@@ -1,10 +1,10 @@
 // 导入变量和混合器
-@import './variables.scss';
-@import './mixins.scss';
+@use './variables.scss' as *;
+@use './mixins.scss' as *;
 
 // 导入基础样式
-@import './base.scss';
+@use './base.scss';
 
 // 导入组件样式
-@import '../components/VKButton/style/index.scss';
+@use '../components/VKButton/style/index.scss';
 // 添加更多组件样式导入

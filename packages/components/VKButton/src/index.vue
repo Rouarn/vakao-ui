@@ -49,7 +49,7 @@ import { defineComponent } from "vue";
 import { buttonProps } from "./types";
 
 export default defineComponent({
-  name: "VKButton",
+  name: "VkButton",
   props: buttonProps,
   emits: ["click"],
   setup(props, { emit }) {

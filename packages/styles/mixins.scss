@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 /* 混合器 */
 
 /* 清除浮动 */
@@ -88,21 +90,21 @@
 
   &:hover,
   &:focus {
-    background-color: lighten($bg-color, 10%);
-    border-color: lighten($border-color, 10%);
+    background-color: color.adjust($bg-color, $lightness: 10%);
+    border-color: color.adjust($border-color, $lightness: 10%);
   }
 
   &:active {
-    background-color: darken($bg-color, 10%);
-    border-color: darken($border-color, 10%);
+    background-color: color.adjust($bg-color, $lightness: -10%);
+    border-color: color.adjust($border-color, $lightness: -10%);
   }
 
   &.is-disabled,
   &.is-disabled:hover,
   &.is-disabled:focus,
   &.is-disabled:active {
-    background-color: lighten($bg-color, 20%);
-    border-color: lighten($border-color, 20%);
+    background-color: color.adjust($bg-color, $lightness: 20%);
+    border-color: color.adjust($border-color, $lightness: 20%);
     color: rgba($text-color, 0.6);
     cursor: not-allowed;
   }

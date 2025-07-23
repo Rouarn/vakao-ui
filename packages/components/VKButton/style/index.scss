@@ -1,5 +1,6 @@
-@import '../../../styles/variables.scss';
-@import '../../../styles/mixins.scss';
+@use 'sass:color';
+@use '../../../styles/variables.scss' as *;
+@use '../../../styles/mixins.scss' as *;
 
 .vk-button {
   display: inline-flex;
@@ -30,12 +31,12 @@
   &:focus {
     color: $color-primary;
     border-color: $color-primary;
-    background-color: lighten($color-primary, 40%);
+    background-color: color.adjust($color-primary, $lightness: 40%);
   }
 
   &:active {
-    color: darken($color-primary, 10%);
-    border-color: darken($color-primary, 10%);
+    color: color.adjust($color-primary, $lightness: -10%);
+    border-color: color.adjust($color-primary, $lightness: -10%);
     outline: none;
   }
 
@@ -159,11 +160,11 @@
 
     &:hover,
     &:focus {
-      color: lighten($color-primary, 10%);
+      color: color.adjust($color-primary, $lightness: 10%);
     }
 
     &:active {
-      color: darken($color-primary, 10%);
+      color: color.adjust($color-primary, $lightness: -10%);
     }
   }
 
