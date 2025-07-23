@@ -2,7 +2,7 @@ import { defineConfig } from 'vitepress'
 
 export default defineConfig({
   title: 'Vakao UI',
-  description: 'A Vue 3 component library based on NaiveUI',
+  description: '基于 Vue 3 和 TypeScript 的现代化组件库',
   themeConfig: {
     logo: '/logo.svg',
     nav: [
@@ -20,7 +20,8 @@ export default defineConfig({
             { text: '快速开始', link: '/guide/getting-started' },
             { text: '安装', link: '/guide/installation' },
             { text: '使用', link: '/guide/usage' },
-            { text: '使用示例', link: '/guide/examples' }
+            { text: '使用示例', link: '/guide/examples' },
+            { text: '更新日志', link: '/guide/changelog' }
           ]
         }
       ],

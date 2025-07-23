@@ -6,9 +6,11 @@
 
 - 🚀 基于 Vue 3 和 TypeScript，提供完整的类型支持
 - 📦 按需引入，支持 Tree Shaking
-- 🎨 可定制主题
+- 🎨 可定制主题和样式
 - 📚 详细的文档和示例
 - 🔧 使用 Vite 构建，开发体验极佳
+- ✨ 支持属性继承和类型安全
+- 🛠️ 支持自动导入插件
 
 ## 安装
 
@@ -62,8 +64,8 @@ app.mount('#app')
 ```vue
 <template>
   <div>
-    <vkbutton type="primary">主要按钮</vkbutton>
-    <vkbutton type="success">成功按钮</vkbutton>
+    <vk-button type="primary">主要按钮</vk-button>
+    <vk-button type="success">成功按钮</vk-button>
   </div>
 </template>
 
@@ -74,34 +76,79 @@ app.mount('#app')
 </script>
 ```
 
-注意：组件在模板中使用时，标签名为全小写的 `vkbutton`。
+### 自动导入插件
 
-### 自动导入
+推荐使用 `unplugin-vue-components` 实现自动导入：
 
-我们推荐使用 [unplugin-vue-components](https://github.com/antfu/unplugin-vue-components) 来实现自动导入组件。
+```bash
+npm install unplugin-vue-components -D
+```
 
 ```ts
 // vite.config.ts
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import Components from 'unplugin-vue-components/vite'
-
-// 导入 Vakao UI 组件解析器
-// 可以从主包导入
-import { VakaoUIResolver } from 'vakao-ui'
-// 或者从专用路径导入
-// import { VakaoUIResolver } from 'vakao-ui/resolver'
+import { VakaoUIResolver } from 'vakao-ui/resolver'
 
 export default defineConfig({
   plugins: [
     vue(),
     Components({
-      resolvers: [
-        VakaoUIResolver(),
-      ],
-    }),
-  ],
+      resolvers: [VakaoUIResolver()]
+    })
+  ]
 })
+```
+
+配置后可直接在模板中使用组件，无需手动导入。
+
+## 类型安全
+
+Vakao UI 使用 TypeScript 编写，提供完整的类型定义：
+
+```vue
+<template>
+  <!-- 完整的类型支持和智能提示 -->
+  <vk-button 
+    type="primary" 
+    size="large"
+    :disabled="false"
+    @click="handleClick"
+  >
+    按钮
+  </vk-button>
+</template>
+
+<script setup lang="ts">
+const handleClick = () => {
+  console.log('按钮被点击')
+}
+</script>
+```
+
+## 自定义样式
+
+组件支持多种方式自定义样式：
+
+```vue
+<template>
+  <!-- 使用 customClass 和 customStyle 属性 -->
+  <vk-button 
+    customClass="my-button" 
+    customStyle="background: linear-gradient(45deg, #ff6b6b, #4ecdc4);"
+  >
+    渐变按钮
+  </vk-button>
+  
+  <!-- 直接使用 class 和 style 属性 -->
+  <vk-button 
+    class="shadow-button" 
+    style="box-shadow: 0 4px 8px rgba(0,0,0,0.2);"
+  >
+    阴影按钮
+  </vk-button>
+</template>
 ```
 
 **重要提示：** 即使使用自动导入组件，也必须手动导入样式文件：

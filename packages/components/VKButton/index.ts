@@ -21,7 +21,7 @@ export type {
 };
 
 // 注册组件
-const VKButton = withInstall(Button);
+const VkButton = withInstall(Button);
 
 // 导出组件
-export { VKButton };
+export { VkButton };

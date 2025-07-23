@@ -49,6 +49,76 @@ app.mount('#app')
 
 我们推荐使用 [unplugin-vue-components](https://github.com/antfu/unplugin-vue-components) 来实现自动导入组件。
 
+```ts
+// vite.config.ts
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import Components from 'unplugin-vue-components/vite'
+import { VakaoUIResolver } from 'vakao-ui/resolver'
+
+export default defineConfig({
+  plugins: [
+    vue(),
+    Components({
+      resolvers: [VakaoUIResolver()]
+    })
+  ]
+})
+```
+
+使用自动导入插件后，你可以直接在模板中使用组件，无需手动导入：
+
+```vue
+<template>
+  <vk-button type="primary">按钮</vk-button>
+</template>
+
+<script setup lang="ts">
+// 无需导入，插件会自动处理
+</script>
+```
+
+## 类型安全
+
+Vakao UI 使用 TypeScript 编写，提供完整的类型定义。所有组件都支持完整的类型检查和智能提示。
+
+```vue
+<template>
+  <!-- 完整的类型支持和智能提示 -->
+  <vk-button 
+    type="primary" 
+    size="large"
+    :disabled="false"
+    @click="handleClick"
+  >
+    按钮
+  </vk-button>
+</template>
+
+<script setup lang="ts">
+const handleClick = () => {
+  console.log('按钮被点击')
+}
+</script>
+```
+
+## 属性继承
+
+组件支持标准的 HTML 属性继承，你可以直接传递 `class`、`style` 等属性：
+
+```vue
+<template>
+  <!-- 支持 class 和 style 属性 -->
+  <vk-button 
+    class="my-custom-class"
+    style="margin: 10px;"
+    data-testid="my-button"
+  >
+    自定义样式按钮
+  </vk-button>
+</template>
+```
+
 首先安装插件：
 
 ```bash

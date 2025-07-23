@@ -17,8 +17,8 @@ yarn add vakao-ui
 pnpm add vakao-ui
 ```
 
-::: warning 注意
-Vakao UI 依赖于 Naive UI，因此需要同时安装 Naive UI。
+::: tip 提示
+Vakao UI 是一个独立的组件库，基于 Vue 3 和 TypeScript 构建，提供完整的类型支持和现代化的开发体验。
 :::
 
 ## 使用
@@ -30,7 +30,8 @@ Vakao UI 依赖于 Naive UI，因此需要同时安装 Naive UI。
 ```ts
 import { createApp } from "vue";
 import VakaoUI from "vakao-ui";
-import "vakao-ui/dist/index.css";
+// 重要：必须导入样式文件
+import "vakao-ui/dist/style.css";
 import App from "./App.vue";
 
 const app = createApp(App);

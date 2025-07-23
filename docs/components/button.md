@@ -49,6 +49,7 @@
   <vk-button>默认按钮</vk-button>
   <vk-button size="large">大按钮</vk-button>
 </template>
+</template>
 ```
 
   </template>
@@ -190,6 +191,78 @@ const renderCheckIcon = () => h(CheckmarkOutline);
     <vk-button type="primary">保存</vk-button>
     <vk-button>取消</vk-button>
   </n-button-group>
+</template>
+```
+
+  </template>
+</Demo>
+
+## 自定义样式
+
+按钮组件支持通过 `customClass` 和 `customStyle` 属性自定义样式，同时也支持直接传递 `class` 和 `style` 属性。
+
+<Demo>
+  <vk-button customClass="my-button" customStyle="background: linear-gradient(45deg, #ff6b6b, #4ecdc4); color: white; border: none;">渐变按钮</vk-button>
+  <vk-button class="shadow-button" style="box-shadow: 0 4px 8px rgba(0,0,0,0.2); border-radius: 20px;">阴影按钮</vk-button>
+  
+  <template #code>
+
+```vue
+<template>
+  <vk-button 
+    customClass="my-button" 
+    customStyle="background: linear-gradient(45deg, #ff6b6b, #4ecdc4); color: white; border: none;"
+  >
+    渐变按钮
+  </vk-button>
+  <vk-button 
+    class="shadow-button" 
+    style="box-shadow: 0 4px 8px rgba(0,0,0,0.2); border-radius: 20px;"
+  >
+    阴影按钮
+  </vk-button>
+</template>
+
+<style>
+.my-button {
+  transition: all 0.3s ease;
+}
+
+.my-button:hover {
+  transform: translateY(-2px);
+}
+
+.shadow-button {
+  transition: all 0.3s ease;
+}
+
+.shadow-button:hover {
+  box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+}
+</style>
+```
+
+  </template>
+</Demo>
+
+## 属性继承
+
+按钮组件支持标准的 HTML 属性继承，包括 `data-*`、`aria-*` 等属性。
+
+<Demo>
+  <vk-button data-testid="test-button" aria-label="测试按钮" title="这是一个测试按钮">可访问性按钮</vk-button>
+  
+  <template #code>
+
+```vue
+<template>
+  <vk-button 
+    data-testid="test-button" 
+    aria-label="测试按钮" 
+    title="这是一个测试按钮"
+  >
+    可访问性按钮
+  </vk-button>
 </template>
 ```
 

@@ -3,8 +3,8 @@ layout: home
 
 hero:
   name: Vakao UI
-  text: 基于 Vue 3 和 Naive UI 的组件库
-  tagline: 简洁、高效、易用的 Vue 3 组件库
+  text: 基于 Vue 3 和 TypeScript 的组件库
+  tagline: 简洁、高效、类型安全的 Vue 3 组件库
   actions:
     - theme: brand
       text: 快速开始
@@ -21,8 +21,8 @@ features:
     title: 基于 Vue 3
     details: 充分利用 Vue 3 的 Composition API 和响应式系统
   - icon: ⚡️
-    title: 基于 Naive UI
-    details: 在 Naive UI 的基础上进行二次封装，提供更加便捷的使用方式
+    title: 现代化构建
+    details: 使用 Vite 构建，支持 Tree Shaking，提供最佳的开发体验
   - icon: 🔑
     title: TypeScript 支持
     details: 使用 TypeScript 编写，提供完整的类型定义
@@ -49,25 +49,35 @@ pnpm add vakao-ui
 ### 完整引入
 
 ```ts
-import { createApp } from "vue";
-import VakaoUI from "vakao-ui";
-import "vakao-ui/dist/index.css";
-import App from "./App.vue";
+import { createApp } from 'vue'
+import VakaoUI from 'vakao-ui'
+// 重要：必须导入样式文件
+import 'vakao-ui/dist/style.css'
+import App from './App.vue'
 
-const app = createApp(App);
-app.use(VakaoUI);
-app.mount("#app");
+const app = createApp(App)
+app.use(VakaoUI)
+app.mount('#app')
 ```
 
 ### 按需引入
 
+```ts
+import { createApp } from 'vue'
+import { VKButton } from 'vakao-ui'
+// 重要：必须导入样式文件
+import 'vakao-ui/dist/style.css'
+import App from './App.vue'
+
+const app = createApp(App)
+app.use(VKButton)
+app.mount('#app')
+```
+
+### 在模板中使用
+
 ```vue
 <template>
-  <vk-button type="primary">按钮</vk-button>
+  <vk-button type="primary">主要按钮</vk-button>
+  <vk-button type="success">成功按钮</vk-button>
 </template>
-
-<script setup lang="ts">
-import { VKButton } from "vakao-ui";
-import "vakao-ui/dist/index.css";
-</script>
-```
