@@ -49,29 +49,29 @@ pnpm add vakao-ui
 ### 完整引入
 
 ```ts
-import { createApp } from 'vue'
-import VakaoUI from 'vakao-ui'
+import { createApp } from "vue";
+import VakaoUI from "vakao-ui";
 // 重要：必须导入样式文件
-import 'vakao-ui/dist/style.css'
-import App from './App.vue'
+import "vakao-ui/dist/index.css";
+import App from "./App.vue";
 
-const app = createApp(App)
-app.use(VakaoUI)
-app.mount('#app')
+const app = createApp(App);
+app.use(VakaoUI);
+app.mount("#app");
 ```
 
 ### 按需引入
 
 ```ts
-import { createApp } from 'vue'
-import { VKButton } from 'vakao-ui'
+import { createApp } from "vue";
+import { VKButton } from "vakao-ui";
 // 重要：必须导入样式文件
-import 'vakao-ui/dist/style.css'
-import App from './App.vue'
+import "vakao-ui/dist/index.css";
+import App from "./App.vue";
 
-const app = createApp(App)
-app.use(VKButton)
-app.mount('#app')
+const app = createApp(App);
+app.use(VKButton);
+app.mount("#app");
 ```
 
 ### 在模板中使用
@@ -81,3 +81,4 @@ app.mount('#app')
   <vk-button type="primary">主要按钮</vk-button>
   <vk-button type="success">成功按钮</vk-button>
 </template>
+```
