@@ -1,21 +1,8 @@
 <template>
   <button
-    :class="[
-      'vk-button',
-      `vk-button--${type}`,
-      `vk-button--${size}`,
-      {
-        'is-disabled': disabled,
-        'is-loading': loading,
-        'is-plain': plain,
-        'is-round': round,
-        'is-circle': circle,
-        'is-text': text,
-        'is-link': link,
-      },
-      customClass,
-    ]"
-    :style="customStyle"
+    v-bind="filteredAttrs"
+    :class="mergedClass"
+    :style="mergedStyle"
     :disabled="disabled || loading"
     :autofocus="autofocus"
     :type="nativeType"
@@ -45,22 +32,67 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, computed, useAttrs } from "vue";
+import type { CSSProperties } from "vue";
 import { buttonProps } from "./types";
 
 export default defineComponent({
   name: "VkButton",
+  inheritAttrs: false,
   props: buttonProps,
   emits: ["click"],
   setup(props, { emit }) {
+    const attrs = useAttrs();
+    
     const handleClick = (e: MouseEvent) => {
       if (!props.disabled && !props.loading) {
         emit("click", e);
       }
     };
 
+    // 过滤掉 class 和 style 属性，其他属性正常传递
+    const filteredAttrs = computed(() => {
+      const { class: _, style: __, ...rest } = attrs;
+      return rest;
+    });
+
+    // 合并样式，确保类型安全
+    const mergedStyle = computed(() => {
+      const styles: (string | CSSProperties | undefined)[] = [];
+      if (props.customStyle) {
+        styles.push(props.customStyle);
+      }
+      if (attrs.style) {
+        styles.push(attrs.style as string | CSSProperties);
+      }
+      return styles.filter(Boolean);
+    });
+
+    // 合并类名
+    const mergedClass = computed(() => {
+      return [
+        'vk-button',
+        `vk-button--${props.type}`,
+        `vk-button--${props.size}`,
+        {
+          'is-disabled': props.disabled,
+          'is-loading': props.loading,
+          'is-plain': props.plain,
+          'is-round': props.round,
+          'is-circle': props.circle,
+          'is-text': props.text,
+          'is-link': props.link,
+        },
+        props.customClass,
+        attrs.class,
+      ];
+    });
+
     return {
       handleClick,
+      filteredAttrs,
+      mergedStyle,
+      mergedClass,
     };
   },
 });
