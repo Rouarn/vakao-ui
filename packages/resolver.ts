@@ -19,12 +19,26 @@ export function VakaoUIResolver(options: VakaoUIResolverOptions = {}): Component
   return {
     type: 'component',
     resolve: (name: string) => {
-      if (name.startsWith(prefix.toUpperCase()) || name.startsWith(prefix)) {
-        // 处理前缀，确保格式一致
-        const compName = name.startsWith(prefix) 
-          ? name.replace(new RegExp(`^${prefix}`), prefix.toUpperCase())
-          : name
-        
+      // 支持多种命名格式：VKButton, VkButton, vk-button
+      const upperPrefix = prefix.toUpperCase()
+      const capitalPrefix = prefix.charAt(0).toUpperCase() + prefix.slice(1).toLowerCase()
+      const kebabPrefix = prefix.toLowerCase() + '-'
+      
+      let compName = ''
+      
+      if (name.startsWith(upperPrefix)) {
+        // VKButton -> VKButton
+        compName = name
+      } else if (name.startsWith(capitalPrefix)) {
+        // VkButton -> VKButton
+        compName = upperPrefix + name.slice(capitalPrefix.length)
+      } else if (name.startsWith(kebabPrefix)) {
+        // vk-button -> VKButton
+        const pascalName = name.replace(kebabPrefix, '').replace(/-([a-z])/g, (_, letter) => letter.toUpperCase())
+        compName = upperPrefix + pascalName.charAt(0).toUpperCase() + pascalName.slice(1)
+      }
+      
+      if (compName) {
         return {
           name: compName,
           from: 'vakao-ui'

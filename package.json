@@ -1,6 +1,6 @@
 {
   "name": "vakao-ui",
-  "version": "1.0.4",
+  "version": "1.0.6",
   "description": "A Vue 3 component library based on NaiveUI",
   "main": "dist/vakao-ui.umd.js",
   "module": "dist/vakao-ui.es.js",

@@ -8,6 +8,9 @@ import {
 } from "./src/types";
 import { withInstall } from "../../utils";
 
+// 导入样式
+import "./style";
+
 // 导出类型
 export type {
   ButtonProps,

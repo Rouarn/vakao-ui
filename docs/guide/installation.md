@@ -33,8 +33,8 @@ $ pnpm add vakao-ui
 
 ```html
 <head>
-  <!-- 导入样式 -->
-  <link rel="stylesheet" href="https://unpkg.com/vakao-ui/dist/vakao-ui.css">
+  <!-- 导入样式（重要！） -->
+  <link rel="stylesheet" href="https://unpkg.com/vakao-ui/dist/style.css">
   <!-- 导入 Vue 3 -->
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
   <!-- 导入组件库 -->

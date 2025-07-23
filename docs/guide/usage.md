@@ -8,7 +8,8 @@
 // main.ts
 import { createApp } from 'vue'
 import VakaoUI from 'vakao-ui'
-import 'vakao-ui/dist/vakao-ui.css'
+// 导入样式文件（重要！）
+import 'vakao-ui/dist/style.css'
 import App from './App.vue'
 
 const app = createApp(App)
@@ -27,7 +28,8 @@ app.mount('#app')
 // main.ts
 import { createApp } from 'vue'
 import { VKButton, VKInput } from 'vakao-ui'
-import 'vakao-ui/dist/vakao-ui.css'
+// 导入样式文件（重要！）
+import 'vakao-ui/dist/style.css'
 import App from './App.vue'
 
 const app = createApp(App)

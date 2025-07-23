@@ -3,6 +3,9 @@ import type { App } from 'vue'
 // 导入所有组件
 import components from './components'
 
+// 导入样式
+import './styles/index.scss'
+
 // 导入工具函数
 export * from './utils'
 

@@ -11,9 +11,9 @@
         'is-round': round,
         'is-circle': circle,
         'is-text': text,
-        'is-link': link
+        'is-link': link,
       },
-      customClass
+      customClass,
     ]"
     :style="customStyle"
     :disabled="disabled || loading"
@@ -24,14 +24,20 @@
     <span v-if="loading" class="vk-button__loading">
       <span class="vk-button__loading-indicator"></span>
     </span>
-    <span v-if="icon && iconPosition === 'left'" class="vk-button__icon vk-button__icon--left">
+    <span
+      v-if="icon && iconPosition === 'left'"
+      class="vk-button__icon vk-button__icon--left"
+    >
       <component v-if="typeof icon === 'object'" :is="icon" />
       <i v-else :class="icon"></i>
     </span>
     <span class="vk-button__content">
       <slot></slot>
     </span>
-    <span v-if="icon && iconPosition === 'right'" class="vk-button__icon vk-button__icon--right">
+    <span
+      v-if="icon && iconPosition === 'right'"
+      class="vk-button__icon vk-button__icon--right"
+    >
       <component v-if="typeof icon === 'object'" :is="icon" />
       <i v-else :class="icon"></i>
     </span>
@@ -39,23 +45,23 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import { buttonProps } from './types'
+import { defineComponent } from "vue";
+import { buttonProps } from "./types";
 
 export default defineComponent({
-  name: 'vkbutton',
+  name: "VKButton",
   props: buttonProps,
-  emits: ['click'],
+  emits: ["click"],
   setup(props, { emit }) {
     const handleClick = (e: MouseEvent) => {
       if (!props.disabled && !props.loading) {
-        emit('click', e)
+        emit("click", e);
       }
-    }
+    };
 
     return {
-      handleClick
-    }
-  }
-})
+      handleClick,
+    };
+  },
+});
 </script>

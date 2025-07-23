@@ -19,7 +19,8 @@ export default defineConfig({
             { text: '介绍', link: '/guide/' },
             { text: '快速开始', link: '/guide/getting-started' },
             { text: '安装', link: '/guide/installation' },
-            { text: '使用', link: '/guide/usage' }
+            { text: '使用', link: '/guide/usage' },
+            { text: '使用示例', link: '/guide/examples' }
           ]
         }
       ],

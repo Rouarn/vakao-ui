@@ -30,7 +30,8 @@ pnpm add vakao-ui
 ```ts
 import { createApp } from 'vue'
 import VakaoUI from 'vakao-ui'
-// 注意：当前版本暂不需要导入 CSS 文件
+// 重要：必须导入样式文件
+import 'vakao-ui/dist/style.css'
 import App from './App.vue'
 
 const app = createApp(App)
@@ -44,7 +45,8 @@ app.mount('#app')
 ```ts
 import { createApp } from 'vue'
 import { VKButton } from 'vakao-ui'
-// 注意：当前版本暂不需要导入 CSS 文件
+// 重要：必须导入样式文件
+import 'vakao-ui/dist/style.css'
 import App from './App.vue'
 
 const app = createApp(App)
@@ -100,6 +102,13 @@ export default defineConfig({
     }),
   ],
 })
+```
+
+**重要提示：** 即使使用自动导入组件，也必须手动导入样式文件：
+
+```ts
+// main.ts
+import 'vakao-ui/dist/style.css'
 ```
 
 ## 使用组合式 API
