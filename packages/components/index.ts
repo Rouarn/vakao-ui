@@ -1,9 +1,9 @@
 // Export all components
-export * from "./VKButton";
+export * from "./VkButton";
 // Add more component exports here as they are created
 
 import { App } from "vue";
-import { VkButton } from "./VKButton";
+import { VkButton } from "./VkButton";
 import { installAll } from "@vakao-ui/utils";
 
 // 组件列表
