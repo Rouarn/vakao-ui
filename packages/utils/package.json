@@ -1,0 +1,21 @@
+{
+  "name": "@vakao-ui/utils",
+  "version": "1.0.0",
+  "description": "Utilities for vakao-ui",
+  "main": "index.ts",
+  "module": "index.ts",
+  "types": "index.ts",
+  "keywords": [
+    "vue3",
+    "utils",
+    "ui-library"
+  ],
+  "author": "",
+  "license": "MIT",
+  "scripts": {
+    "build": "echo \"Utils package build is handled by the main build process\""
+  },
+  "peerDependencies": {
+    "vue": "^3.3.0"
+  }
+}

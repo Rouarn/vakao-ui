@@ -1,0 +1,19 @@
+{
+  "name": "@vakao-ui/packages",
+  "version": "1.0.4",
+  "private": true,
+  "scripts": {
+    "build": "vite build",
+    "build:types": "vue-tsc --declaration --emitDeclarationOnly",
+    "build:full": "npm run build && npm run build:types"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.2.3",
+    "vite": "^4.4.0",
+    "vite-plugin-dts": "^3.0.0",
+    "vue-tsc": "^1.8.0"
+  },
+  "peerDependencies": {
+    "vue": "^3.3.0"
+  }
+}

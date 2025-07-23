@@ -1,0 +1,24 @@
+import Button from "./src/index.vue";
+import {
+  ButtonProps,
+  ButtonEmits,
+  ButtonType,
+  ButtonSize,
+  ButtonNativeType,
+} from "./src/types";
+import { withInstall } from "../../utils";
+
+// 导出类型
+export type {
+  ButtonProps,
+  ButtonEmits,
+  ButtonType,
+  ButtonSize,
+  ButtonNativeType,
+};
+
+// 注册组件
+const VKButton = withInstall(Button);
+
+// 导出组件
+export { VKButton };

@@ -1,0 +1,112 @@
+.vk-button {
+  display: inline-block;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  background: #fff;
+  border: 1px solid #dcdfe6;
+  color: #606266;
+  text-align: center;
+  box-sizing: border-box;
+  outline: none;
+  margin: 0;
+  transition: .1s;
+  font-weight: 500;
+  padding: 12px 20px;
+  font-size: 14px;
+  border-radius: 4px;
+}
+
+.vk-button:hover,
+.vk-button:focus {
+  color: #409eff;
+  border-color: #c6e2ff;
+  background-color: #ecf5ff;
+}
+
+.vk-button:active {
+  color: #3a8ee6;
+  border-color: #3a8ee6;
+  outline: none;
+}
+
+.vk-button.is-plain {
+  background: #fff;
+  border: 1px solid #dcdfe6;
+  color: #606266;
+}
+
+.vk-button.is-primary {
+  color: #fff;
+  background-color: #409eff;
+  border-color: #409eff;
+}
+
+.vk-button.is-primary:hover,
+.vk-button.is-primary:focus {
+  background: #66b1ff;
+  border-color: #66b1ff;
+  color: #fff;
+}
+
+.vk-button.is-success {
+  color: #fff;
+  background-color: #67c23a;
+  border-color: #67c23a;
+}
+
+.vk-button.is-success:hover,
+.vk-button.is-success:focus {
+  background: #85ce61;
+  border-color: #85ce61;
+  color: #fff;
+}
+
+.vk-button.is-info {
+  color: #fff;
+  background-color: #909399;
+  border-color: #909399;
+}
+
+.vk-button.is-info:hover,
+.vk-button.is-info:focus {
+  background: #a6a9ad;
+  border-color: #a6a9ad;
+  color: #fff;
+}
+
+.vk-button.is-warning {
+  color: #fff;
+  background-color: #e6a23c;
+  border-color: #e6a23c;
+}
+
+.vk-button.is-warning:hover,
+.vk-button.is-warning:focus {
+  background: #ebb563;
+  border-color: #ebb563;
+  color: #fff;
+}
+
+.vk-button.is-danger {
+  color: #fff;
+  background-color: #f56c6c;
+  border-color: #f56c6c;
+}
+
+.vk-button.is-danger:hover,
+.vk-button.is-danger:focus {
+  background: #f78989;
+  border-color: #f78989;
+  color: #fff;
+}
+
+.vk-button.is-disabled,
+.vk-button.is-disabled:hover,
+.vk-button.is-disabled:focus {
+  color: #c0c4cc;
+  cursor: not-allowed;
+  background-image: none;
+  background-color: #fff;
+  border-color: #ebeef5;
+}

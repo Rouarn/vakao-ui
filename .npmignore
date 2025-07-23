@@ -1,0 +1,33 @@
+# 开发和构建相关
+.github
+.vscode
+docs
+packages
+scripts
+node_modules
+
+# 配置文件
+.eslintrc.js
+.eslintignore
+.prettierrc.js
+.prettierignore
+.gitignore
+.editorconfig
+tsconfig.json
+vite.config.ts
+pnpm-lock.yaml
+pnpm-workspace.yaml
+
+# 测试文件
+__tests__
+*.test.ts
+*.spec.ts
+
+# 其他
+.DS_Store
+*.log
+.temp
+.cache
+
+# 只保留 dist 目录和 README.md
+# 注意：package.json 中的 files 字段也会控制发布的文件

@@ -1,0 +1,191 @@
+@import '../../../styles/variables.scss';
+@import '../../../styles/mixins.scss';
+
+.vk-button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  -webkit-appearance: none;
+  text-align: center;
+  box-sizing: border-box;
+  outline: none;
+  transition: all $transition-duration $transition-timing-function;
+  user-select: none;
+  vertical-align: middle;
+  border: 1px solid transparent;
+  background-color: $bg-color;
+  color: $text-color-primary;
+  border-color: $border-color;
+  margin: 0;
+  font-weight: 500;
+  padding: 0 $spacing-base;
+  font-size: $font-size-base;
+  height: $component-size-medium;
+  border-radius: $border-radius-base;
+
+  &:hover,
+  &:focus {
+    color: $color-primary;
+    border-color: $color-primary;
+    background-color: lighten($color-primary, 40%);
+  }
+
+  &:active {
+    color: darken($color-primary, 10%);
+    border-color: darken($color-primary, 10%);
+    outline: none;
+  }
+
+  /* 按钮类型 */
+  &--default {
+    @include button-variant($bg-color, $text-color-primary, $border-color);
+  }
+
+  &--primary {
+    @include button-variant($color-primary, white, $color-primary);
+  }
+
+  &--success {
+    @include button-variant($color-success, white, $color-success);
+  }
+
+  &--warning {
+    @include button-variant($color-warning, white, $color-warning);
+  }
+
+  &--info {
+    @include button-variant($color-info, white, $color-info);
+  }
+
+  &--danger {
+    @include button-variant($color-danger, white, $color-danger);
+  }
+
+  /* 按钮尺寸 */
+  &--small {
+    @include button-size($component-size-small, $spacing-small, $font-size-small, $border-radius-small);
+  }
+
+  &--medium {
+    @include button-size($component-size-medium, $spacing-base, $font-size-base, $border-radius-base);
+  }
+
+  &--large {
+    @include button-size($component-size-large, $spacing-large, $font-size-large, $border-radius-large);
+  }
+
+  /* 禁用状态 */
+  &.is-disabled,
+  &.is-disabled:hover,
+  &.is-disabled:focus,
+  &.is-disabled:active {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  /* 加载状态 */
+  &.is-loading {
+    position: relative;
+    pointer-events: none;
+
+    .vk-button__content {
+      opacity: 0.6;
+    }
+  }
+
+  &__loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  &__loading-indicator {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 2px solid currentColor;
+    border-radius: 50%;
+    border-right-color: transparent;
+    animation: vk-button-loading-rotate 1s linear infinite;
+  }
+
+  /* 朴素按钮 */
+  &.is-plain {
+    background: transparent;
+  }
+
+  /* 圆角按钮 */
+  &.is-round {
+    border-radius: 20px;
+  }
+
+  /* 圆形按钮 */
+  &.is-circle {
+    border-radius: 50%;
+    padding: 0;
+    width: $component-size-medium;
+    height: $component-size-medium;
+
+    &.vk-button--small {
+      width: $component-size-small;
+      height: $component-size-small;
+    }
+
+    &.vk-button--large {
+      width: $component-size-large;
+      height: $component-size-large;
+    }
+  }
+
+  /* 文本按钮 */
+  &.is-text {
+    border-color: transparent;
+    background: transparent;
+    padding: 0;
+    height: auto;
+  }
+
+  /* 链接按钮 */
+  &.is-link {
+    border-color: transparent;
+    background: transparent;
+    padding: 0;
+    height: auto;
+    color: $color-primary;
+
+    &:hover,
+    &:focus {
+      color: lighten($color-primary, 10%);
+    }
+
+    &:active {
+      color: darken($color-primary, 10%);
+    }
+  }
+
+  /* 图标 */
+  &__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    &--left {
+      margin-right: 4px;
+    }
+
+    &--right {
+      margin-left: 4px;
+    }
+  }
+}
+
+/* 加载动画 */
+@keyframes vk-button-loading-rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}

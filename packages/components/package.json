@@ -1,0 +1,22 @@
+{
+  "name": "@vakao-ui/components",
+  "version": "1.0.0",
+  "description": "Components for vakao-ui",
+  "main": "index.ts",
+  "module": "index.ts",
+  "types": "index.ts",
+  "keywords": [
+    "vue3",
+    "components",
+    "ui-library"
+  ],
+  "author": "",
+  "license": "MIT",
+  "peerDependencies": {
+    "vue": "^3.3.0"
+  },
+  "dependencies": {
+    "@vakao-ui/utils": "workspace:*",
+    "@vakao-ui/hooks": "workspace:*"
+  }
+}

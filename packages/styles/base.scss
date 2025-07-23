@@ -1,0 +1,84 @@
+/* 基础样式 */
+
+/* 重置样式 */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* 全局变量 */
+:root {
+  /* 主题色 */
+  --vk-color-primary: #{$color-primary};
+  --vk-color-success: #{$color-success};
+  --vk-color-warning: #{$color-warning};
+  --vk-color-danger: #{$color-danger};
+  --vk-color-info: #{$color-info};
+  
+  /* 文本颜色 */
+  --vk-text-color-primary: #{$text-color-primary};
+  --vk-text-color-regular: #{$text-color-regular};
+  --vk-text-color-secondary: #{$text-color-secondary};
+  --vk-text-color-placeholder: #{$text-color-placeholder};
+  --vk-text-color-disabled: #{$text-color-disabled};
+  
+  /* 边框颜色 */
+  --vk-border-color: #{$border-color};
+  --vk-border-color-light: #{$border-color-light};
+  
+  /* 背景颜色 */
+  --vk-bg-color: #{$bg-color};
+  --vk-bg-color-page: #{$bg-color-page};
+  
+  /* 字体 */
+  --vk-font-family: #{$font-family};
+  --vk-font-size-base: #{$font-size-base};
+  --vk-font-size-small: #{$font-size-small};
+  --vk-font-size-medium: #{$font-size-medium};
+  --vk-font-size-large: #{$font-size-large};
+  
+  /* 边框圆角 */
+  --vk-border-radius-small: #{$border-radius-small};
+  --vk-border-radius-base: #{$border-radius-base};
+  --vk-border-radius-large: #{$border-radius-large};
+  --vk-border-radius-circle: #{$border-radius-circle};
+  
+  /* 间距 */
+  --vk-spacing-mini: #{$spacing-mini};
+  --vk-spacing-small: #{$spacing-small};
+  --vk-spacing-base: #{$spacing-base};
+  --vk-spacing-large: #{$spacing-large};
+  
+  /* 阴影 */
+  --vk-box-shadow-base: #{$box-shadow-base};
+  --vk-box-shadow-light: #{$box-shadow-light};
+  --vk-box-shadow-dark: #{$box-shadow-dark};
+  
+  /* 过渡 */
+  --vk-transition-duration: #{$transition-duration};
+  --vk-transition-timing-function: #{$transition-timing-function};
+}
+
+/* 全局样式 */
+body {
+  font-family: var(--vk-font-family);
+  font-size: var(--vk-font-size-base);
+  color: var(--vk-text-color-primary);
+  background-color: var(--vk-bg-color-page);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 通用过渡效果 */
+.vk-fade-enter-active,
+.vk-fade-leave-active {
+  transition: opacity var(--vk-transition-duration) var(--vk-transition-timing-function);
+}
+
+.vk-fade-enter-from,
+.vk-fade-leave-to {
+  opacity: 0;
+}

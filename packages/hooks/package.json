@@ -1,0 +1,21 @@
+{
+  "name": "@vakao-ui/hooks",
+  "version": "1.0.0",
+  "description": "Hooks for vakao-ui",
+  "main": "index.ts",
+  "module": "index.ts",
+  "types": "index.ts",
+  "keywords": [
+    "vue3",
+    "hooks",
+    "ui-library"
+  ],
+  "author": "",
+  "license": "MIT",
+  "scripts": {
+    "build": "echo \"Hooks package build is handled by the main build process\""
+  },
+  "peerDependencies": {
+    "vue": "^3.3.0"
+  }
+}
