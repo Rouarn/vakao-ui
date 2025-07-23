@@ -6,7 +6,7 @@ import {
   ButtonSize,
   ButtonNativeType,
 } from "./src/types";
-import { withInstall } from "../../utils";
+import { withInstall } from "@vakao-ui/utils";
 
 // 导入样式
 import "./style";
