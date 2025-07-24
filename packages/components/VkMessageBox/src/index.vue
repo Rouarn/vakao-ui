@@ -98,10 +98,10 @@ const messageBoxClass = computed(() => [`vk-message-box--${props.type}`]);
 
 const iconName = computed(() => {
   const iconMap = {
-    success: "checkmark-circle",
-    warning: "warning",
-    error: "close-circle",
-    info: "information-circle",
+    success: "Checkmark",
+    warning: "Warning",
+    error: "Close",
+    info: "InformationCircle",
   };
   return iconMap[props.type];
 });
@@ -262,12 +262,13 @@ onUnmounted(() => {
   align-items: center;
   justify-content: center;
   z-index: 2000;
+  padding: 20px;
 }
 
 .vk-message-box {
   background: white;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
   min-width: 420px;
   max-width: 500px;
   overflow: hidden;
@@ -277,45 +278,20 @@ onUnmounted(() => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px 20px 10px;
+  padding: 24px 24px 0;
 }
 
 .vk-message-box__title {
   display: flex;
   align-items: center;
   font-size: 18px;
-  font-weight: 500;
-  color: #303133;
+  font-weight: 600;
+  color: #1f2937;
 }
 
 .vk-message-box__icon {
-  margin-right: 8px;
+  margin-right: 12px;
   font-size: 20px;
-}
-
-.vk-message-box__icon--success {
-  color: #67c23a;
-}
-
-.vk-message-box__icon--warning {
-  color: #e6a23c;
-}
-
-.vk-message-box__icon--error {
-  color: #f56c6c;
-}
-
-.vk-message-box__icon--info {
-  color: #409eff;
-}
-
-.vk-message-box__close {
-  background: none;
-  border: none;
-  font-size: 20px;
-  color: #909399;
-  cursor: pointer;
-  padding: 0;
   width: 20px;
   height: 20px;
   display: flex;
@@ -323,61 +299,106 @@ onUnmounted(() => {
   justify-content: center;
 }
 
+.vk-message-box__icon--success {
+  color: #10b981;
+}
+
+.vk-message-box__icon--warning {
+  color: #f59e0b;
+}
+
+.vk-message-box__icon--error {
+  color: #ef4444;
+}
+
+.vk-message-box__icon--info {
+  color: #3b82f6;
+}
+
+.vk-message-box__close {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 4px;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
 .vk-message-box__close:hover {
-  color: #409eff;
+  background: #f3f4f6;
+  color: #374151;
 }
 
 .vk-message-box__content {
-  padding: 10px 20px 20px;
+  padding: 16px 24px;
 }
 
 .vk-message-box__message {
-  font-size: 14px;
-  color: #606266;
+  font-size: 15px;
+  color: #4b5563;
   line-height: 1.5;
+  margin: 0;
 }
 
 .vk-message-box__input {
-  margin: 16px 0;
+  margin: 16px 0 0;
 }
 
 .vk-message-box__input-inner {
   width: 100%;
-  padding: 8px 12px;
-  border: 1px solid #dcdfe6;
-  border-radius: 4px;
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
   font-size: 14px;
   outline: none;
-  transition: border-color 0.2s;
+  transition: border-color 0.2s ease;
   box-sizing: border-box;
 }
 
 .vk-message-box__input-inner:focus {
-  border-color: #409eff;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.vk-message-box__input-inner::placeholder {
+  color: #9ca3af;
 }
 
 .vk-message-box__error-message {
-  color: #f56c6c;
-  font-size: 12px;
-  margin-top: 4px;
+  color: #ef4444;
+  font-size: 13px;
+  margin-top: 6px;
 }
 
 .vk-message-box__footer {
-  padding: 10px 20px 20px;
+  padding: 16px 24px 24px;
   display: flex;
   justify-content: flex-end;
   gap: 12px;
 }
 
 /* 动画 */
-.vk-message-box-fade-enter-active,
-.vk-message-box-fade-leave-active {
-  transition: opacity 0.3s;
+.vk-message-box-fade-enter-active {
+  transition: all 0.3s ease;
 }
 
-.vk-message-box-fade-enter-active .vk-message-box,
+.vk-message-box-fade-leave-active {
+  transition: all 0.2s ease;
+}
+
+.vk-message-box-fade-enter-active .vk-message-box {
+  transition: all 0.3s ease;
+}
+
 .vk-message-box-fade-leave-active .vk-message-box {
-  transition: transform 0.3s;
+  transition: all 0.2s ease;
 }
 
 .vk-message-box-fade-enter-from,
@@ -385,8 +406,30 @@ onUnmounted(() => {
   opacity: 0;
 }
 
-.vk-message-box-fade-enter-from .vk-message-box,
+.vk-message-box-fade-enter-from .vk-message-box {
+  transform: scale(0.95);
+  opacity: 0;
+}
+
 .vk-message-box-fade-leave-to .vk-message-box {
-  transform: scale(0.9);
+  transform: scale(0.98);
+  opacity: 0;
+}
+
+/* 响应式设计 */
+@media (max-width: 480px) {
+  .vk-message-box {
+    min-width: auto;
+    width: 100%;
+    max-width: 90vw;
+    margin: 0 20px;
+  }
+  
+  .vk-message-box__header,
+  .vk-message-box__content,
+  .vk-message-box__footer {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
 }
 </style>
