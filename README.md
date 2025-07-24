@@ -202,6 +202,26 @@ pnpm build
 pnpm build:docs
 ```
 
+### 部署文档
+
+#### 自动部署（推荐）
+
+项目已配置 GitHub Actions 自动部署，推送到 `main` 分支时会自动构建并部署文档到 GitHub Pages。
+
+访问地址：https://rouarn.github.io/vakao-ui/
+
+#### 手动部署
+
+```bash
+# 构建并部署文档到 GitHub Pages
+pnpm deploy:docs
+
+# 本地预览构建后的文档
+pnpm deploy:preview
+```
+
+详细部署说明请参考 [DEPLOY.md](./DEPLOY.md)
+
 ### 发布组件库
 
 ```bash

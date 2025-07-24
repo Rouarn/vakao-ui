@@ -27,6 +27,8 @@
     "build": "pnpm -C packages build",
     "build:docs": "pnpm -C docs build",
     "prepare-dist": "node ./scripts/prepare-dist.js",
+    "deploy:docs": "node ./scripts/deploy.js",
+    "deploy:preview": "pnpm run build:docs && pnpm -C docs serve",
     "lint": "eslint . --ext .vue,.js,.ts,.jsx,.tsx --fix",
     "format": "prettier --write \"**/*.{vue,js,ts,json,md}\"",
     "publish:only": "node ./scripts/publish.js",

@@ -33,6 +33,10 @@ coverage
 .temp
 .cache
 
+# Documentation build output
+docs/.vitepress/dist
+docs/.vitepress/cache
+
 # Environment variables
 .env
 .env.*
