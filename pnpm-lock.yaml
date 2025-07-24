@@ -55,8 +55,8 @@ importers:
   docs:
     dependencies:
       vakao-ui:
-        specifier: file:..
-        version: file:(vue@3.5.18(typescript@5.8.3))
+        specifier: workspace:*
+        version: link:..
     devDependencies:
       vitepress:
         specifier: ^1.0.0-rc.40
@@ -1930,11 +1930,6 @@ packages:
 
   util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
-
-  'vakao-ui@file:':
-    resolution: {directory: '', type: directory}
-    peerDependencies:
-      vue: ^3.3.0
 
   validator@13.15.15:
     resolution: {integrity: sha512-BgWVbCI72aIQy937xbawcs+hrVaN/CZ2UwutgaJ36hGqRrLNM+f5LUT/YPRbo8IV/ASeFzXszezV+y2+rq3l8A==}
@@ -3889,10 +3884,6 @@ snapshots:
       punycode: 2.3.1
 
   util-deprecate@1.0.2: {}
-
-  vakao-ui@file:(vue@3.5.18(typescript@5.8.3)):
-    dependencies:
-      vue: 3.5.18(typescript@5.8.3)
 
   validator@13.15.15: {}
 
