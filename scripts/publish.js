@@ -10,6 +10,65 @@ const { readFileSync, writeFileSync } = require('fs');
 const path = require('path');
 const readline = require('readline');
 
+// 颜色和样式
+const colors = {
+  reset: '\x1b[0m',
+  bright: '\x1b[1m',
+  dim: '\x1b[2m',
+  red: '\x1b[31m',
+  green: '\x1b[32m',
+  yellow: '\x1b[33m',
+  blue: '\x1b[34m',
+  magenta: '\x1b[35m',
+  cyan: '\x1b[36m',
+  white: '\x1b[37m'
+};
+
+// ASCII 艺术字
+const banner = `
+${colors.cyan}${colors.bright}
+ _          __  _____  __    __  _   _  __    __  _       ___       _   _  
+| |        / / /  _  \\ \\ \\  / / | | | | \\ \\  / / | |     /   |     | | | | 
+| |  __   / /  | | | |  \\ \\/ /  | | | |  \\ \\/ /  | |    / /| |     | | | | 
+| | /  | / /   | | | |   \\  /   | | | |   }  {   | |   / / | |  _  | | | | 
+| |/   |/ /    | |_| |   / /    | |_| |  / /\\ \\  | |  / /  | | | |_| | | | 
+|___/|___/     \\_____/  /_/     \\_____/ /_/  \\_\\ |_| /_/   |_| \\_____/ |_|    
+${colors.reset}
+${colors.magenta}${colors.bright}                           🚀 Vakao UI 发布工具 🚀${colors.reset}
+${colors.dim}                        ═══════════════════════════════════${colors.reset}
+`;
+
+// 美化日志输出
+function log(message, type = 'info') {
+  const timestamp = new Date().toLocaleTimeString();
+  const icons = {
+    info: '📝',
+    success: '✅',
+    warning: '⚠️',
+    error: '❌',
+    command: '🔧',
+    build: '🏗️',
+    publish: '📦'
+  };
+  
+  const typeColors = {
+    info: colors.blue,
+    success: colors.green,
+    warning: colors.yellow,
+    error: colors.red,
+    command: colors.cyan,
+    build: colors.magenta,
+    publish: colors.green
+  };
+  
+  console.log(`${colors.dim}[${timestamp}]${colors.reset} ${icons[type] || '📝'} ${typeColors[type] || colors.blue}${message}${colors.reset}`);
+}
+
+// 分隔线
+function separator(char = '─', length = 50) {
+  console.log(`${colors.dim}${char.repeat(length)}${colors.reset}`);
+}
+
 // 创建readline接口
 const rl = readline.createInterface({
   input: process.stdin,
@@ -18,11 +77,11 @@ const rl = readline.createInterface({
 
 // 执行命令并打印输出
 function exec(command) {
-  console.log(`执行命令: ${command}`);
+  log(`执行命令: ${command}`, 'command');
   try {
     execSync(command, { stdio: 'inherit' });
   } catch (error) {
-    console.error(`命令执行失败: ${error}`);
+    log(`命令执行失败: ${error}`, 'error');
     process.exit(1);
   }
 }
@@ -47,9 +106,9 @@ function updateVersion(version) {
     const packagesPackageJson = JSON.parse(readFileSync(packagesPackagePath, 'utf8'));
     packagesPackageJson.version = version;
     writeFileSync(packagesPackagePath, JSON.stringify(packagesPackageJson, null, 2));
-    console.log(`packages/package.json 版本已更新为: ${version}`);
+    log(`packages/package.json 版本已更新为: ${version}`, 'success');
   } catch (error) {
-    console.warn(`无法更新 packages/package.json: ${error.message}`);
+    log(`无法更新 packages/package.json: ${error.message}`, 'warning');
   }
 }
 
@@ -77,22 +136,22 @@ function askForVersion(currentVersion, suggestedVersion) {
       const newVersion = version || suggestedVersion;
       
       // 验证版本号格式
-      if (!isValidVersion(newVersion)) {
-        console.log('❌ 版本号格式不正确！请使用 x.y.z 格式（如: 1.0.0）');
-        // 递归重新询问
-        askForVersion(currentVersion, suggestedVersion).then(resolve);
-        return;
-      }
-      
-      // 检查版本号是否比当前版本新
-      if (newVersion <= currentVersion) {
-        console.log('❌ 新版本号必须大于当前版本！');
-        // 递归重新询问
-        askForVersion(currentVersion, suggestedVersion).then(resolve);
-        return;
-      }
-      
-      console.log('✅ 版本号验证通过');
+       if (!isValidVersion(newVersion)) {
+         log('版本号格式不正确！请使用 x.y.z 格式（如: 1.0.0）', 'error');
+         // 递归重新询问
+         askForVersion(currentVersion, suggestedVersion).then(resolve);
+         return;
+       }
+       
+       // 检查版本号是否比当前版本新
+       if (newVersion <= currentVersion) {
+         log('新版本号必须大于当前版本！', 'error');
+         // 递归重新询问
+         askForVersion(currentVersion, suggestedVersion).then(resolve);
+         return;
+       }
+       
+       log('版本号验证通过', 'success');
       resolve(newVersion);
     });
   });
@@ -100,12 +159,16 @@ function askForVersion(currentVersion, suggestedVersion) {
 
 // 主函数
 async function main() {
+  // 显示 banner
+  console.log(banner);
+  
   // 检查是否为测试模式
   const isDryRun = process.argv.includes('--dry-run');
   
   const currentVersion = getPackageJson().version;
   const suggestedVersion = suggestNextVersion(currentVersion);
-  console.log(`当前版本: ${currentVersion}`);
+  log(`当前版本: ${currentVersion}`, 'info');
+  separator();
   
   try {
     // 使用新的版本号验证函数
@@ -114,30 +177,35 @@ async function main() {
     // 更新版本号
     if (newVersion !== currentVersion) {
       updateVersion(newVersion);
-      console.log(`版本已更新为: ${newVersion}`);
+      log(`版本已更新为: ${newVersion}`, 'success');
     }
     
+    separator();
     // 构建
-    console.log('开始构建组件库...');
+    log('开始构建组件库...', 'build');
     exec('pnpm build');
     
+    separator();
     // 准备发布文件
-    console.log('准备发布文件...');
+    log('准备发布文件...', 'info');
     exec('node ./scripts/prepare-dist.js');
     
+    separator();
     // 发布
     if (isDryRun) {
-      console.log('测试模式：跳过实际发布到npm');
-      console.log('检查发布文件...');
+      log('测试模式：跳过实际发布到npm', 'warning');
+      log('检查发布文件...', 'info');
       exec('npm pack --dry-run');
     } else {
-      console.log('开始发布到npm...');
+      log('开始发布到npm...', 'publish');
       exec('npm publish --access public --ignore-scripts');
     }
     
-    console.log(`✨ Vakao UI v${newVersion} ${isDryRun ? '测试' : '发布'}成功!`);
+    separator('═');
+    log(`🎉 Vakao UI v${newVersion} ${isDryRun ? '测试' : '发布'}成功! 🎉`, 'success');
+    separator('═');
   } catch (error) {
-    console.error('发布过程中出现错误:', error);
+    log(`发布过程中出现错误: ${error}`, 'error');
   } finally {
     rl.close();
   }
