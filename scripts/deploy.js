@@ -8,65 +8,10 @@
 const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
+const { log, separator, showBanner, showSuccess, handleError } = require('./utils');
 
-// 颜色输出
-const colors = {
-  reset: '\x1b[0m',
-  bright: '\x1b[1m',
-  dim: '\x1b[2m',
-  red: '\x1b[31m',
-  green: '\x1b[32m',
-  yellow: '\x1b[33m',
-  blue: '\x1b[34m',
-  magenta: '\x1b[35m',
-  cyan: '\x1b[36m',
-  white: '\x1b[37m'
-};
-
-// ASCII 艺术字
-const banner = `
-${colors.cyan}${colors.bright}
- _          __  _____  __    __  _   _  __    __  _       ___       _   _  
-| |        / / /  _  \\ \\ \\  / / | | | | \\ \\  / / | |     /   |     | | | | 
-| |  __   / /  | | | |  \\ \\/ /  | | | |  \\ \\/ /  | |    / /| |     | | | | 
-| | /  | / /   | | | |   \\  /   | | | |   }  {   | |   / / | |  _  | | | | 
-| |/   |/ /    | |_| |   / /    | |_| |  / /\\ \\  | |  / /  | | | |_| | | | 
-|___/|___/     \\_____/  /_/     \\_____/ /_/  \\_\\ |_| /_/   |_| \\_____/ |_|    
-${colors.reset}
-${colors.magenta}${colors.bright}                           🚀 Vakao UI 部署工具 🚀${colors.reset}
-${colors.dim}                        ═══════════════════════════════════${colors.reset}
-`;
-
-// 美化日志输出
-function log(message, type = 'info') {
-  const timestamp = new Date().toLocaleTimeString();
-  const icons = {
-    info: '📝',
-    success: '✅',
-    warning: '⚠️',
-    error: '❌',
-    command: '🔧',
-    deploy: '🚀',
-    check: '🔍'
-  };
-  
-  const typeColors = {
-    info: colors.blue,
-    success: colors.green,
-    warning: colors.yellow,
-    error: colors.red,
-    command: colors.cyan,
-    deploy: colors.magenta,
-    check: colors.yellow
-  };
-  
-  console.log(`${colors.dim}[${timestamp}]${colors.reset} ${icons[type] || '📝'} ${typeColors[type] || colors.blue}${message}${colors.reset}`);
-}
-
-// 分隔线
-function separator(char = '─', length = 50) {
-  console.log(`${colors.dim}${char.repeat(length)}${colors.reset}`);
-}
+// 工具标题
+const TOOL_TITLE = '🚀 Vakao UI 部署工具 🚀';
 
 function execCommand(command, options = {}) {
   try {
@@ -113,7 +58,7 @@ function getCurrentBranch() {
 
 function deploy() {
   // 显示 banner
-  console.log(banner);
+  showBanner(TOOL_TITLE);
   
   log('开始部署 Vakao UI 文档到 GitHub Pages', 'deploy');
   separator();
@@ -123,8 +68,7 @@ function deploy() {
   const distDir = path.join(docsDir, '.vitepress', 'dist');
   
   if (!fs.existsSync(docsDir)) {
-    log('错误: 找不到 docs 目录', 'error');
-    process.exit(1);
+    handleError('找不到 docs 目录', 'docs 目录不存在');
   }
   
   // 检查 Git 状态
@@ -145,8 +89,7 @@ function deploy() {
   
   // 检查构建结果
   if (!fs.existsSync(distDir)) {
-    log('错误: 构建失败，找不到 dist 目录', 'error');
-    process.exit(1);
+    handleError('构建失败，找不到 dist 目录', '构建失败');
   }
   
   log('文档构建成功', 'success');
@@ -166,11 +109,9 @@ function deploy() {
   // 部署
   execCommand(`npx gh-pages -d "${distDir}" -m "docs: deploy from ${currentBranch} branch"`);
   
-  separator('═');
-  log('🎉 部署完成！🎉', 'success');
+  showSuccess('部署完成！');
   log('📖 文档地址: https://rouarn.github.io/vakao-ui/', 'info');
   log('⏰ 请等待几分钟让 GitHub Pages 更新', 'warning');
-  separator('═');
 }
 
 // 主函数
@@ -178,9 +119,7 @@ function main() {
   try {
     deploy();
   } catch (error) {
-    log('部署失败:', 'error');
-    log(error.message, 'error');
-    process.exit(1);
+    handleError('部署失败', error.message);
   }
 }
 

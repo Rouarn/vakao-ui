@@ -9,65 +9,10 @@ const { execSync } = require('child_process');
 const { readFileSync, writeFileSync } = require('fs');
 const path = require('path');
 const readline = require('readline');
+const { log, separator, showBanner, showSuccess, handleError } = require('./utils');
 
-// 颜色和样式
-const colors = {
-  reset: '\x1b[0m',
-  bright: '\x1b[1m',
-  dim: '\x1b[2m',
-  red: '\x1b[31m',
-  green: '\x1b[32m',
-  yellow: '\x1b[33m',
-  blue: '\x1b[34m',
-  magenta: '\x1b[35m',
-  cyan: '\x1b[36m',
-  white: '\x1b[37m'
-};
-
-// ASCII 艺术字
-const banner = `
-${colors.cyan}${colors.bright}
- _          __  _____  __    __  _   _  __    __  _       ___       _   _  
-| |        / / /  _  \\ \\ \\  / / | | | | \\ \\  / / | |     /   |     | | | | 
-| |  __   / /  | | | |  \\ \\/ /  | | | |  \\ \\/ /  | |    / /| |     | | | | 
-| | /  | / /   | | | |   \\  /   | | | |   }  {   | |   / / | |  _  | | | | 
-| |/   |/ /    | |_| |   / /    | |_| |  / /\\ \\  | |  / /  | | | |_| | | | 
-|___/|___/     \\_____/  /_/     \\_____/ /_/  \\_\\ |_| /_/   |_| \\_____/ |_|    
-${colors.reset}
-${colors.magenta}${colors.bright}                           🚀 Vakao UI 发布工具 🚀${colors.reset}
-${colors.dim}                        ═══════════════════════════════════${colors.reset}
-`;
-
-// 美化日志输出
-function log(message, type = 'info') {
-  const timestamp = new Date().toLocaleTimeString();
-  const icons = {
-    info: '📝',
-    success: '✅',
-    warning: '⚠️',
-    error: '❌',
-    command: '🔧',
-    build: '🏗️',
-    publish: '📦'
-  };
-  
-  const typeColors = {
-    info: colors.blue,
-    success: colors.green,
-    warning: colors.yellow,
-    error: colors.red,
-    command: colors.cyan,
-    build: colors.magenta,
-    publish: colors.green
-  };
-  
-  console.log(`${colors.dim}[${timestamp}]${colors.reset} ${icons[type] || '📝'} ${typeColors[type] || colors.blue}${message}${colors.reset}`);
-}
-
-// 分隔线
-function separator(char = '─', length = 50) {
-  console.log(`${colors.dim}${char.repeat(length)}${colors.reset}`);
-}
+// 工具标题
+const TOOL_TITLE = '🚀 Vakao UI 发布工具 🚀';
 
 // 创建readline接口
 const rl = readline.createInterface({
@@ -160,7 +105,7 @@ function askForVersion(currentVersion, suggestedVersion) {
 // 主函数
 async function main() {
   // 显示 banner
-  console.log(banner);
+  showBanner(TOOL_TITLE);
   
   // 检查是否为测试模式
   const isDryRun = process.argv.includes('--dry-run');
@@ -201,11 +146,9 @@ async function main() {
       exec('npm publish --access public --ignore-scripts');
     }
     
-    separator('═');
-    log(`🎉 Vakao UI v${newVersion} ${isDryRun ? '测试' : '发布'}成功! 🎉`, 'success');
-    separator('═');
-  } catch (error) {
-    log(`发布过程中出现错误: ${error}`, 'error');
+    showSuccess(`Vakao UI v${newVersion} ${isDryRun ? '测试' : '发布'}成功!`);
+   } catch (error) {
+     handleError('发布过程中出现错误', error);
   } finally {
     rl.close();
   }

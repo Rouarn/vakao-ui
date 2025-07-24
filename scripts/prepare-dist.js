@@ -7,66 +7,13 @@
 
 const fs = require("fs-extra");
 const path = require("path");
+const { log, separator, showBanner, showSuccess, handleError, colors } = require('./utils');
 
-// 颜色和样式
-const colors = {
-  reset: '\x1b[0m',
-  bright: '\x1b[1m',
-  dim: '\x1b[2m',
-  red: '\x1b[31m',
-  green: '\x1b[32m',
-  yellow: '\x1b[33m',
-  blue: '\x1b[34m',
-  magenta: '\x1b[35m',
-  cyan: '\x1b[36m',
-  white: '\x1b[37m'
-};
-
-// ASCII 艺术字
-const banner = `
-${colors.cyan}${colors.bright}
- _          __  _____  __    __  _   _  __    __  _       ___       _   _  
-| |        / / /  _  \\ \\ \\  / / | | | | \\ \\  / / | |     /   |     | | | | 
-| |  __   / /  | | | |  \\ \\/ /  | | | |  \\ \\/ /  | |    / /| |     | | | | 
-| | /  | / /   | | | |   \\  /   | | | |   }  {   | |   / / | |  _  | | | | 
-| |/   |/ /    | |_| |   / /    | |_| |  / /\\ \\  | |  / /  | | | |_| | | | 
-|___/|___/     \\_____/  /_/     \\_____/ /_/  \\_\\ |_| /_/   |_| \\_____/ |_|    
-${colors.reset}
-${colors.magenta}${colors.bright}                         📦 Vakao UI 文件准备工具 📦${colors.reset}
-${colors.dim}                        ═══════════════════════════════════${colors.reset}
-`;
-
-// 美化日志输出
-function log(message, type = 'info') {
-  const timestamp = new Date().toLocaleTimeString();
-  const icons = {
-    info: '📝',
-    success: '✅',
-    warning: '⚠️',
-    error: '❌',
-    copy: '📋',
-    clean: '🧹'
-  };
-  
-  const typeColors = {
-    info: colors.blue,
-    success: colors.green,
-    warning: colors.yellow,
-    error: colors.red,
-    copy: colors.cyan,
-    clean: colors.magenta
-  };
-  
-  console.log(`${colors.dim}[${timestamp}]${colors.reset} ${icons[type] || '📝'} ${typeColors[type] || colors.blue}${message}${colors.reset}`);
-}
-
-// 分隔线
-function separator(char = '─', length = 50) {
-  console.log(`${colors.dim}${char.repeat(length)}${colors.reset}`);
-}
+// 工具标题
+const TOOL_TITLE = '📦 Vakao UI 文件准备工具 📦';
 
 // 显示 banner
-console.log(banner);
+showBanner(TOOL_TITLE);
 
 // 源目录和目标目录
 const sourceDir = path.resolve(__dirname, "../packages/dist");
@@ -77,9 +24,7 @@ separator();
 
 // 检查源目录是否存在
 if (!fs.existsSync(sourceDir)) {
-  log(`错误: 源目录不存在 ${sourceDir}`, 'error');
-  log('请先运行构建命令生成 dist 文件', 'warning');
-  process.exit(1);
+  handleError(`源目录不存在 ${sourceDir}`, '请先运行构建命令生成 dist 文件');
 }
 
 // 确保目标目录存在并清空
@@ -101,10 +46,7 @@ try {
     console.log(`${colors.dim}  - ${file}${colors.reset}`);
   });
   
-  separator('═');
-  log('🎉 文件准备完成！🎉', 'success');
-  separator('═');
+  showSuccess('文件准备完成！');
 } catch (error) {
-  log(`文件复制失败: ${error.message}`, 'error');
-  process.exit(1);
+  handleError('文件复制失败', error.message);
 }
