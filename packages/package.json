@@ -1,10 +1,7 @@
 {
   "name": "@vakao-ui/packages",
-  "version": "1.0.14",
+  "version": "1.0.16",
   "private": true,
-  "exports": {
-    "./style.css": "./dist/style.css"
-  },
   "scripts": {
     "build": "vite build",
     "build:types": "vue-tsc --declaration --emitDeclarationOnly",

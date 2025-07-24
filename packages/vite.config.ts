@@ -19,6 +19,22 @@ export default defineConfig({
       ],
       outDir: "dist/types",
       entryRoot: __dirname,
+      pathsToAliases: false,
+      aliasesExclude: [/@vakao-ui\/.*/],
+      beforeWriteFile: (filePath, content) => {
+        // 替换 workspace 包引用为相对路径
+        const updatedContent = content
+          .replace(/from ["']@vakao-ui\/utils["']/g, 'from "../../utils/"')
+          .replace(/import\(["']@vakao-ui\/utils["']\)/g, 'import("../../utils/")')
+          .replace(/from ["']@vakao-ui\/types["']/g, 'from "../../types/"')
+          .replace(/import\(["']@vakao-ui\/types["']\)/g, 'import("../../types/")')
+          .replace(/from ["']@vakao-ui\/hooks["']/g, 'from "../../hooks/"')
+          .replace(/import\(["']@vakao-ui\/hooks["']\)/g, 'import("../../hooks/")');
+        return {
+          filePath,
+          content: updatedContent
+        };
+      }
     }),
   ],
   build: {
