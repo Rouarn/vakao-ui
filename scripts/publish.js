@@ -131,11 +131,6 @@ async function main() {
     exec('pnpm build');
     
     separator();
-    // 准备发布文件
-    log('准备发布文件...', 'info');
-    exec('node ./scripts/prepare-dist.js');
-    
-    separator();
     // 发布
     if (isDryRun) {
       log('测试模式：跳过实际发布到npm', 'warning');

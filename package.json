@@ -1,6 +1,6 @@
 {
   "name": "vakao-ui",
-  "version": "1.0.21",
+  "version": "1.0.22",
   "description": "A Vue 3 component library based on NaiveUI",
   "main": "dist/vakao-ui.umd.js",
   "module": "dist/vakao-ui.es.js",
@@ -26,7 +26,6 @@
     "dev": "pnpm -C docs dev",
     "build": "pnpm -C packages build",
     "build:docs": "pnpm -C docs build",
-    "prepare-dist": "node ./scripts/prepare-dist.js",
     "deploy:docs": "node ./scripts/deploy.js",
     "deploy:preview": "pnpm run build:docs && pnpm -C docs serve",
     "lint": "eslint . --ext .vue,.js,.ts,.jsx,.tsx --fix",

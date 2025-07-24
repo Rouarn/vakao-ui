@@ -17,7 +17,7 @@ export default defineConfig({
         "index.ts",
         "resolver.ts",
       ],
-      outDir: "dist/types",
+      outDir: "../dist/types",
       entryRoot: __dirname,
       pathsToAliases: false,
       aliasesExclude: [/@vakao-ui\/.*/],
@@ -101,7 +101,7 @@ export default defineConfig({
         },
       },
     },
-    outDir: "dist",
+    outDir: "../dist",
     emptyOutDir: false,
     sourcemap: true,
     // 启用CSS代码分割
