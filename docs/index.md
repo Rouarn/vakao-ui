@@ -64,13 +64,13 @@ app.mount("#app");
 
 ```ts
 import { createApp } from "vue";
-import { VKButton } from "vakao-ui";
+import { VkButton } from "vakao-ui";
 // 重要：必须导入样式文件
 import "vakao-ui/dist/index.css";
 import App from "./App.vue";
 
 const app = createApp(App);
-app.use(VKButton);
+app.use(VkButton);
 app.mount("#app");
 ```
 
