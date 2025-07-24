@@ -1,6 +1,6 @@
 {
   "name": "@vakao-ui/packages",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "private": true,
   "exports": {
     "./style.css": "./dist/style.css"
