@@ -1,0 +1,130 @@
+@use "../mixins.scss" as *;
+@use "../variables.scss" as *;
+
+// VkInput 组件样式
+.vk-input {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: 100%;
+  font-size: var(--vk-font-size-base);
+  line-height: var(--vk-line-height-base);
+
+  // 尺寸变体
+  &--size-small {
+    font-size: var(--vk-font-size-small);
+    
+    .vk-input__inner {
+      height: var(--vk-component-size-small);
+      padding: 0 8px;
+    }
+  }
+
+  &--size-medium {
+    .vk-input__inner {
+      height: var(--vk-component-size-medium);
+      padding: 0 12px;
+    }
+  }
+
+  &--size-large {
+    font-size: var(--vk-font-size-large);
+    
+    .vk-input__inner {
+      height: var(--vk-component-size-large);
+      padding: 0 16px;
+    }
+  }
+
+  // 状态变体
+  &.is-disabled {
+    cursor: not-allowed;
+    
+    .vk-input__inner {
+      background-color: var(--vk-fill-color-light);
+      border-color: var(--vk-border-color-light);
+      color: var(--vk-text-color-disabled);
+      cursor: not-allowed;
+    }
+  }
+
+  &.is-readonly {
+    .vk-input__inner {
+      background-color: var(--vk-fill-color-lighter);
+      cursor: default;
+    }
+  }
+
+  // 前缀后缀变体
+  &--prefix {
+    .vk-input__inner {
+      padding-left: 32px;
+    }
+  }
+
+  &--suffix {
+    .vk-input__inner {
+      padding-right: 32px;
+    }
+  }
+
+  // 输入框主体
+  &__inner {
+    width: 100%;
+    border: 1px solid var(--vk-border-color);
+    border-radius: var(--vk-border-radius-base);
+    background-color: var(--vk-fill-color-blank);
+    color: var(--vk-text-color-regular);
+    font-size: inherit;
+    line-height: inherit;
+    outline: none;
+    transition: border-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+
+    &:focus {
+      border-color: var(--vk-color-primary);
+      box-shadow: 0 0 0 2px var(--vk-color-primary-light-8);
+    }
+
+    &:hover:not(:focus) {
+      border-color: var(--vk-border-color-hover);
+    }
+
+    &::placeholder {
+      color: var(--vk-text-color-placeholder);
+    }
+  }
+
+  // 前缀
+  &__prefix {
+    position: absolute;
+    left: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--vk-text-color-placeholder);
+    z-index: 1;
+  }
+
+  // 后缀
+  &__suffix {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--vk-text-color-placeholder);
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  // 清除按钮
+  &__clear {
+    cursor: pointer;
+    color: var(--vk-text-color-placeholder);
+    transition: color 0.2s;
+
+    &:hover {
+      color: var(--vk-text-color-regular);
+    }
+  }
+}

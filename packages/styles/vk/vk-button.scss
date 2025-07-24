@@ -74,29 +74,37 @@
   }
 
   // 尺寸变体
-  &.vk-button--large {
+  &.vk-button--size-large {
     padding: 0 $spacing-large;
     font-size: $font-size-large;
     height: $component-size-large;
     border-radius: $border-radius-large;
   }
 
-  &.vk-button--small {
+  &.vk-button--size-small {
     padding: 0 $spacing-small;
     font-size: $font-size-small;
     height: $component-size-small;
     border-radius: $border-radius-small;
   }
 
-  &.vk-button--mini {
+  &.vk-button--size-mini {
     padding: 0 $spacing-mini;
     font-size: $font-size-mini;
     height: $component-size-mini;
     border-radius: $border-radius-mini;
   }
 
+  // 添加 tiny 尺寸支持
+  &.vk-button--size-tiny {
+    padding: 0 6px;
+    font-size: 12px;
+    height: 22px;
+    border-radius: $border-radius-small;
+  }
+
   // 类型变体
-  &.vk-button--primary {
+  &.vk-button--type-primary {
     color: #fff;
     background-color: $color-primary;
     border-color: $color-primary;
@@ -122,7 +130,7 @@
     }
   }
 
-  &.vk-button--success {
+  &.vk-button--type-success {
     color: #fff;
     background-color: $color-success;
     border-color: $color-success;
@@ -148,7 +156,7 @@
     }
   }
 
-  &.vk-button--warning {
+  &.vk-button--type-warning {
     color: #fff;
     background-color: $color-warning;
     border-color: $color-warning;
@@ -174,7 +182,7 @@
     }
   }
 
-  &.vk-button--danger {
+  &.vk-button--type-danger {
     color: #fff;
     background-color: $color-danger;
     border-color: $color-danger;
@@ -200,7 +208,7 @@
     }
   }
 
-  &.vk-button--info {
+  &.vk-button--type-info {
     color: #fff;
     background-color: $color-info;
     border-color: $color-info;
@@ -227,7 +235,7 @@
   }
 
   // 文本按钮
-  &.vk-button--text {
+  &.vk-button--type-text {
     border-color: transparent;
     color: $color-primary;
     background: transparent;

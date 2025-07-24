@@ -1,0 +1,182 @@
+@use "../mixins.scss" as *;
+@use "../variables.scss" as *;
+
+// VkSwitch 组件样式
+.vk-switch {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: var(--vk-font-size-base);
+  line-height: var(--vk-line-height-base);
+  user-select: none;
+
+  // 尺寸变体
+  &--size-small {
+    font-size: var(--vk-font-size-small);
+    
+    .vk-switch__core {
+      width: 32px;
+      height: 18px;
+      
+      .vk-switch__action {
+        width: 14px;
+        height: 14px;
+      }
+    }
+    
+    &.is-checked .vk-switch__action {
+      transform: translateX(14px);
+    }
+  }
+
+  &--size-medium {
+    .vk-switch__core {
+      width: 40px;
+      height: 22px;
+      
+      .vk-switch__action {
+        width: 18px;
+        height: 18px;
+      }
+    }
+    
+    &.is-checked .vk-switch__action {
+      transform: translateX(18px);
+    }
+  }
+
+  &--size-large {
+    font-size: var(--vk-font-size-large);
+    
+    .vk-switch__core {
+      width: 48px;
+      height: 26px;
+      
+      .vk-switch__action {
+        width: 22px;
+        height: 22px;
+      }
+    }
+    
+    &.is-checked .vk-switch__action {
+      transform: translateX(22px);
+    }
+  }
+
+  // 状态变体
+  &.is-disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+    
+    .vk-switch__core {
+      cursor: not-allowed;
+    }
+  }
+
+  &.is-checked {
+    .vk-switch__core {
+      background-color: var(--vk-color-primary);
+      border-color: var(--vk-color-primary);
+    }
+  }
+
+  &.is-loading {
+    .vk-switch__loading {
+      display: flex;
+    }
+  }
+
+  // 标签文字
+  &__label {
+    color: var(--vk-text-color-regular);
+    
+    &--left {
+      margin-right: 8px;
+    }
+    
+    &--right {
+      margin-left: 8px;
+    }
+  }
+
+  // 开关主体
+  &__core {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    width: 40px;
+    height: 22px;
+    border: 1px solid var(--vk-border-color);
+    border-radius: 11px;
+    background-color: var(--vk-fill-color-darker);
+    transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+    
+    &:hover {
+      border-color: var(--vk-color-primary);
+    }
+    
+    // 内联提示样式
+    &--inline {
+      justify-content: space-between;
+      padding: 0 4px;
+    }
+  }
+
+  // 内联内容
+  &__inner {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: white;
+    font-size: 12px;
+    z-index: 1;
+    
+    .vk-switch.is-checked & {
+      left: 4px;
+    }
+    
+    .vk-switch:not(.is-checked) & {
+      right: 4px;
+    }
+  }
+
+  // 开关按钮
+  &__action {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+    transition: transform 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+    z-index: 2;
+  }
+
+  // 加载状态
+  &__loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+    color: white;
+    z-index: 3;
+    
+    .vk-icon-loading {
+      animation: vk-loading-rotate 2s linear infinite;
+    }
+  }
+}
+
+// 加载动画
+@keyframes vk-loading-rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

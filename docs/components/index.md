@@ -20,7 +20,11 @@ Vakao UI 提供了一系列精心设计的 Vue 3 组件，这些组件具有现�
 
 ### 表单组件
 
-_即将推出更多表单组件..._
+表单组件用于收集、验证和提交用户输入的数据。
+
+- [Input 输入框](/components/input) - 通过鼠标或键盘输入字符
+- [Checkbox 多选框](/components/checkbox) - 在一组备选项中进行多选
+- [Switch 开关](/components/switch) - 表示两种相互对立的状态间的切换
 
 ### 数据展示
 

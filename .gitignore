@@ -40,3 +40,4 @@ docs/.vitepress/cache
 .env
 .env.*
 !.env.example
+packages-old

@@ -35,6 +35,7 @@
 import { defineComponent, computed, useAttrs } from "vue";
 import type { CSSProperties } from "vue";
 import { buttonProps } from "./types";
+import { useNamespace } from "@vakao-ui/utils";
 
 export default defineComponent({
   name: "VkButton",
@@ -43,6 +44,7 @@ export default defineComponent({
   emits: ["click"],
   setup(props, { emit }) {
     const attrs = useAttrs();
+    const ns = useNamespace('button');
     
     const handleClick = (e: MouseEvent) => {
       if (!props.disabled && !props.loading) {
@@ -71,18 +73,16 @@ export default defineComponent({
     // 合并类名
     const mergedClass = computed(() => {
       return [
-        'vk-button',
-        `vk-button--${props.type}`,
-        `vk-button--${props.size}`,
-        {
-          'is-disabled': props.disabled,
-          'is-loading': props.loading,
-          'is-plain': props.plain,
-          'is-round': props.round,
-          'is-circle': props.circle,
-          'is-text': props.text,
-          'is-link': props.link,
-        },
+        ns.block(),
+        ns.modifier('type', props.type),
+        ns.modifier('size', props.size),
+        ns.is('disabled', props.disabled),
+        ns.is('loading', props.loading),
+        ns.is('plain', props.plain),
+        ns.is('round', props.round),
+        ns.is('circle', props.circle),
+        ns.is('text', props.text),
+        ns.is('link', props.link),
         props.customClass,
         attrs.class,
       ];

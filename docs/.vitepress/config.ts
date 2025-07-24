@@ -58,6 +58,14 @@ export default defineConfig({
           text: "基础组件",
           items: [{ text: "Button 按钮", link: "/components/button" }],
         },
+        {
+          text: "表单组件",
+          items: [
+            { text: "Input 输入框", link: "/components/input" },
+            { text: "Checkbox 多选框", link: "/components/checkbox" },
+            { text: "Switch 开关", link: "/components/switch" },
+          ],
+        },
       ],
       "/hooks/": [
         {

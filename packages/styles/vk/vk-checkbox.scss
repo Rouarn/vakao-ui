@@ -1,0 +1,186 @@
+@use "../mixins.scss" as *;
+@use "../variables.scss" as *;
+
+// VkCheckbox 组件样式
+.vk-checkbox {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: var(--vk-font-size-base);
+  line-height: var(--vk-line-height-base);
+  user-select: none;
+
+  // 尺寸变体
+  &--size-small {
+    font-size: var(--vk-font-size-small);
+    
+    .vk-checkbox__inner {
+      width: 14px;
+      height: 14px;
+    }
+  }
+
+  &--size-medium {
+    .vk-checkbox__inner {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  &--size-large {
+    font-size: var(--vk-font-size-large);
+    
+    .vk-checkbox__inner {
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  // 状态变体
+  &.is-disabled {
+    cursor: not-allowed;
+    
+    .vk-checkbox__inner {
+      background-color: var(--vk-fill-color-light);
+      border-color: var(--vk-border-color-light);
+    }
+    
+    .vk-checkbox__label {
+      color: var(--vk-text-color-disabled);
+    }
+  }
+
+  &.is-checked {
+    .vk-checkbox__inner {
+      background-color: var(--vk-color-primary);
+      border-color: var(--vk-color-primary);
+      
+      .vk-checkbox__icon {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+  }
+
+  &.is-indeterminate {
+    .vk-checkbox__inner {
+      background-color: var(--vk-color-primary);
+      border-color: var(--vk-color-primary);
+      
+      .vk-checkbox__icon {
+        opacity: 1;
+        transform: scale(1);
+        
+        &::before {
+          content: '';
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 8px;
+          height: 2px;
+          background-color: white;
+          transform: translate(-50%, -50%);
+          border-radius: 1px;
+        }
+      }
+    }
+  }
+
+  // 输入框容器
+  &__input {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    margin-right: 8px;
+  }
+
+  // 原生输入框（隐藏）
+  &__original {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    margin: 0;
+    padding: 0;
+    border: none;
+  }
+
+  // 复选框外观
+  &__inner {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    border: 1px solid var(--vk-border-color);
+    border-radius: var(--vk-border-radius-small);
+    background-color: var(--vk-fill-color-blank);
+    transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+
+    &:hover {
+      border-color: var(--vk-color-primary);
+    }
+
+    &.is-disabled {
+      cursor: not-allowed;
+      
+      &:hover {
+        border-color: var(--vk-border-color-light);
+      }
+    }
+  }
+
+  // 选中图标
+  &__icon {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 5px;
+      width: 4px;
+      height: 8px;
+      border: 2px solid white;
+      border-top: 0;
+      border-left: 0;
+      transform: rotate(45deg);
+    }
+  }
+
+  // 标签文字
+  &__label {
+    color: var(--vk-text-color-regular);
+    line-height: 1;
+  }
+}
+
+// VkCheckboxGroup 组件样式
+.vk-checkbox-group {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 12px;
+
+  // 尺寸变体
+  &--size-small {
+    gap: 8px;
+  }
+
+  &--size-large {
+    gap: 16px;
+  }
+
+  // 禁用状态
+  &.is-disabled {
+    .vk-checkbox {
+      cursor: not-allowed;
+    }
+  }
+}

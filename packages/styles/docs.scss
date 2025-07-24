@@ -49,6 +49,29 @@
   --vk-spacing-base: #{$spacing-base};
   --vk-spacing-large: #{$spacing-large};
   
+  /* 行高 */
+  --vk-line-height-base: #{$line-height-base};
+  --vk-line-height-small: #{$line-height-small};
+  --vk-line-height-large: #{$line-height-large};
+  
+  /* 填充颜色 */
+  --vk-fill-color-light: #{$fill-color-light};
+  --vk-fill-color-lighter: #{$fill-color-lighter};
+  --vk-fill-color-extra-light: #{$fill-color-extra-light};
+  --vk-fill-color-dark: #{$fill-color-dark};
+  --vk-fill-color-darker: #{$fill-color-darker};
+  --vk-fill-color-blank: #{$fill-color-blank};
+  
+  /* 组件尺寸 */
+  --vk-component-size-mini: #{$component-size-mini};
+  --vk-component-size-small: #{$component-size-small};
+  --vk-component-size-medium: #{$component-size-medium};
+  --vk-component-size-large: #{$component-size-large};
+  
+  /* 过渡 */
+  --vk-transition-duration: #{$transition-duration};
+  --vk-transition-timing-function: #{$transition-timing-function};
+  
   /* 阴影 */
   --vk-box-shadow-base: #{$box-shadow-base};
   --vk-box-shadow-light: #{$box-shadow-light};
