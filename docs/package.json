@@ -20,7 +20,5 @@
     "vitepress": "^1.0.0-rc.40",
     "vue": "^3.3.4"
   },
-  "dependencies": {
-    "vakao-ui": "workspace:*"
-  }
+  "dependencies": {}
 }

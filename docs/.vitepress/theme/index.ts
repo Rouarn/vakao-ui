@@ -3,6 +3,7 @@ import DefaultTheme from "vitepress/theme";
 
 // 导入组件库
 import VakaoUI from "@vakao-ui/components";
+import "../../../packages/styles/index.scss";
 
 // 导入演示组件
 import Demo from "../components/Demo.vue";
