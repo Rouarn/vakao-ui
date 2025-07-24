@@ -165,32 +165,32 @@ const renderCheckIcon = () => h(CheckmarkOutline);
 
 ## 按钮组
 
-使用 Naive UI 的 `n-button-group` 组件组合多个按钮。
+使用 `vk-button-group` 组件组合多个按钮。
 
 <Demo>
-  <n-button-group>
+  <vk-button-group>
     <vk-button>上一页</vk-button>
     <vk-button>下一页</vk-button>
-  </n-button-group>
+  </vk-button-group>
   <br /><br />
-  <n-button-group>
+  <vk-button-group>
     <vk-button type="primary">保存</vk-button>
     <vk-button>取消</vk-button>
-  </n-button-group>
+  </vk-button-group>
   
   <template #code>
 
 ```vue
 <template>
-  <n-button-group>
+  <vk-button-group>
     <vk-button>上一页</vk-button>
     <vk-button>下一页</vk-button>
-  </n-button-group>
+  </vk-button-group>
 
-  <n-button-group>
+  <vk-button-group>
     <vk-button type="primary">保存</vk-button>
     <vk-button>取消</vk-button>
-  </n-button-group>
+  </vk-button-group>
 </template>
 ```
 
@@ -209,14 +209,14 @@ const renderCheckIcon = () => h(CheckmarkOutline);
 
 ```vue
 <template>
-  <vk-button 
-    customClass="my-button" 
+  <vk-button
+    customClass="my-button"
     customStyle="background: linear-gradient(45deg, #ff6b6b, #4ecdc4); color: white; border: none;"
   >
     渐变按钮
   </vk-button>
-  <vk-button 
-    class="shadow-button" 
+  <vk-button
+    class="shadow-button"
     style="box-shadow: 0 4px 8px rgba(0,0,0,0.2); border-radius: 20px;"
   >
     阴影按钮
@@ -237,7 +237,7 @@ const renderCheckIcon = () => h(CheckmarkOutline);
 }
 
 .shadow-button:hover {
-  box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
 </style>
 ```
@@ -256,9 +256,9 @@ const renderCheckIcon = () => h(CheckmarkOutline);
 
 ```vue
 <template>
-  <vk-button 
-    data-testid="test-button" 
-    aria-label="测试按钮" 
+  <vk-button
+    data-testid="test-button"
+    aria-label="测试按钮"
     title="这是一个测试按钮"
   >
     可访问性按钮

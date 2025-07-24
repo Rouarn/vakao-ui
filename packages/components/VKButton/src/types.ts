@@ -1,11 +1,11 @@
 import type { PropType, CSSProperties, VNode } from 'vue'
-import { ExtractPublicPropTypes } from '../../../types'
+import { ExtractPublicPropTypes, ComponentType, ComponentSize } from '../../../types'
 
-// 按钮类型
-export type ButtonType = 'default' | 'primary' | 'success' | 'warning' | 'info' | 'danger'
+// 按钮类型（使用全局类型）
+export type ButtonType = ComponentType
 
-// 按钮尺寸
-export type ButtonSize = 'small' | 'medium' | 'large'
+// 按钮尺寸（使用全局类型）
+export type ButtonSize = ComponentSize
 
 // 按钮原生类型
 export type ButtonNativeType = 'button' | 'submit' | 'reset'

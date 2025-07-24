@@ -53,10 +53,6 @@ importers:
         version: 28.8.0(@babel/parser@7.28.0)(vue@3.5.18(typescript@5.8.3))
 
   docs:
-    dependencies:
-      vakao-ui:
-        specifier: workspace:*
-        version: link:..
     devDependencies:
       vitepress:
         specifier: ^1.0.0-rc.40

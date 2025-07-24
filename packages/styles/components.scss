@@ -1,6 +1,6 @@
-@use 'sass:color';
-@use './variables.scss' as *;
-@use './mixins.scss' as *;
+@use "sass:color";
+@use "./variables.scss" as *;
+@use "./mixins.scss" as *;
 
 // VKButton 组件样式
 .vk-button {
@@ -63,7 +63,7 @@
 
     &:before {
       pointer-events: none;
-      content: '';
+      content: "";
       position: absolute;
       left: -1px;
       top: -1px;
@@ -83,218 +83,217 @@
   }
 
   &.vk-button--small {
-    padding: 0 $spacing-small;
-    font-size: $font-size-small;
-    height: $component-size-small;
-    border-radius: $border-radius-small;
-  }
+  padding: 0 $spacing-small;
+  font-size: $font-size-small;
+  height: $component-size-small;
+  border-radius: $border-radius-small;
+}
 
-  &.vk-button--mini {
-    padding: 0 $spacing-mini;
-    font-size: $font-size-mini;
-    height: $component-size-mini;
-    border-radius: $border-radius-mini;
-  }
+&.vk-button--mini {
+  padding: 0 $spacing-mini;
+  font-size: $font-size-mini;
+  height: $component-size-mini;
+  border-radius: $border-radius-mini;
+}
 
-  // 类型变体
-  &.vk-button--primary {
+// 类型变体
+&.vk-button--primary {
+  color: #fff;
+  background-color: $color-primary;
+  border-color: $color-primary;
+
+  &:hover,
+  &:focus {
+    background-color: color.adjust($color-primary, $lightness: 10%);
+    border-color: color.adjust($color-primary, $lightness: 10%);
     color: #fff;
-    background-color: $color-primary;
-    border-color: $color-primary;
-
-    &:hover,
-    &:focus {
-      background-color: color.adjust($color-primary, $lightness: 10%);
-      border-color: color.adjust($color-primary, $lightness: 10%);
-      color: #fff;
-    }
-
-    &:active {
-      background-color: color.adjust($color-primary, $lightness: -10%);
-      border-color: color.adjust($color-primary, $lightness: -10%);
-      color: #fff;
-    }
-
-    &.is-disabled,
-    &:disabled {
-      color: #fff;
-      background-color: color.adjust($color-primary, $lightness: 30%);
-      border-color: color.adjust($color-primary, $lightness: 30%);
-    }
   }
 
-  &.vk-button--success {
+  &:active {
+    background-color: color.adjust($color-primary, $lightness: -10%);
+    border-color: color.adjust($color-primary, $lightness: -10%);
     color: #fff;
-    background-color: $color-success;
-    border-color: $color-success;
-
-    &:hover,
-    &:focus {
-      background-color: color.adjust($color-success, $lightness: 10%);
-      border-color: color.adjust($color-success, $lightness: 10%);
-      color: #fff;
-    }
-
-    &:active {
-      background-color: color.adjust($color-success, $lightness: -10%);
-      border-color: color.adjust($color-success, $lightness: -10%);
-      color: #fff;
-    }
-
-    &.is-disabled,
-    &:disabled {
-      color: #fff;
-      background-color: color.adjust($color-success, $lightness: 30%);
-      border-color: color.adjust($color-success, $lightness: 30%);
-    }
   }
 
-  &.vk-button--warning {
+  &.is-disabled,
+  &:disabled {
     color: #fff;
-    background-color: $color-warning;
-    border-color: $color-warning;
-
-    &:hover,
-    &:focus {
-      background-color: color.adjust($color-warning, $lightness: 10%);
-      border-color: color.adjust($color-warning, $lightness: 10%);
-      color: #fff;
-    }
-
-    &:active {
-      background-color: color.adjust($color-warning, $lightness: -10%);
-      border-color: color.adjust($color-warning, $lightness: -10%);
-      color: #fff;
-    }
-
-    &.is-disabled,
-    &:disabled {
-      color: #fff;
-      background-color: color.adjust($color-warning, $lightness: 30%);
-      border-color: color.adjust($color-warning, $lightness: 30%);
-    }
+    background-color: color.adjust($color-primary, $lightness: 30%);
+    border-color: color.adjust($color-primary, $lightness: 30%);
   }
+}
 
-  &.vk-button--danger {
+&.vk-button--success {
+  color: #fff;
+  background-color: $color-success;
+  border-color: $color-success;
+
+  &:hover,
+  &:focus {
+    background-color: color.adjust($color-success, $lightness: 10%);
+    border-color: color.adjust($color-success, $lightness: 10%);
     color: #fff;
-    background-color: $color-danger;
-    border-color: $color-danger;
-
-    &:hover,
-    &:focus {
-      background-color: color.adjust($color-danger, $lightness: 10%);
-      border-color: color.adjust($color-danger, $lightness: 10%);
-      color: #fff;
-    }
-
-    &:active {
-      background-color: color.adjust($color-danger, $lightness: -10%);
-      border-color: color.adjust($color-danger, $lightness: -10%);
-      color: #fff;
-    }
-
-    &.is-disabled,
-    &:disabled {
-      color: #fff;
-      background-color: color.adjust($color-danger, $lightness: 30%);
-      border-color: color.adjust($color-danger, $lightness: 30%);
-    }
   }
 
-  &.vk-button--info {
+  &:active {
+    background-color: color.adjust($color-success, $lightness: -10%);
+    border-color: color.adjust($color-success, $lightness: -10%);
     color: #fff;
-    background-color: $color-info;
-    border-color: $color-info;
-
-    &:hover,
-    &:focus {
-      background-color: color.adjust($color-info, $lightness: 10%);
-      border-color: color.adjust($color-info, $lightness: 10%);
-      color: #fff;
-    }
-
-    &:active {
-      background-color: color.adjust($color-info, $lightness: -10%);
-      border-color: color.adjust($color-info, $lightness: -10%);
-      color: #fff;
-    }
-
-    &.is-disabled,
-    &:disabled {
-      color: #fff;
-      background-color: color.adjust($color-info, $lightness: 30%);
-      border-color: color.adjust($color-info, $lightness: 30%);
-    }
   }
 
-  // 文本按钮
-  &.vk-button--text {
+  &.is-disabled,
+  &:disabled {
+    color: #fff;
+    background-color: color.adjust($color-success, $lightness: 30%);
+    border-color: color.adjust($color-success, $lightness: 30%);
+  }
+}
+
+&.vk-button--warning {
+  color: #fff;
+  background-color: $color-warning;
+  border-color: $color-warning;
+
+  &:hover,
+  &:focus {
+    background-color: color.adjust($color-warning, $lightness: 10%);
+    border-color: color.adjust($color-warning, $lightness: 10%);
+    color: #fff;
+  }
+
+  &:active {
+    background-color: color.adjust($color-warning, $lightness: -10%);
+    border-color: color.adjust($color-warning, $lightness: -10%);
+    color: #fff;
+  }
+
+  &.is-disabled,
+  &:disabled {
+    color: #fff;
+    background-color: color.adjust($color-warning, $lightness: 30%);
+    border-color: color.adjust($color-warning, $lightness: 30%);
+  }
+}
+
+&.vk-button--danger {
+  color: #fff;
+  background-color: $color-danger;
+  border-color: $color-danger;
+
+  &:hover,
+  &:focus {
+    background-color: color.adjust($color-danger, $lightness: 10%);
+    border-color: color.adjust($color-danger, $lightness: 10%);
+    color: #fff;
+  }
+
+  &:active {
+    background-color: color.adjust($color-danger, $lightness: -10%);
+    border-color: color.adjust($color-danger, $lightness: -10%);
+    color: #fff;
+  }
+
+  &.is-disabled,
+  &:disabled {
+    color: #fff;
+    background-color: color.adjust($color-danger, $lightness: 30%);
+    border-color: color.adjust($color-danger, $lightness: 30%);
+  }
+}
+
+&.vk-button--info {
+  color: #fff;
+  background-color: $color-info;
+  border-color: $color-info;
+
+  &:hover,
+  &:focus {
+    background-color: color.adjust($color-info, $lightness: 10%);
+    border-color: color.adjust($color-info, $lightness: 10%);
+    color: #fff;
+  }
+
+  &:active {
+    background-color: color.adjust($color-info, $lightness: -10%);
+    border-color: color.adjust($color-info, $lightness: -10%);
+    color: #fff;
+  }
+
+  &.is-disabled,
+  &:disabled {
+    color: #fff;
+    background-color: color.adjust($color-info, $lightness: 30%);
+    border-color: color.adjust($color-info, $lightness: 30%);
+  }
+}
+
+// 文本按钮
+&.vk-button--text {
+  border-color: transparent;
+  color: $color-primary;
+  background: transparent;
+  padding-left: 0;
+  padding-right: 0;
+
+  &:hover,
+  &:focus {
+    color: color.adjust($color-primary, $lightness: 10%);
     border-color: transparent;
-    color: $color-primary;
-    background: transparent;
-    padding-left: 0;
-    padding-right: 0;
-
-    &:hover,
-    &:focus {
-      color: color.adjust($color-primary, $lightness: 10%);
-      border-color: transparent;
-      background-color: transparent;
-    }
-
-    &:active {
-      color: color.adjust($color-primary, $lightness: -10%);
-      border-color: transparent;
-      background-color: transparent;
-    }
-
-    &.is-disabled,
-    &:disabled {
-      color: $text-color-disabled;
-      cursor: not-allowed;
-      background-image: none;
-      background-color: transparent;
-      border-color: transparent;
-    }
+    background-color: transparent;
   }
 
-  // 图标和内容
-  .vk-button__content {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+  &:active {
+    color: color.adjust($color-primary, $lightness: -10%);
+    border-color: transparent;
+    background-color: transparent;
   }
 
-  .vk-button__icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    &--left {
-      margin-right: $spacing-mini;
-    }
-
-    &--right {
-      margin-left: $spacing-mini;
-    }
+  &.is-disabled,
+  &:disabled {
+    color: $text-color-disabled;
+    cursor: not-allowed;
+    background-image: none;
+    background-color: transparent;
+    border-color: transparent;
   }
+}
 
-  .vk-button__loading {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+// 图标和内容
+.vk-button__content {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vk-button__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  &--left {
     margin-right: $spacing-mini;
   }
 
-  .vk-button__loading-indicator {
-    display: inline-block;
-    width: 14px;
-    height: 14px;
-    border: 2px solid currentColor;
-    border-radius: 50%;
-    border-top-color: transparent;
-    animation: vk-button-loading 1s linear infinite;
+  &--right {
+    margin-left: $spacing-mini;
   }
+}
+
+.vk-button__loading {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: $spacing-mini;
+}
+
+.vk-button__loading-indicator {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  border-top-color: transparent;
+  animation: vk-button-loading 1s linear infinite;
 }
 
 @keyframes vk-button-loading {
@@ -304,4 +303,40 @@
   100% {
     transform: rotate(360deg);
   }
+}
+
+// VkButtonGroup 组件样式
+.vk-button-group {
+  display: inline-flex;
+  vertical-align: middle;
+
+  .vk-button {
+    border-radius: 0;
+    margin-left: -1px;
+    position: relative;
+
+    &:first-child {
+      border-top-left-radius: $border-radius-base;
+      border-bottom-left-radius: $border-radius-base;
+      margin-left: 0;
+    }
+
+    &:last-child {
+      border-top-right-radius: $border-radius-base;
+      border-bottom-right-radius: $border-radius-base;
+    }
+
+    &:hover {
+      z-index: 1;
+    }
+
+    &:focus {
+      z-index: 2;
+    }
+
+    &:active {
+      z-index: 3;
+    }
+  }
+}
 }

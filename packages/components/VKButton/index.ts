@@ -1,24 +1,16 @@
-import Button from "./src/index.vue";
-import {
-  ButtonProps,
-  ButtonEmits,
-  ButtonType,
-  ButtonSize,
-  ButtonNativeType,
-} from "./src/types";
-import { withInstall } from "@vakao-ui/utils";
+import VkButton from './src/index.vue';
+import VkButtonGroup from './src/button-group.vue';
+import { withInstall } from '@vakao-ui/utils';
 
-// 导出类型
-export type {
-  ButtonProps,
-  ButtonEmits,
-  ButtonType,
-  ButtonSize,
-  ButtonNativeType,
-};
+export const _VkButton = withInstall(VkButton);
+export const _VkButtonGroup = withInstall(VkButtonGroup);
+export { _VkButton as VkButton, _VkButtonGroup as VkButtonGroup };
+export default _VkButton;
+export * from './src/types';
 
-// 注册组件
-const VkButton = withInstall(Button);
-
-// 导出组件
-export { VkButton };
+declare module 'vue' {
+  export interface GlobalComponents {
+    VkButton: typeof VkButton;
+    VkButtonGroup: typeof VkButtonGroup;
+  }
+}
