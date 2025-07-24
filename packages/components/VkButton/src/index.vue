@@ -16,7 +16,7 @@
       class="vk-button__icon vk-button__icon--left"
     >
       <component v-if="typeof icon === 'object'" :is="icon" />
-      <i v-else :class="icon"></i>
+      <vk-icon v-else-if="typeof icon === 'string'" :name="icon" :size="iconSize" />
     </span>
     <span class="vk-button__content">
       <slot></slot>
@@ -26,7 +26,7 @@
       class="vk-button__icon vk-button__icon--right"
     >
       <component v-if="typeof icon === 'object'" :is="icon" />
-      <i v-else :class="icon"></i>
+      <vk-icon v-else-if="typeof icon === 'string'" :name="icon" :size="iconSize" />
     </span>
   </button>
 </template>
@@ -36,10 +36,14 @@ import { defineComponent, computed, useAttrs } from "vue";
 import type { CSSProperties } from "vue";
 import { buttonProps } from "./types";
 import { useNamespace } from "@vakao-ui/utils";
+import VkIcon from "../../VkIcon";
 
 export default defineComponent({
   name: "VkButton",
   inheritAttrs: false,
+  components: {
+    VkIcon
+  },
   props: buttonProps,
   emits: ["click"],
   setup(props, { emit }) {
@@ -88,11 +92,22 @@ export default defineComponent({
       ];
     });
 
+    // 图标尺寸
+    const iconSize = computed(() => {
+      const sizeMap = {
+        small: '14px',
+        medium: '16px',
+        large: '18px'
+      };
+      return sizeMap[props.size] || '16px';
+    });
+
     return {
       handleClick,
       filteredAttrs,
       mergedStyle,
       mergedClass,
+      iconSize,
     };
   },
 });

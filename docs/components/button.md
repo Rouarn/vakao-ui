@@ -97,67 +97,43 @@
 
 ## 图标按钮
 
-使用 `render-icon` 属性设置按钮图标。
+使用 `icon` 属性设置按钮图标。
 
 <Demo>
-  <vk-button :render-icon="renderSearchIcon">搜索</vk-button>
-  <vk-button type="primary" :render-icon="renderAddIcon">添加</vk-button>
+  <vk-button icon="SearchOutline">搜索</vk-button>
+  <vk-button type="primary" icon="AddOutline">添加</vk-button>
   
   <template #code>
 
 ```vue
 <template>
-  <vk-button :render-icon="renderSearchIcon">搜索</vk-button>
-  <vk-button type="primary" :render-icon="renderAddIcon">添加</vk-button>
+  <vk-button icon="SearchOutline">搜索</vk-button>
+  <vk-button type="primary" icon="AddOutline">添加</vk-button>
 </template>
-
-<script setup lang="ts">
-import { h } from "vue";
-import { SearchOutline, AddOutline } from "@vicons/ionicons5";
-
-const renderSearchIcon = () => h(SearchOutline);
-const renderAddIcon = () => h(AddOutline);
-</script>
 ```
 
   </template>
 </Demo>
 
-<script setup>
-import { h } from 'vue'
-import { SearchOutline, AddOutline, CheckmarkOutline } from '@vicons/ionicons5'
 
-const renderSearchIcon = () => h(SearchOutline)
-const renderAddIcon = () => h(AddOutline)
-const renderCheckIcon = () => h(CheckmarkOutline)
-</script>
 
 ## 圆形按钮
 
 使用 `circle` 属性将按钮设置为圆形。
 
 <Demo>
-  <vk-button circle :render-icon="renderSearchIcon" />
-  <vk-button type="primary" circle :render-icon="renderAddIcon" />
-  <vk-button type="success" circle :render-icon="renderCheckIcon" />
+  <vk-button circle icon="SearchOutline" />
+  <vk-button type="primary" circle icon="AddOutline" />
+  <vk-button type="success" circle icon="CheckmarkOutline" />
   
   <template #code>
 
 ```vue
 <template>
-  <vk-button circle :render-icon="renderSearchIcon" />
-  <vk-button type="primary" circle :render-icon="renderAddIcon" />
-  <vk-button type="success" circle :render-icon="renderCheckIcon" />
+  <vk-button circle icon="SearchOutline" />
+  <vk-button type="primary" circle icon="AddOutline" />
+  <vk-button type="success" circle icon="CheckmarkOutline" />
 </template>
-
-<script setup lang="ts">
-import { h } from "vue";
-import { SearchOutline, AddOutline, CheckmarkOutline } from "@vicons/ionicons5";
-
-const renderSearchIcon = () => h(SearchOutline);
-const renderAddIcon = () => h(AddOutline);
-const renderCheckIcon = () => h(CheckmarkOutline);
-</script>
 ```
 
   </template>
@@ -294,8 +270,8 @@ const renderCheckIcon = () => h(CheckmarkOutline);
 | focusable     | `boolean`                                                                             | `true`      | 是否可聚焦       |
 | keyboard      | `boolean`                                                                             | `true`      | 是否支持键盘操作 |
 | dashed        | `boolean`                                                                             | `false`     | 是否为虚线边框   |
-| renderIcon    | `() => VNode`                                                                         | —           | 图标渲染函数     |
-| iconPlacement | `'left' \| 'right'`                                                                   | `'left'`    | 图标位置         |
+| icon          | `string \| VNode`                                                                    | —           | 图标名称或组件   |
+| iconPosition  | `'left' \| 'right'`                                                                   | `'left'`    | 图标位置         |
 | wave          | `boolean`                                                                             | `true`      | 是否有波纹效果   |
 | bordered      | `boolean`                                                                             | `true`      | 是否有边框       |
 

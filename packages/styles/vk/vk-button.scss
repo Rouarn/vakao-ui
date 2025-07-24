@@ -295,6 +295,11 @@
       width: 22px;
       height: 22px;
     }
+
+    // 圆形按钮中的图标始终居中，忽略位置属性
+    .vk-button__icon {
+      margin: 0 !important;
+    }
   }
 
   // 图标和内容

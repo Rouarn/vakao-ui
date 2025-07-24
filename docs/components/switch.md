@@ -150,15 +150,15 @@ const value4 = ref(true);
 使用 `inactive-icon` 和 `active-icon` 属性来添加图标。使用 `inline-prompt` 属性来控制图标显示在点内。
 
 <Demo>
-  <vk-switch v-model="value10" active-icon="vk-icon-check" inactive-icon="vk-icon-close" />
+  <vk-switch v-model="value10" active-icon="Checkmark" inactive-icon="Close" />
   <br />
   <vk-switch
     v-model="value11"
     class="mt-2"
     style="margin-left: 24px"
     inline-prompt
-    active-icon="vk-icon-check"
-    inactive-icon="vk-icon-close"
+    active-icon="Checkmark"
+    inactive-icon="Close"
   />
   
   <template #code>
@@ -167,8 +167,8 @@ const value4 = ref(true);
 <template>
   <vk-switch
     v-model="value1"
-    active-icon="vk-icon-check"
-    inactive-icon="vk-icon-close"
+    active-icon="Checkmark"
+    inactive-icon="Close"
   />
   <br />
   <vk-switch
@@ -176,8 +176,8 @@ const value4 = ref(true);
     class="mt-2"
     style="margin-left: 24px"
     inline-prompt
-    active-icon="vk-icon-check"
-    inactive-icon="vk-icon-close"
+    active-icon="Checkmark"
+    inactive-icon="Close"
   />
 </template>
 

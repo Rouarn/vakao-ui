@@ -3,7 +3,7 @@
     <!-- 前缀插槽 -->
     <div v-if="$slots.prefix || prefixIcon" class="vk-input__prefix">
       <slot name="prefix">
-        <i v-if="prefixIcon" :class="prefixIcon"></i>
+        <vk-icon v-if="prefixIcon" :name="prefixIcon" size="16px" />
       </slot>
     </div>
 
@@ -31,18 +31,20 @@
     <!-- 后缀插槽 -->
     <div v-if="showSuffix" class="vk-input__suffix">
       <!-- 清除按钮 -->
-      <i v-if="showClear" class="vk-input__clear" @click="handleClear"></i>
+      <vk-icon v-if="showClear" name="CloseCircle" size="16px" class="vk-input__clear" @click="handleClear" />
 
       <!-- 密码切换按钮 -->
-      <i
+      <vk-icon
         v-if="showPassword"
-        :class="passwordIconClass"
+        :name="showPasswordVisible ? 'EyeOff' : 'Eye'"
+        size="16px"
+        class="vk-input__password-toggle"
         @click="togglePasswordVisible"
-      ></i>
+      />
 
       <!-- 后缀图标 -->
       <slot name="suffix">
-        <i v-if="suffixIcon" :class="suffixIcon"></i>
+        <vk-icon v-if="suffixIcon" :name="suffixIcon" size="16px" />
       </slot>
     </div>
   </div>
@@ -53,6 +55,7 @@ import { ref, computed, useAttrs, useSlots, nextTick } from "vue";
 import type { StyleValue } from "vue";
 import { inputProps } from "./types";
 import { useNamespace } from "@vakao-ui/utils";
+import VkIcon from "../../VkIcon";
 
 defineOptions({
   name: "VkInput",
@@ -132,10 +135,7 @@ const showClear = computed(() => {
   );
 });
 
-// 密码图标类名
-const passwordIconClass = computed(() => {
-  return showPasswordVisible.value ? "vk-icon-eye" : "vk-icon-eye-close";
-});
+
 
 // 双向绑定值
 const modelValue = defineModel<string>({ default: "" });

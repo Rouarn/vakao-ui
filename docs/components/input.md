@@ -103,15 +103,15 @@ const value = ref('')
 可以通过 `prefix-icon` 和 `suffix-icon` 属性在 input 组件首部和尾部增加显示图标。
 
 <Demo>
-  <vk-input v-model="value5" prefix-icon="search" placeholder="请输入搜索内容" />
-  <vk-input v-model="value6" suffix-icon="calendar" placeholder="请选择日期" />
+  <vk-input v-model="value5" prefix-icon="Search" placeholder="请输入搜索内容" />
+  <vk-input v-model="value6" suffix-icon="Calendar" placeholder="请选择日期" />
   
   <template #code>
 
 ```vue
 <template>
-  <vk-input v-model="value1" prefix-icon="search" placeholder="请输入搜索内容" />
-  <vk-input v-model="value2" suffix-icon="calendar" placeholder="请选择日期" />
+  <vk-input v-model="value1" prefix-icon="Search" placeholder="请输入搜索内容" />
+  <vk-input v-model="value2" suffix-icon="Calendar" placeholder="请选择日期" />
 </template>
 
 <script setup>
