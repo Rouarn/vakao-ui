@@ -95,7 +95,7 @@ const isLimitExceeded = computed(() => {
 const mergedClass = computed(() => {
   return [
     ns.block(),
-    ns.modifier('size', currentSize.value),
+    `${ns.block()}--size-${currentSize.value}`,
     ns.is('disabled', isDisabled.value),
     ns.is('checked', isChecked.value),
     ns.is('indeterminate', props.indeterminate),

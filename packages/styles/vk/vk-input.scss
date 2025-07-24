@@ -206,12 +206,6 @@
     justify-content: center;
     border-radius: 50%;
 
-    &::before {
-      content: "×";
-      font-size: 16px;
-      line-height: 1;
-    }
-
     &:hover {
       color: var(--vk-text-color-regular);
       background-color: var(--vk-fill-color-light);

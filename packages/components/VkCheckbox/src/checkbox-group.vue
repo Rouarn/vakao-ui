@@ -32,7 +32,7 @@ const modelValue = defineModel<CheckboxValue[]>({ default: () => [] })
 const mergedClass = computed(() => {
   return [
     ns.block(),
-    ns.modifier('size', props.size),
+    `${ns.block()}--size-${props.size}`,
     ns.is('disabled', props.disabled),
     props.customClass
   ]

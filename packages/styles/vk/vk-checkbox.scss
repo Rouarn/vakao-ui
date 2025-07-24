@@ -180,12 +180,54 @@
   gap: 12px;
 
   // 尺寸变体
+  &--size-tiny {
+    gap: 6px;
+    
+    .vk-checkbox {
+      font-size: 12px;
+      
+      .vk-checkbox__inner {
+        width: 12px !important;
+        height: 12px !important;
+      }
+    }
+  }
+
   &--size-small {
     gap: 8px;
+    
+    .vk-checkbox {
+      font-size: var(--vk-font-size-small);
+      
+      .vk-checkbox__inner {
+        width: 14px !important;
+        height: 14px !important;
+      }
+    }
+  }
+
+  &--size-medium {
+    gap: 12px;
+    
+    .vk-checkbox {
+      .vk-checkbox__inner {
+        width: 16px !important;
+        height: 16px !important;
+      }
+    }
   }
 
   &--size-large {
     gap: 16px;
+    
+    .vk-checkbox {
+      font-size: var(--vk-font-size-large);
+      
+      .vk-checkbox__inner {
+        width: 18px !important;
+        height: 18px !important;
+      }
+    }
   }
 
   // 禁用状态
