@@ -79,7 +79,7 @@ export default defineComponent({
       if (isGroup.value && checkboxGroup) {
         return checkboxGroup.modelValue.value.includes(props.value as CheckboxValue)
       }
-      return props.checked || modelValue.value
+      return props.modelValue !== undefined ? props.modelValue : (props.checked || modelValue.value)
     })
     
     const isLimitExceeded = computed(() => {
@@ -134,8 +134,13 @@ export default defineComponent({
         
         checkboxGroup.changeEvent(newValue)
       } else {
-        modelValue.value = checked
-        emit('update:modelValue', checked)
+        // 如果使用 v-model，发出 update:modelValue 事件
+        if (props.modelValue !== undefined) {
+          emit('update:modelValue', checked)
+        } else {
+          // 否则使用内部状态
+          modelValue.value = checked
+        }
         emit('change', checked)
       }
     }

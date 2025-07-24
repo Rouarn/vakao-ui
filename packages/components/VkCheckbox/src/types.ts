@@ -9,6 +9,11 @@ export type CheckboxValue = string | number | boolean
 
 // 复选框属性定义
 export const checkboxProps = {
+  /** 绑定值 */
+  modelValue: {
+    type: Boolean,
+    default: false
+  },
   /** 复选框尺寸 */
   size: {
     type: String as PropType<CheckboxSize>,
