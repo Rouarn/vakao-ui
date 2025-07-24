@@ -11,7 +11,7 @@
       "require": "./dist/vakao-ui.umd.js",
       "types": "./dist/types/index.d.ts"
     },
-    "./dist/index.css": "./dist/style.css",
+    "./style.css": "./dist/style.css",
     "./resolver": {
       "import": "./dist/vakao-ui.es.js",
       "require": "./dist/vakao-ui.umd.js",

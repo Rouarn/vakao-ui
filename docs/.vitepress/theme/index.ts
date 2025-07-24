@@ -1,5 +1,6 @@
 import type { Theme } from "vitepress";
 import DefaultTheme from "vitepress/theme";
+import "vakao-ui/style.css";
 
 // 导入组件库
 import VakaoUI from "@vakao-ui/components";

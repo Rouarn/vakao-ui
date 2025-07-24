@@ -8,9 +8,6 @@ import {
 } from "./src/types";
 import { withInstall } from "@vakao-ui/utils";
 
-// 导入样式
-import "./style";
-
 // 导出类型
 export type {
   ButtonProps,

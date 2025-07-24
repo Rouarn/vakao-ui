@@ -10,7 +10,7 @@ const path = require("path");
 
 // 源目录和目标目录
 const sourceDir = path.resolve(__dirname, "../packages/dist");
-const targetDir = path.resolve(__dirname, "../packages/vakao-ui");
+const targetDir = path.resolve(__dirname, "../packages/vakao-ui/dist");
 
 // 确保目标目录存在并清空
 fs.emptyDirSync(targetDir);

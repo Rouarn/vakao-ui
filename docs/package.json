@@ -21,6 +21,6 @@
     "vue": "^3.3.4"
   },
   "dependencies": {
-    "vakao-ui": "file:.."
+    "vakao-ui": "workspace:*"
   }
 }
