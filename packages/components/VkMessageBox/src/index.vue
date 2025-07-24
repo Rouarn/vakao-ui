@@ -27,13 +27,14 @@
             <div class="vk-message-box__message">{{ message }}</div>
             <!-- 输入框 (用于 prompt 类型) -->
             <div v-if="showInput" class="vk-message-box__input">
-              <input
+              <VkInput
                 ref="inputRef"
                 v-model="inputValue"
                 type="text"
                 :placeholder="inputPlaceholder"
-                class="vk-message-box__input-inner"
-                @keyup.enter="handleConfirm"
+                clearable
+                @keydown.enter="handleConfirm"
+                @blur="handleInputBlur"
               />
               <div v-if="inputErrorMessage" class="vk-message-box__error-message">
                 {{ inputErrorMessage }}
@@ -71,12 +72,14 @@ import { messageBoxProps, type MessageBoxAction } from "./types";
 import { ComponentType } from "../../../types";
 import VkButton from "../../VkButton";
 import VkIcon from "../../VkIcon";
+import VkInput from "../../VkInput";
 
 export default defineComponent({
   name: "VkMessageBox",
   components: {
     VkButton,
-    VkIcon
+    VkIcon,
+    VkInput
   },
   props: {
     ...messageBoxProps,
@@ -91,7 +94,8 @@ export default defineComponent({
     const visible = ref(false);
     const inputRef = ref<HTMLInputElement>();
     const inputValue = ref(props.inputValue || '');
-    const inputErrorMessage = ref(props.inputErrorMessage || '');
+    const inputErrorMessage = ref('');
+    const hasInputBlurred = ref(false); // 追踪输入框是否已经失焦过
 
 // 计算属性
 const messageBoxClass = computed(() => [`vk-message-box--${props.type}`]);
@@ -126,27 +130,32 @@ const confirmButtonClass = computed(() => ["vk-message-box__confirm"]);
 const cancelButtonClass = computed(() => ["vk-message-box__cancel"]);
 
 // 输入验证方法
-const validateInput = () => {
+const validateInput = (showError = true) => {
   if (!props.showInput) return true;
   
   const value = inputValue.value;
+  
+  // 如果还没有交互过且不强制显示错误，则不验证
+  if (!hasInputBlurred.value && !showError) {
+    return true;
+  }
   
   // 使用自定义验证函数
   if (props.inputValidator) {
     const result = props.inputValidator(value);
     if (result === false) {
-      inputErrorMessage.value = '输入不符合要求';
+      if (showError) inputErrorMessage.value = '输入不符合要求';
       return false;
     }
     if (typeof result === 'string') {
-      inputErrorMessage.value = result;
+      if (showError) inputErrorMessage.value = result;
       return false;
     }
   }
   
   // 使用正则表达式验证
   if (props.inputPattern && !props.inputPattern.test(value)) {
-    inputErrorMessage.value = props.inputErrorMessage || '输入格式不正确';
+    if (showError) inputErrorMessage.value = props.inputErrorMessage || '输入格式不正确';
     return false;
   }
   
@@ -187,6 +196,11 @@ const handleWrapperClick = (e: Event) => {
   if (e.target === e.currentTarget && props.closeOnClickModal) {
     handleClose();
   }
+};
+
+const handleInputBlur = () => {
+  hasInputBlurred.value = true;
+  validateInput(true); // 失焦时进行验证并显示错误
 };
 
 const getMessageBoxInstance = () => {
@@ -240,6 +254,7 @@ onUnmounted(() => {
       handleCancel,
       handleClose,
       handleWrapperClick,
+      handleInputBlur,
       getMessageBoxInstance,
       // 暴露方法
       close: () => {
@@ -349,26 +364,6 @@ onUnmounted(() => {
 
 .vk-message-box__input {
   margin: 16px 0 0;
-}
-
-.vk-message-box__input-inner {
-  width: 100%;
-  padding: 10px 12px;
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
-  font-size: 14px;
-  outline: none;
-  transition: border-color 0.2s ease;
-  box-sizing: border-box;
-}
-
-.vk-message-box__input-inner:focus {
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-}
-
-.vk-message-box__input-inner::placeholder {
-  color: #9ca3af;
 }
 
 .vk-message-box__error-message {

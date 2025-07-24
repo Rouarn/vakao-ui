@@ -22,26 +22,26 @@
   min-width: 420px;
   max-width: 500px;
   overflow: hidden;
-  
+
   // 类型变体
   &--success {
     .vk-message-box__icon--success {
       color: var(--vk-color-success);
     }
   }
-  
+
   &--warning {
     .vk-message-box__icon--warning {
       color: var(--vk-color-warning);
     }
   }
-  
+
   &--error {
     .vk-message-box__icon--error {
       color: var(--vk-color-danger);
     }
   }
-  
+
   &--info {
     .vk-message-box__icon--info {
       color: var(--vk-color-info);
@@ -54,7 +54,6 @@
   align-items: center;
   justify-content: space-between;
   padding: 20px 20px 10px;
-  border-bottom: 1px solid var(--vk-border-color-light, #e5e5e5);
 }
 
 .vk-message-box__title {
@@ -69,19 +68,19 @@
 .vk-message-box__icon {
   margin-right: $spacing-small;
   font-size: 20px;
-  
+
   &--success {
     color: var(--vk-color-success);
   }
-  
+
   &--warning {
     color: var(--vk-color-warning);
   }
-  
+
   &--error {
     color: var(--vk-color-danger);
   }
-  
+
   &--info {
     color: var(--vk-color-info);
   }
@@ -101,7 +100,7 @@
   justify-content: center;
   border-radius: var(--vk-border-radius-small);
   transition: all 0.2s;
-  
+
   &:hover {
     color: var(--vk-color-primary);
     background-color: var(--vk-fill-color-light);
@@ -124,7 +123,6 @@
   display: flex;
   justify-content: flex-end;
   gap: $spacing-base;
-  border-top: 1px solid var(--vk-border-color-light, #e5e5e5);
   padding-top: 20px;
 }
 
@@ -139,12 +137,14 @@
 // 动画效果
 .vk-message-box-fade-enter-active,
 .vk-message-box-fade-leave-active {
-  transition: opacity var(--vk-transition-duration) var(--vk-transition-timing-function);
+  transition: opacity var(--vk-transition-duration)
+    var(--vk-transition-timing-function);
 }
 
 .vk-message-box-fade-enter-active .vk-message-box,
 .vk-message-box-fade-leave-active .vk-message-box {
-  transition: transform var(--vk-transition-duration) var(--vk-transition-timing-function);
+  transition: transform var(--vk-transition-duration)
+    var(--vk-transition-timing-function);
 }
 
 .vk-message-box-fade-enter-from,
@@ -164,15 +164,15 @@
     max-width: 90vw;
     margin: 0 20px;
   }
-  
+
   .vk-message-box__header {
     padding: 16px 16px 8px;
   }
-  
+
   .vk-message-box__content {
     padding: 16px;
   }
-  
+
   .vk-message-box__footer {
     padding: 0 16px 16px;
     padding-top: 16px;
