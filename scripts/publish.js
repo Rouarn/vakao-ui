@@ -53,6 +53,13 @@ function updateVersion(version) {
   }
 }
 
+// 验证版本号格式
+function isValidVersion(version) {
+  // 检查是否符合 semver 格式 (x.y.z)
+  const semverRegex = /^\d+\.\d+\.\d+$/;
+  return semverRegex.test(version);
+}
+
 // 计算建议的新版本号（将小版本号加1）
 function suggestNextVersion(currentVersion) {
   const versionParts = currentVersion.split('.');
@@ -61,6 +68,34 @@ function suggestNextVersion(currentVersion) {
     return `${major}.${minor}.${parseInt(patch) + 1}`;
   }
   return currentVersion;
+}
+
+// 递归询问版本号直到输入正确
+function askForVersion(currentVersion, suggestedVersion) {
+  return new Promise((resolve) => {
+    rl.question(`请输入新版本号 (建议: ${suggestedVersion}, 留空使用建议版本): `, (version) => {
+      const newVersion = version || suggestedVersion;
+      
+      // 验证版本号格式
+      if (!isValidVersion(newVersion)) {
+        console.log('❌ 版本号格式不正确！请使用 x.y.z 格式（如: 1.0.0）');
+        // 递归重新询问
+        askForVersion(currentVersion, suggestedVersion).then(resolve);
+        return;
+      }
+      
+      // 检查版本号是否比当前版本新
+      if (newVersion <= currentVersion) {
+        console.log('❌ 新版本号必须大于当前版本！');
+        // 递归重新询问
+        askForVersion(currentVersion, suggestedVersion).then(resolve);
+        return;
+      }
+      
+      console.log('✅ 版本号验证通过');
+      resolve(newVersion);
+    });
+  });
 }
 
 // 主函数
@@ -72,9 +107,9 @@ async function main() {
   const suggestedVersion = suggestNextVersion(currentVersion);
   console.log(`当前版本: ${currentVersion}`);
   
-  // 询问版本号，并显示建议的新版本号
-  rl.question(`请输入新版本号 (建议: ${suggestedVersion}, 留空使用建议版本): `, (version) => {
-    const newVersion = version || suggestedVersion;
+  try {
+    // 使用新的版本号验证函数
+    const newVersion = await askForVersion(currentVersion, suggestedVersion);
     
     // 更新版本号
     if (newVersion !== currentVersion) {
@@ -101,8 +136,11 @@ async function main() {
     }
     
     console.log(`✨ Vakao UI v${newVersion} ${isDryRun ? '测试' : '发布'}成功!`);
+  } catch (error) {
+    console.error('发布过程中出现错误:', error);
+  } finally {
     rl.close();
-  });
+  }
 }
 
 // 运行主函数

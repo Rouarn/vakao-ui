@@ -1,0 +1,71 @@
+/* VitePress 主题自定义样式 */
+
+/* 组件演示区域样式 */
+.vp-doc .vk-demo {
+  padding: 24px;
+  margin: 16px 0;
+  border: 1px solid var(--vp-c-border);
+  border-radius: 8px;
+  background-color: var(--vp-c-bg);
+}
+
+.vp-doc .vk-demo > * {
+  margin: 0;
+}
+
+.vp-doc .vk-demo .vk-button {
+  margin-right: 8px;
+  margin-bottom: 8px;
+}
+
+.vp-doc .vk-demo .vk-button:last-child {
+  margin-right: 0;
+}
+
+/* 确保组件在文档中的正确显示 */
+.vp-doc .vk-button-group {
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+/* 代码块和演示区域的分隔 */
+.vp-doc .vk-demo + div[class*="language-"] {
+  margin-top: 16px;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+  .vp-doc .vk-demo {
+    padding: 16px;
+  }
+  
+  .vp-doc .vk-demo .vk-button {
+    margin-right: 4px;
+    margin-bottom: 4px;
+  }
+}
+
+/* 确保组件的 CSS 变量在文档中生效 */
+.vp-doc {
+  /* 继承组件库的 CSS 变量，但不覆盖 VitePress 的全局样式 */
+}
+
+/* 修复可能的样式冲突 */
+.vp-doc .vk-button {
+  /* 确保按钮样式不被 VitePress 覆盖 */
+  font-family: var(--vk-font-family, inherit);
+  box-sizing: border-box;
+}
+
+/* 演示代码的语法高亮调整 */
+.vp-doc .vk-demo + .vp-code-group,
+.vp-doc .vk-demo + div[class*="language-"] {
+  border-top: 1px solid var(--vp-c-border);
+  border-radius: 0 0 8px 8px;
+  margin-top: -1px;
+}
+
+.vp-doc .vk-demo + .vp-code-group .vp-code-group-tabs,
+.vp-doc .vk-demo + div[class*="language-"] .lang {
+  background-color: var(--vp-c-bg-soft);
+}

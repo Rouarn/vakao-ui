@@ -52,30 +52,6 @@ const app = createApp(App)
 app.use(VakaoUI)
 ```
 
-## 特色功能
-
-### 🎨 丰富的组件
-
-提供常用的基础组件，覆盖大部分业务场景，持续更新中。
-
-### 🔧 强大的 Hooks
-
-内置实用的 Composition API hooks，提升开发效率。
-
-### 🛠️ 完善的工具
-
-提供组件开发和应用构建所需的工具函数。
-
-### 📖 详细的文档
-
-完善的文档和示例，帮助您快速上手和深入使用。
-
----
-
-<div style="text-align: center; margin-top: 40px;">
-  <p style="font-size: 16px; color: #666;">由 ❤️ 和 Vue 3 驱动</p>
-</div>
-
 ## 安装
 
 ```bash
@@ -105,8 +81,11 @@ app.use(VakaoUI);
 app.mount("#app");
 ```
 
-```ts
-在 tsconfig.json 的types字段中添加vakao-ui
+#### TypeScript 支持
+
+为了获得更好的 TypeScript 类型提示，请在 `tsconfig.json` 中配置类型声明：
+
+```json
 {
   "compilerOptions": {
     "types": ["vakao-ui"]
