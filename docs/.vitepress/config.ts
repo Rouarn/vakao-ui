@@ -4,6 +4,16 @@ export default defineConfig({
   title: "Vakao UI",
   description: "基于 Vue 3 和 TypeScript 的现代化组件库",
   base: "/vakao-ui/", // GitHub Pages 部署路径
+  vite: {
+    css: {
+      preprocessorOptions: {
+        scss: {
+          api: 'modern-compiler',
+          silenceDeprecations: ['legacy-js-api']
+        }
+      }
+    }
+  },
   themeConfig: {
     logo: "/logo.svg",
     nav: [
