@@ -27,10 +27,10 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref } from "vue";
 
-const value1 = ref(true)
-const value2 = ref(true)
+const value1 = ref(true);
+const value2 = ref(true);
 </script>
 ```
 
@@ -56,11 +56,11 @@ const value2 = ref(true)
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref } from "vue";
 
-const value1 = ref(true)
-const value2 = ref(true)
-const value3 = ref(true)
+const value1 = ref(true);
+const value2 = ref(true);
+const value3 = ref(true);
 </script>
 ```
 
@@ -75,16 +75,16 @@ const value3 = ref(true)
   <vk-switch
     v-model="value6"
     class="mb-2"
-    active-text="Pay by month"
-    inactive-text="Pay by year"
+    active-text="按月支付"
+    inactive-text="按年支付"
   />
   <br />
   <vk-switch
     v-model="value7"
     class="mb-2"
     style="--vk-switch-on-color: #13ce66; --vk-switch-off-color: #ff4949"
-    active-text="Pay by month"
-    inactive-text="Pay by year"
+    active-text="按月支付"
+    inactive-text="按年支付"
   />
   <br />
   <vk-switch
@@ -121,12 +121,7 @@ const value3 = ref(true)
     inactive-text="Pay by year"
   />
   <br />
-  <vk-switch
-    v-model="value3"
-    inline-prompt
-    active-text="Y"
-    inactive-text="N"
-  />
+  <vk-switch v-model="value3" inline-prompt active-text="Y" inactive-text="N" />
   <vk-switch
     v-model="value4"
     class="ml-2"
@@ -138,12 +133,12 @@ const value3 = ref(true)
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref } from "vue";
 
-const value1 = ref(true)
-const value2 = ref(true)
-const value3 = ref(true)
-const value4 = ref(true)
+const value1 = ref(true);
+const value2 = ref(true);
+const value3 = ref(true);
+const value4 = ref(true);
 </script>
 ```
 
@@ -155,38 +150,42 @@ const value4 = ref(true)
 使用 `inactive-icon` 和 `active-icon` 属性来添加图标。使用 `inline-prompt` 属性来控制图标显示在点内。
 
 <Demo>
-  <vk-switch v-model="value10" active-icon="Check" inactive-icon="Close" />
+  <vk-switch v-model="value10" active-icon="vk-icon-check" inactive-icon="vk-icon-close" />
   <br />
   <vk-switch
     v-model="value11"
     class="mt-2"
     style="margin-left: 24px"
     inline-prompt
-    active-icon="Check"
-    inactive-icon="Close"
+    active-icon="vk-icon-check"
+    inactive-icon="vk-icon-close"
   />
   
   <template #code>
 
 ```vue
 <template>
-  <vk-switch v-model="value1" active-icon="Check" inactive-icon="Close" />
+  <vk-switch
+    v-model="value1"
+    active-icon="vk-icon-check"
+    inactive-icon="vk-icon-close"
+  />
   <br />
   <vk-switch
     v-model="value2"
     class="mt-2"
     style="margin-left: 24px"
     inline-prompt
-    active-icon="Check"
-    inactive-icon="Close"
+    active-icon="vk-icon-check"
+    inactive-icon="vk-icon-close"
   />
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref } from "vue";
 
-const value1 = ref(true)
-const value2 = ref(true)
+const value1 = ref(true);
+const value2 = ref(true);
 </script>
 ```
 
@@ -208,17 +207,13 @@ const value2 = ref(true)
 
 ```vue
 <template>
-  <vk-switch
-    v-model="value"
-    active-value="100"
-    inactive-value="0"
-  />
+  <vk-switch v-model="value" active-value="100" inactive-value="0" />
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref } from "vue";
 
-const value = ref('100')
+const value = ref("100");
 </script>
 ```
 
@@ -242,10 +237,10 @@ const value = ref('100')
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref } from "vue";
 
-const value1 = ref(true)
-const value2 = ref(false)
+const value1 = ref(true);
+const value2 = ref(false);
 </script>
 ```
 
@@ -269,10 +264,10 @@ const value2 = ref(false)
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref } from "vue";
 
-const value1 = ref(true)
-const value2 = ref(false)
+const value1 = ref(true);
+const value2 = ref(false);
 </script>
 ```
 
@@ -293,31 +288,24 @@ const value2 = ref(false)
 
 ```vue
 <template>
-  <vk-switch
-    v-model="value"
-    :before-change="beforeChange"
-  />
+  <vk-switch v-model="value" :before-change="beforeChange" />
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { VkMessageBox } from 'vakao-ui'
+import { ref } from "vue";
+import { VkMessageBox } from "vakao-ui";
 
-const value = ref(false)
+const value = ref(false);
 
 const beforeChange = () => {
-  return VkMessageBox.confirm(
-    'Switch to a new value. Continue?',
-    'Warning',
-    {
-      confirmButtonText: 'Yes',
-      cancelButtonText: 'No',
-      type: 'warning',
-    }
-  )
+  return VkMessageBox.confirm("Switch to a new value. Continue?", "Warning", {
+    confirmButtonText: "Yes",
+    cancelButtonText: "No",
+    type: "warning",
+  })
     .then(() => true)
-    .catch(() => false)
-}
+    .catch(() => false);
+};
 </script>
 ```
 
@@ -328,34 +316,34 @@ const beforeChange = () => {
 
 ### Switch Props
 
-| 名称           | 类型                                      | 默认值      | 说明                                                         |
-| -------------- | ----------------------------------------- | ----------- | ------------------------------------------------------------ |
-| size           | `'small' \| 'medium' \| 'large'`          | `'medium'`  | 开关大小                                                     |
-| disabled       | `boolean`                                 | `false`     | 是否禁用                                                     |
-| loading        | `boolean`                                 | `false`     | 是否显示加载中                                               |
-| activeValue    | `boolean \| string \| number`             | `true`      | switch 打开时的值                                            |
-| inactiveValue  | `boolean \| string \| number`             | `false`     | switch 关闭时的值                                            |
-| activeText     | `string`                                  | —           | switch 打开时的文字描述                                      |
-| inactiveText   | `string`                                  | —           | switch 关闭时的文字描述                                      |
-| activeIcon     | `string`                                  | —           | switch 打开时所显示图标，设置此项会忽略 `active-text`        |
-| inactiveIcon   | `string`                                  | —           | switch 关闭时所显示图标，设置此项会忽略 `inactive-text`      |
-| inlinePrompt   | `boolean`                                 | `false`     | 无论图标或文本是否显示在点内，只会呈现文本的第一个字符       |
-| beforeChange   | `() => boolean \| Promise<boolean>`       | —           | switch 状态改变前的钩子，返回 false 或者返回 Promise 且被 reject 则停止切换 |
-| customClass    | `string`                                  | —           | 自定义类名                                                   |
-| customStyle    | `string \| object`                        | —           | 自定义样式                                                   |
+| 名称          | 类型                                | 默认值     | 说明                                                                        |
+| ------------- | ----------------------------------- | ---------- | --------------------------------------------------------------------------- |
+| size          | `'small' \| 'medium' \| 'large'`    | `'medium'` | 开关大小                                                                    |
+| disabled      | `boolean`                           | `false`    | 是否禁用                                                                    |
+| loading       | `boolean`                           | `false`    | 是否显示加载中                                                              |
+| activeValue   | `boolean \| string \| number`       | `true`     | switch 打开时的值                                                           |
+| inactiveValue | `boolean \| string \| number`       | `false`    | switch 关闭时的值                                                           |
+| activeText    | `string`                            | —          | switch 打开时的文字描述                                                     |
+| inactiveText  | `string`                            | —          | switch 关闭时的文字描述                                                     |
+| activeIcon    | `string`                            | —          | switch 打开时所显示图标，设置此项会忽略 `active-text`                       |
+| inactiveIcon  | `string`                            | —          | switch 关闭时所显示图标，设置此项会忽略 `inactive-text`                     |
+| inlinePrompt  | `boolean`                           | `false`    | 无论图标或文本是否显示在点内，只会呈现文本的第一个字符                      |
+| beforeChange  | `() => boolean \| Promise<boolean>` | —          | switch 状态改变前的钩子，返回 false 或者返回 Promise 且被 reject 则停止切换 |
+| customClass   | `string`                            | —          | 自定义类名                                                                  |
+| customStyle   | `string \| object`                  | —          | 自定义样式                                                                  |
 
 ### Switch Events
 
-| 名称   | 参数                                      | 说明               |
-| ------ | ----------------------------------------- | ------------------ |
-| change | `(value: SwitchValue) => void`            | 当绑定值变化时触发 |
+| 名称   | 参数                           | 说明               |
+| ------ | ------------------------------ | ------------------ |
+| change | `(value: SwitchValue) => void` | 当绑定值变化时触发 |
 
 ### Switch Methods
 
-| 名称  | 说明               |
-| ----- | ------------------ |
-| focus | 使开关获取焦点     |
-| blur  | 使开关失去焦点     |
+| 名称  | 说明           |
+| ----- | -------------- |
+| focus | 使开关获取焦点 |
+| blur  | 使开关失去焦点 |
 
 <script setup>
 import { ref } from 'vue'

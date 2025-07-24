@@ -26,7 +26,7 @@
     }
     
     &.is-checked .vk-switch__action {
-      transform: translateX(14px);
+      transform: translateY(-50%) translateX(14px);
     }
   }
 
@@ -42,7 +42,7 @@
     }
     
     &.is-checked .vk-switch__action {
-      transform: translateX(18px);
+      transform: translateY(-50%) translateX(18px);
     }
   }
 
@@ -60,7 +60,7 @@
     }
     
     &.is-checked .vk-switch__action {
-      transform: translateX(22px);
+      transform: translateY(-50%) translateX(22px);
     }
   }
 
@@ -76,8 +76,8 @@
 
   &.is-checked {
     .vk-switch__core {
-      background-color: var(--vk-color-primary);
-      border-color: var(--vk-color-primary);
+      background-color: var(--vk-switch-on-color, var(--vk-color-primary));
+      border-color: var(--vk-switch-on-color, var(--vk-color-primary));
     }
   }
 
@@ -109,7 +109,7 @@
     height: 22px;
     border: 1px solid var(--vk-border-color);
     border-radius: 11px;
-    background-color: var(--vk-fill-color-darker);
+    background-color: var(--vk-switch-off-color, var(--vk-fill-color-darker));
     transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
     
     &:hover {
@@ -131,6 +131,14 @@
     color: white;
     font-size: 12px;
     z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    i {
+      font-size: 12px;
+      line-height: 1;
+    }
     
     .vk-switch.is-checked & {
       left: 4px;
@@ -144,14 +152,15 @@
   // 开关按钮
   &__action {
     position: absolute;
-    top: 2px;
+    top: 50%;
     left: 2px;
     width: 18px;
     height: 18px;
     border-radius: 50%;
     background-color: white;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
-    transition: transform 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+    transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+    transform: translateY(-50%);
     z-index: 2;
   }
 
@@ -178,5 +187,37 @@
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+
+// Switch 图标样式
+.vk-switch {
+  i[class*="vk-icon-"] {
+    display: inline-block;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    text-align: center;
+    
+    &.vk-icon-check::before {
+      content: '✓';
+    }
+    
+    &.vk-icon-close::before {
+      content: '✕';
+    }
+    
+    &.vk-icon-sun::before {
+      content: '☀️';
+    }
+    
+    &.vk-icon-moon::before {
+      content: '🌙';
+    }
+    
+    &.vk-icon-loading::before {
+      content: '⟳';
+      animation: vk-loading-rotate 2s linear infinite;
+    }
   }
 }

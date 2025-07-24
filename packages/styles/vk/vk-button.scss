@@ -265,6 +265,38 @@
     }
   }
 
+  // 形状变体
+  &.is-round {
+    border-radius: 20px;
+  }
+
+  &.is-circle {
+    border-radius: 50%;
+    padding: 0;
+    width: var(--vk-component-size-medium);
+    height: var(--vk-component-size-medium);
+    
+    &.vk-button--size-large {
+      width: var(--vk-component-size-large);
+      height: var(--vk-component-size-large);
+    }
+    
+    &.vk-button--size-small {
+      width: var(--vk-component-size-small);
+      height: var(--vk-component-size-small);
+    }
+    
+    &.vk-button--size-mini {
+      width: var(--vk-component-size-mini);
+      height: var(--vk-component-size-mini);
+    }
+    
+    &.vk-button--size-tiny {
+      width: 22px;
+      height: 22px;
+    }
+  }
+
   // 图标和内容
   .vk-button__content {
     display: inline-flex;
