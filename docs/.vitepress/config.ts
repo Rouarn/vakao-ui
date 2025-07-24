@@ -69,6 +69,12 @@ export default defineConfig({
             { text: "Switch 开关", link: "/components/switch" },
           ],
         },
+        {
+          text: "反馈组件",
+          items: [
+            { text: "MessageBox 消息弹框", link: "/components/message-box" },
+          ],
+        },
       ],
       "/hooks/": [
         {

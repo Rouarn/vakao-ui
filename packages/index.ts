@@ -18,6 +18,9 @@ export * from './components'
 // 导出解析器
 export * from './resolver'
 
+// 导出 MessageBox 服务
+export { VkMessageBox } from './components/VkMessageBox/src/message-box'
+
 // 默认导出插件
 export default {
   install(app: App) {

@@ -14,7 +14,7 @@ hero:
       link: /components/
     - theme: alt
       text: GitHub
-      link: https://github.com/your-username/vakao-ui
+      link: https://github.com/Rouarn/vakao-ui
 
 features:
   - title: 🚀 现代化技术栈
