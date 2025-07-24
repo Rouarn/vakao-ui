@@ -9,6 +9,11 @@ export type SwitchValue = string | number | boolean
 
 // 开关属性定义
 export const switchProps = {
+  /** 绑定值 */
+  modelValue: {
+    type: [String, Number, Boolean] as PropType<SwitchValue>,
+    default: false
+  },
   /** 开关尺寸 */
   size: {
     type: String as PropType<SwitchSize>,
@@ -58,6 +63,11 @@ export const switchProps = {
   inlinePrompt: {
     type: Boolean,
     default: false
+  },
+  /** 切换前的钩子函数，返回 false 或 Promise reject 时阻止切换 */
+  beforeChange: {
+    type: Function as PropType<() => boolean | Promise<boolean>>,
+    default: undefined
   },
   /** 自定义类名 */
   customClass: String,

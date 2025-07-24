@@ -293,18 +293,16 @@ const value2 = ref(false);
 
 <script setup>
 import { ref } from "vue";
-import { VkMessageBox } from "vakao-ui";
+import { VkMessageBox } from '@vakao-ui/components'
 
 const value = ref(false);
 
 const beforeChange = () => {
-  return VkMessageBox.confirm("Switch to a new value. Continue?", "Warning", {
-    confirmButtonText: "Yes",
-    cancelButtonText: "No",
+  return VkMessageBox.confirm("切换到新的值，是否继续？", "警告", {
+    confirmText: "确定",
+    cancelText: "取消",
     type: "warning",
   })
-    .then(() => true)
-    .catch(() => false);
 };
 </script>
 ```
@@ -347,6 +345,7 @@ const beforeChange = () => {
 
 <script setup>
 import { ref } from 'vue'
+import { VkMessageBox } from '@vakao-ui/components'
 
 const value1 = ref(true)
 const value2 = ref(true)
@@ -367,14 +366,10 @@ const value16 = ref(false)
 const value17 = ref(false)
 
 const beforeChange = () => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      if (Math.random() > 0.5) {
-        resolve(true)
-      } else {
-        reject(new Error('切换失败'))
-      }
-    }, 1000)
+  return VkMessageBox.confirm("切换到新的值，是否继续？", "警告", {
+    confirmText: "确定",
+    cancelText: "取消",
+    type: "warning",
   })
 }
 </script>

@@ -67,12 +67,9 @@ export default defineComponent({
     // 模板引用
     const switchRef = ref<HTMLElement>()
     
-    // 双向绑定值
-    const modelValue = ref<SwitchValue>(false)
-    
     // 计算属性
     const isChecked = computed(() => {
-      return modelValue.value === props.activeValue
+      return props.modelValue === props.activeValue
     })
     
     const isDisabled = computed(() => {
@@ -106,11 +103,23 @@ export default defineComponent({
     })
     
     // 事件处理
-    const handleClick = () => {
+    const handleClick = async () => {
       if (isDisabled.value) return
       
       const newValue = isChecked.value ? props.inactiveValue : props.activeValue
-      modelValue.value = newValue
+      
+      // 如果有 beforeChange 钩子，先执行
+      if (props.beforeChange) {
+        try {
+          const result = await props.beforeChange()
+          if (result === false) {
+            return // 阻止切换
+          }
+        } catch (error) {
+          return // Promise reject 时阻止切换
+        }
+      }
+      
       emit('update:modelValue', newValue)
       emit('change', newValue)
     }
@@ -118,7 +127,6 @@ export default defineComponent({
     return {
       ns,
       switchRef,
-      modelValue,
       isChecked,
       isDisabled,
       mergedClass,
