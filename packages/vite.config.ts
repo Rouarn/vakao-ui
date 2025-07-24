@@ -22,19 +22,61 @@ export default defineConfig({
       pathsToAliases: false,
       aliasesExclude: [/@vakao-ui\/.*/],
       beforeWriteFile: (filePath, content) => {
-        // 替换 workspace 包引用为相对路径
+        // 动态计算相对路径，确保在任何位置都能正确访问
+        const path = require("path");
+        const fileDir = path.dirname(filePath);
+        const typesRoot = path.resolve(__dirname, "dist/types");
+
+        // 计算从当前文件到各个模块的相对路径
+        const utilsPath = path
+          .relative(fileDir, path.join(typesRoot, "utils"))
+          .replace(/\\/g, "/");
+        const typesPath = path
+          .relative(fileDir, path.join(typesRoot, "index"))
+          .replace(/\\/g, "/");
+        const hooksPath = path
+          .relative(fileDir, path.join(typesRoot, "hooks"))
+          .replace(/\\/g, "/");
+
+        // 确保路径以 ./ 开头（如果不是以 ../ 开头的话）
+        const normalizeRelativePath = (p: string) => {
+          if (!p.startsWith("../") && !p.startsWith("./")) {
+            return "./" + p;
+          }
+          return p;
+        };
+
         const updatedContent = content
-          .replace(/from ["']@vakao-ui\/utils["']/g, 'from "../../utils/"')
-          .replace(/import\(["']@vakao-ui\/utils["']\)/g, 'import("../../utils/")')
-          .replace(/from ["']@vakao-ui\/types["']/g, 'from "../../types/"')
-          .replace(/import\(["']@vakao-ui\/types["']\)/g, 'import("../../types/")')
-          .replace(/from ["']@vakao-ui\/hooks["']/g, 'from "../../hooks/"')
-          .replace(/import\(["']@vakao-ui\/hooks["']\)/g, 'import("../../hooks/")');
+          .replace(
+            /from ["']@vakao-ui\/utils["']/g,
+            `from "${normalizeRelativePath(utilsPath)}"`
+          )
+          .replace(
+            /import\(["']@vakao-ui\/utils["']\)/g,
+            `import("${normalizeRelativePath(utilsPath)}")`
+          )
+          .replace(
+            /from ["']@vakao-ui\/types["']/g,
+            `from "${normalizeRelativePath(typesPath)}"`
+          )
+          .replace(
+            /import\(["']@vakao-ui\/types["']\)/g,
+            `import("${normalizeRelativePath(typesPath)}")`
+          )
+          .replace(
+            /from ["']@vakao-ui\/hooks["']/g,
+            `from "${normalizeRelativePath(hooksPath)}"`
+          )
+          .replace(
+            /import\(["']@vakao-ui\/hooks["']\)/g,
+            `import("${normalizeRelativePath(hooksPath)}")`
+          );
+
         return {
           filePath,
-          content: updatedContent
+          content: updatedContent,
         };
-      }
+      },
     }),
   ],
   build: {
@@ -53,9 +95,9 @@ export default defineConfig({
         },
         exports: "named",
         // 确保CSS文件输出为单独的文件
-        assetFileNames: (assetInfo) => {
-          if (assetInfo.name === 'style.css') return 'style.css';
-          return assetInfo.name || 'asset';
+        assetFileNames: assetInfo => {
+          if (assetInfo.name === "style.css") return "style.css";
+          return assetInfo.name || "asset";
         },
       },
     },
