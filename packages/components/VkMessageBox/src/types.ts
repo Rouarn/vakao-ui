@@ -68,6 +68,34 @@ export const messageBoxProps = {
   customStyle: {
     type: [String, Object] as PropType<string | CSSProperties>,
     default: ''
+  },
+  /** 是否显示输入框 */
+  showInput: {
+    type: Boolean,
+    default: false
+  },
+  /** 输入框占位符 */
+  inputPlaceholder: {
+    type: String,
+    default: ''
+  },
+  /** 输入框初始值 */
+  inputValue: {
+    type: String,
+    default: ''
+  },
+  /** 输入框验证模式 */
+  inputPattern: {
+    type: RegExp
+  },
+  /** 输入框验证函数 */
+  inputValidator: {
+    type: Function as PropType<(value: string) => boolean | string>
+  },
+  /** 输入框错误信息 */
+  inputErrorMessage: {
+    type: String,
+    default: ''
   }
 } as const
 
@@ -88,16 +116,24 @@ export interface MessageBoxOptions {
   closeOnPressEscape?: boolean
   customClass?: string
   customStyle?: string | CSSProperties
+  showInput?: boolean
+  inputPlaceholder?: string
+  inputValue?: string
+  inputPattern?: RegExp
+  inputValidator?: (value: string) => boolean | string
+  inputErrorMessage?: string
 }
 
 // MessageBox 实例
 export interface MessageBoxInstance {
   visible: boolean
+  value?: string
   close: () => void
 }
 
 // MessageBox 返回值
 export interface MessageBoxResult {
-  action: MessageBoxAction
-  instance: MessageBoxInstance
+  action: MessageBoxAction;
+  instance: MessageBoxInstance;
+  value?: string;
 }

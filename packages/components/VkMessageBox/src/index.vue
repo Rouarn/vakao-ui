@@ -25,6 +25,20 @@
           <!-- 内容 -->
           <div class="vk-message-box__content">
             <div class="vk-message-box__message">{{ message }}</div>
+            <!-- 输入框 (用于 prompt 类型) -->
+            <div v-if="showInput" class="vk-message-box__input">
+              <input
+                ref="inputRef"
+                v-model="inputValue"
+                type="text"
+                :placeholder="inputPlaceholder"
+                class="vk-message-box__input-inner"
+                @keyup.enter="handleConfirm"
+              />
+              <div v-if="inputErrorMessage" class="vk-message-box__error-message">
+                {{ inputErrorMessage }}
+              </div>
+            </div>
           </div>
 
           <!-- 底部按钮 -->
@@ -51,23 +65,33 @@
   </Teleport>
 </template>
 
-<script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted, getCurrentInstance } from "vue";
+<script lang="ts">
+import { defineComponent, ref, computed, onMounted, onUnmounted, type PropType } from "vue";
 import { messageBoxProps, type MessageBoxAction } from "./types";
 import { ComponentType } from "../../../types";
 import VkButton from "../../VkButton";
 import VkIcon from "../../VkIcon";
 
-defineOptions({
+export default defineComponent({
   name: "VkMessageBox",
-});
-
-const props = defineProps(messageBoxProps);
-const emit = defineEmits<{
-  action: [action: MessageBoxAction, instance: any];
-}>();
-
-const visible = ref(false);
+  components: {
+    VkButton,
+    VkIcon
+  },
+  props: {
+    ...messageBoxProps,
+    onAction: {
+      type: Function as PropType<(action: MessageBoxAction, instance: any) => void>
+    }
+  },
+  emits: {
+    'action': (_action: MessageBoxAction, _instance: any) => true
+  },
+  setup(props, { emit }) {
+    const visible = ref(false);
+    const inputRef = ref<HTMLInputElement>();
+    const inputValue = ref(props.inputValue || '');
+    const inputErrorMessage = ref(props.inputErrorMessage || '');
 
 // 计算属性
 const messageBoxClass = computed(() => [`vk-message-box--${props.type}`]);
@@ -101,17 +125,62 @@ const confirmButtonClass = computed(() => ["vk-message-box__confirm"]);
 
 const cancelButtonClass = computed(() => ["vk-message-box__cancel"]);
 
+// 输入验证方法
+const validateInput = () => {
+  if (!props.showInput) return true;
+  
+  const value = inputValue.value;
+  
+  // 使用自定义验证函数
+  if (props.inputValidator) {
+    const result = props.inputValidator(value);
+    if (result === false) {
+      inputErrorMessage.value = '输入不符合要求';
+      return false;
+    }
+    if (typeof result === 'string') {
+      inputErrorMessage.value = result;
+      return false;
+    }
+  }
+  
+  // 使用正则表达式验证
+  if (props.inputPattern && !props.inputPattern.test(value)) {
+    inputErrorMessage.value = props.inputErrorMessage || '输入格式不正确';
+    return false;
+  }
+  
+  inputErrorMessage.value = '';
+  return true;
+};
+
 // 方法
 const handleConfirm = () => {
-  emit("action", "confirm", getMessageBoxInstance());
+  if (!validateInput()) {
+    return;
+  }
+  
+  const instance = getMessageBoxInstance();
+  emit("action", "confirm", instance);
+  if (props.onAction) {
+    props.onAction("confirm", instance);
+  }
 };
 
 const handleCancel = () => {
-  emit("action", "cancel", getMessageBoxInstance());
+  const instance = getMessageBoxInstance();
+  emit("action", "cancel", instance);
+  if (props.onAction) {
+    props.onAction("cancel", instance);
+  }
 };
 
 const handleClose = () => {
-  emit("action", "close", getMessageBoxInstance());
+  const instance = getMessageBoxInstance();
+  emit("action", "close", instance);
+  if (props.onAction) {
+    props.onAction("close", instance);
+  }
 };
 
 const handleWrapperClick = (e: Event) => {
@@ -123,6 +192,7 @@ const handleWrapperClick = (e: Event) => {
 const getMessageBoxInstance = () => {
   return {
     visible,
+    value: inputValue.value,
     close: () => {
       visible.value = false;
     },
@@ -140,18 +210,43 @@ const handleKeydown = (e: KeyboardEvent) => {
 onMounted(() => {
   visible.value = true;
   document.addEventListener("keydown", handleKeydown);
+  
+  // 如果显示输入框，自动聚焦
+  if (props.showInput && inputRef.value) {
+    setTimeout(() => {
+      inputRef.value?.focus();
+    }, 100);
+  }
 });
 
 onUnmounted(() => {
   document.removeEventListener("keydown", handleKeydown);
 });
 
-// 暴露方法
-defineExpose({
-  visible,
-  close: () => {
-    visible.value = false;
-  },
+    // 返回所有需要在模板中使用的变量和方法
+    return {
+      visible,
+      inputRef,
+      inputValue,
+      inputErrorMessage,
+      messageBoxClass,
+      iconName,
+      iconClass,
+      confirmButtonType,
+      confirmButtonClass,
+      cancelButtonClass,
+      validateInput,
+      handleConfirm,
+      handleCancel,
+      handleClose,
+      handleWrapperClick,
+      getMessageBoxInstance,
+      // 暴露方法
+      close: () => {
+        visible.value = false;
+      }
+    };
+  }
 });
 </script>
 
@@ -240,6 +335,31 @@ defineExpose({
   font-size: 14px;
   color: #606266;
   line-height: 1.5;
+}
+
+.vk-message-box__input {
+  margin: 16px 0;
+}
+
+.vk-message-box__input-inner {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #dcdfe6;
+  border-radius: 4px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+}
+
+.vk-message-box__input-inner:focus {
+  border-color: #409eff;
+}
+
+.vk-message-box__error-message {
+  color: #f56c6c;
+  font-size: 12px;
+  margin-top: 4px;
 }
 
 .vk-message-box__footer {
