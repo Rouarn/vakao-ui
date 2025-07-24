@@ -88,20 +88,7 @@
     border-radius: $border-radius-small;
   }
 
-  &.vk-button--size-mini {
-    padding: 0 $spacing-mini;
-    font-size: $font-size-mini;
-    height: $component-size-mini;
-    border-radius: $border-radius-mini;
-  }
 
-  // 添加 tiny 尺寸支持
-  &.vk-button--size-tiny {
-    padding: 0 6px;
-    font-size: 12px;
-    height: 22px;
-    border-radius: $border-radius-small;
-  }
 
   // 类型变体
   &.vk-button--type-primary {
@@ -284,16 +271,6 @@
     &.vk-button--size-small {
       width: var(--vk-component-size-small);
       height: var(--vk-component-size-small);
-    }
-    
-    &.vk-button--size-mini {
-      width: var(--vk-component-size-mini);
-      height: var(--vk-component-size-mini);
-    }
-    
-    &.vk-button--size-tiny {
-      width: 22px;
-      height: 22px;
     }
 
     // 圆形按钮中的图标始终居中，忽略位置属性

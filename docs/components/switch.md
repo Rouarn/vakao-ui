@@ -165,11 +165,7 @@ const value4 = ref(true);
 
 ```vue
 <template>
-  <vk-switch
-    v-model="value1"
-    active-icon="Checkmark"
-    inactive-icon="Close"
-  />
+  <vk-switch v-model="value1" active-icon="Checkmark" inactive-icon="Close" />
   <br />
   <vk-switch
     v-model="value2"

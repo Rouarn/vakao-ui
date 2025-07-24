@@ -44,7 +44,7 @@
   --vk-border-radius-circle: #{$border-radius-circle};
   
   /* 间距 */
-  --vk-spacing-mini: #{$spacing-mini};
+
   --vk-spacing-small: #{$spacing-small};
   --vk-spacing-base: #{$spacing-base};
   --vk-spacing-large: #{$spacing-large};
@@ -63,23 +63,19 @@
   --vk-fill-color-blank: #{$fill-color-blank};
   
   /* 组件尺寸 */
-  --vk-component-size-mini: #{$component-size-mini};
+
   --vk-component-size-small: #{$component-size-small};
   --vk-component-size-medium: #{$component-size-medium};
   --vk-component-size-large: #{$component-size-large};
   
-  /* 过渡 */
+  /* 过渡动画 */
   --vk-transition-duration: #{$transition-duration};
   --vk-transition-timing-function: #{$transition-timing-function};
-  
+
   /* 阴影 */
   --vk-box-shadow-base: #{$box-shadow-base};
   --vk-box-shadow-light: #{$box-shadow-light};
   --vk-box-shadow-dark: #{$box-shadow-dark};
-  
-  /* 过渡 */
-  --vk-transition-duration: #{$transition-duration};
-  --vk-transition-timing-function: #{$transition-timing-function};
 }
 
 /* 通用过渡效果 - 使用类名前缀避免冲突 */

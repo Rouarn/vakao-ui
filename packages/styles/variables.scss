@@ -25,17 +25,16 @@ $bg-color-page: #f5f5f5;
 $bg-color-disabled: #f5f7fa;
 
 /* 字体 */
-$font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
-  'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
-  'Noto Color Emoji';
-$font-size-mini: 12px;
+$font-family:
+  -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
+  Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+  "Segoe UI Symbol", "Noto Color Emoji";
 $font-size-small: 12px;
 $font-size-base: 14px;
 $font-size-medium: 16px;
 $font-size-large: 18px;
 
 /* 边框圆角 */
-$border-radius-mini: 2px;
 $border-radius-small: 2px;
 $border-radius-base: 4px;
 $border-radius-large: 8px;
@@ -48,7 +47,9 @@ $spacing-base: 12px;
 $spacing-large: 16px;
 
 /* 阴影 */
-$box-shadow-base: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
+$box-shadow-base:
+  0 2px 4px rgba(0, 0, 0, 0.12),
+  0 0 6px rgba(0, 0, 0, 0.04);
 $box-shadow-light: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
 $box-shadow-dark: 0 2px 16px 0 rgba(0, 0, 0, 0.18);
 
@@ -70,7 +71,7 @@ $fill-color-darker: #e4e7ed;
 $fill-color-blank: #ffffff;
 
 /* 组件尺寸 */
-$component-size-mini: 24px;
+
 $component-size-small: 28px;
 $component-size-medium: 32px;
 $component-size-large: 40px;

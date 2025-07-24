@@ -138,14 +138,6 @@
   }
 
   // 尺寸变体
-  &.vk-checkbox--size-tiny {
-    font-size: 12px;
-    
-    .vk-checkbox__inner {
-      width: 12px !important;
-      height: 12px !important;
-    }
-  }
 
   &.vk-checkbox--size-small {
     font-size: var(--vk-font-size-small);
@@ -180,18 +172,6 @@
   gap: 12px;
 
   // 尺寸变体
-  &--size-tiny {
-    gap: 6px;
-    
-    .vk-checkbox {
-      font-size: 12px;
-      
-      .vk-checkbox__inner {
-        width: 12px !important;
-        height: 12px !important;
-      }
-    }
-  }
 
   &--size-small {
     gap: 8px;
