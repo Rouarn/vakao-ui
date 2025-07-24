@@ -1,46 +1,76 @@
-import { defineConfig } from 'vitepress'
+import { defineConfig } from "vitepress";
 
 export default defineConfig({
-  title: 'Vakao UI',
-  description: '基于 Vue 3 和 TypeScript 的现代化组件库',
+  title: "Vakao UI",
+  description: "基于 Vue 3 和 TypeScript 的现代化组件库",
   themeConfig: {
-    logo: '/logo.svg',
+    logo: "/logo.svg",
     nav: [
-      { text: '首页', link: '/' },
-      { text: '指南', link: '/guide/' },
-      { text: '组件', link: '/components/' },
-      { text: 'GitHub', link: 'https://github.com/your-username/vakao-ui' }
+      { text: "首页", link: "/" },
+      { text: "指南", link: "/guide/" },
+      { text: "组件", link: "/components/" },
+      { text: "Hooks", link: "/hooks/" },
+      { text: "工具", link: "/utils/" },
+      { text: "GitHub", link: "https://github.com/Rouarn/vakao-ui" },
     ],
     sidebar: {
-      '/guide/': [
+      "/guide/": [
         {
-          text: '指南',
+          text: "基础",
           items: [
-            { text: '介绍', link: '/guide/' },
-            { text: '快速开始', link: '/guide/getting-started' },
-            { text: '安装', link: '/guide/installation' },
-            { text: '使用', link: '/guide/usage' },
-            { text: '使用示例', link: '/guide/examples' },
-            { text: '更新日志', link: '/guide/changelog' }
-          ]
-        }
+            { text: "介绍", link: "/guide/" },
+            { text: "快速开始", link: "/guide/getting-started" },
+            { text: "安装", link: "/guide/installation" },
+          ],
+        },
+        {
+          text: "进阶",
+          items: [
+            { text: "使用指南", link: "/guide/usage" },
+            { text: "主题定制", link: "/guide/theming" },
+            { text: "使用示例", link: "/guide/examples" },
+          ],
+        },
+        {
+          text: "其他",
+          items: [
+            { text: "更新日志", link: "/guide/changelog" },
+          ],
+        },
       ],
-      '/components/': [
+      "/components/": [
         {
-          text: '基础组件',
-          items: [
-            { text: 'Button 按钮', link: '/components/button' }
-            // Add more components here as they are created
-          ]
-        }
-      ]
+          text: "组件总览",
+          items: [{ text: "组件介绍", link: "/components/" }],
+        },
+        {
+          text: "基础组件",
+          items: [{ text: "Button 按钮", link: "/components/button" }],
+        },
+      ],
+      "/hooks/": [
+        {
+          text: "Hooks 总览",
+          items: [{ text: "Hooks 介绍", link: "/hooks/" }],
+        },
+        {
+          text: "状态管理",
+          items: [{ text: "useToggle", link: "/hooks/use-toggle" }],
+        },
+      ],
+      "/utils/": [
+        {
+          text: "工具函数",
+          items: [{ text: "工具介绍", link: "/utils/" }],
+        },
+      ],
     },
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/your-username/vakao-ui' }
+      { icon: "github", link: "https://github.com/Rouarn/vakao-ui" },
     ],
     footer: {
-      message: 'Released under the MIT License.',
-      copyright: 'Copyright © 2023-present Vakao UI'
-    }
-  }
-})
+      message: "Released under the MIT License.",
+      copyright: "Copyright © 2023-present Vakao UI",
+    },
+  },
+});

@@ -6,16 +6,16 @@
 
 ```ts
 // main.ts
-import { createApp } from 'vue'
-import VakaoUI from 'vakao-ui'
+import { createApp } from "vue";
+import VakaoUI from "vakao-ui";
 // 导入样式文件（重要！）
-import 'vakao-ui/dist/style.css'
-import App from './App.vue'
+import "vakao-ui/style.css";
+import App from "./App.vue";
 
-const app = createApp(App)
+const app = createApp(App);
 
-app.use(VakaoUI)
-app.mount('#app')
+app.use(VakaoUI);
+app.mount("#app");
 ```
 
 ## 按需引入
@@ -26,23 +26,23 @@ app.mount('#app')
 
 ```ts
 // main.ts
-import { createApp } from 'vue'
-import { VKButton, VKInput } from 'vakao-ui'
+import { createApp } from "vue";
+import { VKButton, VKInput } from "vakao-ui";
 // 导入样式文件（重要！）
-import 'vakao-ui/dist/style.css'
-import App from './App.vue'
+import "vakao-ui/style.css";
+import App from "./App.vue";
 
-const app = createApp(App)
+const app = createApp(App);
 
 // 全局注册
-app.component('VKButton', VKButton)
-app.component('VKInput', VKInput)
+app.component("VKButton", VKButton);
+app.component("VKInput", VKInput);
 
 // 或者使用 install 方法
-app.use(VKButton)
-app.use(VKInput)
+app.use(VKButton);
+app.use(VKInput);
 
-app.mount('#app')
+app.mount("#app");
 ```
 
 ### 使用自动导入插件
@@ -51,19 +51,19 @@ app.mount('#app')
 
 ```ts
 // vite.config.ts
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
-import Components from 'unplugin-vue-components/vite'
-import { VakaoUIResolver } from 'vakao-ui/resolver'
+import { defineConfig } from "vite";
+import vue from "@vitejs/plugin-vue";
+import Components from "unplugin-vue-components/vite";
+import { VakaoUIResolver } from "vakao-ui/resolver";
 
 export default defineConfig({
   plugins: [
     vue(),
     Components({
-      resolvers: [VakaoUIResolver()]
-    })
-  ]
-})
+      resolvers: [VakaoUIResolver()],
+    }),
+  ],
+});
 ```
 
 使用自动导入插件后，你可以直接在模板中使用组件，无需手动导入：
@@ -85,20 +85,15 @@ Vakao UI 使用 TypeScript 编写，提供完整的类型定义。所有组件�
 ```vue
 <template>
   <!-- 完整的类型支持和智能提示 -->
-  <vk-button 
-    type="primary" 
-    size="large"
-    :disabled="false"
-    @click="handleClick"
-  >
+  <vk-button type="primary" size="large" :disabled="false" @click="handleClick">
     按钮
   </vk-button>
 </template>
 
 <script setup lang="ts">
 const handleClick = () => {
-  console.log('按钮被点击')
-}
+  console.log("按钮被点击");
+};
 </script>
 ```
 
@@ -109,7 +104,7 @@ const handleClick = () => {
 ```vue
 <template>
   <!-- 支持 class 和 style 属性 -->
-  <vk-button 
+  <vk-button
     class="my-custom-class"
     style="margin: 10px;"
     data-testid="my-button"
@@ -131,42 +126,38 @@ npm install -D unplugin-vue-components
 
 ```ts
 // vite.config.ts
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
-import Components from 'unplugin-vue-components/vite'
+import { defineConfig } from "vite";
+import vue from "@vitejs/plugin-vue";
+import Components from "unplugin-vue-components/vite";
 
 // 导入 Vakao UI 组件解析器
-import { VakaoUIResolver } from 'vakao-ui/resolver'
+import { VakaoUIResolver } from "vakao-ui/resolver";
 
 export default defineConfig({
   plugins: [
     vue(),
     Components({
-      resolvers: [
-        VakaoUIResolver(),
-      ],
+      resolvers: [VakaoUIResolver()],
     }),
   ],
-})
+});
 ```
 
 #### Webpack
 
 ```js
 // webpack.config.js
-const Components = require('unplugin-vue-components/webpack')
-const { VakaoUIResolver } = require('vakao-ui/resolver')
+const Components = require("unplugin-vue-components/webpack");
+const { VakaoUIResolver } = require("vakao-ui/resolver");
 
 module.exports = {
   // ...
   plugins: [
     Components({
-      resolvers: [
-        VakaoUIResolver(),
-      ],
+      resolvers: [VakaoUIResolver()],
     }),
   ],
-}
+};
 ```
 
 ## 在组件中使用
@@ -189,13 +180,13 @@ Vakao UI 提供了一系列的组合式 API，可以在 `setup` 中使用：
 ```vue
 <template>
   <div>
-    <vk-button @click="toggle">切换状态: {{ state ? '开' : '关' }}</vk-button>
+    <vk-button @click="toggle">切换状态: {{ state ? "开" : "关" }}</vk-button>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useToggle } from 'vakao-ui'
+import { useToggle } from "vakao-ui";
 
-const { state, toggle } = useToggle(false)
+const { state, toggle } = useToggle(false);
 </script>
 ```

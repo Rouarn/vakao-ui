@@ -1,16 +1,38 @@
-# 组件
+# 组件总览
 
-Vakao UI 提供了一系列基于 Naive UI 的组件，这些组件经过二次封装，提供更加便捷的使用方式。
+Vakao UI 提供了一系列精心设计的 Vue 3 组件，这些组件具有现代化的设计风格、完善的类型支持和优秀的开发体验。
 
-## 组件列表
+## 设计原则
+
+- **一致性** - 统一的设计语言和交互模式
+- **易用性** - 简洁的 API 设计，开箱即用
+- **可定制** - 灵活的主题系统和样式定制
+- **类型安全** - 完整的 TypeScript 类型支持
+- **性能优化** - 按需加载，体积小巧
+
+## 组件分类
 
 ### 基础组件
 
-- [Button 按钮](/components/button) - 用于触发一个操作
+基础组件是构建用户界面的核心元素，提供最常用的交互功能。
 
-### 其他组件
+- [Button 按钮](/components/button) - 用于触发操作的基础按钮组件
 
-_即将推出_
+### 表单组件
+
+_即将推出更多表单组件..._
+
+### 数据展示
+
+_即将推出数据展示组件..._
+
+### 导航组件
+
+_即将推出导航组件..._
+
+### 反馈组件
+
+_即将推出反馈组件..._
 
 ## 组件命名约定
 
@@ -32,7 +54,7 @@ Vakao UI 的组件命名遵循以下约定：
 ```ts
 import { createApp } from "vue";
 import VakaoUI from "vakao-ui";
-import "vakao-ui/dist/index.css";
+import "vakao-ui/style.css";
 import App from "./App.vue";
 
 const app = createApp(App);
@@ -49,6 +71,6 @@ app.mount("#app");
 
 <script setup lang="ts">
 import { VKButton } from "vakao-ui";
-import "vakao-ui/dist/index.css";
+import "vakao-ui/style.css";
 </script>
 ```

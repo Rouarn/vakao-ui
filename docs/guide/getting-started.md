@@ -1,20 +1,36 @@
 # 快速开始
 
-本节将介绍如何在项目中使用 Vakao UI。
+本节将介绍如何在项目中快速上手 Vakao UI，包括安装、配置和基本使用方法。
+
+## 环境要求
+
+- Vue 3.0+
+- TypeScript 4.0+ (推荐)
+- Node.js 16+
 
 ## 安装
 
-### 安装 Vakao UI
+### 使用包管理器安装
 
 ```bash
 # npm
-npm install vakao-ui --save
+npm install vakao-ui
 
 # yarn
 yarn add vakao-ui
 
-# pnpm
+# pnpm (推荐)
 pnpm add vakao-ui
+```
+
+### CDN 引入
+
+```html
+<!-- 引入样式 -->
+<link rel="stylesheet" href="https://unpkg.com/vakao-ui/dist/style.css">
+
+<!-- 引入组件库 -->
+<script src="https://unpkg.com/vakao-ui/dist/vakao-ui.umd.js"></script>
 ```
 
 ::: tip 提示
@@ -27,30 +43,121 @@ Vakao UI 是一个独立的组件库，基于 Vue 3 和 TypeScript 构建，提�
 
 如果你对打包后的文件大小不是很在乎，那么使用完整导入会更方便。
 
-```ts
-import { createApp } from "vue";
-import VakaoUI from "vakao-ui";
-// 重要：必须导入样式文件
-import "vakao-ui/dist/style.css";
-import App from "./App.vue";
+```typescript
+// main.ts
+import { createApp } from 'vue'
+import VakaoUI from 'vakao-ui'
+import 'vakao-ui/dist/style.css'
+import App from './App.vue'
 
-const app = createApp(App);
-app.use(VakaoUI);
-app.mount("#app");
+const app = createApp(App)
+app.use(VakaoUI)
+app.mount('#app')
+```
+
+#### 使用组件
+
+```vue
+<template>
+  <div>
+    <vk-button type="primary">主要按钮</vk-button>
+    <vk-button type="success">成功按钮</vk-button>
+  </div>
+</template>
 ```
 
 ### 按需引入
 
-如果你只希望引入部分组件，可以使用按需引入的方式。
+按需引入可以减小打包体积，推荐在生产环境中使用。
+
+#### 手动按需引入
 
 ```vue
 <template>
-  <vk-button type="primary">按钮</vk-button>
+  <div>
+    <vk-button type="primary">Hello Vakao UI</vk-button>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { VKButton } from "vakao-ui";
-import "vakao-ui/dist/index.css";
+import { VkButton } from 'vakao-ui'
+import 'vakao-ui/dist/style.css'
+</script>
+```
+
+#### 自动按需引入 (推荐)
+
+使用 `unplugin-vue-components` 和 `unplugin-auto-import` 实现自动按需引入。
+
+##### 安装插件
+
+```bash
+pnpm add -D unplugin-vue-components unplugin-auto-import
+```
+
+##### 配置 Vite
+
+```typescript
+// vite.config.ts
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import AutoImport from 'unplugin-auto-import/vite'
+import Components from 'unplugin-vue-components/vite'
+import { VakaoUIResolver } from 'vakao-ui/resolver'
+
+export default defineConfig({
+  plugins: [
+    vue(),
+    AutoImport({
+      resolvers: [VakaoUIResolver()],
+    }),
+    Components({
+      resolvers: [VakaoUIResolver()],
+    }),
+  ],
+})
+```
+
+##### 配置 Webpack
+
+```javascript
+// webpack.config.js
+const AutoImport = require('unplugin-auto-import/webpack')
+const Components = require('unplugin-vue-components/webpack')
+const { VakaoUIResolver } = require('vakao-ui/resolver')
+
+module.exports = {
+  // ...
+  plugins: [
+    AutoImport({
+      resolvers: [VakaoUIResolver()],
+    }),
+    Components({
+      resolvers: [VakaoUIResolver()],
+    }),
+  ],
+}
+```
+
+##### 使用组件
+
+配置完成后，可以直接在模板中使用组件，无需手动导入：
+
+```vue
+<template>
+  <div>
+    <!-- 自动导入，无需手动 import -->
+    <vk-button type="primary">主要按钮</vk-button>
+    <vk-button-group>
+      <vk-button>按钮1</vk-button>
+      <vk-button>按钮2</vk-button>
+    </vk-button-group>
+  </div>
+</template>
+
+<script setup lang="ts">
+// 自动导入 hooks
+const { state, toggle } = useToggle()
 </script>
 ```
 
