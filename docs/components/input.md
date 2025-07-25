@@ -105,25 +105,40 @@ const value = ref("");
 
 ## 带图标的输入框
 
-可以通过 `prefix-icon` 和 `suffix-icon` 属性在 input 组件首部和尾部增加显示图标。
+可以通过 `prefix-icon` 和 `suffix-icon` 属性在 input 组件首部和尾部增加显示图标。支持 Iconify 图标名称、图片 URL 和本地图片路径。
 
 <Demo>
-  <vk-input v-model="value5" prefix-icon="mdi:magnify" placeholder="请输入搜索内容" />
-  <vk-input v-model="value6" suffix-icon="mdi:calendar" placeholder="请选择日期" />
+  <vk-input v-model="value5" prefix-icon="mdi:magnify" placeholder="Iconify 图标" />
+  <vk-input v-model="value6" suffix-icon="https://api.iconify.design/simple-icons/github.svg" placeholder="图片 URL" />
+  <vk-input
+    v-model="value7"
+    :prefix-icon="'../public/logo.svg'"
+    placeholder="本地图片"
+  />
   
   <template #code>
 
 ```vue
 <template>
+  <!-- Iconify 图标名称 -->
   <vk-input
     v-model="value1"
     prefix-icon="mdi:magnify"
-    placeholder="请输入搜索内容"
+    placeholder="Iconify 图标"
   />
+
+  <!-- 图片 URL -->
   <vk-input
     v-model="value2"
-    suffix-icon="mdi:calendar"
-    placeholder="请选择日期"
+    suffix-icon="https://api.iconify.design/simple-icons/github.svg"
+    placeholder="图片 URL"
+  />
+
+  <!-- 本地图片路径 -->
+  <vk-input
+    v-model="value3"
+    prefix-icon="/public/logo.svg"
+    placeholder="本地图片"
   />
 </template>
 
@@ -132,6 +147,7 @@ import { ref } from "vue";
 
 const value1 = ref("");
 const value2 = ref("");
+const value3 = ref("");
 </script>
 ```
 
@@ -217,21 +233,21 @@ const value2 = ref("");
 
 ### Props
 
-| 名称         | 类型                                                            | 默认值        | 说明                 |
-| ------------ | --------------------------------------------------------------- | ------------- | -------------------- |
-| type         | `'text' \| 'password' \| 'email' \| 'number' \| 'tel' \| 'url'` | `'text'`      | 输入框类型           |
-| size         | `'small' \| 'medium' \| 'large'`                                | `'medium'`    | 输入框大小           |
-| disabled     | `boolean`                                                       | `false`       | 是否禁用             |
-| placeholder  | `string`                                                        | `'请输入...'` | 输入框占位文本       |
-| maxlength    | `number \| string`                                              | —             | 最大输入长度         |
-| clearable    | `boolean`                                                       | `false`       | 是否可清空           |
-| showPassword | `boolean`                                                       | `false`       | 是否显示切换密码图标 |
-| prefixIcon   | `string`                                                        | —             | 输入框头部图标，支持 iconify 图标格式（如 `mdi:magnify`）       |
-| suffixIcon   | `string`                                                        | —             | 输入框尾部图标，支持 iconify 图标格式（如 `mdi:calendar`）       |
-| readonly     | `boolean`                                                       | `false`       | 是否只读             |
-| customClass  | `string`                                                        | —             | 自定义类名           |
-| customStyle  | `string \| object`                                              | —             | 自定义样式           |
-| autofocus    | `boolean`                                                       | `false`       | 是否自动获取焦点     |
+| 名称         | 类型                                                            | 默认值        | 说明                                                                                |
+| ------------ | --------------------------------------------------------------- | ------------- | ----------------------------------------------------------------------------------- |
+| type         | `'text' \| 'password' \| 'email' \| 'number' \| 'tel' \| 'url'` | `'text'`      | 输入框类型                                                                          |
+| size         | `'small' \| 'medium' \| 'large'`                                | `'medium'`    | 输入框大小                                                                          |
+| disabled     | `boolean`                                                       | `false`       | 是否禁用                                                                            |
+| placeholder  | `string`                                                        | `'请输入...'` | 输入框占位文本                                                                      |
+| maxlength    | `number \| string`                                              | —             | 最大输入长度                                                                        |
+| clearable    | `boolean`                                                       | `false`       | 是否可清空                                                                          |
+| showPassword | `boolean`                                                       | `false`       | 是否显示切换密码图标                                                                |
+| prefixIcon   | `string`                                                        | —             | 输入框头部图标，支持 Iconify 图标名称（如 `mdi:magnify`）、图片 URL 或本地图片路径  |
+| suffixIcon   | `string`                                                        | —             | 输入框尾部图标，支持 Iconify 图标名称（如 `mdi:calendar`）、图片 URL 或本地图片路径 |
+| readonly     | `boolean`                                                       | `false`       | 是否只读                                                                            |
+| customClass  | `string`                                                        | —             | 自定义类名                                                                          |
+| customStyle  | `string \| object`                                              | —             | 自定义样式                                                                          |
+| autofocus    | `boolean`                                                       | `false`       | 是否自动获取焦点                                                                    |
 
 ### Events
 

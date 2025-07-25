@@ -3,8 +3,8 @@
     <!-- 前缀插槽 -->
     <div v-if="$slots.prefix || prefixIcon" class="vk-input__prefix">
       <slot name="prefix">
-        <vk-icon v-if="prefixIcon" size="16px">
-          <Icon :icon="prefixIcon" />
+        <vk-icon v-if="prefixIcon" size="16px" :src="isUrl(prefixIcon) ? prefixIcon : undefined">
+          <Icon v-if="!isUrl(prefixIcon)" :icon="prefixIcon" />
         </vk-icon>
       </slot>
     </div>
@@ -54,8 +54,8 @@
 
       <!-- 后缀图标 -->
       <slot name="suffix">
-        <vk-icon v-if="suffixIcon" size="16px">
-          <Icon :icon="suffixIcon" />
+        <vk-icon v-if="suffixIcon" size="16px" :src="isUrl(suffixIcon) ? suffixIcon : undefined">
+          <Icon v-if="!isUrl(suffixIcon)" :icon="suffixIcon" />
         </vk-icon>
       </slot>
     </div>
@@ -66,7 +66,7 @@
 import { defineComponent, ref, computed, nextTick } from "vue";
 import type { StyleValue } from "vue";
 import { inputProps } from "./types";
-import { useNamespace } from "@vakao-ui/utils";
+import { useNamespace, isUrl } from "@vakao-ui/utils";
 import VkIcon from "../../VkIcon";
 import { Icon } from "@iconify/vue";
 
@@ -101,6 +101,8 @@ export default defineComponent({
 
     // 焦点状态
     const isFocused = ref(false);
+
+
 
     // 过滤属性
     const filteredAttrs = computed(() => {
@@ -217,6 +219,7 @@ export default defineComponent({
       inputClass,
       showSuffix,
       showClear,
+      isUrl,
       handleInput,
       handleChange,
       handleFocus,

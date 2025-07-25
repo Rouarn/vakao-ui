@@ -16,8 +16,8 @@
       class="vk-button__icon vk-button__icon--left"
     >
       <component v-if="typeof icon === 'object'" :is="icon" />
-      <vk-icon v-else-if="typeof icon === 'string'" :size="iconSize">
-        <Icon :icon="icon" />
+      <vk-icon v-else-if="typeof icon === 'string'" :size="iconSize" :src="isUrl(icon) ? icon : undefined">
+        <Icon v-if="!isUrl(icon)" :icon="icon" />
       </vk-icon>
     </span>
     <span class="vk-button__content">
@@ -28,8 +28,8 @@
       class="vk-button__icon vk-button__icon--right"
     >
       <component v-if="typeof icon === 'object'" :is="icon" />
-      <vk-icon v-else-if="typeof icon === 'string'" :size="iconSize">
-        <Icon :icon="icon" />
+      <vk-icon v-else-if="typeof icon === 'string'" :size="iconSize" :src="isUrl(icon) ? icon : undefined">
+        <Icon v-if="!isUrl(icon)" :icon="icon" />
       </vk-icon>
     </span>
   </button>
@@ -39,7 +39,7 @@
 import { defineComponent, computed, useAttrs } from "vue";
 import type { CSSProperties } from "vue";
 import { buttonProps } from "./types";
-import { useNamespace } from "@vakao-ui/utils";
+import { useNamespace, isUrl } from "@vakao-ui/utils";
 import VkIcon from "../../VkIcon";
 import { Icon } from "@iconify/vue";
 
@@ -55,6 +55,8 @@ export default defineComponent({
   setup(props, { emit }) {
     const attrs = useAttrs();
     const ns = useNamespace('button');
+    
+
     
     const handleClick = (e: MouseEvent) => {
       if (!props.disabled && !props.loading) {
@@ -114,6 +116,7 @@ export default defineComponent({
       mergedStyle,
       mergedClass,
       iconSize,
+      isUrl,
     };
   },
 });

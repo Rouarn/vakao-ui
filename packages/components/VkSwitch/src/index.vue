@@ -24,14 +24,14 @@
       <!-- 内联提示 -->
       <template v-if="inlinePrompt">
         <span v-if="isChecked" :class="ns.element('inner')">
-          <vk-icon v-if="activeIcon" size="12px">
-            <Icon :icon="activeIcon" />
+          <vk-icon v-if="activeIcon" size="12px" :src="isUrl(activeIcon) ? activeIcon : undefined">
+            <Icon v-if="!isUrl(activeIcon)" :icon="activeIcon" />
           </vk-icon>
           <span v-else-if="activeText">{{ activeText }}</span>
         </span>
         <span v-else :class="ns.element('inner')">
-          <vk-icon v-if="inactiveIcon" size="12px">
-            <Icon :icon="inactiveIcon" />
+          <vk-icon v-if="inactiveIcon" size="12px" :src="isUrl(inactiveIcon) ? inactiveIcon : undefined">
+            <Icon v-if="!isUrl(inactiveIcon)" :icon="inactiveIcon" />
           </vk-icon>
           <span v-else-if="inactiveText">{{ inactiveText }}</span>
         </span>
@@ -54,7 +54,7 @@
 <script lang="ts">
 import { defineComponent, computed, ref } from 'vue'
 import { switchProps, type SwitchValue } from './types'
-import { useNamespace } from '@vakao-ui/utils'
+import { useNamespace, isUrl } from '@vakao-ui/utils'
 import VkIcon from '../../VkIcon'
 import { Icon } from '@iconify/vue'
 
@@ -74,6 +74,8 @@ export default defineComponent({
     
     // 模板引用
     const switchRef = ref<HTMLElement>()
+    
+
     
     // 计算属性
     const isChecked = computed(() => {
@@ -141,6 +143,7 @@ export default defineComponent({
       switchClass,
       mergedStyle,
       handleClick,
+      isUrl,
       // 暴露方法
       focus: () => switchRef.value?.focus(),
       blur: () => switchRef.value?.blur()

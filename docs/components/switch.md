@@ -323,8 +323,8 @@ const beforeChange = () => {
 | inactiveValue | `boolean \| string \| number`       | `false`    | switch 关闭时的值                                                           |
 | activeText    | `string`                            | —          | switch 打开时的文字描述                                                     |
 | inactiveText  | `string`                            | —          | switch 关闭时的文字描述                                                     |
-| activeIcon    | `string`                            | —          | switch 打开时所显示图标，支持 iconify 图标格式（如 `mdi:check`），设置此项会忽略 `active-text`                       |
-| inactiveIcon  | `string`                            | —          | switch 关闭时所显示图标，支持 iconify 图标格式（如 `mdi:close`），设置此项会忽略 `inactive-text`                     |
+| activeIcon    | `string`                            | —          | switch 打开时所显示图标，支持 Iconify 图标名称（如 `mdi:check`）、图片 URL 或本地图片路径，设置此项会忽略 `active-text`                       |
+| inactiveIcon  | `string`                            | —          | switch 关闭时所显示图标，支持 Iconify 图标名称（如 `mdi:close`）、图片 URL 或本地图片路径，设置此项会忽略 `inactive-text`                     |
 | inlinePrompt  | `boolean`                           | `false`    | 无论图标或文本是否显示在点内，只会呈现文本的第一个字符                      |
 | beforeChange  | `() => boolean \| Promise<boolean>` | —          | switch 状态改变前的钩子，返回 false 或者返回 Promise 且被 reject 则停止切换 |
 | customClass   | `string`                            | —          | 自定义类名                                                                  |

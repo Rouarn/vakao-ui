@@ -8,38 +8,38 @@
   justify-content: center;
   vertical-align: middle;
   line-height: 1;
-  
+
   // 图片样式
   &__image {
-    width: 100%;
-    height: 100%;
+    width: 1em;
+    height: 1em;
     object-fit: contain;
     display: block;
   }
-  
+
   // SVG 图标样式
   &__svg {
     width: 1em;
     height: 1em;
     fill: currentColor;
     display: block;
-    
+
     svg {
       width: 100%;
       height: 100%;
       display: block;
     }
   }
-  
+
   // 尺寸变体
   &--size-small {
     font-size: 14px;
   }
-  
+
   &--size-medium {
     font-size: 16px;
   }
-  
+
   &--size-large {
     font-size: 20px;
   }

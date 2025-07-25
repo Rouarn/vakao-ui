@@ -270,7 +270,7 @@
 | focusable     | `boolean`                                                                             | `true`      | 是否可聚焦       |
 | keyboard      | `boolean`                                                                             | `true`      | 是否支持键盘操作 |
 | dashed        | `boolean`                                                                             | `false`     | 是否为虚线边框   |
-| icon          | `string \| VNode`                                                                    | —           | 图标名称或组件，支持 iconify 图标格式（如 `mdi:magnify`）   |
+| icon          | `string \| VNode`                                                                    | —           | 图标名称或组件，支持 Iconify 图标名称（如 `mdi:magnify`）、图片 URL 或本地图片路径   |
 | iconPosition  | `'left' \| 'right'`                                                                   | `'left'`    | 图标位置         |
 | wave          | `boolean`                                                                             | `true`      | 是否有波纹效果   |
 | bordered      | `boolean`                                                                             | `true`      | 是否有边框       |
