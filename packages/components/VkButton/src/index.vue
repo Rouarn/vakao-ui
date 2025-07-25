@@ -38,7 +38,7 @@
 <script lang="ts">
 import { defineComponent, computed, useAttrs } from "vue";
 import type { CSSProperties } from "vue";
-import { buttonProps } from "./types";
+import { buttonProps, buttonEmits } from "./types";
 import { useNamespace, isUrl } from "@vakao-ui/utils";
 import VkIcon from "../../VkIcon";
 import { Icon } from "@iconify/vue";
@@ -51,7 +51,7 @@ export default defineComponent({
     Icon
   },
   props: buttonProps,
-  emits: ["click"],
+  emits: buttonEmits,
   setup(props, { emit }) {
     const attrs = useAttrs();
     const ns = useNamespace('button');

@@ -25,16 +25,16 @@
           class="vk-checkbox__icon"
           size="12px"
           color="#ffffff"
+          icon="mdi:check"
         >
-          <Icon icon="mdi:check" />
         </vk-icon>
         <vk-icon
           v-if="indeterminate"
           class="vk-checkbox__icon"
           size="12px"
           color="#ffffff"
+          icon="mdi:minus"
         >
-          <Icon icon="mdi:minus" />
         </vk-icon>
       </span>
     </span>
@@ -45,30 +45,18 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  computed,
-  inject,
-  ref,
-  type Ref,
-  type ComputedRef,
-} from "vue";
-import { checkboxProps, type CheckboxValue } from "./types";
+import { defineComponent, ref, computed, inject, type Ref, type ComputedRef } from "vue";
+import { checkboxProps, checkboxEmits, type CheckboxValue } from "./types";
 import { useNamespace } from "@vakao-ui/utils";
 import VkIcon from "../../VkIcon";
-import { Icon } from "@iconify/vue";
 
 export default defineComponent({
   name: "VkCheckbox",
   components: {
     VkIcon,
-    Icon,
   },
   props: checkboxProps,
-  emits: {
-    "update:modelValue": (_value: boolean) => true,
-    change: (_value: boolean) => true,
-  },
+  emits: checkboxEmits,
   setup(props, { emit }) {
     const ns = useNamespace("checkbox");
 

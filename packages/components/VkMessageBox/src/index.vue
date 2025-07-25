@@ -70,7 +70,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, computed, onMounted, onUnmounted, type PropType } from "vue";
-import { messageBoxProps, type MessageBoxAction } from "./types";
+import { messageBoxProps, messageBoxEmits, type MessageBoxAction } from "./types";
 import { ComponentType } from "../../../types";
 import VkButton from "../../VkButton";
 import VkIcon from "../../VkIcon";
@@ -91,9 +91,7 @@ export default defineComponent({
       type: Function as PropType<(action: MessageBoxAction, instance: any) => void>
     }
   },
-  emits: {
-    'action': (_action: MessageBoxAction, _instance: any) => true
-  },
+  emits: messageBoxEmits,
   setup(props, { emit }) {
     const visible = ref(false);
     const inputRef = ref<HTMLInputElement>();

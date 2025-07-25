@@ -82,13 +82,17 @@ export const checkboxGroupProps = {
 export type CheckboxProps = ExtractPublicPropTypes<typeof checkboxProps>
 export type CheckboxGroupProps = ExtractPublicPropTypes<typeof checkboxGroupProps>
 
-// 事件类型
-export type CheckboxEmits = {
-  'update:modelValue': (value: boolean) => void
-  change: (value: boolean) => void
-}
+// 复选框事件定义
+export const checkboxEmits = {
+  "update:modelValue": (_value: boolean) => null,
+  change: (_value: boolean) => null,
+} as const;
 
-export type CheckboxGroupEmits = {
-  'update:modelValue': (value: CheckboxValue[]) => void
-  change: (value: CheckboxValue[]) => void
-}
+export const checkboxGroupEmits = {
+  "update:modelValue": (_value: CheckboxValue[]) => null,
+  change: (_value: CheckboxValue[]) => null,
+} as const;
+
+// 导出事件类型
+export type CheckboxEmits = ExtractPublicPropTypes<typeof checkboxEmits>;
+export type CheckboxGroupEmits = ExtractPublicPropTypes<typeof checkboxGroupEmits>;

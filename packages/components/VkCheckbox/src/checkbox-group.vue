@@ -11,7 +11,7 @@
 
 <script setup lang="ts">
 import { computed, provide, watch } from 'vue'
-import { checkboxGroupProps, type CheckboxValue } from './types'
+import { checkboxGroupProps, checkboxGroupEmits, type CheckboxValue } from './types'
 import { useNamespace } from '@vakao-ui/utils'
 
 defineOptions({
@@ -19,10 +19,7 @@ defineOptions({
 })
 
 const props = defineProps(checkboxGroupProps)
-const emit = defineEmits<{
-  'update:modelValue': [value: CheckboxValue[]]
-  change: [value: CheckboxValue[]]
-}>()
+const emit = defineEmits(checkboxGroupEmits)
 const ns = useNamespace('checkbox-group')
 
 // 双向绑定值

@@ -70,12 +70,16 @@ export const inputProps = {
 // 导出属性类型
 export type InputProps = ExtractPublicPropTypes<typeof inputProps>
 
-// 事件类型
-export type InputEmits = {
-  'update:modelValue': (value: string) => void
-  input: (value: string) => void
-  change: (value: string) => void
-  focus: (evt: FocusEvent) => void
-  blur: (evt: FocusEvent) => void
-  clear: () => void
-}
+// 输入框事件定义
+export const inputEmits = {
+  "update:modelValue": (_value: string) => null,
+  input: (_value: string) => null,
+  change: (_value: string) => null,
+  focus: (_evt: FocusEvent) => null,
+  blur: (_evt: FocusEvent) => null,
+  clear: () => null,
+  keydown: (_evt: KeyboardEvent) => null,
+} as const;
+
+// 导出事件类型
+export type InputEmits = ExtractPublicPropTypes<typeof inputEmits>;

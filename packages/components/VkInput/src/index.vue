@@ -3,8 +3,12 @@
     <!-- 前缀插槽 -->
     <div v-if="$slots.prefix || prefixIcon" class="vk-input__prefix">
       <slot name="prefix">
-        <vk-icon v-if="prefixIcon" size="16px" :src="isUrl(prefixIcon) ? prefixIcon : undefined">
-          <Icon v-if="!isUrl(prefixIcon)" :icon="prefixIcon" />
+        <vk-icon
+          v-if="prefixIcon"
+          size="16px"
+          :src="isUrl(prefixIcon) ? prefixIcon : undefined"
+          :icon="isUrl(prefixIcon) ? undefined : prefixIcon"
+        >
         </vk-icon>
       </slot>
     </div>
@@ -54,8 +58,12 @@
 
       <!-- 后缀图标 -->
       <slot name="suffix">
-        <vk-icon v-if="suffixIcon" size="16px" :src="isUrl(suffixIcon) ? suffixIcon : undefined">
-          <Icon v-if="!isUrl(suffixIcon)" :icon="suffixIcon" />
+        <vk-icon
+          v-if="suffixIcon"
+          size="16px"
+          :src="isUrl(suffixIcon) ? suffixIcon : undefined"
+          :icon="isUrl(prefixIcon) ? undefined : prefixIcon"
+        >
         </vk-icon>
       </slot>
     </div>
@@ -65,7 +73,7 @@
 <script lang="ts">
 import { defineComponent, ref, computed, nextTick } from "vue";
 import type { StyleValue } from "vue";
-import { inputProps } from "./types";
+import { inputProps, inputEmits } from "./types";
 import { useNamespace, isUrl } from "@vakao-ui/utils";
 import VkIcon from "../../VkIcon";
 import { Icon } from "@iconify/vue";
@@ -78,15 +86,7 @@ export default defineComponent({
     Icon,
   },
   props: inputProps,
-  emits: {
-    "update:modelValue": (_value: string) => true,
-    input: (_value: string) => true,
-    change: (_value: string) => true,
-    focus: (_evt: FocusEvent) => true,
-    blur: (_evt: FocusEvent) => true,
-    clear: () => true,
-    keydown: (_evt: KeyboardEvent) => true,
-  },
+  emits: inputEmits,
   setup(props, { emit, attrs, slots }) {
     const ns = useNamespace("input");
 
@@ -101,8 +101,6 @@ export default defineComponent({
 
     // 焦点状态
     const isFocused = ref(false);
-
-
 
     // 过滤属性
     const filteredAttrs = computed(() => {

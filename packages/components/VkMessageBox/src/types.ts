@@ -131,9 +131,17 @@ export interface MessageBoxInstance {
   close: () => void
 }
 
-// MessageBox 返回值
+// MessageBox 结果
 export interface MessageBoxResult {
   action: MessageBoxAction;
   instance: MessageBoxInstance;
   value?: string;
 }
+
+// MessageBox 事件定义
+export const messageBoxEmits = {
+  action: (_action: MessageBoxAction, _instance: any) => null,
+} as const;
+
+// 导出事件类型
+export type MessageBoxEmits = ExtractPublicPropTypes<typeof messageBoxEmits>;

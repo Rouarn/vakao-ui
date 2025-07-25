@@ -139,39 +139,7 @@
   </template>
 </Demo>
 
-## 按钮组
 
-使用 `vk-button-group` 组件组合多个按钮。
-
-<Demo>
-  <vk-button-group>
-    <vk-button>上一页</vk-button>
-    <vk-button>下一页</vk-button>
-  </vk-button-group>
-  <br /><br />
-  <vk-button-group>
-    <vk-button type="primary">保存</vk-button>
-    <vk-button>取消</vk-button>
-  </vk-button-group>
-  
-  <template #code>
-
-```vue
-<template>
-  <vk-button-group>
-    <vk-button>上一页</vk-button>
-    <vk-button>下一页</vk-button>
-  </vk-button-group>
-
-  <vk-button-group>
-    <vk-button type="primary">保存</vk-button>
-    <vk-button>取消</vk-button>
-  </vk-button-group>
-</template>
-```
-
-  </template>
-</Demo>
 
 ## 自定义样式
 
@@ -216,6 +184,44 @@
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
 </style>
+```
+
+  </template>
+</Demo>
+
+## 按钮组
+
+使用 `vk-button-group` 将多个按钮组合在一起，形成一个按钮组。
+
+<Demo>
+  <vk-button-group>
+    <vk-button>左</vk-button>
+    <vk-button>中</vk-button>
+    <vk-button>右</vk-button>
+  </vk-button-group>
+  
+  <vk-button-group>
+    <vk-button type="primary">保存</vk-button>
+    <vk-button type="primary">编辑</vk-button>
+    <vk-button type="primary">删除</vk-button>
+  </vk-button-group>
+  
+  <template #code>
+
+```vue
+<template>
+  <vk-button-group>
+    <vk-button>左</vk-button>
+    <vk-button>中</vk-button>
+    <vk-button>右</vk-button>
+  </vk-button-group>
+  
+  <vk-button-group>
+    <vk-button type="primary">保存</vk-button>
+    <vk-button type="primary">编辑</vk-button>
+    <vk-button type="primary">删除</vk-button>
+  </vk-button-group>
+</template>
 ```
 
   </template>
@@ -286,3 +292,15 @@
 | 名称    | 说明     |
 | ------- | -------- |
 | default | 按钮内容 |
+
+## ButtonGroup API
+
+### ButtonGroup Props
+
+ButtonGroup 组件没有特定的 props，它只是一个容器组件，用于将多个按钮组合在一起。
+
+### ButtonGroup Slots
+
+| 名称    | 说明                           |
+| ------- | ------------------------------ |
+| default | 按钮组内容，通常包含多个按钮   |

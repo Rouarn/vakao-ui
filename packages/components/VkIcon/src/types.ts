@@ -4,6 +4,10 @@ export interface VkIconProps {
    */
   src?: string;
   /**
+   * Iconify 图标名称
+   */
+  icon?: string;
+  /**
    * 图标大小
    */
   size?: string | number;
@@ -21,4 +25,4 @@ export interface VkIconProps {
   customStyle?: string | Record<string, any>;
 }
 
-export type VkIconSize = 'small' | 'medium' | 'large';
+export type VkIconSize = "small" | "medium" | "large";

@@ -293,7 +293,7 @@ const value2 = ref(false);
 
 <script setup>
 import { ref } from "vue";
-import { VkMessageBox } from '@vakao-ui/components'
+import { VkMessageBox } from "@vakao-ui/components";
 
 const value = ref(false);
 
@@ -302,7 +302,7 @@ const beforeChange = () => {
     confirmText: "确定",
     cancelText: "取消",
     type: "warning",
-  })
+  });
 };
 </script>
 ```
@@ -314,21 +314,21 @@ const beforeChange = () => {
 
 ### Switch Props
 
-| 名称          | 类型                                | 默认值     | 说明                                                                        |
-| ------------- | ----------------------------------- | ---------- | --------------------------------------------------------------------------- |
-| size          | `'small' \| 'medium' \| 'large'`    | `'medium'` | 开关大小                                                                    |
-| disabled      | `boolean`                           | `false`    | 是否禁用                                                                    |
-| loading       | `boolean`                           | `false`    | 是否显示加载中                                                              |
-| activeValue   | `boolean \| string \| number`       | `true`     | switch 打开时的值                                                           |
-| inactiveValue | `boolean \| string \| number`       | `false`    | switch 关闭时的值                                                           |
-| activeText    | `string`                            | —          | switch 打开时的文字描述                                                     |
-| inactiveText  | `string`                            | —          | switch 关闭时的文字描述                                                     |
-| activeIcon    | `string`                            | —          | switch 打开时所显示图标，支持 Iconify 图标名称（如 `mdi:check`）、图片 URL 或本地图片路径，设置此项会忽略 `active-text`                       |
-| inactiveIcon  | `string`                            | —          | switch 关闭时所显示图标，支持 Iconify 图标名称（如 `mdi:close`）、图片 URL 或本地图片路径，设置此项会忽略 `inactive-text`                     |
-| inlinePrompt  | `boolean`                           | `false`    | 无论图标或文本是否显示在点内，只会呈现文本的第一个字符                      |
-| beforeChange  | `() => boolean \| Promise<boolean>` | —          | switch 状态改变前的钩子，返回 false 或者返回 Promise 且被 reject 则停止切换 |
-| customClass   | `string`                            | —          | 自定义类名                                                                  |
-| customStyle   | `string \| object`                  | —          | 自定义样式                                                                  |
+| 名称          | 类型                                | 默认值     | 说明                                                                                                                      |
+| ------------- | ----------------------------------- | ---------- | ------------------------------------------------------------------------------------------------------------------------- |
+| size          | `'small' \| 'medium' \| 'large'`    | `'medium'` | 开关大小                                                                                                                  |
+| disabled      | `boolean`                           | `false`    | 是否禁用                                                                                                                  |
+| loading       | `boolean`                           | `false`    | 是否显示加载中                                                                                                            |
+| activeValue   | `boolean \| string \| number`       | `true`     | switch 打开时的值                                                                                                         |
+| inactiveValue | `boolean \| string \| number`       | `false`    | switch 关闭时的值                                                                                                         |
+| activeText    | `string`                            | —          | switch 打开时的文字描述                                                                                                   |
+| inactiveText  | `string`                            | —          | switch 关闭时的文字描述                                                                                                   |
+| activeIcon    | `string`                            | —          | switch 打开时所显示图标，支持 Iconify 图标名称（如 `mdi:check`）、图片 URL 或本地图片路径，设置此项会忽略 `active-text`   |
+| inactiveIcon  | `string`                            | —          | switch 关闭时所显示图标，支持 Iconify 图标名称（如 `mdi:close`）、图片 URL 或本地图片路径，设置此项会忽略 `inactive-text` |
+| inlinePrompt  | `boolean`                           | `false`    | 无论图标或文本是否显示在点内，只会呈现文本的第一个字符                                                                    |
+| beforeChange  | `() => boolean \| Promise<boolean>` | —          | switch 状态改变前的钩子，返回 false 或者返回 Promise 且被 reject 则停止切换                                               |
+| customClass   | `string`                            | —          | 自定义类名                                                                                                                |
+| customStyle   | `string \| object`                  | —          | 自定义样式                                                                                                                |
 
 ### Switch Events
 

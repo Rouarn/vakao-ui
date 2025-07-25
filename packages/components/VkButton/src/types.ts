@@ -83,7 +83,10 @@ export const buttonProps = {
 // 导出按钮属性类型
 export type ButtonProps = ExtractPublicPropTypes<typeof buttonProps>
 
-// 按钮事件类型
-export type ButtonEmits = {
-  click: (evt: MouseEvent) => void
-}
+// 按钮事件定义
+export const buttonEmits = {
+  click: (_evt: MouseEvent) => null,
+} as const;
+
+// 导出事件类型
+export type ButtonEmits = ExtractPublicPropTypes<typeof buttonEmits>;
