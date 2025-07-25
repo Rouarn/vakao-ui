@@ -4,12 +4,34 @@
 
 ## 基本用法
 
+最简单的用法是存储字符串值，数据会自动持久化到 localStorage。
+
+<Demo>
+  <div style="padding: 16px; border: 1px solid #e0e0e0; border-radius: 8px;">
+    <div style="margin-bottom: 16px;">
+      <vk-input 
+        v-model="username" 
+        placeholder="输入用户名"
+        style="width: 200px;"
+      />
+      <vk-button @click="removeUsername" type="warning" style="margin-left: 8px;">清除</vk-button>
+    </div>
+    <div style="background: #f5f5f5; padding: 12px; border-radius: 4px;">
+      <p style="margin: 0; font-size: 14px;"><strong>存储的用户名:</strong> 
+        <span style="color: #1890ff;">{{ username || '(空)' }}</span>
+      </p>
+      <p style="margin: 8px 0 0; font-size: 12px; color: #666;">刷新页面数据依然存在</p>
+    </div>
+  </div>
+  
+  <template #code>
+
 ```vue
 <template>
   <div>
-    <input v-model="username" placeholder="输入用户名" />
+    <vk-input v-model="username" placeholder="输入用户名" />
     <p>存储的用户名: {{ username }}</p>
-    <button @click="removeUsername">清除用户名</button>
+    <vk-button @click="removeUsername">清除用户名</vk-button>
   </div>
 </template>
 
@@ -20,7 +42,43 @@ const [username, setUsername, removeUsername] = useLocalStorage('username', '');
 </script>
 ```
 
+  </template>
+</Demo>
+
 ## 存储对象数据
+
+可以存储复杂的对象数据，自动进行 JSON 序列化和反序列化。
+
+<Demo>
+  <div style="padding: 16px; border: 1px solid #e0e0e0; border-radius: 8px;">
+    <h4 style="margin-top: 0; margin-bottom: 16px;">用户设置</h4>
+    <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px;">
+      <label style="display: flex; align-items: center; gap: 8px;">
+        <input 
+          type="checkbox" 
+          v-model="settings.darkMode" 
+          @change="updateSettings"
+        />
+        <span>深色模式</span>
+      </label>
+      <label style="display: flex; align-items: center; gap: 8px;">
+        <span>语言:</span>
+        <select v-model="settings.language" @change="updateSettings" style="padding: 4px 8px; border: 1px solid #d9d9d9; border-radius: 4px;">
+          <option value="zh">中文</option>
+          <option value="en">English</option>
+        </select>
+      </label>
+    </div>
+    <div style="display: flex; gap: 8px; margin-bottom: 16px;">
+      <vk-button @click="resetSettings" type="warning">重置设置</vk-button>
+    </div>
+    <div style="background: #f5f5f5; padding: 12px; border-radius: 4px;">
+      <p style="margin: 0; font-size: 14px;"><strong>当前设置:</strong></p>
+      <pre style="margin: 8px 0 0; font-size: 12px; color: #666;">{{ JSON.stringify(settings, null, 2) }}</pre>
+    </div>
+  </div>
+  
+  <template #code>
 
 ```vue
 <template>
@@ -43,7 +101,7 @@ const [username, setUsername, removeUsername] = useLocalStorage('username', '');
       </select>
     </label>
     <br>
-    <button @click="resetSettings">重置设置</button>
+    <vk-button @click="resetSettings">重置设置</vk-button>
   </div>
 </template>
 
@@ -70,6 +128,9 @@ const resetSettings = () => {
 };
 </script>
 ```
+
+  </template>
+</Demo>
 
 ## 自定义序列化器
 
@@ -277,3 +338,29 @@ function useLocalStorage<T>(
 - 主题切换状态
 - 用户登录状态
 - 应用配置信息
+
+<script setup>
+import { useLocalStorage } from '@vakao-ui/hooks';
+
+// 基本用法示例
+const [username, setUsername, removeUsername] = useLocalStorage('demo-username', '');
+
+// 存储对象数据示例
+const defaultSettings = {
+  darkMode: false,
+  language: 'zh'
+};
+
+const [settings, setSettings, removeSettings] = useLocalStorage(
+  'demo-user-settings',
+  defaultSettings
+);
+
+const updateSettings = () => {
+  setSettings(settings.value);
+};
+
+const resetSettings = () => {
+  setSettings(defaultSettings);
+};
+</script>

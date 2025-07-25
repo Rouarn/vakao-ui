@@ -4,14 +4,31 @@
 
 ## 基本用法
 
+最简单的计数器用法，提供增减、重置和设置值的功能。
+
+<Demo>
+  <div>
+    <p style="font-size: 18px; margin-bottom: 16px;">计数: <strong>{{ basicCount }}</strong></p>
+    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+      <vk-button @click="basicIncrement">+1</vk-button>
+      <vk-button @click="basicDecrement">-1</vk-button>
+      <vk-button @click="basicReset" type="warning">重置</vk-button>
+      <vk-button @click="() => basicSetCount(10)" type="primary">设置为 10</vk-button>
+    </div>
+  </div>
+  
+  <template #code>
+
 ```vue
 <template>
   <div>
     <p>计数: {{ count }}</p>
-    <button @click="increment">+1</button>
-    <button @click="decrement">-1</button>
-    <button @click="reset">重置</button>
-    <button @click="() => setCount(10)">设置为 10</button>
+    <div>
+      <vk-button @click="increment">+1</vk-button>
+      <vk-button @click="decrement">-1</vk-button>
+      <vk-button @click="reset">重置</vk-button>
+      <vk-button @click="() => setCount(10)">设置为 10</vk-button>
+    </div>
   </div>
 </template>
 
@@ -22,16 +39,36 @@ const [count, increment, decrement, reset, setCount] = useCounter(0);
 </script>
 ```
 
+  </template>
+</Demo>
+
 ## 带边界限制
+
+设置最小值和最大值来限制计数器的范围。
+
+<Demo>
+  <div>
+    <p style="font-size: 18px; margin-bottom: 8px;">计数: <strong>{{ boundedCount }}</strong></p>
+    <p style="color: #666; margin-bottom: 16px;">范围: 0 - 10</p>
+    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+      <vk-button @click="boundedIncrement" :disabled="boundedCount >= 10">+1</vk-button>
+      <vk-button @click="boundedDecrement" :disabled="boundedCount <= 0">-1</vk-button>
+      <vk-button @click="boundedReset" type="warning">重置</vk-button>
+    </div>
+  </div>
+  
+  <template #code>
 
 ```vue
 <template>
   <div>
     <p>计数: {{ count }}</p>
     <p>范围: 0 - 10</p>
-    <button @click="increment" :disabled="count >= 10">+1</button>
-    <button @click="decrement" :disabled="count <= 0">-1</button>
-    <button @click="reset">重置</button>
+    <div>
+      <vk-button @click="increment" :disabled="count >= 10">+1</vk-button>
+      <vk-button @click="decrement" :disabled="count <= 0">-1</vk-button>
+      <vk-button @click="reset">重置</vk-button>
+    </div>
   </div>
 </template>
 
@@ -45,15 +82,38 @@ const [count, increment, decrement, reset] = useCounter(5, {
 </script>
 ```
 
+  </template>
+</Demo>
+
 ## 自定义步长
+
+可以为增减操作指定自定义的步长值。
+
+<Demo>
+  <div>
+    <p style="font-size: 18px; margin-bottom: 16px;">计数: <strong>{{ stepCount }}</strong></p>
+    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+      <vk-button @click="() => stepIncrement(5)" type="primary">+5</vk-button>
+      <vk-button @click="() => stepDecrement(3)" type="primary">-3</vk-button>
+      <vk-button @click="() => stepIncrement(1)">+1</vk-button>
+      <vk-button @click="() => stepDecrement(1)">-1</vk-button>
+      <vk-button @click="stepReset" type="warning">重置</vk-button>
+    </div>
+  </div>
+  
+  <template #code>
 
 ```vue
 <template>
   <div>
     <p>计数: {{ count }}</p>
-    <button @click="() => increment(5)">+5</button>
-    <button @click="() => decrement(3)">-3</button>
-    <button @click="reset">重置</button>
+    <div>
+      <vk-button @click="() => increment(5)">+5</vk-button>
+      <vk-button @click="() => decrement(3)">-3</vk-button>
+      <vk-button @click="() => increment(1)">+1</vk-button>
+      <vk-button @click="() => decrement(1)">-1</vk-button>
+      <vk-button @click="reset">重置</vk-button>
+    </div>
   </div>
 </template>
 
@@ -63,6 +123,9 @@ import { useCounter } from 'vakao-ui';
 const [count, increment, decrement, reset] = useCounter(0);
 </script>
 ```
+
+  </template>
+</Demo>
 
 ## API
 
@@ -170,3 +233,19 @@ function useCounter(
 - 评分组件
 - 游戏分数计算
 - 任何需要数值增减的场景
+
+<script setup>
+import { useCounter } from '@vakao-ui/hooks';
+
+// 基本用法示例
+const [basicCount, basicIncrement, basicDecrement, basicReset, basicSetCount] = useCounter(0);
+
+// 带边界限制示例
+const [boundedCount, boundedIncrement, boundedDecrement, boundedReset] = useCounter(5, {
+  min: 0,
+  max: 10
+});
+
+// 自定义步长示例
+const [stepCount, stepIncrement, stepDecrement, stepReset] = useCounter(0);
+</script>
