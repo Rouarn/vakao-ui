@@ -71,10 +71,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed, nextTick, watch } from "vue";
+import { defineComponent, ref, computed, nextTick } from "vue";
 import type { StyleValue } from "vue";
 import { inputProps, inputEmits } from "./types";
-import { useNamespace, isUrl } from "@vakao-ui/utils";
+import { useNamespace, isUrl, useStandardControlled } from "@vakao-ui/utils";
 import VkIcon from "../../VkIcon";
 import { Icon } from "@iconify/vue";
 
@@ -93,31 +93,12 @@ export default defineComponent({
     // 模板引用
     const inputRef = ref<HTMLInputElement>();
 
-    // 判断是否为受控模式
-    const isControlled = computed(() => props.value !== undefined);
-    
-    // 内部状态值（非受控模式使用）
-    const internalValue = ref<string>(props.modelValue || "");
-    
-    // 当前显示的值
-    const currentValue = computed(() => {
-      return isControlled.value ? (props.value || "") : internalValue.value;
-    });
-    
-    // 监听 modelValue 变化（非受控模式）
-    watch(() => props.modelValue, (newValue) => {
-      if (!isControlled.value) {
-        internalValue.value = newValue || "";
-      }
-    });
-    
-    // 监听 value 变化（受控模式）
-    watch(() => props.value, (newValue) => {
-      if (isControlled.value && newValue !== undefined) {
-        // 受控模式下，value 变化时不需要更新内部状态
-        // 因为 currentValue 会直接使用 props.value
-      }
-    });
+    // 使用受控/非受控模式工具函数
+    const { currentValue, updateValue } = useStandardControlled(
+      props,
+      emit,
+      ""
+    );
 
     // 密码显示状态
     const showPasswordVisible = ref(false);
@@ -186,11 +167,7 @@ export default defineComponent({
       const target = event.target as HTMLInputElement;
       const value = target.value;
       
-      if (!isControlled.value) {
-        internalValue.value = value;
-      }
-      
-      emit("update:modelValue", value);
+      updateValue(value);
       emit("input", value);
     };
 
@@ -211,11 +188,7 @@ export default defineComponent({
     };
 
     const handleClear = () => {
-      if (!isControlled.value) {
-        internalValue.value = "";
-      }
-      
-      emit("update:modelValue", "");
+      updateValue("");
       emit("clear");
       emit("input", "");
       emit("change", "");

@@ -26,6 +26,100 @@ const checked = ref(false);
   </template>
 </Demo>
 
+## 受控和非受控模式
+
+VkCheckbox 组件支持两种使用模式：非受控模式（使用 v-model）和受控模式（使用 :value + 事件）。
+
+### 非受控模式
+
+使用 `v-model` 进行双向数据绑定，组件内部管理状态。
+
+<Demo>
+  <div>
+    <vk-checkbox v-model="uncontrolledChecked" label="非受控模式" />
+    <p>当前值: {{ uncontrolledChecked }}</p>
+    <vk-button-group>
+      <vk-button @click="uncontrolledChecked = true">选中</vk-button>
+      <vk-button @click="uncontrolledChecked = false">取消选中</vk-button>
+    </vk-button-group>
+  </div>
+  
+  <template #code>
+
+```vue
+<template>
+  <vk-checkbox v-model="checked" label="同意条款" />
+  <p>当前值: {{ checked }}</p>
+</template>
+
+<script setup>
+import { ref } from "vue";
+
+const checked = ref(false);
+</script>
+```
+
+  </template>
+</Demo>
+
+### 受控模式
+
+使用 `:checked` 单向绑定配合 `@change` 或 `@update:modelValue` 事件，由父组件完全控制状态。
+
+<Demo>
+  <div style="width: 100%;">
+    <div style="margin-bottom: 16px;">
+      <vk-checkbox :checked="controlledChecked" @change="toggleControlled" label="受控模式 - @change" />
+      <p>当前值: {{ controlledChecked }}</p>
+      <vk-button-group>
+        <vk-button @click="setControlledCheckedTrue()">选中</vk-button>
+        <vk-button @click="setControlledCheckedFalse()">取消选中</vk-button>
+      </vk-button-group>
+    </div>
+    <div>
+      <vk-checkbox :checked="controlledChecked1" @update:modelValue="toggleControlled1" label="受控模式 - @update:modelValue" />
+      <p>当前值: {{ controlledChecked1 }}</p>
+      <vk-button-group>
+        <vk-button @click="setControlledChecked1True()">选中</vk-button>
+        <vk-button @click="setControlledChecked1False()">取消选中</vk-button>
+      </vk-button-group>
+    </div>
+  </div>
+  
+  <template #code>
+
+```vue
+<template>
+  <!-- 使用 @change 事件 -->
+  <vk-checkbox :checked="checked1" @change="setChecked1" label="同意条款" />
+
+  <!-- 使用 @update:modelValue 事件 -->
+  <vk-checkbox
+    :checked="checked2"
+    @update:modelValue="setChecked2"
+    label="同意条款"
+  />
+</template>
+
+<script setup>
+import { ref } from "vue";
+
+const checked1 = ref(false);
+const checked2 = ref(false);
+
+const setChecked1 = value => {
+  checked1.value = value;
+};
+
+const setChecked2 = value => {
+  checked2.value = value;
+};
+</script>
+```
+
+  </template>
+</Demo>
+
 ## 禁用状态
 
 多选框不可用状态。
@@ -146,11 +240,11 @@ const isIndeterminate = computed(() => {
   return checkedCount > 0 && checkedCount < cities.length;
 });
 
-const handleCheckAllChange = (val) => {
+const handleCheckAllChange = val => {
   checkedCities.value = val ? cities : [];
 };
 
-const handleCheckedCitiesChange = (value) => {
+const handleCheckedCitiesChange = value => {
   const checkedCount = value.length;
   checkAll.value = checkedCount === cities.length;
 };
@@ -305,6 +399,7 @@ const checkList3 = ref([]);
 
 <script setup>
 import { ref, computed } from 'vue'
+import {useToggle} from '@vakao-ui/hooks'
 
 const checked1 = ref(false)
 const checked2 = ref(false)
@@ -313,6 +408,11 @@ const checkList1 = ref(['selected'])
 const checkList2 = ref([])
 const checkList3 = ref([])
 const checkList4 = ref([])
+
+// 受控和非受控模式示例变量
+const uncontrolledChecked = ref(false)
+const [controlledChecked, toggleControlled, setControlledCheckedTrue, setControlledCheckedFalse] = useToggle(false)
+const [controlledChecked1, toggleControlled1, setControlledChecked1True, setControlledChecked1False] = useToggle(false)
 
 const checkAll = ref(false)
 const checkedCities = ref(['上海', '北京'])

@@ -37,7 +37,7 @@ export default {
   setup() {
     const [isVisible, toggle] = useToggle();
     const [count, increment, decrement] = useCounter(0);
-    const { data, loading } = useFetch("/api/users");
+    const [data, loading] = useFetch("/api/users");
 
     return {
       isVisible,

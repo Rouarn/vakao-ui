@@ -1,6 +1,32 @@
 # 更新日志
 
-## v0.0.2 (最新)
+## v0.0.3 (最新)
+
+### 🔧 重构优化
+
+- **Hook 函数重构**: 将所有 Hook 函数的第一个返回值改为只读的 `ComputedRef`，提升数据封装性和类型安全性
+  - `useToggle`: 状态值从 `Ref<boolean>` 改为 `ComputedRef<boolean>`
+  - `useCounter`: 计数值从 `Ref<number>` 改为 `ComputedRef<number>`
+  - `useDebounce`: 防抖值从 `Ref<T>` 改为 `ComputedRef<T>`
+  - `useThrottle`: 节流值从 `Ref<T>` 改为 `ComputedRef<T>`
+  - `useFetch`: 数据值从 `Ref<T | null>` 改为 `ComputedRef<T | null>`
+  - `useLocalStorage`: 存储值从 `Ref<T>` 改为 `ComputedRef<T>`
+
+### 📚 文档更新
+
+- **API 文档**: 更新了所有 Hook 函数的类型定义和返回值说明
+- **示例代码**: 修正了文档中 Hook 函数的解构语法，统一使用数组解构
+- **类型安全**: 完善了 TypeScript 类型定义，明确标注只读属性
+
+### ✨ 设计改进
+
+- **数据保护**: 防止意外修改 Hook 返回的状态值，提升代码健壮性
+- **API 一致性**: 统一了所有 Hook 函数的返回值设计模式
+- **开发体验**: 提供更好的类型提示和错误预防
+
+---
+
+## v0.0.2
 
 ### 🐛 Bug 修复
 

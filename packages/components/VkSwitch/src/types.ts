@@ -9,10 +9,15 @@ export type SwitchValue = string | number | boolean;
 
 // 开关属性定义
 export const switchProps = {
-  /** 绑定值 */
+  /** 绑定值 (v-model) */
   modelValue: {
     type: [String, Number, Boolean] as PropType<SwitchValue>,
     default: false,
+  },
+  /** 开关值 (受控模式) */
+  value: {
+    type: [String, Number, Boolean] as PropType<SwitchValue>,
+    default: undefined,
   },
   /** 开关尺寸 */
   size: {

@@ -1,4 +1,4 @@
-import { ref, Ref } from "vue";
+import { ref, Ref, computed, ComputedRef } from "vue";
 
 /**
  * 切换布尔值的钩子函数
@@ -16,6 +16,9 @@ import { ref, Ref } from "vue";
 export function useToggle(initialValue: boolean = false): UseToggleReturn {
   const state = ref(initialValue);
 
+  // 创建只读的计算属性
+  const readonlyState = computed(() => state.value);
+
   function toggle() {
     state.value = !state.value;
   }
@@ -28,7 +31,7 @@ export function useToggle(initialValue: boolean = false): UseToggleReturn {
     state.value = false;
   }
 
-  return [state, toggle, setTrue, setFalse];
+  return [readonlyState, toggle, setTrue, setFalse];
 }
 
 /**
@@ -58,8 +61,8 @@ export type SetFalseFunction = () => void;
  * ```
  */
 export type UseToggleReturn = [
-  /** 当前布尔状态值的响应式引用 */
-  Ref<boolean>,
+  /** 当前布尔状态值的只读响应式引用 */
+  ComputedRef<boolean>,
   /** 切换状态的函数 */
   ToggleFunction,
   /** 将状态设置为 true 的函数 */

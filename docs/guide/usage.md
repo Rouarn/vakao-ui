@@ -187,6 +187,6 @@ Vakao UI 提供了一系列的组合式 API，可以在 `setup` 中使用：
 <script setup lang="ts">
 import { useToggle } from "vakao-ui";
 
-const { state, toggle } = useToggle(false);
+const [state, toggle] = useToggle(false);
 </script>
 ```

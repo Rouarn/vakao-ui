@@ -36,6 +36,205 @@ const value = ref("");
   </template>
 </Demo>
 
+## 受控和非受控模式
+
+VkSelect 组件支持两种使用模式：非受控模式（使用 v-model）和受控模式（使用 :value + 事件）。
+
+### 非受控模式
+
+使用 `v-model` 进行双向数据绑定，组件内部管理状态。
+
+<Demo>
+  <div>
+    <vk-select v-model="uncontrolledValue" placeholder="非受控模式">
+      <vk-option label="选项一" value="option1" />
+      <vk-option label="选项二" value="option2" />
+      <vk-option label="选项三" value="option3" />
+    </vk-select>
+    <p>当前值: {{ uncontrolledValue }}</p>
+    <vk-button-group>
+      <vk-button @click="uncontrolledValue = 'option1'">选择选项一</vk-button>
+      <vk-button @click="uncontrolledValue = ''">清空</vk-button>
+    </vk-button-group>
+  </div>
+  
+  <template #code>
+
+```vue
+<template>
+  <vk-select v-model="value" placeholder="请选择">
+    <vk-option label="选项一" value="option1" />
+    <vk-option label="选项二" value="option2" />
+    <vk-option label="选项三" value="option3" />
+  </vk-select>
+  <p>当前值: {{ value }}</p>
+</template>
+
+<script setup>
+import { ref } from "vue";
+
+const value = ref("");
+</script>
+```
+
+  </template>
+</Demo>
+
+### 受控模式
+
+使用 `:value` 单向绑定配合 `@change` 或 `@update:modelValue` 事件，由父组件完全控制状态。
+
+<Demo>
+  <div style="width: 100%;">
+    <div style="margin-bottom: 16px;">
+      <vk-select :value="controlledValue1" @change="setControlledValue1" placeholder="受控模式 - @change">
+        <vk-option label="选项一" value="option1" />
+        <vk-option label="选项二" value="option2" />
+        <vk-option label="选项三" value="option3" />
+      </vk-select>
+      <p>当前值: {{ controlledValue1 }}</p>
+      <vk-button-group>
+        <vk-button @click="controlledValue1 = 'option2'">选择选项二</vk-button>
+        <vk-button @click="controlledValue1 = ''">清空</vk-button>
+      </vk-button-group>
+    </div>
+    <div>
+      <vk-select :value="controlledValue2" @update:modelValue="setControlledValue2" placeholder="受控模式 - @update:modelValue">
+        <vk-option label="选项一" value="option1" />
+        <vk-option label="选项二" value="option2" />
+        <vk-option label="选项三" value="option3" />
+      </vk-select>
+      <p>当前值: {{ controlledValue2 }}</p>
+      <vk-button-group>
+        <vk-button @click="controlledValue2 = 'option3'">选择选项三</vk-button>
+        <vk-button @click="controlledValue2 = ''">清空</vk-button>
+      </vk-button-group>
+    </div>
+  </div>
+  
+  <template #code>
+
+```vue
+<template>
+  <!-- 使用 @change 事件 -->
+  <vk-select
+    :value="value1"
+    @change="setValue1"
+    placeholder="请选择"
+  >
+    <vk-option label="选项一" value="option1" />
+    <vk-option label="选项二" value="option2" />
+    <vk-option label="选项三" value="option3" />
+  </vk-select>
+
+  <!-- 使用 @update:modelValue 事件 -->
+  <vk-select
+    :value="value2"
+    @update:modelValue="setValue2"
+    placeholder="请选择"
+  >
+    <vk-option label="选项一" value="option1" />
+    <vk-option label="选项二" value="option2" />
+    <vk-option label="选项三" value="option3" />
+  </vk-select>
+</template>
+
+<script setup>
+import { ref } from "vue";
+
+const value1 = ref("");
+const value2 = ref("");
+
+const setValue1 = value => {
+  value1.value = value;
+};
+
+const setValue2 = value => {
+  value2.value = value;
+};
+</script>
+```
+
+  </template>
+</Demo>
+
+### 多选模式的受控和非受控
+
+多选模式同样支持受控和非受控两种模式。
+
+<Demo>
+  <div style="width: 100%;">
+    <div style="margin-bottom: 16px;">
+      <h4>非受控多选</h4>
+      <vk-select v-model="multiUncontrolledValue" multiple placeholder="非受控多选">
+        <vk-option label="选项一" value="option1" />
+        <vk-option label="选项二" value="option2" />
+        <vk-option label="选项三" value="option3" />
+        <vk-option label="选项四" value="option4" />
+      </vk-select>
+      <p>当前值: {{ multiUncontrolledValue }}</p>
+      <vk-button-group>
+        <vk-button @click="multiUncontrolledValue = ['option1', 'option2']">选择前两项</vk-button>
+        <vk-button @click="multiUncontrolledValue = []">清空</vk-button>
+      </vk-button-group>
+    </div>
+    <div>
+      <h4>受控多选</h4>
+      <vk-select :value="multiControlledValue" @change="setMultiControlledValue" multiple placeholder="受控多选">
+        <vk-option label="选项一" value="option1" />
+        <vk-option label="选项二" value="option2" />
+        <vk-option label="选项三" value="option3" />
+        <vk-option label="选项四" value="option4" />
+      </vk-select>
+      <p>当前值: {{ multiControlledValue }}</p>
+      <vk-button-group>
+        <vk-button @click="multiControlledValue = ['option3', 'option4']">选择后两项</vk-button>
+        <vk-button @click="multiControlledValue = []">清空</vk-button>
+      </vk-button-group>
+    </div>
+  </div>
+  
+  <template #code>
+
+```vue
+<template>
+  <!-- 非受控多选 -->
+  <vk-select v-model="multiValue1" multiple placeholder="请选择">
+    <vk-option label="选项一" value="option1" />
+    <vk-option label="选项二" value="option2" />
+    <vk-option label="选项三" value="option3" />
+    <vk-option label="选项四" value="option4" />
+  </vk-select>
+
+  <!-- 受控多选 -->
+  <vk-select
+    :value="multiValue2"
+    @change="setMultiValue2"
+    multiple
+    placeholder="请选择"
+  >
+    <vk-option label="选项一" value="option1" />
+    <vk-option label="选项二" value="option2" />
+    <vk-option label="选项三" value="option3" />
+    <vk-option label="选项四" value="option4" />
+  </vk-select>
+</template>
+
+<script setup>
+import { ref } from "vue";
+
+const multiValue1 = ref([]);
+const multiValue2 = ref([]);
+
+const setMultiValue2 = value => {
+  multiValue2.value = value;
+};
+</script>
+```
+
+  </template>
+</Demo>
+
 ## 有禁用选项
 
 在 `vk-option` 中，设定 `disabled` 值为 `true`，即可禁用该选项。
@@ -293,6 +492,25 @@ const value6 = ref("");
 const value7 = ref("");
 const value8 = ref("");
 const value9 = ref("");
+
+// 受控和非受控模式示例变量
+const uncontrolledValue = ref("");
+const controlledValue1 = ref("");
+const controlledValue2 = ref("");
+const multiUncontrolledValue = ref([]);
+const multiControlledValue = ref([]);
+
+const setControlledValue1 = (value) => {
+  controlledValue1.value = value;
+};
+
+const setControlledValue2 = (value) => {
+  controlledValue2.value = value;
+};
+
+const setMultiControlledValue = (value) => {
+  multiControlledValue.value = value;
+};
 </script>
 
 ## API

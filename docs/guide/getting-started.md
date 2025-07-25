@@ -157,7 +157,7 @@ module.exports = {
 
 <script setup lang="ts">
 // 自动导入 hooks
-const { state, toggle } = useToggle();
+const [state, toggle] = useToggle();
 </script>
 ```
 

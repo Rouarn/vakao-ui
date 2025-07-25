@@ -675,7 +675,7 @@ function useFetch<T = any>(
 
 | 索引 | 类型                      | 说明                                                                                                                                                                                                           |
 | ---- | ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [0]  | `Ref<T \| null>`          | 响应数据                                                                                                                                                                                                       |
+| [0]  | `ComputedRef<T \| null>`  | 响应数据（只读）                                                                                                                                                                                               |
 | [1]  | `Ref<boolean>`            | 加载状态                                                                                                                                                                                                       |
 | [2]  | `Ref<FetchError \| null>` | 错误信息                                                                                                                                                                                                       |
 | [3]  | `Object`                  | 控制函数和状态对象，包含以下属性：<br/>• `status`: 请求状态 (idle/loading/success/error/canceled)<br/>• `execute`: 手动执行请求函数<br/>• `cancel`: 取消当前请求函数<br/>• `refresh`: 刷新请求函数（重新执行） |
@@ -725,8 +725,8 @@ type RefreshFunction = () => Promise<void>;
  * useFetch 返回值类型（数组形式）
  */
 type UseFetchReturn<T> = [
-  /** 响应数据 */
-  Ref<T | null>,
+  /** 响应数据（只读） */
+  ComputedRef<T | null>,
   /** 加载状态 */
   Ref<boolean>,
   /** 错误信息 */

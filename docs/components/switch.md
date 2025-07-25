@@ -37,6 +37,102 @@ const value2 = ref(true);
   </template>
 </Demo>
 
+## 受控和非受控模式
+
+VkSwitch 组件支持两种使用模式：非受控模式（使用 v-model）和受控模式（使用 :value + 事件）。
+
+### 非受控模式
+
+使用 `v-model` 进行双向数据绑定，组件内部管理状态。
+
+<Demo>
+  <div>
+    <vk-switch v-model="uncontrolledValue" />
+    <p>当前值: {{ uncontrolledValue }}</p>
+    <vk-button-group>
+      <vk-button @click="uncontrolledValue = true">开启</vk-button>
+      <vk-button @click="uncontrolledValue = false">关闭</vk-button>
+    </vk-button-group>
+  </div>
+  
+  <template #code>
+
+```vue
+<template>
+  <vk-switch v-model="enabled" />
+  <p>当前值: {{ enabled }}</p>
+</template>
+
+<script setup>
+import { ref } from "vue";
+
+const enabled = ref(false);
+</script>
+```
+
+  </template>
+</Demo>
+
+### 受控模式
+
+使用 `:value` 单向绑定配合 `@change` 或 `@update:modelValue` 事件，由父组件完全控制状态。
+
+<Demo>
+  <div style="width: 100%;">
+    <div style="margin-bottom: 16px;">
+      <vk-switch :value="controlledValue1" @change="setControlledValue1" />
+      <p>当前值: {{ controlledValue1 }}</p>
+      <vk-button-group>
+        <vk-button @click="controlledValue1 = true">开启</vk-button>
+        <vk-button @click="controlledValue1 = false">关闭</vk-button>
+      </vk-button-group>
+    </div>
+    <div>
+      <vk-switch :value="controlledValue2" @update:modelValue="setControlledValue2" />
+      <p>当前值: {{ controlledValue2 }}</p>
+      <vk-button-group>
+        <vk-button @click="controlledValue2 = true">开启</vk-button>
+        <vk-button @click="controlledValue2 = false">关闭</vk-button>
+      </vk-button-group>
+    </div>
+  </div>
+  
+  <template #code>
+
+```vue
+<template>
+  <!-- 使用 @change 事件 -->
+  <vk-switch
+    :value="enabled1"
+    @change="setEnabled1"
+  />
+
+  <!-- 使用 @update:modelValue 事件 -->
+  <vk-switch
+    :value="enabled2"
+    @update:modelValue="setEnabled2"
+  />
+</template>
+
+<script setup>
+import { ref } from "vue";
+
+const enabled1 = ref(false);
+const enabled2 = ref(false);
+
+const setEnabled1 = value => {
+  enabled1.value = value;
+};
+
+const setEnabled2 = value => {
+  enabled2.value = value;
+};
+</script>
+```
+
+  </template>
+</Demo>
+
 ## 尺寸
 
 使用 `size` 属性改变开关大小。
@@ -364,6 +460,19 @@ const value14 = ref(false)
 const value15 = ref(true)
 const value16 = ref(false)
 const value17 = ref(false)
+
+// 受控和非受控模式示例变量
+const uncontrolledValue = ref(false)
+const controlledValue1 = ref(false)
+const controlledValue2 = ref(false)
+
+const setControlledValue1 = (value) => {
+  controlledValue1.value = value
+}
+
+const setControlledValue2 = (value) => {
+  controlledValue2.value = value
+}
 
 const beforeChange = () => {
   return VkMessageBox.confirm("切换到新的值，是否继续？", "警告", {

@@ -1,4 +1,4 @@
-import { ref, Ref } from "vue";
+import { ref, computed, ComputedRef } from "vue";
 
 /**
  * 增加计数的函数类型
@@ -33,8 +33,8 @@ export type SetCountFunction = (value: number) => void;
  * ```
  */
 export type UseCounterReturn = [
-  /** 当前计数值的响应式引用 */
-  Ref<number>,
+  /** 当前计数值的只读响应式引用 */
+  ComputedRef<number>,
   /** 增加计数的函数 */
   IncrementFunction,
   /** 减少计数的函数 */
@@ -69,10 +69,13 @@ export function useCounter(
   options: {
     min?: number;
     max?: number;
-  } = {},
+  } = {}
 ): UseCounterReturn {
   const { min, max } = options;
   const count = ref(initialValue);
+
+  // 创建只读的计算属性
+  const readonlyCount = computed(() => count.value);
 
   function increment(delta: number = 1) {
     const newValue = count.value + delta;
@@ -99,5 +102,5 @@ export function useCounter(
     count.value = newValue;
   }
 
-  return [count, increment, decrement, reset, setCount];
+  return [readonlyCount, increment, decrement, reset, setCount];
 }

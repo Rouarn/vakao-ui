@@ -105,7 +105,7 @@ import {
   type SelectValue,
   type SelectOption,
 } from "./types";
-import { useNamespace } from "@vakao-ui/utils";
+import { useNamespace, useControlled } from "@vakao-ui/utils";
 import VkIcon from "../../VkIcon";
 import VkInput from "../../VkInput";
 
@@ -131,39 +131,41 @@ export default defineComponent({
     const isFocused = ref(false);
     const options = reactive<SelectOption[]>([]);
 
-    // 双向绑定值
-    const modelValue = computed({
-      get: () => props.value !== undefined ? props.value : props.modelValue,
-      set: (value: SelectValue | SelectValue[]) => {
-        emit("update:modelValue", value);
-        emit("change", value);
-      },
-    });
+    // 使用受控/非受控模式工具函数
+    const { currentValue, updateValue } = useControlled<SelectValue | SelectValue[]>(
+      props,
+      'value',
+      'modelValue',
+      emit,
+      props.multiple ? [] as SelectValue[] : "" as SelectValue
+    );
+
+
 
     // 计算属性
     const hasValue = computed(() => {
       if (props.multiple) {
-        return Array.isArray(modelValue.value) && modelValue.value.length > 0;
+        return Array.isArray(currentValue.value) && currentValue.value.length > 0;
       }
       return (
-        modelValue.value !== undefined &&
-        modelValue.value !== null &&
-        modelValue.value !== ""
+        currentValue.value !== undefined &&
+        currentValue.value !== null &&
+        currentValue.value !== ""
       );
     });
 
     const selectedOptions = computed(() => {
-      if (!props.multiple || !Array.isArray(modelValue.value)) return [];
+      if (!props.multiple || !Array.isArray(currentValue.value)) return [];
       return options.filter(option =>
-        (modelValue.value as SelectValue[]).includes(option.value)
+        (currentValue.value as SelectValue[]).includes(option.value)
       );
     });
 
     const displayValue = computed(() => {
       if (props.multiple) return "";
       if (!hasValue.value) return "";
-      const option = options.find(opt => opt.value === modelValue.value);
-      return option ? option.label : String(modelValue.value);
+      const option = options.find(opt => opt.value === currentValue.value);
+      return option ? option.label : String(currentValue.value);
     });
 
     const currentPlaceholder = computed(() => {
@@ -255,14 +257,8 @@ export default defineComponent({
       if (props.disabled) return;
 
       const newValue = props.multiple ? [] : "";
-      
-      if (props.value !== undefined) {
-        // 受控模式，只触发事件
-        emit("change", newValue);
-      } else {
-        // 非受控模式，更新内部状态
-        modelValue.value = newValue;
-      }
+      updateValue(newValue);
+      emit("change", newValue);
       
       searchQuery.value = "";
       emit("clear");
@@ -272,9 +268,9 @@ export default defineComponent({
     const removeTag = (value: SelectValue) => {
       if (props.disabled || !props.multiple) return;
 
-      const currentValues = modelValue.value as SelectValue[];
+      const currentValues = currentValue.value as SelectValue[];
       const newValues = currentValues.filter(v => v !== value);
-      modelValue.value = newValues;
+      updateValue(newValues);
       emit("remove-tag", value);
       emit("change", newValues);
     };
@@ -323,7 +319,7 @@ export default defineComponent({
       if (option.disabled) return;
 
       if (props.multiple) {
-        const currentValues = (modelValue.value as SelectValue[]) || [];
+        const currentValues = (currentValue.value as SelectValue[]) || [];
         const index = currentValues.indexOf(option.value);
         let newValues: SelectValue[];
 
@@ -335,22 +331,12 @@ export default defineComponent({
           newValues = [...currentValues, option.value];
         }
         
-        if (props.value !== undefined) {
-          // 受控模式，只触发事件
-          emit("change", newValues);
-        } else {
-          // 非受控模式，更新内部状态
-          modelValue.value = newValues;
-        }
+        updateValue(newValues);
+        emit("change", newValues);
       } else {
         // 单选模式
-        if (props.value !== undefined) {
-          // 受控模式，只触发事件
-          emit("change", option.value);
-        } else {
-          // 非受控模式，更新内部状态
-          modelValue.value = option.value;
-        }
+        updateValue(option.value);
+        emit("change", option.value);
         hideDropdown(); // 单选后自动关闭
       }
     };
@@ -358,10 +344,10 @@ export default defineComponent({
     const isSelected = (value: SelectValue) => {
       if (props.multiple) {
         return (
-          Array.isArray(modelValue.value) && modelValue.value.includes(value)
+          Array.isArray(currentValue.value) && currentValue.value.includes(value)
         );
       }
-      return modelValue.value === value;
+      return currentValue.value === value;
     };
 
     // 提供给子组件的上下文
@@ -406,7 +392,7 @@ export default defineComponent({
       searchQuery,
       isFocused,
       options,
-      modelValue,
+      currentValue,
       hasValue,
       selectedOptions,
       displayValue,

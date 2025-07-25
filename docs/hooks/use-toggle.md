@@ -188,12 +188,12 @@ const fetchData = async () => {
 
 返回一个数组，包含以下元素：
 
-| 索引 | 类型           | 说明                 |
-| ---- | -------------- | -------------------- |
-| 0    | `Ref<boolean>` | 当前状态的响应式引用 |
-| 1    | `() => void`   | 切换状态的函数       |
-| 2    | `() => void`   | 设置状态为 true      |
-| 3    | `() => void`   | 设置状态为 false     |
+| 索引 | 类型                   | 说明                 |
+| ---- | ---------------------- | -------------------- |
+| 0    | `ComputedRef<boolean>` | 当前状态的只读响应式引用 |
+| 1    | `() => void`           | 切换状态的函数       |
+| 2    | `() => void`           | 设置状态为 true      |
+| 3    | `() => void`           | 设置状态为 false     |
 
 ### 类型定义
 
@@ -225,8 +225,8 @@ export type SetFalseFunction = () => void;
  * ```
  */
 export type UseToggleReturn = [
-  /** 当前布尔状态值的响应式引用 */
-  Ref<boolean>,
+  /** 当前布尔状态值的只读响应式引用 */
+  ComputedRef<boolean>,
   /** 切换状态的函数 */
   ToggleFunction,
   /** 将状态设置为 true 的函数 */

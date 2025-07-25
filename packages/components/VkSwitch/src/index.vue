@@ -55,8 +55,8 @@
 
 <script lang="ts">
 import { defineComponent, computed, ref } from "vue";
-import { switchProps, switchEmits } from "./types";
-import { useNamespace, isUrl } from "@vakao-ui/utils";
+import { switchProps, switchEmits, type SwitchValue } from "./types";
+import { useNamespace, isUrl, useControlled } from "@vakao-ui/utils";
 import VkIcon from "../../VkIcon";
 
 export default defineComponent({
@@ -72,9 +72,18 @@ export default defineComponent({
     // 模板引用
     const switchRef = ref<HTMLElement>();
 
+    // 使用受控/非受控模式工具函数
+    const { currentValue, updateValue } = useControlled<SwitchValue>(
+      props,
+      "value",
+      "modelValue",
+      emit,
+      false as SwitchValue
+    );
+
     // 计算属性
     const isChecked = computed(() => {
-      return props.modelValue === props.activeValue;
+      return currentValue.value === props.activeValue;
     });
 
     const isDisabled = computed(() => {
@@ -127,7 +136,7 @@ export default defineComponent({
         }
       }
 
-      emit("update:modelValue", newValue);
+      updateValue(newValue);
       emit("change", newValue);
     };
 

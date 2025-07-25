@@ -54,7 +54,7 @@ import {
   type ComputedRef,
 } from "vue";
 import { checkboxProps, checkboxEmits, type CheckboxValue } from "./types";
-import { useNamespace } from "@vakao-ui/utils";
+import { useNamespace, useControlled } from "@vakao-ui/utils";
 import VkIcon from "../../VkIcon";
 
 export default defineComponent({
@@ -83,8 +83,14 @@ export default defineComponent({
       | undefined
     >("VkCheckboxGroup", undefined);
 
-    // 双向绑定值
-    const modelValue = ref<boolean>(false);
+    // 使用受控/非受控模式工具函数（仅在非组模式下使用）
+    const { currentValue: currentChecked, updateValue } = useControlled(
+      props,
+      'checked',
+      'modelValue',
+      emit,
+      false
+    );
 
     // 计算属性
     const isGroup = computed(() => !!checkboxGroup);
@@ -103,13 +109,8 @@ export default defineComponent({
           props.value as CheckboxValue
         );
       }
-      // 优先使用 checked prop（受控模式），然后是 modelValue（v-model），最后是内部状态
-      if (props.checked !== undefined) {
-        return props.checked;
-      }
-      return props.modelValue !== undefined
-        ? props.modelValue
-        : modelValue.value;
+      // 非组模式下使用受控/非受控逻辑
+      return currentChecked.value;
     });
 
     const isLimitExceeded = computed(() => {
@@ -166,20 +167,8 @@ export default defineComponent({
 
         checkboxGroup.changeEvent(newValue);
       } else {
-        // 受控模式（使用 checked prop）
-        if (props.checked !== undefined) {
-          emit("change", checked);
-        }
-        // v-model 模式
-        else if (props.modelValue !== undefined) {
-          emit("update:modelValue", checked);
-          emit("change", checked);
-        }
-        // 内部状态模式
-        else {
-          modelValue.value = checked;
-          emit("change", checked);
-        }
+        updateValue(checked);
+        emit("change", checked);
       }
     };
 
@@ -193,7 +182,6 @@ export default defineComponent({
     return {
       ns,
       inputRef,
-      modelValue,
       isGroup,
       isDisabled,
       currentSize,

@@ -73,8 +73,8 @@ export type RefreshFunction = () => Promise<void>;
  * ```
  */
 export type UseFetchReturn<T> = [
-  /** 响应数据的响应式引用 */
-  Ref<T | null>,
+  /** 响应数据的只读响应式引用 */
+  ComputedRef<T | null>,
   /** 加载状态的响应式引用 */
   Ref<boolean>,
   /** 错误信息的响应式引用 */
@@ -156,6 +156,9 @@ export function useFetch<T = any>(
   const loading = ref(false);
   const error = ref<FetchError | null>(null);
   const status = ref<FetchStatus>(FetchStatus.IDLE);
+
+  // 创建只读的数据计算属性
+  const readonlyData = computed(() => data.value);
 
   // 计算属性
   const finished = computed(
@@ -381,7 +384,7 @@ export function useFetch<T = any>(
   });
 
   return [
-    data as Ref<T | null>,
+    readonlyData,
     loading,
     error,
     {

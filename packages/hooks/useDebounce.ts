@@ -1,4 +1,4 @@
-import { ref, Ref, watch, onUnmounted } from "vue";
+import { ref, Ref, watch, onUnmounted, computed, ComputedRef } from "vue";
 
 /**
  * 防抖函数类型
@@ -22,13 +22,13 @@ export type DebounceFlushFunction = () => void;
 
 /**
  * useDebounce 钩子函数的返回值类型（用于防抖值）
- * @description 返回防抖后的响应式值
+ * @description 返回防抖后的只读响应式值
  * @example
  * ```typescript
  * const debouncedValue = useDebounce(searchText, 300);
  * ```
  */
-export type UseDebouncedValueReturn<T> = Ref<T>;
+export type UseDebouncedValueReturn<T> = ComputedRef<T>;
 
 /**
  * useDebounce 钩子函数的返回值类型（用于防抖函数）
@@ -131,6 +131,9 @@ function useDebouncedValue<T>(
   const debouncedValue = ref<T>(value.value) as Ref<T>;
   let timeoutId: ReturnType<typeof setTimeout> | null = null;
 
+  // 创建只读的计算属性
+  const readonlyDebouncedValue = computed(() => debouncedValue.value);
+
   const updateDebouncedValue = () => {
     debouncedValue.value = value.value;
   };
@@ -152,7 +155,7 @@ function useDebouncedValue<T>(
     }
   });
 
-  return debouncedValue;
+  return readonlyDebouncedValue;
 }
 
 /**

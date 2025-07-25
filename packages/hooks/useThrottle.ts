@@ -1,4 +1,4 @@
-import { ref, Ref, watch, onUnmounted } from "vue";
+import { ref, Ref, watch, onUnmounted, computed, ComputedRef } from "vue";
 
 /**
  * 节流函数类型
@@ -22,13 +22,13 @@ export type ThrottleFlushFunction = () => void;
 
 /**
  * useThrottle 钩子函数的返回值类型（用于节流值）
- * @description 返回节流后的响应式值
+ * @description 返回节流后的只读响应式值
  * @example
  * ```typescript
  * const throttledValue = useThrottle(scrollPosition, 100);
  * ```
  */
-export type UseThrottledValueReturn<T> = Ref<T>;
+export type UseThrottledValueReturn<T> = ComputedRef<T>;
 
 /**
  * useThrottle 钩子函数的返回值类型（用于节流函数）
@@ -132,6 +132,9 @@ function useThrottledValue<T>(
   let lastUpdateTime = 0;
   let timeoutId: ReturnType<typeof setTimeout> | null = null;
 
+  // 创建只读的计算属性
+  const readonlyThrottledValue = computed(() => throttledValue.value);
+
   const updateThrottledValue = () => {
     throttledValue.value = value.value;
     lastUpdateTime = Date.now();
@@ -166,7 +169,7 @@ function useThrottledValue<T>(
     }
   });
 
-  return throttledValue;
+  return readonlyThrottledValue;
 }
 
 /**
