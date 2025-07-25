@@ -2,6 +2,7 @@
 export * from "./VkButton";
 export * from "./VkInput";
 export * from "./VkCheckbox";
+export * from "./VkRadio";
 export * from "./VkSwitch";
 export * from "./VkIcon";
 export * from "./VkMessageBox";
@@ -12,6 +13,7 @@ import { App } from "vue";
 import { VkButton, VkButtonGroup } from "./VkButton";
 import { VkInput } from "./VkInput";
 import { VkCheckbox, VkCheckboxGroup } from "./VkCheckbox";
+import { VkRadio, VkRadioGroup } from "./VkRadio";
 import { VkSwitch } from "./VkSwitch";
 import { VkIcon } from "./VkIcon";
 import { VkMessageBox } from "./VkMessageBox";
@@ -25,6 +27,8 @@ const components = {
   VkInput: VkInput,
   VkCheckbox: VkCheckbox,
   VkCheckboxGroup: VkCheckboxGroup,
+  VkRadio: VkRadio,
+  VkRadioGroup: VkRadioGroup,
   VkSwitch: VkSwitch,
   VkIcon: VkIcon,
   VkMessageBox: VkMessageBox,

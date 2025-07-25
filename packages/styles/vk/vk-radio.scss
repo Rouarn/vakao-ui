@@ -1,0 +1,203 @@
+@use "../mixins.scss" as *;
+@use "../variables.scss" as *;
+
+// VkRadio 组件样式
+.vk-radio {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: var(--vk-font-size-base);
+  line-height: var(--vk-line-height-base);
+  user-select: none;
+
+  // 状态变体
+  &.is-disabled {
+    cursor: not-allowed;
+    
+    .vk-radio__inner {
+      background-color: var(--vk-fill-color-light);
+      border-color: var(--vk-border-color-light);
+    }
+    
+    .vk-radio__label {
+      color: var(--vk-text-color-disabled);
+    }
+  }
+
+  &.is-checked {
+    .vk-radio__inner {
+      border-color: var(--vk-color-primary);
+    }
+  }
+
+  // 输入框容器
+  &__input {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    margin-right: 8px;
+  }
+
+  // 原生输入框（隐藏）
+  &__original {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    margin: 0;
+    padding: 0;
+    border: none;
+  }
+
+  // 单选框外观
+  &__inner {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    border: 1px solid var(--vk-border-color);
+    border-radius: 50%;
+    background-color: var(--vk-fill-color-blank);
+    transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+
+    &:hover {
+      border-color: var(--vk-color-primary);
+    }
+
+    &.is-disabled {
+      cursor: not-allowed;
+      
+      &:hover {
+        border-color: var(--vk-border-color-light);
+      }
+    }
+  }
+
+  // 选中圆点
+  &__dot {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--vk-color-primary);
+    transform: scale(1);
+    transition: transform 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+  }
+
+  // 标签文字
+  &__label {
+    color: var(--vk-text-color-regular);
+    line-height: 1;
+  }
+
+  // 尺寸变体
+  &.vk-radio--size-small {
+    font-size: var(--vk-font-size-small);
+    
+    .vk-radio__inner {
+      width: 14px !important;
+      height: 14px !important;
+    }
+    
+    .vk-radio__dot {
+      width: 6px !important;
+      height: 6px !important;
+    }
+  }
+
+  &.vk-radio--size-medium {
+    .vk-radio__inner {
+      width: 16px !important;
+      height: 16px !important;
+    }
+    
+    .vk-radio__dot {
+      width: 8px !important;
+      height: 8px !important;
+    }
+  }
+
+  &.vk-radio--size-large {
+    font-size: var(--vk-font-size-large);
+    
+    .vk-radio__inner {
+      width: 18px !important;
+      height: 18px !important;
+    }
+    
+    .vk-radio__dot {
+      width: 10px !important;
+      height: 10px !important;
+    }
+  }
+}
+
+// VkRadioGroup 组件样式
+.vk-radio-group {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 12px;
+
+  // 尺寸变体
+  &--size-small {
+    gap: 8px;
+    
+    .vk-radio {
+      font-size: var(--vk-font-size-small);
+      
+      .vk-radio__inner {
+        width: 14px !important;
+        height: 14px !important;
+      }
+      
+      .vk-radio__dot {
+        width: 6px !important;
+        height: 6px !important;
+      }
+    }
+  }
+
+  &--size-medium {
+    gap: 12px;
+    
+    .vk-radio {
+      .vk-radio__inner {
+        width: 16px !important;
+        height: 16px !important;
+      }
+      
+      .vk-radio__dot {
+        width: 8px !important;
+        height: 8px !important;
+      }
+    }
+  }
+
+  &--size-large {
+    gap: 16px;
+    
+    .vk-radio {
+      font-size: var(--vk-font-size-large);
+      
+      .vk-radio__inner {
+        width: 18px !important;
+        height: 18px !important;
+      }
+      
+      .vk-radio__dot {
+        width: 10px !important;
+        height: 10px !important;
+      }
+    }
+  }
+
+  // 禁用状态
+  &.is-disabled {
+    .vk-radio {
+      cursor: not-allowed;
+    }
+  }
+}
