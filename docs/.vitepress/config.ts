@@ -105,6 +105,31 @@ export default defineConfig({
           text: "工具函数",
           items: [{ text: "工具介绍", link: "/utils/" }],
         },
+        {
+          text: "组件工具",
+          items: [
+            { text: "withInstall", link: "/utils/withInstall" },
+          ],
+        },
+        {
+          text: "类型工具",
+          items: [
+            { text: "类型工具", link: "/utils/types" },
+          ],
+        },
+        {
+          text: "数据处理",
+          items: [
+            { text: "deepClone", link: "/utils/deepClone" },
+            { text: "isEqual", link: "/utils/isEqual" },
+          ],
+        },
+        {
+          text: "日期处理",
+          items: [
+            { text: "formatDate", link: "/utils/formatDate" },
+          ],
+        },
       ],
     },
     socialLinks: [

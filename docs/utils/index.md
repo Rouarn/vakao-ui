@@ -13,21 +13,21 @@ Vakao UI 提供了一系列实用的工具函数，帮助您更高效地开发�
 
 ### 组件工具
 
-- `withInstall` - 为组件添加全局安装方法
+- [withInstall](./withInstall.md) - 为组件添加全局安装方法
 - `createNamespace` - 创建组件命名空间
 
 ### 类型工具
 
-- `ExtractPublicPropTypes` - 提取组件公共属性类型
-- `SFCWithInstall` - 带安装方法的单文件组件类型
+- [类型工具](./types.md) - ExtractPublicPropTypes、SFCWithInstall 等类型工具
 
-### 即将推出
+### 数据处理
 
-- `debounce` - 防抖函数
-- `throttle` - 节流函数
-- `deepClone` - 深拷贝函数
-- `formatDate` - 日期格式化
-- `isEqual` - 深度比较
+- [deepClone](./deepClone.md) - 深拷贝函数，支持循环引用
+- [isEqual](./isEqual.md) - 深度比较、浅比较、数组比较等
+
+### 日期处理
+
+- [formatDate](./formatDate.md) - 日期格式化、相对时间、日期判断等
 
 ## 使用方式
 
@@ -43,125 +43,39 @@ import { withInstall } from "vakao-ui";
 import { withInstall } from "vakao-ui/utils";
 ```
 
-## withInstall
+## 快速开始
 
-为 Vue 组件添加全局安装方法的工具函数。
+### 安装
 
-### 基础用法
-
-```ts
-import { withInstall } from "vakao-ui/utils";
-import Button from "./Button.vue";
-
-// 为组件添加 install 方法
-const VkButton = withInstall(Button);
-
-export default VkButton;
+```bash
+npm install vakao-ui
 ```
 
-### 在插件中使用
+### 基础示例
 
 ```ts
-import { App } from "vue";
-import { withInstall } from "vakao-ui/utils";
-import Button from "./components/Button.vue";
-
-const VkButton = withInstall(Button);
-
-// 可以作为插件使用
-app.use(VkButton);
-
-// 也可以全局注册
-app.component("VkButton", VkButton);
-```
-
-### 类型定义
-
-```ts
-export type SFCWithInstall<T> = T & {
-  install(app: App): void;
-};
-
-export function withInstall<T>(component: T): SFCWithInstall<T>;
-```
-
-## 类型工具
-
-### ExtractPublicPropTypes
-
-提取组件公共属性类型的工具类型。
-
-```ts
-import type { ExtractPublicPropTypes } from "vakao-ui";
-
-// 定义组件属性
-const buttonProps = {
-  type: {
-    type: String as PropType<"primary" | "default">,
-    default: "default",
-  },
-  size: {
-    type: String as PropType<"small" | "medium" | "large">,
-    default: "medium",
-  },
-} as const;
-
-// 提取公共属性类型
-export type ButtonProps = ExtractPublicPropTypes<typeof buttonProps>;
-```
-
-### SFCWithInstall
-
-带安装方法的单文件组件类型。
-
-```ts
-import type { SFCWithInstall } from "vakao-ui";
-import type { DefineComponent } from "vue";
-
-// 定义组件类型
-type ButtonComponent = DefineComponent<ButtonProps>;
-
-// 带安装方法的组件类型
-type VkButtonType = SFCWithInstall<ButtonComponent>;
-```
-
-## 最佳实践
-
-### 组件开发
-
-```ts
-// components/Button/index.ts
-import { withInstall } from "vakao-ui/utils";
-import Button from "./src/Button.vue";
-
-// 添加安装方法
-export const VkButton = withInstall(Button);
-export default VkButton;
-
-// 导出类型
-export type { ButtonProps } from "./src/types";
-```
-
-### 插件开发
-
-```ts
-// plugins/my-plugin.ts
-import type { App } from "vue";
+// 组件安装
 import { withInstall } from "vakao-ui/utils";
 import MyComponent from "./MyComponent.vue";
 
-const MyPlugin = withInstall(MyComponent);
+const VkMyComponent = withInstall(MyComponent);
 
-export default {
-  install(app: App) {
-    app.use(MyPlugin);
-  },
-};
+// 数据处理
+import { deepClone, isEqual } from "vakao-ui/utils";
+
+const original = { name: "张三", hobbies: ["读书"] };
+const cloned = deepClone(original);
+
+// 日期格式化
+import { formatDate, DATE_FORMATS } from "vakao-ui/utils";
+
+const formatted = formatDate(new Date(), DATE_FORMATS.DATETIME);
 ```
 
 ## 注意事项
 
-1. `withInstall` 会修改原始组件，添加 `install` 方法
+1. 所有工具函数都支持 Tree Shaking，按需打包
 2. 类型工具仅在 TypeScript 环境下有效
 3. 建议在组件库开发中使用这些工具保持一致性
-4. 所有工具函数都支持 Tree Shaking，按需打包
+4. 部分函数提供了处理循环引用的版本
+5. 日期相关函数支持多种语言环境和时区

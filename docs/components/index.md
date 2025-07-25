@@ -39,6 +39,7 @@ Vakao UI 组件推荐使用直接的图标属性来设置图标，而不是通�
 - [Input 输入框](/components/input) - 通过鼠标或键盘输入字符
 - [Select 选择器](/components/select) - 从一组备选项中选择一个或多个选项
 - [Checkbox 多选框](/components/checkbox) - 在一组备选项中进行多选
+- [Radio 单选框](/components/radio) - 在一组备选项中进行单选
 - [Switch 开关](/components/switch) - 表示两种相互对立的状态间的切换
 
 ### 数据展示
