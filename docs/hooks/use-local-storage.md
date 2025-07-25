@@ -7,7 +7,7 @@
 最简单的用法是存储字符串值，数据会自动持久化到 localStorage。
 
 <Demo>
-  <div style="padding: 16px; border: 1px solid #e0e0e0; border-radius: 8px;">
+  <div style="padding: 16px; border: 1px solid #e0e0e0; border-radius: 8px; width: 100%;">
     <div style="margin-bottom: 16px;">
       <vk-input 
         v-model="username" 
@@ -50,7 +50,7 @@ const [username, setUsername, removeUsername] = useLocalStorage("username", "");
 可以存储复杂的对象数据，自动进行 JSON 序列化和反序列化。
 
 <Demo>
-  <div style="padding: 16px; border: 1px solid #e0e0e0; border-radius: 8px;">
+  <div style="padding: 16px; border: 1px solid #e0e0e0; border-radius: 8px; width: 100%;">
     <h4 style="margin-top: 0; margin-bottom: 16px;">用户设置</h4>
     <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px;">
       <label style="display: flex; align-items: center; gap: 8px;">
@@ -116,7 +116,7 @@ const defaultSettings = {
 
 const [settings, setSettings, removeSettings] = useLocalStorage(
   "user-settings",
-  defaultSettings,
+  defaultSettings
 );
 
 const updateSettings = () => {
@@ -317,7 +317,7 @@ interface UseLocalStorageOptions<T> {
 function useLocalStorage<T>(
   key: string,
   defaultValue: T,
-  options?: UseLocalStorageOptions<T>,
+  options?: UseLocalStorageOptions<T>
 ): UseLocalStorageReturn<T>;
 ```
 

@@ -68,6 +68,8 @@ export type RefreshFunction = () => Promise<void>;
  * const [data, loading, error, { execute, cancel, refresh, status, finished }] = useFetch('/api/users');
  * // 或者自定义命名
  * const [users, isLoading, fetchError, actions] = useFetch('/api/users');
+ * // 支持Promise函数
+ * const [data, loading, error] = useFetch(() => fetchUserData());
  * ```
  */
 export type UseFetchReturn<T> = [
@@ -89,8 +91,19 @@ export type UseFetchReturn<T> = [
     cancel: CancelFunction;
     /** 重新请求的函数 */
     refresh: RefreshFunction;
-  }
+  },
 ];
+
+/**
+ * usePromise 钩子函数的返回值类型（数组形式）
+ * @description 专门用于处理Promise函数的钩子
+ */
+export type UsePromiseReturn<T> = UseFetchReturn<T>;
+
+/**
+ * Promise执行函数类型
+ */
+export type PromiseFunction<T> = () => Promise<T>;
 
 /**
  * 数据获取钩子函数
@@ -123,9 +136,9 @@ export type UseFetchReturn<T> = [
  * ```
  */
 export function useFetch<T = any>(
-  url: string | (() => string),
+  url: string | (() => string) | (() => Promise<T>),
   options: UseFetchOptions<T> = {},
-  fetchOptions: RequestInit = {},
+  fetchOptions: RequestInit = {}
 ): UseFetchReturn<T> {
   const {
     immediate = true,
@@ -147,17 +160,32 @@ export function useFetch<T = any>(
   // 计算属性
   const finished = computed(
     () =>
-      status.value === FetchStatus.SUCCESS ||
-      status.value === FetchStatus.ERROR,
+      status.value === FetchStatus.SUCCESS || status.value === FetchStatus.ERROR
   );
 
   // 请求控制
   let abortController: AbortController | null = null;
   let retryCount = 0;
 
+  // 检查是否为Promise函数
+  const isPromiseFunction = (): boolean => {
+    if (typeof url === "function") {
+      try {
+        const result = url();
+        return result instanceof Promise;
+      } catch {
+        return false;
+      }
+    }
+    return false;
+  };
+
   // 获取当前 URL
   const getCurrentUrl = (): string => {
-    return typeof url === "function" ? url() : url;
+    if (typeof url === "function" && !isPromiseFunction()) {
+      return url() as string;
+    }
+    return url as string;
   };
 
   // 创建错误对象
@@ -172,7 +200,7 @@ export function useFetch<T = any>(
 
   // 延迟函数
   const delay = (ms: number): Promise<void> => {
-    return new Promise((resolve) => setTimeout(resolve, ms));
+    return new Promise(resolve => setTimeout(resolve, ms));
   };
 
   // 执行请求
@@ -193,66 +221,100 @@ export function useFetch<T = any>(
 
     const performRequest = async (): Promise<void> => {
       try {
-        const currentUrl = getCurrentUrl();
+        // 检查是否为Promise函数
+        if (isPromiseFunction()) {
+          // 直接执行Promise函数
+          const promiseFunction = url as () => Promise<T>;
 
-        // 请求前钩子
-        if (beforeRequest) {
-          await beforeRequest(currentUrl, fetchOptions);
-        }
+          // 设置超时
+          const timeoutPromise = new Promise<never>((_, reject) => {
+            setTimeout(() => {
+              reject(createError("Request timeout"));
+            }, timeout);
+          });
 
-        // 创建请求配置
-        const requestOptions: RequestInit = {
-          ...fetchOptions,
-          signal: abortController?.signal,
-        };
+          try {
+            const responseData = await Promise.race([
+              promiseFunction(),
+              timeoutPromise,
+            ]);
 
-        // 设置超时
-        const timeoutId = setTimeout(() => {
-          if (abortController) {
-            abortController.abort();
+            // 数据转换
+            let finalData: T = responseData;
+            if (transform) {
+              finalData = transform(responseData);
+            }
+
+            // 更新状态
+            data.value = finalData;
+            status.value = FetchStatus.SUCCESS;
+            loading.value = false;
+          } catch (promiseError: any) {
+            throw promiseError;
           }
-        }, timeout);
+        } else {
+          // 原有的HTTP请求逻辑
+          const currentUrl = getCurrentUrl();
 
-        try {
-          const response = await fetch(currentUrl, requestOptions);
-          clearTimeout(timeoutId);
-
-          // 请求后钩子
-          if (afterRequest) {
-            await afterRequest(response);
-          }
-
-          if (!response.ok) {
-            throw createError(
-              `HTTP Error: ${response.status} ${response.statusText}`,
-              response,
-            );
-          }
-
-          // 解析响应数据
-          let responseData: any;
-          const contentType = response.headers.get("content-type");
-
-          if (contentType?.includes("application/json")) {
-            responseData = await response.json();
-          } else if (contentType?.includes("text/")) {
-            responseData = await response.text();
-          } else {
-            responseData = await response.blob();
+          // 请求前钩子
+          if (beforeRequest) {
+            await beforeRequest(currentUrl, fetchOptions);
           }
 
-          // 数据转换
-          if (transform) {
-            responseData = transform(responseData);
-          }
+          // 创建请求配置
+          const requestOptions: RequestInit = {
+            ...fetchOptions,
+            signal: abortController?.signal,
+          };
 
-          // 更新状态
-          data.value = responseData;
-          status.value = FetchStatus.SUCCESS;
-          loading.value = false;
-        } catch (fetchError: any) {
-          clearTimeout(timeoutId);
-          throw fetchError;
+          // 设置超时
+          const timeoutId = setTimeout(() => {
+            if (abortController) {
+              abortController.abort();
+            }
+          }, timeout);
+
+          try {
+            const response = await fetch(currentUrl, requestOptions);
+            clearTimeout(timeoutId);
+
+            // 请求后钩子
+            if (afterRequest) {
+              await afterRequest(response);
+            }
+
+            if (!response.ok) {
+              throw createError(
+                `HTTP Error: ${response.status} ${response.statusText}`,
+                response
+              );
+            }
+
+            // 解析响应数据
+            let responseData: any;
+            const contentType = response.headers.get("content-type");
+
+            if (contentType?.includes("application/json")) {
+              responseData = await response.json();
+            } else if (contentType?.includes("text/")) {
+              responseData = await response.text();
+            } else {
+              responseData = await response.blob();
+            }
+
+            // 数据转换
+            if (transform) {
+              responseData = transform(responseData);
+            }
+
+            // 更新状态
+            data.value = responseData;
+            status.value = FetchStatus.SUCCESS;
+            loading.value = false;
+          } catch (fetchError: any) {
+            clearTimeout(timeoutId);
+            throw fetchError;
+          }
         }
       } catch (err: any) {
         // 如果是取消请求，不处理错误
@@ -351,12 +413,12 @@ export function useFetch<T = any>(
 export function createFetch(
   baseURL: string,
   defaultOptions: UseFetchOptions<any> = {},
-  defaultFetchOptions: RequestInit = {},
+  defaultFetchOptions: RequestInit = {}
 ) {
   return function <T = any>(
     url: string | (() => string),
     options: UseFetchOptions<T> = {},
-    fetchOptions: RequestInit = {},
+    fetchOptions: RequestInit = {}
   ): UseFetchReturn<T> {
     const fullUrl =
       typeof url === "function" ? () => baseURL + url() : baseURL + url;

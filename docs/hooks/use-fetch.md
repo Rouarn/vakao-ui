@@ -21,8 +21,7 @@
         <vk-button @click="refresh" style="margin-top: 12px;" size="small">重试</vk-button>
       </div>
       <div v-else-if="data" style="background: #f5f5f5; border-radius: 4px; max-height: 300px; overflow-y: auto;">
-        <div v-for="user in data" :key="user.id" 
-             style="padding: 12px; border-bottom: 1px solid #e8e8e8; display: flex; align-items: center; gap: 12px;">
+        <div v-for="user in data" :key="user.id" style="padding: 12px; border-bottom: 1px solid #e8e8e8; display: flex; align-items: center; gap: 12px;">
           <div style="width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(45deg, #1890ff, #52c41a); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">
             {{ user.name}}
           </div>
@@ -64,7 +63,23 @@ interface User {
   email: string;
 }
 
-const [data, loading, error, { refresh }] = useFetch<User[]>('/api/users');
+// 模拟用户数据
+const mockUsers: User[] = [
+  { id: 1, name: '张三', email: 'zhangsan@example.com' },
+  { id: 2, name: '李四', email: 'lisi@gmail.com' },
+  { id: 3, name: '王五', email: 'wangwu@example.com' },
+  { id: 4, name: '赵六', email: 'zhaoliu@outlook.com' },
+  { id: 5, name: '钱七', email: 'qianqi@gmail.com' }
+];
+
+// 使用Promise函数模拟API请求
+const [data, loading, error, { refresh }] = useFetch(() => {
+  return new Promise<User[]>((resolve) => {
+    setTimeout(() => {
+      resolve(mockUsers);
+    }, 1000);
+  });
+});
 </script>
 ```
 
@@ -86,14 +101,14 @@ const [data, loading, error, { refresh }] = useFetch<User[]>('/api/users');
         />
         <vk-button 
           @click="handleSearch" 
-          :disabled="!userId || loading" 
-          :loading="loading"
+          :disabled="!userId || userLoading" 
+          :loading="userLoading"
           type="primary"
         >
-          {{ loading ? '查询中...' : '查询用户' }}
+          {{ userLoading ? '查询中...' : '查询用户' }}
         </vk-button>
       </div>
-      <div v-if="loading" style="text-align: center; padding: 30px; color: #1890ff; background: #f0f9ff; border-radius: 4px;">
+      <div v-if="userLoading" style="text-align: center; padding: 30px; color: #1890ff; background: #f0f9ff; border-radius: 4px;">
         🔍 正在查询用户信息...
       </div>
       <div v-else-if="userError" style="text-align: center; padding: 30px; color: #ff4d4f; background: #fff2f0; border-radius: 4px;">
@@ -153,10 +168,31 @@ interface User {
   email: string;
 }
 
+// 模拟用户数据
+const mockUsers: User[] = [
+  { id: 1, name: '张三', email: 'zhangsan@example.com' },
+  { id: 2, name: '李四', email: 'lisi@gmail.com' },
+  { id: 3, name: '王五', email: 'wangwu@example.com' },
+  { id: 4, name: '赵六', email: 'zhaoliu@outlook.com' },
+  { id: 5, name: '钱七', email: 'qianqi@gmail.com' }
+];
+
 const userId = ref('');
 
-const [data, loading, error, { execute }] = useFetch<User>(
-  () => `/api/users/${userId.value}`,
+// 使用Promise函数模拟API请求
+const [data, loading, error, { execute }] = useFetch(
+  () => {
+    return new Promise<User>((resolve, reject) => {
+      setTimeout(() => {
+        const user = mockUsers.find(u => u.id === parseInt(userId.value));
+        if (user) {
+          resolve(user);
+        } else {
+          reject(new Error('用户不存在'));
+        }
+      }, 800);
+    });
+  },
   { immediate: false }
 );
 
@@ -201,6 +237,7 @@ const handleSearch = () => {
           html-type="submit" 
           :disabled="createLoading || !form.name || !form.email" 
           style="width: 100%;"
+          @click="handleSubmit"
         >
           {{ createLoading ? '创建中...' : '创建用户' }}
         </vk-button>
@@ -275,18 +312,25 @@ const form = reactive<CreateUserData>({
   email: ''
 });
 
-const [data, loading, error, { execute }] = useFetch<User>('/api/users', {
-  method: 'POST',
-  immediate: false
-});
+// 使用Promise函数模拟POST请求
+const [data, loading, error, { execute }] = useFetch(
+  () => {
+    return new Promise<User>((resolve) => {
+      setTimeout(() => {
+        const newUser: User = {
+          id: Date.now(),
+          name: form.name,
+          email: form.email
+        };
+        resolve(newUser);
+      }, 1200);
+    });
+  },
+  { immediate: false }
+);
 
 const handleSubmit = () => {
-  execute({
-    body: JSON.stringify(form),
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  });
+  execute();
 };
 </script>
 ```
@@ -300,14 +344,14 @@ const handleSubmit = () => {
     <div style="padding: 20px; border: 1px solid #e8e8e8; border-radius: 8px; width: 100%;">
       <h3 style="margin-top: 0;">🔄 不稳定的 API 请求</h3>
       <div style="margin-bottom: 20px; display: flex; gap: 12px;">
-        <vk-button @click="execute" :disabled="loading" type="primary">
-          {{ loading ? '请求中...' : '发起请求' }}
+        <vk-button @click="retryExecute" :disabled="retryLoading" type="primary">
+          {{ retryLoading ? '请求中...' : '发起请求' }}
         </vk-button>
-        <vk-button @click="cancel" :disabled="!loading" type="default">
+        <vk-button @click="cancel" :disabled="!retryLoading" type="default">
           取消请求
         </vk-button>
       </div>
-      <div v-if="loading" style="background: #f0f9ff; padding: 20px; border-radius: 4px; border: 1px solid #91d5ff;">
+      <div v-if="retryLoading" style="background: #f0f9ff; padding: 20px; border-radius: 4px; border: 1px solid #91d5ff;">
         <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
           <div style="width: 20px; height: 20px; border: 2px solid #1890ff; border-top: 2px solid transparent; border-radius: 50%; animation: spin 1s linear infinite;"></div>
           <span style="color: #1890ff; font-weight: 500;">请求进行中...</span>
@@ -321,17 +365,17 @@ const handleSubmit = () => {
         </div>
         <p style="margin: 8px 0 0; font-size: 12px; color: #999;">进度: {{ progress }}%</p>
       </div>
-      <div v-else-if="error" style="background: #fff2f0; padding: 20px; border-radius: 4px; border: 1px solid #ffccc7;">
+      <div v-else-if="retryError" style="background: #fff2f0; padding: 20px; border-radius: 4px; border: 1px solid #ffccc7;">
         <h4 style="margin: 0 0 12px; color: #ff4d4f;">❌ 请求失败</h4>
-        <p style="margin: 4px 0; color: #666;">错误信息: {{ error?.message || '未知错误' }}</p>
-        <p v-if="error?.isTimeout" style="margin: 4px 0; color: #fa8c16;">⏰ 请求超时</p>
-        <p v-if="error?.isCancel" style="margin: 4px 0; color: #722ed1;">🚫 请求已取消</p>
+        <p style="margin: 4px 0; color: #666;">错误信息: {{ retryError?.message || '未知错误' }}</p>
+        <p v-if="retryError?.isTimeout" style="margin: 4px 0; color: #fa8c16;">⏰ 请求超时</p>
+        <p v-if="retryError?.isCancel" style="margin: 4px 0; color: #722ed1;">🚫 请求已取消</p>
         <p style="margin: 8px 0 0; font-size: 12px; color: #999;">最终重试次数: {{ retryCount }}</p>
       </div>
-      <div v-else-if="data" style="background: #f6ffed; padding: 20px; border-radius: 4px; border: 1px solid #b7eb8f;">
+      <div v-else-if="retryData" style="background: #f6ffed; padding: 20px; border-radius: 4px; border: 1px solid #b7eb8f;">
         <h4 style="margin: 0 0 12px; color: #52c41a;">✅ 请求成功</h4>
-        <p style="margin: 4px 0; color: #666;">响应消息: <strong>{{ data.message }}</strong></p>
-        <p style="margin: 4px 0; color: #999; font-size: 12px;">时间戳: {{ new Date(data.timestamp).toLocaleString() }}</p>
+        <p style="margin: 4px 0; color: #666;">响应消息: <strong>{{ retryData.message }}</strong></p>
+         <p style="margin: 4px 0; color: #999; font-size: 12px;">响应时间: {{ new Date(retryData.timestamp).toLocaleString() }}</p>
         <p style="margin: 8px 0 0; font-size: 12px; color: #999;">重试次数: {{ retryCount }}</p>
       </div>
       <div v-else style="text-align: center; padding: 30px; color: #999; background: #fafafa; border-radius: 4px;">
@@ -379,8 +423,23 @@ interface ApiResponse {
 const retryCount = ref(0);
 const progress = ref(0);
 
-const [data, loading, error, { execute, cancel }] = useFetch<ApiResponse>(
-  '/api/unstable',
+// 使用Promise函数模拟不稳定的API请求
+const [data, loading, error, { execute, cancel }] = useFetch(
+  () => {
+    return new Promise<ApiResponse>((resolve, reject) => {
+      setTimeout(() => {
+        // 模拟 70% 的失败率
+        if (Math.random() < 0.7) {
+          reject(new Error('网络不稳定，请求失败'));
+        } else {
+          resolve({
+            message: '请求成功！',
+            timestamp: Date.now()
+          });
+        }
+      }, 2000);
+    });
+  },
   {
     immediate: false,
     timeout: 5000,
@@ -453,42 +512,42 @@ watch(loading, (isLoading) => {
     <div style="padding: 20px; border: 1px solid #e8e8e8; border-radius: 8px; width: 100%;">
       <h3 style="margin-top: 0;">📊 数据转换示例</h3>
       <div style="margin-bottom: 16px;">
-        <vk-button @click="refresh" :loading="loading" type="primary">
-          {{ loading ? '加载中...' : '获取统计数据' }}
+        <vk-button @click="refreshStats" :loading="statsLoading" type="primary">
+          {{ statsLoading ? '加载中...' : '获取统计数据' }}
         </vk-button>
       </div>
-      <div v-if="loading" style="text-align: center; padding: 30px; color: #1890ff;">
+      <div v-if="statsLoading" style="text-align: center; padding: 30px; color: #1890ff;">
         📈 正在处理数据...
       </div>
-      <div v-else-if="error" style="text-align: center; padding: 30px; color: #ff4d4f; background: #fff2f0; border-radius: 4px;">
-        ❌ 数据加载失败: {{ error?.message || '未知错误' }}
+      <div v-else-if="statsError" style="text-align: center; padding: 30px; color: #ff4d4f; background: #fff2f0; border-radius: 4px;">
+        ❌ 数据加载失败: {{ statsError?.message || '未知错误' }}
       </div>
-      <div v-else-if="data" style="background: #f6ffed; padding: 20px; border-radius: 4px;">
+      <div v-else-if="statsData" style="background: #f6ffed; padding: 20px; border-radius: 4px;">
         <h4 style="margin: 0 0 16px; color: #52c41a;">📊 用户统计数据</h4>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
           <div style="background: white; padding: 16px; border-radius: 8px; border: 1px solid #d9f7be; text-align: center;">
-            <div style="font-size: 24px; font-weight: bold; color: #1890ff; margin-bottom: 4px;">{{ data.totalUsers }}</div>
+            <div style="font-size: 24px; font-weight: bold; color: #1890ff; margin-bottom: 4px;">{{ statsData.totalUsers }}</div>
             <div style="color: #666; font-size: 14px;">总用户数</div>
           </div>
           <div style="background: white; padding: 16px; border-radius: 8px; border: 1px solid #d9f7be; text-align: center;">
-            <div style="font-size: 24px; font-weight: bold; color: #52c41a; margin-bottom: 4px;">{{ data.activeUsers }}</div>
+            <div style="font-size: 24px; font-weight: bold; color: #52c41a; margin-bottom: 4px;">{{ statsData.activeUsers }}</div>
             <div style="color: #666; font-size: 14px;">活跃用户</div>
           </div>
           <div style="background: white; padding: 16px; border-radius: 8px; border: 1px solid #d9f7be; text-align: center;">
-            <div style="font-size: 24px; font-weight: bold; color: #fa8c16; margin-bottom: 4px;">{{ data.averageAge }}</div>
+            <div style="font-size: 24px; font-weight: bold; color: #fa8c16; margin-bottom: 4px;">{{ statsData.averageAge }}</div>
             <div style="color: #666; font-size: 14px;">平均年龄</div>
           </div>
         </div>
         <div style="margin-top: 16px; padding: 12px; background: white; border-radius: 4px; border: 1px solid #d9f7be;">
           <h5 style="margin: 0 0 8px; color: #666;">🏆 最受欢迎的域名</h5>
-          <div v-for="(count, domain) in data.emailDomains" :key="domain" 
+          <div v-for="(count, domain) in statsData.emailDomains" :key="domain" 
                style="display: flex; justify-content: space-between; align-items: center; padding: 4px 0;">
             <span style="color: #333;">{{ domain }}</span>
             <span style="background: #1890ff; color: white; padding: 2px 8px; border-radius: 12px; font-size: 12px;">{{ count }}</span>
           </div>
         </div>
         <p style="margin: 12px 0 0; font-size: 12px; color: #999; text-align: center;">
-          数据更新时间: {{ new Date(data.lastUpdated).toLocaleString() }}
+          数据更新时间: {{ new Date(statsData.lastUpdated).toLocaleString() }}
         </p>
       </div>
     </div>
@@ -527,31 +586,51 @@ interface UserStats {
   lastUpdated: string;
 }
 
-const [data, loading, error, { refresh }] = useFetch<UserStats>(
-  '/api/users/stats',
+// 模拟用户数据
+const mockUsers = [
+  { id: 1, name: '张三', email: 'zhangsan@example.com' },
+  { id: 2, name: '李四', email: 'lisi@gmail.com' },
+  { id: 3, name: '王五', email: 'wangwu@example.com' },
+  { id: 4, name: '赵六', email: 'zhaoliu@outlook.com' },
+  { id: 5, name: '钱七', email: 'qianqi@gmail.com' }
+];
+
+// 使用Promise函数模拟数据转换和缓存
+const [data, loading, error, { refresh }] = useFetch(
+  () => {
+    return new Promise<UserStats>((resolve) => {
+      setTimeout(() => {
+        // 模拟原始数据转换
+        const rawData = mockUsers.map(user => ({
+          ...user,
+          age: Math.floor(Math.random() * 40) + 20,
+          active: Math.random() > 0.3
+        }));
+
+        const totalUsers = rawData.length;
+        const activeUsers = rawData.filter(user => user.active).length;
+        const averageAge = Math.round(
+          rawData.reduce((sum, user) => sum + user.age, 0) / totalUsers
+        );
+
+        const emailDomains = rawData.reduce((acc, user) => {
+          const domain = user.email.split('@')[1];
+          acc[domain] = (acc[domain] || 0) + 1;
+          return acc;
+        }, {} as Record<string, number>);
+
+        resolve({
+          totalUsers,
+          activeUsers,
+          averageAge,
+          emailDomains,
+          lastUpdated: new Date().toISOString()
+        });
+      }, 1500);
+    });
+  },
   {
-    transform: (rawData: any[]) => {
-      // 数据转换逻辑
-      const totalUsers = rawData.length;
-      const activeUsers = rawData.filter(user => user.active).length;
-      const averageAge = Math.round(
-        rawData.reduce((sum, user) => sum + user.age, 0) / totalUsers
-      );
-
-      const emailDomains = rawData.reduce((acc, user) => {
-        const domain = user.email.split('@')[1];
-        acc[domain] = (acc[domain] || 0) + 1;
-        return acc;
-      }, {});
-
-      return {
-        totalUsers,
-        activeUsers,
-        averageAge,
-        emailDomains,
-        lastUpdated: new Date().toISOString()
-      };
-    },
+    immediate: false,
     cache: true,
     cacheTime: 5 * 60 * 1000 // 5分钟缓存
   }
@@ -594,11 +673,11 @@ function useFetch<T = any>(
 
 返回一个数组，包含以下元素：
 
-| 索引 | 类型                      | 说明                                                      |
-| ---- | ------------------------- | --------------------------------------------------------- |
-| [0]  | `Ref<T \| null>`          | 响应数据                                                  |
-| [1]  | `Ref<boolean>`            | 加载状态                                                  |
-| [2]  | `Ref<FetchError \| null>` | 错误信息                                                  |
+| 索引 | 类型                      | 说明                                                                                                                                                                                                           |
+| ---- | ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [0]  | `Ref<T \| null>`          | 响应数据                                                                                                                                                                                                       |
+| [1]  | `Ref<boolean>`            | 加载状态                                                                                                                                                                                                       |
+| [2]  | `Ref<FetchError \| null>` | 错误信息                                                                                                                                                                                                       |
 | [3]  | `Object`                  | 控制函数和状态对象，包含以下属性：<br/>• `status`: 请求状态 (idle/loading/success/error/canceled)<br/>• `execute`: 手动执行请求函数<br/>• `cancel`: 取消当前请求函数<br/>• `refresh`: 刷新请求函数（重新执行） |
 
 ### 类型定义

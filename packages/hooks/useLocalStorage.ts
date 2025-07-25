@@ -53,7 +53,7 @@ const defaultSerializer: SerializerFunction<any> = {
 
 /**
  * 本地存储钩子函数
- * @param key 存储键名
+ * @param key 存储键名（实际存储时会自动添加 'vk-' 前缀）
  * @param defaultValue 默认值
  * @param options 配置选项
  * @param options.serializer 自定义序列化器
@@ -61,13 +61,13 @@ const defaultSerializer: SerializerFunction<any> = {
  * @returns 返回数组 [storedValue, setValue, removeValue]
  * @example
  * ```typescript
- * // 基础用法
+ * // 基础用法（实际存储键名为 'vk-username'）
  * const [name, setName] = useLocalStorage('username', '');
  *
- * // 存储对象
+ * // 存储对象（实际存储键名为 'vk-user'）
  * const [user, setUser] = useLocalStorage('user', { name: '', age: 0 });
  *
- * // 自定义序列化器
+ * // 自定义序列化器（实际存储键名为 'vk-date'）
  * const [date, setDate] = useLocalStorage('date', new Date(), {
  *   serializer: {
  *     read: (value) => new Date(value),
@@ -86,6 +86,9 @@ export function useLocalStorage<T>(
 ): UseLocalStorageReturn<T> {
   const { serializer = defaultSerializer, syncAcrossTabs = true } = options;
 
+  // 添加组件库前缀
+  const prefixedKey = `vk-${key}`;
+
   // 读取初始值
   function readFromStorage(): T {
     if (typeof window === "undefined") {
@@ -93,13 +96,13 @@ export function useLocalStorage<T>(
     }
 
     try {
-      const item = window.localStorage.getItem(key);
+      const item = window.localStorage.getItem(prefixedKey);
       if (item === null) {
         return defaultValue;
       }
       return serializer.read(item);
     } catch (error) {
-      console.warn(`Error reading localStorage key "${key}":`, error);
+      console.warn(`Error reading localStorage key "${prefixedKey}":`, error);
       return defaultValue;
     }
   }
@@ -111,9 +114,9 @@ export function useLocalStorage<T>(
     }
 
     try {
-      window.localStorage.setItem(key, serializer.write(value));
+      window.localStorage.setItem(prefixedKey, serializer.write(value));
     } catch (error) {
-      console.warn(`Error setting localStorage key "${key}":`, error);
+      console.warn(`Error setting localStorage key "${prefixedKey}":`, error);
     }
   }
 
@@ -124,9 +127,9 @@ export function useLocalStorage<T>(
     }
 
     try {
-      window.localStorage.removeItem(key);
+      window.localStorage.removeItem(prefixedKey);
     } catch (error) {
-      console.warn(`Error removing localStorage key "${key}":`, error);
+      console.warn(`Error removing localStorage key "${prefixedKey}":`, error);
     }
   }
 
@@ -161,13 +164,13 @@ export function useLocalStorage<T>(
   // 监听存储变化（跨标签页同步）
   if (typeof window !== "undefined" && syncAcrossTabs) {
     const handleStorageChange = (e: StorageEvent) => {
-      if (e.key === key && e.newValue !== null) {
+      if (e.key === prefixedKey && e.newValue !== null) {
         try {
           storedValue.value = serializer.read(e.newValue);
         } catch (error) {
-          console.warn(`Error parsing storage event for key "${key}":`, error);
+          console.warn(`Error parsing storage event for key "${prefixedKey}":`, error);
         }
-      } else if (e.key === key && e.newValue === null) {
+      } else if (e.key === prefixedKey && e.newValue === null) {
         storedValue.value = defaultValue;
       }
     };

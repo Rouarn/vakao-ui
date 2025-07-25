@@ -197,15 +197,237 @@ defineExpose({
 - 变量命名：`--vk-component-property`
 - 支持暗色主题
 
-## 5. 图标规范
+## 5. Hooks 设计规范
 
-### 5.1 图标系统
+### 5.1 设计原则
+
+参考 React Hooks 设计模式，Vakao UI 的组合式函数（Hooks）应遵循以下设计原则：
+
+- **函数式编程**：Hooks 应该是纯函数，避免副作用
+- **可组合性**：Hooks 可以相互组合使用
+- **可重用性**：Hooks 应该具有良好的可重用性
+- **一致性**：所有 Hooks 应遵循统一的 API 设计模式
+
+### 5.2 命名规范
+
+- Hooks 函数名使用 `use` 前缀，采用 camelCase 命名
+- 示例：`useFetch`、`useToggle`、`useLocalStorage`
+- 文件名与函数名保持一致：`useFetch.ts`
+
+### 5.3 返回值规范
+
+**核心要求**：所有 Hooks 的返回值必须使用数组格式，参考 React Hooks 设计模式。
+
+#### 基础返回格式
+
+```typescript
+// 基础格式：[状态, 操作函数]
+const [state, setState] = useHook();
+
+// 扩展格式：[状态, 操作函数, 额外信息]
+const [data, actions, meta] = useHook();
+```
+
+#### 具体示例
+
+```typescript
+// useToggle - 布尔状态切换
+const [isOpen, toggle] = useToggle(false);
+const [isOpen, { toggle, setTrue, setFalse }] = useToggle(false);
+
+// useFetch - 数据获取
+const [data, loading, error] = useFetch('/api/users');
+const [data, loading, error, { refetch, cancel }] = useFetch('/api/users');
+
+// useCounter - 计数器
+const [count, { increment, decrement, reset }] = useCounter(0);
+
+// useLocalStorage - 本地存储
+const [value, setValue, { remove, clear }] = useLocalStorage('key', defaultValue);
+```
+
+### 5.4 TypeScript 类型定义
+
+#### 返回值类型定义
+
+```typescript
+// 基础类型定义
+type UseToggleReturn = [
+  boolean,
+  {
+    toggle: () => void;
+    setTrue: () => void;
+    setFalse: () => void;
+  }
+];
+
+// 泛型类型定义
+type UseFetchReturn<T> = [
+  T | null,
+  boolean,
+  Error | null,
+  {
+    refetch: () => Promise<void>;
+    cancel: () => void;
+  }
+];
+```
+
+#### 参数类型定义
+
+```typescript
+// 配置选项类型
+interface UseFetchOptions {
+  immediate?: boolean;
+  timeout?: number;
+  retry?: number;
+}
+
+// Hook 函数签名
+function useFetch<T>(
+  url: string | (() => string),
+  options?: UseFetchOptions
+): UseFetchReturn<T>;
+```
+
+### 5.5 实现规范
+
+#### 基本结构
+
+```typescript
+import { ref, computed, type Ref } from 'vue';
+
+// 类型定义
+interface UseExampleOptions {
+  // 配置选项
+}
+
+type UseExampleReturn = [
+  // 返回值类型定义
+];
+
+// Hook 实现
+export function useExample(
+  initialValue?: any,
+  options?: UseExampleOptions
+): UseExampleReturn {
+  // 1. 响应式状态
+  const state = ref(initialValue);
+  
+  // 2. 计算属性
+  const computedValue = computed(() => {
+    // 计算逻辑
+  });
+  
+  // 3. 操作函数
+  const actions = {
+    update: (newValue: any) => {
+      state.value = newValue;
+    },
+    reset: () => {
+      state.value = initialValue;
+    }
+  };
+  
+  // 4. 返回数组格式
+  return [state, actions] as const;
+}
+```
+
+#### 错误处理
+
+```typescript
+export function useFetch<T>(url: string): UseFetchReturn<T> {
+  const data = ref<T | null>(null);
+  const loading = ref(false);
+  const error = ref<Error | null>(null);
+  
+  const execute = async () => {
+    try {
+      loading.value = true;
+      error.value = null;
+      // 请求逻辑
+    } catch (err) {
+      error.value = err as Error;
+    } finally {
+      loading.value = false;
+    }
+  };
+  
+  return [data, loading, error, { execute }] as const;
+}
+```
+
+### 5.6 文档规范
+
+#### API 文档格式
+
+```markdown
+## useFetch
+
+用于处理异步数据获取的组合式函数。
+
+### 基础用法
+
+\`\`\`typescript
+const [data, loading, error] = useFetch('/api/users');
+\`\`\`
+
+### 参数
+
+| 参数 | 说明 | 类型 | 默认值 |
+|------|------|------|--------|
+| url | 请求地址 | `string \| (() => string)` | - |
+| options | 配置选项 | `UseFetchOptions` | `{}` |
+
+### 返回值
+
+返回一个数组，包含以下元素：
+
+| 索引 | 说明 | 类型 |
+|------|------|------|
+| 0 | 响应数据 | `T \| null` |
+| 1 | 加载状态 | `boolean` |
+| 2 | 错误信息 | `Error \| null` |
+| 3 | 操作函数 | `{ refetch, cancel }` |
+```
+
+### 5.7 测试规范
+
+```typescript
+import { describe, it, expect } from 'vitest';
+import { useToggle } from '../useToggle';
+
+describe('useToggle', () => {
+  it('should return array with initial state and actions', () => {
+    const [state, actions] = useToggle(false);
+    
+    expect(Array.isArray([state, actions])).toBe(true);
+    expect(state.value).toBe(false);
+    expect(typeof actions.toggle).toBe('function');
+  });
+  
+  it('should toggle state correctly', () => {
+    const [state, { toggle }] = useToggle(false);
+    
+    toggle();
+    expect(state.value).toBe(true);
+    
+    toggle();
+    expect(state.value).toBe(false);
+  });
+});
+```
+
+## 6. 图标规范
+
+### 6.1 图标系统
 
 - 优先使用 Iconify 图标库
 - 图标格式：`mdi:icon-name`
 - 支持自定义 SVG 图标
 
-### 5.2 图标使用
+### 6.2 图标使用
 
 ```vue
 <!-- Iconify 图标 -->
@@ -215,9 +437,9 @@ defineExpose({
 <VkIcon src="/path/to/icon.svg" />
 ```
 
-## 6. 文档规范
+## 7. 文档规范
 
-### 6.1 组件文档结构
+### 7.1 组件文档结构
 
 1. 组件描述
 2. 基础用法
@@ -225,22 +447,22 @@ defineExpose({
 4. API 文档
 5. 主题定制
 
-### 6.2 示例代码
+### 7.2 示例代码
 
 - 提供完整可运行的示例
 - 包含 HTML、JavaScript 和 CSS
 - 示例应该简洁明了
 
-### 6.3 API 文档
+### 7.3 API 文档
 
 - Props 表格：参数、说明、类型、可选值、默认值
 - Events 表格：事件名、说明、参数
 - Slots 表格：插槽名、说明、作用域参数
 - Methods 表格：方法名、说明、参数、返回值
 
-### 6.4 文档编写注意事项
+### 7.4 文档编写注意事项
 
-#### 6.4.1 导入路径规范
+#### 7.4.1 导入路径规范
 
 **文档示例代码中的导入**：
 
@@ -254,7 +476,7 @@ defineExpose({
 - 组件导入：`import { VkMessageBox } from "@vakao-ui/components"`
 - 样式导入：根据实际文档环境配置
 
-#### 6.4.2 组件标签使用规范
+#### 7.4.2 组件标签使用规范
 
 **支持的组件标签格式**：
 
@@ -265,44 +487,44 @@ defineExpose({
 
 - 全大写：`<VKBUTTON></VKBUTTON>`、`<VKMESSAGEBOX></VKMESSAGEBOX>`
 
-#### 6.4.4 文档一致性要求
+#### 7.4.4 文档一致性要求
 
 - 示例代码必须与用户实际使用场景保持一致
 - 确保所有示例都能在用户环境中直接运行
 - 区分开发环境和生产环境的不同配置
 
-## 7. 测试规范
+## 8. 测试规范
 
-### 7.1 单元测试
+### 8.1 单元测试
 
 - 使用 Vitest 测试框架
 - 测试覆盖率不低于 80%
 - 测试文件命名：`component-name.test.ts`
 
-### 7.2 测试内容
+### 8.2 测试内容
 
 - Props 验证
 - 事件触发
 - 插槽渲染
 - 边界情况
 
-## 8. 版本管理
+## 9. 版本管理
 
-### 8.1 语义化版本
+### 9.1 语义化版本
 
 - 主版本号：不兼容的 API 修改
 - 次版本号：向下兼容的功能性新增
 - 修订号：向下兼容的问题修正
 
-### 8.2 变更日志
+### 9.2 变更日志
 
 - 记录每个版本的变更内容
 - 分类：新增、修改、修复、移除
 - 提供迁移指南
 
-## 9. 依赖管理
+## 10. 依赖管理
 
-### 9.1 工作空间配置
+### 10.1 工作空间配置
 
 项目使用 pnpm workspace 管理 Monorepo，配置文件：`pnpm-workspace.yaml`
 
@@ -312,7 +534,7 @@ packages:
   - "docs"
 ```
 
-### 9.2 依赖分类
+### 10.2 依赖分类
 
 **核心依赖**：
 
@@ -332,7 +554,7 @@ packages:
 - `@vakao-ui/hooks`
 - `@vakao-ui/utils`
 
-### 9.3 依赖安装
+### 10.3 依赖安装
 
 ```bash
 # 安装所有依赖
@@ -345,9 +567,9 @@ pnpm add <package> --filter @vakao-ui/components
 pnpm add -D <package> -w
 ```
 
-## 10. 构建和发布
+## 11. 构建和发布
 
-### 10.1 构建流程
+### 11.1 构建流程
 
 1. 代码检查（ESLint + Prettier）
 2. 类型检查（TypeScript）
@@ -355,7 +577,7 @@ pnpm add -D <package> -w
 4. 构建产物（UMD + ESM + 类型声明）
 5. 文档生成
 
-### 10.2 构建产物
+### 11.2 构建产物
 
 ```
 dist/
@@ -367,7 +589,7 @@ dist/
     └── resolver.d.ts
 ```
 
-### 10.3 发布流程
+### 11.3 发布流程
 
 1. 版本号更新
 2. 变更日志更新
@@ -376,9 +598,9 @@ dist/
 5. NPM 发布（`pnpm publish:only`）
 6. 文档部署（GitHub Actions）
 
-## 11. 代码审查
+## 12. 代码审查
 
-### 11.1 审查要点
+### 12.1 审查要点
 
 - 代码规范遵循
 - API 设计合理性
@@ -386,16 +608,16 @@ dist/
 - 向后兼容性
 - 文档完整性
 
-### 11.2 审查流程
+### 12.2 审查流程
 
 1. 自测验证
 2. 同行评审
 3. 集成测试
 4. 合并主分支
 
-## 12. 性能优化
+## 13. 性能优化
 
-### 12.1 优化原则
+### 13.1 优化原则
 
 - 按需加载
 - Tree Shaking 支持
