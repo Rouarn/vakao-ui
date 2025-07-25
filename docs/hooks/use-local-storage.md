@@ -494,9 +494,8 @@ const [lastVisit, setLastVisit] = useLocalStorage("last-visit", null, {
   serializer: dateSerializer,
 });
 
-const updateLastVisit = (event: Event) => {
-  const target = event.target as HTMLInputElement;
-  setLastVisit(new Date(target.value));
+const updateLastVisit = (value: string) => {
+  setLastVisit(new Date(value));
 };
 </script>
 ```
@@ -819,9 +818,8 @@ const [lastVisit, setLastVisit] = useLocalStorage(
   { serializer: dateSerializer }
 );
 
-const updateLastVisit = (event) => {
-  const target = event.target;
-  setLastVisit(new Date(target.value));
+const updateLastVisit = (value) => {
+  setLastVisit(new Date(value));
 };
 
 // 跨标签页同步示例
