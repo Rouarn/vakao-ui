@@ -14,29 +14,39 @@ Vakao UI 提供了一系列实用的 Vue 3 Composition API hooks，帮助您更�
 ### 状态管理
 
 - [useToggle](/hooks/use-toggle) - 布尔值切换钩子
+- [useCounter](/hooks/use-counter) - 计数器钩子
+- [useLocalStorage](/hooks/use-local-storage) - 本地存储钩子
 
-### 即将推出
+### 性能优化
 
-- `useCounter` - 计数器钩子
-- `useLocalStorage` - 本地存储钩子
-- `useDebounce` - 防抖钩子
-- `useThrottle` - 节流钩子
-- `useFetch` - 数据获取钩子
+- [useDebounce](/hooks/use-debounce) - 防抖钩子
+- [useThrottle](/hooks/use-throttle) - 节流钩子
+
+### 数据获取
+
+- [useFetch](/hooks/use-fetch) - 数据获取钩子
 
 ## 使用方式
 
 ### 全局引入
 
 ```ts
-import { useToggle } from 'vakao-ui';
+import { useToggle, useCounter, useFetch } from 'vakao-ui';
 
 export default {
   setup() {
-    const { state, toggle } = useToggle();
+    const [isVisible, toggle] = useToggle();
+    const [count, increment, decrement] = useCounter(0);
+    const { data, loading } = useFetch('/api/users');
     
     return {
-      state,
-      toggle
+      isVisible,
+      toggle,
+      count,
+      increment,
+      decrement,
+      data,
+      loading
     };
   }
 };
@@ -45,19 +55,43 @@ export default {
 ### 按需引入
 
 ```ts
-import { useToggle } from 'vakao-ui/hooks';
+import { useToggle, useLocalStorage, useDebounce } from 'vakao-ui/hooks';
+import { ref } from 'vue';
 
 export default {
   setup() {
-    const { state, toggle } = useToggle();
+    const [isVisible, toggle] = useToggle();
+    const [username, setUsername] = useLocalStorage('username', '');
+    
+    const searchText = ref('');
+    const debouncedSearchText = useDebounce(searchText, 300);
     
     return {
-      state,
-      toggle
+      isVisible,
+      toggle,
+      username,
+      setUsername,
+      searchText,
+      debouncedSearchText
     };
   }
 };
 ```
+
+## 特性
+
+- **响应式** - 基于 Vue 3 响应式系统
+- **类型安全** - 完整的 TypeScript 支持
+- **轻量级** - 按需引入，减少包体积
+- **易于测试** - 纯函数设计，便于单元测试
+- **SSR 友好** - 支持服务端渲染
+
+## 最佳实践
+
+1. **按需引入** - 只引入需要的 hooks
+2. **类型注解** - 充分利用 TypeScript 类型推导
+3. **组合使用** - 多个 hooks 可以组合使用
+4. **性能优化** - 合理使用防抖和节流 hooks
 
 ## 类型支持
 

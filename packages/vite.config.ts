@@ -22,20 +22,19 @@ export default defineConfig({
       pathsToAliases: false,
       aliasesExclude: [/@vakao-ui\/.*/],
       beforeWriteFile: (filePath, content) => {
-        // 动态计算相对路径，确保在任何位置都能正确访问
         const path = require("path");
         const fileDir = path.dirname(filePath);
-        const typesRoot = path.resolve(__dirname, "dist/types");
+        const distTypesRoot = path.resolve(__dirname, "../dist/types");
 
         // 计算从当前文件到各个模块的相对路径
         const utilsPath = path
-          .relative(fileDir, path.join(typesRoot, "utils"))
+          .relative(fileDir, path.join(distTypesRoot, "utils"))
           .replace(/\\/g, "/");
         const typesPath = path
-          .relative(fileDir, path.join(typesRoot, "index"))
+          .relative(fileDir, path.join(distTypesRoot, "types"))
           .replace(/\\/g, "/");
         const hooksPath = path
-          .relative(fileDir, path.join(typesRoot, "hooks"))
+          .relative(fileDir, path.join(distTypesRoot, "hooks"))
           .replace(/\\/g, "/");
 
         // 确保路径以 ./ 开头（如果不是以 ../ 开头的话）
@@ -46,7 +45,10 @@ export default defineConfig({
           return p;
         };
 
-        const updatedContent = content
+        let updatedContent = content;
+
+        // 替换 @vakao-ui/utils 导入
+        updatedContent = updatedContent
           .replace(
             /from ["']@vakao-ui\/utils["']/g,
             `from "${normalizeRelativePath(utilsPath)}"`
@@ -54,7 +56,10 @@ export default defineConfig({
           .replace(
             /import\(["']@vakao-ui\/utils["']\)/g,
             `import("${normalizeRelativePath(utilsPath)}")`
-          )
+          );
+
+        // 替换 @vakao-ui/types 导入
+        updatedContent = updatedContent
           .replace(
             /from ["']@vakao-ui\/types["']/g,
             `from "${normalizeRelativePath(typesPath)}"`
@@ -62,7 +67,10 @@ export default defineConfig({
           .replace(
             /import\(["']@vakao-ui\/types["']\)/g,
             `import("${normalizeRelativePath(typesPath)}")`
-          )
+          );
+
+        // 替换 @vakao-ui/hooks 导入
+        updatedContent = updatedContent
           .replace(
             /from ["']@vakao-ui\/hooks["']/g,
             `from "${normalizeRelativePath(hooksPath)}"`
@@ -71,6 +79,24 @@ export default defineConfig({
             /import\(["']@vakao-ui\/hooks["']\)/g,
             `import("${normalizeRelativePath(hooksPath)}")`
           );
+
+        // 修复错误的内部路径引用
+        // 将类似 "../../../../packages/dist/types/utils" 的路径替换为正确的相对路径
+        updatedContent = updatedContent.replace(
+          /import\(["'][^"']*\/packages\/dist\/types\/utils["']\)/g,
+          `import("${normalizeRelativePath(utilsPath)}")`
+        );
+
+        // 修复其他可能的错误路径
+        updatedContent = updatedContent.replace(
+          /["'][^"']*\/packages\/dist\/types\/([^"']*)["']/g,
+          (_match, modulePath) => {
+            const targetPath = path
+              .relative(fileDir, path.join(distTypesRoot, modulePath))
+              .replace(/\\/g, "/");
+            return `"${normalizeRelativePath(targetPath)}"`;
+          }
+        );
 
         return {
           filePath,

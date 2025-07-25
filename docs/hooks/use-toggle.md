@@ -29,7 +29,7 @@
 <script setup lang="ts">
 import { useToggle } from "vakao-ui";
 
-const { state, toggle, setTrue, setFalse } = useToggle();
+const [state, toggle, setTrue, setFalse] = useToggle();
 </script>
 ```
 
@@ -60,7 +60,7 @@ const { state, toggle, setTrue, setFalse } = useToggle();
 import { useToggle } from "vakao-ui";
 
 // 初始值为 true
-const { state: modalVisible, toggle: toggleModal } = useToggle(true);
+const [modalVisible, toggleModal] = useToggle(true);
 </script>
 ```
 
@@ -99,11 +99,7 @@ const { state: modalVisible, toggle: toggleModal } = useToggle(true);
 <script setup lang="ts">
 import { useToggle } from "vakao-ui";
 
-const {
-  state: sidebarVisible,
-  toggle: toggleSidebar,
-  setFalse: closeSidebar,
-} = useToggle();
+const [sidebarVisible, toggleSidebar, , closeSidebar] = useToggle();
 </script>
 
 <style>
@@ -160,11 +156,7 @@ const {
 import { ref } from "vue";
 import { useToggle } from "vakao-ui";
 
-const {
-  state: isLoading,
-  setTrue: startLoading,
-  setFalse: stopLoading,
-} = useToggle();
+const [isLoading, , startLoading, stopLoading] = useToggle();
 const data = ref(null);
 
 const fetchData = async () => {
@@ -194,23 +186,68 @@ const fetchData = async () => {
 
 ### 返回值
 
-| 属性名   | 类型           | 说明                 |
-| -------- | -------------- | -------------------- |
-| state    | `Ref<boolean>` | 当前状态的响应式引用 |
-| toggle   | `() => void`   | 切换状态的函数       |
-| setTrue  | `() => void`   | 设置状态为 true      |
-| setFalse | `() => void`   | 设置状态为 false     |
+返回一个数组，包含以下元素：
+
+| 索引 | 类型           | 说明                 |
+| ---- | -------------- | -------------------- |
+| 0    | `Ref<boolean>` | 当前状态的响应式引用 |
+| 1    | `() => void`   | 切换状态的函数       |
+| 2    | `() => void`   | 设置状态为 true      |
+| 3    | `() => void`   | 设置状态为 false     |
 
 ### 类型定义
 
 ```ts
-export type UseToggleReturn = {
-  state: Ref<boolean>;
-  toggle: () => void;
-  setTrue: () => void;
-  setFalse: () => void;
-};
+/**
+ * 切换状态的函数类型
+ * @description 切换当前布尔状态值
+ */
+export type ToggleFunction = () => void;
 
+/**
+ * 设置状态为 true 的函数类型
+ * @description 将状态设置为 true
+ */
+export type SetTrueFunction = () => void;
+
+/**
+ * 设置状态为 false 的函数类型
+ * @description 将状态设置为 false
+ */
+export type SetFalseFunction = () => void;
+
+/**
+ * useToggle 钩子函数的返回值类型
+ * @description 返回一个包含状态和操作函数的数组，可以通过数组解构使用
+ * @example
+ * ```typescript
+ * const [isVisible, toggle, setTrue, setFalse] = useToggle(false);
+ * ```
+ */
+export type UseToggleReturn = [
+  /** 当前布尔状态值的响应式引用 */
+  Ref<boolean>,
+  /** 切换状态的函数 */
+  ToggleFunction,
+  /** 将状态设置为 true 的函数 */
+  SetTrueFunction,
+  /** 将状态设置为 false 的函数 */
+  SetFalseFunction,
+];
+
+/**
+ * 切换布尔值的钩子函数
+ * @param initialValue 初始值，默认为false
+ * @returns 返回数组 [state, toggle, setTrue, setFalse]
+ * @example
+ * ```typescript
+ * // 基础用法
+ * const [isVisible, toggle] = useToggle(false);
+ * 
+ * // 完整用法
+ * const [isOpen, toggleOpen, setOpen, setClosed] = useToggle(true);
+ * ```
+ */
 export function useToggle(initialValue?: boolean): UseToggleReturn;
 ```
 
@@ -226,19 +263,19 @@ import { ref } from 'vue';
 import { useToggle } from '@vakao-ui/hooks';
 
 // 基础用法示例
-const { state: basicState, toggle: basicToggle, setTrue: basicSetTrue, setFalse: basicSetFalse } = useToggle();
+const [basicState, basicToggle, basicSetTrue, basicSetFalse] = useToggle();
 
 // 设置初始值示例
-const { state: modalVisible, toggle: toggleModal } = useToggle(true);
+const [modalVisible, toggleModal] = useToggle(true);
 
 // 侧边栏控制示例
-const { state: sidebarVisible, toggle: toggleSidebar, setFalse: closeSidebar } = useToggle();
+const [sidebarVisible, toggleSidebar, , closeSidebar] = useToggle();
 
 // 表单字段控制示例
-const { state: showAdvanced, toggle: toggleAdvanced } = useToggle();
+const [showAdvanced, toggleAdvanced] = useToggle();
 
 // 加载状态管理示例
-const { state: isLoading, setTrue: startLoading, setFalse: stopLoading } = useToggle();
+const [isLoading, , startLoading, stopLoading] = useToggle();
 const data = ref(null);
 
 const fetchData = async () => {

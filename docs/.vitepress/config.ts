@@ -80,7 +80,24 @@ export default defineConfig({
         },
         {
           text: "状态管理",
-          items: [{ text: "useToggle", link: "/hooks/use-toggle" }],
+          items: [
+            { text: "useToggle", link: "/hooks/use-toggle" },
+            { text: "useCounter", link: "/hooks/use-counter" },
+            { text: "useLocalStorage", link: "/hooks/use-local-storage" },
+          ],
+        },
+        {
+          text: "性能优化",
+          items: [
+            { text: "useDebounce", link: "/hooks/use-debounce" },
+            { text: "useThrottle", link: "/hooks/use-throttle" },
+          ],
+        },
+        {
+          text: "数据获取",
+          items: [
+            { text: "useFetch", link: "/hooks/use-fetch" },
+          ],
         },
       ],
       "/utils/": [
