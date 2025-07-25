@@ -345,7 +345,7 @@ const beforeChange = () => {
 
 <script setup>
 import { ref } from 'vue'
-import { VkMessageBox } from 'vakao-ui'
+import { VkMessageBox } from '@vakao-ui/components'
 
 const value1 = ref(true)
 const value2 = ref(true)

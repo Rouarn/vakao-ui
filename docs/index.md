@@ -52,66 +52,12 @@ const app = createApp(App)
 app.use(VakaoUI)
 ```
 
-## 安装
-
-```bash
-# npm
-npm install vakao-ui --save
-
-# yarn
-yarn add vakao-ui
-
-# pnpm
-pnpm add vakao-ui
-```
-
-## 使用
-
-### 完整引入
-
-```ts
-import { createApp } from "vue";
-import VakaoUI from "vakao-ui";
-// 重要：必须导入样式文件
-import "vakao-ui/style.css";
-import App from "./App.vue";
-
-const app = createApp(App);
-app.use(VakaoUI);
-app.mount("#app");
-```
-
-#### TypeScript 支持
-
-为了获得更好的 TypeScript 类型提示，请在 `tsconfig.json` 中配置类型声明：
-
-```json
-{
-  "compilerOptions": {
-    "types": ["vakao-ui"]
-  }
-}
-```
-
-### 按需引入
-
-```ts
-import { createApp } from "vue";
-import { VkButton } from "vakao-ui";
-// 重要：必须导入样式文件
-import "vakao-ui/style.css";
-import App from "./App.vue";
-
-const app = createApp(App);
-app.use(VkButton);
-app.mount("#app");
-```
-
-### 在模板中使用
-
 ```vue
 <template>
   <vk-button type="primary">主要按钮</vk-button>
   <vk-button type="success">成功按钮</vk-button>
 </template>
 ```
+
+::: tip 开始使用
+查看 [快速开始](/guide/getting-started) 了解详细的安装和配置方法。

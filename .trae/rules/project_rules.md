@@ -243,11 +243,13 @@ defineExpose({
 #### 6.4.1 导入路径规范
 
 **文档示例代码中的导入**：
+
 - 在 `<Demo>` 组件的 `<template #code>` 中展示给用户的代码，应使用用户实际安装后的导入路径
 - 组件导入：`import { VkMessageBox } from "vakao-ui"`
 - 样式导入：`import 'vakao-ui/style.css'`
 
 **文档内部实际使用**：
+
 - 在文档的 `<script setup>` 中，使用开发环境的导入路径
 - 组件导入：`import { VkMessageBox } from "@vakao-ui/components"`
 - 样式导入：根据实际文档环境配置
@@ -255,13 +257,15 @@ defineExpose({
 #### 6.4.2 组件标签使用规范
 
 **支持的组件标签格式**：
+
 - PascalCase：`<VkButton></VkButton>`、`<VkMessageBox></VkMessageBox>`
 - kebab-case：`<vk-button></vk-button>`、`<vk-message-box></vk-message-box>`
 
 **不支持的格式**：
+
 - 全大写：`<VKBUTTON></VKBUTTON>`、`<VKMESSAGEBOX></VKMESSAGEBOX>`
 
-#### 6.4.3 文档一致性要求
+#### 6.4.4 文档一致性要求
 
 - 示例代码必须与用户实际使用场景保持一致
 - 确保所有示例都能在用户环境中直接运行
@@ -304,23 +308,26 @@ defineExpose({
 
 ```yaml
 packages:
-  - 'packages/*'
-  - 'docs'
+  - "packages/*"
+  - "docs"
 ```
 
 ### 9.2 依赖分类
 
 **核心依赖**：
+
 - `@iconify/vue`：图标系统
 - `vue`：框架（peerDependency）
 
 **开发依赖**：
+
 - `@typescript-eslint/*`：TypeScript ESLint 支持
 - `eslint`、`prettier`：代码质量工具
 - `typescript`：类型检查
 - `vite`、`vite-plugin-dts`：构建工具
 
 **工作空间依赖**：
+
 - `@vakao-ui/components`
 - `@vakao-ui/hooks`
 - `@vakao-ui/utils`
@@ -404,12 +411,14 @@ dist/
 ### 12.3 构建优化
 
 **Vite 配置优化**：
+
 - 启用 Tree Shaking
 - CSS 代码分割：`cssCodeSplit: false`（统一样式文件）
 - 生成 Source Map：便于调试
 - 外部化 Vue：减少包体积
 
 **类型声明优化**：
+
 - 使用 `vite-plugin-dts` 生成类型声明
 - 路径别名处理：确保类型导入正确
 - 排除内部依赖：避免类型污染
@@ -511,6 +520,7 @@ pnpm publish:only     # 发布到 npm
 ### 16.4 IDE 配置建议
 
 **VS Code 扩展**：
+
 - Vue Language Features (Volar)
 - TypeScript Vue Plugin (Volar)
 - ESLint
@@ -518,6 +528,7 @@ pnpm publish:only     # 发布到 npm
 - SCSS IntelliSense
 
 **工作区设置**：
+
 ```json
 {
   "editor.formatOnSave": true,

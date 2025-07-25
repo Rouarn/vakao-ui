@@ -186,6 +186,20 @@ const handleClick = () => {
 
 Vakao UI 使用 TypeScript 编写，提供完整的类型定义。
 
+### 类型声明配置
+
+为了获得更好的 TypeScript 类型提示，请在 `tsconfig.json` 中配置类型声明：
+
+```json
+{
+  "compilerOptions": {
+    "types": ["vakao-ui"]
+  }
+}
+```
+
+### 类型推断
+
 ```ts
 import { VkButton } from "vakao-ui";
 
