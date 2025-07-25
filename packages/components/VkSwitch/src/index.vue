@@ -16,17 +16,23 @@
     <span ref="switchRef" :class="switchClass">
       <!-- 加载图标 -->
       <span v-if="loading" :class="ns.element('loading')">
-        <vk-icon name="Reload" size="12px" />
+        <vk-icon size="12px">
+          <Icon icon="mdi:reload" />
+        </vk-icon>
       </span>
       
       <!-- 内联提示 -->
       <template v-if="inlinePrompt">
         <span v-if="isChecked" :class="ns.element('inner')">
-          <vk-icon v-if="activeIcon" :name="activeIcon" size="12px" />
+          <vk-icon v-if="activeIcon" size="12px">
+            <Icon :icon="activeIcon" />
+          </vk-icon>
           <span v-else-if="activeText">{{ activeText }}</span>
         </span>
         <span v-else :class="ns.element('inner')">
-          <vk-icon v-if="inactiveIcon" :name="inactiveIcon" size="12px" />
+          <vk-icon v-if="inactiveIcon" size="12px">
+            <Icon :icon="inactiveIcon" />
+          </vk-icon>
           <span v-else-if="inactiveText">{{ inactiveText }}</span>
         </span>
       </template>
@@ -50,11 +56,13 @@ import { defineComponent, computed, ref } from 'vue'
 import { switchProps, type SwitchValue } from './types'
 import { useNamespace } from '@vakao-ui/utils'
 import VkIcon from '../../VkIcon'
+import { Icon } from '@iconify/vue'
 
 export default defineComponent({
   name: 'VkSwitch',
   components: {
-    VkIcon
+    VkIcon,
+    Icon
   },
   props: switchProps,
   emits: {

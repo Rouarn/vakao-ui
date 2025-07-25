@@ -3,7 +3,9 @@
     <!-- 前缀插槽 -->
     <div v-if="$slots.prefix || prefixIcon" class="vk-input__prefix">
       <slot name="prefix">
-        <vk-icon v-if="prefixIcon" :name="prefixIcon" size="16px" />
+        <vk-icon v-if="prefixIcon" size="16px">
+          <Icon :icon="prefixIcon" />
+        </vk-icon>
       </slot>
     </div>
 
@@ -33,24 +35,28 @@
       <!-- 清除按钮 -->
       <vk-icon
         v-if="showClear"
-        name="CloseCircle"
         size="16px"
         class="vk-input__clear"
         @click="handleClear"
-      />
+      >
+        <Icon icon="mdi:close-circle" />
+      </vk-icon>
 
       <!-- 密码切换按钮 -->
       <vk-icon
         v-if="showPassword"
-        :name="showPasswordVisible ? 'EyeOff' : 'Eye'"
         size="16px"
         class="vk-input__password-toggle"
         @click="togglePasswordVisible"
-      />
+      >
+        <Icon :icon="showPasswordVisible ? 'mdi:eye-off' : 'mdi:eye'" />
+      </vk-icon>
 
       <!-- 后缀图标 -->
       <slot name="suffix">
-        <vk-icon v-if="suffixIcon" :name="suffixIcon" size="16px" />
+        <vk-icon v-if="suffixIcon" size="16px">
+          <Icon :icon="suffixIcon" />
+        </vk-icon>
       </slot>
     </div>
   </div>
@@ -62,12 +68,14 @@ import type { StyleValue } from "vue";
 import { inputProps } from "./types";
 import { useNamespace } from "@vakao-ui/utils";
 import VkIcon from "../../VkIcon";
+import { Icon } from "@iconify/vue";
 
 export default defineComponent({
   name: "VkInput",
   inheritAttrs: false,
   components: {
     VkIcon,
+    Icon,
   },
   props: inputProps,
   emits: {

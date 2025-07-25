@@ -16,7 +16,9 @@
       class="vk-button__icon vk-button__icon--left"
     >
       <component v-if="typeof icon === 'object'" :is="icon" />
-      <vk-icon v-else-if="typeof icon === 'string'" :name="icon" :size="iconSize" />
+      <vk-icon v-else-if="typeof icon === 'string'" :size="iconSize">
+        <Icon :icon="icon" />
+      </vk-icon>
     </span>
     <span class="vk-button__content">
       <slot></slot>
@@ -26,7 +28,9 @@
       class="vk-button__icon vk-button__icon--right"
     >
       <component v-if="typeof icon === 'object'" :is="icon" />
-      <vk-icon v-else-if="typeof icon === 'string'" :name="icon" :size="iconSize" />
+      <vk-icon v-else-if="typeof icon === 'string'" :size="iconSize">
+        <Icon :icon="icon" />
+      </vk-icon>
     </span>
   </button>
 </template>
@@ -37,12 +41,14 @@ import type { CSSProperties } from "vue";
 import { buttonProps } from "./types";
 import { useNamespace } from "@vakao-ui/utils";
 import VkIcon from "../../VkIcon";
+import { Icon } from "@iconify/vue";
 
 export default defineComponent({
   name: "VkButton",
   inheritAttrs: false,
   components: {
-    VkIcon
+    VkIcon,
+    Icon
   },
   props: buttonProps,
   emits: ["click"],

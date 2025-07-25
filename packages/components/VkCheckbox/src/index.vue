@@ -22,18 +22,20 @@
       >
         <vk-icon
           v-if="isChecked && !indeterminate"
-          name="Checkmark"
           class="vk-checkbox__icon"
           size="12px"
           color="#ffffff"
-        />
+        >
+          <Icon icon="mdi:check" />
+        </vk-icon>
         <vk-icon
           v-if="indeterminate"
-          name="Remove"
           class="vk-checkbox__icon"
           size="12px"
           color="#ffffff"
-        />
+        >
+          <Icon icon="mdi:minus" />
+        </vk-icon>
       </span>
     </span>
     <span v-if="$slots.default || label" class="vk-checkbox__label">
@@ -54,11 +56,13 @@ import {
 import { checkboxProps, type CheckboxValue } from "./types";
 import { useNamespace } from "@vakao-ui/utils";
 import VkIcon from "../../VkIcon";
+import { Icon } from "@iconify/vue";
 
 export default defineComponent({
   name: "VkCheckbox",
   components: {
     VkIcon,
+    Icon,
   },
   props: checkboxProps,
   emits: {

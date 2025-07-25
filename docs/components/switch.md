@@ -150,15 +150,15 @@ const value4 = ref(true);
 使用 `inactive-icon` 和 `active-icon` 属性来添加图标。使用 `inline-prompt` 属性来控制图标显示在点内。
 
 <Demo>
-  <vk-switch v-model="value10" active-icon="Checkmark" inactive-icon="Close" />
+  <vk-switch v-model="value10" active-icon="mdi:check" inactive-icon="mdi:close" />
   <br />
   <vk-switch
     v-model="value11"
     class="mt-2"
     style="margin-left: 24px"
     inline-prompt
-    active-icon="Checkmark"
-    inactive-icon="Close"
+    active-icon="mdi:check"
+    inactive-icon="mdi:close"
   />
   
   <template #code>
@@ -167,8 +167,8 @@ const value4 = ref(true);
 <template>
   <vk-switch
     v-model="value1"
-    active-icon="Checkmark"
-    inactive-icon="Close"
+    active-icon="mdi:check"
+    inactive-icon="mdi:close"
   />
   <br />
   <vk-switch
@@ -176,8 +176,8 @@ const value4 = ref(true);
     class="mt-2"
     style="margin-left: 24px"
     inline-prompt
-    active-icon="Checkmark"
-    inactive-icon="Close"
+    active-icon="mdi:check"
+    inactive-icon="mdi:close"
   />
 </template>
 
@@ -323,8 +323,8 @@ const beforeChange = () => {
 | inactiveValue | `boolean \| string \| number`       | `false`    | switch 关闭时的值                                                           |
 | activeText    | `string`                            | —          | switch 打开时的文字描述                                                     |
 | inactiveText  | `string`                            | —          | switch 关闭时的文字描述                                                     |
-| activeIcon    | `string`                            | —          | switch 打开时所显示图标，设置此项会忽略 `active-text`                       |
-| inactiveIcon  | `string`                            | —          | switch 关闭时所显示图标，设置此项会忽略 `inactive-text`                     |
+| activeIcon    | `string`                            | —          | switch 打开时所显示图标，支持 iconify 图标格式（如 `mdi:check`），设置此项会忽略 `active-text`                       |
+| inactiveIcon  | `string`                            | —          | switch 关闭时所显示图标，支持 iconify 图标格式（如 `mdi:close`），设置此项会忽略 `inactive-text`                     |
 | inlinePrompt  | `boolean`                           | `false`    | 无论图标或文本是否显示在点内，只会呈现文本的第一个字符                      |
 | beforeChange  | `() => boolean \| Promise<boolean>` | —          | switch 状态改变前的钩子，返回 false 或者返回 Promise 且被 reject 则停止切换 |
 | customClass   | `string`                            | —          | 自定义类名                                                                  |

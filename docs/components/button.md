@@ -100,15 +100,15 @@
 使用 `icon` 属性设置按钮图标。
 
 <Demo>
-  <vk-button icon="SearchOutline">搜索</vk-button>
-  <vk-button type="primary" icon="AddOutline">添加</vk-button>
+  <vk-button icon="mdi:magnify">搜索</vk-button>
+  <vk-button type="primary" icon="mdi:plus">添加</vk-button>
   
   <template #code>
 
 ```vue
 <template>
-  <vk-button icon="SearchOutline">搜索</vk-button>
-  <vk-button type="primary" icon="AddOutline">添加</vk-button>
+  <vk-button icon="mdi:magnify">搜索</vk-button>
+  <vk-button type="primary" icon="mdi:plus">添加</vk-button>
 </template>
 ```
 
@@ -122,17 +122,17 @@
 使用 `circle` 属性将按钮设置为圆形。
 
 <Demo>
-  <vk-button circle icon="SearchOutline" />
-  <vk-button type="primary" circle icon="AddOutline" />
-  <vk-button type="success" circle icon="CheckmarkOutline" />
+  <vk-button circle icon="mdi:magnify" />
+  <vk-button type="primary" circle icon="mdi:plus" />
+  <vk-button type="success" circle icon="mdi:check" />
   
   <template #code>
 
 ```vue
 <template>
-  <vk-button circle icon="SearchOutline" />
-  <vk-button type="primary" circle icon="AddOutline" />
-  <vk-button type="success" circle icon="CheckmarkOutline" />
+  <vk-button circle icon="mdi:magnify" />
+  <vk-button type="primary" circle icon="mdi:plus" />
+  <vk-button type="success" circle icon="mdi:check" />
 </template>
 ```
 
@@ -270,7 +270,7 @@
 | focusable     | `boolean`                                                                             | `true`      | 是否可聚焦       |
 | keyboard      | `boolean`                                                                             | `true`      | 是否支持键盘操作 |
 | dashed        | `boolean`                                                                             | `false`     | 是否为虚线边框   |
-| icon          | `string \| VNode`                                                                    | —           | 图标名称或组件   |
+| icon          | `string \| VNode`                                                                    | —           | 图标名称或组件，支持 iconify 图标格式（如 `mdi:magnify`）   |
 | iconPosition  | `'left' \| 'right'`                                                                   | `'left'`    | 图标位置         |
 | wave          | `boolean`                                                                             | `true`      | 是否有波纹效果   |
 | bordered      | `boolean`                                                                             | `true`      | 是否有边框       |

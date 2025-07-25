@@ -1,19 +1,14 @@
 <template>
   <span :class="mergedClass" :style="mergedStyle" v-bind="$attrs">
     <!-- 自定义图片 -->
-    <img
-      v-if="props.src"
-      :src="props.src"
-      alt="icon"
-      class="vk-icon__image"
-    />
-    <!-- 插槽内容 -->
+    <img v-if="props.src" :src="props.src" alt="icon" class="vk-icon__image" />
+    <!-- 默认插槽内容 -->
     <slot v-else />
   </span>
 </template>
 
 <script setup lang="ts">
-import { computed, useSlots } from "vue";
+import { computed } from "vue";
 import { useNamespace } from "@vakao-ui/utils";
 import type { VkIconProps } from "./types";
 
@@ -27,11 +22,7 @@ const props = withDefaults(defineProps<VkIconProps>(), {
   color: "currentColor",
 });
 
-const slots = useSlots();
-
 const ns = useNamespace("icon");
-
-
 
 // 样式类名
 const mergedClass = computed(() => {

@@ -10,7 +10,9 @@
           <!-- 头部 -->
           <div class="vk-message-box__header">
             <div class="vk-message-box__title">
-              <VkIcon v-if="iconName" :name="iconName" :class="iconClass" />
+              <VkIcon v-if="iconName" :class="iconClass">
+                <Icon :icon="iconName" />
+              </VkIcon>
               {{ title }}
             </div>
             <button
@@ -73,13 +75,15 @@ import { ComponentType } from "../../../types";
 import VkButton from "../../VkButton";
 import VkIcon from "../../VkIcon";
 import VkInput from "../../VkInput";
+import { Icon } from "@iconify/vue";
 
 export default defineComponent({
   name: "VkMessageBox",
   components: {
     VkButton,
     VkIcon,
-    VkInput
+    VkInput,
+    Icon
   },
   props: {
     ...messageBoxProps,

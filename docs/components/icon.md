@@ -4,6 +4,8 @@
 
 ## 基础用法
 
+### 使用 Iconify 图标组件
+
 <Demo>
   <vk-icon>
     <Icon icon="mdi:home" />
@@ -43,6 +45,8 @@ import { Icon } from "@iconify/vue";
 
   </template>
 </Demo>
+
+
 
 ## 自定义图片
 
@@ -153,7 +157,7 @@ import { Icon } from "@iconify/vue";
 
 ## 插槽内容
 
-当没有指定 `src` 时，可以使用插槽自定义内容。支持 Iconify 图标组件和普通模板内容。
+当没有指定 `src` 时，可以使用插槽自定义内容。需要手动导入并使用 Iconify 图标组件或其他普通模板内容。
 
 <Demo>
   <vk-icon size="24px">
@@ -205,7 +209,7 @@ import { Icon } from "@iconify/vue";
 
 | 名称    | 说明                                                |
 | ------- | --------------------------------------------------- |
-| default | 自定义图标内容，支持 Iconify 图标组件和普通模板内容 |
+| default | 自定义图标内容，需要手动导入并使用 Iconify 图标组件或其他普通模板内容 |
 
 <script setup>
 import { Icon } from '@iconify/vue';
