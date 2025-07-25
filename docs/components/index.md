@@ -58,14 +58,13 @@ _即将推出导航组件..._
 
 Vakao UI 的组件命名遵循以下约定：
 
-- 组件名称使用 PascalCase 命名法，例如 `VKButton`
-- 组件前缀为 `VK`，例如 `VKButton`
-- 在模板中使用时，支持多种命名方式：
-  - `<VKButton>` - 原始 PascalCase 格式
-  - `<VkButton>` - 首字母小写的 k
+- 组件名称使用 PascalCase 命名法，例如 `VkButton`
+- 组件前缀为 `Vk`，例如 `VkButton`
+- 在模板中使用时，支持以下命名方式：
+  - `<VkButton>` - PascalCase 格式
   - `<vk-button>` - kebab-case 格式（推荐）
 
-所有这些命名方式都会被正确识别和注册。
+**注意**：不支持全大写格式如 `<VKBUTTON>`。
 
 ## 组件引入方式
 

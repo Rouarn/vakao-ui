@@ -22,7 +22,7 @@
             v-if="activeIcon"
             size="12px"
             :src="isUrl(activeIcon) ? activeIcon : undefined"
-            :icon="isUrl(activeIcon) ? undefined : activeIcon"
+            :icon="!isUrl(activeIcon) ? activeIcon : undefined"
           >
           </vk-icon>
           <span v-else-if="activeText">{{ activeText }}</span>
@@ -32,7 +32,7 @@
             v-if="inactiveIcon"
             size="12px"
             :src="isUrl(inactiveIcon) ? inactiveIcon : undefined"
-            :icon="isUrl(inactiveIcon) ? undefined : inactiveIcon"
+            :icon="!isUrl(inactiveIcon) ? inactiveIcon : undefined"
           >
           </vk-icon>
           <span v-else-if="inactiveText">{{ inactiveText }}</span>

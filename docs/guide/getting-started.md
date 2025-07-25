@@ -47,7 +47,7 @@ Vakao UI 是一个独立的组件库，基于 Vue 3 和 TypeScript 构建，提�
 // main.ts
 import { createApp } from 'vue'
 import VakaoUI from 'vakao-ui'
-import 'vakao-ui/dist/style.css'
+import 'vakao-ui/style.css'
 import App from './App.vue'
 
 const app = createApp(App)
@@ -81,7 +81,7 @@ app.mount('#app')
 
 <script setup lang="ts">
 import { VkButton } from 'vakao-ui'
-import 'vakao-ui/dist/style.css'
+import 'vakao-ui/style.css'
 </script>
 ```
 
@@ -187,8 +187,8 @@ const handleClick = () => {
 Vakao UI 使用 TypeScript 编写，提供完整的类型定义。
 
 ```ts
-import { VKButton } from "vakao-ui";
+import { VkButton } from "vakao-ui";
 
 // 类型会被正确推断
-const button: typeof VKButton = VKButton;
+const button: typeof VkButton = VkButton;
 ```

@@ -13,7 +13,7 @@
 import { createApp } from 'vue'
 import VakaoUI from 'vakao-ui'
 // 重要：必须导入样式文件
-import 'vakao-ui/dist/style.css'
+import 'vakao-ui/style.css'
 import App from './App.vue'
 
 const app = createApp(App)
@@ -49,7 +49,7 @@ app.mount('#app')
 // main.ts
 import { createApp } from 'vue'
 // 重要：必须导入样式文件
-import 'vakao-ui/dist/style.css'
+import 'vakao-ui/style.css'
 import App from './App.vue'
 
 const app = createApp(App)
@@ -106,7 +106,7 @@ export default defineConfig({
 // main.ts
 import { createApp } from 'vue'
 // 重要：即使使用自动导入，也必须手动导入样式文件
-import 'vakao-ui/dist/style.css'
+import 'vakao-ui/style.css'
 import App from './App.vue'
 
 const app = createApp(App)
@@ -160,16 +160,10 @@ import 'vakao-ui/dist/style.css'
 <vk-button>按钮</vk-button>
 ```
 
-2. 原始 PascalCase 格式：
-
-```html
-<VKButton>按钮</VKButton>
-```
-
-3. 首字母小写的格式：
+2. PascalCase 格式：
 
 ```html
 <VkButton>按钮</VkButton>
 ```
 
-所有这些命名方式都会被正确识别，选择你喜欢的方式即可。
+**注意**：不支持全大写格式如 `<VKBUTTON>`。推荐使用 kebab-case 格式以保持一致性。

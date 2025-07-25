@@ -7,7 +7,7 @@
           v-if="prefixIcon"
           size="16px"
           :src="isUrl(prefixIcon) ? prefixIcon : undefined"
-          :icon="isUrl(prefixIcon) ? undefined : prefixIcon"
+          :icon="!isUrl(prefixIcon) ? prefixIcon : undefined"
         >
         </vk-icon>
       </slot>
@@ -62,7 +62,7 @@
           v-if="suffixIcon"
           size="16px"
           :src="isUrl(suffixIcon) ? suffixIcon : undefined"
-          :icon="isUrl(prefixIcon) ? undefined : prefixIcon"
+          :icon="!isUrl(suffixIcon) ? suffixIcon : undefined"
         >
         </vk-icon>
       </slot>
