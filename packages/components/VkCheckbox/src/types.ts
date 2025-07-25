@@ -86,13 +86,13 @@ export type CheckboxGroupProps = ExtractPublicPropTypes<
 
 // 复选框事件定义
 export const checkboxEmits = {
-  "update:modelValue": (_value: boolean) => null,
-  change: (_value: boolean) => null,
+  "update:modelValue": (_value: boolean) => true,
+  change: (_value: boolean) => true,
 } as const;
 
 export const checkboxGroupEmits = {
-  "update:modelValue": (_value: CheckboxValue[]) => null,
-  change: (_value: CheckboxValue[]) => null,
+  "update:modelValue": (_value: CheckboxValue[]) => true,
+  change: (_value: CheckboxValue[]) => true,
 } as const;
 
 // 导出事件类型

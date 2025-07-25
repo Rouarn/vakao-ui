@@ -80,8 +80,8 @@ export type SwitchProps = ExtractPublicPropTypes<typeof switchProps>;
 
 // 开关事件定义
 export const switchEmits = {
-  "update:modelValue": (_value: SwitchValue) => null,
-  change: (_value: SwitchValue) => null,
+  "update:modelValue": (_value: SwitchValue) => true,
+  change: (_value: SwitchValue) => true,
 } as const;
 // 导出事件类型
 export type SwitchEmits = ExtractPublicPropTypes<typeof switchEmits>;

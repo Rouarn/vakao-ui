@@ -64,7 +64,7 @@ interface User {
   email: string;
 }
 
-const { data, loading, error, refresh } = useFetch<User[]>('/api/users');
+const [data, loading, error, { refresh }] = useFetch<User[]>('/api/users');
 </script>
 ```
 
@@ -74,8 +74,7 @@ const { data, loading, error, refresh } = useFetch<User[]>('/api/users');
 ## 手动执行请求
 
 <Demo>
-  <template #demo>
-    <div style="padding: 20px; border: 1px solid #e8e8e8; border-radius: 8px;">
+    <div style="padding: 20px; border: 1px solid #e8e8e8; border-radius: 8px; width: 100%;">
       <h3 style="margin-top: 0;">🔍 用户查询</h3>
       <div style="margin-bottom: 16px; display: flex; gap: 12px; align-items: center;">
         <label style="font-weight: 500; min-width: 80px;">用户ID:</label>
@@ -106,7 +105,7 @@ const { data, loading, error, refresh } = useFetch<User[]>('/api/users');
         </h4>
         <div style="display: flex; align-items: center; gap: 16px;">
           <div style="width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(45deg, #52c41a, #1890ff); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 20px;">
-            {{ userData.name.charAt(0) }}
+            {{ userData.name}}
           </div>
           <div>
             <p style="margin: 4px 0; font-size: 16px;"><strong>姓名:</strong> {{ userData.name }}</p>
@@ -119,7 +118,6 @@ const { data, loading, error, refresh } = useFetch<User[]>('/api/users');
         💡 请输入用户ID进行查询
       </div>
     </div>
-  </template>
   
   <template #code>
 
@@ -157,7 +155,7 @@ interface User {
 
 const userId = ref('');
 
-const { data, loading, error, execute } = useFetch<User>(
+const [data, loading, error, { execute }] = useFetch<User>(
   () => `/api/users/${userId.value}`,
   { immediate: false }
 );
@@ -176,8 +174,7 @@ const handleSearch = () => {
 ## POST 请求示例
 
 <Demo>
-  <template #demo>
-    <div style="padding: 20px; border: 1px solid #e8e8e8; border-radius: 8px;">
+    <div style="padding: 20px; border: 1px solid #e8e8e8; border-radius: 8px; width: 100%;">
       <h3 style="margin-top: 0;">👤 创建新用户</h3>
       <form @submit.prevent="handleSubmit" style="margin-bottom: 20px;">
         <div style="margin-bottom: 16px;">
@@ -229,7 +226,6 @@ const handleSearch = () => {
         <vk-button @click="resetForm" size="small">重置表单</vk-button>
       </div>
     </div>
-  </template>
   
   <template #code>
 
@@ -279,7 +275,7 @@ const form = reactive<CreateUserData>({
   email: ''
 });
 
-const { data, loading, error, execute } = useFetch<User>('/api/users', {
+const [data, loading, error, { execute }] = useFetch<User>('/api/users', {
   method: 'POST',
   immediate: false
 });
@@ -301,8 +297,7 @@ const handleSubmit = () => {
 ## 带重试和超时的请求
 
 <Demo>
-  <template #demo>
-    <div style="padding: 20px; border: 1px solid #e8e8e8; border-radius: 8px;">
+    <div style="padding: 20px; border: 1px solid #e8e8e8; border-radius: 8px; width: 100%;">
       <h3 style="margin-top: 0;">🔄 不稳定的 API 请求</h3>
       <div style="margin-bottom: 20px; display: flex; gap: 12px;">
         <vk-button @click="execute" :disabled="loading" type="primary">
@@ -343,7 +338,6 @@ const handleSubmit = () => {
         💡 点击"发起请求"开始测试不稳定的 API
       </div>
     </div>
-  </template>
   
   <template #code>
 
@@ -385,7 +379,7 @@ interface ApiResponse {
 const retryCount = ref(0);
 const progress = ref(0);
 
-const { data, loading, error, execute, cancel } = useFetch<ApiResponse>(
+const [data, loading, error, { execute, cancel }] = useFetch<ApiResponse>(
   '/api/unstable',
   {
     immediate: false,
@@ -456,8 +450,7 @@ watch(loading, (isLoading) => {
 ## 数据转换和缓存
 
 <Demo>
-  <template #demo>
-    <div style="padding: 20px; border: 1px solid #e8e8e8; border-radius: 8px;">
+    <div style="padding: 20px; border: 1px solid #e8e8e8; border-radius: 8px; width: 100%;">
       <h3 style="margin-top: 0;">📊 数据转换示例</h3>
       <div style="margin-bottom: 16px;">
         <vk-button @click="refresh" :loading="loading" type="primary">
@@ -499,7 +492,6 @@ watch(loading, (isLoading) => {
         </p>
       </div>
     </div>
-  </template>
   
   <template #code>
 
@@ -535,7 +527,7 @@ interface UserStats {
   lastUpdated: string;
 }
 
-const { data, loading, error, refresh } = useFetch<UserStats>(
+const [data, loading, error, { refresh }] = useFetch<UserStats>(
   '/api/users/stats',
   {
     transform: (rawData: any[]) => {
@@ -577,7 +569,7 @@ const { data, loading, error, refresh } = useFetch<UserStats>(
 ```ts
 function useFetch<T = any>(
   url: string | (() => string),
-  options?: UseFetchOptions<T>,
+  options?: UseFetchOptions<T>
 ): UseFetchReturn<T>;
 ```
 
@@ -600,15 +592,14 @@ function useFetch<T = any>(
 
 ### 返回值
 
-| 属性    | 类型                      | 说明         |
-| ------- | ------------------------- | ------------ |
-| data    | `Ref<T \| null>`          | 响应数据     |
-| loading | `Ref<boolean>`            | 加载状态     |
-| error   | `Ref<FetchError \| null>` | 错误信息     |
-| status  | `Ref<FetchStatus>`        | 请求状态     |
-| execute | `ExecuteFunction`         | 执行请求函数 |
-| cancel  | `CancelFunction`          | 取消请求函数 |
-| refresh | `RefreshFunction`         | 刷新请求函数 |
+返回一个数组，包含以下元素：
+
+| 索引 | 类型                      | 说明                                                      |
+| ---- | ------------------------- | --------------------------------------------------------- |
+| [0]  | `Ref<T \| null>`          | 响应数据                                                  |
+| [1]  | `Ref<boolean>`            | 加载状态                                                  |
+| [2]  | `Ref<FetchError \| null>` | 错误信息                                                  |
+| [3]  | `Object`                  | 控制函数和状态对象，包含以下属性：<br/>• `status`: 请求状态 (idle/loading/success/error/canceled)<br/>• `execute`: 手动执行请求函数<br/>• `cancel`: 取消当前请求函数<br/>• `refresh`: 刷新请求函数（重新执行） |
 
 ### 类型定义
 
@@ -652,24 +643,27 @@ type CancelFunction = () => void;
 type RefreshFunction = () => Promise<void>;
 
 /**
- * useFetch 返回值类型
+ * useFetch 返回值类型（数组形式）
  */
-interface UseFetchReturn<T> {
+type UseFetchReturn<T> = [
   /** 响应数据 */
-  data: Ref<T | null>;
+  Ref<T | null>,
   /** 加载状态 */
-  loading: Ref<boolean>;
+  Ref<boolean>,
   /** 错误信息 */
-  error: Ref<FetchError | null>;
-  /** 请求状态 */
-  status: Ref<FetchStatus>;
-  /** 执行请求函数 */
-  execute: ExecuteFunction;
-  /** 取消请求函数 */
-  cancel: CancelFunction;
-  /** 刷新请求函数 */
-  refresh: RefreshFunction;
-}
+  Ref<FetchError | null>,
+  /** 控制函数和状态对象 */
+  {
+    /** 请求状态 */
+    status: Ref<FetchStatus>;
+    /** 执行请求函数 */
+    execute: ExecuteFunction;
+    /** 取消请求函数 */
+    cancel: CancelFunction;
+    /** 刷新请求函数 */
+    refresh: RefreshFunction;
+  },
+];
 
 /**
  * 数据获取钩子
@@ -677,11 +671,11 @@ interface UseFetchReturn<T> {
  * @param options 配置选项
  * @returns UseFetchReturn
  * @example
- * const { data, loading, error } = useFetch('/api/users');
+ * const [data, loading, error] = useFetch('/api/users');
  */
 function useFetch<T = any>(
   url: string | (() => string),
-  options?: UseFetchOptions<T>,
+  options?: UseFetchOptions<T>
 ): UseFetchReturn<T>;
 
 /**
@@ -754,7 +748,7 @@ const mockUsers: User[] = [
 ];
 
 // 基本用法 - 用户列表
-const { data, loading, error, refresh } = useFetch(() => {
+const [data, loading, error, { refresh }] = useFetch(() => {
   return new Promise<User[]>((resolve) => {
     setTimeout(() => {
       resolve(mockUsers);
@@ -764,7 +758,7 @@ const { data, loading, error, refresh } = useFetch(() => {
 
 // 手动执行请求
 const userId = ref('');
-const { data: userData, loading: userLoading, error: userError, execute } = useFetch(
+const [userData, userLoading, userError, { execute }] = useFetch(
   () => {
     return new Promise<User>((resolve, reject) => {
       setTimeout(() => {
@@ -792,7 +786,7 @@ const form = reactive<CreateUserData>({
   email: ''
 });
 
-const { data: createData, loading: createLoading, error: createError, execute: createExecute } = useFetch(
+const [createData, createLoading, createError, { execute: createExecute }] = useFetch(
   () => {
     return new Promise<User>((resolve) => {
       setTimeout(() => {
@@ -824,13 +818,12 @@ const resetForm = () => {
 const retryCount = ref(0);
 const progress = ref(0);
 
-const { 
-  data: retryData, 
-  loading: retryLoading, 
-  error: retryError, 
-  execute: retryExecute, 
-  cancel 
-} = useFetch(
+const [
+  retryData, 
+  retryLoading, 
+  retryError, 
+  { execute: retryExecute, cancel }
+] = useFetch(
   () => {
     return new Promise<ApiResponse>((resolve, reject) => {
       setTimeout(() => {
@@ -883,7 +876,7 @@ watch(retryLoading, (isLoading) => {
 });
 
 // 数据转换和缓存
-const { data: statsData, loading: statsLoading, error: statsError, refresh: refreshStats } = useFetch(
+const [statsData, statsLoading, statsError, { refresh: refreshStats }] = useFetch(
   () => {
     return new Promise<UserStats>((resolve) => {
       setTimeout(() => {

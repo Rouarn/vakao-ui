@@ -61,31 +61,36 @@ export type CancelFunction = () => void;
 export type RefreshFunction = () => Promise<void>;
 
 /**
- * useFetch 钩子函数的返回值类型
- * @description 返回一个包含请求状态和控制函数的对象
+ * useFetch 钩子函数的返回值类型（数组形式）
+ * @description 返回一个包含请求状态和控制函数的数组，类似 React hooks 设计
  * @example
  * ```typescript
- * const { data, loading, error, execute, cancel, refresh } = useFetch('/api/users');
+ * const [data, loading, error, { execute, cancel, refresh, status, finished }] = useFetch('/api/users');
+ * // 或者自定义命名
+ * const [users, isLoading, fetchError, actions] = useFetch('/api/users');
  * ```
  */
-export interface UseFetchReturn<T> {
+export type UseFetchReturn<T> = [
   /** 响应数据的响应式引用 */
-  data: Ref<T | null>;
+  Ref<T | null>,
   /** 加载状态的响应式引用 */
-  loading: Ref<boolean>;
+  Ref<boolean>,
   /** 错误信息的响应式引用 */
-  error: Ref<FetchError | null>;
-  /** 请求状态的响应式引用 */
-  status: Ref<FetchStatus>;
-  /** 是否完成的计算属性 */
-  finished: ComputedRef<boolean>;
-  /** 手动执行请求的函数 */
-  execute: ExecuteFunction;
-  /** 取消请求的函数 */
-  cancel: CancelFunction;
-  /** 重新请求的函数 */
-  refresh: RefreshFunction;
-}
+  Ref<FetchError | null>,
+  /** 控制函数和状态对象 */
+  {
+    /** 请求状态的响应式引用 */
+    status: Ref<FetchStatus>;
+    /** 是否完成的计算属性 */
+    finished: ComputedRef<boolean>;
+    /** 手动执行请求的函数 */
+    execute: ExecuteFunction;
+    /** 取消请求的函数 */
+    cancel: CancelFunction;
+    /** 重新请求的函数 */
+    refresh: RefreshFunction;
+  }
+];
 
 /**
  * 数据获取钩子函数
@@ -96,22 +101,25 @@ export interface UseFetchReturn<T> {
  * @example
  * ```typescript
  * // 基础用法
- * const { data, loading, error } = useFetch('/api/users');
+ * const [data, loading, error] = useFetch('/api/users');
  *
  * // 手动触发请求
- * const { data, execute } = useFetch('/api/users', { immediate: false });
+ * const [data, , , { execute }] = useFetch('/api/users', { immediate: false });
  *
  * // 带参数的请求
  * const userId = ref(1);
- * const { data } = useFetch(() => `/api/users/${userId.value}`);
+ * const [data] = useFetch(() => `/api/users/${userId.value}`);
  *
  * // 自定义配置
- * const { data, loading, error, refresh } = useFetch('/api/users', {
+ * const [data, loading, error, { refresh }] = useFetch('/api/users', {
  *   timeout: 5000,
  *   retries: 3,
  *   transform: (data) => data.users,
  *   onError: (error) => console.error('请求失败:', error)
  * });
+ *
+ * // 自定义命名（React 风格）
+ * const [users, isLoading, fetchError, actions] = useFetch('/api/users');
  * ```
  */
 export function useFetch<T = any>(
@@ -310,16 +318,18 @@ export function useFetch<T = any>(
     cancel();
   });
 
-  return {
-    data: data as Ref<T | null>,
+  return [
+    data as Ref<T | null>,
     loading,
     error,
-    status,
-    finished,
-    execute,
-    cancel,
-    refresh,
-  };
+    {
+      status,
+      finished,
+      execute,
+      cancel,
+      refresh,
+    },
+  ];
 }
 
 /**
@@ -335,7 +345,7 @@ export function useFetch<T = any>(
  *   onError: (error) => console.error('API Error:', error)
  * });
  *
- * const { data } = useApi('/users');
+ * const [data] = useApi('/users');
  * ```
  */
 export function createFetch(
