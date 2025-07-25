@@ -1,0 +1,439 @@
+@use "../mixins.scss" as *;
+@use "../variables.scss" as *;
+
+// VkSelect 组件样式
+.vk-select {
+  display: inline-flex;
+  position: relative;
+  width: 100%;
+  font-size: var(--vk-font-size-base);
+  line-height: var(--vk-line-height-base);
+  cursor: pointer;
+  outline: none;
+
+  &:hover:not(.is-disabled) {
+    .vk-select__input {
+      border-color: var(--vk-border-color-hover);
+    }
+  }
+
+  &.is-focused {
+    .vk-select__input {
+      border-color: var(--vk-color-primary);
+      box-shadow: 0 0 0 2px var(--vk-color-primary-light-8);
+    }
+  }
+
+  &.is-disabled {
+    cursor: not-allowed;
+
+    .vk-select__input {
+      background-color: var(--vk-fill-color-lighter);
+      border-color: var(--vk-border-color-lighter);
+      color: var(--vk-text-color-disabled);
+      cursor: not-allowed;
+    }
+
+    .vk-select__inner {
+      cursor: not-allowed;
+      color: var(--vk-text-color-disabled);
+    }
+  }
+
+  // 尺寸变体
+  &--size-small {
+    font-size: var(--vk-font-size-small);
+
+    .vk-select__input {
+      min-height: var(--vk-component-size-small);
+    }
+
+    .vk-select__inner {
+      padding: 0 8px;
+      line-height: calc(var(--vk-component-size-small) - 2px);
+    }
+
+    .vk-select__tag {
+      height: 20px;
+      line-height: 18px;
+      font-size: 12px;
+      margin: 2px 4px 2px 0;
+    }
+  }
+
+  &--size-large {
+    font-size: var(--vk-font-size-large);
+
+    .vk-select__input {
+      min-height: var(--vk-component-size-large);
+    }
+
+    .vk-select__inner {
+      padding: 0 16px;
+      line-height: calc(var(--vk-component-size-large) - 2px);
+    }
+
+    .vk-select__tag {
+      height: 28px;
+      line-height: 26px;
+      font-size: 14px;
+      margin: 4px 6px 4px 0;
+    }
+  }
+
+  // 多选模式
+  &.is-multiple {
+    .vk-select__input {
+      min-height: var(--vk-component-size-base);
+      height: auto;
+      padding: 4px 30px 4px 8px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .vk-select__inner {
+      flex: 1;
+      min-width: 80px;
+      border: none;
+      outline: none;
+      background: transparent;
+      padding: 0;
+      margin: 2px 0;
+      line-height: 20px;
+    }
+  }
+}
+
+// 输入区域
+.vk-select__input {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: var(--vk-component-size-base);
+  padding: 0 30px 0 12px;
+  border: 1px solid var(--vk-border-color);
+  border-radius: var(--vk-border-radius-base);
+  background-color: var(--vk-fill-color-blank);
+  transition:
+    border-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1),
+    box-shadow 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+  position: relative;
+}
+
+// 内部输入框或显示文本
+.vk-select__inner {
+  flex: 1;
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--vk-text-color-regular);
+  font-size: inherit;
+  line-height: calc(var(--vk-component-size-base) - 2px);
+  cursor: inherit;
+
+  &::placeholder {
+    color: var(--vk-text-color-placeholder);
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+// 多选标签
+.vk-select__tag {
+  display: inline-flex;
+  align-items: center;
+  height: 24px;
+  padding: 0 8px;
+  margin: 2px 6px 2px 0;
+  background-color: var(--vk-fill-color-light);
+  border: 1px solid var(--vk-border-color-lighter);
+  border-radius: var(--vk-border-radius-small);
+  color: var(--vk-text-color-regular);
+  font-size: 12px;
+  line-height: 22px;
+  white-space: nowrap;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.vk-select__tag-close {
+  margin-left: 4px;
+  cursor: pointer;
+  color: var(--vk-text-color-secondary);
+  transition: color 0.2s;
+
+  &:hover {
+    color: var(--vk-text-color-regular);
+  }
+}
+
+// 折叠标签
+.vk-select__tag--collapsed {
+  background-color: var(--vk-color-info-light-9);
+  border-color: var(--vk-color-info-light-5);
+  color: var(--vk-color-info);
+  cursor: default;
+
+  .vk-select__tag-close {
+    display: none;
+  }
+}
+
+// 标签提示
+.vk-select__tag-tooltip {
+  max-width: 300px;
+}
+
+// 后缀区域
+.vk-select__suffix {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  color: var(--vk-text-color-placeholder);
+  pointer-events: none;
+}
+
+// 清空按钮
+.vk-select__clear {
+  cursor: pointer;
+  pointer-events: auto;
+  color: var(--vk-text-color-placeholder);
+  transition: color 0.2s;
+
+  &:hover {
+    color: var(--vk-text-color-secondary);
+  }
+}
+
+// 下拉箭头
+.vk-select__arrow {
+  transition: transform 0.3s;
+  pointer-events: none;
+
+  &.is-reverse {
+    transform: rotate(180deg);
+  }
+}
+
+// 下拉面板
+.vk-select__dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  margin-top: 4px;
+  background: var(--vk-fill-color-blank);
+  border: 1px solid var(--vk-border-color-light);
+  border-radius: var(--vk-border-radius-base);
+  box-shadow: var(--vk-box-shadow-light);
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+// 选项列表
+.vk-select__options {
+  margin: 0;
+  padding: 4px 0;
+  list-style: none;
+}
+
+// 加载状态
+.vk-select__loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  color: var(--vk-text-color-secondary);
+  font-size: var(--vk-font-size-small);
+
+  .rotating {
+    animation: vk-select-loading 1s linear infinite;
+    margin-right: 8px;
+  }
+}
+
+// 空状态
+.vk-select__empty {
+  padding: 12px;
+  text-align: center;
+  color: var(--vk-text-color-secondary);
+  font-size: var(--vk-font-size-small);
+  background-color: var(--vk-fill-color-lighter);
+}
+
+// 选项样式
+.vk-select-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  color: var(--vk-text-color-regular);
+  font-size: var(--vk-font-size-base);
+  line-height: 1.5;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  background-color: var(--vk-fill-color-blank);
+
+  &:hover,
+  &.is-hover {
+    background-color: var(--vk-fill-color-light);
+  }
+
+  &.is-selected {
+    background-color: var(--vk-color-primary-light-9);
+    color: var(--vk-color-primary);
+    font-weight: 500;
+  }
+
+  &.is-disabled {
+    color: var(--vk-text-color-disabled);
+    cursor: not-allowed;
+    background-color: var(--vk-fill-color-blank);
+
+    &:hover {
+      background-color: var(--vk-fill-color-blank);
+    }
+  }
+
+  // 创建新选项样式
+  &.is-created {
+    color: var(--vk-color-success);
+    font-style: italic;
+    background-color: var(--vk-fill-color-blank);
+
+    &::before {
+      content: "创建: ";
+      font-weight: 500;
+    }
+  }
+}
+
+.vk-select-option__check {
+  color: var(--vk-color-primary);
+  margin-left: 8px;
+}
+
+// 选项组样式
+.vk-select-option-group {
+  &__title {
+    padding: 8px 12px 4px;
+    color: var(--vk-text-color-secondary);
+    font-size: var(--vk-font-size-small);
+    font-weight: 500;
+    line-height: 1.5;
+    background-color: var(--vk-fill-color-lighter);
+    border-bottom: 1px solid var(--vk-border-color-lighter);
+  }
+
+  &__options {
+    .vk-select-option {
+      padding-left: 24px;
+    }
+  }
+
+  &.is-disabled {
+    .vk-select-option-group__title {
+      color: var(--vk-text-color-disabled);
+    }
+
+    .vk-select-option {
+      color: var(--vk-text-color-disabled);
+      cursor: not-allowed;
+
+      &:hover {
+        background-color: transparent;
+      }
+    }
+  }
+}
+
+// 下拉面板头部和底部
+.vk-select__dropdown-header,
+.vk-select__dropdown-footer {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--vk-border-color-lighter);
+  background-color: var(--vk-fill-color-lighter);
+
+  &:last-child {
+    border-bottom: none;
+    border-top: 1px solid var(--vk-border-color-lighter);
+  }
+}
+
+// 远程搜索状态
+.vk-select.is-remote {
+  .vk-select__suffix {
+    .vk-select__arrow {
+      display: none;
+    }
+  }
+
+  &.is-loading {
+    .vk-select__suffix::after {
+      content: "";
+      width: 14px;
+      height: 14px;
+      border: 2px solid var(--vk-border-color-lighter);
+      border-top-color: var(--vk-color-primary);
+      border-radius: 50%;
+      animation: vk-select-loading 1s linear infinite;
+    }
+  }
+}
+
+// 下拉动画
+.vk-select-dropdown-enter-active,
+.vk-select-dropdown-leave-active {
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.vk-select-dropdown-enter-from,
+.vk-select-dropdown-leave-to {
+  opacity: 0;
+  transform: translateY(-8px);
+}
+
+// 加载动画
+@keyframes vk-select-loading {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+// 滚动条样式
+.vk-select__dropdown {
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: var(--vk-fill-color-lighter);
+    border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--vk-border-color-darker);
+    border-radius: 3px;
+
+    &:hover {
+      background: var(--vk-text-color-disabled);
+    }
+  }
+}

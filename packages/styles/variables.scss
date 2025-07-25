@@ -23,6 +23,7 @@ $border-color-disabled: #e4e7ed;
 $bg-color: #ffffff;
 $bg-color-page: #f5f5f5;
 $bg-color-disabled: #f5f7fa;
+$bg-color-overlay: rgba(0, 0, 0, 0.05);
 
 /* 字体 */
 $font-family:
@@ -31,7 +32,6 @@ $font-family:
   "Segoe UI Symbol", "Noto Color Emoji";
 $font-size-small: 12px;
 $font-size-base: 14px;
-$font-size-medium: 16px;
 $font-size-large: 18px;
 
 /* 边框圆角 */
@@ -71,7 +71,6 @@ $fill-color-darker: #e4e7ed;
 $fill-color-blank: #ffffff;
 
 /* 组件尺寸 */
-
+$component-size-base: 32px;
 $component-size-small: 28px;
-$component-size-medium: 32px;
 $component-size-large: 40px;

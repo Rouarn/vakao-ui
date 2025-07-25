@@ -62,6 +62,7 @@ export default defineConfig({
           text: "表单组件",
           items: [
             { text: "Input 输入框", link: "/components/input" },
+            { text: "Select 选择器", link: "/components/select" },
             { text: "Checkbox 多选框", link: "/components/checkbox" },
             { text: "Switch 开关", link: "/components/switch" },
           ],

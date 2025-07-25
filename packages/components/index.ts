@@ -5,6 +5,7 @@ export * from "./VkCheckbox";
 export * from "./VkSwitch";
 export * from "./VkIcon";
 export * from "./VkMessageBox";
+export * from "./VkSelect";
 // Add more component exports here as they are created
 
 import { App } from "vue";
@@ -14,6 +15,7 @@ import { VkCheckbox, VkCheckboxGroup } from "./VkCheckbox";
 import { VkSwitch } from "./VkSwitch";
 import { VkIcon } from "./VkIcon";
 import { VkMessageBox } from "./VkMessageBox";
+import { VkSelect, VkOption, VkOptionGroup } from "./VkSelect";
 import { installAll } from "@vakao-ui/utils";
 
 // 组件列表
@@ -26,6 +28,9 @@ const components = {
   VkSwitch: VkSwitch,
   VkIcon: VkIcon,
   VkMessageBox: VkMessageBox,
+  VkSelect: VkSelect,
+  VkOption: VkOption,
+  VkOptionGroup: VkOptionGroup,
 };
 
 // 导出组件库插件

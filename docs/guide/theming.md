@@ -57,8 +57,8 @@ Vakao UI 使用 CSS 变量来定义主题，您可以通过覆盖这些变量来
   --vk-font-family:
     -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
     Arial, sans-serif;
+  --vk-font-size-base: 14px;
   --vk-font-size-small: 12px;
-  --vk-font-size-medium: 14px;
   --vk-font-size-large: 16px;
 }
 ```

@@ -1,4 +1,4 @@
-import { ref, Ref, watch } from "vue";
+import { ref, Ref, watch, computed, ComputedRef } from "vue";
 
 /**
  * 设置存储值的函数类型
@@ -21,8 +21,8 @@ export type RemoveStorageFunction = () => void;
  * ```
  */
 export type UseLocalStorageReturn<T> = [
-  /** 当前存储值的响应式引用 */
-  Ref<T>,
+  /** 当前存储值的只读响应式引用 */
+  ComputedRef<T>,
   /** 设置存储值的函数 */
   SetStorageFunction<T>,
   /** 移除存储值的函数 */
@@ -58,14 +58,18 @@ const defaultSerializer: SerializerFunction<any> = {
  * @param options 配置选项
  * @param options.serializer 自定义序列化器
  * @param options.syncAcrossTabs 是否在标签页间同步，默认为true
- * @returns 返回数组 [storedValue, setValue, removeValue]
+ * @returns 返回数组 [storedValue, setValue, removeValue]，其中 storedValue 是只读的
  * @example
  * ```typescript
  * // 基础用法（实际存储键名为 'vk-username'）
  * const [name, setName] = useLocalStorage('username', '');
+ * // name.value 是只读的，只能通过 setName() 修改
+ * setName('新用户名'); // ✅ 正确
+ * // name.value = '直接修改'; // ❌ 错误：只读属性
  *
  * // 存储对象（实际存储键名为 'vk-user'）
  * const [user, setUser] = useLocalStorage('user', { name: '', age: 0 });
+ * setUser({ name: '张三', age: 25 }); // ✅ 正确
  *
  * // 自定义序列化器（实际存储键名为 'vk-date'）
  * const [date, setDate] = useLocalStorage('date', new Date(), {
@@ -135,6 +139,9 @@ export function useLocalStorage<T>(
 
   const storedValue = ref<T>(readFromStorage());
 
+  // 创建只读的计算属性
+  const readonlyValue = computed(() => storedValue.value);
+
   // 设置值
   function setValue(value: T | ((prevValue: T) => T)): void {
     const newValue =
@@ -189,5 +196,5 @@ export function useLocalStorage<T>(
     }
   }
 
-  return [storedValue as Ref<T>, setValue, removeValue];
+  return [readonlyValue, setValue, removeValue];
 }

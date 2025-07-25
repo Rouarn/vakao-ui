@@ -2,9 +2,9 @@
 // 只包含 CSS 变量和组件样式，不包含全局重置
 
 // 所有 @use 规则必须在文件开头
-@use './variables.scss' as *;
-@use './mixins.scss' as *;
-@use './components.scss';
+@use "./variables.scss" as *;
+@use "./mixins.scss" as *;
+@use "./components.scss";
 
 /* CSS 变量定义 - 不影响全局样式 */
 :root {
@@ -14,46 +14,45 @@
   --vk-color-warning: #{$color-warning};
   --vk-color-danger: #{$color-danger};
   --vk-color-info: #{$color-info};
-  
+
   /* 文本颜色 */
   --vk-text-color-primary: #{$text-color-primary};
   --vk-text-color-regular: #{$text-color-regular};
   --vk-text-color-secondary: #{$text-color-secondary};
   --vk-text-color-placeholder: #{$text-color-placeholder};
   --vk-text-color-disabled: #{$text-color-disabled};
-  
+
   /* 边框颜色 */
   --vk-border-color: #{$border-color};
   --vk-border-color-light: #{$border-color-light};
-  
+
   /* 背景颜色 */
   --vk-bg-color: #{$bg-color};
   --vk-bg-color-page: #{$bg-color-page};
-  
+
   /* 字体 */
   --vk-font-family: #{$font-family};
   --vk-font-size-base: #{$font-size-base};
   --vk-font-size-small: #{$font-size-small};
-  --vk-font-size-medium: #{$font-size-medium};
   --vk-font-size-large: #{$font-size-large};
-  
+
   /* 边框圆角 */
   --vk-border-radius-small: #{$border-radius-small};
   --vk-border-radius-base: #{$border-radius-base};
   --vk-border-radius-large: #{$border-radius-large};
   --vk-border-radius-circle: #{$border-radius-circle};
-  
+
   /* 间距 */
 
   --vk-spacing-small: #{$spacing-small};
   --vk-spacing-base: #{$spacing-base};
   --vk-spacing-large: #{$spacing-large};
-  
+
   /* 行高 */
   --vk-line-height-base: #{$line-height-base};
   --vk-line-height-small: #{$line-height-small};
   --vk-line-height-large: #{$line-height-large};
-  
+
   /* 填充颜色 */
   --vk-fill-color-light: #{$fill-color-light};
   --vk-fill-color-lighter: #{$fill-color-lighter};
@@ -61,13 +60,12 @@
   --vk-fill-color-dark: #{$fill-color-dark};
   --vk-fill-color-darker: #{$fill-color-darker};
   --vk-fill-color-blank: #{$fill-color-blank};
-  
-  /* 组件尺寸 */
 
+  /* 组件尺寸 */
   --vk-component-size-small: #{$component-size-small};
-  --vk-component-size-medium: #{$component-size-medium};
+  --vk-component-size-base: #{$component-size-base};
   --vk-component-size-large: #{$component-size-large};
-  
+
   /* 过渡动画 */
   --vk-transition-duration: #{$transition-duration};
   --vk-transition-timing-function: #{$transition-timing-function};
@@ -81,7 +79,8 @@
 /* 通用过渡效果 - 使用类名前缀避免冲突 */
 .vk-fade-enter-active,
 .vk-fade-leave-active {
-  transition: opacity var(--vk-transition-duration) var(--vk-transition-timing-function);
+  transition: opacity var(--vk-transition-duration)
+    var(--vk-transition-timing-function);
 }
 
 .vk-fade-enter-from,

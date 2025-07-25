@@ -10,7 +10,8 @@
   <div style="padding: 16px; border: 1px solid #e0e0e0; border-radius: 8px; width: 100%;">
     <div style="margin-bottom: 16px;">
       <vk-input 
-        v-model="username" 
+        :value="username" 
+        @input="setUsername"
         placeholder="输入用户名"
         style="width: 200px;"
       />
@@ -29,7 +30,7 @@
 ```vue
 <template>
   <div>
-    <vk-input v-model="username" placeholder="输入用户名" />
+    <vk-input :value="username" @input="setUsername" placeholder="输入用户名" />
     <p>存储的用户名: {{ username }}</p>
     <vk-button @click="removeUsername">清除用户名</vk-button>
   </div>
@@ -54,16 +55,16 @@ const [username, setUsername, removeUsername] = useLocalStorage("username", "");
     <h4 style="margin-top: 0; margin-bottom: 16px;">用户设置</h4>
     <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px;">
       <label style="display: flex; align-items: center; gap: 8px;">
-        <input 
-          type="checkbox" 
-          v-model="settings.darkMode" 
-          @change="updateSettings"
-        />
-        <span>深色模式</span>
+        <vk-checkbox 
+          :checked="settings.darkMode" 
+          @change="toggleDarkMode"
+        >
+          深色模式
+        </vk-checkbox>
       </label>
       <label style="display: flex; align-items: center; gap: 8px;">
         <span>语言:</span>
-        <select v-model="settings.language" @change="updateSettings" style="padding: 4px 8px; border: 1px solid #d9d9d9; border-radius: 4px;">
+        <select :value="settings.language" @change="updateLanguage" style="padding: 4px 8px; border: 1px solid #d9d9d9; border-radius: 4px;">
           <option value="zh">中文</option>
           <option value="en">English</option>
         </select>
@@ -85,17 +86,17 @@ const [username, setUsername, removeUsername] = useLocalStorage("username", "");
   <div>
     <h3>用户设置</h3>
     <label>
-      <input
-        type="checkbox"
-        v-model="settings.darkMode"
-        @change="updateSettings"
-      />
-      深色模式
+      <vk-checkbox
+        :checked="settings.darkMode"
+        @change="toggleDarkMode"
+      >
+        深色模式
+      </vk-checkbox>
     </label>
     <br />
     <label>
       语言:
-      <select v-model="settings.language" @change="updateSettings">
+      <select :value="settings.language" @change="updateLanguage">
         <option value="zh">中文</option>
         <option value="en">English</option>
       </select>
@@ -119,8 +120,12 @@ const [settings, setSettings, removeSettings] = useLocalStorage(
   defaultSettings
 );
 
-const updateSettings = () => {
-  setSettings(settings.value);
+const toggleDarkMode = (checked) => {
+  setSettings(prev => ({ ...prev, darkMode: checked }));
+};
+
+const updateLanguage = (event) => {
+  setSettings(prev => ({ ...prev, language: event.target.value }));
 };
 
 const resetSettings = () => {
@@ -132,12 +137,360 @@ const resetSettings = () => {
   </template>
 </Demo>
 
+## 只读状态演示
+
+展示第一个返回值是只读的，只能通过 setter 函数修改，符合 React Hook 设计模式。
+
+<Demo>
+  <div style="padding: 16px; border: 1px solid #e0e0e0; border-radius: 8px; width: 100%;">
+    <h4 style="margin-top: 0; margin-bottom: 16px;">计数器演示</h4>
+    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+      <span style="font-size: 18px; font-weight: bold; color: #1890ff;">当前计数: {{ count }}</span>
+      <vk-button @click="increment" type="primary">+1</vk-button>
+      <vk-button @click="decrement">-1</vk-button>
+      <vk-button @click="reset" type="warning">重置</vk-button>
+    </div>
+    <div style="background: #f5f5f5; padding: 12px; border-radius: 4px; font-size: 12px;">
+      <p style="margin: 0; color: #666;">✅ 正确方式：通过 setCount() 修改</p>
+      <p style="margin: 4px 0 0; color: #666;">❌ 错误方式：count.value = newValue（只读属性）</p>
+    </div>
+  </div>
+  
+  <template #code>
+
+```vue
+<template>
+  <div>
+    <p>当前计数: {{ count }}</p>
+    <vk-button @click="increment">+1</vk-button>
+    <vk-button @click="decrement">-1</vk-button>
+    <vk-button @click="reset">重置</vk-button>
+  </div>
+</template>
+
+<script setup>
+import { useLocalStorage } from "vakao-ui";
+
+const [count, setCount] = useLocalStorage("counter", 0);
+
+// ✅ 正确：通过 setter 函数修改
+const increment = () => setCount(count.value + 1);
+const decrement = () => setCount(count.value - 1);
+const reset = () => setCount(0);
+
+// ❌ 错误：直接修改会报错（只读属性）
+// count.value = 10; // TypeError: Cannot set property value
+</script>
+```
+
+  </template>
+</Demo>
+
+## 表单数据持久化
+
+展示如何使用函数式更新和复杂对象的持久化存储。
+
+<Demo>
+  <div style="padding: 16px; border: 1px solid #e0e0e0; border-radius: 8px; width: 100%;">
+    <h4 style="margin-top: 0; margin-bottom: 16px;">用户信息表单</h4>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
+      <div>
+        <label style="display: block; margin-bottom: 4px; font-size: 14px;">姓名:</label>
+        <vk-input 
+          :value="userForm.name" 
+          @input="updateName"
+          placeholder="请输入姓名"
+          style="width: 100%;"
+        />
+      </div>
+      <div>
+        <label style="display: block; margin-bottom: 4px; font-size: 14px;">年龄:</label>
+        <vk-input 
+          :value="userForm.age" 
+          @input="updateAge"
+          type="number"
+          placeholder="请输入年龄"
+          style="width: 100%;"
+        />
+      </div>
+      <div>
+        <label style="display: block; margin-bottom: 4px; font-size: 14px;">邮箱:</label>
+        <vk-input 
+          :value="userForm.email" 
+          @input="updateEmail"
+          type="email"
+          placeholder="请输入邮箱"
+          style="width: 100%;"
+        />
+      </div>
+      <div>
+        <label style="display: block; margin-bottom: 4px; font-size: 14px;">城市:</label>
+        <vk-select 
+          :value="userForm.city" 
+          @change="updateCity"
+          placeholder="请选择城市"
+          style="width: 100%;"
+        >
+          <vk-option value="beijing">北京</vk-option>
+          <vk-option value="shanghai">上海</vk-option>
+          <vk-option value="guangzhou">广州</vk-option>
+          <vk-option value="shenzhen">深圳</vk-option>
+        </vk-select>
+      </div>
+    </div>
+    <div style="display: flex; gap: 8px; margin-bottom: 16px;">
+      <vk-button @click="clearForm" type="warning">清空表单</vk-button>
+      <vk-button @click="fillDemo" type="primary">填充示例数据</vk-button>
+    </div>
+    <div style="background: #f5f5f5; padding: 12px; border-radius: 4px;">
+      <p style="margin: 0; font-size: 14px;"><strong>表单数据:</strong></p>
+      <pre style="margin: 8px 0 0; font-size: 12px; color: #666;">{{ JSON.stringify(userForm, null, 2) }}</pre>
+    </div>
+  </div>
+  
+  <template #code>
+
+```vue
+<template>
+  <div>
+    <h3>用户信息表单</h3>
+    <div>
+      <label>姓名: <vk-input :value="userForm.name" @input="updateName" /></label>
+      <label
+        >年龄: <vk-input :value="userForm.age" @input="updateAge" type="number"
+      /></label>
+      <label
+        >邮箱: <vk-input :value="userForm.email" @input="updateEmail" type="email"
+      /></label>
+      <label>
+        城市:
+        <vk-select :value="userForm.city" @change="updateCity" placeholder="请选择城市">
+          <vk-option value="beijing">北京</vk-option>
+          <vk-option value="shanghai">上海</vk-option>
+          <vk-option value="guangzhou">广州</vk-option>
+          <vk-option value="shenzhen">深圳</vk-option>
+        </vk-select>
+      </label>
+    </div>
+    <vk-button @click="clearForm">清空表单</vk-button>
+    <vk-button @click="fillDemo">填充示例数据</vk-button>
+    <pre>{{ JSON.stringify(userForm, null, 2) }}</pre>
+  </div>
+</template>
+
+<script setup>
+import { useLocalStorage } from "vakao-ui";
+
+const defaultForm = {
+  name: "",
+  age: "",
+  email: "",
+  city: "",
+};
+
+const [userForm, setUserForm] = useLocalStorage("user-form", defaultForm);
+
+// 使用函数式更新，只修改特定字段
+const updateName = event => {
+  const value = event.target ? event.target.value : event;
+  setUserForm(prev => ({ ...prev, name: value }));
+};
+
+const updateAge = event => {
+  const value = event.target ? event.target.value : event;
+  setUserForm(prev => ({ ...prev, age: value }));
+};
+
+const updateEmail = event => {
+  const value = event.target ? event.target.value : event;
+  setUserForm(prev => ({ ...prev, email: value }));
+};
+
+const updateCity = (value) => {
+  const cityValue = value && typeof value === 'object' && value.target ? value.target.value : value;
+  setUserForm(prev => ({ ...prev, city: cityValue }));
+};
+
+const clearForm = () => {
+  setUserForm(defaultForm);
+};
+
+const fillDemo = () => {
+  setUserForm({
+    name: "张三",
+    age: "25",
+    email: "zhangsan@example.com",
+    city: "beijing",
+  });
+};
+</script>
+```
+
+  </template>
+</Demo>
+
+## 数组数据管理
+
+展示如何使用 useLocalStorage 管理列表数据，包括增删改查操作。
+
+<Demo>
+  <div style="padding: 16px; border: 1px solid #e0e0e0; border-radius: 8px; width: 100%;">
+    <h4 style="margin-top: 0; margin-bottom: 16px;">待办事项列表</h4>
+    <div style="display: flex; gap: 8px; margin-bottom: 16px;">
+      <vk-input 
+        :value="newTodo" 
+        @input="updateNewTodo" 
+        placeholder="输入新的待办事项"
+        style="flex: 1;"
+        @keyup.enter="addTodo"
+      />
+      <vk-button @click="addTodo" type="primary" :disabled="!newTodo.trim()">添加</vk-button>
+    </div>
+    <div v-if="todoList.length === 0" style="text-align: center; color: #999; padding: 20px;">
+      暂无待办事项
+    </div>
+    <div v-else>
+      <div v-for="(todo, index) in todoList" :key="todo.id" style="display: flex; align-items: center; gap: 8px; padding: 8px; border: 1px solid #e8e8e8; border-radius: 4px; margin-bottom: 8px;">
+        <vk-checkbox 
+          :checked="todo.completed" 
+          @change="(checked) => toggleTodo(index, checked)"
+        />
+        <span 
+          :style="{ 
+            flex: 1, 
+            textDecoration: todo.completed ? 'line-through' : 'none',
+            color: todo.completed ? '#999' : '#333'
+          }"
+        >
+          {{ todo.text }}
+        </span>
+        <vk-button @click="removeTodo(index)" size="small" type="danger">删除</vk-button>
+      </div>
+    </div>
+    <div style="display: flex; gap: 8px; margin-top: 16px;">
+      <vk-button @click="clearCompleted" :disabled="!hasCompleted">清除已完成</vk-button>
+      <vk-button @click="clearAll" type="warning" :disabled="todoList.length === 0">清空全部</vk-button>
+    </div>
+    <div style="background: #f5f5f5; padding: 12px; border-radius: 4px; margin-top: 16px;">
+      <p style="margin: 0; font-size: 14px;">
+        <strong>统计:</strong> 
+        总计 {{ todoList.length }} 项，
+        已完成 {{ completedCount }} 项，
+        未完成 {{ todoList.length - completedCount }} 项
+      </p>
+    </div>
+  </div>
+  
+  <template #code>
+
+```vue
+<template>
+  <div>
+    <h3>待办事项列表</h3>
+    <div>
+      <vk-input
+        v-model="newTodo"
+        placeholder="输入新的待办事项"
+        @keyup.enter="addTodo"
+      />
+      <vk-button @click="addTodo" :disabled="!newTodo.trim()">添加</vk-button>
+    </div>
+
+    <div v-if="todoList.length === 0">暂无待办事项</div>
+    <div v-else>
+      <div v-for="(todo, index) in todoList" :key="todo.id">
+        <vk-checkbox
+          :checked="todo.completed"
+          @change="(checked) => toggleTodo(index, checked)"
+        />
+        <span :class="{ completed: todo.completed }">{{ todo.text }}</span>
+        <vk-button @click="removeTodo(index)">删除</vk-button>
+      </div>
+    </div>
+
+    <div>
+      <vk-button @click="clearCompleted">清除已完成</vk-button>
+      <vk-button @click="clearAll">清空全部</vk-button>
+    </div>
+
+    <p>总计: {{ todoList.length }}, 已完成: {{ completedCount }}</p>
+  </div>
+</template>
+
+<script setup>
+import { ref, computed } from "vue";
+import { useLocalStorage } from "vakao-ui";
+
+const [todoList, setTodoList] = useLocalStorage("todo-list", []);
+const newTodo = ref("");
+
+// 计算属性
+const completedCount = computed(
+  () => todoList.value.filter(todo => todo.completed).length
+);
+
+const hasCompleted = computed(() =>
+  todoList.value.some(todo => todo.completed)
+);
+
+// 添加待办事项
+const addTodo = () => {
+  if (!newTodo.value.trim()) return;
+
+  const newItem = {
+    id: Date.now(),
+    text: newTodo.value.trim(),
+    completed: false,
+  };
+
+  setTodoList(prev => [...prev, newItem]);
+  newTodo.value = "";
+};
+
+// 切换完成状态
+const toggleTodo = (index, checked) => {
+  // 如果第二个参数是事件对象，提取checked值；否则直接使用
+  const isChecked = typeof checked === 'boolean' ? checked : !todoList.value[index].completed;
+  setTodoList(prev =>
+    prev.map((todo, i) =>
+      i === index ? { ...todo, completed: isChecked } : todo
+    )
+  );
+};
+
+// 删除待办事项
+const removeTodo = index => {
+  setTodoList(prev => prev.filter((_, i) => i !== index));
+};
+
+// 清除已完成
+const clearCompleted = () => {
+  setTodoList(prev => prev.filter(todo => !todo.completed));
+};
+
+// 清空全部
+const clearAll = () => {
+  setTodoList([]);
+};
+</script>
+
+<style>
+.completed {
+  text-decoration: line-through;
+  color: #999;
+}
+</style>
+```
+
+  </template>
+</Demo>
+
 ## 自定义序列化器
 
 ```vue
 <template>
   <div>
-    <input
+    <vk-input
       type="date"
       :value="lastVisit?.toISOString().split('T')[0]"
       @input="updateLastVisit"
@@ -179,10 +532,10 @@ const updateLastVisit = (event: Event) => {
     <h3>购物车 (跨标签页同步)</h3>
     <div v-for="item in cart" :key="item.id">
       {{ item.name }} - 数量: {{ item.quantity }}
-      <button @click="removeFromCart(item.id)">移除</button>
+      <vk-button @click="removeFromCart(item.id)" size="small" type="danger">移除</vk-button>
     </div>
-    <button @click="addToCart">添加商品</button>
-    <button @click="clearCart">清空购物车</button>
+    <vk-button @click="addToCart" type="primary">添加商品</vk-button>
+    <vk-button @click="clearCart" type="warning">清空购物车</vk-button>
   </div>
 </template>
 
@@ -252,11 +605,11 @@ interface StorageSerializer<T> {
 
 返回一个数组 `[storedValue, setValue, removeValue]`：
 
-| 索引 | 名称        | 类型                    | 说明       |
-| ---- | ----------- | ----------------------- | ---------- |
-| 0    | storedValue | `Ref<T>`                | 存储的值   |
-| 1    | setValue    | `SetStorageFunction<T>` | 设置值函数 |
-| 2    | removeValue | `RemoveStorageFunction` | 移除值函数 |
+| 索引 | 名称        | 类型                    | 说明             |
+| ---- | ----------- | ----------------------- | ---------------- |
+| 0    | storedValue | `ComputedRef<T>`        | 存储的值（只读） |
+| 1    | setValue    | `SetStorageFunction<T>` | 设置值函数       |
+| 2    | removeValue | `RemoveStorageFunction` | 移除值函数       |
 
 ### 类型定义
 
@@ -278,7 +631,7 @@ type RemoveStorageFunction = () => void;
  * const [value, setValue, removeValue] = useLocalStorage('key', 'default');
  */
 type UseLocalStorageReturn<T> = [
-  /** 存储的值 */ Ref<T>,
+  /** 存储的值（只读） */ ComputedRef<T>,
   /** 设置值函数 */ SetStorageFunction<T>,
   /** 移除值函数 */ RemoveStorageFunction,
 ];
@@ -340,6 +693,7 @@ function useLocalStorage<T>(
 - 应用配置信息
 
 <script setup>
+import { ref, computed } from 'vue';
 import { useLocalStorage } from '@vakao-ui/hooks';
 
 // 基本用法示例
@@ -356,11 +710,124 @@ const [settings, setSettings, removeSettings] = useLocalStorage(
   defaultSettings
 );
 
-const updateSettings = () => {
-  setSettings(settings.value);
+const toggleDarkMode = (checked) => {
+  setSettings(prev => ({ ...prev, darkMode: checked }));
+};
+
+const updateLanguage = (event) => {
+  setSettings(prev => ({ ...prev, language: event.target.value }));
 };
 
 const resetSettings = () => {
   setSettings(defaultSettings);
+};
+
+// 计数器演示
+const [count, setCount] = useLocalStorage("counter", 0);
+
+const increment = () => setCount(count.value + 1);
+const decrement = () => setCount(count.value - 1);
+const reset = () => setCount(0);
+
+// 表单数据持久化演示
+const defaultForm = {
+  name: '',
+  age: '',
+  email: '',
+  city: ''
+};
+
+const [userForm, setUserForm] = useLocalStorage('user-form', defaultForm);
+
+const updateName = (event) => {
+  const value = event.target ? event.target.value : event;
+  setUserForm(prev => ({ ...prev, name: value }));
+};
+
+const updateAge = (event) => {
+  const value = event.target ? event.target.value : event;
+  setUserForm(prev => ({ ...prev, age: value }));
+};
+
+const updateEmail = (event) => {
+  const value = event.target ? event.target.value : event;
+  setUserForm(prev => ({ ...prev, email: value }));
+};
+
+const updateCity = (value) => {
+  const cityValue = value && typeof value === 'object' && value.target ? value.target.value : value;
+  setUserForm(prev => ({ ...prev, city: cityValue }));
+};
+
+const clearForm = () => {
+  setUserForm(defaultForm);
+};
+
+const fillDemo = () => {
+  setUserForm({
+    name: '张三',
+    age: '25',
+    email: 'zhangsan@example.com',
+    city: 'beijing'
+  });
+};
+
+// 待办事项列表演示
+const [todoList, setTodoList] = useLocalStorage('todo-list', []);
+const newTodo = ref('');
+
+// 更新新待办事项
+const updateNewTodo = (event) => {
+  const value = event.target ? event.target.value : event;
+  newTodo.value = value;
+};
+
+// 计算属性
+const completedCount = computed(() => 
+  todoList.value.filter(todo => todo.completed).length
+);
+
+const hasCompleted = computed(() => 
+  todoList.value.some(todo => todo.completed)
+);
+
+// 添加待办事项
+const addTodo = () => {
+  if (!newTodo.value.trim()) return;
+  
+  const newItem = {
+    id: Date.now(),
+    text: newTodo.value.trim(),
+    completed: false
+  };
+  
+  setTodoList(prev => [...prev, newItem]);
+  newTodo.value = '';
+};
+
+// 切换完成状态
+const toggleTodo = (index, checked) => {
+  // 如果第二个参数是事件对象，提取checked值；否则直接使用
+  const isChecked = typeof checked === 'boolean' ? checked : !todoList.value[index].completed;
+  setTodoList(prev => 
+    prev.map((todo, i) => 
+      i === index ? { ...todo, completed: isChecked } : todo
+    )
+  );
+};
+
+// 删除待办事项
+const removeTodo = (index) => {
+  setTodoList(prev => prev.filter((_, i) => i !== index));
+};
+
+// 清除已完成
+const clearCompleted = () => {
+  setTodoList(prev => prev.filter(todo => !todo.completed));
+};
+
+// 清空全部
+const clearAll = () => {
+  setTodoList([]);
 };
 </script>

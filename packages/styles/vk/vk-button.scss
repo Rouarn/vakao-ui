@@ -24,7 +24,7 @@
   font-weight: 500;
   padding: 0 $spacing-base;
   font-size: $font-size-base;
-  height: $component-size-medium;
+  height: $component-size-base;
   border-radius: $border-radius-base;
 
   &:hover,
@@ -87,8 +87,6 @@
     height: $component-size-small;
     border-radius: $border-radius-small;
   }
-
-
 
   // 类型变体
   &.vk-button--type-primary {
@@ -262,12 +260,12 @@
     padding: 0;
     width: var(--vk-component-size-medium);
     height: var(--vk-component-size-medium);
-    
+
     &.vk-button--size-large {
       width: var(--vk-component-size-large);
       height: var(--vk-component-size-large);
     }
-    
+
     &.vk-button--size-small {
       width: var(--vk-component-size-small);
       height: var(--vk-component-size-small);
