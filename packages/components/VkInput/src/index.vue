@@ -20,7 +20,7 @@
         v-bind="filteredAttrs"
         :class="inputClass"
         :type="showPasswordVisible ? 'text' : type"
-        :value="modelValue"
+        :value="currentValue"
         :placeholder="placeholder"
         :disabled="disabled"
         :readonly="readonly"
@@ -71,7 +71,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed, nextTick } from "vue";
+import { defineComponent, ref, computed, nextTick, watch } from "vue";
 import type { StyleValue } from "vue";
 import { inputProps, inputEmits } from "./types";
 import { useNamespace, isUrl } from "@vakao-ui/utils";
@@ -93,8 +93,31 @@ export default defineComponent({
     // 模板引用
     const inputRef = ref<HTMLInputElement>();
 
-    // 双向绑定值
-    const modelValue = ref<string>("");
+    // 判断是否为受控模式
+    const isControlled = computed(() => props.value !== undefined);
+    
+    // 内部状态值（非受控模式使用）
+    const internalValue = ref<string>(props.modelValue || "");
+    
+    // 当前显示的值
+    const currentValue = computed(() => {
+      return isControlled.value ? (props.value || "") : internalValue.value;
+    });
+    
+    // 监听 modelValue 变化（非受控模式）
+    watch(() => props.modelValue, (newValue) => {
+      if (!isControlled.value) {
+        internalValue.value = newValue || "";
+      }
+    });
+    
+    // 监听 value 变化（受控模式）
+    watch(() => props.value, (newValue) => {
+      if (isControlled.value && newValue !== undefined) {
+        // 受控模式下，value 变化时不需要更新内部状态
+        // 因为 currentValue 会直接使用 props.value
+      }
+    });
 
     // 密码显示状态
     const showPasswordVisible = ref(false);
@@ -144,7 +167,7 @@ export default defineComponent({
         props.clearable &&
         !props.disabled &&
         !props.readonly &&
-        !!modelValue.value
+        !!currentValue.value
       );
     });
 
@@ -162,7 +185,11 @@ export default defineComponent({
     const handleInput = (event: Event) => {
       const target = event.target as HTMLInputElement;
       const value = target.value;
-      modelValue.value = value;
+      
+      if (!isControlled.value) {
+        internalValue.value = value;
+      }
+      
       emit("update:modelValue", value);
       emit("input", value);
     };
@@ -184,7 +211,10 @@ export default defineComponent({
     };
 
     const handleClear = () => {
-      modelValue.value = "";
+      if (!isControlled.value) {
+        internalValue.value = "";
+      }
+      
       emit("update:modelValue", "");
       emit("clear");
       emit("input", "");
@@ -208,7 +238,7 @@ export default defineComponent({
     return {
       ns,
       inputRef,
-      modelValue,
+      currentValue,
       showPasswordVisible,
       isFocused,
       filteredAttrs,

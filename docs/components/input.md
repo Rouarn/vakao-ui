@@ -26,6 +26,104 @@ const value = ref("");
   </template>
 </Demo>
 
+## 受控和非受控模式
+
+VkInput 组件支持两种使用模式：非受控模式（使用 v-model）和受控模式（使用 :value + 事件）。
+
+### 非受控模式
+
+使用 `v-model` 进行双向数据绑定，组件内部管理状态。
+
+<Demo>
+  <div>
+    <vk-input v-model="uncontrolledValue" placeholder="非受控模式 - v-model" />
+    <p>当前值: {{ uncontrolledValue }}</p>
+    <vk-button-group>
+      <vk-button @click="uncontrolledValue = 'Hello World'">设置值</vk-button>
+      <vk-button @click="uncontrolledValue = ''">清空</vk-button>
+    </vk-button-group>
+  </div>
+  
+  <template #code>
+
+```vue
+<template>
+  <vk-input v-model="username" placeholder="请输入用户名" />
+  <p>当前值: {{ username }}</p>
+</template>
+
+<script setup>
+import { ref } from "vue";
+
+const username = ref("");
+</script>
+```
+
+  </template>
+</Demo>
+
+### 受控模式
+
+使用 `:value` 单向绑定配合 `@input` 或 `@update:modelValue` 事件，由父组件完全控制状态。
+
+<Demo>
+  <div style="width: 100%;">
+    <div style="margin-bottom: 16px;">
+      <vk-input :value="controlledValue1" @input="setControlledValue1" placeholder="受控模式 - @input" />
+      <p>当前值: {{ controlledValue1 }}</p>
+      <vk-button-group>
+        <vk-button @click="controlledValue1 = 'Controlled Input'">设置值</vk-button>
+        <vk-button @click="controlledValue1 = ''">清空</vk-button>
+      </vk-button-group>
+    </div>
+    <div>
+      <vk-input :value="controlledValue2" @update:modelValue="setControlledValue2" placeholder="受控模式 - @update:modelValue" />
+      <p>当前值: {{ controlledValue2 }}</p>
+      <vk-button-group>
+        <vk-button @click="controlledValue2 = 'Model Value'">设置值</vk-button>
+        <vk-button @click="controlledValue2 = ''">清空</vk-button>
+      </vk-button-group>
+    </div>
+  </div>
+  
+  <template #code>
+
+```vue
+<template>
+  <!-- 使用 @input 事件 -->
+  <vk-input
+    :value="username1"
+    @input="setUsername1"
+    placeholder="请输入用户名"
+  />
+
+  <!-- 使用 @update:modelValue 事件 -->
+  <vk-input
+    :value="username2"
+    @update:modelValue="setUsername2"
+    placeholder="请输入用户名"
+  />
+</template>
+
+<script setup>
+import { ref } from "vue";
+
+const username1 = ref("");
+const username2 = ref("");
+
+const setUsername1 = value => {
+  username1.value = value;
+};
+
+const setUsername2 = value => {
+  username2.value = value;
+};
+</script>
+```
+
+  </template>
+</Demo>
+
 ## 禁用状态
 
 通过 `disabled` 属性指定是否禁用 input 组件。
@@ -235,6 +333,8 @@ const value2 = ref("");
 
 | 名称         | 类型                                                            | 默认值        | 说明                                                                                |
 | ------------ | --------------------------------------------------------------- | ------------- | ----------------------------------------------------------------------------------- |
+| modelValue   | `string`                                                        | `''`          | 绑定值（v-model，非受控模式）                                                       |
+| value        | `string`                                                        | `undefined`   | 输入框的值（受控模式）                                                              |
 | type         | `'text' \| 'password' \| 'email' \| 'number' \| 'tel' \| 'url'` | `'text'`      | 输入框类型                                                                          |
 | size         | `'small' \| 'medium' \| 'large'`                                | `'medium'`    | 输入框大小                                                                          |
 | disabled     | `boolean`                                                       | `false`       | 是否禁用                                                                            |
@@ -287,4 +387,17 @@ const value8 = ref('')
 const value9 = ref('')
 const value10 = ref('')
 const value11 = ref('')
+
+// 受控和非受控模式示例
+const uncontrolledValue = ref('')
+const controlledValue1 = ref('')
+const controlledValue2 = ref('')
+
+const setControlledValue1 = (value) => {
+  controlledValue1.value = value
+}
+
+const setControlledValue2 = (value) => {
+  controlledValue2.value = value
+}
 </script>

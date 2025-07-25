@@ -15,6 +15,16 @@ export type InputSize = ComponentSize;
 
 // 输入框属性定义
 export const inputProps = {
+  /** 输入框值 (v-model) */
+  modelValue: {
+    type: String,
+    default: "",
+  },
+  /** 输入框值 (受控模式) */
+  value: {
+    type: String,
+    default: undefined,
+  },
   /** 输入框类型 */
   type: {
     type: String as PropType<InputType>,

@@ -28,7 +28,7 @@
       <vk-input
         v-if="filterable"
         ref="inputRef"
-        v-model="searchQuery"
+        :value="inputValue"
         :class="ns.element('inner')"
         :placeholder="currentPlaceholder"
         :disabled="disabled"
@@ -133,9 +133,10 @@ export default defineComponent({
 
     // 双向绑定值
     const modelValue = computed({
-      get: () => props.modelValue,
+      get: () => props.value !== undefined ? props.value : props.modelValue,
       set: (value: SelectValue | SelectValue[]) => {
         emit("update:modelValue", value);
+        emit("change", value);
       },
     });
 
@@ -168,6 +169,18 @@ export default defineComponent({
     const currentPlaceholder = computed(() => {
       if (props.multiple && hasValue.value) return "";
       return props.placeholder;
+    });
+
+    const inputValue = computed({
+      get: () => {
+        if (dropdownVisible.value && searchQuery.value) {
+          return searchQuery.value;
+        }
+        return displayValue.value;
+      },
+      set: (value: string) => {
+        searchQuery.value = value;
+      },
     });
 
     const filteredOptions = computed(() => {
@@ -241,14 +254,18 @@ export default defineComponent({
     const handleClear = () => {
       if (props.disabled) return;
 
-      if (props.multiple) {
-        modelValue.value = [];
+      const newValue = props.multiple ? [] : "";
+      
+      if (props.value !== undefined) {
+        // 受控模式，只触发事件
+        emit("change", newValue);
       } else {
-        modelValue.value = "";
+        // 非受控模式，更新内部状态
+        modelValue.value = newValue;
       }
+      
       searchQuery.value = "";
       emit("clear");
-      emit("change", modelValue.value);
       hideDropdown();
     };
 
@@ -308,21 +325,32 @@ export default defineComponent({
       if (props.multiple) {
         const currentValues = (modelValue.value as SelectValue[]) || [];
         const index = currentValues.indexOf(option.value);
+        let newValues: SelectValue[];
 
         if (index > -1) {
           // 取消选择
-          const newValues = currentValues.filter(v => v !== option.value);
-          modelValue.value = newValues;
+          newValues = currentValues.filter(v => v !== option.value);
         } else {
           // 添加选择
-          const newValues = [...currentValues, option.value];
+          newValues = [...currentValues, option.value];
+        }
+        
+        if (props.value !== undefined) {
+          // 受控模式，只触发事件
+          emit("change", newValues);
+        } else {
+          // 非受控模式，更新内部状态
           modelValue.value = newValues;
         }
-        emit("change", modelValue.value);
       } else {
         // 单选模式
-        modelValue.value = option.value;
-        emit("change", option.value);
+        if (props.value !== undefined) {
+          // 受控模式，只触发事件
+          emit("change", option.value);
+        } else {
+          // 非受控模式，更新内部状态
+          modelValue.value = option.value;
+        }
         hideDropdown(); // 单选后自动关闭
       }
     };
@@ -383,6 +411,7 @@ export default defineComponent({
       selectedOptions,
       displayValue,
       currentPlaceholder,
+      inputValue,
       filteredOptions,
       showClearIcon,
       hasVisibleOptions,

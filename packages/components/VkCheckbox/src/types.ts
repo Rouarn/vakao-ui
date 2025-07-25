@@ -42,7 +42,7 @@ export const checkboxProps = {
   /** 是否选中 */
   checked: {
     type: Boolean,
-    default: false,
+    default: undefined,
   },
   /** 自定义类名 */
   customClass: String,

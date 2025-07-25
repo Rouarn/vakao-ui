@@ -26,6 +26,10 @@ export const selectProps = {
     type: [String, Number, Array] as PropType<SelectValue | SelectValue[]>,
     default: undefined,
   },
+  value: {
+    type: [String, Number, Array] as PropType<SelectValue | SelectValue[]>,
+    default: undefined,
+  },
   size: {
     type: String as PropType<SelectSize>,
     default: "medium",

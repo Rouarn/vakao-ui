@@ -1,5 +1,5 @@
 <template>
-  <li :class="mergedClass" @click.stop="handleClick">
+  <li v-show="isVisible" :class="mergedClass" @click.stop="handleClick">
     <slot>
       {{ label }}
     </slot>
@@ -56,6 +56,13 @@ export default defineComponent({
       return props.disabled || selectContext?.props.disabled || false;
     });
 
+    // 计算是否可见（用于搜索过滤）
+    const isVisible = computed(() => {
+      if (!selectContext) return true;
+      if (!selectContext.props.filterable) return true;
+      return selectContext.filteredOptions.value.some((option: SelectOption) => option.value === props.value);
+    });
+
     // 样式类名
     const mergedClass = computed(() => {
       return [
@@ -96,6 +103,7 @@ export default defineComponent({
       mergedClass,
       isSelected,
       isDisabled,
+      isVisible,
       handleClick,
     };
   },

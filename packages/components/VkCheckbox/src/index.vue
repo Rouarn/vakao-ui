@@ -100,12 +100,16 @@ export default defineComponent({
     const isChecked = computed(() => {
       if (isGroup.value && checkboxGroup) {
         return checkboxGroup.modelValue.value.includes(
-          props.value as CheckboxValue,
+          props.value as CheckboxValue
         );
+      }
+      // 优先使用 checked prop（受控模式），然后是 modelValue（v-model），最后是内部状态
+      if (props.checked !== undefined) {
+        return props.checked;
       }
       return props.modelValue !== undefined
         ? props.modelValue
-        : props.checked || modelValue.value;
+        : modelValue.value;
     });
 
     const isLimitExceeded = computed(() => {
@@ -162,14 +166,20 @@ export default defineComponent({
 
         checkboxGroup.changeEvent(newValue);
       } else {
-        // 如果使用 v-model，发出 update:modelValue 事件
-        if (props.modelValue !== undefined) {
-          emit("update:modelValue", checked);
-        } else {
-          // 否则使用内部状态
-          modelValue.value = checked;
+        // 受控模式（使用 checked prop）
+        if (props.checked !== undefined) {
+          emit("change", checked);
         }
-        emit("change", checked);
+        // v-model 模式
+        else if (props.modelValue !== undefined) {
+          emit("update:modelValue", checked);
+          emit("change", checked);
+        }
+        // 内部状态模式
+        else {
+          modelValue.value = checked;
+          emit("change", checked);
+        }
       }
     };
 
