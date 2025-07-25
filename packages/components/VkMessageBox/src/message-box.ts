@@ -1,67 +1,74 @@
-import { createApp, App } from 'vue'
-import MessageBoxComponent from './index.vue'
-import type { MessageBoxOptions, MessageBoxAction, MessageBoxInstance, MessageBoxResult } from './types'
+import { createApp, App } from "vue";
+import MessageBoxComponent from "./index.vue";
+import type {
+  MessageBoxOptions,
+  MessageBoxAction,
+  MessageBoxInstance,
+  MessageBoxResult,
+} from "./types";
 
 // MessageBox 实例管理
-let messageBoxInstance: App | null = null
-let currentContainer: HTMLElement | null = null
+let messageBoxInstance: App | null = null;
+let currentContainer: HTMLElement | null = null;
 
 // 创建 MessageBox 实例
-function createMessageBox(options: MessageBoxOptions): Promise<MessageBoxResult> {
+function createMessageBox(
+  options: MessageBoxOptions,
+): Promise<MessageBoxResult> {
   return new Promise((resolve, reject) => {
     // 清理之前的实例
     if (messageBoxInstance && currentContainer) {
-      messageBoxInstance.unmount()
+      messageBoxInstance.unmount();
       if (currentContainer.parentNode) {
-        document.body.removeChild(currentContainer)
+        document.body.removeChild(currentContainer);
       }
     }
 
     // 创建容器
-    const container = document.createElement('div')
-    document.body.appendChild(container)
-    currentContainer = container
+    const container = document.createElement("div");
+    document.body.appendChild(container);
+    currentContainer = container;
 
     // 创建应用实例
     const app = createApp(MessageBoxComponent, {
       ...options,
       onAction: (action: MessageBoxAction, instance: MessageBoxInstance) => {
         // 先设置visible为false触发动画
-        if (instance && typeof instance.close === 'function') {
-          instance.close()
+        if (instance && typeof instance.close === "function") {
+          instance.close();
         }
-        
+
         // 延迟清理DOM，等待动画完成
         setTimeout(() => {
           if (messageBoxInstance && currentContainer) {
-            messageBoxInstance.unmount()
+            messageBoxInstance.unmount();
             if (currentContainer.parentNode) {
-              document.body.removeChild(currentContainer)
+              document.body.removeChild(currentContainer);
             }
-            messageBoxInstance = null
-            currentContainer = null
+            messageBoxInstance = null;
+            currentContainer = null;
           }
-        }, 300)
+        }, 300);
 
-        if (action === 'confirm') {
-          resolve({ 
-            action, 
-            instance, 
-            value: instance.value 
-          })
+        if (action === "confirm") {
+          resolve({
+            action,
+            instance,
+            value: instance.value,
+          });
         } else {
-          reject({ 
-            action, 
-            instance, 
-            value: instance.value 
-          })
+          reject({
+            action,
+            instance,
+            value: instance.value,
+          });
         }
-      }
-    })
+      },
+    });
 
-    messageBoxInstance = app
-    app.mount(container)
-  })
+    messageBoxInstance = app;
+    app.mount(container);
+  });
 }
 
 // MessageBox 主对象
@@ -72,27 +79,27 @@ export const VkMessageBox = {
   confirm(
     message: string,
     title?: string | MessageBoxOptions,
-    options?: MessageBoxOptions
+    options?: MessageBoxOptions,
   ): Promise<MessageBoxResult> {
-    let mergedOptions: MessageBoxOptions
+    let mergedOptions: MessageBoxOptions;
 
-    if (typeof title === 'string') {
+    if (typeof title === "string") {
       mergedOptions = {
         message,
         title,
         showCancelButton: true,
-        ...options
-      }
+        ...options,
+      };
     } else {
       mergedOptions = {
         message,
-        title: '确认',
+        title: "确认",
         showCancelButton: true,
-        ...title
-      }
+        ...title,
+      };
     }
 
-    return createMessageBox(mergedOptions)
+    return createMessageBox(mergedOptions);
   },
 
   /**
@@ -101,27 +108,27 @@ export const VkMessageBox = {
   alert(
     message: string,
     title?: string | MessageBoxOptions,
-    options?: MessageBoxOptions
+    options?: MessageBoxOptions,
   ): Promise<MessageBoxResult> {
-    let mergedOptions: MessageBoxOptions
+    let mergedOptions: MessageBoxOptions;
 
-    if (typeof title === 'string') {
+    if (typeof title === "string") {
       mergedOptions = {
         message,
         title,
         showCancelButton: false,
-        ...options
-      }
+        ...options,
+      };
     } else {
       mergedOptions = {
         message,
-        title: '提示',
+        title: "提示",
         showCancelButton: false,
-        ...title
-      }
+        ...title,
+      };
     }
 
-    return createMessageBox(mergedOptions)
+    return createMessageBox(mergedOptions);
   },
 
   /**
@@ -130,31 +137,31 @@ export const VkMessageBox = {
   prompt(
     message: string,
     title?: string | MessageBoxOptions,
-    options?: MessageBoxOptions
+    options?: MessageBoxOptions,
   ): Promise<MessageBoxResult> {
-    let mergedOptions: MessageBoxOptions
+    let mergedOptions: MessageBoxOptions;
 
-    if (typeof title === 'string') {
+    if (typeof title === "string") {
       mergedOptions = {
         message,
         title,
         showCancelButton: true,
-        type: 'info',
+        type: "info",
         showInput: true,
-        ...options
-      }
+        ...options,
+      };
     } else {
       mergedOptions = {
         message,
-        title: '输入',
+        title: "输入",
         showCancelButton: true,
-        type: 'info',
+        type: "info",
         showInput: true,
-        ...title
-      }
+        ...title,
+      };
     }
 
-    return createMessageBox(mergedOptions)
+    return createMessageBox(mergedOptions);
   },
 
   /**
@@ -162,14 +169,14 @@ export const VkMessageBox = {
    */
   close() {
     if (messageBoxInstance && currentContainer) {
-      messageBoxInstance.unmount()
+      messageBoxInstance.unmount();
       if (currentContainer.parentNode) {
-        document.body.removeChild(currentContainer)
+        document.body.removeChild(currentContainer);
       }
-      messageBoxInstance = null
-      currentContainer = null
+      messageBoxInstance = null;
+      currentContainer = null;
     }
-  }
-}
+  },
+};
 
-export default VkMessageBox
+export default VkMessageBox;

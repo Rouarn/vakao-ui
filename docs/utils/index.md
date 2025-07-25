@@ -34,13 +34,13 @@ Vakao UI 提供了一系列实用的工具函数，帮助您更高效地开发�
 ### 全局引入
 
 ```ts
-import { withInstall } from 'vakao-ui';
+import { withInstall } from "vakao-ui";
 ```
 
 ### 按需引入
 
 ```ts
-import { withInstall } from 'vakao-ui/utils';
+import { withInstall } from "vakao-ui/utils";
 ```
 
 ## withInstall
@@ -50,8 +50,8 @@ import { withInstall } from 'vakao-ui/utils';
 ### 基础用法
 
 ```ts
-import { withInstall } from 'vakao-ui/utils';
-import Button from './Button.vue';
+import { withInstall } from "vakao-ui/utils";
+import Button from "./Button.vue";
 
 // 为组件添加 install 方法
 const VkButton = withInstall(Button);
@@ -62,9 +62,9 @@ export default VkButton;
 ### 在插件中使用
 
 ```ts
-import { App } from 'vue';
-import { withInstall } from 'vakao-ui/utils';
-import Button from './components/Button.vue';
+import { App } from "vue";
+import { withInstall } from "vakao-ui/utils";
+import Button from "./components/Button.vue";
 
 const VkButton = withInstall(Button);
 
@@ -72,7 +72,7 @@ const VkButton = withInstall(Button);
 app.use(VkButton);
 
 // 也可以全局注册
-app.component('VkButton', VkButton);
+app.component("VkButton", VkButton);
 ```
 
 ### 类型定义
@@ -92,18 +92,18 @@ export function withInstall<T>(component: T): SFCWithInstall<T>;
 提取组件公共属性类型的工具类型。
 
 ```ts
-import type { ExtractPublicPropTypes } from 'vakao-ui';
+import type { ExtractPublicPropTypes } from "vakao-ui";
 
 // 定义组件属性
 const buttonProps = {
   type: {
-    type: String as PropType<'primary' | 'default'>,
-    default: 'default'
+    type: String as PropType<"primary" | "default">,
+    default: "default",
   },
   size: {
-    type: String as PropType<'small' | 'medium' | 'large'>,
-    default: 'medium'
-  }
+    type: String as PropType<"small" | "medium" | "large">,
+    default: "medium",
+  },
 } as const;
 
 // 提取公共属性类型
@@ -115,8 +115,8 @@ export type ButtonProps = ExtractPublicPropTypes<typeof buttonProps>;
 带安装方法的单文件组件类型。
 
 ```ts
-import type { SFCWithInstall } from 'vakao-ui';
-import type { DefineComponent } from 'vue';
+import type { SFCWithInstall } from "vakao-ui";
+import type { DefineComponent } from "vue";
 
 // 定义组件类型
 type ButtonComponent = DefineComponent<ButtonProps>;
@@ -131,31 +131,31 @@ type VkButtonType = SFCWithInstall<ButtonComponent>;
 
 ```ts
 // components/Button/index.ts
-import { withInstall } from 'vakao-ui/utils';
-import Button from './src/Button.vue';
+import { withInstall } from "vakao-ui/utils";
+import Button from "./src/Button.vue";
 
 // 添加安装方法
 export const VkButton = withInstall(Button);
 export default VkButton;
 
 // 导出类型
-export type { ButtonProps } from './src/types';
+export type { ButtonProps } from "./src/types";
 ```
 
 ### 插件开发
 
 ```ts
 // plugins/my-plugin.ts
-import type { App } from 'vue';
-import { withInstall } from 'vakao-ui/utils';
-import MyComponent from './MyComponent.vue';
+import type { App } from "vue";
+import { withInstall } from "vakao-ui/utils";
+import MyComponent from "./MyComponent.vue";
 
 const MyPlugin = withInstall(MyComponent);
 
 export default {
   install(app: App) {
     app.use(MyPlugin);
-  }
+  },
 };
 ```
 

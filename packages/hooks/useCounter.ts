@@ -56,10 +56,10 @@ export type UseCounterReturn = [
  * ```typescript
  * // 基础用法
  * const [count, increment, decrement] = useCounter(0);
- * 
+ *
  * // 带限制的用法
  * const [score, addScore, minusScore, resetScore] = useCounter(0, { min: 0, max: 100 });
- * 
+ *
  * // 完整用法
  * const [value, inc, dec, reset, setValue] = useCounter(10, { min: 0, max: 20 });
  * ```
@@ -69,7 +69,7 @@ export function useCounter(
   options: {
     min?: number;
     max?: number;
-  } = {}
+  } = {},
 ): UseCounterReturn {
   const { min, max } = options;
   const count = ref(initialValue);

@@ -30,10 +30,7 @@
 ```vue
 <template>
   <div>
-    <vk-input 
-      v-model="searchText" 
-      placeholder="输入搜索关键词"
-    />
+    <vk-input v-model="searchText" placeholder="输入搜索关键词" />
     <p>实时输入: {{ searchText }}</p>
     <p>防抖后的值: {{ debouncedSearchText }}</p>
     <p>搜索结果: {{ searchResults }}</p>
@@ -41,10 +38,10 @@
 </template>
 
 <script setup>
-import { useDebounce } from 'vakao-ui';
-import { ref, watch } from 'vue';
+import { useDebounce } from "vakao-ui";
+import { ref, watch } from "vue";
 
-const searchText = ref('');
+const searchText = ref("");
 const debouncedSearchText = useDebounce(searchText, 500);
 const searchResults = ref([]);
 
@@ -95,8 +92,8 @@ watch(debouncedSearchText, async (newValue) => {
 </template>
 
 <script setup>
-import { useDebounce } from 'vakao-ui';
-import { ref } from 'vue';
+import { useDebounce } from "vakao-ui";
+import { ref } from "vue";
 
 const saving = ref(false);
 const saved = ref(false);
@@ -104,13 +101,13 @@ const saved = ref(false);
 const saveData = async () => {
   saving.value = true;
   saved.value = false;
-  
+
   // 模拟 API 调用
-  await new Promise(resolve => setTimeout(resolve, 1000));
-  
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+
   saving.value = false;
   saved.value = true;
-  
+
   setTimeout(() => {
     saved.value = false;
   }, 2000);
@@ -157,17 +154,17 @@ const [debouncedSave, cancelSave, flushSave] = useDebounce(saveData, 1000);
 <template>
   <div>
     <h3>不同的防抖配置</h3>
-    
+
     <div>
       <vk-button @click="leadingDebounce">Leading (立即执行)</vk-button>
       <p>{{ leadingCount }} 次点击</p>
     </div>
-    
+
     <div>
       <vk-button @click="trailingDebounce">Trailing (延迟执行)</vk-button>
       <p>{{ trailingCount }} 次点击</p>
     </div>
-    
+
     <div>
       <vk-button @click="bothDebounce">Both (首次立即，后续延迟)</vk-button>
       <p>{{ bothCount }} 次点击</p>
@@ -176,30 +173,27 @@ const [debouncedSave, cancelSave, flushSave] = useDebounce(saveData, 1000);
 </template>
 
 <script setup>
-import { useDebounce } from 'vakao-ui';
-import { ref } from 'vue';
+import { useDebounce } from "vakao-ui";
+import { ref } from "vue";
 
 const leadingCount = ref(0);
 const trailingCount = ref(0);
 const bothCount = ref(0);
 
-const [leadingDebounce] = useDebounce(
-  () => leadingCount.value++,
-  500,
-  { leading: true, trailing: false }
-);
+const [leadingDebounce] = useDebounce(() => leadingCount.value++, 500, {
+  leading: true,
+  trailing: false,
+});
 
-const [trailingDebounce] = useDebounce(
-  () => trailingCount.value++,
-  500,
-  { leading: false, trailing: true }
-);
+const [trailingDebounce] = useDebounce(() => trailingCount.value++, 500, {
+  leading: false,
+  trailing: true,
+});
 
-const [bothDebounce] = useDebounce(
-  () => bothCount.value++,
-  500,
-  { leading: true, trailing: true }
-);
+const [bothDebounce] = useDebounce(() => bothCount.value++, 500, {
+  leading: true,
+  trailing: true,
+});
 </script>
 ```
 
@@ -214,23 +208,16 @@ const [bothDebounce] = useDebounce(
     <form @submit.prevent="submitForm">
       <div>
         <label>邮箱:</label>
-        <input 
-          v-model="email" 
-          type="email" 
-          :class="{ error: emailError }"
-        />
+        <input v-model="email" type="email" :class="{ error: emailError }" />
         <span v-if="emailError" class="error-text">{{ emailError }}</span>
       </div>
-      
+
       <div>
         <label>用户名:</label>
-        <input 
-          v-model="username" 
-          :class="{ error: usernameError }"
-        />
+        <input v-model="username" :class="{ error: usernameError }" />
         <span v-if="usernameError" class="error-text">{{ usernameError }}</span>
       </div>
-      
+
       <button type="submit" :disabled="hasErrors">提交</button>
     </form>
   </div>
@@ -258,13 +245,13 @@ watch(debouncedEmail, async (newEmail) => {
     emailError.value = '';
     return;
   }
-  
+
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(newEmail)) {
     emailError.value = '邮箱格式不正确';
     return;
   }
-  
+
   // 模拟检查邮箱是否已存在
   const exists = await checkEmailExists(newEmail);
   emailError.value = exists ? '邮箱已存在' : '';
@@ -276,12 +263,12 @@ watch(debouncedUsername, async (newUsername) => {
     usernameError.value = '';
     return;
   }
-  
+
   if (newUsername.length < 3) {
     usernameError.value = '用户名至少3个字符';
     return;
   }
-  
+
   // 模拟检查用户名是否已存在
   const exists = await checkUsernameExists(newUsername);
   usernameError.value = exists ? '用户名已存在' : '';
@@ -324,26 +311,26 @@ const submitForm = () => {
 
 #### 防抖响应式值
 
-| 参数 | 类型 | 默认值 | 说明 |
-| --- | --- | --- | --- |
-| value | `Ref<T>` | - | 要防抖的响应式值 |
-| delay | `number` | - | 延迟时间（毫秒） |
-| options | `UseDebounceOptions` | `{}` | 配置选项 |
+| 参数    | 类型                 | 默认值 | 说明             |
+| ------- | -------------------- | ------ | ---------------- |
+| value   | `Ref<T>`             | -      | 要防抖的响应式值 |
+| delay   | `number`             | -      | 延迟时间（毫秒） |
+| options | `UseDebounceOptions` | `{}`   | 配置选项         |
 
 #### 防抖函数
 
-| 参数 | 类型 | 默认值 | 说明 |
-| --- | --- | --- | --- |
-| fn | `Function` | - | 要防抖的函数 |
-| delay | `number` | - | 延迟时间（毫秒） |
-| options | `UseDebounceOptions` | `{}` | 配置选项 |
+| 参数    | 类型                 | 默认值 | 说明             |
+| ------- | -------------------- | ------ | ---------------- |
+| fn      | `Function`           | -      | 要防抖的函数     |
+| delay   | `number`             | -      | 延迟时间（毫秒） |
+| options | `UseDebounceOptions` | `{}`   | 配置选项         |
 
 ### UseDebounceOptions
 
-| 属性 | 类型 | 默认值 | 说明 |
-| --- | --- | --- | --- |
-| leading | `boolean` | `false` | 是否在延迟开始前调用 |
-| trailing | `boolean` | `true` | 是否在延迟结束后调用 |
+| 属性     | 类型      | 默认值  | 说明                 |
+| -------- | --------- | ------- | -------------------- |
+| leading  | `boolean` | `false` | 是否在延迟开始前调用 |
+| trailing | `boolean` | `true`  | 是否在延迟结束后调用 |
 
 ### 返回值
 
@@ -355,11 +342,11 @@ const submitForm = () => {
 
 返回一个数组 `[debouncedFn, cancel, flush]`：
 
-| 索引 | 名称 | 类型 | 说明 |
-| --- | --- | --- | --- |
-| 0 | debouncedFn | `DebouncedFunction` | 防抖后的函数 |
-| 1 | cancel | `DebounceCancelFunction` | 取消执行函数 |
-| 2 | flush | `DebounceFlushFunction` | 立即执行函数 |
+| 索引 | 名称        | 类型                     | 说明         |
+| ---- | ----------- | ------------------------ | ------------ |
+| 0    | debouncedFn | `DebouncedFunction`      | 防抖后的函数 |
+| 1    | cancel      | `DebounceCancelFunction` | 取消执行函数 |
+| 2    | flush       | `DebounceFlushFunction`  | 立即执行函数 |
 
 ### 类型定义
 
@@ -403,7 +390,7 @@ interface UseDebounceOptions {
 function useDebounce<T>(
   value: Ref<T>,
   delay: number,
-  options?: UseDebounceOptions
+  options?: UseDebounceOptions,
 ): Ref<T>;
 
 /**
@@ -418,7 +405,7 @@ function useDebounce<T>(
 function useDebounce<T extends (...args: any[]) => any>(
   fn: T,
   delay: number,
-  options?: UseDebounceOptions
+  options?: UseDebounceOptions,
 ): [DebouncedFunction<T>, DebounceCancelFunction, DebounceFlushFunction];
 ```
 

@@ -1,15 +1,15 @@
 // CSS 命名空间工具函数
 export interface UseNamespaceReturn {
-  block: () => string
-  element: (element: string) => string
-  modifier: (modifier: string, value?: string | number | boolean) => string
-  is: (name: string, state?: boolean) => string
-  bem: (element?: string, modifier?: string) => string
+  block: () => string;
+  element: (element: string) => string;
+  modifier: (modifier: string, value?: string | number | boolean) => string;
+  is: (name: string, state?: boolean) => string;
+  bem: (element?: string, modifier?: string) => string;
 }
 
 // 默认命名空间前缀
-const defaultNamespace = 'vk'
-const statePrefix = 'is-'
+const defaultNamespace = "vk";
+const statePrefix = "is-";
 
 /**
  * 创建 CSS 命名空间工具函数
@@ -19,55 +19,55 @@ const statePrefix = 'is-'
  */
 export const useNamespace = (
   block: string,
-  namespace: string = defaultNamespace
+  namespace: string = defaultNamespace,
 ): UseNamespaceReturn => {
-  const blockClass = `${namespace}-${block}`
+  const blockClass = `${namespace}-${block}`;
 
-  const block_ = () => blockClass
+  const block_ = () => blockClass;
 
   const element = (element: string) => {
-    return element ? `${blockClass}__${element}` : ''
-  }
+    return element ? `${blockClass}__${element}` : "";
+  };
 
   const modifier = (modifier: string, value?: string | number | boolean) => {
-    if (!modifier) return ''
-    
-    if (typeof value === 'boolean') {
-      return value ? `${blockClass}--${modifier}` : ''
+    if (!modifier) return "";
+
+    if (typeof value === "boolean") {
+      return value ? `${blockClass}--${modifier}` : "";
     }
-    
-    if (typeof value === 'string' || typeof value === 'number') {
-      return `${blockClass}--${modifier}-${value}`
+
+    if (typeof value === "string" || typeof value === "number") {
+      return `${blockClass}--${modifier}-${value}`;
     }
-    
-    return `${blockClass}--${modifier}`
-  }
+
+    return `${blockClass}--${modifier}`;
+  };
 
   const is = (name: string, state?: boolean) => {
-    if (typeof state === 'boolean') {
-      return state ? `${statePrefix}${name}` : ''
+    if (typeof state === "boolean") {
+      return state ? `${statePrefix}${name}` : "";
     }
-    return `${statePrefix}${name}`
-  }
+    return `${statePrefix}${name}`;
+  };
 
   const bem = (element?: string, modifier?: string) => {
-    let cls = blockClass
+    let cls = blockClass;
     if (element) {
-      cls += `__${element}`
+      cls += `__${element}`;
     }
     if (modifier) {
-      cls += `--${modifier}`
+      cls += `--${modifier}`;
     }
-    return cls
-  }
+    return cls;
+  };
 
   return {
     block: block_,
     element,
     modifier,
     is,
-    bem
-  }
-}
+    bem,
+  };
+};
 
 // 类型已在上面导出，无需重复导出

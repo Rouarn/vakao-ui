@@ -17,9 +17,9 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref } from "vue";
 
-const checked = ref(false)
+const checked = ref(false);
 </script>
 ```
 
@@ -43,10 +43,10 @@ const checked = ref(false)
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref } from "vue";
 
-const checked1 = ref(false)
-const checked2 = ref(true)
+const checked1 = ref(false);
+const checked2 = ref(true);
 </script>
 ```
 
@@ -80,9 +80,9 @@ const checked2 = ref(true)
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref } from "vue";
 
-const checkList = ref(['selected'])
+const checkList = ref(["selected"]);
 </script>
 ```
 
@@ -125,30 +125,35 @@ const checkList = ref(['selected'])
     v-model="checkedCities"
     @change="handleCheckedCitiesChange"
   >
-    <vk-checkbox v-for="city in cities" :key="city" :label="city" :value="city" />
+    <vk-checkbox
+      v-for="city in cities"
+      :key="city"
+      :label="city"
+      :value="city"
+    />
   </vk-checkbox-group>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed } from "vue";
 
-const checkAll = ref(false)
-const checkedCities = ref(['上海', '北京'])
-const cities = ['上海', '北京', '广州', '深圳']
+const checkAll = ref(false);
+const checkedCities = ref(["上海", "北京"]);
+const cities = ["上海", "北京", "广州", "深圳"];
 
 const isIndeterminate = computed(() => {
-  const checkedCount = checkedCities.value.length
-  return checkedCount > 0 && checkedCount < cities.length
-})
+  const checkedCount = checkedCities.value.length;
+  return checkedCount > 0 && checkedCount < cities.length;
+});
 
 const handleCheckAllChange = (val) => {
-  checkedCities.value = val ? cities : []
-}
+  checkedCities.value = val ? cities : [];
+};
 
 const handleCheckedCitiesChange = (value) => {
-  const checkedCount = value.length
-  checkAll.value = checkedCount === cities.length
-}
+  const checkedCount = value.length;
+  checkAll.value = checkedCount === cities.length;
+};
 </script>
 ```
 
@@ -169,15 +174,20 @@ const handleCheckedCitiesChange = (value) => {
 ```vue
 <template>
   <vk-checkbox-group v-model="checkedCities" :min="1" :max="2">
-    <vk-checkbox v-for="city in cities" :key="city" :label="city" :value="city" />
+    <vk-checkbox
+      v-for="city in cities"
+      :key="city"
+      :label="city"
+      :value="city"
+    />
   </vk-checkbox-group>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref } from "vue";
 
-const checkedCities = ref(['上海', '北京'])
-const cities = ['上海', '北京', '广州', '深圳']
+const checkedCities = ref(["上海", "北京"]);
+const cities = ["上海", "北京", "广州", "深圳"];
 </script>
 ```
 
@@ -212,12 +222,12 @@ const cities = ['上海', '北京', '广州', '深圳']
     <vk-checkbox label="小尺寸" value="small" />
     <vk-checkbox label="小尺寸" value="small2" />
   </vk-checkbox-group>
-  
+
   <vk-checkbox-group v-model="checkList2">
     <vk-checkbox label="默认尺寸" value="medium" />
     <vk-checkbox label="默认尺寸" value="medium2" />
   </vk-checkbox-group>
-  
+
   <vk-checkbox-group v-model="checkList3" size="large">
     <vk-checkbox label="大尺寸" value="large" />
     <vk-checkbox label="大尺寸" value="large2" />
@@ -225,11 +235,11 @@ const cities = ['上海', '北京', '广州', '深圳']
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref } from "vue";
 
-const checkList1 = ref([])
-const checkList2 = ref([])
-const checkList3 = ref([])
+const checkList1 = ref([]);
+const checkList2 = ref([]);
+const checkList3 = ref([]);
 </script>
 ```
 
@@ -240,45 +250,45 @@ const checkList3 = ref([])
 
 ### Checkbox Props
 
-| 名称          | 类型                                | 默认值      | 说明                                    |
-| ------------- | ----------------------------------- | ----------- | --------------------------------------- |
-| size          | `'small' \| 'medium' \| 'large'`    | `'medium'`  | 多选框大小                              |
-| disabled      | `boolean`                           | `false`     | 是否禁用                                |
-| value         | `string \| number \| boolean`       | —           | 选中状态的值（在 checkbox-group 下有效） |
-| label         | `string`                            | —           | 多选框的文本                            |
-| indeterminate | `boolean`                           | `false`     | 设置不确定状态，仅负责样式控制          |
-| checked       | `boolean`                           | `false`     | 当前是否勾选                            |
-| customClass   | `string`                            | —           | 自定义类名                              |
-| customStyle   | `string \| object`                  | —           | 自定义样式                              |
+| 名称          | 类型                             | 默认值     | 说明                                     |
+| ------------- | -------------------------------- | ---------- | ---------------------------------------- |
+| size          | `'small' \| 'medium' \| 'large'` | `'medium'` | 多选框大小                               |
+| disabled      | `boolean`                        | `false`    | 是否禁用                                 |
+| value         | `string \| number \| boolean`    | —          | 选中状态的值（在 checkbox-group 下有效） |
+| label         | `string`                         | —          | 多选框的文本                             |
+| indeterminate | `boolean`                        | `false`    | 设置不确定状态，仅负责样式控制           |
+| checked       | `boolean`                        | `false`    | 当前是否勾选                             |
+| customClass   | `string`                         | —          | 自定义类名                               |
+| customStyle   | `string \| object`               | —          | 自定义样式                               |
 
 ### CheckboxGroup Props
 
-| 名称        | 类型                             | 默认值      | 说明                                    |
-| ----------- | -------------------------------- | ----------- | --------------------------------------- |
-| size        | `'small' \| 'medium' \| 'large'` | `'medium'`  | 多选框组大小                            |
-| disabled    | `boolean`                        | `false`     | 是否禁用                                |
-| min         | `number`                         | —           | 可被勾选的 checkbox 的最小数量          |
-| max         | `number`                         | —           | 可被勾选的 checkbox 的最大数量          |
-| customClass | `string`                         | —           | 自定义类名                              |
-| customStyle | `string \| object`               | —           | 自定义样式                              |
+| 名称        | 类型                             | 默认值     | 说明                           |
+| ----------- | -------------------------------- | ---------- | ------------------------------ |
+| size        | `'small' \| 'medium' \| 'large'` | `'medium'` | 多选框组大小                   |
+| disabled    | `boolean`                        | `false`    | 是否禁用                       |
+| min         | `number`                         | —          | 可被勾选的 checkbox 的最小数量 |
+| max         | `number`                         | —          | 可被勾选的 checkbox 的最大数量 |
+| customClass | `string`                         | —          | 自定义类名                     |
+| customStyle | `string \| object`               | —          | 自定义样式                     |
 
 ### Checkbox Events
 
-| 名称   | 参数                        | 说明               |
-| ------ | --------------------------- | ------------------ |
-| change | `(value: boolean) => void`  | 当绑定值变化时触发 |
+| 名称   | 参数                       | 说明               |
+| ------ | -------------------------- | ------------------ |
+| change | `(value: boolean) => void` | 当绑定值变化时触发 |
 
 ### CheckboxGroup Events
 
-| 名称   | 参数                                      | 说明               |
-| ------ | ----------------------------------------- | ------------------ |
-| change | `(value: CheckboxValue[]) => void`        | 当绑定值变化时触发 |
+| 名称   | 参数                               | 说明               |
+| ------ | ---------------------------------- | ------------------ |
+| change | `(value: CheckboxValue[]) => void` | 当绑定值变化时触发 |
 
 ### Checkbox Slots
 
-| 名称    | 说明           |
-| ------- | -------------- |
-| default | 多选框的文本   |
+| 名称    | 说明         |
+| ------- | ------------ |
+| default | 多选框的文本 |
 
 ### CheckboxGroup Slots
 
@@ -288,10 +298,10 @@ const checkList3 = ref([])
 
 ### Checkbox Methods
 
-| 名称  | 说明               |
-| ----- | ------------------ |
-| focus | 使多选框获取焦点   |
-| blur  | 使多选框失去焦点   |
+| 名称  | 说明             |
+| ----- | ---------------- |
+| focus | 使多选框获取焦点 |
+| blur  | 使多选框失去焦点 |
 
 <script setup>
 import { ref, computed } from 'vue'

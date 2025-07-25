@@ -36,9 +36,9 @@
 </template>
 
 <script setup>
-import { useLocalStorage } from 'vakao-ui';
+import { useLocalStorage } from "vakao-ui";
 
-const [username, setUsername, removeUsername] = useLocalStorage('username', '');
+const [username, setUsername, removeUsername] = useLocalStorage("username", "");
 </script>
 ```
 
@@ -85,14 +85,14 @@ const [username, setUsername, removeUsername] = useLocalStorage('username', '');
   <div>
     <h3>用户设置</h3>
     <label>
-      <input 
-        type="checkbox" 
-        v-model="settings.darkMode" 
+      <input
+        type="checkbox"
+        v-model="settings.darkMode"
         @change="updateSettings"
       />
       深色模式
     </label>
-    <br>
+    <br />
     <label>
       语言:
       <select v-model="settings.language" @change="updateSettings">
@@ -100,23 +100,23 @@ const [username, setUsername, removeUsername] = useLocalStorage('username', '');
         <option value="en">English</option>
       </select>
     </label>
-    <br>
+    <br />
     <vk-button @click="resetSettings">重置设置</vk-button>
   </div>
 </template>
 
 <script setup>
-import { useLocalStorage } from 'vakao-ui';
-import { watch } from 'vue';
+import { useLocalStorage } from "vakao-ui";
+import { watch } from "vue";
 
 const defaultSettings = {
   darkMode: false,
-  language: 'zh'
+  language: "zh",
 };
 
 const [settings, setSettings, removeSettings] = useLocalStorage(
-  'user-settings',
-  defaultSettings
+  "user-settings",
+  defaultSettings,
 );
 
 const updateSettings = () => {
@@ -137,9 +137,9 @@ const resetSettings = () => {
 ```vue
 <template>
   <div>
-    <input 
-      type="date" 
-      :value="lastVisit?.toISOString().split('T')[0]" 
+    <input
+      type="date"
+      :value="lastVisit?.toISOString().split('T')[0]"
       @input="updateLastVisit"
     />
     <p>上次访问: {{ lastVisit?.toLocaleString() }}</p>
@@ -225,19 +225,19 @@ const clearCart = () => {
 
 ### 参数
 
-| 参数 | 类型 | 默认值 | 说明 |
-| --- | --- | --- | --- |
-| key | `string` | - | localStorage 的键名 |
-| defaultValue | `T` | - | 默认值 |
-| options | `UseLocalStorageOptions<T>` | `{}` | 配置选项 |
+| 参数         | 类型                        | 默认值 | 说明                |
+| ------------ | --------------------------- | ------ | ------------------- |
+| key          | `string`                    | -      | localStorage 的键名 |
+| defaultValue | `T`                         | -      | 默认值              |
+| options      | `UseLocalStorageOptions<T>` | `{}`   | 配置选项            |
 
 ### UseLocalStorageOptions
 
-| 属性 | 类型 | 默认值 | 说明 |
-| --- | --- | --- | --- |
-| serializer | `StorageSerializer<T>` | `JSON` | 自定义序列化器 |
-| syncAcrossTabs | `boolean` | `false` | 是否跨标签页同步 |
-| onError | `(error: Error) => void` | `console.error` | 错误处理函数 |
+| 属性           | 类型                     | 默认值          | 说明             |
+| -------------- | ------------------------ | --------------- | ---------------- |
+| serializer     | `StorageSerializer<T>`   | `JSON`          | 自定义序列化器   |
+| syncAcrossTabs | `boolean`                | `false`         | 是否跨标签页同步 |
+| onError        | `(error: Error) => void` | `console.error` | 错误处理函数     |
 
 ### StorageSerializer
 
@@ -252,11 +252,11 @@ interface StorageSerializer<T> {
 
 返回一个数组 `[storedValue, setValue, removeValue]`：
 
-| 索引 | 名称 | 类型 | 说明 |
-| --- | --- | --- | --- |
-| 0 | storedValue | `Ref<T>` | 存储的值 |
-| 1 | setValue | `SetStorageFunction<T>` | 设置值函数 |
-| 2 | removeValue | `RemoveStorageFunction` | 移除值函数 |
+| 索引 | 名称        | 类型                    | 说明       |
+| ---- | ----------- | ----------------------- | ---------- |
+| 0    | storedValue | `Ref<T>`                | 存储的值   |
+| 1    | setValue    | `SetStorageFunction<T>` | 设置值函数 |
+| 2    | removeValue | `RemoveStorageFunction` | 移除值函数 |
 
 ### 类型定义
 
@@ -280,7 +280,7 @@ type RemoveStorageFunction = () => void;
 type UseLocalStorageReturn<T> = [
   /** 存储的值 */ Ref<T>,
   /** 设置值函数 */ SetStorageFunction<T>,
-  /** 移除值函数 */ RemoveStorageFunction
+  /** 移除值函数 */ RemoveStorageFunction,
 ];
 
 /**
@@ -317,7 +317,7 @@ interface UseLocalStorageOptions<T> {
 function useLocalStorage<T>(
   key: string,
   defaultValue: T,
-  options?: UseLocalStorageOptions<T>
+  options?: UseLocalStorageOptions<T>,
 ): UseLocalStorageReturn<T>;
 ```
 

@@ -117,7 +117,7 @@ export interface UseFetchReturn<T> {
 export function useFetch<T = any>(
   url: string | (() => string),
   options: UseFetchOptions<T> = {},
-  fetchOptions: RequestInit = {}
+  fetchOptions: RequestInit = {},
 ): UseFetchReturn<T> {
   const {
     immediate = true,
@@ -139,7 +139,8 @@ export function useFetch<T = any>(
   // 计算属性
   const finished = computed(
     () =>
-      status.value === FetchStatus.SUCCESS || status.value === FetchStatus.ERROR
+      status.value === FetchStatus.SUCCESS ||
+      status.value === FetchStatus.ERROR,
   );
 
   // 请求控制
@@ -163,7 +164,7 @@ export function useFetch<T = any>(
 
   // 延迟函数
   const delay = (ms: number): Promise<void> => {
-    return new Promise(resolve => setTimeout(resolve, ms));
+    return new Promise((resolve) => setTimeout(resolve, ms));
   };
 
   // 执行请求
@@ -216,7 +217,7 @@ export function useFetch<T = any>(
           if (!response.ok) {
             throw createError(
               `HTTP Error: ${response.status} ${response.statusText}`,
-              response
+              response,
             );
           }
 
@@ -340,12 +341,12 @@ export function useFetch<T = any>(
 export function createFetch(
   baseURL: string,
   defaultOptions: UseFetchOptions<any> = {},
-  defaultFetchOptions: RequestInit = {}
+  defaultFetchOptions: RequestInit = {},
 ) {
   return function <T = any>(
     url: string | (() => string),
     options: UseFetchOptions<T> = {},
-    fetchOptions: RequestInit = {}
+    fetchOptions: RequestInit = {},
   ): UseFetchReturn<T> {
     const fullUrl =
       typeof url === "function" ? () => baseURL + url() : baseURL + url;

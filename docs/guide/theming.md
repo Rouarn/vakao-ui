@@ -21,40 +21,42 @@ Vakao UI 使用 CSS 变量来定义主题，您可以通过覆盖这些变量来
   --vk-color-primary: #1890ff;
   --vk-color-primary-hover: #40a9ff;
   --vk-color-primary-active: #096dd9;
-  
+
   /* 成功色 */
   --vk-color-success: #52c41a;
   --vk-color-success-hover: #73d13d;
   --vk-color-success-active: #389e0d;
-  
+
   /* 警告色 */
   --vk-color-warning: #faad14;
   --vk-color-warning-hover: #ffc53d;
   --vk-color-warning-active: #d48806;
-  
+
   /* 错误色 */
   --vk-color-error: #ff4d4f;
   --vk-color-error-hover: #ff7875;
   --vk-color-error-active: #d9363e;
-  
+
   /* 文字颜色 */
   --vk-text-color-primary: #262626;
   --vk-text-color-secondary: #595959;
   --vk-text-color-disabled: #bfbfbf;
-  
+
   /* 背景色 */
   --vk-background-color: #ffffff;
   --vk-background-color-secondary: #fafafa;
-  
+
   /* 边框 */
   --vk-border-color: #d9d9d9;
   --vk-border-radius: 6px;
-  
+
   /* 阴影 */
   --vk-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  
+
   /* 字体 */
-  --vk-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --vk-font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, sans-serif;
   --vk-font-size-small: 12px;
   --vk-font-size-medium: 14px;
   --vk-font-size-large: 16px;
@@ -111,14 +113,14 @@ $spacing-medium: 16px;
 $spacing-large: 24px;
 
 // 导入组件库样式
-@import 'vakao-ui/styles/index.scss';
+@import "vakao-ui/styles/index.scss";
 ```
 
 ### 在项目中使用
 
 ```scss
 // main.scss
-@import './theme.scss';
+@import "./theme.scss";
 ```
 
 ## 暗色模式
@@ -127,21 +129,21 @@ Vakao UI 支持暗色模式，您可以通过 CSS 变量来定义暗色主题。
 
 ```css
 /* 暗色模式变量 */
-[data-theme='dark'] {
+[data-theme="dark"] {
   /* 主色调 */
   --vk-color-primary: #177ddc;
   --vk-color-primary-hover: #1890ff;
   --vk-color-primary-active: #0958d9;
-  
+
   /* 文字颜色 */
   --vk-text-color-primary: #ffffff;
   --vk-text-color-secondary: #a6a6a6;
   --vk-text-color-disabled: #595959;
-  
+
   /* 背景色 */
   --vk-background-color: #141414;
   --vk-background-color-secondary: #1f1f1f;
-  
+
   /* 边框 */
   --vk-border-color: #434343;
 }
@@ -153,18 +155,18 @@ Vakao UI 支持暗色模式，您可以通过 CSS 变量来定义暗色主题。
 // 切换主题的工具函数
 export function toggleTheme() {
   const html = document.documentElement;
-  const currentTheme = html.getAttribute('data-theme');
-  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-  html.setAttribute('data-theme', newTheme);
-  localStorage.setItem('theme', newTheme);
+  const currentTheme = html.getAttribute("data-theme");
+  const newTheme = currentTheme === "dark" ? "light" : "dark";
+  html.setAttribute("data-theme", newTheme);
+  localStorage.setItem("theme", newTheme);
 }
 
 // 初始化主题
 export function initTheme() {
-  const savedTheme = localStorage.getItem('theme');
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  const theme = savedTheme || (prefersDark ? 'dark' : 'light');
-  document.documentElement.setAttribute('data-theme', theme);
+  const savedTheme = localStorage.getItem("theme");
+  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  const theme = savedTheme || (prefersDark ? "dark" : "light");
+  document.documentElement.setAttribute("data-theme", theme);
 }
 ```
 
@@ -202,7 +204,7 @@ export function initTheme() {
 
 ```vue
 <template>
-  <vk-button 
+  <vk-button
     customClass="my-custom-button"
     customStyle="background: linear-gradient(45deg, #ff6b6b, #4ecdc4)"
   >
@@ -266,7 +268,7 @@ Vakao UI 提供了一些预设主题供您快速使用：
   --vk-color-warning: #d48806;
   --vk-color-error: #cf1322;
   --vk-border-radius: 4px;
-  --vk-font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --vk-font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 ```
 

@@ -27,7 +27,7 @@ pnpm add vakao-ui
 
 ```html
 <!-- 引入样式 -->
-<link rel="stylesheet" href="https://unpkg.com/vakao-ui/dist/style.css">
+<link rel="stylesheet" href="https://unpkg.com/vakao-ui/dist/style.css" />
 
 <!-- 引入组件库 -->
 <script src="https://unpkg.com/vakao-ui/dist/vakao-ui.umd.js"></script>
@@ -45,14 +45,14 @@ Vakao UI 是一个独立的组件库，基于 Vue 3 和 TypeScript 构建，提�
 
 ```typescript
 // main.ts
-import { createApp } from 'vue'
-import VakaoUI from 'vakao-ui'
-import 'vakao-ui/style.css'
-import App from './App.vue'
+import { createApp } from "vue";
+import VakaoUI from "vakao-ui";
+import "vakao-ui/style.css";
+import App from "./App.vue";
 
-const app = createApp(App)
-app.use(VakaoUI)
-app.mount('#app')
+const app = createApp(App);
+app.use(VakaoUI);
+app.mount("#app");
 ```
 
 #### 使用组件
@@ -80,8 +80,8 @@ app.mount('#app')
 </template>
 
 <script setup lang="ts">
-import { VkButton } from 'vakao-ui'
-import 'vakao-ui/style.css'
+import { VkButton } from "vakao-ui";
+import "vakao-ui/style.css";
 </script>
 ```
 
@@ -99,11 +99,11 @@ pnpm add -D unplugin-vue-components unplugin-auto-import
 
 ```typescript
 // vite.config.ts
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
-import AutoImport from 'unplugin-auto-import/vite'
-import Components from 'unplugin-vue-components/vite'
-import { VakaoUIResolver } from 'vakao-ui/resolver'
+import { defineConfig } from "vite";
+import vue from "@vitejs/plugin-vue";
+import AutoImport from "unplugin-auto-import/vite";
+import Components from "unplugin-vue-components/vite";
+import { VakaoUIResolver } from "vakao-ui/resolver";
 
 export default defineConfig({
   plugins: [
@@ -115,16 +115,16 @@ export default defineConfig({
       resolvers: [VakaoUIResolver()],
     }),
   ],
-})
+});
 ```
 
 ##### 配置 Webpack
 
 ```javascript
 // webpack.config.js
-const AutoImport = require('unplugin-auto-import/webpack')
-const Components = require('unplugin-vue-components/webpack')
-const { VakaoUIResolver } = require('vakao-ui/resolver')
+const AutoImport = require("unplugin-auto-import/webpack");
+const Components = require("unplugin-vue-components/webpack");
+const { VakaoUIResolver } = require("vakao-ui/resolver");
 
 module.exports = {
   // ...
@@ -136,7 +136,7 @@ module.exports = {
       resolvers: [VakaoUIResolver()],
     }),
   ],
-}
+};
 ```
 
 ##### 使用组件
@@ -157,7 +157,7 @@ module.exports = {
 
 <script setup lang="ts">
 // 自动导入 hooks
-const { state, toggle } = useToggle()
+const { state, toggle } = useToggle();
 </script>
 ```
 

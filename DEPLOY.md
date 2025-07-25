@@ -25,6 +25,7 @@
 工作流包含两个主要步骤：
 
 #### 构建步骤 (Build)
+
 - 检出代码
 - 设置 pnpm 和 Node.js 环境
 - 安装依赖
@@ -32,6 +33,7 @@
 - 上传构建产物
 
 #### 部署步骤 (Deploy)
+
 - 将构建产物部署到 GitHub Pages
 - 提供访问 URL
 
@@ -135,6 +137,7 @@ https://rouarn.github.io/vakao-ui/
 ### 调试步骤
 
 1. 本地测试构建：
+
    ```bash
    cd docs
    pnpm run build
@@ -142,6 +145,7 @@ https://rouarn.github.io/vakao-ui/
    ```
 
 2. 检查构建产物：
+
    ```bash
    ls -la docs/.vitepress/dist
    ```

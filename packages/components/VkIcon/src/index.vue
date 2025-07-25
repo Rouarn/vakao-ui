@@ -47,7 +47,7 @@ const mergedStyle = computed(() => {
     return `${Object.entries(baseStyle)
       .map(
         ([key, value]) =>
-          `${key.replace(/([A-Z])/g, "-$1").toLowerCase()}: ${value}`
+          `${key.replace(/([A-Z])/g, "-$1").toLowerCase()}: ${value}`,
       )
       .join("; ")}; ${props.customStyle}`;
   }

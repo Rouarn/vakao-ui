@@ -16,8 +16,12 @@
       class="vk-button__icon vk-button__icon--left"
     >
       <component v-if="typeof icon === 'object'" :is="icon" />
-      <vk-icon v-else-if="typeof icon === 'string'" :size="iconSize" :src="isUrl(icon) ? icon : undefined">
-        <Icon v-if="!isUrl(icon)" :icon="icon" />
+      <vk-icon
+        v-else-if="typeof icon === 'string'"
+        :size="iconSize"
+        :src="isUrl(icon) ? icon : undefined"
+        :icon="!isUrl(icon) ? icon : undefined"
+      >
       </vk-icon>
     </span>
     <span class="vk-button__content">
@@ -28,8 +32,12 @@
       class="vk-button__icon vk-button__icon--right"
     >
       <component v-if="typeof icon === 'object'" :is="icon" />
-      <vk-icon v-else-if="typeof icon === 'string'" :size="iconSize" :src="isUrl(icon) ? icon : undefined">
-        <Icon v-if="!isUrl(icon)" :icon="icon" />
+      <vk-icon
+        v-else-if="typeof icon === 'string'"
+        :size="iconSize"
+        :src="isUrl(icon) ? icon : undefined"
+        :icon="!isUrl(icon) ? icon : undefined"
+      >
       </vk-icon>
     </span>
   </button>
@@ -48,16 +56,14 @@ export default defineComponent({
   inheritAttrs: false,
   components: {
     VkIcon,
-    Icon
+    Icon,
   },
   props: buttonProps,
   emits: buttonEmits,
   setup(props, { emit }) {
     const attrs = useAttrs();
-    const ns = useNamespace('button');
-    
+    const ns = useNamespace("button");
 
-    
     const handleClick = (e: MouseEvent) => {
       if (!props.disabled && !props.loading) {
         emit("click", e);
@@ -86,15 +92,15 @@ export default defineComponent({
     const mergedClass = computed(() => {
       return [
         ns.block(),
-        ns.modifier('type', props.type),
-        ns.modifier('size', props.size),
-        ns.is('disabled', props.disabled),
-        ns.is('loading', props.loading),
-        ns.is('plain', props.plain),
-        ns.is('round', props.round),
-        ns.is('circle', props.circle),
-        ns.is('text', props.text),
-        ns.is('link', props.link),
+        ns.modifier("type", props.type),
+        ns.modifier("size", props.size),
+        ns.is("disabled", props.disabled),
+        ns.is("loading", props.loading),
+        ns.is("plain", props.plain),
+        ns.is("round", props.round),
+        ns.is("circle", props.circle),
+        ns.is("text", props.text),
+        ns.is("link", props.link),
         props.customClass,
         attrs.class,
       ];
@@ -103,11 +109,11 @@ export default defineComponent({
     // 图标尺寸
     const iconSize = computed(() => {
       const sizeMap = {
-        small: '14px',
-        medium: '16px',
-        large: '18px'
+        small: "14px",
+        medium: "16px",
+        large: "18px",
       };
-      return sizeMap[props.size] || '16px';
+      return sizeMap[props.size] || "16px";
     });
 
     return {

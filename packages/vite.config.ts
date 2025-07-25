@@ -51,40 +51,40 @@ export default defineConfig({
         updatedContent = updatedContent
           .replace(
             /from ["']@vakao-ui\/utils["']/g,
-            `from "${normalizeRelativePath(utilsPath)}"`
+            `from "${normalizeRelativePath(utilsPath)}"`,
           )
           .replace(
             /import\(["']@vakao-ui\/utils["']\)/g,
-            `import("${normalizeRelativePath(utilsPath)}")`
+            `import("${normalizeRelativePath(utilsPath)}")`,
           );
 
         // 替换 @vakao-ui/types 导入
         updatedContent = updatedContent
           .replace(
             /from ["']@vakao-ui\/types["']/g,
-            `from "${normalizeRelativePath(typesPath)}"`
+            `from "${normalizeRelativePath(typesPath)}"`,
           )
           .replace(
             /import\(["']@vakao-ui\/types["']\)/g,
-            `import("${normalizeRelativePath(typesPath)}")`
+            `import("${normalizeRelativePath(typesPath)}")`,
           );
 
         // 替换 @vakao-ui/hooks 导入
         updatedContent = updatedContent
           .replace(
             /from ["']@vakao-ui\/hooks["']/g,
-            `from "${normalizeRelativePath(hooksPath)}"`
+            `from "${normalizeRelativePath(hooksPath)}"`,
           )
           .replace(
             /import\(["']@vakao-ui\/hooks["']\)/g,
-            `import("${normalizeRelativePath(hooksPath)}")`
+            `import("${normalizeRelativePath(hooksPath)}")`,
           );
 
         // 修复错误的内部路径引用
         // 将类似 "../../../../packages/dist/types/utils" 的路径替换为正确的相对路径
         updatedContent = updatedContent.replace(
           /import\(["'][^"']*\/packages\/dist\/types\/utils["']\)/g,
-          `import("${normalizeRelativePath(utilsPath)}")`
+          `import("${normalizeRelativePath(utilsPath)}")`,
         );
 
         // 修复其他可能的错误路径
@@ -95,7 +95,7 @@ export default defineConfig({
               .relative(fileDir, path.join(distTypesRoot, modulePath))
               .replace(/\\/g, "/");
             return `"${normalizeRelativePath(targetPath)}"`;
-          }
+          },
         );
 
         return {
@@ -109,7 +109,7 @@ export default defineConfig({
     lib: {
       entry: resolve(__dirname, "index.ts"),
       name: "VakaoUI",
-      fileName: format => `vakao-ui.${format}.js`,
+      fileName: (format) => `vakao-ui.${format}.js`,
     },
     rollupOptions: {
       // 确保外部化处理那些你不想打包进库的依赖
@@ -121,7 +121,7 @@ export default defineConfig({
         },
         exports: "named",
         // 确保CSS文件输出为单独的文件
-        assetFileNames: assetInfo => {
+        assetFileNames: (assetInfo) => {
           if (assetInfo.name === "style.css") return "style.css";
           return assetInfo.name || "asset";
         },

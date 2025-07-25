@@ -1,76 +1,80 @@
-import type { PropType, CSSProperties, VNode } from 'vue'
-import { ExtractPublicPropTypes, ComponentType, ComponentSize } from '../../../types'
+import type { PropType, CSSProperties, VNode } from "vue";
+import {
+  ExtractPublicPropTypes,
+  ComponentType,
+  ComponentSize,
+} from "../../../types";
 
 // 按钮类型（使用全局类型）
-export type ButtonType = ComponentType
+export type ButtonType = ComponentType;
 
 // 按钮尺寸（使用全局类型）
-export type ButtonSize = ComponentSize
+export type ButtonSize = ComponentSize;
 
 // 按钮原生类型
-export type ButtonNativeType = 'button' | 'submit' | 'reset'
+export type ButtonNativeType = "button" | "submit" | "reset";
 
 // 按钮属性定义
 export const buttonProps = {
   /** 按钮类型 */
   type: {
     type: String as PropType<ButtonType>,
-    default: 'default'
+    default: "default",
   },
   /** 按钮尺寸 */
   size: {
     type: String as PropType<ButtonSize>,
-    default: 'medium'
+    default: "medium",
   },
   /** 是否禁用 */
   disabled: {
     type: Boolean,
-    default: false
+    default: false,
   },
   /** 是否加载中 */
   loading: {
     type: Boolean,
-    default: false
+    default: false,
   },
   /** 是否为朴素按钮 */
   plain: {
     type: Boolean,
-    default: false
+    default: false,
   },
   /** 是否为文本按钮 */
   text: {
     type: Boolean,
-    default: false
+    default: false,
   },
   /** 是否为链接按钮 */
   link: {
     type: Boolean,
-    default: false
+    default: false,
   },
   /** 是否为圆角按钮 */
   round: {
     type: Boolean,
-    default: false
+    default: false,
   },
   /** 是否为圆形按钮 */
   circle: {
     type: Boolean,
-    default: false
+    default: false,
   },
   /** 按钮图标 */
   icon: {
     type: [String, Object] as PropType<string | VNode>,
-    default: ''
+    default: "",
   },
   /** 图标位置 */
   iconPosition: {
-    type: String as PropType<'left' | 'right'>,
-    default: 'left'
+    type: String as PropType<"left" | "right">,
+    default: "left",
   },
   /** 原生type属性 */
   nativeType: {
     type: String as PropType<ButtonNativeType>,
-    default: 'button'
+    default: "button",
   },
   /** 自定义类名 */
   customClass: String,
@@ -78,10 +82,10 @@ export const buttonProps = {
   customStyle: [String, Object] as PropType<string | CSSProperties>,
   /** 自动聚焦 */
   autofocus: Boolean,
-} as const
+} as const;
 
 // 导出按钮属性类型
-export type ButtonProps = ExtractPublicPropTypes<typeof buttonProps>
+export type ButtonProps = ExtractPublicPropTypes<typeof buttonProps>;
 
 // 按钮事件定义
 export const buttonEmits = {

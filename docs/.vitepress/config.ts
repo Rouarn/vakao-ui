@@ -95,9 +95,7 @@ export default defineConfig({
         },
         {
           text: "数据获取",
-          items: [
-            { text: "useFetch", link: "/hooks/use-fetch" },
-          ],
+          items: [{ text: "useFetch", link: "/hooks/use-fetch" }],
         },
       ],
       "/utils/": [

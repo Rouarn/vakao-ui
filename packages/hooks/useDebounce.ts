@@ -57,14 +57,17 @@ export type UseDebouncedFunctionReturn<T extends (...args: any[]) => any> = [
  * // 防抖搜索输入
  * const searchText = ref('');
  * const debouncedSearchText = useDebounce(searchText, 300);
- * 
+ *
  * // 监听防抖后的值
  * watch(debouncedSearchText, (newValue) => {
  *   console.log('搜索:', newValue);
  * });
  * ```
  */
-export function useDebounce<T>(value: Ref<T>, delay: number): UseDebouncedValueReturn<T>;
+export function useDebounce<T>(
+  value: Ref<T>,
+  delay: number,
+): UseDebouncedValueReturn<T>;
 
 /**
  * 防抖函数钩子函数
@@ -79,7 +82,7 @@ export function useDebounce<T>(value: Ref<T>, delay: number): UseDebouncedValueR
  * // 防抖按钮点击
  * const handleClick = () => console.log('clicked');
  * const [debouncedClick, cancel, flush] = useDebounce(handleClick, 300);
- * 
+ *
  * // 防抖搜索函数
  * const search = (query: string) => console.log('searching:', query);
  * const [debouncedSearch] = useDebounce(search, 500, { leading: true });
@@ -91,7 +94,7 @@ export function useDebounce<T extends (...args: any[]) => any>(
   options?: {
     leading?: boolean;
     trailing?: boolean;
-  }
+  },
 ): UseDebouncedFunctionReturn<T>;
 
 /**
@@ -103,7 +106,7 @@ export function useDebounce<T>(
   options: {
     leading?: boolean;
     trailing?: boolean;
-  } = {}
+  } = {},
 ): UseDebouncedValueReturn<T> | UseDebouncedFunctionReturn<any> {
   // 如果第一个参数是 ref，则处理防抖值
   if (typeof valueOrFn === "object" && "value" in valueOrFn) {
@@ -111,13 +114,20 @@ export function useDebounce<T>(
   }
 
   // 否则处理防抖函数
-  return useDebouncedFunction(valueOrFn as (...args: any[]) => any, delay, options);
+  return useDebouncedFunction(
+    valueOrFn as (...args: any[]) => any,
+    delay,
+    options,
+  );
 }
 
 /**
  * 防抖值的内部实现
  */
-function useDebouncedValue<T>(value: Ref<T>, delay: number): UseDebouncedValueReturn<T> {
+function useDebouncedValue<T>(
+  value: Ref<T>,
+  delay: number,
+): UseDebouncedValueReturn<T> {
   const debouncedValue = ref<T>(value.value) as Ref<T>;
   let timeoutId: ReturnType<typeof setTimeout> | null = null;
 
@@ -133,7 +143,7 @@ function useDebouncedValue<T>(value: Ref<T>, delay: number): UseDebouncedValueRe
       }
       timeoutId = setTimeout(updateDebouncedValue, delay);
     },
-    { immediate: false }
+    { immediate: false },
   );
 
   onUnmounted(() => {
@@ -154,10 +164,10 @@ function useDebouncedFunction<T extends (...args: any[]) => any>(
   options: {
     leading?: boolean;
     trailing?: boolean;
-  } = {}
+  } = {},
 ): UseDebouncedFunctionReturn<T> {
   const { leading = false, trailing = true } = options;
-  
+
   let timeoutId: ReturnType<typeof setTimeout> | null = null;
   let lastArgs: Parameters<T> | null = null;
   let lastCallTime: number | null = null;
@@ -181,9 +191,10 @@ function useDebouncedFunction<T extends (...args: any[]) => any>(
   const debouncedFn = (...args: Parameters<T>) => {
     const now = Date.now();
     lastArgs = args;
-    
-    const shouldCallLeading = leading && (lastCallTime === null || now - lastCallTime >= delay);
-    
+
+    const shouldCallLeading =
+      leading && (lastCallTime === null || now - lastCallTime >= delay);
+
     if (shouldCallLeading) {
       lastCallTime = now;
       fn(...args);
@@ -195,7 +206,10 @@ function useDebouncedFunction<T extends (...args: any[]) => any>(
 
     if (trailing) {
       timeoutId = setTimeout(() => {
-        if (!leading || (lastCallTime !== null && now - lastCallTime >= delay)) {
+        if (
+          !leading ||
+          (lastCallTime !== null && now - lastCallTime >= delay)
+        ) {
           fn(...args);
         }
         lastCallTime = Date.now();

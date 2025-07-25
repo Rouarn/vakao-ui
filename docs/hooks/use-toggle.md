@@ -164,7 +164,7 @@ const fetchData = async () => {
 
   try {
     // 模拟 API 请求
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    await new Promise((resolve) => setTimeout(resolve, 2000));
     data.value = { message: "数据加载成功!", timestamp: Date.now() };
   } finally {
     stopLoading();
@@ -197,7 +197,7 @@ const fetchData = async () => {
 
 ### 类型定义
 
-```ts
+````ts
 /**
  * 切换状态的函数类型
  * @description 切换当前布尔状态值
@@ -243,13 +243,13 @@ export type UseToggleReturn = [
  * ```typescript
  * // 基础用法
  * const [isVisible, toggle] = useToggle(false);
- * 
+ *
  * // 完整用法
  * const [isOpen, toggleOpen, setOpen, setClosed] = useToggle(true);
  * ```
  */
 export function useToggle(initialValue?: boolean): UseToggleReturn;
-```
+````
 
 ## 注意事项
 

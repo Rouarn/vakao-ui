@@ -120,7 +120,7 @@ const handleClick = () => {
 
 const [throttledClick, cancelThrottle, flushThrottle] = useThrottle(
   handleClick,
-  1000
+  1000,
 );
 
 const onClick = () => {
@@ -357,7 +357,7 @@ interface UseThrottleOptions {
 function useThrottle<T>(
   value: Ref<T>,
   delay: number,
-  options?: UseThrottleOptions
+  options?: UseThrottleOptions,
 ): Ref<T>;
 
 /**
@@ -372,7 +372,7 @@ function useThrottle<T>(
 function useThrottle<T extends (...args: any[]) => any>(
   fn: T,
   delay: number,
-  options?: UseThrottleOptions
+  options?: UseThrottleOptions,
 ): [ThrottledFunction<T>, ThrottleCancelFunction, ThrottleFlushFunction];
 ```
 

@@ -127,7 +127,7 @@ import { VkMessageBox } from "vakao-ui";
 
 const handleCustomValidator = () => {
   VkMessageBox.prompt("请输入用户名", "提示", {
-    inputValidator: value => {
+    inputValidator: (value) => {
       if (!value) {
         return "用户名不能为空";
       }
@@ -180,7 +180,7 @@ const handleCustomValidator = () => {
 <script setup>
 import { VkMessageBox } from "vakao-ui";
 
-const showMessage = type => {
+const showMessage = (type) => {
   const messages = {
     success: "恭喜你，这是一条成功消息",
     warning: "警告哦，这是一条警告消息",
@@ -223,7 +223,7 @@ const handleCustomButtons = () => {
       confirmText: "保存",
       cancelText: "放弃修改",
       type: "warning",
-    }
+    },
   )
     .then(() => {
       console.log("保存修改");
@@ -434,17 +434,17 @@ const showAlert = () => {
 
 ```javascript
 // 成功时 resolve
-VkMessageBox.alert("消息").then(result => {
+VkMessageBox.alert("消息").then((result) => {
   console.log(result.action); // 'confirm'
 });
 
 // 取消时 reject
-VkMessageBox.confirm("确认吗？").catch(result => {
+VkMessageBox.confirm("确认吗？").catch((result) => {
   console.log(result.action); // 'cancel' 或 'close'
 });
 
 // prompt 返回输入值
-VkMessageBox.prompt("请输入").then(result => {
+VkMessageBox.prompt("请输入").then((result) => {
   console.log(result.value); // 用户输入的内容
 });
 ```
@@ -462,7 +462,7 @@ VkMessageBox.confirm("确定要删除吗？", "危险操作", {
 
 // 输入验证
 VkMessageBox.prompt("请输入用户名", "注册", {
-  inputValidator: value => {
+  inputValidator: (value) => {
     if (!value) return "用户名不能为空";
     if (value.length < 3) return "用户名至少3个字符";
     return true;

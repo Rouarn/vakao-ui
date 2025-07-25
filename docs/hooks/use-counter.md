@@ -33,7 +33,7 @@
 </template>
 
 <script setup>
-import { useCounter } from 'vakao-ui';
+import { useCounter } from "vakao-ui";
 
 const [count, increment, decrement, reset, setCount] = useCounter(0);
 </script>
@@ -73,11 +73,11 @@ const [count, increment, decrement, reset, setCount] = useCounter(0);
 </template>
 
 <script setup>
-import { useCounter } from 'vakao-ui';
+import { useCounter } from "vakao-ui";
 
 const [count, increment, decrement, reset] = useCounter(5, {
   min: 0,
-  max: 10
+  max: 10,
 });
 </script>
 ```
@@ -118,7 +118,7 @@ const [count, increment, decrement, reset] = useCounter(5, {
 </template>
 
 <script setup>
-import { useCounter } from 'vakao-ui';
+import { useCounter } from "vakao-ui";
 
 const [count, increment, decrement, reset] = useCounter(0);
 </script>
@@ -131,29 +131,29 @@ const [count, increment, decrement, reset] = useCounter(0);
 
 ### 参数
 
-| 参数 | 类型 | 默认值 | 说明 |
-| --- | --- | --- | --- |
-| initialValue | `number` | `0` | 初始值 |
-| options | `UseCounterOptions` | `{}` | 配置选项 |
+| 参数         | 类型                | 默认值 | 说明     |
+| ------------ | ------------------- | ------ | -------- |
+| initialValue | `number`            | `0`    | 初始值   |
+| options      | `UseCounterOptions` | `{}`   | 配置选项 |
 
 ### UseCounterOptions
 
-| 属性 | 类型 | 默认值 | 说明 |
-| --- | --- | --- | --- |
-| min | `number` | `undefined` | 最小值 |
-| max | `number` | `undefined` | 最大值 |
+| 属性 | 类型     | 默认值      | 说明   |
+| ---- | -------- | ----------- | ------ |
+| min  | `number` | `undefined` | 最小值 |
+| max  | `number` | `undefined` | 最大值 |
 
 ### 返回值
 
 返回一个数组 `[count, increment, decrement, reset, setCount]`：
 
-| 索引 | 名称 | 类型 | 说明 |
-| --- | --- | --- | --- |
-| 0 | count | `Ref<number>` | 当前计数值 |
-| 1 | increment | `IncrementFunction` | 增加函数 |
-| 2 | decrement | `DecrementFunction` | 减少函数 |
-| 3 | reset | `ResetFunction` | 重置函数 |
-| 4 | setCount | `SetCountFunction` | 设置值函数 |
+| 索引 | 名称      | 类型                | 说明       |
+| ---- | --------- | ------------------- | ---------- |
+| 0    | count     | `Ref<number>`       | 当前计数值 |
+| 1    | increment | `IncrementFunction` | 增加函数   |
+| 2    | decrement | `DecrementFunction` | 减少函数   |
+| 3    | reset     | `ResetFunction`     | 重置函数   |
+| 4    | setCount  | `SetCountFunction`  | 设置值函数 |
 
 ### 类型定义
 
@@ -191,7 +191,7 @@ type UseCounterReturn = [
   /** 增加函数 */ IncrementFunction,
   /** 减少函数 */ DecrementFunction,
   /** 重置函数 */ ResetFunction,
-  /** 设置值函数 */ SetCountFunction
+  /** 设置值函数 */ SetCountFunction,
 ];
 
 /**
@@ -214,7 +214,7 @@ interface UseCounterOptions {
  */
 function useCounter(
   initialValue?: number,
-  options?: UseCounterOptions
+  options?: UseCounterOptions,
 ): UseCounterReturn;
 ```
 

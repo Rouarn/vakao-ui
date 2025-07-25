@@ -45,7 +45,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed, inject, type Ref, type ComputedRef } from "vue";
+import {
+  defineComponent,
+  ref,
+  computed,
+  inject,
+  type Ref,
+  type ComputedRef,
+} from "vue";
 import { checkboxProps, checkboxEmits, type CheckboxValue } from "./types";
 import { useNamespace } from "@vakao-ui/utils";
 import VkIcon from "../../VkIcon";
@@ -93,7 +100,7 @@ export default defineComponent({
     const isChecked = computed(() => {
       if (isGroup.value && checkboxGroup) {
         return checkboxGroup.modelValue.value.includes(
-          props.value as CheckboxValue
+          props.value as CheckboxValue,
         );
       }
       return props.modelValue !== undefined

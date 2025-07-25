@@ -31,14 +31,14 @@ Vakao UI 提供了一系列实用的 Vue 3 Composition API hooks，帮助您更�
 ### 全局引入
 
 ```ts
-import { useToggle, useCounter, useFetch } from 'vakao-ui';
+import { useToggle, useCounter, useFetch } from "vakao-ui";
 
 export default {
   setup() {
     const [isVisible, toggle] = useToggle();
     const [count, increment, decrement] = useCounter(0);
-    const { data, loading } = useFetch('/api/users');
-    
+    const { data, loading } = useFetch("/api/users");
+
     return {
       isVisible,
       toggle,
@@ -46,35 +46,35 @@ export default {
       increment,
       decrement,
       data,
-      loading
+      loading,
     };
-  }
+  },
 };
 ```
 
 ### 按需引入
 
 ```ts
-import { useToggle, useLocalStorage, useDebounce } from 'vakao-ui/hooks';
-import { ref } from 'vue';
+import { useToggle, useLocalStorage, useDebounce } from "vakao-ui/hooks";
+import { ref } from "vue";
 
 export default {
   setup() {
     const [isVisible, toggle] = useToggle();
-    const [username, setUsername] = useLocalStorage('username', '');
-    
-    const searchText = ref('');
+    const [username, setUsername] = useLocalStorage("username", "");
+
+    const searchText = ref("");
     const debouncedSearchText = useDebounce(searchText, 300);
-    
+
     return {
       isVisible,
       toggle,
       username,
       setUsername,
       searchText,
-      debouncedSearchText
+      debouncedSearchText,
     };
-  }
+  },
 };
 ```
 
@@ -98,7 +98,7 @@ export default {
 所有 hooks 都提供完整的 TypeScript 类型定义，确保开发时的类型安全和智能提示。
 
 ```ts
-import type { UseToggleReturn } from 'vakao-ui';
+import type { UseToggleReturn } from "vakao-ui";
 
 const toggleResult: UseToggleReturn = useToggle();
 ```

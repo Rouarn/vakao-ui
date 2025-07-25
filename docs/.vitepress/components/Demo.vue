@@ -7,7 +7,7 @@
       <slot name="code"></slot>
     </div>
     <div class="demo-footer" @click="toggleCode">
-      <span>{{ showCode ? '隐藏代码' : '显示代码' }}</span>
+      <span>{{ showCode ? "隐藏代码" : "显示代码" }}</span>
       <svg
         :class="['icon', { 'icon-rotate': showCode }]"
         viewBox="0 0 1024 1024"
@@ -25,7 +25,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref } from "vue";
 
 const showCode = ref(false);
 

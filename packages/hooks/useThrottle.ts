@@ -57,14 +57,17 @@ export type UseThrottledFunctionReturn<T extends (...args: any[]) => any> = [
  * // 节流滚动位置
  * const scrollY = ref(0);
  * const throttledScrollY = useThrottle(scrollY, 100);
- * 
+ *
  * // 监听节流后的值
  * watch(throttledScrollY, (newValue) => {
  *   console.log('滚动位置:', newValue);
  * });
  * ```
  */
-export function useThrottle<T>(value: Ref<T>, delay: number): UseThrottledValueReturn<T>;
+export function useThrottle<T>(
+  value: Ref<T>,
+  delay: number,
+): UseThrottledValueReturn<T>;
 
 /**
  * 节流函数钩子函数
@@ -79,7 +82,7 @@ export function useThrottle<T>(value: Ref<T>, delay: number): UseThrottledValueR
  * // 节流滚动事件
  * const handleScroll = () => console.log('scrolling');
  * const [throttledScroll] = useThrottle(handleScroll, 100);
- * 
+ *
  * // 节流搜索函数
  * const search = (query: string) => console.log('searching:', query);
  * const [throttledSearch, cancel, flush] = useThrottle(search, 300, { trailing: false });
@@ -91,7 +94,7 @@ export function useThrottle<T extends (...args: any[]) => any>(
   options?: {
     leading?: boolean;
     trailing?: boolean;
-  }
+  },
 ): UseThrottledFunctionReturn<T>;
 
 /**
@@ -103,7 +106,7 @@ export function useThrottle<T>(
   options: {
     leading?: boolean;
     trailing?: boolean;
-  } = {}
+  } = {},
 ): UseThrottledValueReturn<T> | UseThrottledFunctionReturn<any> {
   // 如果第一个参数是 ref，则处理节流值
   if (typeof valueOrFn === "object" && "value" in valueOrFn) {
@@ -111,13 +114,20 @@ export function useThrottle<T>(
   }
 
   // 否则处理节流函数
-  return useThrottledFunction(valueOrFn as (...args: any[]) => any, delay, options);
+  return useThrottledFunction(
+    valueOrFn as (...args: any[]) => any,
+    delay,
+    options,
+  );
 }
 
 /**
  * 节流值的内部实现
  */
-function useThrottledValue<T>(value: Ref<T>, delay: number): UseThrottledValueReturn<T> {
+function useThrottledValue<T>(
+  value: Ref<T>,
+  delay: number,
+): UseThrottledValueReturn<T> {
   const throttledValue = ref<T>(value.value) as Ref<T>;
   let lastUpdateTime = 0;
   let timeoutId: ReturnType<typeof setTimeout> | null = null;
@@ -147,7 +157,7 @@ function useThrottledValue<T>(value: Ref<T>, delay: number): UseThrottledValueRe
         }, delay - timeSinceLastUpdate);
       }
     },
-    { immediate: false }
+    { immediate: false },
   );
 
   onUnmounted(() => {
@@ -168,10 +178,10 @@ function useThrottledFunction<T extends (...args: any[]) => any>(
   options: {
     leading?: boolean;
     trailing?: boolean;
-  } = {}
+  } = {},
 ): UseThrottledFunctionReturn<T> {
   const { leading = true, trailing = true } = options;
-  
+
   let lastCallTime = 0;
   let timeoutId: ReturnType<typeof setTimeout> | null = null;
   let lastArgs: Parameters<T> | null = null;
@@ -195,16 +205,16 @@ function useThrottledFunction<T extends (...args: any[]) => any>(
   const throttledFn = (...args: Parameters<T>) => {
     const now = Date.now();
     lastArgs = args;
-    
+
     const timeSinceLastCall = now - lastCallTime;
-    
+
     if (lastCallTime === 0 && leading) {
       // 第一次调用且允许 leading
       fn(...args);
       lastCallTime = now;
       return;
     }
-    
+
     if (timeSinceLastCall >= delay) {
       // 距离上次调用已经超过延迟时间
       if (leading) {
