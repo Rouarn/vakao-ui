@@ -8,11 +8,11 @@ export default defineConfig({
     css: {
       preprocessorOptions: {
         scss: {
-          api: 'modern-compiler',
-          silenceDeprecations: ['legacy-js-api']
-        }
-      }
-    }
+          api: "modern-compiler",
+          silenceDeprecations: ["legacy-js-api"],
+        },
+      },
+    },
   },
   themeConfig: {
     logo: "/logo.svg",
@@ -22,7 +22,6 @@ export default defineConfig({
       { text: "组件", link: "/components/" },
       { text: "Hooks", link: "/hooks/" },
       { text: "工具", link: "/utils/" },
-      { text: "GitHub", link: "https://github.com/Rouarn/vakao-ui" },
     ],
     sidebar: {
       "/guide/": [
@@ -44,9 +43,7 @@ export default defineConfig({
         },
         {
           text: "其他",
-          items: [
-            { text: "更新日志", link: "/guide/changelog" },
-          ],
+          items: [{ text: "更新日志", link: "/guide/changelog" }],
         },
       ],
       "/components/": [
@@ -97,8 +94,8 @@ export default defineConfig({
       { icon: "github", link: "https://github.com/Rouarn/vakao-ui" },
     ],
     footer: {
-      message: "Released under the MIT License.",
-      copyright: "Copyright © 2023-present Vakao UI",
+      message: "基于 MIT 协议发布",
+      copyright: "Copyright © 2025-present Vakao UI",
     },
   },
 });

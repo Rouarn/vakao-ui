@@ -6,7 +6,7 @@ Vakao UI 需要 Node.js 版本 >= 16。
 
 ## 版本
 
-Vakao UI 目前还处于开发中，版本为 1.0.0。
+Vakao UI 目前还处于开发中，版本为 0.0.1。
 
 ## 使用包管理器
 
@@ -34,7 +34,7 @@ $ pnpm add vakao-ui
 ```html
 <head>
   <!-- 导入样式（重要！） -->
-  <link rel="stylesheet" href="https://unpkg.com/vakao-ui/dist/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/vakao-ui/dist/style.css" />
   <!-- 导入 Vue 3 -->
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
   <!-- 导入组件库 -->
@@ -47,12 +47,12 @@ $ pnpm add vakao-ui
   </div>
 
   <script>
-    const { createApp } = Vue
+    const { createApp } = Vue;
     const app = createApp({
       /* ... */
-    })
-    app.use(VakaoUI)
-    app.mount('#app')
+    });
+    app.use(VakaoUI);
+    app.mount("#app");
   </script>
 </body>
 ```
