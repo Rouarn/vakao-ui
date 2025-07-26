@@ -1,35 +1,158 @@
+/**
+ * Vakao UI 组件库 TypeScript 配置文件
+ * 
+ * 此配置文件定义了整个组件库项目的 TypeScript 编译选项，
+ * 确保代码的类型安全性和现代化的开发体验。
+ * 
+ * 主要配置特点：
+ * - 使用 ES2020 作为编译目标，支持现代 JavaScript 特性
+ * - 启用严格模式，确保代码质量
+ * - 配置路径别名，简化模块导入
+ * - 支持 Vue 3 单文件组件的类型检查
+ * - 优化构建工具集成
+ */
 {
   "compilerOptions": {
+    // ==================== 编译目标配置 ====================
+    
+    /** 
+     * 编译目标版本
+     * ES2020 提供了现代 JavaScript 特性支持，包括：
+     * - Optional Chaining (?.) 
+     * - Nullish Coalescing (??)
+     * - BigInt 支持
+     * - Dynamic Import
+     */
     "target": "ES2020",
+    
+    /** 
+     * 启用类字段定义的现代语法
+     * 支持在类中直接定义字段，无需在构造函数中初始化
+     */
     "useDefineForClassFields": true,
+    
+    /** 
+     * 模块系统类型
+     * ESNext 支持最新的 ES 模块特性，包括动态导入和顶级 await
+     */
     "module": "ESNext",
+    
+    /** 
+     * 包含的类型库
+     * - ES2020: 现代 JavaScript API
+     * - DOM: 浏览器 DOM API
+     * - DOM.Iterable: DOM 集合的迭代器支持
+     */
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    
+    /** 
+     * 跳过第三方库的类型检查
+     * 提高编译性能，避免第三方库类型错误影响项目构建
+     */
     "skipLibCheck": true,
 
-    /* Bundler mode */
+    // ==================== 构建工具集成 ====================
+    
+    /** 
+     * 模块解析策略
+     * bundler 模式专为现代构建工具（如 Vite、Webpack）优化
+     */
     "moduleResolution": "bundler",
+    
+    /** 
+     * 允许导入 TypeScript 扩展名文件
+     * 支持直接导入 .ts/.tsx 文件，由构建工具处理
+     */
     "allowImportingTsExtensions": true,
+    
+    /** 
+     * 支持导入 JSON 模块
+     * 允许直接 import JSON 文件作为模块
+     */
     "resolveJsonModule": true,
+    
+    /** 
+     * 隔离模块编译
+     * 确保每个文件都能独立编译，提高构建工具的并行处理能力
+     */
     "isolatedModules": true,
+    
+    /** 
+     * 不生成编译输出
+     * 由构建工具（Vite）负责最终的代码生成和优化
+     */
     "noEmit": true,
 
-    /* Linting */
+    // ==================== 代码质量检查 ====================
+    
+    /** 
+     * 启用严格模式
+     * 包含所有严格类型检查选项，确保代码的类型安全性
+     */
     "strict": true,
+    
+    /** 
+     * 检查未使用的局部变量
+     * 帮助发现和清理无用代码
+     */
     "noUnusedLocals": true,
+    
+    /** 
+     * 检查未使用的函数参数
+     * 提高代码质量，避免参数冗余
+     */
     "noUnusedParameters": true,
+    
+    /** 
+     * 检查 switch 语句的 fallthrough
+     * 防止意外的 case 穿透，提高代码安全性
+     */
     "noFallthroughCasesInSwitch": true,
 
-    /* Paths */
+    // ==================== 路径解析配置 ====================
+    
+    /** 
+     * 基础路径
+     * 设置为项目根目录，作为相对路径解析的起点
+     */
     "baseUrl": ".",
+    
+    /** 
+     * 路径别名映射
+     * @/* 映射到 packages/* 目录，简化组件库内部模块的导入
+     * 
+     * 使用示例：
+     * import { VkButton } from '@/components/VkButton'
+     * 实际解析为：packages/components/VkButton
+     */
     "paths": {
       "@/*": ["packages/*"]
     }
   },
+  
+  // ==================== 文件包含配置 ====================
+  
+  /** 
+   * 包含在编译中的文件模式
+   * 
+   * 涵盖 packages 目录下的所有相关文件：
+   * - *.ts: TypeScript 源文件
+   * - *.d.ts: TypeScript 声明文件
+   * - *.tsx: TypeScript JSX 文件
+   * - *.vue: Vue 单文件组件
+   */
   "include": [
     "packages/**/*.ts",
     "packages/**/*.d.ts",
     "packages/**/*.tsx",
     "packages/**/*.vue"
   ],
+  
+  /** 
+   * 排除在编译外的目录
+   * 
+   * - node_modules: 第三方依赖包
+   * - dist: 构建输出目录
+   */
   "exclude": ["node_modules", "dist"]
 }
