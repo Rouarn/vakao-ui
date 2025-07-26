@@ -29,6 +29,7 @@ const PACKAGE_DEPENDENCIES = {
   main: ["utils", "hooks"], // 主包依赖 utils 和 hooks 包
   hooks: [], // hooks 包无依赖
   utils: [], // utils 包无依赖
+  docs: ["utils", "hooks"], // 文档包依赖 utils 和 hooks 包
 };
 
 /**
@@ -255,6 +256,55 @@ const MyComponent = withInstall(MyComponentImpl);
 ## 许可证
 
 私有
+`,
+  },
+
+  docs: {
+    name: "vakao-ui-docs",
+    displayName: "Docs (文档站点)",
+    path: "docs",
+    icon: "📚",
+    description: "Vakao UI 组件库文档站点",
+    buildCommand: "pnpm run build:docs",
+    keywords: ["vue3", "docs", "vitepress", "documentation", "vakao-ui"],
+    // 文档包不需要发布到npm，只需要部署
+    skipPublish: true,
+    // 文档包支持的部署策略
+    supportedDeployStrategies: ["docs", "github-pages"],
+    defaultReadme: `# Vakao UI 文档
+
+Vakao UI 组件库的官方文档站点，基于 VitePress 构建。
+
+## 本地开发
+
+\`\`\`bash
+# 安装依赖
+pnpm install
+
+# 启动开发服务器
+pnpm run docs:dev
+
+# 构建文档
+pnpm run build:docs
+\`\`\`
+
+## 部署
+
+文档会自动部署到 GitHub Pages：
+- 主分支推送时自动触发部署
+- 手动部署：\`node scripts/publish.js --deploy-only --deploy-strategy docs\`
+
+## 访问地址
+
+- 生产环境：https://rouarn.github.io/vakao-ui/
+- 开发环境：http://localhost:5173
+
+## 文档结构
+
+- \`guide/\`: 使用指南
+- \`components/\`: 组件文档
+- \`hooks/\`: Hooks 文档
+- \`utils/\`: 工具函数文档
 `,
   },
 };

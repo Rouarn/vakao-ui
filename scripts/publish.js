@@ -200,22 +200,38 @@ async function handleDeployOnly(options, deploymentEngine, interactive) {
   let strategy = options.deployStrategy;
   if (!strategy) {
     const strategies = deploymentEngine.getAvailableStrategies();
-    const choices = strategies.map(s => ({
+    
+    // 智能过滤策略：如果没有指定包，默认为文档部署
+    const supportedStrategies = ['docs', 'github-pages'];
+    const filteredStrategies = strategies.filter(s => supportedStrategies.includes(s.key));
+    
+    const choices = filteredStrategies.map(s => ({
       name: `${s.icon} ${s.name}`,
       value: s.key,
       description: s.description,
     }));
 
-    const inquirer = require("inquirer");
-    const answer = await inquirer.prompt([
-      {
-        type: "list",
-        name: "strategy",
-        message: "选择部署策略:",
-        choices,
-      },
-    ]);
-    strategy = answer.strategy;
+    if (choices.length === 0) {
+      log("没有可用的部署策略", "error");
+      process.exit(1);
+    }
+
+    // 如果只有一个选择，直接使用
+    if (choices.length === 1) {
+      strategy = choices[0].value;
+      log(`自动选择部署策略: ${choices[0].name}`, "info");
+    } else {
+      const { default: inquirer } = await import("inquirer");
+       const answer = await inquirer.prompt([
+        {
+          type: "list",
+          name: "strategy",
+          message: "选择部署策略:",
+          choices,
+        },
+      ]);
+      strategy = answer.strategy;
+    }
   }
 
   // 执行部署
@@ -391,7 +407,7 @@ async function main() {
       !options.deployOnly &&
       !options.deployStrategy
     ) {
-      const deploymentOptions = await interactive.askForDeployment();
+      const deploymentOptions = await interactive.askForDeployment(packageKeys);
       // 合并部署选项到 options
       Object.assign(options, deploymentOptions);
 

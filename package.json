@@ -76,6 +76,7 @@
     "eslint": "^8.45.0",
     "eslint-plugin-vue": "^9.15.1",
     "fs-extra": "^11.3.0",
+    "inquirer": "^12.8.2",
     "node-notifier": "^10.0.1",
     "prettier": "^3.0.0",
     "terser": "^5.43.1",

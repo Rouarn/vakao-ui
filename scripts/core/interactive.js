@@ -13,6 +13,7 @@
 const readline = require("readline");
 const { CONFIG } = require("./package-configs");
 const { log } = require("../utils");
+// inquirer will be imported dynamically when needed
 
 /**
  * 交互式界面类
@@ -201,46 +202,129 @@ class Interactive {
   }
 
   /**
+   * 根据选择的包获取支持的部署策略
+   * @param {string[]} packageKeys - 选择的包列表
+   * @returns {string[]} 支持的部署策略列表
+   */
+  getSupportedDeployStrategies(packageKeys) {
+    // 如果选择了文档包，只返回文档相关的部署策略
+    if (packageKeys.includes('docs')) {
+      return this.packages.docs.supportedDeployStrategies || ['docs', 'github-pages'];
+    }
+    
+    // 如果选择了主包，支持所有部署策略
+    if (packageKeys.includes('main')) {
+      return ['docs', 'github-pages', 'static'];
+    }
+    
+    // 其他包（hooks, utils）主要支持文档部署
+    return ['docs', 'github-pages'];
+  }
+
+  /**
    * 询问部署选项
+   * @param {string[]} packageKeys - 选择的包列表（可选，用于智能过滤部署策略）
    * @returns {Promise<Object>} 部署配置
    */
-  askForDeployment() {
+  askForDeployment(packageKeys = []) {
     return new Promise((resolve) => {
+      const supportedStrategies = this.getSupportedDeployStrategies(packageKeys);
+      const isDocsOnly = packageKeys.length === 1 && packageKeys[0] === 'docs';
+      
       log("\n部署选项:", "info");
-      log("  1. 📚 仅发布包，不部署", "info");
-      log("  2. 🌐 发布包并部署文档站点", "info");
-      log("  3. 📦 发布包并部署到 GitHub Pages", "info");
-      log("  4. 🚀 发布包并执行完整部署", "info");
-      log("  5. 📋 仅部署文档站点（跳过发布）", "info");
+      
+      // 根据选择的包显示不同的选项
+      if (isDocsOnly) {
+        log("  1. 📚 仅构建文档，不部署", "info");
+        log("  2. 🌐 构建并部署文档到 GitHub Pages", "info");
+        log("  3. 📋 仅部署文档站点（跳过构建）", "info");
+        
+        this.rl.question(
+          "请选择部署选项 (输入数字，默认为 2): ",
+          (answer) => {
+            const choice = parseInt(answer) || 2;
+            
+            switch (choice) {
+              case 1:
+                resolve({ deploy: false, deployOnly: false, deployStrategy: null });
+                break;
+              case 2:
+                resolve({ deploy: true, deployOnly: false, deployStrategy: "docs" });
+                break;
+              case 3:
+                resolve({ deploy: false, deployOnly: true, deployStrategy: "docs" });
+                break;
+              default:
+                log("无效选择，使用默认选项（构建并部署文档）", "warning");
+                resolve({ deploy: true, deployOnly: false, deployStrategy: "docs" });
+                break;
+            }
+          },
+        );
+      } else {
+        // 通用选项
+        log("  1. 📚 仅发布包，不部署", "info");
+        
+        if (supportedStrategies.includes('docs')) {
+          log("  2. 🌐 发布包并部署文档站点", "info");
+        }
+        
+        if (supportedStrategies.includes('github-pages')) {
+          log("  3. 📦 发布包并部署到 GitHub Pages", "info");
+        }
+        
+        if (supportedStrategies.length > 1) {
+          log("  4. 🚀 发布包并执行完整部署", "info");
+        }
+        
+        log("  5. 📋 仅部署（跳过发布）", "info");
 
-      this.rl.question(
-        "请选择部署选项 (输入数字，默认为 1): ",
-        (answer) => {
-          const choice = parseInt(answer) || 1;
-          
-          switch (choice) {
-            case 1:
-              resolve({ deploy: false, deployOnly: false, deployStrategy: null });
-              break;
-            case 2:
-              resolve({ deploy: true, deployOnly: false, deployStrategy: "docs" });
-              break;
-            case 3:
-              resolve({ deploy: true, deployOnly: false, deployStrategy: "github-pages" });
-              break;
-            case 4:
-              resolve({ deploy: true, deployOnly: false, deployStrategy: null });
-              break;
-            case 5:
-              resolve({ deploy: false, deployOnly: true, deployStrategy: "docs" });
-              break;
-            default:
-              log("无效选择，使用默认选项（仅发布包）", "warning");
-              resolve({ deploy: false, deployOnly: false, deployStrategy: null });
-              break;
-          }
-        },
-      );
+        this.rl.question(
+          "请选择部署选项 (输入数字，默认为 1): ",
+          (answer) => {
+            const choice = parseInt(answer) || 1;
+            
+            switch (choice) {
+              case 1:
+                resolve({ deploy: false, deployOnly: false, deployStrategy: null });
+                break;
+              case 2:
+                if (supportedStrategies.includes('docs')) {
+                  resolve({ deploy: true, deployOnly: false, deployStrategy: "docs" });
+                } else {
+                  log("该选项不可用，使用默认选项", "warning");
+                  resolve({ deploy: false, deployOnly: false, deployStrategy: null });
+                }
+                break;
+              case 3:
+                if (supportedStrategies.includes('github-pages')) {
+                  resolve({ deploy: true, deployOnly: false, deployStrategy: "github-pages" });
+                } else {
+                  log("该选项不可用，使用默认选项", "warning");
+                  resolve({ deploy: false, deployOnly: false, deployStrategy: null });
+                }
+                break;
+              case 4:
+                if (supportedStrategies.length > 1) {
+                  resolve({ deploy: true, deployOnly: false, deployStrategy: null });
+                } else {
+                  log("该选项不可用，使用默认选项", "warning");
+                  resolve({ deploy: false, deployOnly: false, deployStrategy: null });
+                }
+                break;
+              case 5:
+                // 智能选择部署策略
+                const defaultStrategy = supportedStrategies.includes('docs') ? 'docs' : supportedStrategies[0];
+                resolve({ deploy: false, deployOnly: true, deployStrategy: defaultStrategy });
+                break;
+              default:
+                log("无效选择，使用默认选项（仅发布包）", "warning");
+                resolve({ deploy: false, deployOnly: false, deployStrategy: null });
+                break;
+            }
+          },
+        );
+      }
     });
   }
 
