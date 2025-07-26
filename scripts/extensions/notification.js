@@ -251,21 +251,18 @@ class NotificationExtension {
   }
 
   /**
-   * 获取图标路径
-   * @param {string} type - 消息类型
+   * 获取通知图标路径
+   *
+   * Windows 桌面通知对 SVG 格式支持有限，可能导致显示问题。
+   * 暂时移除自定义图标，使用系统默认图标以确保正常显示。
+   *
+   * @param {string} type - 消息类型 ('success' | 'error')
+   * @returns {undefined} 返回 undefined 使用系统默认图标
    */
   getIconPath(type) {
-    const path = require('path');
-    const fs = require('fs');
-    
-    // 尝试使用项目 logo
-    const logoPath = path.resolve(__dirname, '../../docs/public/logo.svg');
-    if (fs.existsSync(logoPath)) {
-      return logoPath;
-    }
-    
-    // 备用方案：使用系统图标
-    return type === 'success' ? 'success' : 'error';
+    // Windows SnoreToast 对 SVG 格式支持有限
+    // 暂时使用系统默认图标以确保正常显示
+    return undefined;
   }
 
   /**
