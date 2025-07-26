@@ -3,6 +3,8 @@
  * 提供 GitHub 相关的自动化功能
  */
 
+const { log } = require("../utils");
+
 class GitHubIntegrationExtension {
   constructor(config) {
     this.config = config;
@@ -20,7 +22,7 @@ class GitHubIntegrationExtension {
     extensionManager.registerHook('beforeDeploy', this.beforeDeploy.bind(this), this.name);
     extensionManager.registerHook('afterDeploy', this.afterDeploy.bind(this), this.name);
     
-    console.log(`${this.name} 扩展已初始化`);
+    log(`${this.name} 扩展已初始化`, "info");
   }
 
   /**
@@ -28,7 +30,7 @@ class GitHubIntegrationExtension {
    * @param {Object} context - 上下文
    */
   async beforeDeploy(context) {
-    console.log('🔗 GitHub 集成: 部署前检查');
+    log('🔗 GitHub 集成: 部署前检查', "check");
     
     // 检查是否有未推送的提交
     try {
@@ -39,9 +41,9 @@ class GitHubIntegrationExtension {
       }).trim();
       
       if (unpushedCommits) {
-        console.log('⚠️  检测到未推送的提交:');
-        console.log(unpushedCommits);
-        console.log('建议先推送到远程仓库');
+        log('⚠️  检测到未推送的提交:', "warning");
+        log(unpushedCommits, "warning");
+        log('建议先推送到远程仓库', "warning");
       }
     } catch (error) {
       // 忽略错误，可能是没有远程分支
@@ -53,10 +55,10 @@ class GitHubIntegrationExtension {
    * @param {Object} context - 上下文
    */
   async afterDeploy(context) {
-    console.log('🔗 GitHub 集成: 部署后处理');
+    log('🔗 GitHub 集成: 部署后处理', "deploy");
     
     if (context.result && context.result.success) {
-      console.log('✅ 部署成功，可以考虑创建 Release');
+      log('✅ 部署成功，可以考虑创建 Release', "success");
       
       // 这里可以添加自动创建 GitHub Release 的逻辑
       // 或者发送通知等
@@ -70,7 +72,7 @@ class GitHubIntegrationExtension {
   async createRelease(options = {}) {
     const { version, notes } = options;
     
-    console.log(`创建 GitHub Release: ${version}`);
+    log(`创建 GitHub Release: ${version}`, "info");
     
     // 这里可以使用 GitHub API 创建 Release
     // 示例代码（需要安装 @octokit/rest）:
@@ -91,14 +93,14 @@ class GitHubIntegrationExtension {
     });
     */
     
-    console.log('GitHub Release 创建功能待实现');
+    log('GitHub Release 创建功能待实现', "info");
   }
 
   /**
    * 清理资源
    */
   async destroy() {
-    console.log(`${this.name} 扩展已清理`);
+    log(`${this.name} 扩展已清理`, "info");
   }
 }
 

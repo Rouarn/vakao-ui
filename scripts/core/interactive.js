@@ -11,7 +11,8 @@
  */
 
 const readline = require("readline");
-const { log } = require("../utils/");
+const { CONFIG } = require("./package-configs");
+const { log } = require("../utils");
 
 /**
  * 交互式界面类
@@ -33,13 +34,14 @@ class Interactive {
    */
   askForPackages() {
     return new Promise((resolve) => {
-      console.log("\n可用的包:");
+      log("\n可用的包:", "info");
       Object.entries(this.packages).forEach(([_key, pkg], index) => {
-        console.log(
-          `  ${index + 1}. ${pkg.icon} ${pkg.displayName} (${pkg.name})`,
-        );
+        log(
+        `  ${index + 1}. ${pkg.icon} ${pkg.displayName} (${pkg.name})`,
+        "info"
+      );
       });
-      console.log(`  ${Object.keys(this.packages).length + 1}. 🚀 全部发布`);
+      log(`  ${Object.keys(this.packages).length + 1}. 🚀 全部发布`, "info");
 
       this.rl.question(
         "\n请选择要发布的包 (输入数字，多个用逗号分隔): ",
@@ -204,12 +206,12 @@ class Interactive {
    */
   askForDeployment() {
     return new Promise((resolve) => {
-      console.log("\n部署选项:");
-      console.log("  1. 📚 仅发布包，不部署");
-      console.log("  2. 🌐 发布包并部署文档站点");
-      console.log("  3. 📦 发布包并部署到 GitHub Pages");
-      console.log("  4. 🚀 发布包并执行完整部署");
-      console.log("  5. 📋 仅部署文档站点（跳过发布）");
+      log("\n部署选项:", "info");
+      log("  1. 📚 仅发布包，不部署", "info");
+      log("  2. 🌐 发布包并部署文档站点", "info");
+      log("  3. 📦 发布包并部署到 GitHub Pages", "info");
+      log("  4. 🚀 发布包并执行完整部署", "info");
+      log("  5. 📋 仅部署文档站点（跳过发布）", "info");
 
       this.rl.question(
         "请选择部署选项 (输入数字，默认为 1): ",

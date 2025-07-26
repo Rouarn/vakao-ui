@@ -34,7 +34,7 @@ class LegacyDeployExtension {
       });
     }
 
-    console.log(`${this.name} 扩展已初始化`);
+    log(`${this.name} 扩展已初始化`, "info");
   }
 
   /**
@@ -210,7 +210,7 @@ class LegacyDeployExtension {
    * 清理资源
    */
   async destroy() {
-    console.log(`${this.name} 扩展已清理`);
+    log(`${this.name} 扩展已清理`, "info");
   }
 }
 

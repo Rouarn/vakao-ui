@@ -3,6 +3,8 @@
  * 提供多种通知方式（邮件、Webhook、桌面通知等）
  */
 
+const { log } = require("../utils");
+
 class NotificationExtension {
   constructor(config) {
     this.config = config;
@@ -52,7 +54,7 @@ class NotificationExtension {
       this.name
     );
 
-    console.log(`${this.name} 扩展已初始化`);
+    log(`${this.name} 扩展已初始化`, "info");
     this.logNotificationConfig();
   }
 
@@ -68,9 +70,9 @@ class NotificationExtension {
       enabledMethods.push("🖥️  桌面");
 
     if (enabledMethods.length > 0) {
-      console.log(`📢 通知方式: ${enabledMethods.join(", ")}`);
+      log(`📢 通知方式: ${enabledMethods.join(", ")}`, "info");
     } else {
-      console.log("📢 通知功能已禁用");
+      log("📢 通知功能已禁用", "info");
     }
   }
 
@@ -154,9 +156,9 @@ class NotificationExtension {
         appID: "com.vakao.ui.deploy",
       });
 
-      console.log("🖥️  桌面通知已发送");
+      log("🖥️  桌面通知已发送", "info");
     } catch (error) {
-      console.log("🖥️  桌面通知发送失败:", error.message);
+      log("🖥️  桌面通知发送失败:" + error.message, "error");
     }
   }
 
@@ -180,9 +182,9 @@ class NotificationExtension {
       };
 
       await transporter.sendMail(mailOptions);
-      console.log("📧 邮件通知已发送");
+      log("📧 邮件通知已发送", "info");
     } catch (error) {
-      console.log("📧 邮件通知发送失败:", error.message);
+      log("📧 邮件通知发送失败:" + error.message, "error");
     }
   }
 
@@ -221,20 +223,20 @@ class NotificationExtension {
 
       const req = client.request(options, res => {
         if (res.statusCode >= 200 && res.statusCode < 300) {
-          console.log("🔗 Webhook 通知已发送");
+          log("🔗 Webhook 通知已发送", "info");
         } else {
-          console.log(`🔗 Webhook 通知发送失败: ${res.statusCode}`);
+          log(`🔗 Webhook 通知发送失败: ${res.statusCode}`, "error");
         }
       });
 
       req.on("error", error => {
-        console.log("🔗 Webhook 通知发送失败:", error.message);
+        log("🔗 Webhook 通知发送失败:" + error.message, "error");
       });
 
       req.write(payload);
       req.end();
     } catch (error) {
-      console.log("🔗 Webhook 通知发送失败:", error.message);
+      log("🔗 Webhook 通知发送失败:" + error.message, "error");
     }
   }
 
@@ -287,7 +289,7 @@ class NotificationExtension {
    * 清理资源
    */
   async destroy() {
-    console.log(`${this.name} 扩展已清理`);
+    log(`${this.name} 扩展已清理`, "info");
   }
 }
 
