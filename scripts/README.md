@@ -124,7 +124,7 @@ node scripts/publish.js --deploy-only --deploy-strategy docs
 2. **通知系统** (`notification.js`)
    - 邮件通知
    - Webhook 通知
-   - 桌面通知
+   - 桌面通知（支持部署成功/失败通知）
 
 3. **传统部署** (`legacy-deploy.js`)
    - 提供 `legacy-docs` 部署策略
@@ -183,11 +183,17 @@ node scripts/publish.js --deploy-only --deploy-strategy docs
    - 检查 Git 状态
    - 验证 GitHub 权限
    - 确认构建产物
+   - 部署失败时会自动发送桌面通知
 
 3. **扩展加载失败**
    - 检查扩展语法
    - 验证依赖安装
    - 查看错误日志
+
+4. **桌面通知未显示**
+   - 确认 `node-notifier` 依赖已安装
+   - 检查系统通知权限设置
+   - 验证通知扩展是否正确加载
 
 ### 调试模式
 

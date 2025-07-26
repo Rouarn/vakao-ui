@@ -117,6 +117,26 @@ permissions:
 https://rouarn.github.io/vakao-ui/
 ```
 
+## 智能通知功能
+
+项目集成了智能通知系统，在部署过程中会自动发送通知：
+
+- 🖥️ **桌面通知**: 部署成功/失败时自动发送系统通知
+- 📧 **邮件通知**: 支持配置邮件通知（可选）
+- 🔗 **Webhook 通知**: 支持集成第三方服务（可选）
+
+### 配置通知
+
+```bash
+# 邮件通知配置（可选）
+SMTP_USER=your-email@gmail.com
+SMTP_PASS=your-app-password
+NOTIFICATION_EMAIL=admin@company.com
+
+# Webhook 通知配置（可选）
+WEBHOOK_URL=https://hooks.slack.com/services/YOUR/SLACK/WEBHOOK
+```
+
 ## 故障排除
 
 ### 常见问题
@@ -125,6 +145,7 @@ https://rouarn.github.io/vakao-ui/
    - 检查 GitHub Actions 日志
    - 确认 GitHub Pages 已启用
    - 验证工作流权限设置
+   - 部署失败时会自动发送桌面通知
 
 2. **资源加载失败**
    - 检查 `base` 路径配置是否正确
@@ -133,6 +154,11 @@ https://rouarn.github.io/vakao-ui/
 3. **页面显示异常**
    - 检查构建日志是否有错误
    - 验证 VitePress 配置是否正确
+
+4. **桌面通知未显示**
+   - 确认 `node-notifier` 依赖已安装
+   - 检查系统通知权限设置
+   - 验证通知扩展是否正确加载
 
 ### 调试步骤
 
@@ -170,3 +196,4 @@ https://rouarn.github.io/vakao-ui/
 - 首次部署可能需要几分钟时间
 - 每次推送到主分支都会触发重新部署
 - 构建失败时会在 GitHub Actions 中显示详细错误信息
+- 手动部署时，失败会触发桌面通知提醒

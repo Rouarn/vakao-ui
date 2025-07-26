@@ -145,6 +145,7 @@ npm run publish:dry-run
 - 🧪 **测试模式**: 完整的 dry-run 支持
 - 🏢 **私有仓库**: 完整的私有制品仓库支持
 - 🎨 **交互式界面**: 友好的用户交互体验
+- 🔔 **智能通知**: 支持桌面通知、邮件和 Webhook 通知
 
 ## 发布步骤详解
 
@@ -272,6 +273,13 @@ npm login --registry=http://your-private-registry.com/repository/npm-private/
 - 如果在交互式模式下出现输入重复或删除键异常
 - 运行测试工具验证：`node scripts/test-input.js`
 - 问题已在 v2.0.0 中修复，使用优化的 readline 配置
+
+**问题5: 桌面通知未显示**
+
+- 确认 `node-notifier` 依赖已安装：`pnpm list node-notifier`
+- 检查系统通知权限设置
+- 验证通知扩展是否正确加载
+- 部署失败时会自动发送桌面通知，包含错误详情
 
 ## 最佳实践
 
