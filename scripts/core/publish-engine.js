@@ -15,7 +15,7 @@
  * @author Vakao UI Team
  */
 
-const { execSync, spawn } = require("child_process");
+const { execSync } = require("child_process");
 const {
   readFileSync,
   writeFileSync,
@@ -26,13 +26,7 @@ const {
 } = require("fs");
 const path = require("path");
 const readline = require("readline");
-const {
-  log,
-  separator,
-  showBanner,
-  showSuccess,
-  handleError,
-} = require("../utils");
+const { log } = require("../utils");
 
 /**
  * 发布引擎类
@@ -45,7 +39,7 @@ class PublishEngine {
 
     // Registry 配置
     this.defaultRegistry = "https://registry.npmjs.org/";
-    this.privateRegistry = process.env.NPM_REGISTRY || this.defaultRegistry;
+    this.privateRegistry = this.getRegistryConfig();
     this.usePrivateRegistry = this.privateRegistry !== this.defaultRegistry;
 
     // 创建 readline 接口
@@ -53,6 +47,47 @@ class PublishEngine {
       input: process.stdin,
       output: process.stdout,
     });
+  }
+
+  /**
+   * 获取 Registry 配置
+   *
+   * 优先级：
+   * 1. NPM_REGISTRY 环境变量
+   * 2. npm 全局配置的 registry
+   * 3. 默认的 npm 官方仓库
+   *
+   * @returns {string} Registry URL
+   */
+  getRegistryConfig() {
+    // 1. 优先使用环境变量
+    if (process.env.NPM_REGISTRY) {
+      log(`使用环境变量 NPM_REGISTRY: ${process.env.NPM_REGISTRY}`, "info");
+      return process.env.NPM_REGISTRY;
+    }
+
+    // 2. 尝试读取 npm 全局配置
+    try {
+      const npmRegistry = execSync("npm config get registry", {
+        encoding: "utf8",
+        stdio: "pipe",
+      }).trim();
+
+      if (
+        npmRegistry &&
+        npmRegistry !== "undefined" &&
+        npmRegistry !== this.defaultRegistry
+      ) {
+        log(`使用 npm 全局配置的 registry: ${npmRegistry}`, "info");
+        return npmRegistry;
+      }
+    } catch (error) {
+      log(`读取 npm 配置失败，使用默认配置: ${error.message}`, "warning");
+    }
+
+    // 3. 使用默认配置
+    log(`使用默认 npm 官方仓库: ${this.defaultRegistry}`, "info");
+    return this.defaultRegistry;
   }
 
   /**
@@ -128,17 +163,17 @@ class PublishEngine {
    * @returns {number} 1: version1 > version2, 0: 相等, -1: version1 < version2
    */
   compareVersions(version1, version2) {
-    const v1Parts = version1.split('.').map(Number);
-    const v2Parts = version2.split('.').map(Number);
-    
+    const v1Parts = version1.split(".").map(Number);
+    const v2Parts = version2.split(".").map(Number);
+
     for (let i = 0; i < Math.max(v1Parts.length, v2Parts.length); i++) {
       const v1Part = v1Parts[i] || 0;
       const v2Part = v2Parts[i] || 0;
-      
+
       if (v1Part > v2Part) return 1;
       if (v1Part < v2Part) return -1;
     }
-    
+
     return 0;
   }
 
