@@ -253,15 +253,21 @@ class NotificationExtension {
   /**
    * 获取通知图标路径
    *
-   * Windows 桌面通知对 SVG 格式支持有限，可能导致显示问题。
-   * 暂时移除自定义图标，使用系统默认图标以确保正常显示。
-   *
    * @param {string} type - 消息类型 ('success' | 'error')
-   * @returns {undefined} 返回 undefined 使用系统默认图标
+   * @returns {string|undefined} 返回图标路径或 undefined 使用系统默认图标
    */
   getIconPath(type) {
-    // Windows SnoreToast 对 SVG 格式支持有限
-    // 暂时使用系统默认图标以确保正常显示
+    // 使用项目中的 favicon 作为通知图标
+    const path = require('path');
+    const fs = require('fs');
+    
+    // 尝试使用项目的 favicon.ico
+    const faviconPath = path.join(process.cwd(), 'docs', 'public', 'favicon.ico');
+    if (fs.existsSync(faviconPath)) {
+        return faviconPath;
+    }
+    
+    // 如果没有 favicon，返回 undefined 使用系统默认图标
     return undefined;
   }
 

@@ -111,11 +111,11 @@ import { ref } from "vue";
 const username1 = ref("");
 const username2 = ref("");
 
-const setUsername1 = (value) => {
+const setUsername1 = value => {
   username1.value = value;
 };
 
-const setUsername2 = (value) => {
+const setUsername2 = value => {
   username2.value = value;
 };
 </script>
@@ -210,7 +210,7 @@ const value = ref("");
   <vk-input v-model="value6" suffix-icon="https://api.iconify.design/simple-icons/github.svg" placeholder="图片 URL" />
   <vk-input
     v-model="value7"
-    :prefix-icon="'../public/logo.svg'"
+    :prefix-icon="'../../public/logo.svg'"
     placeholder="本地图片"
   />
   
