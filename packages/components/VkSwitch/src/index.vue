@@ -94,7 +94,7 @@ export default defineComponent({
       props,
       "value",
       "modelValue",
-      emit,
+      emit as (event: string, ...args: unknown[]) => void,
       false as SwitchValue,
     );
 

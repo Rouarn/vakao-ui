@@ -103,7 +103,7 @@ export default defineComponent({
     // 使用受控/非受控模式工具函数
     const { currentValue, updateValue } = useStandardControlled(
       props,
-      emit,
+      emit as (event: string, ...args: unknown[]) => void,
       "",
     );
 

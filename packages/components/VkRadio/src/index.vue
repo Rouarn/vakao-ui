@@ -76,7 +76,7 @@ export default defineComponent({
       props,
       "modelValue",
       "modelValue",
-      emit,
+      emit as (event: string, ...args: unknown[]) => void,
       undefined,
     );
 

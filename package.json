@@ -24,8 +24,11 @@
   ],
   "scripts": {
     "dev": "pnpm -C docs dev",
-    "build": "pnpm -C packages build",
-    "build:docs": "pnpm -C docs build",
+    "build": "pnpm run build:deps && pnpm -C packages build",
+    "build:deps": "pnpm -C packages/utils build && pnpm -C packages/hooks build",
+    "build:utils": "pnpm -C packages/utils build",
+    "build:hooks": "pnpm -C packages/hooks build",
+    "build:docs": "pnpm run build:deps && pnpm -C docs build",
     "deploy:docs": "node ./scripts/deploy.js",
     "deploy:preview": "pnpm run build:docs && pnpm -C docs serve",
     "lint": "eslint . --ext .vue,.js,.ts,.jsx,.tsx --fix",

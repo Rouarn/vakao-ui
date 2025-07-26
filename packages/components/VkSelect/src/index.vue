@@ -154,7 +154,7 @@ export default defineComponent({
       props,
       "value",
       "modelValue",
-      emit,
+      emit as (event: string, ...args: unknown[]) => void,
       props.multiple ? ([] as SelectValue[]) : ("" as SelectValue),
     );
 
