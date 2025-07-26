@@ -1,131 +1,148 @@
 /**
- * 脚本工具模块
- * 提供统一的装饰、样式和日志功能
+ * 脚本工具模块统一导出
+ * 
+ * 提供统一的装饰、样式和日志功能，是脚本系统的核心工具库。
+ * 整合了颜色配置、图标管理、横幅显示、日志记录和通用工具函数。
+ * 
+ * 模块结构：
+ * - colors.js: 颜色和样式配置
+ * - icons.js: 图标配置
+ * - banner.js: 横幅显示功能
+ * - logger.js: 日志记录功能
+ * - utils.js: 通用工具函数
+ * 
+ * 主要特性：
+ * - 🎨 丰富的颜色支持：支持多种终端颜色和样式
+ * - 📝 类型化日志：不同类型的日志消息和图标
+ * - 🎯 美化输出：ASCII 艺术字横幅和格式化输出
+ * - 🛠️ 实用工具：分隔线、成功提示、错误处理
+ * - 📦 模块化设计：功能分离，易于维护和扩展
+ * 
+ * @example
+ * ```javascript
+ * const { 
+ *   log, 
+ *   showBanner, 
+ *   showSuccess, 
+ *   separator, 
+ *   colors, 
+ *   icons 
+ * } = require('./utils');
+ * 
+ * // 显示项目横幅
+ * showBanner('Vakao UI 构建工具');
+ * 
+ * // 输出不同类型的日志
+ * log('开始构建项目', 'build');
+ * log('构建成功完成', 'success');
+ * 
+ * // 显示分隔线
+ * separator();
+ * 
+ * // 显示成功消息
+ * showSuccess('所有任务完成');
+ * 
+ * // 自定义颜色输出
+ * console.log(`${colors.green}成功${colors.reset}`);
+ * ```
+ * 
+ * @version 2.0.0
+ * @author Vakao UI Team
  */
 
-// 颜色和样式
-const colors = {
-  reset: "\x1b[0m",
-  bright: "\x1b[1m",
-  dim: "\x1b[2m",
-  red: "\x1b[31m",
-  green: "\x1b[32m",
-  yellow: "\x1b[33m",
-  blue: "\x1b[34m",
-  magenta: "\x1b[35m",
-  cyan: "\x1b[36m",
-  white: "\x1b[37m",
-};
+// ==================== 模块导入 ====================
 
-// ASCII 艺术字
-const asciiArt = `
-${colors.cyan}${colors.bright}
- _          __  _____  __    __  _   _  __    __  _       ___       _   _  
-| |        / / /  _  \\ \\ \\  / / | | | | \\ \\  / / | |     /   |     | | | | 
-| |  __   / /  | | | |  \\ \\/ /  | | | |  \\ \\/ /  | |    / /| |     | | | | 
-| | /  | / /   | | | |   \\  /   | | | |   }  {   | |   / / | |  _  | | | | 
-| |/   |/ /    | |_| |   / /    | |_| |  / /\\ \\  | |  / /  | | | |_| | | | 
-|___/|___/     \\_____/  /_/     \\_____/ /_/  \\_\\ |_| /_/   |_| \\_____/ |_|    
-${colors.reset}`;
+/** 颜色和样式配置 */
+const { colors, typeColors } = require('./colors');
 
-// 创建带标题的 banner
-function createBanner(title) {
-  return `${asciiArt}
-${colors.magenta}${colors.bright}                           ${title}${colors.reset}
-${colors.dim}                        ═══════════════════════════════════${colors.reset}
-`;
-}
+/** 图标配置 */
+const { icons } = require('./icons');
 
-// 图标配置
-const icons = {
-  info: "📝",
-  success: "✅",
-  warning: "⚠️",
-  error: "❌",
-  command: "🔧",
-  build: "🏗️",
-  publish: "📦",
-  deploy: "🚀",
-  check: "🔍",
-  copy: "📋",
-  clean: "🧹",
-};
+/** 横幅显示功能 */
+const { asciiArt, createBanner, showBanner } = require('./banner');
 
-// 类型颜色配置
-const typeColors = {
-  info: colors.blue,
-  success: colors.green,
-  warning: colors.yellow,
-  error: colors.red,
-  command: colors.cyan,
-  build: colors.magenta,
-  publish: colors.green,
-  deploy: colors.magenta,
-  check: colors.yellow,
-  copy: colors.cyan,
-  clean: colors.magenta,
-};
+/** 日志记录功能 */
+const { log } = require('./logger');
 
-// 美化日志输出
-function log(message, type = "info") {
-  const timestamp = new Date().toLocaleTimeString();
-  const icon = icons[type] || icons.info;
-  const color = typeColors[type] || typeColors.info;
+/** 通用工具函数 */
+const { separator, showSuccess, handleError } = require('./utils');
 
-  // 检查消息开头是否有换行符
-  const startsWithNewline = message.startsWith('\n');
-  // 检查消息结尾是否有换行符
-  const endsWithNewline = message.endsWith('\n');
-  
-  // 移除消息中的换行符，由我们来控制换行
-  const cleanMessage = message.replace(/^\n+|\n+$/g, '');
-  
-  // 如果开头有换行符，先打印换行
-  if (startsWithNewline) {
-    console.log('');
-  }
-  
-  // 打印主要内容
-  console.log(
-    `${colors.dim}[${timestamp}]${colors.reset} ${icon} ${color}${cleanMessage}${colors.reset}`,
-  );
-  
-  // 如果结尾有换行符，后打印换行
-  if (endsWithNewline) {
-    console.log('');
-  }
-}
+// ==================== 统一导出 ====================
 
-// 分隔线
-function separator(char = "─", length = 50) {
-  console.log(`${colors.dim}${char.repeat(length)}${colors.reset}`);
-}
-
-// 显示 banner
-function showBanner(title) {
-  console.log(createBanner(title));
-}
-
-// 成功结束消息
-function showSuccess(message) {
-  separator("═");
-  log(`🎉 ${message} 🎉`, "success");
-  separator("═");
-}
-
-// 错误处理
-function handleError(message, error) {
-  log(`${message}: ${error}`, "error");
-  process.exit(1);
-}
-
+/**
+ * 导出所有工具函数和配置
+ * 
+ * 保持与原有 API 的完全兼容性，确保现有代码无需修改。
+ * 同时提供了更好的模块化结构，便于后续维护和扩展。
+ */
 module.exports = {
+  // ==================== 颜色和样式 ====================
+  
+  /** 
+   * ANSI 颜色代码配置
+   * @type {Object}
+   */
   colors,
-  log,
-  separator,
-  showBanner,
-  showSuccess,
-  handleError,
-  icons,
+  
+  /** 
+   * 日志类型颜色映射
+   * @type {Object}
+   */
   typeColors,
+  
+  // ==================== 图标配置 ====================
+  
+  /** 
+   * Emoji 图标配置
+   * @type {Object}
+   */
+  icons,
+  
+  // ==================== 横幅功能 ====================
+  
+  /** 
+   * ASCII 艺术字
+   * @type {string}
+   */
+  asciiArt,
+  
+  /** 
+   * 创建带标题的横幅
+   * @type {Function}
+   */
+  createBanner,
+  
+  /** 
+   * 显示横幅
+   * @type {Function}
+   */
+  showBanner,
+  
+  // ==================== 日志功能 ====================
+  
+  /** 
+   * 美化日志输出
+   * @type {Function}
+   */
+  log,
+  
+  // ==================== 工具函数 ====================
+  
+  /** 
+   * 显示分隔线
+   * @type {Function}
+   */
+  separator,
+  
+  /** 
+   * 显示成功消息
+   * @type {Function}
+   */
+  showSuccess,
+  
+  /** 
+   * 错误处理
+   * @type {Function}
+   */
+  handleError,
 };
