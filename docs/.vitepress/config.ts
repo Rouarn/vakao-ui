@@ -4,6 +4,12 @@ export default defineConfig({
   title: "Vakao UI",
   description: "基于 Vue 3 和 TypeScript 的现代化组件库",
   base: "/vakao-ui/", // GitHub Pages 部署路径
+
+  // 网站图标配置
+  head: [
+    ["link", { rel: "icon", href: "/vakao-ui/logo.svg" }],
+    ["link", { rel: "apple-touch-icon", href: "/vakao-ui/logo.svg" }],
+  ],
   vite: {
     css: {
       preprocessorOptions: {
