@@ -1,170 +1,299 @@
 #!/usr/bin/env node
 
 /**
- * 发布脚本
- * 用于构建并发布组件库到npm
+ * Vakao UI 统一发布系统
+ *
+ * 提供完整的包发布管理功能：
+ * - 交互式包选择
+ * - 批量发布支持
+ * - 版本同步选项
+ * - 测试模式支持
+ * - 完整的错误处理和回滚
+ * - 私有仓库支持
+ *
+ * 使用方法：
+ * ```bash
+ * # 交互式发布
+ * node scripts/publish.js
+ *
+ * # 发布指定包
+ * node scripts/publish.js --packages hooks,utils
+ *
+ * # 测试模式
+ * node scripts/publish.js --dry-run
+ *
+ * # 同步版本号
+ * node scripts/publish.js --sync-version
+ *
+ * # 发布单个包
+ * node scripts/publish.js --package hooks
+ * ```
+ *
+ * @version 2.0.0
+ * @author Vakao UI Team
  */
 
-const { execSync } = require("child_process");
-const { readFileSync, writeFileSync } = require("fs");
 const path = require("path");
-const readline = require("readline");
-const {
-  log,
-  separator,
-  showBanner,
-  showSuccess,
-  handleError,
-} = require("./utils");
+const { log, separator, showBanner, showSuccess, handleError } = require("./utils");
+const PublishEngine = require("./core/publish-engine");
+const Interactive = require("./core/interactive");
+const { CONFIG } = require("./core/package-configs");
 
-// 工具标题
-const TOOL_TITLE = "🚀 Vakao UI 发布工具 🚀";
+// ==================== 配置常量 ====================
 
-// 创建readline接口
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-});
+/** 工具标题 */
+const TOOL_TITLE = "📦 Vakao UI 统一发布系统 📦";
 
-// 执行命令并打印输出
-function exec(command) {
-  log(`执行命令: ${command}`, "command");
-  try {
-    execSync(command, { stdio: "inherit" });
-  } catch (error) {
-    log(`命令执行失败: ${error}`, "error");
-    process.exit(1);
+// ==================== 工具函数 ====================
+
+/**
+ * 解析命令行参数
+ * @returns {Object} 解析后的参数
+ */
+function parseArguments() {
+  const args = process.argv.slice(2);
+  const options = {
+    isDryRun: args.includes("--dry-run"),
+    syncVersion: args.includes("--sync-version"),
+    packages: null,
+    singlePackage: null,
+    help: args.includes("--help") || args.includes("-h")
+  };
+
+  // 解析 --packages 参数（多个包）
+  const packagesIndex = args.findIndex(arg => arg.startsWith("--packages"));
+  if (packagesIndex !== -1) {
+    const packagesArg = args[packagesIndex];
+    if (packagesArg.includes("=")) {
+      const packagesList = packagesArg.split("=")[1];
+      options.packages = packagesList.split(",").map(p => p.trim());
+    } else if (
+      args[packagesIndex + 1] &&
+      !args[packagesIndex + 1].startsWith("--")
+    ) {
+      options.packages = args[packagesIndex + 1].split(",").map(p => p.trim());
+    }
   }
-}
 
-// 获取package.json
-function getPackageJson() {
-  const packagePath = path.resolve(__dirname, "../package.json");
-  return JSON.parse(readFileSync(packagePath, "utf8"));
-}
-
-// 更新版本号
-function updateVersion(version) {
-  // 更新主 package.json
-  const packagePath = path.resolve(__dirname, "../package.json");
-  const packageJson = getPackageJson();
-  packageJson.version = version;
-  writeFileSync(packagePath, JSON.stringify(packageJson, null, 2));
-
-  // 更新 packages/package.json
-  const packagesPackagePath = path.resolve(
-    __dirname,
-    "../packages/package.json",
-  );
-  try {
-    const packagesPackageJson = JSON.parse(
-      readFileSync(packagesPackagePath, "utf8"),
-    );
-    packagesPackageJson.version = version;
-    writeFileSync(
-      packagesPackagePath,
-      JSON.stringify(packagesPackageJson, null, 2),
-    );
-    log(`packages/package.json 版本已更新为: ${version}`, "success");
-  } catch (error) {
-    log(`无法更新 packages/package.json: ${error.message}`, "warning");
+  // 解析 --package 参数（单个包）
+  const packageIndex = args.findIndex(arg => arg.startsWith("--package"));
+  if (packageIndex !== -1) {
+    const packageArg = args[packageIndex];
+    if (packageArg.includes("=")) {
+      options.singlePackage = packageArg.split("=")[1].trim();
+    } else if (
+      args[packageIndex + 1] &&
+      !args[packageIndex + 1].startsWith("--")
+    ) {
+      options.singlePackage = args[packageIndex + 1].trim();
+    }
   }
+
+  return options;
 }
 
-// 验证版本号格式
-function isValidVersion(version) {
-  // 检查是否符合 semver 格式 (x.y.z)
-  const semverRegex = /^\d+\.\d+\.\d+$/;
-  return semverRegex.test(version);
-}
-
-// 计算建议的新版本号（将小版本号加1）
-function suggestNextVersion(currentVersion) {
-  const versionParts = currentVersion.split(".");
-  if (versionParts.length === 3) {
-    const [major, minor, patch] = versionParts;
-    return `${major}.${minor}.${parseInt(patch) + 1}`;
-  }
-  return currentVersion;
-}
-
-// 递归询问版本号直到输入正确
-function askForVersion(currentVersion, suggestedVersion) {
-  return new Promise((resolve) => {
-    rl.question(
-      `请输入新版本号 (建议: ${suggestedVersion}, 留空使用建议版本): `,
-      (version) => {
-        const newVersion = version || suggestedVersion;
-
-        // 验证版本号格式
-        if (!isValidVersion(newVersion)) {
-          log("版本号格式不正确！请使用 x.y.z 格式（如: 1.0.0）", "error");
-          // 递归重新询问
-          askForVersion(currentVersion, suggestedVersion).then(resolve);
-          return;
-        }
-
-        // 检查版本号是否比当前版本新
-        if (newVersion <= currentVersion) {
-          log("新版本号必须大于当前版本！", "error");
-          // 递归重新询问
-          askForVersion(currentVersion, suggestedVersion).then(resolve);
-          return;
-        }
-
-        log("版本号验证通过", "success");
-        resolve(newVersion);
-      },
-    );
+/**
+ * 显示帮助信息
+ */
+function showHelp() {
+  console.log(`\n${TOOL_TITLE}\n`);
+  console.log("使用方法:");
+  console.log("  node scripts/publish.js [选项]");
+  console.log("\n选项:");
+  console.log("  --help, -h           显示帮助信息");
+  console.log("  --dry-run            测试模式，不实际发布");
+  console.log("  --sync-version       同步所有包的版本号");
+  console.log("  --packages <list>    发布指定的包（逗号分隔）");
+  console.log("  --package <name>     发布单个包");
+  console.log("\n示例:");
+  console.log("  node scripts/publish.js");
+  console.log("  node scripts/publish.js --dry-run");
+  console.log("  node scripts/publish.js --packages hooks,utils");
+  console.log("  node scripts/publish.js --package hooks --dry-run");
+  console.log("  node scripts/publish.js --sync-version");
+  console.log("\n可用的包:");
+  Object.entries(CONFIG.packages).forEach(([key, pkg]) => {
+    console.log(`  ${key.padEnd(8)} ${pkg.icon} ${pkg.displayName}`);
   });
 }
 
-// 主函数
+/**
+ * 验证包名
+ * @param {string[]} packageKeys - 包名列表
+ * @returns {string[]} 有效的包名列表
+ */
+function validatePackages(packageKeys) {
+  const validPackages = packageKeys.filter(key => CONFIG.packages[key]);
+  const invalidPackages = packageKeys.filter(key => !CONFIG.packages[key]);
+  
+  if (invalidPackages.length > 0) {
+    log(`无效的包名: ${invalidPackages.join(", ")}`, "error");
+    log("可用的包:", "info");
+    Object.keys(CONFIG.packages).forEach(key => {
+      log(`  ${key}`, "info");
+    });
+  }
+  
+  return validPackages;
+}
+
+// ==================== 主函数 ====================
+
+/**
+ * 主发布流程
+ */
 async function main() {
-  // 显示 banner
-  showBanner(TOOL_TITLE);
-
-  // 检查是否为测试模式
-  const isDryRun = process.argv.includes("--dry-run");
-
-  const currentVersion = getPackageJson().version;
-  const suggestedVersion = suggestNextVersion(currentVersion);
-  log(`当前版本: ${currentVersion}`, "info");
-  separator();
-
+  let publishEngine = null;
+  let interactive = null;
+  
   try {
-    // 使用新的版本号验证函数
-    const newVersion = await askForVersion(currentVersion, suggestedVersion);
-
-    // 更新版本号
-    if (newVersion !== currentVersion) {
-      updateVersion(newVersion);
-      log(`版本已更新为: ${newVersion}`, "success");
+    // 解析命令行参数
+    const options = parseArguments();
+    
+    // 显示帮助信息
+    if (options.help) {
+      showHelp();
+      return;
     }
-
+    
+    // 显示 banner
+    showBanner(TOOL_TITLE);
+    
+    // 设置项目路径
+    CONFIG.projectRoot = path.resolve(__dirname, "..");
+    CONFIG.buildRoot = path.resolve(CONFIG.projectRoot, "dist");
+    
+    // 初始化发布引擎
+    publishEngine = new PublishEngine(CONFIG);
+    
+    // 初始化交互界面
+    interactive = new Interactive(CONFIG.packages);
+    
+    // 显示配置信息
+    log(`发布模式: ${options.isDryRun ? "测试模式" : "正式发布"}`, "info");
+    log(
+      `目标仓库: ${publishEngine.usePrivateRegistry 
+        ? `私有制品仓库 (${publishEngine.privateRegistry})` 
+        : "npm 官方仓库"}`,
+      "info"
+    );
+    if (options.syncVersion) {
+      log(`版本同步: 启用`, "info");
+    }
+    
     separator();
-    // 构建
-    log("开始构建组件库...", "build");
-    exec("pnpm build");
-
-    separator();
-    // 发布
-    if (isDryRun) {
-      log("测试模式：跳过实际发布到npm", "warning");
-      log("检查发布文件...", "info");
-      exec("npm pack --dry-run");
+    
+    // 确定要发布的包
+    let packageKeys;
+    if (options.singlePackage) {
+      // 单个包模式
+      const validPackages = validatePackages([options.singlePackage]);
+      if (validPackages.length === 0) {
+        throw new Error("指定的包不存在");
+      }
+      packageKeys = validPackages;
+      log(`发布单个包: ${CONFIG.packages[packageKeys[0]].displayName}`, "info");
+    } else if (options.packages) {
+      // 指定包模式
+      const validPackages = validatePackages(options.packages);
+      if (validPackages.length === 0) {
+        throw new Error("指定的包不存在");
+      }
+      packageKeys = validPackages;
+      log(
+        `指定发布包: ${packageKeys.map(key => CONFIG.packages[key].displayName).join(", ")}`,
+        "info"
+      );
     } else {
-      log("开始发布到npm...", "publish");
-      exec("npm publish --access public --ignore-scripts");
+      // 交互式选择
+      packageKeys = await interactive.askForPackages();
     }
-
-    showSuccess(`Vakao UI v${newVersion} ${isDryRun ? "测试" : "发布"}成功!`);
+    
+    separator();
+    
+    // 确定版本号
+    const versions = await interactive.askForVersions(
+      packageKeys,
+      options.syncVersion,
+      (key) => publishEngine.getPackageJson(key),
+      (version) => publishEngine.suggestNextVersion(version)
+    );
+    
+    separator();
+    
+    // 显示发布计划
+    interactive.showPublishPlan(packageKeys, versions);
+    
+    separator();
+    
+    // 确认发布
+    const confirmMessage = `确认${options.isDryRun ? "测试" : "发布"}以上包？`;
+    const confirmPublish = await interactive.askForConfirmation(confirmMessage);
+    
+    if (!confirmPublish) {
+      log("发布已取消", "warning");
+      return;
+    }
+    
+    separator();
+    
+    // 执行发布
+    const results = [];
+    for (const packageKey of packageKeys) {
+      try {
+        const result = await publishEngine.publishSinglePackage(
+          packageKey,
+          versions[packageKey],
+          options.isDryRun
+        );
+        results.push({
+          package: packageKey,
+          ...result
+        });
+      } catch (error) {
+        results.push({
+          package: packageKey,
+          success: false,
+          error: error.message
+        });
+        log(
+          `${CONFIG.packages[packageKey].displayName} 发布失败，继续处理其他包...`,
+          "warning"
+        );
+      }
+    }
+    
+    separator();
+    
+    // 显示发布结果
+    const { successCount, failCount } = interactive.showPublishResults(results, options.isDryRun);
+    
+    separator();
+    
+    // 显示最终结果
+    if (failCount === 0) {
+      showSuccess(
+        `所有包${options.isDryRun ? "测试" : "发布"}成功！(${successCount}/${packageKeys.length})`
+      );
+    } else {
+      log(`发布完成：${successCount} 成功，${failCount} 失败`, "warning");
+      process.exit(1);
+    }
+    
   } catch (error) {
     handleError("发布过程中出现错误", error);
   } finally {
-    rl.close();
+    // 清理资源
+    if (publishEngine) {
+      publishEngine.close();
+    }
+    if (interactive) {
+      interactive.close();
+    }
   }
 }
+
+// ==================== 程序入口 ====================
 
 // 运行主函数
 main().catch((err) => {

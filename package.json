@@ -30,8 +30,18 @@
     "deploy:preview": "pnpm run build:docs && pnpm -C docs serve",
     "lint": "eslint . --ext .vue,.js,.ts,.jsx,.tsx --fix",
     "format": "prettier --write \"**/*.{vue,js,ts,json,md}\"",
-    "publish:only": "node ./scripts/publish.js",
-    "publish:dry-run": "node ./scripts/publish.js --dry-run"
+    "publish": "node ./scripts/publish.js",
+    "publish:dry-run": "node ./scripts/publish.js --dry-run",
+    "publish:main": "node ./scripts/publish.js --package main",
+    "publish:main:dry-run": "node ./scripts/publish.js --package main --dry-run",
+    "publish:hooks": "node ./scripts/publish.js --package hooks",
+    "publish:hooks:dry-run": "node ./scripts/publish.js --package hooks --dry-run",
+    "publish:utils": "node ./scripts/publish.js --package utils",
+    "publish:utils:dry-run": "node ./scripts/publish.js --package utils --dry-run",
+    "publish:all": "node ./scripts/publish.js --packages main,hooks,utils",
+    "publish:all:dry-run": "node ./scripts/publish.js --packages main,hooks,utils --dry-run",
+    "publish:sync": "node ./scripts/publish.js --sync-version",
+    "publish:sync:dry-run": "node ./scripts/publish.js --sync-version --dry-run"
   },
   "keywords": [
     "vue3",
@@ -39,7 +49,13 @@
     "ui-library",
     "typescript"
   ],
-  "author": "",
+  "author": "我与夏季",
+  "email": "woyuxiaji@foxmail.com",
+  "homepage": "https://rouarn.github.io/vakao-ui/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Rouarn/vakao-ui"
+  },
   "license": "MIT",
   "dependencies": {
     "@iconify/vue": "^5.0.0"
