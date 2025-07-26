@@ -136,6 +136,10 @@
                 <i class="fas fa-eye"></i>
                 预览命令
               </button>
+              <button class="btn btn-info" id="setVersionBtn">
+                <i class="fas fa-tag"></i>
+                设置版本号
+              </button>
               <button class="btn btn-danger" id="stopBtn" style="display: none">
                 <i class="fas fa-stop"></i>
                 停止发布
@@ -209,10 +213,19 @@
               <h2><i class="fas fa-file-alt"></i> 日志查看</h2>
               <p>查看发布和部署的详细日志</p>
             </div>
+            logStatusIndicator
 
             <div class="card">
               <div class="card-header">
                 <h3>实时日志</h3>
+                <div
+                  class="log-status-indicator"
+                  id="logStatusIndicator"
+                  style="display: none"
+                >
+                  <div class="executing-spinner"></div>
+                  <span class="executing-text">执行中...</span>
+                </div>
                 <div class="card-actions">
                   <button class="btn btn-small" id="clearLogsBtn">
                     <i class="fas fa-trash"></i>
@@ -375,7 +388,6 @@
       </div>
     </div>
 
-    <!-- 命令预览模态框 -->
     <div class="modal" id="commandPreviewModal">
       <div class="modal-content">
         <div class="modal-header">
@@ -397,6 +409,49 @@
           <button class="btn btn-primary" id="executeFromPreviewBtn">
             <i class="fas fa-play"></i>
             执行命令
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 用户输入模态框 -->
+    <div class="modal" id="userInputModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 id="userInputTitle">用户输入</h3>
+          <button class="modal-close" id="closeUserInputModal">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="user-input-content">
+            <p id="userInputPrompt">请输入所需信息：</p>
+            <div class="form-group">
+              <label for="userInputField" id="userInputLabel">输入：</label>
+              <input
+                type="text"
+                id="userInputField"
+                class="form-input"
+                placeholder="请输入..."
+              />
+            </div>
+            <div
+              class="user-input-hint"
+              id="userInputHint"
+              style="display: none"
+            >
+              <small class="text-secondary">提示信息</small>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" id="cancelUserInputBtn">
+            <i class="fas fa-times"></i>
+            取消
+          </button>
+          <button class="btn btn-primary" id="confirmUserInputBtn">
+            <i class="fas fa-check"></i>
+            确认
           </button>
         </div>
       </div>

@@ -59,6 +59,7 @@ const $elements = {
   // 发布管理
   packageGrid: null,
   publishBtn: null,
+  previewBtn: null,
   dryRunCheckbox: null,
   syncVersionCheckbox: null,
   skipDeployCheckbox: null,
@@ -162,6 +163,8 @@ function initializeElements() {
   // 发布管理
   $elements.packageGrid = $("#packageGrid");
   $elements.publishBtn = $("#publishBtn");
+  $elements.previewBtn = $("#previewBtn");
+  $elements.setVersionBtn = $("#setVersionBtn");
   $elements.dryRunCheckbox = $("#dryRunCheck");
   $elements.syncVersionCheckbox = $("#syncVersionCheck");
   $elements.skipDeployCheckbox = $("#deployCheck");
@@ -190,7 +193,7 @@ function initializeElements() {
   $elements.commandModal = $("#commandModal");
   $elements.commandPreview = $("#commandPreview");
   $elements.executeBtn = $("#executeBtn");
-  $elements.cancelCommandBtn = $("#cancelBtn");
+  $elements.cancelCommandBtn = $("#cancelCommandBtn");
   $elements.commandPreviewModal = $("#commandPreviewModal");
   $elements.commandPreviewContent = $("#commandPreviewContent");
   $elements.closePreviewModal = $("#closePreviewModal");
@@ -200,6 +203,20 @@ function initializeElements() {
   // 加载遮罩
   $elements.loadingOverlay = $("#loadingOverlay");
   $elements.loadingText = $("#loadingText");
+
+  // 日志状态指示器
+  $elements.logStatusIndicator = $("#logStatusIndicator");
+
+  // 用户输入模态框
+  $elements.userInputModal = $("#userInputModal");
+  $elements.userInputTitle = $("#userInputTitle");
+  $elements.userInputPrompt = $("#userInputPrompt");
+  $elements.userInputLabel = $("#userInputLabel");
+  $elements.userInputField = $("#userInputField");
+  $elements.userInputHint = $("#userInputHint");
+  $elements.closeUserInputModal = $("#closeUserInputModal");
+  $elements.cancelUserInputBtn = $("#cancelUserInputBtn");
+  $elements.confirmUserInputBtn = $("#confirmUserInputBtn");
 
   // 设置
   $elements.themeSelect = $("#themeSelect");
@@ -228,6 +245,11 @@ function bindEventListeners() {
 
   // 发布管理事件
   $elements.publishBtn.on("click", handlePublish);
+  $elements.previewBtn.on("click", function() {
+    const command = buildPublishCommand();
+    showCommandPreviewModal("发布命令预览", command, false);
+  });
+  $elements.setVersionBtn.on("click", handleSetVersion);
 
   // 发布选项事件 - 使用 jQuery 链式调用
   $elements.dryRunCheckbox.on("change", function () {
@@ -265,6 +287,16 @@ function bindEventListeners() {
   $elements.closePreviewModal.on("click", hideCommandPreviewModal);
   $elements.copyCommandBtn.on("click", copyCommandFromPreview);
   $elements.executeFromPreviewBtn.on("click", executeCommandFromPreview);
+
+  // 用户输入模态框事件
+  $elements.closeUserInputModal.on("click", hideUserInputModal);
+  $elements.cancelUserInputBtn.on("click", hideUserInputModal);
+  $elements.confirmUserInputBtn.on("click", confirmUserInput);
+  $elements.userInputField.on("keypress", function(e) {
+    if (e.which === 13) { // Enter键
+      confirmUserInput();
+    }
+  });
 
   // 设置事件
   bindSettingsEvents();
@@ -304,7 +336,7 @@ function bindDeploymentEvents() {
         return;
     }
     
-    showCommandPreviewModal(title, command);
+    showCommandPreviewModal(title, command, false); // 部署命令预览不显示执行按钮
   });
 }
 
@@ -844,8 +876,12 @@ function togglePackageSelection(packageId, $card) {
       .animate({ scale: 1.2 }, 100)
       .animate({ scale: 1 }, 100);
 
-    // 添加选择特效
-    $card.effect("highlight", { color: "#4CAF50" }, 500);
+    // 添加选择特效 - 使用 CSS 动画替代 jQuery UI effect
+    $card.addClass("package-selected-animation");
+    // 动画完成后移除类名，以便下次可以重新触发
+    setTimeout(() => {
+      $card.removeClass("package-selected-animation");
+    }, 500);
 
     showToast(`已选择 ${getPackageName(packageId)}`, "success");
   }
@@ -913,7 +949,12 @@ function updatePublishButton() {
       .removeClass("btn-disabled")
       .addClass("btn-primary")
       .html(`<i class="fas fa-rocket"></i> 发布选中的包 (${count})`)
-      .effect("pulse", { times: 1 }, 300);
+      .addClass("btn-pulse-animation");
+    
+    // 动画完成后移除类名
+    setTimeout(() => {
+      $publishBtn.removeClass("btn-pulse-animation");
+    }, 300);
 
     // 更新按钮提示
     $publishBtn.attr("title", `发布 ${count} 个选中的包`);
@@ -1470,6 +1511,16 @@ function showCommandModal(title, command) {
   // 存储命令
   $modal.data("command", command);
 
+  // 控制执行按钮的显示/隐藏
+  const $executeBtn = $modal.find("#executeFromPreviewBtn");
+  if ($executeBtn.length) {
+    if (showExecuteButton) {
+      $executeBtn.show();
+    } else {
+      $executeBtn.hide();
+    }
+  }
+
   // 显示模态框动画
   $modal
     .addClass("active")
@@ -1543,8 +1594,8 @@ async function executeCommand() {
     // 隐藏模态框
     hideCommandModal();
 
-    // 显示加载状态
-    showLoading("执行命令中...");
+    // 显示日志执行状态指示器
+    showLogExecutionStatus("执行命令中...");
     updateStatus("running", "执行中...");
 
     // 切换到日志标签页
@@ -1563,8 +1614,7 @@ async function executeCommand() {
     console.error("执行命令失败:", error);
     showError("执行命令失败: " + error.message);
     updateStatus("error", "执行失败");
-  } finally {
-    hideLoading();
+    hideLogExecutionStatus();
   }
 }
 
@@ -1572,8 +1622,9 @@ async function executeCommand() {
  * 显示命令预览模态框
  * @param {string} title - 标题
  * @param {string} command - 命令
+ * @param {boolean} showExecuteButton - 是否显示执行按钮，默认为true
  */
-function showCommandPreviewModal(title, command) {
+function showCommandPreviewModal(title, command, showExecuteButton = true) {
   const $modal = $elements.commandPreviewModal;
   const $preview = $elements.commandPreviewContent;
 
@@ -1592,6 +1643,16 @@ function showCommandPreviewModal(title, command) {
 
   // 存储命令
   $modal.data("command", command);
+
+  // 控制执行按钮的显示
+  const $executeButton = $modal.find("#executeFromPreviewBtn");
+  if ($executeButton.length) {
+    if (showExecuteButton) {
+      $executeButton.show();
+    } else {
+      $executeButton.hide();
+    }
+  }
 
   // 显示模态框动画
   $modal
@@ -1682,8 +1743,8 @@ async function executeCommandFromPreview() {
     // 隐藏预览模态框
     hideCommandPreviewModal();
 
-    // 显示加载状态
-    showLoading("执行命令中...");
+    // 显示日志执行状态指示器
+    showLogExecutionStatus("执行命令中...");
     updateStatus("running", "执行中...");
 
     // 切换到日志标签页
@@ -1702,8 +1763,7 @@ async function executeCommandFromPreview() {
     console.error("执行命令失败:", error);
     showError("执行命令失败: " + error.message);
     updateStatus("error", "执行失败");
-  } finally {
-    hideLoading();
+    hideLogExecutionStatus();
   }
 }
 
@@ -1722,6 +1782,7 @@ function handleProcessStatus(status) {
 
     case "completed":
       AppState.currentProcess = null;
+      hideLogExecutionStatus();
       const exitCode = status.code || 0;
       if (exitCode === 0) {
         updateStatus("success", "执行成功");
@@ -1742,6 +1803,7 @@ function handleProcessStatus(status) {
 
     case "failed":
       AppState.currentProcess = null;
+      hideLogExecutionStatus();
       const failCode = status.code || 1;
       updateStatus("error", `执行失败 (退出码: ${failCode})`);
       addLog("error", status.message || `进程执行失败，退出码: ${failCode}`);
@@ -1798,6 +1860,200 @@ function showLoading(text = "加载中...") {
 }
 
 /**
+ * 显示日志执行状态指示器
+ * @param {string} text - 状态文本
+ */
+function showLogExecutionStatus(text = "执行中...") {
+  const $indicator = $elements.logStatusIndicator;
+  const $textElement = $indicator.find('.executing-text');
+  
+  if ($indicator && $indicator.length) {
+    if ($textElement.length) {
+      $textElement.text(text);
+    }
+    $indicator.fadeIn(300);
+  }
+}
+
+/**
+ * 隐藏日志执行状态指示器
+ */
+function hideLogExecutionStatus() {
+  const $indicator = $elements.logStatusIndicator;
+  
+  if ($indicator && $indicator.length) {
+    $indicator.fadeOut(300);
+  }
+}
+
+/**
+ * 显示用户输入模态框
+ * @param {Object} options - 输入选项
+ * @param {string} options.title - 模态框标题
+ * @param {string} options.prompt - 提示文本
+ * @param {string} options.label - 输入框标签
+ * @param {string} options.placeholder - 输入框占位符
+ * @param {string} options.hint - 提示信息
+ * @param {string} options.defaultValue - 默认值
+ * @param {Function} options.onConfirm - 确认回调函数
+ * @param {Function} options.onCancel - 取消回调函数
+ */
+function showUserInputModal(options = {}) {
+  const {
+    title = "用户输入",
+    prompt = "请输入所需信息：",
+    label = "输入：",
+    placeholder = "请输入...",
+    hint = "",
+    defaultValue = "",
+    onConfirm = null,
+    onCancel = null
+  } = options;
+
+  const $modal = $elements.userInputModal;
+  
+  if (!$modal || !$modal.length) return;
+
+  // 设置内容
+  $elements.userInputTitle.text(title);
+  $elements.userInputPrompt.text(prompt);
+  $elements.userInputLabel.text(label);
+  $elements.userInputField.attr("placeholder", placeholder).val(defaultValue);
+  
+  // 设置提示信息
+  if (hint) {
+    $elements.userInputHint.find("small").text(hint);
+    $elements.userInputHint.show();
+  } else {
+    $elements.userInputHint.hide();
+  }
+
+  // 存储回调函数
+  $modal.data("onConfirm", onConfirm);
+  $modal.data("onCancel", onCancel);
+
+  // 显示模态框
+  $modal
+    .addClass("active")
+    .hide()
+    .fadeIn(300)
+    .find(".modal-content")
+    .css("transform", "scale(0.8)")
+    .animate({
+      scale: 1
+    }, 200);
+
+  // 聚焦输入框
+  setTimeout(() => {
+    $elements.userInputField.focus().select();
+  }, 350);
+
+  // 添加键盘事件监听
+  $(document).on("keydown.userInputModal", function(e) {
+    if (e.key === "Escape") {
+      hideUserInputModal();
+    }
+  });
+}
+
+/**
+ * 隐藏用户输入模态框
+ */
+function hideUserInputModal() {
+  const $modal = $elements.userInputModal;
+  
+  if (!$modal || !$modal.length) return;
+
+  // 获取取消回调
+  const onCancel = $modal.data("onCancel");
+  
+  // 隐藏模态框
+  $modal
+    .find(".modal-content")
+    .animate({
+      scale: 0.8
+    }, 200)
+    .end()
+    .fadeOut(300, function() {
+      $(this).removeClass("active");
+    });
+
+  // 清除数据和事件
+  $modal.removeData("onConfirm").removeData("onCancel");
+  $(document).off("keydown.userInputModal");
+  
+  // 执行取消回调
+  if (typeof onCancel === "function") {
+    onCancel();
+  }
+}
+
+/**
+ * 确认用户输入
+ */
+function confirmUserInput() {
+  const $modal = $elements.userInputModal;
+  const value = $elements.userInputField.val().trim();
+  
+  if (!$modal || !$modal.length) return;
+
+  // 获取确认回调
+  const onConfirm = $modal.data("onConfirm");
+  
+  // 验证输入
+  if (!value) {
+    $elements.userInputField.addClass("error").focus();
+    showToast("请输入有效内容", "warning");
+    return;
+  }
+  
+  // 移除错误样式
+  $elements.userInputField.removeClass("error");
+  
+  // 隐藏模态框
+  $modal
+    .find(".modal-content")
+    .animate({
+      scale: 0.8
+    }, 200)
+    .end()
+    .fadeOut(300, function() {
+      $(this).removeClass("active");
+    });
+
+  // 清除数据和事件
+  $modal.removeData("onConfirm").removeData("onCancel");
+  $(document).off("keydown.userInputModal");
+  
+  // 执行确认回调
+  if (typeof onConfirm === "function") {
+    onConfirm(value);
+  }
+}
+
+/**
+ * 处理设置版本号
+ * 显示用户输入模态框，让用户输入新的版本号
+ */
+function handleSetVersion() {
+  showUserInputModal(
+    '设置版本号',
+    '请输入新的版本号（例如：1.0.0）',
+    '版本号',
+    '',
+    '请使用语义化版本格式，如 1.0.0',
+    function(version) {
+      // 这里可以添加版本号设置的具体逻辑
+      console.log('设置版本号为:', version);
+      showToast(`版本号已设置为: ${version}`, 'success');
+      
+      // 可以在这里调用实际的版本号设置API
+      // 例如：updatePackageVersion(version);
+    }
+  );
+}
+
+/**
  * 使用 jQuery 隐藏全局加载状态
  * 添加淡出动画
  */
@@ -1825,7 +2081,12 @@ function updateStatus(type, text) {
     $statusIndicator
       .removeClass()
       .addClass(`status-indicator ${type}`)
-      .effect("pulse", { times: 1 }, 300);
+      .addClass("status-pulse-animation");
+    
+    // 动画完成后移除类名
+    setTimeout(() => {
+      $statusIndicator.removeClass("status-pulse-animation");
+    }, 300);
   }
 
   if ($statusText && $statusText.length) {

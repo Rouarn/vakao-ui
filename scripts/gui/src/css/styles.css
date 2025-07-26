@@ -19,52 +19,56 @@
   --warning-color: #f59e0b;
   --error-color: #ef4444;
   --info-color: #06b6d4;
-  
+
   /* 背景色 */
   --bg-primary: #ffffff;
   --bg-secondary: #f8fafc;
   --bg-tertiary: #f1f5f9;
   --bg-hover: #e2e8f0;
   --bg-active: #cbd5e1;
-  
+
   /* 文字颜色 */
   --text-primary: #1e293b;
   --text-secondary: #64748b;
   --text-tertiary: #94a3b8;
   --text-inverse: #ffffff;
-  
+
   /* 边框颜色 */
   --border-color: #e2e8f0;
   --border-hover: #cbd5e1;
   --border-focus: #3b82f6;
-  
+
   /* 阴影 */
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  
+  --shadow-md:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+
   /* 圆角 */
   --radius-sm: 4px;
   --radius-md: 6px;
   --radius-lg: 8px;
   --radius-xl: 12px;
-  
+
   /* 间距 */
   --spacing-xs: 4px;
   --spacing-sm: 8px;
   --spacing-md: 16px;
   --spacing-lg: 24px;
   --spacing-xl: 32px;
-  
+
   /* 字体 */
-  --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, sans-serif;
   --font-size-xs: 12px;
   --font-size-sm: 14px;
   --font-size-md: 16px;
   --font-size-lg: 18px;
   --font-size-xl: 20px;
   --font-size-2xl: 24px;
-  
+
   /* 动画 */
   --transition-fast: 150ms ease-in-out;
   --transition-normal: 250ms ease-in-out;
@@ -78,17 +82,19 @@
   --bg-tertiary: #334155;
   --bg-hover: #475569;
   --bg-active: #64748b;
-  
+
   --text-primary: #f8fafc;
   --text-secondary: #cbd5e1;
   --text-tertiary: #94a3b8;
-  
+
   --border-color: #334155;
   --border-hover: #475569;
-  
+
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+  --shadow-md:
+    0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+  --shadow-lg:
+    0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
 }
 
 /* ==================== 基础样式重置 ==================== */
@@ -350,8 +356,8 @@ body {
 }
 
 .checkbox-label input[type="checkbox"]:checked + .checkmark::after {
-  content: '\f00c';
-  font-family: 'Font Awesome 6 Free';
+  content: "\f00c";
+  font-family: "Font Awesome 6 Free";
   font-weight: 900;
   color: white;
   font-size: 10px;
@@ -557,7 +563,7 @@ body {
   border-radius: var(--radius-md);
   height: 400px;
   overflow-y: auto;
-  font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+  font-family: "Consolas", "Monaco", "Courier New", monospace;
   font-size: var(--font-size-sm);
   padding: var(--spacing-md);
 }
@@ -589,7 +595,7 @@ body {
   background-color: var(--bg-secondary);
   transition: all var(--transition-fast);
   position: relative;
-  font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+  font-family: "Consolas", "Monaco", "Courier New", monospace;
   font-size: var(--font-size-sm);
   line-height: 1.4;
 }
@@ -861,7 +867,7 @@ body {
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
   padding: var(--spacing-md);
-  font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+  font-family: "Consolas", "Monaco", "Courier New", monospace;
   font-size: var(--font-size-sm);
   color: var(--text-primary);
   white-space: pre-wrap;
@@ -906,8 +912,12 @@ body {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* ==================== 包概览 ==================== */
@@ -973,7 +983,7 @@ body {
 .package-detail-value {
   font-size: var(--font-size-sm);
   color: var(--text-primary);
-  font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+  font-family: "Consolas", "Monaco", "Courier New", monospace;
 }
 
 .package-overview-actions {
@@ -1017,27 +1027,27 @@ body {
   .sidebar {
     width: 200px;
   }
-  
+
   .content {
     padding: var(--spacing-md);
   }
-  
+
   .form-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .package-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .deploy-actions {
     grid-template-columns: 1fr;
   }
-  
+
   .action-bar {
     flex-direction: column;
   }
-  
+
   .modal-content {
     width: 95%;
     margin: var(--spacing-md);
@@ -1048,20 +1058,20 @@ body {
   .header {
     padding: var(--spacing-xs) var(--spacing-sm);
   }
-  
+
   .sidebar {
     width: 180px;
   }
-  
+
   .nav {
     padding: var(--spacing-sm);
   }
-  
+
   .nav-item {
     padding: var(--spacing-xs) var(--spacing-sm);
     font-size: var(--font-size-xs);
   }
-  
+
   .tab-header h2 {
     font-size: var(--font-size-xl);
   }
@@ -1140,7 +1150,7 @@ body {
 }
 
 .font-mono {
-  font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+  font-family: "Consolas", "Monaco", "Courier New", monospace;
 }
 
 .font-bold {
@@ -1189,4 +1199,178 @@ body {
 
 .border-error {
   border-color: var(--error-color);
+}
+
+/* ==================== 自定义动画类 ==================== */
+
+/* 包选择动画 */
+.package-selected-animation {
+  animation: packageHighlight 0.5s ease-in-out;
+}
+
+@keyframes packageHighlight {
+  0% {
+    background-color: transparent;
+  }
+  50% {
+    background-color: rgba(76, 175, 80, 0.2);
+    transform: scale(1.02);
+  }
+  100% {
+    background-color: transparent;
+    transform: scale(1);
+  }
+}
+
+/* 按钮脉冲动画 */
+.btn-pulse-animation {
+  animation: btnPulse 0.3s ease-in-out;
+}
+
+@keyframes btnPulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* 状态指示器脉冲动画 */
+.status-pulse-animation {
+  animation: statusPulse 0.3s ease-in-out;
+}
+
+@keyframes statusPulse {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* 动画完成后自动移除类名 */
+.package-selected-animation,
+.btn-pulse-animation,
+.status-pulse-animation {
+  animation-fill-mode: forwards;
+}
+
+/* 确保动画只执行一次 */
+.package-selected-animation {
+  animation-iteration-count: 1;
+}
+
+.btn-pulse-animation {
+  animation-iteration-count: 1;
+}
+
+.status-pulse-animation {
+  animation-iteration-count: 1;
+}
+
+/* ==================== 日志执行状态指示器 ==================== */
+
+.log-status-indicator {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-left: var(--spacing-md);
+  margin-right: auto;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background-color: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  color: var(--primary-color);
+}
+
+.executing-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(59, 130, 246, 0.2);
+  border-top: 2px solid var(--primary-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.executing-text {
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* 深色主题下的样式调整 */
+[data-theme="dark"] .log-status-indicator {
+  background-color: rgba(59, 130, 246, 0.15);
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+[data-theme="dark"] .executing-spinner {
+  border-color: rgba(59, 130, 246, 0.3);
+  border-top-color: var(--primary-color);
+}
+
+/* ==================== 用户输入模态框样式 ==================== */
+
+.user-input-content {
+  padding: var(--spacing-md) 0;
+}
+
+.user-input-content p {
+  margin-bottom: var(--spacing-md);
+  color: var(--text-primary);
+  font-size: var(--font-size-md);
+}
+
+.user-input-hint {
+  margin-top: var(--spacing-sm);
+}
+
+.user-input-hint small {
+  color: var(--text-tertiary);
+  font-style: italic;
+}
+
+/* 输入框错误状态 */
+.form-input.error {
+  border-color: var(--error-color);
+  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.1);
+  animation: inputError 0.3s ease-in-out;
+}
+
+@keyframes inputError {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+}
+
+/* 深色主题下的错误状态 */
+[data-theme="dark"] .form-input.error {
+  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2);
 }

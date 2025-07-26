@@ -4,9 +4,8 @@
   "description": "Vakao UI 发布工具 GUI 版本",
   "main": "src/main.js",
   "scripts": {
-    "start": "npm run electron .",
-    "dev": "npm run electron . --dev",
-    "electron": "electron .",
+    "start": "electron .",
+    "dev": "electron . --dev",
     "build": "electron-builder",
     "build:win": "electron-builder --win",
     "build:mac": "electron-builder --mac",
@@ -28,15 +27,15 @@
     ],
     "win": {
       "target": "nsis",
-      "icon": "public/favicon.ico"
+      "icon": "assets/icon.ico"
     },
     "mac": {
       "target": "dmg",
-      "icon": "public/favicon.icns"
+      "icon": "assets/icon.icns"
     },
     "linux": {
       "target": "AppImage",
-      "icon": "public/favicon.png"
+      "icon": "assets/icon.png"
     }
   },
   "keywords": [
