@@ -1,4 +1,4 @@
-import { ref, computed, ComputedRef } from "vue";
+import { ref, computed, ComputedRef } from 'vue';
 
 /**
  * 切换状态的函数类型

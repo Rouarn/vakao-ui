@@ -11,8 +11,8 @@
         @change="handleChange"
       />
       <span
+        class="vk-checkbox__inner"
         :class="[
-          'vk-checkbox__inner',
           {
             'is-indeterminate': indeterminate,
             'is-checked': isChecked,
@@ -20,22 +20,20 @@
           },
         ]"
       >
-        <vk-icon
+        <VkIcon
           v-if="isChecked && !indeterminate"
           class="vk-checkbox__icon"
           size="12px"
           color="#ffffff"
           icon="mdi:check"
-        >
-        </vk-icon>
-        <vk-icon
+        />
+        <VkIcon
           v-if="indeterminate"
           class="vk-checkbox__icon"
           size="12px"
           color="#ffffff"
           icon="mdi:minus"
-        >
-        </vk-icon>
+        />
       </span>
     </span>
     <span v-if="$slots.default || label" class="vk-checkbox__label">
@@ -52,20 +50,20 @@ import {
   inject,
   type Ref,
   type ComputedRef,
-} from "vue";
-import { checkboxProps, checkboxEmits, type CheckboxValue } from "./types";
-import { useNamespace, useControlled } from "@vakao-ui/utils";
-import VkIcon from "../../VkIcon";
+} from 'vue';
+import { checkboxProps, checkboxEmits, type CheckboxValue } from './types';
+import { useNamespace, useControlled } from '@vakao-ui/utils';
+import VkIcon from '../../VkIcon';
 
 export default defineComponent({
-  name: "VkCheckbox",
+  name: 'VkCheckbox',
   components: {
     VkIcon,
   },
   props: checkboxProps,
   emits: checkboxEmits,
   setup(props, { emit }) {
-    const ns = useNamespace("checkbox");
+    const ns = useNamespace('checkbox');
 
     // 模板引用
     const inputRef = ref<HTMLInputElement>();
@@ -78,18 +76,18 @@ export default defineComponent({
           size: ComputedRef<string>;
           min: ComputedRef<number>;
           max: ComputedRef<number>;
-          changeEvent: (value: CheckboxValue[]) => void;
+          changeEvent: (_value: CheckboxValue[]) => void;
         }
       | undefined
-    >("VkCheckboxGroup", undefined);
+    >('VkCheckboxGroup', undefined);
 
     // 使用受控/非受控模式工具函数（仅在非组模式下使用）
     const { currentValue: currentChecked, updateValue } = useControlled(
       props,
-      "checked",
-      "modelValue",
+      'checked',
+      'modelValue',
       emit,
-      false,
+      false
     );
 
     // 计算属性
@@ -100,13 +98,13 @@ export default defineComponent({
     });
 
     const currentSize = computed(() => {
-      return props.size || checkboxGroup?.size.value || "medium";
+      return props.size || checkboxGroup?.size.value || 'medium';
     });
 
     const isChecked = computed(() => {
       if (isGroup.value && checkboxGroup) {
         return checkboxGroup.modelValue.value.includes(
-          props.value as CheckboxValue,
+          props.value as CheckboxValue
         );
       }
       // 非组模式下使用受控/非受控逻辑
@@ -128,9 +126,9 @@ export default defineComponent({
       return [
         ns.block(),
         `${ns.block()}--size-${currentSize.value}`,
-        ns.is("disabled", isDisabled.value),
-        ns.is("checked", isChecked.value),
-        ns.is("indeterminate", props.indeterminate),
+        ns.is('disabled', isDisabled.value),
+        ns.is('checked', isChecked.value),
+        ns.is('indeterminate', props.indeterminate),
         props.customClass,
       ];
     });
@@ -168,7 +166,7 @@ export default defineComponent({
         checkboxGroup.changeEvent(newValue);
       } else {
         updateValue(checked);
-        emit("change", checked);
+        emit('change', checked);
       }
     };
 

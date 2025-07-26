@@ -15,23 +15,23 @@ export interface FormatDateOptions {
  */
 export const DATE_FORMATS = {
   /** YYYY-MM-DD */
-  DATE: "YYYY-MM-DD",
+  DATE: 'YYYY-MM-DD',
   /** YYYY-MM-DD HH:mm:ss */
-  DATETIME: "YYYY-MM-DD HH:mm:ss",
+  DATETIME: 'YYYY-MM-DD HH:mm:ss',
   /** YYYY-MM-DD HH:mm */
-  DATETIME_SHORT: "YYYY-MM-DD HH:mm",
+  DATETIME_SHORT: 'YYYY-MM-DD HH:mm',
   /** HH:mm:ss */
-  TIME: "HH:mm:ss",
+  TIME: 'HH:mm:ss',
   /** HH:mm */
-  TIME_SHORT: "HH:mm",
+  TIME_SHORT: 'HH:mm',
   /** YYYY年MM月DD日 */
-  DATE_CN: "YYYY年MM月DD日",
+  DATE_CN: 'YYYY年MM月DD日',
   /** YYYY年MM月DD日 HH:mm:ss */
-  DATETIME_CN: "YYYY年MM月DD日 HH:mm:ss",
+  DATETIME_CN: 'YYYY年MM月DD日 HH:mm:ss',
   /** MM/DD/YYYY */
-  DATE_US: "MM/DD/YYYY",
+  DATE_US: 'MM/DD/YYYY',
   /** MM/DD/YYYY HH:mm:ss */
-  DATETIME_US: "MM/DD/YYYY HH:mm:ss",
+  DATETIME_US: 'MM/DD/YYYY HH:mm:ss',
 } as const;
 
 /**
@@ -68,7 +68,7 @@ export const formatDate = (
 
   // 检查日期是否有效
   if (isNaN(dateObj.getTime())) {
-    throw new Error("Invalid date");
+    throw new Error('Invalid date');
   }
 
   const year = dateObj.getFullYear();
@@ -81,26 +81,26 @@ export const formatDate = (
 
   // 12小时制转换
   const hours12 = hours === 0 ? 12 : hours > 12 ? hours - 12 : hours;
-  const ampm = hours >= 12 ? "PM" : "AM";
+  const ampm = hours >= 12 ? 'PM' : 'AM';
   const ampmLower = ampm.toLowerCase();
 
   // 格式化映射
   const formatMap: Record<string, string> = {
     YYYY: year.toString(),
     YY: year.toString().slice(-2),
-    MM: month.toString().padStart(2, "0"),
+    MM: month.toString().padStart(2, '0'),
     M: month.toString(),
-    DD: day.toString().padStart(2, "0"),
+    DD: day.toString().padStart(2, '0'),
     D: day.toString(),
-    HH: hours.toString().padStart(2, "0"),
+    HH: hours.toString().padStart(2, '0'),
     H: hours.toString(),
-    hh: hours12.toString().padStart(2, "0"),
+    hh: hours12.toString().padStart(2, '0'),
     h: hours12.toString(),
-    mm: minutes.toString().padStart(2, "0"),
+    mm: minutes.toString().padStart(2, '0'),
     m: minutes.toString(),
-    ss: seconds.toString().padStart(2, "0"),
+    ss: seconds.toString().padStart(2, '0'),
     s: seconds.toString(),
-    SSS: milliseconds.toString().padStart(3, "0"),
+    SSS: milliseconds.toString().padStart(3, '0'),
     A: ampm,
     a: ampmLower,
   };
@@ -108,7 +108,7 @@ export const formatDate = (
   // 替换格式化占位符
   let result = format;
   for (const [key, value] of Object.entries(formatMap)) {
-    result = result.replace(new RegExp(key, "g"), value);
+    result = result.replace(new RegExp(key, 'g'), value);
   }
 
   return result;
@@ -131,14 +131,14 @@ export const formatRelativeTime = (
 
   // 检查日期是否有效
   if (isNaN(dateObj.getTime()) || isNaN(baseDateObj.getTime())) {
-    throw new Error("Invalid date");
+    throw new Error('Invalid date');
   }
 
   const diff = dateObj.getTime() - baseDateObj.getTime();
   const absDiff = Math.abs(diff);
   const isPast = diff < 0;
 
-  const locale = options?.locale || "zh-CN";
+  const locale = options?.locale || 'zh-CN';
 
   // 时间单位（毫秒）
   const units = {
@@ -153,35 +153,35 @@ export const formatRelativeTime = (
 
   // 中文时间单位
   const cnUnits = {
-    year: "年",
-    month: "个月",
-    week: "周",
-    day: "天",
-    hour: "小时",
-    minute: "分钟",
-    second: "秒",
+    year: '年',
+    month: '个月',
+    week: '周',
+    day: '天',
+    hour: '小时',
+    minute: '分钟',
+    second: '秒',
   };
 
   // 英文时间单位
   const enUnits = {
-    year: "year",
-    month: "month",
-    week: "week",
-    day: "day",
-    hour: "hour",
-    minute: "minute",
-    second: "second",
+    year: 'year',
+    month: 'month',
+    week: 'week',
+    day: 'day',
+    hour: 'hour',
+    minute: 'minute',
+    second: 'second',
   };
 
   // 选择时间单位
-  const timeUnits = locale.startsWith("zh") ? cnUnits : enUnits;
-  const suffix = locale.startsWith("zh")
+  const timeUnits = locale.startsWith('zh') ? cnUnits : enUnits;
+  const suffix = locale.startsWith('zh')
     ? isPast
-      ? "前"
-      : "后"
+      ? '前'
+      : '后'
     : isPast
-      ? " ago"
-      : " later";
+      ? ' ago'
+      : ' later';
 
   // 计算最合适的时间单位
   for (const [unit, ms] of Object.entries(units)) {
@@ -189,17 +189,17 @@ export const formatRelativeTime = (
       const value = Math.floor(absDiff / ms);
       const unitText = timeUnits[unit as keyof typeof timeUnits];
 
-      if (locale.startsWith("zh")) {
+      if (locale.startsWith('zh')) {
         return `${value}${unitText}${suffix}`;
       } else {
-        const plural = value > 1 ? "s" : "";
+        const plural = value > 1 ? 's' : '';
         return `${value} ${unitText}${plural}${suffix}`;
       }
     }
   }
 
   // 小于1秒的情况
-  return locale.startsWith("zh") ? "刚刚" : "just now";
+  return locale.startsWith('zh') ? '刚刚' : 'just now';
 };
 
 /**

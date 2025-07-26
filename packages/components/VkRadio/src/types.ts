@@ -1,5 +1,5 @@
-import type { PropType, CSSProperties } from "vue";
-import { ExtractPublicPropTypes, ComponentSize } from "../../../types";
+import type { PropType, CSSProperties } from 'vue';
+import { ExtractPublicPropTypes, ComponentSize } from '../../../types';
 
 // 单选框尺寸
 export type RadioSize = ComponentSize;
@@ -17,7 +17,7 @@ export const radioProps = {
   /** 单选框尺寸 */
   size: {
     type: String as PropType<RadioSize>,
-    default: "medium",
+    default: 'medium',
   },
   /** 是否禁用 */
   disabled: {
@@ -32,7 +32,7 @@ export const radioProps = {
   /** 单选框标签 */
   label: {
     type: String,
-    default: "",
+    default: '',
   },
   /** 自定义类名 */
   customClass: String,
@@ -50,7 +50,7 @@ export const radioGroupProps = {
   /** 单选框组尺寸 */
   size: {
     type: String as PropType<RadioSize>,
-    default: "medium",
+    default: 'medium',
   },
   /** 是否禁用 */
   disabled: {
@@ -69,12 +69,12 @@ export type RadioGroupProps = ExtractPublicPropTypes<typeof radioGroupProps>;
 
 // 单选框事件定义
 export const radioEmits = {
-  "update:modelValue": (_value: RadioValue) => true,
+  'update:modelValue': (_value: RadioValue) => true,
   change: (_value: RadioValue) => true,
 } as const;
 
 export const radioGroupEmits = {
-  "update:modelValue": (_value: RadioValue) => true,
+  'update:modelValue': (_value: RadioValue) => true,
   change: (_value: RadioValue) => true,
 } as const;
 

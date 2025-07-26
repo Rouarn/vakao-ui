@@ -1,13 +1,13 @@
-import { ref, Ref, computed, ComputedRef, onUnmounted } from "vue";
+import { ref, Ref, computed, ComputedRef, onUnmounted } from 'vue';
 
 /**
  * 请求状态枚举
  */
 export enum FetchStatus {
-  IDLE = "idle",
-  LOADING = "loading",
-  SUCCESS = "success",
-  ERROR = "error",
+  IDLE = 'idle',
+  LOADING = 'loading',
+  SUCCESS = 'success',
+  ERROR = 'error',
 }
 
 /**
@@ -173,7 +173,7 @@ export function useFetch<T = any>(
 
   // 检查是否为Promise函数
   const isPromiseFunction = (): boolean => {
-    if (typeof url === "function") {
+    if (typeof url === 'function') {
       try {
         const result = url();
         return result instanceof Promise;
@@ -186,7 +186,7 @@ export function useFetch<T = any>(
 
   // 获取当前 URL
   const getCurrentUrl = (): string => {
-    if (typeof url === "function" && !isPromiseFunction()) {
+    if (typeof url === 'function' && !isPromiseFunction()) {
       return url() as string;
     }
     return url as string;
@@ -233,7 +233,7 @@ export function useFetch<T = any>(
           // 设置超时
           const timeoutPromise = new Promise<never>((_, reject) => {
             setTimeout(() => {
-              reject(createError("Request timeout"));
+              reject(createError('Request timeout'));
             }, timeout);
           });
 
@@ -296,11 +296,11 @@ export function useFetch<T = any>(
 
             // 解析响应数据
             let responseData: any;
-            const contentType = response.headers.get("content-type");
+            const contentType = response.headers.get('content-type');
 
-            if (contentType?.includes("application/json")) {
+            if (contentType?.includes('application/json')) {
               responseData = await response.json();
-            } else if (contentType?.includes("text/")) {
+            } else if (contentType?.includes('text/')) {
               responseData = await response.text();
             } else {
               responseData = await response.blob();
@@ -322,14 +322,14 @@ export function useFetch<T = any>(
         }
       } catch (err: any) {
         // 如果是取消请求，不处理错误
-        if (err.name === "AbortError") {
+        if (err.name === 'AbortError') {
           return;
         }
 
         const fetchError =
           err instanceof Error
             ? createError(err.message)
-            : createError("Unknown error occurred");
+            : createError('Unknown error occurred');
 
         // 重试逻辑
         if (retryCount < retries) {
@@ -369,7 +369,7 @@ export function useFetch<T = any>(
   };
 
   // 如果 URL 是响应式的，监听变化
-  if (typeof url === "function") {
+  if (typeof url === 'function') {
     // 这里我们假设 URL 函数中使用的响应式变量会触发重新执行
     // 在实际使用中，用户需要手动调用 refresh 或 execute
   }
@@ -419,13 +419,13 @@ export function createFetch(
   defaultOptions: UseFetchOptions<any> = {},
   defaultFetchOptions: RequestInit = {},
 ) {
-  return function <T = any>(
+  return function <T = any> (
     url: string | (() => string),
     options: UseFetchOptions<T> = {},
     fetchOptions: RequestInit = {},
   ): UseFetchReturn<T> {
     const fullUrl =
-      typeof url === "function" ? () => baseURL + url() : baseURL + url;
+      typeof url === 'function' ? () => baseURL + url() : baseURL + url;
 
     const mergedOptions = { ...defaultOptions, ...options };
     const mergedFetchOptions = { ...defaultFetchOptions, ...fetchOptions };

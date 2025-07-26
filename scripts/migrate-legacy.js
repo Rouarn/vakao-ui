@@ -10,28 +10,28 @@
  * @author Vakao UI Team
  */
 
-const { existsSync, mkdirSync, renameSync, writeFileSync } = require("fs");
-const path = require("path");
-const { log, separator, showBanner, showSuccess } = require("./utils");
+const { existsSync, mkdirSync, renameSync, writeFileSync } = require('fs');
+const path = require('path');
+const { log, separator, showBanner, showSuccess } = require('./utils');
 
 // 工具标题
-const TOOL_TITLE = "🔄 Vakao UI 发布系统迁移工具 🔄";
+const TOOL_TITLE = '🔄 Vakao UI 发布系统迁移工具 🔄';
 
 // 需要迁移的文件
 const LEGACY_FILES = [
-  "publish-hooks.js",
-  "publish-utils.js",
-  "publish-packages.js",
+  'publish-hooks.js',
+  'publish-utils.js',
+  'publish-packages.js',
 ];
 
 /**
  * 创建 legacy 目录
  */
 function createLegacyDirectory() {
-  const legacyDir = path.resolve(__dirname, "legacy");
+  const legacyDir = path.resolve(__dirname, 'legacy');
   if (!existsSync(legacyDir)) {
     mkdirSync(legacyDir, { recursive: true });
-    log("创建 legacy 目录", "success");
+    log('创建 legacy 目录', 'success');
   }
   return legacyDir;
 }
@@ -51,13 +51,13 @@ function moveFilesToLegacy(legacyDir) {
     if (existsSync(sourcePath)) {
       try {
         renameSync(sourcePath, targetPath);
-        log(`移动文件: ${filename} -> legacy/${filename}`, "success");
+        log(`移动文件: ${filename} -> legacy/${filename}`, 'success');
         movedCount++;
       } catch (error) {
-        log(`移动文件失败: ${filename} - ${error.message}`, "error");
+        log(`移动文件失败: ${filename} - ${error.message}`, 'error');
       }
     } else {
-      log(`文件不存在: ${filename}`, "warning");
+      log(`文件不存在: ${filename}`, 'warning');
     }
   });
 
@@ -158,9 +158,9 @@ node scripts/publish.js --help
 迁移时间: ${new Date().toLocaleString()}
 `;
 
-  const guidePath = path.join(legacyDir, "MIGRATION_GUIDE.md");
+  const guidePath = path.join(legacyDir, 'MIGRATION_GUIDE.md');
   writeFileSync(guidePath, guideContent);
-  log("创建迁移说明文件: MIGRATION_GUIDE.md", "success");
+  log('创建迁移说明文件: MIGRATION_GUIDE.md', 'success');
 }
 
 /**
@@ -193,9 +193,9 @@ node scripts/publish.js
 存档时间: ${new Date().toLocaleString()}
 `;
 
-  const readmePath = path.join(legacyDir, "README.md");
+  const readmePath = path.join(legacyDir, 'README.md');
   writeFileSync(readmePath, readmeContent);
-  log("创建 legacy README.md", "success");
+  log('创建 legacy README.md', 'success');
 }
 
 /**
@@ -206,7 +206,7 @@ function main() {
     // 显示 banner
     showBanner(TOOL_TITLE);
 
-    log("开始迁移旧版发布脚本...", "info");
+    log('开始迁移旧版发布脚本...', 'info');
     separator();
 
     // 创建 legacy 目录
@@ -224,14 +224,14 @@ function main() {
     if (movedCount > 0) {
       showSuccess(`迁移完成！已移动 ${movedCount} 个文件到 legacy 目录`);
       console.log(
-        "\n📖 请查看 scripts/legacy/MIGRATION_GUIDE.md 了解详细迁移说明",
+        '\n📖 请查看 scripts/legacy/MIGRATION_GUIDE.md 了解详细迁移说明',
       );
-      console.log("🚀 现在可以使用新的统一发布系统: node scripts/publish.js");
+      console.log('🚀 现在可以使用新的统一发布系统: node scripts/publish.js');
     } else {
-      log("没有找到需要迁移的文件", "warning");
+      log('没有找到需要迁移的文件', 'warning');
     }
   } catch (error) {
-    log(`迁移过程中出现错误: ${error.message}`, "error");
+    log(`迁移过程中出现错误: ${error.message}`, 'error');
     process.exit(1);
   }
 }

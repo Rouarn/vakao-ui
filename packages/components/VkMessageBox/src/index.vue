@@ -29,7 +29,9 @@
 
           <!-- 内容 -->
           <div class="vk-message-box__content">
-            <div class="vk-message-box__message">{{ message }}</div>
+            <div class="vk-message-box__message">
+              {{ message }}
+            </div>
             <!-- 输入框 (用于 prompt 类型) -->
             <div v-if="showInput" class="vk-message-box__input">
               <VkInput
@@ -54,16 +56,16 @@
           <div class="vk-message-box__footer">
             <VkButton
               v-if="showCancelButton"
-              @click="handleCancel"
               :class="cancelButtonClass"
+              @click="handleCancel"
             >
               {{ cancelText }}
             </VkButton>
             <VkButton
               v-if="showConfirmButton"
-              @click="handleConfirm"
               :type="confirmButtonType"
               :class="confirmButtonClass"
+              @click="handleConfirm"
             >
               {{ confirmText }}
             </VkButton>
@@ -82,20 +84,20 @@ import {
   onMounted,
   onUnmounted,
   type PropType,
-} from "vue";
+} from 'vue';
 import {
   messageBoxProps,
   messageBoxEmits,
   type MessageBoxAction,
-} from "./types";
-import { ComponentType } from "../../../types";
-import VkButton from "../../VkButton";
-import VkIcon from "../../VkIcon";
-import VkInput from "../../VkInput";
-import { Icon } from "@iconify/vue";
+} from './types';
+import { ComponentType } from '../../../types';
+import VkButton from '../../VkButton';
+import VkIcon from '../../VkIcon';
+import VkInput from '../../VkInput';
+import { Icon } from '@iconify/vue';
 
 export default defineComponent({
-  name: "VkMessageBox",
+  name: 'VkMessageBox',
   components: {
     VkButton,
     VkIcon,
@@ -106,7 +108,7 @@ export default defineComponent({
     ...messageBoxProps,
     onAction: {
       type: Function as PropType<
-        (action: MessageBoxAction, instance: any) => void
+        (_action: MessageBoxAction, _instance: any) => void
       >,
     },
   },
@@ -114,8 +116,8 @@ export default defineComponent({
   setup(props, { emit }) {
     const visible = ref(false);
     const inputRef = ref<HTMLInputElement>();
-    const inputValue = ref(props.inputValue || "");
-    const inputErrorMessage = ref("");
+    const inputValue = ref(props.inputValue || '');
+    const inputErrorMessage = ref('');
     const hasInputBlurred = ref(false); // 追踪输入框是否已经失焦过
 
     // 计算属性
@@ -123,42 +125,42 @@ export default defineComponent({
 
     const iconName = computed(() => {
       const iconMap = {
-        success: "mdi:check-circle",
-        warning: "mdi:alert",
-        error: "mdi:close-circle",
-        info: "mdi:information",
+        success: 'mdi:check-circle',
+        warning: 'mdi:alert',
+        error: 'mdi:close-circle',
+        info: 'mdi:information',
       };
       return iconMap[props.type];
     });
 
     const iconColor = computed(() => {
       const colorMap = {
-        success: "var(--vk-color-success)",
-        warning: "var(--vk-color-warning)",
-        error: "var(--vk-color-danger)",
-        info: "var(--vk-color-info)",
+        success: 'var(--vk-color-success)',
+        warning: 'var(--vk-color-warning)',
+        error: 'var(--vk-color-danger)',
+        info: 'var(--vk-color-info)',
       };
       return colorMap[props.type];
     });
 
     const iconClass = computed(() => [
-      "vk-message-box__icon",
+      'vk-message-box__icon',
       `vk-message-box__icon--${props.type}`,
     ]);
 
     const confirmButtonType = computed((): ComponentType => {
       const typeMap: Record<string, ComponentType> = {
-        success: "success",
-        warning: "warning",
-        error: "danger",
-        info: "info",
+        success: 'success',
+        warning: 'warning',
+        error: 'danger',
+        info: 'info',
       };
-      return typeMap[props.type] || "primary";
+      return typeMap[props.type] || 'primary';
     });
 
-    const confirmButtonClass = computed(() => ["vk-message-box__confirm"]);
+    const confirmButtonClass = computed(() => ['vk-message-box__confirm']);
 
-    const cancelButtonClass = computed(() => ["vk-message-box__cancel"]);
+    const cancelButtonClass = computed(() => ['vk-message-box__cancel']);
 
     // 输入验证方法
     const validateInput = (showError = true) => {
@@ -175,10 +177,10 @@ export default defineComponent({
       if (props.inputValidator) {
         const result = props.inputValidator(value);
         if (result === false) {
-          if (showError) inputErrorMessage.value = "输入不符合要求";
+          if (showError) inputErrorMessage.value = '输入不符合要求';
           return false;
         }
-        if (typeof result === "string") {
+        if (typeof result === 'string') {
           if (showError) inputErrorMessage.value = result;
           return false;
         }
@@ -187,11 +189,11 @@ export default defineComponent({
       // 使用正则表达式验证
       if (props.inputPattern && !props.inputPattern.test(value)) {
         if (showError)
-          inputErrorMessage.value = props.inputErrorMessage || "输入格式不正确";
+          inputErrorMessage.value = props.inputErrorMessage || '输入格式不正确';
         return false;
       }
 
-      inputErrorMessage.value = "";
+      inputErrorMessage.value = '';
       return true;
     };
 
@@ -202,25 +204,25 @@ export default defineComponent({
       }
 
       const instance = getMessageBoxInstance();
-      emit("action", "confirm", instance);
+      emit('action', 'confirm', instance);
       if (props.onAction) {
-        props.onAction("confirm", instance);
+        props.onAction('confirm', instance);
       }
     };
 
     const handleCancel = () => {
       const instance = getMessageBoxInstance();
-      emit("action", "cancel", instance);
+      emit('action', 'cancel', instance);
       if (props.onAction) {
-        props.onAction("cancel", instance);
+        props.onAction('cancel', instance);
       }
     };
 
     const handleClose = () => {
       const instance = getMessageBoxInstance();
-      emit("action", "close", instance);
+      emit('action', 'close', instance);
       if (props.onAction) {
-        props.onAction("close", instance);
+        props.onAction('close', instance);
       }
     };
 
@@ -247,7 +249,7 @@ export default defineComponent({
 
     // 键盘事件处理
     const handleKeydown = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && props.closeOnPressEscape) {
+      if (e.key === 'Escape' && props.closeOnPressEscape) {
         handleClose();
       }
     };
@@ -255,7 +257,7 @@ export default defineComponent({
     // 生命周期
     onMounted(() => {
       visible.value = true;
-      document.addEventListener("keydown", handleKeydown);
+      document.addEventListener('keydown', handleKeydown);
 
       // 如果显示输入框，自动聚焦
       if (props.showInput && inputRef.value) {
@@ -266,7 +268,7 @@ export default defineComponent({
     });
 
     onUnmounted(() => {
-      document.removeEventListener("keydown", handleKeydown);
+      document.removeEventListener('keydown', handleKeydown);
     });
 
     // 返回所有需要在模板中使用的变量和方法

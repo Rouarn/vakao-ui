@@ -22,7 +22,7 @@ export const isEqual = (a: any, b: any): boolean => {
   }
 
   // 基本类型检查
-  if (typeof a !== "object") {
+  if (typeof a !== 'object') {
     return a === b;
   }
 
@@ -142,7 +142,7 @@ export const isEqualWithCircular = (
   }
 
   // 基本类型检查
-  if (typeof a !== "object") {
+  if (typeof a !== 'object') {
     return a === b;
   }
 
@@ -268,8 +268,8 @@ export const shallowEqual = (a: any, b: any): boolean => {
 
   // 类型不同或不是对象
   if (
-    typeof a !== "object" ||
-    typeof b !== "object" ||
+    typeof a !== 'object' ||
+    typeof b !== 'object' ||
     a === null ||
     b === null
   ) {

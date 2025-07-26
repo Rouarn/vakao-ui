@@ -1,5 +1,9 @@
 <template>
-  <div :class="mergedClass" :style="mergedStyle" @click="handleClick">
+  <div
+    :class="mergedClass"
+    :style="mergedStyle"
+    @click="handleClick"
+  >
     <!-- 未选中状态的文字 -->
     <span
       v-if="inactiveText && !inlinePrompt"
@@ -9,38 +13,51 @@
     </span>
 
     <!-- 开关主体 -->
-    <span ref="switchRef" :class="switchClass">
+    <span
+      ref="switchRef"
+      :class="switchClass"
+    >
       <!-- 加载图标 -->
-      <span v-if="loading" :class="ns.element('loading')">
-        <vk-icon size="12px" icon="mdi:reload"> </vk-icon>
+      <span
+        v-if="loading"
+        :class="ns.element('loading')"
+      >
+        <VkIcon
+          size="12px"
+          icon="mdi:reload"
+        />
       </span>
 
       <!-- 内联提示 -->
       <template v-if="inlinePrompt">
-        <span v-if="isChecked" :class="ns.element('inner')">
-          <vk-icon
+        <span
+          v-if="isChecked"
+          :class="ns.element('inner')"
+        >
+          <VkIcon
             v-if="activeIcon"
             size="12px"
             :src="isUrl(activeIcon) ? activeIcon : undefined"
             :icon="!isUrl(activeIcon) ? activeIcon : undefined"
-          >
-          </vk-icon>
+          />
           <span v-else-if="activeText">{{ activeText }}</span>
         </span>
-        <span v-else :class="ns.element('inner')">
-          <vk-icon
+        <span
+          v-else
+          :class="ns.element('inner')"
+        >
+          <VkIcon
             v-if="inactiveIcon"
             size="12px"
             :src="isUrl(inactiveIcon) ? inactiveIcon : undefined"
             :icon="!isUrl(inactiveIcon) ? inactiveIcon : undefined"
-          >
-          </vk-icon>
+          />
           <span v-else-if="inactiveText">{{ inactiveText }}</span>
         </span>
       </template>
 
       <!-- 开关按钮 -->
-      <span :class="ns.element('action')"></span>
+      <span :class="ns.element('action')" />
     </span>
 
     <!-- 选中状态的文字 -->
@@ -54,20 +71,20 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, ref } from "vue";
-import { switchProps, switchEmits, type SwitchValue } from "./types";
-import { useNamespace, isUrl, useControlled } from "@vakao-ui/utils";
-import VkIcon from "../../VkIcon";
+import { defineComponent, computed, ref } from 'vue';
+import { switchProps, switchEmits, type SwitchValue } from './types';
+import { useNamespace, isUrl, useControlled } from '@vakao-ui/utils';
+import VkIcon from '../../VkIcon';
 
 export default defineComponent({
-  name: "VkSwitch",
+  name: 'VkSwitch',
   components: {
     VkIcon,
   },
   props: switchProps,
   emits: switchEmits,
   setup(props, { emit }) {
-    const ns = useNamespace("switch");
+    const ns = useNamespace('switch');
 
     // 模板引用
     const switchRef = ref<HTMLElement>();
@@ -75,8 +92,8 @@ export default defineComponent({
     // 使用受控/非受控模式工具函数
     const { currentValue, updateValue } = useControlled<SwitchValue>(
       props,
-      "value",
-      "modelValue",
+      'value',
+      'modelValue',
       emit,
       false as SwitchValue,
     );
@@ -94,19 +111,19 @@ export default defineComponent({
     const mergedClass = computed(() => {
       return [
         ns.block(),
-        ns.modifier("size", props.size),
-        ns.is("disabled", isDisabled.value),
-        ns.is("checked", isChecked.value),
-        ns.is("loading", props.loading),
+        ns.modifier('size', props.size),
+        ns.is('disabled', isDisabled.value),
+        ns.is('checked', isChecked.value),
+        ns.is('loading', props.loading),
         props.customClass,
       ];
     });
 
     const switchClass = computed(() => {
       return [
-        ns.element("core"),
+        ns.element('core'),
         {
-          [ns.element("core--inline")]: props.inlinePrompt,
+          [ns.element('core--inline')]: props.inlinePrompt,
         },
       ];
     });
@@ -137,7 +154,7 @@ export default defineComponent({
       }
 
       updateValue(newValue);
-      emit("change", newValue);
+      emit('change', newValue);
     };
 
     return {

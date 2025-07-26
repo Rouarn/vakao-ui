@@ -10,19 +10,19 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, provide, computed } from "vue";
-import { optionGroupProps, optionGroupEmits } from "./types";
-import { useNamespace } from "@vakao-ui/utils";
+import { defineComponent, provide, computed } from 'vue';
+import { optionGroupProps, optionGroupEmits } from './types';
+import { useNamespace } from '@vakao-ui/utils';
 
 export default defineComponent({
-  name: "VkOptionGroup",
+  name: 'VkOptionGroup',
   props: optionGroupProps,
   emits: optionGroupEmits,
   setup(props) {
-    const ns = useNamespace("select-option-group");
+    const ns = useNamespace('select-option-group');
 
     // 提供给子选项的分组信息
-    provide("VkOptionGroup", {
+    provide('VkOptionGroup', {
       disabled: computed(() => props.disabled),
     });
 

@@ -1,11 +1,11 @@
-import { createApp, App } from "vue";
-import MessageBoxComponent from "./index.vue";
+import { createApp, App } from 'vue';
+import MessageBoxComponent from './index.vue';
 import type {
   MessageBoxOptions,
   MessageBoxAction,
   MessageBoxInstance,
   MessageBoxResult,
-} from "./types";
+} from './types';
 
 // MessageBox 实例管理
 let messageBoxInstance: App | null = null;
@@ -25,7 +25,7 @@ function createMessageBox(
     }
 
     // 创建容器
-    const container = document.createElement("div");
+    const container = document.createElement('div');
     document.body.appendChild(container);
     currentContainer = container;
 
@@ -34,7 +34,7 @@ function createMessageBox(
       ...options,
       onAction: (action: MessageBoxAction, instance: MessageBoxInstance) => {
         // 先设置visible为false触发动画
-        if (instance && typeof instance.close === "function") {
+        if (instance && typeof instance.close === 'function') {
           instance.close();
         }
 
@@ -50,7 +50,7 @@ function createMessageBox(
           }
         }, 300);
 
-        if (action === "confirm") {
+        if (action === 'confirm') {
           resolve({
             action,
             instance,
@@ -83,7 +83,7 @@ export const VkMessageBox = {
   ): Promise<MessageBoxResult> {
     let mergedOptions: MessageBoxOptions;
 
-    if (typeof title === "string") {
+    if (typeof title === 'string') {
       mergedOptions = {
         message,
         title,
@@ -93,7 +93,7 @@ export const VkMessageBox = {
     } else {
       mergedOptions = {
         message,
-        title: "确认",
+        title: '确认',
         showCancelButton: true,
         ...title,
       };
@@ -112,7 +112,7 @@ export const VkMessageBox = {
   ): Promise<MessageBoxResult> {
     let mergedOptions: MessageBoxOptions;
 
-    if (typeof title === "string") {
+    if (typeof title === 'string') {
       mergedOptions = {
         message,
         title,
@@ -122,7 +122,7 @@ export const VkMessageBox = {
     } else {
       mergedOptions = {
         message,
-        title: "提示",
+        title: '提示',
         showCancelButton: false,
         ...title,
       };
@@ -141,21 +141,21 @@ export const VkMessageBox = {
   ): Promise<MessageBoxResult> {
     let mergedOptions: MessageBoxOptions;
 
-    if (typeof title === "string") {
+    if (typeof title === 'string') {
       mergedOptions = {
         message,
         title,
         showCancelButton: true,
-        type: "info",
+        type: 'info',
         showInput: true,
         ...options,
       };
     } else {
       mergedOptions = {
         message,
-        title: "输入",
+        title: '输入',
         showCancelButton: true,
-        type: "info",
+        type: 'info',
         showInput: true,
         ...title,
       };

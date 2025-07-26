@@ -1,15 +1,20 @@
 <template>
-  <div :class="mergedClass" :style="mergedStyle">
+  <div
+    :class="mergedClass"
+    :style="mergedStyle"
+  >
     <!-- 前缀插槽 -->
-    <div v-if="$slots.prefix || prefixIcon" class="vk-input__prefix">
+    <div
+      v-if="$slots.prefix || prefixIcon"
+      class="vk-input__prefix"
+    >
       <slot name="prefix">
-        <vk-icon
+        <VkIcon
           v-if="prefixIcon"
           size="16px"
           :src="isUrl(prefixIcon) ? prefixIcon : undefined"
           :icon="!isUrl(prefixIcon) ? prefixIcon : undefined"
-        >
-        </vk-icon>
+        />
       </slot>
     </div>
 
@@ -31,64 +36,66 @@
         @focus="handleFocus"
         @blur="handleBlur"
         @keydown.enter="handleEnter"
-      />
+      >
     </div>
 
     <!-- 后缀插槽 -->
-    <div v-if="showSuffix" class="vk-input__suffix">
+    <div
+      v-if="showSuffix"
+      class="vk-input__suffix"
+    >
       <!-- 清除按钮 -->
-      <vk-icon
+      <VkIcon
         v-if="showClear"
         size="16px"
         class="vk-input__clear"
         @click="handleClear"
       >
         <Icon icon="mdi:close-circle" />
-      </vk-icon>
+      </VkIcon>
 
       <!-- 密码切换按钮 -->
-      <vk-icon
+      <VkIcon
         v-if="showPassword"
         size="16px"
         class="vk-input__password-toggle"
         @click="togglePasswordVisible"
       >
         <Icon :icon="showPasswordVisible ? 'mdi:eye-off' : 'mdi:eye'" />
-      </vk-icon>
+      </VkIcon>
 
       <!-- 后缀图标 -->
       <slot name="suffix">
-        <vk-icon
+        <VkIcon
           v-if="suffixIcon"
           size="16px"
           :src="isUrl(suffixIcon) ? suffixIcon : undefined"
           :icon="!isUrl(suffixIcon) ? suffixIcon : undefined"
-        >
-        </vk-icon>
+        />
       </slot>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed, nextTick } from "vue";
-import type { StyleValue } from "vue";
-import { inputProps, inputEmits } from "./types";
-import { useNamespace, isUrl, useStandardControlled } from "@vakao-ui/utils";
-import VkIcon from "../../VkIcon";
-import { Icon } from "@iconify/vue";
+import { defineComponent, ref, computed, nextTick } from 'vue';
+import type { StyleValue } from 'vue';
+import { inputProps, inputEmits } from './types';
+import { useNamespace, isUrl, useStandardControlled } from '@vakao-ui/utils';
+import VkIcon from '../../VkIcon';
+import { Icon } from '@iconify/vue';
 
 export default defineComponent({
-  name: "VkInput",
-  inheritAttrs: false,
+  name: 'VkInput',
   components: {
     VkIcon,
     Icon,
   },
+  inheritAttrs: false,
   props: inputProps,
   emits: inputEmits,
   setup(props, { emit, attrs, slots }) {
-    const ns = useNamespace("input");
+    const ns = useNamespace('input');
 
     // 模板引用
     const inputRef = ref<HTMLInputElement>();
@@ -97,7 +104,7 @@ export default defineComponent({
     const { currentValue, updateValue } = useStandardControlled(
       props,
       emit,
-      "",
+      '',
     );
 
     // 密码显示状态
@@ -116,10 +123,10 @@ export default defineComponent({
     const mergedClass = computed(() => {
       return [
         ns.block(),
-        ns.modifier("size", props.size),
-        ns.is("disabled", props.disabled),
-        ns.is("readonly", props.readonly),
-        ns.is("focused", isFocused.value),
+        ns.modifier('size', props.size),
+        ns.is('disabled', props.disabled),
+        ns.is('readonly', props.readonly),
+        ns.is('focused', isFocused.value),
         props.customClass,
         attrs.class,
       ];
@@ -168,30 +175,30 @@ export default defineComponent({
       const value = target.value;
 
       updateValue(value);
-      emit("input", value);
+      emit('input', value);
     };
 
     const handleChange = (event: Event) => {
       const target = event.target as HTMLInputElement;
       const value = target.value;
-      emit("change", value);
+      emit('change', value);
     };
 
     const handleFocus = (event: FocusEvent) => {
       isFocused.value = true;
-      emit("focus", event);
+      emit('focus', event);
     };
 
     const handleBlur = (event: FocusEvent) => {
       isFocused.value = false;
-      emit("blur", event);
+      emit('blur', event);
     };
 
     const handleClear = () => {
-      updateValue("");
-      emit("clear");
-      emit("input", "");
-      emit("change", "");
+      updateValue('');
+      emit('clear');
+      emit('input', '');
+      emit('change', '');
       nextTick(() => {
         inputRef.value?.focus();
       });
@@ -205,7 +212,7 @@ export default defineComponent({
     };
 
     const handleEnter = (event: KeyboardEvent) => {
-      emit("keydown", event);
+      emit('keydown', event);
     };
 
     return {

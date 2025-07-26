@@ -8,37 +8,44 @@
     :type="nativeType"
     @click="handleClick"
   >
-    <span v-if="loading" class="vk-button__loading">
-      <span class="vk-button__loading-indicator"></span>
+    <span
+      v-if="loading"
+      class="vk-button__loading"
+    >
+      <span class="vk-button__loading-indicator" />
     </span>
     <span
       v-if="icon && iconPosition === 'left'"
       class="vk-button__icon vk-button__icon--left"
     >
-      <component v-if="typeof icon === 'object'" :is="icon" />
-      <vk-icon
+      <component
+        :is="icon"
+        v-if="typeof icon === 'object'"
+      />
+      <VkIcon
         v-else-if="typeof icon === 'string'"
         :size="iconSize"
         :src="isUrl(icon) ? icon : undefined"
         :icon="!isUrl(icon) ? icon : undefined"
-      >
-      </vk-icon>
+      />
     </span>
     <span class="vk-button__content">
-      <slot></slot>
+      <slot />
     </span>
     <span
       v-if="icon && iconPosition === 'right'"
       class="vk-button__icon vk-button__icon--right"
     >
-      <component v-if="typeof icon === 'object'" :is="icon" />
-      <vk-icon
+      <component
+        :is="icon"
+        v-if="typeof icon === 'object'"
+      />
+      <VkIcon
         v-else-if="typeof icon === 'string'"
         :size="iconSize"
         :src="isUrl(icon) ? icon : undefined"
         :icon="!isUrl(icon) ? icon : undefined"
-      >
-      </vk-icon>
+      />
     </span>
   </button>
 </template>
@@ -66,26 +73,26 @@
  * </template>
  * ```
  */
-import { defineComponent, computed, useAttrs } from "vue";
-import type { CSSProperties } from "vue";
-import { buttonProps, buttonEmits } from "./types";
-import { useNamespace, isUrl } from "@vakao-ui/utils";
-import VkIcon from "../../VkIcon";
-import { Icon } from "@iconify/vue";
+import { defineComponent, computed, useAttrs } from 'vue';
+import type { CSSProperties } from 'vue';
+import { buttonProps, buttonEmits } from './types';
+import { useNamespace, isUrl } from '@vakao-ui/utils';
+import VkIcon from '../../VkIcon';
+import { Icon } from '@iconify/vue';
 
 export default defineComponent({
-  name: "VkButton",
-  inheritAttrs: false,
+  name: 'VkButton',
   components: {
     VkIcon,
     Icon,
   },
+  inheritAttrs: false,
   props: buttonProps,
   emits: buttonEmits,
   setup(props, { emit }) {
     // 获取组件属性和命名空间工具
     const attrs = useAttrs();
-    const ns = useNamespace("button");
+    const ns = useNamespace('button');
 
     /**
      * 处理按钮点击事件
@@ -97,7 +104,7 @@ export default defineComponent({
      */
     const handleClick = (e: MouseEvent) => {
       if (!props.disabled && !props.loading) {
-        emit("click", e);
+        emit('click', e);
       }
     };
 
@@ -138,15 +145,15 @@ export default defineComponent({
     const mergedClass = computed(() => {
       return [
         ns.block(), // 基础块类名：vk-button
-        ns.modifier("type", props.type), // 类型修饰符：vk-button--primary
-        ns.modifier("size", props.size), // 尺寸修饰符：vk-button--large
-        ns.is("disabled", props.disabled), // 状态类名：is-disabled
-        ns.is("loading", props.loading), // 加载状态：is-loading
-        ns.is("plain", props.plain), // 朴素样式：is-plain
-        ns.is("round", props.round), // 圆角样式：is-round
-        ns.is("circle", props.circle), // 圆形样式：is-circle
-        ns.is("text", props.text), // 文本样式：is-text
-        ns.is("link", props.link), // 链接样式：is-link
+        ns.modifier('type', props.type), // 类型修饰符：vk-button--primary
+        ns.modifier('size', props.size), // 尺寸修饰符：vk-button--large
+        ns.is('disabled', props.disabled), // 状态类名：is-disabled
+        ns.is('loading', props.loading), // 加载状态：is-loading
+        ns.is('plain', props.plain), // 朴素样式：is-plain
+        ns.is('round', props.round), // 圆角样式：is-round
+        ns.is('circle', props.circle), // 圆形样式：is-circle
+        ns.is('text', props.text), // 文本样式：is-text
+        ns.is('link', props.link), // 链接样式：is-link
         props.customClass, // 自定义类名
         attrs.class, // 父组件传递的类名
       ];
@@ -160,11 +167,11 @@ export default defineComponent({
      */
     const iconSize = computed(() => {
       const sizeMap = {
-        small: "14px",
-        medium: "16px",
-        large: "18px",
+        small: '14px',
+        medium: '16px',
+        large: '18px',
       };
-      return sizeMap[props.size] || "16px";
+      return sizeMap[props.size] || '16px';
     });
 
     return {

@@ -1,11 +1,11 @@
-import type { PropType, CSSProperties } from "vue";
-import { ExtractPublicPropTypes } from "../../../types";
+import type { PropType, CSSProperties } from 'vue';
+import { ExtractPublicPropTypes } from '../../../types';
 
 // MessageBox 类型
-export type MessageBoxType = "success" | "warning" | "error" | "info";
+export type MessageBoxType = 'success' | 'warning' | 'error' | 'info';
 
 // MessageBox 动作类型
-export type MessageBoxAction = "confirm" | "cancel" | "close";
+export type MessageBoxAction = 'confirm' | 'cancel' | 'close';
 
 // MessageBox 属性定义
 export const messageBoxProps = {
@@ -17,22 +17,22 @@ export const messageBoxProps = {
   /** 标题 */
   title: {
     type: String,
-    default: "提示",
+    default: '提示',
   },
   /** 类型 */
   type: {
     type: String as PropType<MessageBoxType>,
-    default: "info",
+    default: 'info',
   },
   /** 确认按钮文字 */
   confirmText: {
     type: String,
-    default: "确定",
+    default: '确定',
   },
   /** 取消按钮文字 */
   cancelText: {
     type: String,
-    default: "取消",
+    default: '取消',
   },
   /** 是否显示确认按钮 */
   showConfirmButton: {
@@ -62,12 +62,12 @@ export const messageBoxProps = {
   /** 自定义类名 */
   customClass: {
     type: String,
-    default: "",
+    default: '',
   },
   /** 自定义样式 */
   customStyle: {
     type: [String, Object] as PropType<string | CSSProperties>,
-    default: "",
+    default: '',
   },
   /** 是否显示输入框 */
   showInput: {
@@ -77,12 +77,12 @@ export const messageBoxProps = {
   /** 输入框占位符 */
   inputPlaceholder: {
     type: String,
-    default: "",
+    default: '',
   },
   /** 输入框初始值 */
   inputValue: {
     type: String,
-    default: "",
+    default: '',
   },
   /** 输入框验证模式 */
   inputPattern: {
@@ -90,12 +90,12 @@ export const messageBoxProps = {
   },
   /** 输入框验证函数 */
   inputValidator: {
-    type: Function as PropType<(value: string) => boolean | string>,
+    type: Function as PropType<(_value: string) => boolean | string>,
   },
   /** 输入框错误信息 */
   inputErrorMessage: {
     type: String,
-    default: "",
+    default: '',
   },
 } as const;
 
@@ -120,7 +120,7 @@ export interface MessageBoxOptions {
   inputPlaceholder?: string;
   inputValue?: string;
   inputPattern?: RegExp;
-  inputValidator?: (value: string) => boolean | string;
+  inputValidator?: (_value: string) => boolean | string;
   inputErrorMessage?: string;
 }
 

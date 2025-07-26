@@ -11,7 +11,7 @@ export const deepClone = <T>(obj: T): T => {
   }
 
   // 处理基本类型
-  if (typeof obj !== "object") {
+  if (typeof obj !== 'object') {
     return obj;
   }
 
@@ -75,7 +75,7 @@ export const deepCloneWithCircular = <T>(
   }
 
   // 处理基本类型
-  if (typeof obj !== "object") {
+  if (typeof obj !== 'object') {
     return obj;
   }
 

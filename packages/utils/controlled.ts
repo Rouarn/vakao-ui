@@ -1,4 +1,4 @@
-import { ref, computed, watch, type Ref, type ComputedRef } from "vue";
+import { ref, computed, watch, type Ref, type ComputedRef } from 'vue';
 
 /**
  * 受控/非受控模式的返回类型
@@ -11,7 +11,7 @@ export interface UseControlledReturn<T> {
   /** 当前值（受控或非受控） */
   currentValue: ComputedRef<T>;
   /** 更新值的方法 */
-  updateValue: (newValue: T) => void;
+  updateValue: (_newValue: T) => void;
 }
 
 /**
@@ -46,7 +46,7 @@ export function useControlled<T>(
   props: Record<string, any>,
   propName: string,
   modelValuePropName: string,
-  emit: (...args: any[]) => void,
+  emit: (..._args: any[]) => void,
   defaultValue: T,
 ): UseControlledReturn<T> {
   // 判断是否为受控模式
@@ -108,8 +108,8 @@ export function useControlled<T>(
  */
 export function useStandardControlled<T>(
   props: Record<string, any>,
-  emit: (...args: any[]) => void,
+  emit: (..._args: any[]) => void,
   defaultValue: T,
 ): UseControlledReturn<T> {
-  return useControlled(props, "value", "modelValue", emit, defaultValue);
+  return useControlled(props, 'value', 'modelValue', emit, defaultValue);
 }

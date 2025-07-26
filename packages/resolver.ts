@@ -1,4 +1,4 @@
-import type { ComponentResolver } from "unplugin-vue-components/types";
+import type { ComponentResolver } from 'unplugin-vue-components/types';
 
 export interface VakaoUIResolverOptions {
   /**
@@ -16,18 +16,18 @@ export interface VakaoUIResolverOptions {
 export function VakaoUIResolver(
   options: VakaoUIResolverOptions = {},
 ): ComponentResolver {
-  const { prefix = "vk" } = options;
+  const { prefix = 'vk' } = options;
 
   return {
-    type: "component",
+    type: 'component',
     resolve: (name: string) => {
       // 支持多种命名格式：VKButton, VkButton, vk-button
       const upperPrefix = prefix.toUpperCase();
       const capitalPrefix =
         prefix.charAt(0).toUpperCase() + prefix.slice(1).toLowerCase();
-      const kebabPrefix = prefix.toLowerCase() + "-";
+      const kebabPrefix = `${prefix.toLowerCase()}-`;
 
-      let compName = "";
+      let compName = '';
 
       if (name.startsWith(upperPrefix)) {
         // VKButton -> VKButton
@@ -38,7 +38,7 @@ export function VakaoUIResolver(
       } else if (name.startsWith(kebabPrefix)) {
         // vk-button -> VKButton
         const pascalName = name
-          .replace(kebabPrefix, "")
+          .replace(kebabPrefix, '')
           .replace(/-([a-z])/g, (_, letter) => letter.toUpperCase());
         compName =
           upperPrefix +
@@ -49,7 +49,7 @@ export function VakaoUIResolver(
       if (compName) {
         return {
           name: compName,
-          from: "vakao-ui",
+          from: 'vakao-ui',
         };
       }
     },

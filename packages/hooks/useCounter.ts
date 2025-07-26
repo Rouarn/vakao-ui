@@ -1,16 +1,16 @@
-import { ref, computed, ComputedRef } from "vue";
+import { ref, computed, ComputedRef } from 'vue';
 
 /**
  * 增加计数的函数类型
  * @description 将计数值增加指定数量
  */
-export type IncrementFunction = (delta?: number) => void;
+export type IncrementFunction = (_delta?: number) => void;
 
 /**
  * 减少计数的函数类型
  * @description 将计数值减少指定数量
  */
-export type DecrementFunction = (delta?: number) => void;
+export type DecrementFunction = (_delta?: number) => void;
 
 /**
  * 重置计数的函数类型
@@ -22,7 +22,7 @@ export type ResetFunction = () => void;
  * 设置计数的函数类型
  * @description 将计数值设置为指定值
  */
-export type SetCountFunction = (value: number) => void;
+export type SetCountFunction = (_value: number) => void;
 
 /**
  * useCounter 钩子函数的返回值类型

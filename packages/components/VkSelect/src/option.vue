@@ -3,7 +3,7 @@
     <slot>
       {{ label }}
     </slot>
-    <vk-icon
+    <VkIcon
       v-if="isSelected"
       class="vk-select-option__check"
       icon="mdi:check"
@@ -13,30 +13,30 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, inject, onMounted, onUnmounted } from "vue";
-import { optionProps, optionEmits, type SelectOption } from "./types";
-import { useNamespace } from "@vakao-ui/utils";
-import VkIcon from "../../VkIcon";
+import { defineComponent, computed, inject, onMounted, onUnmounted } from 'vue';
+import { optionProps, optionEmits, type SelectOption } from './types';
+import { useNamespace } from '@vakao-ui/utils';
+import VkIcon from '../../VkIcon';
 
 export default defineComponent({
-  name: "VkOption",
+  name: 'VkOption',
   components: {
     VkIcon,
   },
   props: optionProps,
   emits: optionEmits,
   setup(props, { emit }) {
-    const ns = useNamespace("select-option");
+    const ns = useNamespace('select-option');
 
     // 注入选择器上下文
     const selectContext = inject<{
       props: any;
-      addOption: (option: SelectOption) => void;
-      removeOption: (value: any) => void;
-      selectOption: (option: SelectOption) => void;
-      isSelected: (value: any) => boolean;
+      addOption: (_option: SelectOption) => void;
+      removeOption: (_value: any) => void;
+      selectOption: (_option: SelectOption) => void;
+      isSelected: (_value: any) => boolean;
       filteredOptions: any;
-    }>("VkSelect");
+    }>('VkSelect');
 
     // 当前选项对象
     const currentOption = computed(() => ({
@@ -61,7 +61,7 @@ export default defineComponent({
       if (!selectContext) return true;
       if (!selectContext.props.filterable) return true;
       return selectContext.filteredOptions.value.some(
-        (option: SelectOption) => option.value === props.value,
+        (option: SelectOption) => option.value === props.value
       );
     });
 
@@ -69,8 +69,8 @@ export default defineComponent({
     const mergedClass = computed(() => {
       return [
         ns.block(),
-        ns.is("selected", isSelected.value),
-        ns.is("disabled", isDisabled.value),
+        ns.is('selected', isSelected.value),
+        ns.is('disabled', isDisabled.value),
       ];
     });
 
@@ -81,7 +81,7 @@ export default defineComponent({
         ...currentOption.value,
         label: String(currentOption.value.label),
       });
-      emit("click", props.value);
+      emit('click', props.value);
     };
 
     // 注册选项到父组件

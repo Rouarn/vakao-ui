@@ -1,6 +1,6 @@
-import VkMessageBoxComponent from "./src/index.vue";
-import { VkMessageBox as MessageBoxService } from "./src/message-box";
-import { withInstall } from "@vakao-ui/utils";
+import VkMessageBoxComponent from './src/index.vue';
+import { VkMessageBox as MessageBoxService } from './src/message-box';
+import { withInstall } from '@vakao-ui/utils';
 
 // 组件安装
 const VkMessageBox = withInstall(VkMessageBoxComponent);
@@ -15,4 +15,4 @@ export { VkMessageBox };
 export default VkMessageBox;
 
 // 导出类型
-export * from "./src/types";
+export * from './src/types';

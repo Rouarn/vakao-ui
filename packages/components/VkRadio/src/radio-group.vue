@@ -1,20 +1,24 @@
 <template>
-  <div :class="mergedClass" :style="mergedStyle" role="radiogroup">
-    <slot></slot>
+  <div
+    :class="mergedClass"
+    :style="mergedStyle"
+    role="radiogroup"
+  >
+    <slot />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, provide, ref, watch } from "vue";
-import { radioGroupProps, radioGroupEmits, type RadioValue } from "./types";
-import { useNamespace } from "@vakao-ui/utils";
+import { defineComponent, computed, provide, ref, watch } from 'vue';
+import { radioGroupProps, radioGroupEmits, type RadioValue } from './types';
+import { useNamespace } from '@vakao-ui/utils';
 
 export default defineComponent({
-  name: "VkRadioGroup",
+  name: 'VkRadioGroup',
   props: radioGroupProps,
   emits: radioGroupEmits,
   setup(props, { emit }) {
-    const ns = useNamespace("radio-group");
+    const ns = useNamespace('radio-group');
 
     // 内部状态
     const modelValue = ref(props.modelValue);
@@ -36,7 +40,7 @@ export default defineComponent({
       return [
         ns.block(),
         `${ns.block()}--size-${currentSize.value}`,
-        ns.is("disabled", isDisabled.value),
+        ns.is('disabled', isDisabled.value),
         props.customClass,
       ];
     });
@@ -49,12 +53,12 @@ export default defineComponent({
     // 事件处理
     const changeEvent = (value: RadioValue) => {
       modelValue.value = value;
-      emit("update:modelValue", value);
-      emit("change", value);
+      emit('update:modelValue', value);
+      emit('change', value);
     };
 
     // 提供给子组件的上下文
-    provide("VkRadioGroup", {
+    provide('VkRadioGroup', {
       modelValue,
       disabled: isDisabled,
       size: currentSize,
