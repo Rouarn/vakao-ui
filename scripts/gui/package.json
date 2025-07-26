@@ -1,0 +1,59 @@
+{
+  "name": "vakao-ui-publisher-gui",
+  "version": "1.0.0",
+  "description": "Vakao UI 发布工具 GUI 版本",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "npm run electron .",
+    "dev": "npm run electron . --dev",
+    "electron": "electron .",
+    "build": "electron-builder",
+    "build:win": "electron-builder --win",
+    "build:mac": "electron-builder --mac",
+    "build:linux": "electron-builder --linux",
+    "pack": "electron-builder --dir",
+    "dist": "npm run build"
+  },
+  "build": {
+    "appId": "com.vakao-ui.publisher",
+    "productName": "Vakao UI Publisher",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "src/**/*",
+      "assets/**/*",
+      "node_modules/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "public/favicon.ico"
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "public/favicon.icns"
+    },
+    "linux": {
+      "target": "AppImage",
+      "icon": "public/favicon.png"
+    }
+  },
+  "keywords": [
+    "vakao-ui",
+    "publisher",
+    "gui",
+    "electron",
+    "vue"
+  ],
+  "author": "我与夏季",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^27.0.0",
+    "electron-builder": "^24.6.4"
+  },
+  "dependencies": {
+    "electron-store": "^8.1.0",
+    "node-notifier": "^10.0.1"
+  }
+}
