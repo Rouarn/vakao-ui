@@ -199,6 +199,50 @@ class Interactive {
   }
 
   /**
+   * 询问部署选项
+   * @returns {Promise<Object>} 部署配置
+   */
+  askForDeployment() {
+    return new Promise((resolve) => {
+      console.log("\n部署选项:");
+      console.log("  1. 📚 仅发布包，不部署");
+      console.log("  2. 🌐 发布包并部署文档站点");
+      console.log("  3. 📦 发布包并部署到 GitHub Pages");
+      console.log("  4. 🚀 发布包并执行完整部署");
+      console.log("  5. 📋 仅部署文档站点（跳过发布）");
+
+      this.rl.question(
+        "请选择部署选项 (输入数字，默认为 1): ",
+        (answer) => {
+          const choice = parseInt(answer) || 1;
+          
+          switch (choice) {
+            case 1:
+              resolve({ deploy: false, deployOnly: false, deployStrategy: null });
+              break;
+            case 2:
+              resolve({ deploy: true, deployOnly: false, deployStrategy: "docs" });
+              break;
+            case 3:
+              resolve({ deploy: true, deployOnly: false, deployStrategy: "github-pages" });
+              break;
+            case 4:
+              resolve({ deploy: true, deployOnly: false, deployStrategy: null });
+              break;
+            case 5:
+              resolve({ deploy: false, deployOnly: true, deployStrategy: "docs" });
+              break;
+            default:
+              log("无效选择，使用默认选项（仅发布包）", "warning");
+              resolve({ deploy: false, deployOnly: false, deployStrategy: null });
+              break;
+          }
+        },
+      );
+    });
+  }
+
+  /**
    * 询问确认
    * @param {string} message - 确认消息
    * @returns {Promise<boolean>} 是否确认

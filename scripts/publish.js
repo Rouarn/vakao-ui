@@ -371,6 +371,21 @@ async function main() {
 
     separator();
 
+    // 在交互模式下询问部署选项（如果没有通过命令行指定）
+    if (!options.singlePackage && !options.packages && !options.deploy && !options.deployOnly && !options.deployStrategy) {
+      const deploymentOptions = await interactive.askForDeployment();
+      // 合并部署选项到 options
+      Object.assign(options, deploymentOptions);
+      
+      if (deploymentOptions.deployOnly) {
+        // 如果选择仅部署，直接执行部署逻辑
+        await handleDeployOnly(options, deploymentEngine, interactive);
+        return;
+      }
+      
+      separator();
+    }
+
     // 确定版本号
     const versions = await interactive.askForVersions(
       packageKeys,
