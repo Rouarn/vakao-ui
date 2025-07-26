@@ -72,9 +72,28 @@ function log(message, type = "info") {
   const icon = icons[type] || icons.info;
   const color = typeColors[type] || typeColors.info;
 
+  // 检查消息开头是否有换行符
+  const startsWithNewline = message.startsWith('\n');
+  // 检查消息结尾是否有换行符
+  const endsWithNewline = message.endsWith('\n');
+  
+  // 移除消息中的换行符，由我们来控制换行
+  const cleanMessage = message.replace(/^\n+|\n+$/g, '');
+  
+  // 如果开头有换行符，先打印换行
+  if (startsWithNewline) {
+    console.log('');
+  }
+  
+  // 打印主要内容
   console.log(
-    `${colors.dim}[${timestamp}]${colors.reset} ${icon} ${color}${message}${colors.reset}`,
+    `${colors.dim}[${timestamp}]${colors.reset} ${icon} ${color}${cleanMessage}${colors.reset}`,
   );
+  
+  // 如果结尾有换行符，后打印换行
+  if (endsWithNewline) {
+    console.log('');
+  }
 }
 
 // 分隔线
