@@ -72,7 +72,7 @@ class NotificationExtension {
     const { strategy, result, duration } = context;
     
     const message = {
-      title: '🚀 部署完成',
+      title: '🎉 Vakao UI - 部署成功',
       content: `策略: ${strategy}\n结果: ${result.message}\n耗时: ${Math.round(duration / 1000)}秒`,
       type: 'success',
       url: result.url
@@ -89,7 +89,7 @@ class NotificationExtension {
     const { error, strategy } = context;
     
     const message = {
-      title: '❌ 部署失败',
+      title: '⚠️ Vakao UI - 部署失败',
       content: `策略: ${strategy}\n错误: ${error.message}`,
       type: 'error'
     };
