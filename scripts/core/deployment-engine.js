@@ -110,17 +110,36 @@ class DeploymentEngine {
   }
 
   /**
+   * 设置扩展管理器
+   * @param {ExtensionManager} extensionManager - 扩展管理器实例
+   */
+  setExtensionManager(extensionManager) {
+    this.extensionManager = extensionManager;
+  }
+
+  /**
    * 执行钩子函数
    * @param {string} hookName - 钩子名称
    * @param {Object} context - 上下文数据
    */
   async executeHooks(hookName, context) {
+    // 执行部署引擎自己的钩子
     const hooks = this.hooks[hookName] || [];
     for (const hook of hooks) {
       try {
         await hook(context);
       } catch (error) {
         log(`钩子执行失败 (${hookName}): ${error.message}`, "error");
+        throw error;
+      }
+    }
+
+    // 执行扩展管理器的钩子
+    if (this.extensionManager) {
+      try {
+        await this.extensionManager.executeHook(hookName, context);
+      } catch (error) {
+        log(`扩展钩子执行失败 (${hookName}): ${error.message}`, "error");
         throw error;
       }
     }

@@ -316,6 +316,7 @@ async function main() {
 
     // 初始化部署引擎
     deploymentEngine = new DeploymentEngine(CONFIG);
+    deploymentEngine.setExtensionManager(extensionManager);
 
     // 初始化交互界面
     interactive = new Interactive(CONFIG.packages);
