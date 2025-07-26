@@ -41,7 +41,7 @@ const {
   showBanner,
   showSuccess,
   handleError,
-} = require("./utils");
+} = require("../utils/");
 
 // ==================== 配置常量 ====================
 

@@ -15,7 +15,7 @@
 const { execSync } = require("child_process");
 const fs = require("fs");
 const path = require("path");
-const { log, separator } = require("../utils");
+const { log, separator } = require("../utils/");
 
 /**
  * 部署引擎类

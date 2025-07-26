@@ -6,7 +6,7 @@
 const { execSync } = require("child_process");
 const fs = require("fs");
 const path = require("path");
-const { log, separator, showSuccess, handleError } = require("../utils");
+const { log, separator, showSuccess } = require("../utils/");
 
 class LegacyDeployExtension {
   constructor(config) {
@@ -20,7 +20,7 @@ class LegacyDeployExtension {
    * 初始化扩展
    * @param {ExtensionManager} extensionManager - 扩展管理器
    */
-  async initialize(extensionManager) {
+  async initialize() {
     // 注册自定义部署策略
     const deploymentEngine = this.getDeploymentEngine();
     if (deploymentEngine) {
@@ -111,9 +111,7 @@ class LegacyDeployExtension {
 
         // 部署
         const deployMessage = `docs: deploy from ${gitStatus.currentBranch} branch`;
-        this.execCommand(
-          `npx gh-pages -d "${distDir}" -m "${deployMessage}"`,
-        );
+        this.execCommand(`npx gh-pages -d "${distDir}" -m "${deployMessage}"`);
       } else {
         log("[测试模式] 跳过实际部署", "info");
       }
@@ -166,10 +164,12 @@ class LegacyDeployExtension {
    */
   checkGitStatus() {
     try {
-      const status = this.execCommand("git status --porcelain", { silent: true });
+      const status = this.execCommand("git status --porcelain", {
+        silent: true,
+      });
       const currentBranch = this.execCommand(
         "git rev-parse --abbrev-ref HEAD",
-        { silent: true },
+        { silent: true }
       ).trim();
 
       const hasUncommittedChanges = !!status.trim();

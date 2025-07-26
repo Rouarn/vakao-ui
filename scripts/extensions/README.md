@@ -231,7 +231,7 @@ constructor(config) {
 ### 3. 日志记录
 
 ```javascript
-const { log } = require('../utils');
+const { log } = require('../utils/');
 
 async initialize(extensionManager) {
   log(`初始化 ${this.name} 扩展`, 'info');

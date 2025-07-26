@@ -11,7 +11,7 @@
  */
 
 const readline = require("readline");
-const { log } = require("../utils");
+const { log } = require("../utils/");
 
 /**
  * 交互式界面类

@@ -14,7 +14,7 @@
 
 const fs = require("fs");
 const path = require("path");
-const { log } = require("../utils");
+const { log } = require("../utils/");
 
 /**
  * 扩展管理器类

@@ -13,7 +13,7 @@
  */
 
 const path = require("path");
-const { log, showBanner, showSuccess, handleError } = require("../utils");
+const { log, showBanner, showSuccess, handleError } = require("../utils/");
 
 // 工具标题
 const TOOL_TITLE = "🚀 Vakao UI 部署工具 🚀 (兼容模式)";

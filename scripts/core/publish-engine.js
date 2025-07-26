@@ -26,7 +26,7 @@ const {
 } = require("fs");
 const path = require("path");
 const readline = require("readline");
-const { log } = require("../utils");
+const { log } = require("../utils/");
 
 /**
  * 发布引擎类
