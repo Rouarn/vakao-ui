@@ -255,7 +255,16 @@ class NotificationExtension {
    * @param {string} type - 消息类型
    */
   getIconPath(type) {
-    // 返回系统图标或自定义图标路径
+    const path = require('path');
+    const fs = require('fs');
+    
+    // 尝试使用项目 logo
+    const logoPath = path.resolve(__dirname, '../../docs/public/logo.svg');
+    if (fs.existsSync(logoPath)) {
+      return logoPath;
+    }
+    
+    // 备用方案：使用系统图标
     return type === 'success' ? 'success' : 'error';
   }
 
