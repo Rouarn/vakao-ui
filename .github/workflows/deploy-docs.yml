@@ -53,8 +53,7 @@ jobs:
       
       - name: Build with VitePress
         run: |
-          cd docs
-          pnpm run build
+          pnpm run build:docs
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
