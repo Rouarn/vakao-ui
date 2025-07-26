@@ -71,20 +71,20 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, ref } from 'vue';
-import { switchProps, switchEmits, type SwitchValue } from './types';
-import { useNamespace, isUrl, useControlled } from '@vakao-ui/utils';
-import VkIcon from '../../VkIcon';
+import { defineComponent, computed, ref } from "vue";
+import { switchProps, switchEmits, type SwitchValue } from "./types";
+import { useNamespace, isUrl, useControlled } from "@vakao-ui/utils";
+import VkIcon from "../../VkIcon";
 
 export default defineComponent({
-  name: 'VkSwitch',
+  name: "VkSwitch",
   components: {
     VkIcon,
   },
   props: switchProps,
   emits: switchEmits,
   setup(props, { emit }) {
-    const ns = useNamespace('switch');
+    const ns = useNamespace("switch");
 
     // 模板引用
     const switchRef = ref<HTMLElement>();
@@ -92,8 +92,8 @@ export default defineComponent({
     // 使用受控/非受控模式工具函数
     const { currentValue, updateValue } = useControlled<SwitchValue>(
       props,
-      'value',
-      'modelValue',
+      "value",
+      "modelValue",
       emit,
       false as SwitchValue,
     );
@@ -111,19 +111,19 @@ export default defineComponent({
     const mergedClass = computed(() => {
       return [
         ns.block(),
-        ns.modifier('size', props.size),
-        ns.is('disabled', isDisabled.value),
-        ns.is('checked', isChecked.value),
-        ns.is('loading', props.loading),
+        ns.modifier("size", props.size),
+        ns.is("disabled", isDisabled.value),
+        ns.is("checked", isChecked.value),
+        ns.is("loading", props.loading),
         props.customClass,
       ];
     });
 
     const switchClass = computed(() => {
       return [
-        ns.element('core'),
+        ns.element("core"),
         {
-          [ns.element('core--inline')]: props.inlinePrompt,
+          [ns.element("core--inline")]: props.inlinePrompt,
         },
       ];
     });
@@ -154,7 +154,7 @@ export default defineComponent({
       }
 
       updateValue(newValue);
-      emit('change', newValue);
+      emit("change", newValue);
     };
 
     return {

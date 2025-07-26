@@ -33,22 +33,22 @@
  * @author Vakao UI Team
  */
 
-const path = require('path');
+const path = require("path");
 const {
   log,
   separator,
   showBanner,
   showSuccess,
   handleError,
-} = require('./utils');
-const PublishEngine = require('./core/publish-engine');
-const Interactive = require('./core/interactive');
-const { CONFIG } = require('./core/package-configs');
+} = require("./utils");
+const PublishEngine = require("./core/publish-engine");
+const Interactive = require("./core/interactive");
+const { CONFIG } = require("./core/package-configs");
 
 // ==================== 配置常量 ====================
 
 /** 工具标题 */
-const TOOL_TITLE = '📦 Vakao UI 统一发布系统 📦';
+const TOOL_TITLE = "📦 Vakao UI 统一发布系统 📦";
 
 // ==================== 工具函数 ====================
 
@@ -59,41 +59,41 @@ const TOOL_TITLE = '📦 Vakao UI 统一发布系统 📦';
 function parseArguments() {
   const args = process.argv.slice(2);
   const options = {
-    isDryRun: args.includes('--dry-run'),
-    syncVersion: args.includes('--sync-version'),
+    isDryRun: args.includes("--dry-run"),
+    syncVersion: args.includes("--sync-version"),
     packages: null,
     singlePackage: null,
-    help: args.includes('--help') || args.includes('-h'),
+    help: args.includes("--help") || args.includes("-h"),
   };
 
   // 解析 --packages 参数（多个包）
-  const packagesIndex = args.findIndex((arg) => arg.startsWith('--packages'));
+  const packagesIndex = args.findIndex((arg) => arg.startsWith("--packages"));
   if (packagesIndex !== -1) {
     const packagesArg = args[packagesIndex];
-    if (packagesArg.includes('=')) {
-      const packagesList = packagesArg.split('=')[1];
-      options.packages = packagesList.split(',').map((p) => p.trim());
+    if (packagesArg.includes("=")) {
+      const packagesList = packagesArg.split("=")[1];
+      options.packages = packagesList.split(",").map((p) => p.trim());
     } else if (
       args[packagesIndex + 1] &&
-      !args[packagesIndex + 1].startsWith('--')
+      !args[packagesIndex + 1].startsWith("--")
     ) {
       options.packages = args[packagesIndex + 1]
-        .split(',')
+        .split(",")
         .map((p) => p.trim());
     }
   }
 
   // 解析 --package 参数（单个包）
   const packageIndex = args.findIndex(
-    (arg) => arg.startsWith('--package') && !arg.startsWith('--packages'),
+    (arg) => arg.startsWith("--package") && !arg.startsWith("--packages"),
   );
   if (packageIndex !== -1) {
     const packageArg = args[packageIndex];
-    if (packageArg.includes('=')) {
-      options.singlePackage = packageArg.split('=')[1].trim();
+    if (packageArg.includes("=")) {
+      options.singlePackage = packageArg.split("=")[1].trim();
     } else if (
       args[packageIndex + 1] &&
-      !args[packageIndex + 1].startsWith('--')
+      !args[packageIndex + 1].startsWith("--")
     ) {
       options.singlePackage = args[packageIndex + 1].trim();
     }
@@ -107,21 +107,21 @@ function parseArguments() {
  */
 function showHelp() {
   console.log(`\n${TOOL_TITLE}\n`);
-  console.log('使用方法:');
-  console.log('  node scripts/publish.js [选项]');
-  console.log('\n选项:');
-  console.log('  --help, -h           显示帮助信息');
-  console.log('  --dry-run            测试模式，不实际发布');
-  console.log('  --sync-version       同步所有包的版本号');
-  console.log('  --packages <list>    发布指定的包（逗号分隔）');
-  console.log('  --package <name>     发布单个包');
-  console.log('\n示例:');
-  console.log('  node scripts/publish.js');
-  console.log('  node scripts/publish.js --dry-run');
-  console.log('  node scripts/publish.js --packages hooks,utils');
-  console.log('  node scripts/publish.js --package hooks --dry-run');
-  console.log('  node scripts/publish.js --sync-version');
-  console.log('\n可用的包:');
+  console.log("使用方法:");
+  console.log("  node scripts/publish.js [选项]");
+  console.log("\n选项:");
+  console.log("  --help, -h           显示帮助信息");
+  console.log("  --dry-run            测试模式，不实际发布");
+  console.log("  --sync-version       同步所有包的版本号");
+  console.log("  --packages <list>    发布指定的包（逗号分隔）");
+  console.log("  --package <name>     发布单个包");
+  console.log("\n示例:");
+  console.log("  node scripts/publish.js");
+  console.log("  node scripts/publish.js --dry-run");
+  console.log("  node scripts/publish.js --packages hooks,utils");
+  console.log("  node scripts/publish.js --package hooks --dry-run");
+  console.log("  node scripts/publish.js --sync-version");
+  console.log("\n可用的包:");
   Object.entries(CONFIG.packages).forEach(([key, pkg]) => {
     console.log(`  ${key.padEnd(8)} ${pkg.icon} ${pkg.displayName}`);
   });
@@ -137,10 +137,10 @@ function validatePackages(packageKeys) {
   const invalidPackages = packageKeys.filter((key) => !CONFIG.packages[key]);
 
   if (invalidPackages.length > 0) {
-    log(`无效的包名: ${invalidPackages.join(', ')}`, 'error');
-    log('可用的包:', 'info');
+    log(`无效的包名: ${invalidPackages.join(", ")}`, "error");
+    log("可用的包:", "info");
     Object.keys(CONFIG.packages).forEach((key) => {
-      log(`  ${key}`, 'info');
+      log(`  ${key}`, "info");
     });
   }
 
@@ -170,8 +170,8 @@ async function main() {
     showBanner(TOOL_TITLE);
 
     // 设置项目路径
-    CONFIG.projectRoot = path.resolve(__dirname, '..');
-    CONFIG.buildRoot = path.resolve(CONFIG.projectRoot, 'dist');
+    CONFIG.projectRoot = path.resolve(__dirname, "..");
+    CONFIG.buildRoot = path.resolve(CONFIG.projectRoot, "dist");
 
     // 初始化发布引擎
     publishEngine = new PublishEngine(CONFIG);
@@ -180,17 +180,17 @@ async function main() {
     interactive = new Interactive(CONFIG.packages);
 
     // 显示配置信息
-    log(`发布模式: ${options.isDryRun ? '测试模式' : '正式发布'}`, 'info');
+    log(`发布模式: ${options.isDryRun ? "测试模式" : "正式发布"}`, "info");
     log(
       `目标仓库: ${
         publishEngine.usePrivateRegistry
           ? `私有制品仓库 (${publishEngine.privateRegistry})`
-          : 'npm 官方仓库'
+          : "npm 官方仓库"
       }`,
-      'info',
+      "info",
     );
     if (options.syncVersion) {
-      log('版本同步: 启用', 'info');
+      log("版本同步: 启用", "info");
     }
 
     separator();
@@ -201,20 +201,20 @@ async function main() {
       // 单个包模式
       const validPackages = validatePackages([options.singlePackage]);
       if (validPackages.length === 0) {
-        throw new Error('指定的包不存在');
+        throw new Error("指定的包不存在");
       }
       packageKeys = validPackages;
-      log(`发布单个包: ${CONFIG.packages[packageKeys[0]].displayName}`, 'info');
+      log(`发布单个包: ${CONFIG.packages[packageKeys[0]].displayName}`, "info");
     } else if (options.packages) {
       // 指定包模式
       const validPackages = validatePackages(options.packages);
       if (validPackages.length === 0) {
-        throw new Error('指定的包不存在');
+        throw new Error("指定的包不存在");
       }
       packageKeys = validPackages;
       log(
-        `指定发布包: ${packageKeys.map((key) => CONFIG.packages[key].displayName).join(', ')}`,
-        'info',
+        `指定发布包: ${packageKeys.map((key) => CONFIG.packages[key].displayName).join(", ")}`,
+        "info",
       );
     } else {
       // 交互式选择
@@ -239,11 +239,11 @@ async function main() {
     separator();
 
     // 确认发布
-    const confirmMessage = `确认${options.isDryRun ? '测试' : '发布'}以上包？`;
+    const confirmMessage = `确认${options.isDryRun ? "测试" : "发布"}以上包？`;
     const confirmPublish = await interactive.askForConfirmation(confirmMessage);
 
     if (!confirmPublish) {
-      log('发布已取消', 'warning');
+      log("发布已取消", "warning");
       return;
     }
 
@@ -257,8 +257,8 @@ async function main() {
           publishEngine.sortPackagesByDependencies(packageKeys);
         separator();
       } catch (error) {
-        log(`依赖排序失败: ${error.message}`, 'warning');
-        log('将按原顺序发布', 'warning');
+        log(`依赖排序失败: ${error.message}`, "warning");
+        log("将按原顺序发布", "warning");
         separator();
       }
     }
@@ -284,7 +284,7 @@ async function main() {
         });
         log(
           `${CONFIG.packages[packageKey].displayName} 发布失败，继续处理其他包...`,
-          'warning',
+          "warning",
         );
       }
     }
@@ -302,14 +302,14 @@ async function main() {
     // 显示最终结果
     if (failCount === 0) {
       showSuccess(
-        `所有包${options.isDryRun ? '测试' : '发布'}成功！(${successCount}/${packageKeys.length})`,
+        `所有包${options.isDryRun ? "测试" : "发布"}成功！(${successCount}/${packageKeys.length})`,
       );
     } else {
-      log(`发布完成：${successCount} 成功，${failCount} 失败`, 'warning');
+      log(`发布完成：${successCount} 成功，${failCount} 失败`, "warning");
       process.exit(1);
     }
   } catch (error) {
-    handleError('发布过程中出现错误', error);
+    handleError("发布过程中出现错误", error);
   } finally {
     // 清理资源
     if (publishEngine) {
@@ -325,6 +325,6 @@ async function main() {
 
 // 运行主函数
 main().catch((err) => {
-  console.error('发布失败:', err);
+  console.error("发布失败:", err);
   process.exit(1);
 });

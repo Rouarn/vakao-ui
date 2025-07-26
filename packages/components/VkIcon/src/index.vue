@@ -57,25 +57,25 @@
  * </template>
  * ```
  */
-import { computed } from 'vue';
-import { useNamespace } from '@vakao-ui/utils';
-import type { VkIconProps } from './types';
-import { Icon } from '@iconify/vue';
+import { computed } from "vue";
+import { useNamespace } from "@vakao-ui/utils";
+import type { VkIconProps } from "./types";
+import { Icon } from "@iconify/vue";
 
 // 组件配置
 defineOptions({
-  name: 'VkIcon',
+  name: "VkIcon",
   inheritAttrs: false, // 禁用属性继承，手动控制属性传递
 });
 
 // 组件属性定义和默认值
 const props = withDefaults(defineProps<VkIconProps>(), {
-  size: '1em', // 默认大小为 1em，继承父元素字体大小
-  color: 'currentColor', // 默认颜色为当前文字颜色
+  size: "1em", // 默认大小为 1em，继承父元素字体大小
+  color: "currentColor", // 默认颜色为当前文字颜色
 });
 
 // 获取命名空间工具
-const ns = useNamespace('icon');
+const ns = useNamespace("icon");
 
 /**
  * 合并 CSS 类名
@@ -96,18 +96,18 @@ const mergedClass = computed(() => {
 const mergedStyle = computed(() => {
   // 基础样式：尺寸和颜色
   const baseStyle = {
-    fontSize: typeof props.size === 'number' ? `${props.size}px` : props.size,
+    fontSize: typeof props.size === "number" ? `${props.size}px` : props.size,
     color: props.color,
   };
 
   // 如果自定义样式是字符串格式，需要转换并合并
-  if (typeof props.customStyle === 'string') {
+  if (typeof props.customStyle === "string") {
     return `${Object.entries(baseStyle)
       .map(
         ([key, value]) =>
-          `${key.replace(/([A-Z])/g, '-$1').toLowerCase()}: ${value}`,
+          `${key.replace(/([A-Z])/g, "-$1").toLowerCase()}: ${value}`,
       )
-      .join('; ')}; ${props.customStyle}`;
+      .join("; ")}; ${props.customStyle}`;
   }
 
   // 如果自定义样式是对象格式，直接合并

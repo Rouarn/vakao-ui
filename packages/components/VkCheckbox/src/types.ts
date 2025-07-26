@@ -1,5 +1,5 @@
-import type { PropType, CSSProperties } from 'vue';
-import { ExtractPublicPropTypes, ComponentSize } from '../../../types';
+import type { PropType, CSSProperties } from "vue";
+import type { ExtractPublicPropTypes, ComponentSize } from "../../../types";
 
 // 复选框尺寸
 export type CheckboxSize = ComponentSize;
@@ -17,7 +17,7 @@ export const checkboxProps = {
   /** 复选框尺寸 */
   size: {
     type: String as PropType<CheckboxSize>,
-    default: 'medium',
+    default: "medium",
   },
   /** 是否禁用 */
   disabled: {
@@ -32,7 +32,7 @@ export const checkboxProps = {
   /** 复选框标签 */
   label: {
     type: String,
-    default: '',
+    default: "",
   },
   /** 是否为不确定状态 */
   indeterminate: {
@@ -55,7 +55,7 @@ export const checkboxGroupProps = {
   /** 复选框组尺寸 */
   size: {
     type: String as PropType<CheckboxSize>,
-    default: 'medium',
+    default: "medium",
   },
   /** 是否禁用 */
   disabled: {
@@ -86,12 +86,12 @@ export type CheckboxGroupProps = ExtractPublicPropTypes<
 
 // 复选框事件定义
 export const checkboxEmits = {
-  'update:modelValue': (_value: boolean) => true,
+  "update:modelValue": (_value: boolean) => true,
   change: (_value: boolean) => true,
 } as const;
 
 export const checkboxGroupEmits = {
-  'update:modelValue': (_value: CheckboxValue[]) => true,
+  "update:modelValue": (_value: CheckboxValue[]) => true,
   change: (_value: CheckboxValue[]) => true,
 } as const;
 

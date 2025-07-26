@@ -1,5 +1,5 @@
-import type { PropType, CSSProperties } from 'vue';
-import { ExtractPublicPropTypes, ComponentSize } from '../../../types';
+import type { PropType, CSSProperties } from "vue";
+import type { ExtractPublicPropTypes, ComponentSize } from "../../../types";
 
 // 开关尺寸
 export type SwitchSize = ComponentSize;
@@ -22,7 +22,7 @@ export const switchProps = {
   /** 开关尺寸 */
   size: {
     type: String as PropType<SwitchSize>,
-    default: 'medium',
+    default: "medium",
   },
   /** 是否禁用 */
   disabled: {
@@ -47,22 +47,22 @@ export const switchProps = {
   /** 选中时的文字描述 */
   activeText: {
     type: String,
-    default: '',
+    default: "",
   },
   /** 未选中时的文字描述 */
   inactiveText: {
     type: String,
-    default: '',
+    default: "",
   },
   /** 选中时的图标 */
   activeIcon: {
     type: String,
-    default: '',
+    default: "",
   },
   /** 未选中时的图标 */
   inactiveIcon: {
     type: String,
-    default: '',
+    default: "",
   },
   /** 是否在按钮内显示图标 */
   inlinePrompt: {
@@ -85,7 +85,7 @@ export type SwitchProps = ExtractPublicPropTypes<typeof switchProps>;
 
 // 开关事件定义
 export const switchEmits = {
-  'update:modelValue': (_value: SwitchValue) => true,
+  "update:modelValue": (_value: SwitchValue) => true,
   change: (_value: SwitchValue) => true,
 } as const;
 // 导出事件类型

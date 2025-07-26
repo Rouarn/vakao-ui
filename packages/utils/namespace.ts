@@ -16,9 +16,9 @@ export interface UseNamespaceReturn {
 }
 
 /** 默认命名空间前缀 */
-const defaultNamespace = 'vk';
+const defaultNamespace = "vk";
 /** 状态类名前缀 */
-const statePrefix = 'is-';
+const statePrefix = "is-";
 
 /**
  * 创建 CSS 命名空间工具函数
@@ -62,7 +62,7 @@ export const useNamespace = (
    * @returns 元素类名，格式：{namespace}-{block}__{element}
    */
   const element = (element: string) => {
-    return element ? `${blockClass}__${element}` : '';
+    return element ? `${blockClass}__${element}` : "";
   };
 
   /**
@@ -75,13 +75,13 @@ export const useNamespace = (
    * - 布尔值为 false：返回空字符串
    */
   const modifier = (modifier: string, value?: string | number | boolean) => {
-    if (!modifier) return '';
+    if (!modifier) return "";
 
-    if (typeof value === 'boolean') {
-      return value ? `${blockClass}--${modifier}` : '';
+    if (typeof value === "boolean") {
+      return value ? `${blockClass}--${modifier}` : "";
     }
 
-    if (typeof value === 'string' || typeof value === 'number') {
+    if (typeof value === "string" || typeof value === "number") {
       return `${blockClass}--${modifier}-${value}`;
     }
 
@@ -97,8 +97,8 @@ export const useNamespace = (
    * - 当 state 为 true 或未提供时返回状态类名
    */
   const is = (name: string, state?: boolean) => {
-    if (typeof state === 'boolean') {
-      return state ? `${statePrefix}${name}` : '';
+    if (typeof state === "boolean") {
+      return state ? `${statePrefix}${name}` : "";
     }
     return `${statePrefix}${name}`;
   };

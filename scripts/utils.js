@@ -5,16 +5,16 @@
 
 // 颜色和样式
 const colors = {
-  reset: '\x1b[0m',
-  bright: '\x1b[1m',
-  dim: '\x1b[2m',
-  red: '\x1b[31m',
-  green: '\x1b[32m',
-  yellow: '\x1b[33m',
-  blue: '\x1b[34m',
-  magenta: '\x1b[35m',
-  cyan: '\x1b[36m',
-  white: '\x1b[37m',
+  reset: "\x1b[0m",
+  bright: "\x1b[1m",
+  dim: "\x1b[2m",
+  red: "\x1b[31m",
+  green: "\x1b[32m",
+  yellow: "\x1b[33m",
+  blue: "\x1b[34m",
+  magenta: "\x1b[35m",
+  cyan: "\x1b[36m",
+  white: "\x1b[37m",
 };
 
 // ASCII 艺术字
@@ -38,17 +38,17 @@ ${colors.dim}                        ══════════════�
 
 // 图标配置
 const icons = {
-  info: '📝',
-  success: '✅',
-  warning: '⚠️',
-  error: '❌',
-  command: '🔧',
-  build: '🏗️',
-  publish: '📦',
-  deploy: '🚀',
-  check: '🔍',
-  copy: '📋',
-  clean: '🧹',
+  info: "📝",
+  success: "✅",
+  warning: "⚠️",
+  error: "❌",
+  command: "🔧",
+  build: "🏗️",
+  publish: "📦",
+  deploy: "🚀",
+  check: "🔍",
+  copy: "📋",
+  clean: "🧹",
 };
 
 // 类型颜色配置
@@ -67,7 +67,7 @@ const typeColors = {
 };
 
 // 美化日志输出
-function log(message, type = 'info') {
+function log(message, type = "info") {
   const timestamp = new Date().toLocaleTimeString();
   const icon = icons[type] || icons.info;
   const color = typeColors[type] || typeColors.info;
@@ -78,7 +78,7 @@ function log(message, type = 'info') {
 }
 
 // 分隔线
-function separator(char = '─', length = 50) {
+function separator(char = "─", length = 50) {
   console.log(`${colors.dim}${char.repeat(length)}${colors.reset}`);
 }
 
@@ -89,14 +89,14 @@ function showBanner(title) {
 
 // 成功结束消息
 function showSuccess(message) {
-  separator('═');
-  log(`🎉 ${message} 🎉`, 'success');
-  separator('═');
+  separator("═");
+  log(`🎉 ${message} 🎉`, "success");
+  separator("═");
 }
 
 // 错误处理
 function handleError(message, error) {
-  log(`${message}: ${error}`, 'error');
+  log(`${message}: ${error}`, "error");
   process.exit(1);
 }
 

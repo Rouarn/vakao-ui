@@ -5,12 +5,12 @@
  * 按钮组件支持多种样式变体、图标配置、状态控制等功能。
  */
 
-import type { PropType, CSSProperties, VNode } from 'vue';
-import {
+import type { PropType, CSSProperties, VNode } from "vue";
+import type {
   ExtractPublicPropTypes,
   ComponentType,
   ComponentSize,
-} from '../../../types';
+} from "../../../types";
 
 /**
  * 按钮类型
@@ -43,7 +43,7 @@ export type ButtonSize = ComponentSize;
  * - submit: 提交按钮，用于表单提交
  * - reset: 重置按钮，用于表单重置
  */
-export type ButtonNativeType = 'button' | 'submit' | 'reset';
+export type ButtonNativeType = "button" | "submit" | "reset";
 
 /**
  * 按钮组件属性定义
@@ -71,7 +71,7 @@ export const buttonProps = {
    */
   type: {
     type: String as PropType<ButtonType>,
-    default: 'default',
+    default: "default",
   },
   /**
    * 按钮尺寸，影响按钮的高度和内边距
@@ -79,7 +79,7 @@ export const buttonProps = {
    */
   size: {
     type: String as PropType<ButtonSize>,
-    default: 'medium',
+    default: "medium",
   },
   /**
    * 是否禁用按钮，禁用后不可点击且样式变灰
@@ -145,15 +145,15 @@ export const buttonProps = {
    */
   icon: {
     type: [String, Object] as PropType<string | VNode>,
-    default: '',
+    default: "",
   },
   /**
    * 图标位置，相对于按钮文字的位置
    * @default 'left'
    */
   iconPosition: {
-    type: String as PropType<'left' | 'right'>,
-    default: 'left',
+    type: String as PropType<"left" | "right">,
+    default: "left",
   },
   /**
    * 原生 button 元素的 type 属性
@@ -161,7 +161,7 @@ export const buttonProps = {
    */
   nativeType: {
     type: String as PropType<ButtonNativeType>,
-    default: 'button',
+    default: "button",
   },
   /**
    * 自定义 CSS 类名，会与组件默认类名合并

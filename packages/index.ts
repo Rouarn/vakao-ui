@@ -37,15 +37,15 @@
  * @author Vakao UI Team
  */
 
-import type { App } from 'vue';
+import type { App } from "vue";
 
 // ==================== 核心模块导入 ====================
 
 /** 导入所有组件的安装插件 */
-import components from './components';
+import components from "./components";
 
 /** 导入完整的样式系统 */
-import './styles/index.scss';
+import "./styles/index.scss";
 
 // ==================== 功能模块导出 ====================
 
@@ -60,7 +60,7 @@ import './styles/index.scss';
  * - URL 处理工具：isUrl
  * - 受控组件工具：useControlled
  */
-export * from './utils';
+export * from "./utils";
 
 /**
  * 组合式函数模块
@@ -71,7 +71,7 @@ export * from './utils';
  * - 性能优化：useDebounce, useThrottle
  * - 网络请求：useFetch
  */
-export * from './hooks';
+export * from "./hooks";
 
 /**
  * 组件模块
@@ -82,7 +82,7 @@ export * from './hooks';
  * - 反馈组件：VkMessageBox
  * - 组合组件：VkButtonGroup, VkCheckboxGroup, VkRadioGroup
  */
-export * from './components';
+export * from "./components";
 
 /**
  * 解析器模块
@@ -92,7 +92,7 @@ export * from './components';
  * - Webpack 插件按需导入
  * - 自动样式导入
  */
-export * from './resolver';
+export * from "./resolver";
 
 // ==================== 服务 API 导出 ====================
 
@@ -118,7 +118,7 @@ export * from './resolver';
  * }
  * ```
  */
-export { VkMessageBox } from './components/VkMessageBox/src/message-box';
+export { VkMessageBox } from "./components/VkMessageBox/src/message-box";
 
 // ==================== 默认插件导出 ====================
 

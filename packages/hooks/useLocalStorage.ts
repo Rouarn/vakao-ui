@@ -1,4 +1,5 @@
-import { ref, watch, computed, ComputedRef } from 'vue';
+import type { ComputedRef } from "vue";
+import { ref, watch, computed } from "vue";
 
 /**
  * 设置存储值的函数类型
@@ -95,7 +96,7 @@ export function useLocalStorage<T>(
 
   // 读取初始值
   function readFromStorage(): T {
-    if (typeof window === 'undefined') {
+    if (typeof window === "undefined") {
       return defaultValue;
     }
 
@@ -113,7 +114,7 @@ export function useLocalStorage<T>(
 
   // 写入存储
   function writeToStorage(value: T): void {
-    if (typeof window === 'undefined') {
+    if (typeof window === "undefined") {
       return;
     }
 
@@ -126,7 +127,7 @@ export function useLocalStorage<T>(
 
   // 从存储中移除
   function removeFromStorage(): void {
-    if (typeof window === 'undefined') {
+    if (typeof window === "undefined") {
       return;
     }
 
@@ -145,7 +146,7 @@ export function useLocalStorage<T>(
   // 设置值
   function setValue(value: T | ((prevValue: T) => T)): void {
     const newValue =
-      typeof value === 'function'
+      typeof value === "function"
         ? (value as (prevValue: T) => T)(storedValue.value)
         : value;
 
@@ -169,7 +170,7 @@ export function useLocalStorage<T>(
   );
 
   // 监听存储变化（跨标签页同步）
-  if (typeof window !== 'undefined' && syncAcrossTabs) {
+  if (typeof window !== "undefined" && syncAcrossTabs) {
     const handleStorageChange = (e: StorageEvent) => {
       if (e.key === prefixedKey && e.newValue !== null) {
         try {
@@ -185,12 +186,12 @@ export function useLocalStorage<T>(
       }
     };
 
-    window.addEventListener('storage', handleStorageChange);
+    window.addEventListener("storage", handleStorageChange);
 
     // 清理函数（在组件卸载时会自动调用）
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       const cleanup = () => {
-        window.removeEventListener('storage', handleStorageChange);
+        window.removeEventListener("storage", handleStorageChange);
       };
 
       // 在 Vue 3 中，可以使用 onUnmounted 来清理

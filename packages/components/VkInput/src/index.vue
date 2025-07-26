@@ -78,15 +78,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed, nextTick } from 'vue';
-import type { StyleValue } from 'vue';
-import { inputProps, inputEmits } from './types';
-import { useNamespace, isUrl, useStandardControlled } from '@vakao-ui/utils';
-import VkIcon from '../../VkIcon';
-import { Icon } from '@iconify/vue';
+import { defineComponent, ref, computed, nextTick } from "vue";
+import type { StyleValue } from "vue";
+import { inputProps, inputEmits } from "./types";
+import { useNamespace, isUrl, useStandardControlled } from "@vakao-ui/utils";
+import VkIcon from "../../VkIcon";
+import { Icon } from "@iconify/vue";
 
 export default defineComponent({
-  name: 'VkInput',
+  name: "VkInput",
   components: {
     VkIcon,
     Icon,
@@ -95,7 +95,7 @@ export default defineComponent({
   props: inputProps,
   emits: inputEmits,
   setup(props, { emit, attrs, slots }) {
-    const ns = useNamespace('input');
+    const ns = useNamespace("input");
 
     // 模板引用
     const inputRef = ref<HTMLInputElement>();
@@ -104,7 +104,7 @@ export default defineComponent({
     const { currentValue, updateValue } = useStandardControlled(
       props,
       emit,
-      '',
+      "",
     );
 
     // 密码显示状态
@@ -123,10 +123,10 @@ export default defineComponent({
     const mergedClass = computed(() => {
       return [
         ns.block(),
-        ns.modifier('size', props.size),
-        ns.is('disabled', props.disabled),
-        ns.is('readonly', props.readonly),
-        ns.is('focused', isFocused.value),
+        ns.modifier("size", props.size),
+        ns.is("disabled", props.disabled),
+        ns.is("readonly", props.readonly),
+        ns.is("focused", isFocused.value),
         props.customClass,
         attrs.class,
       ];
@@ -172,33 +172,33 @@ export default defineComponent({
     // 事件处理
     const handleInput = (event: Event) => {
       const target = event.target as HTMLInputElement;
-      const value = target.value;
+      const {value} = target;
 
       updateValue(value);
-      emit('input', value);
+      emit("input", value);
     };
 
     const handleChange = (event: Event) => {
       const target = event.target as HTMLInputElement;
-      const value = target.value;
-      emit('change', value);
+      const {value} = target;
+      emit("change", value);
     };
 
     const handleFocus = (event: FocusEvent) => {
       isFocused.value = true;
-      emit('focus', event);
+      emit("focus", event);
     };
 
     const handleBlur = (event: FocusEvent) => {
       isFocused.value = false;
-      emit('blur', event);
+      emit("blur", event);
     };
 
     const handleClear = () => {
-      updateValue('');
-      emit('clear');
-      emit('input', '');
-      emit('change', '');
+      updateValue("");
+      emit("clear");
+      emit("input", "");
+      emit("change", "");
       nextTick(() => {
         inputRef.value?.focus();
       });
@@ -212,7 +212,7 @@ export default defineComponent({
     };
 
     const handleEnter = (event: KeyboardEvent) => {
-      emit('keydown', event);
+      emit("keydown", event);
     };
 
     return {

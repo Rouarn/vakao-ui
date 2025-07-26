@@ -1,4 +1,4 @@
-import { ref, computed, watch, type Ref, type ComputedRef } from 'vue';
+import { ref, computed, watch, type Ref, type ComputedRef } from "vue";
 
 /**
  * 受控/非受控模式的返回类型
@@ -111,5 +111,5 @@ export function useStandardControlled<T>(
   emit: (..._args: any[]) => void,
   defaultValue: T,
 ): UseControlledReturn<T> {
-  return useControlled(props, 'value', 'modelValue', emit, defaultValue);
+  return useControlled(props, "value", "modelValue", emit, defaultValue);
 }

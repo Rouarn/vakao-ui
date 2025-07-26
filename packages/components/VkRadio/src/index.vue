@@ -1,5 +1,9 @@
 <template>
-  <label :class="mergedClass" :style="mergedStyle" @click="handleClick">
+  <label
+    :class="mergedClass"
+    :style="mergedStyle"
+    @click="handleClick"
+  >
     <span class="vk-radio__input">
       <input
         ref="inputRef"
@@ -9,7 +13,7 @@
         :checked="isChecked"
         :value="value"
         @change="handleChange"
-      />
+      >
       <span
         class="vk-radio__inner"
         :class="[
@@ -19,10 +23,16 @@
           },
         ]"
       >
-        <span v-if="isChecked" class="vk-radio__dot" />
+        <span
+          v-if="isChecked"
+          class="vk-radio__dot"
+        />
       </span>
     </span>
-    <span v-if="$slots.default || label" class="vk-radio__label">
+    <span
+      v-if="$slots.default || label"
+      class="vk-radio__label"
+    >
       <slot>{{ label }}</slot>
     </span>
   </label>
@@ -36,16 +46,16 @@ import {
   inject,
   type Ref,
   type ComputedRef,
-} from 'vue';
-import { radioProps, radioEmits, type RadioValue } from './types';
-import { useNamespace, useControlled } from '@vakao-ui/utils';
+} from "vue";
+import { radioProps, radioEmits, type RadioValue } from "./types";
+import { useNamespace, useControlled } from "@vakao-ui/utils";
 
 export default defineComponent({
-  name: 'VkRadio',
+  name: "VkRadio",
   props: radioProps,
   emits: radioEmits,
   setup(props, { emit }) {
-    const ns = useNamespace('radio');
+    const ns = useNamespace("radio");
 
     // 模板引用
     const inputRef = ref<HTMLInputElement>();
@@ -59,15 +69,15 @@ export default defineComponent({
           changeEvent: (_value: RadioValue) => void;
         }
       | undefined
-    >('VkRadioGroup', undefined);
+    >("VkRadioGroup", undefined);
 
     // 使用受控/非受控模式工具函数（仅在非组模式下使用）
     const { currentValue, updateValue } = useControlled<RadioValue | undefined>(
       props,
-      'modelValue',
-      'modelValue',
+      "modelValue",
+      "modelValue",
       emit,
-      undefined
+      undefined,
     );
 
     // 计算属性
@@ -78,7 +88,7 @@ export default defineComponent({
     });
 
     const currentSize = computed(() => {
-      return props.size || radioGroup?.size.value || 'medium';
+      return props.size || radioGroup?.size.value || "medium";
     });
 
     const isChecked = computed(() => {
@@ -94,8 +104,8 @@ export default defineComponent({
       return [
         ns.block(),
         `${ns.block()}--size-${currentSize.value}`,
-        ns.is('disabled', isDisabled.value),
-        ns.is('checked', isChecked.value),
+        ns.is("disabled", isDisabled.value),
+        ns.is("checked", isChecked.value),
         props.customClass,
       ];
     });
@@ -112,13 +122,13 @@ export default defineComponent({
         return;
       }
 
-      const value = props.value;
+      const {value} = props;
 
       if (isGroup.value && radioGroup) {
         radioGroup.changeEvent(value);
       } else {
         updateValue(value);
-        emit('change', value);
+        emit("change", value);
       }
     };
 

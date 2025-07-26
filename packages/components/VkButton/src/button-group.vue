@@ -5,13 +5,13 @@
 </template>
 
 <script setup lang="ts">
-import { useNamespace } from '@vakao-ui/utils';
+import { useNamespace } from "@vakao-ui/utils";
 
 defineOptions({
-  name: 'VkButtonGroup',
+  name: "VkButtonGroup",
 });
 
-const ns = useNamespace('button-group');
+const ns = useNamespace("button-group");
 </script>
 
 <style scoped>

@@ -37,37 +37,37 @@
 // 导出所有组件的类型定义和组件实例，支持按需导入
 
 /** 按钮相关组件 */
-export * from './VkButton';
+export * from "./VkButton";
 
 /** 输入相关组件 */
-export * from './VkInput';
+export * from "./VkInput";
 
 /** 选择相关组件 */
-export * from './VkCheckbox';
-export * from './VkRadio';
-export * from './VkSwitch';
-export * from './VkSelect';
+export * from "./VkCheckbox";
+export * from "./VkRadio";
+export * from "./VkSwitch";
+export * from "./VkSelect";
 
 /** 通用组件 */
-export * from './VkIcon';
+export * from "./VkIcon";
 
 /** 反馈组件 */
-export * from './VkMessageBox';
+export * from "./VkMessageBox";
 
 // 注意：新增组件时请在此处添加导出
 
 // ==================== 插件安装 ====================
 
-import { App } from 'vue';
-import { VkButton, VkButtonGroup } from './VkButton';
-import { VkInput } from './VkInput';
-import { VkCheckbox, VkCheckboxGroup } from './VkCheckbox';
-import { VkRadio, VkRadioGroup } from './VkRadio';
-import { VkSwitch } from './VkSwitch';
-import { VkIcon } from './VkIcon';
-import { VkMessageBox } from './VkMessageBox';
-import { VkSelect, VkOption, VkOptionGroup } from './VkSelect';
-import { installAll } from '@vakao-ui/utils';
+import type { App } from "vue";
+import { VkButton, VkButtonGroup } from "./VkButton";
+import { VkInput } from "./VkInput";
+import { VkCheckbox, VkCheckboxGroup } from "./VkCheckbox";
+import { VkRadio, VkRadioGroup } from "./VkRadio";
+import { VkSwitch } from "./VkSwitch";
+import { VkIcon } from "./VkIcon";
+import { VkMessageBox } from "./VkMessageBox";
+import { VkSelect, VkOption, VkOptionGroup } from "./VkSelect";
+import { installAll } from "@vakao-ui/utils";
 
 /**
  * 组件注册列表

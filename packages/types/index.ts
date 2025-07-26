@@ -16,7 +16,7 @@
  * ```
  */
 
-import type { App, Component, Plugin } from 'vue';
+import type { App, Component, Plugin } from "vue";
 
 /**
  * 提取组件的公共属性类型
@@ -109,7 +109,7 @@ export interface VakaoUIInstance {
  * };
  * ```
  */
-export type ComponentSize = 'small' | 'medium' | 'large';
+export type ComponentSize = "small" | "medium" | "large";
 
 /**
  * 组件类型（主题色彩）
@@ -145,9 +145,9 @@ export type ComponentSize = 'small' | 'medium' | 'large';
  * ```
  */
 export type ComponentType =
-  | 'default'
-  | 'primary'
-  | 'success'
-  | 'warning'
-  | 'info'
-  | 'danger';
+  | "default"
+  | "primary"
+  | "success"
+  | "warning"
+  | "info"
+  | "danger";

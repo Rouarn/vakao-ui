@@ -1,7 +1,7 @@
-import type { ExtractPropTypes, PropType } from 'vue';
+import type { ExtractPropTypes, PropType } from "vue";
 
 // 选择器尺寸
-export type SelectSize = 'small' | 'medium' | 'large';
+export type SelectSize = "small" | "medium" | "large";
 
 // 选择器值类型
 export type SelectValue = string | number;
@@ -32,7 +32,7 @@ export const selectProps = {
   },
   size: {
     type: String as PropType<SelectSize>,
-    default: 'medium',
+    default: "medium",
   },
   disabled: {
     type: Boolean,
@@ -40,7 +40,7 @@ export const selectProps = {
   },
   placeholder: {
     type: String,
-    default: '请选择',
+    default: "请选择",
   },
 
   // 功能选项
@@ -64,37 +64,37 @@ export const selectProps = {
   // 文本配置
   loadingText: {
     type: String,
-    default: '加载中...',
+    default: "加载中...",
   },
   noDataText: {
     type: String,
-    default: '无数据',
+    default: "无数据",
   },
   noMatchText: {
     type: String,
-    default: '无匹配数据',
+    default: "无匹配数据",
   },
 
   // 样式配置
   customClass: {
     type: String,
-    default: '',
+    default: "",
   },
   customStyle: {
     type: [String, Object] as PropType<string | Record<string, any>>,
-    default: '',
+    default: "",
   },
 } as const;
 
 // Select 组件 emits
 export const selectEmits = {
-  'update:modelValue': (_value: SelectValue | SelectValue[]) => true,
+  "update:modelValue": (_value: SelectValue | SelectValue[]) => true,
   change: (_value: SelectValue | SelectValue[]) => true,
   clear: () => true,
   focus: (_event: FocusEvent) => true,
   blur: (_event: FocusEvent) => true,
-  'visible-change': (_visible: boolean) => true,
-  'remove-tag': (_value: SelectValue) => true,
+  "visible-change": (_visible: boolean) => true,
+  "remove-tag": (_value: SelectValue) => true,
 } as const;
 
 // Option 组件 props
@@ -105,7 +105,7 @@ export const optionProps = {
   },
   label: {
     type: [String, Number] as PropType<string | number>,
-    default: '',
+    default: "",
   },
   disabled: {
     type: Boolean,

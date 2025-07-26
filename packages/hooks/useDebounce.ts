@@ -1,4 +1,5 @@
-import { ref, Ref, watch, onUnmounted, computed, ComputedRef } from 'vue';
+import type { Ref, ComputedRef } from "vue";
+import { ref, watch, onUnmounted, computed } from "vue";
 
 /**
  * 防抖函数类型
@@ -106,10 +107,10 @@ export function useDebounce<T>(
   options: {
     leading?: boolean;
     trailing?: boolean;
-  } = {}
+  } = {},
 ): UseDebouncedValueReturn<T> | UseDebouncedFunctionReturn<any> {
   // 如果第一个参数是 ref，则处理防抖值
-  if (typeof valueOrFn === 'object' && 'value' in valueOrFn) {
+  if (typeof valueOrFn === "object" && "value" in valueOrFn) {
     return useDebouncedValue(valueOrFn as Ref<T>, delay);
   }
 
@@ -117,7 +118,7 @@ export function useDebounce<T>(
   return useDebouncedFunction(
     valueOrFn as (..._args: any[]) => any,
     delay,
-    options
+    options,
   );
 }
 
@@ -126,7 +127,7 @@ export function useDebounce<T>(
  */
 function useDebouncedValue<T>(
   value: Ref<T>,
-  delay: number
+  delay: number,
 ): UseDebouncedValueReturn<T> {
   const debouncedValue = ref<T>(value.value) as Ref<T>;
   let timeoutId: ReturnType<typeof setTimeout> | null = null;
@@ -146,7 +147,7 @@ function useDebouncedValue<T>(
       }
       timeoutId = setTimeout(updateDebouncedValue, delay);
     },
-    { immediate: false }
+    { immediate: false },
   );
 
   onUnmounted(() => {
@@ -167,7 +168,7 @@ function useDebouncedFunction<T extends (...args: any[]) => any>(
   options: {
     leading?: boolean;
     trailing?: boolean;
-  } = {}
+  } = {},
 ): UseDebouncedFunctionReturn<T> {
   const { leading = false, trailing = true } = options;
 

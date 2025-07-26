@@ -1,4 +1,5 @@
-import { ref, computed, ComputedRef } from 'vue';
+import type { ComputedRef } from "vue";
+import { ref, computed } from "vue";
 
 /**
  * 增加计数的函数类型

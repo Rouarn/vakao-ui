@@ -113,7 +113,7 @@ export interface VkIconProps {
    * <VkIcon :customStyle="{ transform: 'scale(1.2)', filter: 'drop-shadow(2px 2px 4px rgba(0,0,0,0.3))' }" />
    * ```
    */
-  customStyle?: string | Record<string, any>;
+  customStyle?: string | Record<string, CSSStyleValue>;
 }
 
 /**
@@ -122,4 +122,4 @@ export interface VkIconProps {
  * 定义了常用的图标尺寸选项，可以配合主题系统使用。
  * 注意：当前组件实现中主要使用 size 属性的具体值，此类型用于未来扩展。
  */
-export type VkIconSize = 'small' | 'medium' | 'large';
+export type VkIconSize = "small" | "medium" | "large";

@@ -114,19 +114,19 @@ import {
   onMounted,
   onUnmounted,
   type StyleValue,
-} from 'vue';
+} from "vue";
 import {
   selectProps,
   selectEmits,
   type SelectValue,
   type SelectOption,
-} from './types';
-import { useNamespace, useControlled } from '@vakao-ui/utils';
-import VkIcon from '../../VkIcon';
-import VkInput from '../../VkInput';
+} from "./types";
+import { useNamespace, useControlled } from "@vakao-ui/utils";
+import VkIcon from "../../VkIcon";
+import VkInput from "../../VkInput";
 
 export default defineComponent({
-  name: 'VkSelect',
+  name: "VkSelect",
   components: {
     VkIcon,
     VkInput,
@@ -134,7 +134,7 @@ export default defineComponent({
   props: selectProps,
   emits: selectEmits,
   setup(props, { emit, slots }) {
-    const ns = useNamespace('select');
+    const ns = useNamespace("select");
 
     // 模板引用
     const selectRef = ref<HTMLElement>();
@@ -143,7 +143,7 @@ export default defineComponent({
 
     // 响应式状态
     const dropdownVisible = ref(false);
-    const searchQuery = ref('');
+    const searchQuery = ref("");
     const isFocused = ref(false);
     const options = reactive<SelectOption[]>([]);
 
@@ -152,10 +152,10 @@ export default defineComponent({
       SelectValue | SelectValue[]
     >(
       props,
-      'value',
-      'modelValue',
+      "value",
+      "modelValue",
       emit,
-      props.multiple ? ([] as SelectValue[]) : ('' as SelectValue),
+      props.multiple ? ([] as SelectValue[]) : ("" as SelectValue),
     );
 
     // 计算属性
@@ -168,7 +168,7 @@ export default defineComponent({
       return (
         currentValue.value !== undefined &&
         currentValue.value !== null &&
-        currentValue.value !== ''
+        currentValue.value !== ""
       );
     });
 
@@ -180,14 +180,14 @@ export default defineComponent({
     });
 
     const displayValue = computed(() => {
-      if (props.multiple) return '';
-      if (!hasValue.value) return '';
+      if (props.multiple) return "";
+      if (!hasValue.value) return "";
       const option = options.find((opt) => opt.value === currentValue.value);
       return option ? option.label : String(currentValue.value);
     });
 
     const currentPlaceholder = computed(() => {
-      if (props.multiple && hasValue.value) return '';
+      if (props.multiple && hasValue.value) return "";
       return props.placeholder;
     });
 
@@ -224,11 +224,11 @@ export default defineComponent({
     const mergedClass = computed(() => {
       return [
         ns.block(),
-        ns.modifier('size', props.size),
-        ns.is('disabled', props.disabled),
-        ns.is('focused', isFocused.value),
-        ns.is('multiple', props.multiple),
-        ns.is('filterable', props.filterable),
+        ns.modifier("size", props.size),
+        ns.is("disabled", props.disabled),
+        ns.is("focused", isFocused.value),
+        ns.is("multiple", props.multiple),
+        ns.is("filterable", props.filterable),
         props.customClass,
       ];
     });
@@ -254,13 +254,13 @@ export default defineComponent({
     const handleFocus = (evt: FocusEvent) => {
       if (props.disabled) return;
       isFocused.value = true;
-      emit('focus', evt);
+      emit("focus", evt);
     };
 
     const handleBlur = (evt: FocusEvent) => {
       setTimeout(() => {
         isFocused.value = false;
-        emit('blur', evt);
+        emit("blur", evt);
       }, 200);
     };
 
@@ -274,12 +274,12 @@ export default defineComponent({
     const handleClear = () => {
       if (props.disabled) return;
 
-      const newValue = props.multiple ? [] : '';
+      const newValue = props.multiple ? [] : "";
       updateValue(newValue);
-      emit('change', newValue);
+      emit("change", newValue);
 
-      searchQuery.value = '';
-      emit('clear');
+      searchQuery.value = "";
+      emit("clear");
       hideDropdown();
     };
 
@@ -289,21 +289,21 @@ export default defineComponent({
       const currentValues = currentValue.value as SelectValue[];
       const newValues = currentValues.filter((v) => v !== value);
       updateValue(newValues);
-      emit('remove-tag', value);
-      emit('change', newValues);
+      emit("remove-tag", value);
+      emit("change", newValues);
     };
 
     // 下拉框控制
     const showDropdown = () => {
       if (props.disabled) return;
       dropdownVisible.value = true;
-      emit('visible-change', true);
+      emit("visible-change", true);
     };
 
     const hideDropdown = () => {
       dropdownVisible.value = false;
-      emit('visible-change', false);
-      searchQuery.value = '';
+      emit("visible-change", false);
+      searchQuery.value = "";
     };
 
     const toggleDropdown = () => {
@@ -350,11 +350,11 @@ export default defineComponent({
         }
 
         updateValue(newValues);
-        emit('change', newValues);
+        emit("change", newValues);
       } else {
         // 单选模式
         updateValue(option.value);
-        emit('change', option.value);
+        emit("change", option.value);
         hideDropdown(); // 单选后自动关闭
       }
     };
@@ -370,7 +370,7 @@ export default defineComponent({
     };
 
     // 提供给子组件的上下文
-    provide('VkSelect', {
+    provide("VkSelect", {
       props,
       addOption,
       removeOption,
@@ -395,11 +395,11 @@ export default defineComponent({
     };
 
     onMounted(() => {
-      document.addEventListener('click', handleClickOutside);
+      document.addEventListener("click", handleClickOutside);
     });
 
     onUnmounted(() => {
-      document.removeEventListener('click', handleClickOutside);
+      document.removeEventListener("click", handleClickOutside);
     });
 
     return {

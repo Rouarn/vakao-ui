@@ -1,14 +1,14 @@
-import type { PropType, CSSProperties } from 'vue';
-import { ExtractPublicPropTypes, ComponentSize } from '../../../types';
+import type { PropType, CSSProperties } from "vue";
+import type { ExtractPublicPropTypes, ComponentSize } from "../../../types";
 
 // 输入框类型
 export type InputType =
-  | 'text'
-  | 'password'
-  | 'email'
-  | 'number'
-  | 'tel'
-  | 'url';
+  | "text"
+  | "password"
+  | "email"
+  | "number"
+  | "tel"
+  | "url";
 
 // 输入框尺寸
 export type InputSize = ComponentSize;
@@ -18,7 +18,7 @@ export const inputProps = {
   /** 输入框值 (v-model) */
   modelValue: {
     type: String,
-    default: '',
+    default: "",
   },
   /** 输入框值 (受控模式) */
   value: {
@@ -28,12 +28,12 @@ export const inputProps = {
   /** 输入框类型 */
   type: {
     type: String as PropType<InputType>,
-    default: 'text',
+    default: "text",
   },
   /** 输入框尺寸 */
   size: {
     type: String as PropType<InputSize>,
-    default: 'medium',
+    default: "medium",
   },
   /** 是否禁用 */
   disabled: {
@@ -43,7 +43,7 @@ export const inputProps = {
   /** 占位符 */
   placeholder: {
     type: String,
-    default: '请输入...',
+    default: "请输入...",
   },
   /** 最大输入长度 */
   maxlength: {
@@ -63,12 +63,12 @@ export const inputProps = {
   /** 前缀图标 */
   prefixIcon: {
     type: String,
-    default: '',
+    default: "",
   },
   /** 后缀图标 */
   suffixIcon: {
     type: String,
-    default: '',
+    default: "",
   },
   /** 是否只读 */
   readonly: {
@@ -88,7 +88,7 @@ export type InputProps = ExtractPublicPropTypes<typeof inputProps>;
 
 // 输入框事件定义
 export const inputEmits = {
-  'update:modelValue': (_value: string) => true,
+  "update:modelValue": (_value: string) => true,
   input: (_value: string) => true,
   change: (_value: string) => true,
   focus: (_evt: FocusEvent) => true,

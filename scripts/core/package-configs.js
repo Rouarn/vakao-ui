@@ -11,14 +11,14 @@
  * 项目基础配置
  */
 const PROJECT_CONFIG = {
-  author: '我与夏季',
-  email: 'woyuxiaji@foxmail.com',
-  license: 'MIT',
+  author: "我与夏季",
+  email: "woyuxiaji@foxmail.com",
+  license: "MIT",
   repository: {
-    type: 'git',
-    url: 'https://github.com/Rouarn/vakao-ui',
+    type: "git",
+    url: "https://github.com/Rouarn/vakao-ui",
   },
-  homepage: 'https://rouarn.github.io/vakao-ui/',
+  homepage: "https://rouarn.github.io/vakao-ui/",
 };
 
 /**
@@ -26,7 +26,7 @@ const PROJECT_CONFIG = {
  * 用于确定发布顺序，被依赖的包需要先发布
  */
 const PACKAGE_DEPENDENCIES = {
-  main: ['utils', 'hooks'], // 主包依赖 utils 和 hooks 包
+  main: ["utils", "hooks"], // 主包依赖 utils 和 hooks 包
   hooks: [], // hooks 包无依赖
   utils: [], // utils 包无依赖
 };
@@ -36,15 +36,15 @@ const PACKAGE_DEPENDENCIES = {
  */
 const PACKAGES = {
   main: {
-    name: 'vakao-ui',
-    displayName: 'Main (组件库主包)',
-    path: '.',
-    icon: '📦',
-    description: 'Vue 3 组件库 - Vakao UI',
-    buildCommand: 'pnpm run build',
-    keywords: ['vue3', 'components', 'ui-library', 'typescript', 'vakao-ui'],
+    name: "vakao-ui",
+    displayName: "Main (组件库主包)",
+    path: ".",
+    icon: "📦",
+    description: "Vue 3 组件库 - Vakao UI",
+    buildCommand: "pnpm run build",
+    keywords: ["vue3", "components", "ui-library", "typescript", "vakao-ui"],
     peerDependencies: {
-      vue: '^3.3.0',
+      vue: "^3.3.0",
     },
     defaultReadme: `# Vakao UI
 
@@ -141,22 +141,22 @@ export default defineConfig({
   },
 
   hooks: {
-    name: '@vakao-ui/hooks',
-    displayName: 'Hooks (组合式函数)',
-    path: 'packages/hooks',
-    icon: '🪝',
-    description: 'Vue 3 组合式函数库 - Vakao UI Hooks',
-    buildCommand: 'pnpm run build',
+    name: "@vakao-ui/hooks",
+    displayName: "Hooks (组合式函数)",
+    path: "packages/hooks",
+    icon: "🪝",
+    description: "Vue 3 组合式函数库 - Vakao UI Hooks",
+    buildCommand: "pnpm run build",
     keywords: [
-      'vue3',
-      'hooks',
-      'composables',
-      'ui-library',
-      'typescript',
-      'vakao-ui',
+      "vue3",
+      "hooks",
+      "composables",
+      "ui-library",
+      "typescript",
+      "vakao-ui",
     ],
     peerDependencies: {
-      vue: '^3.3.0',
+      vue: "^3.3.0",
     },
     defaultReadme: `# @vakao-ui/hooks
 
@@ -198,23 +198,23 @@ const [theme, setTheme] = useLocalStorage('theme', 'light');
   },
 
   utils: {
-    name: '@vakao-ui/utils',
-    displayName: 'Utils (工具函数)',
-    path: 'packages/utils',
-    icon: '🛠️',
-    description: 'Vue 3 工具函数库 - Vakao UI Utils',
-    buildCommand: 'pnpm run build',
+    name: "@vakao-ui/utils",
+    displayName: "Utils (工具函数)",
+    path: "packages/utils",
+    icon: "🛠️",
+    description: "Vue 3 工具函数库 - Vakao UI Utils",
+    buildCommand: "pnpm run build",
     keywords: [
-      'vue3',
-      'utils',
-      'utilities',
-      'helpers',
-      'ui-library',
-      'typescript',
-      'vakao-ui',
+      "vue3",
+      "utils",
+      "utilities",
+      "helpers",
+      "ui-library",
+      "typescript",
+      "vakao-ui",
     ],
     peerDependencies: {
-      vue: '^3.3.0',
+      vue: "^3.3.0",
     },
     defaultReadme: `# @vakao-ui/utils
 

@@ -10,21 +10,21 @@
 </template>
 
 <script setup lang="ts">
-import { computed, provide, watch } from 'vue';
+import { computed, provide, watch } from "vue";
 import {
   checkboxGroupProps,
   checkboxGroupEmits,
   type CheckboxValue,
-} from './types';
-import { useNamespace } from '@vakao-ui/utils';
+} from "./types";
+import { useNamespace } from "@vakao-ui/utils";
 
 defineOptions({
-  name: 'VkCheckboxGroup',
+  name: "VkCheckboxGroup",
 });
 
 const props = defineProps(checkboxGroupProps);
 const emit = defineEmits(checkboxGroupEmits);
-const ns = useNamespace('checkbox-group');
+const ns = useNamespace("checkbox-group");
 
 // 双向绑定值
 const modelValue = defineModel<CheckboxValue[]>({ default: () => [] });
@@ -34,7 +34,7 @@ const mergedClass = computed(() => {
   return [
     ns.block(),
     `${ns.block()}--size-${props.size}`,
-    ns.is('disabled', props.disabled),
+    ns.is("disabled", props.disabled),
     props.customClass,
   ];
 });
@@ -47,11 +47,11 @@ const mergedStyle = computed(() => {
 // 变更事件处理
 const changeEvent = (value: CheckboxValue[]) => {
   modelValue.value = value;
-  emit('change', value);
+  emit("change", value);
 };
 
 // 提供给子组件的上下文
-provide('VkCheckboxGroup', {
+provide("VkCheckboxGroup", {
   modelValue,
   disabled: computed(() => props.disabled),
   size: computed(() => props.size),

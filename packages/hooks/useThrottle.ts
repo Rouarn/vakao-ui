@@ -1,4 +1,5 @@
-import { ref, Ref, watch, onUnmounted, computed, ComputedRef } from 'vue';
+import type { Ref, ComputedRef } from "vue";
+import { ref, watch, onUnmounted, computed } from "vue";
 
 /**
  * 节流函数类型
@@ -108,10 +109,10 @@ export function useThrottle<T>(
   options: {
     leading?: boolean;
     trailing?: boolean;
-  } = {}
+  } = {},
 ): UseThrottledValueReturn<T> | UseThrottledFunctionReturn<any> {
   // 如果第一个参数是 ref，则处理节流值
-  if (typeof valueOrFn === 'object' && 'value' in valueOrFn) {
+  if (typeof valueOrFn === "object" && "value" in valueOrFn) {
     return useThrottledValue(valueOrFn as Ref<T>, delay);
   }
 
@@ -119,7 +120,7 @@ export function useThrottle<T>(
   return useThrottledFunction(
     valueOrFn as (..._args: any[]) => any,
     delay,
-    options
+    options,
   );
 }
 
@@ -128,7 +129,7 @@ export function useThrottle<T>(
  */
 function useThrottledValue<T>(
   value: Ref<T>,
-  delay: number
+  delay: number,
 ): UseThrottledValueReturn<T> {
   const throttledValue = ref<T>(value.value) as Ref<T>;
   let lastUpdateTime = 0;
@@ -162,7 +163,7 @@ function useThrottledValue<T>(
         }, delay - timeSinceLastUpdate);
       }
     },
-    { immediate: false }
+    { immediate: false },
   );
 
   onUnmounted(() => {
@@ -183,7 +184,7 @@ function useThrottledFunction<T extends (..._args: any[]) => any>(
   options: {
     leading?: boolean;
     trailing?: boolean;
-  } = {}
+  } = {},
 ): UseThrottledFunctionReturn<T> {
   const { leading = true, trailing = true } = options;
 

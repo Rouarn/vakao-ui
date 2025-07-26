@@ -1,4 +1,4 @@
-import type { App, Component } from 'vue';
+import type { App, Component } from "vue";
 
 // Type for component with install method
 export type WithInstall<T> = T & {
