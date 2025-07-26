@@ -1,6 +1,6 @@
 {
   "name": "@vakao-ui/utils",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Utility functions for Vakao UI - A collection of reusable utility functions",
   "main": "dist/vakao-ui-utils.umd.js",
   "module": "dist/vakao-ui-utils.es.js",
