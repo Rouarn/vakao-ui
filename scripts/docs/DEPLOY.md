@@ -1,15 +1,28 @@
 # 部署文档到 GitHub Pages
 
-本项目已配置自动化部署流程，可以将 VitePress 文档自动部署到 GitHub Pages。
+本项目已配置自动化部署流程，可以将 VitePress 文档自动部署到 GitHub Pages。GitHub 发布构建已完全集成到统一的发布脚本中，提供一键式部署体验。
 
-## 自动部署设置
+## 统一发布脚本集成
 
-### 1. GitHub Actions 工作流
+### 1. 一键式部署
+
+项目已将 GitHub 发布构建完全集成到统一的发布脚本中，支持：
+
+```bash
+# 使用统一发布脚本进行文档部署
+node scripts/publish.js --docs
+
+# 或使用交互式发布
+node scripts/publish.js --interactive
+```
+
+### 2. GitHub Actions 工作流
 
 项目已包含 `.github/workflows/deploy-docs.yml` 工作流文件，该文件会在以下情况下自动触发：
 
 - 推送到 `main` 或 `master` 分支
 - 创建针对 `main` 或 `master` 分支的 Pull Request
+- 通过统一发布脚本触发的自动化部署
 
 ### 2. GitHub Pages 设置
 
@@ -37,7 +50,27 @@
 - 将构建产物部署到 GitHub Pages
 - 提供访问 URL
 
-## 手动部署
+## 部署方式
+
+### 1. 统一脚本部署（推荐）
+
+使用集成的统一发布脚本进行部署：
+
+```bash
+# 文档部署
+node scripts/publish.js --docs
+
+# 交互式选择部署目标
+node scripts/publish.js --interactive
+
+# 完整发布（包含文档）
+node scripts/publish.js --all
+
+# 测试模式部署
+node scripts/publish.js --docs --test
+```
+
+### 2. 手动部署
 
 如果需要手动部署，可以按照以下步骤：
 
@@ -124,6 +157,7 @@ https://rouarn.github.io/vakao-ui/
 - 🖥️ **桌面通知**: 部署成功/失败时自动发送系统通知
 - 📧 **邮件通知**: 支持配置邮件通知（可选）
 - 🔗 **Webhook 通知**: 支持集成第三方服务（可选）
+- 🚀 **GitHub 集成**: 自动创建 Release 和更新部署状态
 
 ### 配置通知
 
@@ -135,6 +169,10 @@ NOTIFICATION_EMAIL=admin@company.com
 
 # Webhook 通知配置（可选）
 WEBHOOK_URL=https://hooks.slack.com/services/YOUR/SLACK/WEBHOOK
+
+# GitHub 集成配置
+GITHUB_TOKEN=your-github-token
+GITHUB_REPO=Rouarn/vakao-ui
 ```
 
 ## 故障排除
@@ -142,6 +180,7 @@ WEBHOOK_URL=https://hooks.slack.com/services/YOUR/SLACK/WEBHOOK
 ### 常见问题
 
 1. **部署失败**
+   - 检查统一发布脚本日志：`node scripts/publish.js --docs --verbose`
    - 检查 GitHub Actions 日志
    - 确认 GitHub Pages 已启用
    - 验证工作流权限设置
@@ -162,7 +201,14 @@ WEBHOOK_URL=https://hooks.slack.com/services/YOUR/SLACK/WEBHOOK
 
 ### 调试步骤
 
-1. 本地测试构建：
+1. 使用统一脚本测试：
+
+   ```bash
+   # 测试模式部署
+   node scripts/publish.js --docs --test --verbose
+   ```
+
+2. 本地测试构建：
 
    ```bash
    cd docs
