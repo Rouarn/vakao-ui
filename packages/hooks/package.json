@@ -1,6 +1,6 @@
 {
   "name": "@vakao-ui/hooks",
-  "version": "0.0.4",
+  "version": "0.0.2",
   "description": "Vue 3 composition hooks for Vakao UI - A collection of reusable composition functions",
   "main": "dist/vakao-ui-hooks.umd.js",
   "module": "dist/vakao-ui-hooks.es.js",

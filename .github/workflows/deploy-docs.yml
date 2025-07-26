@@ -1,5 +1,8 @@
 name: Deploy Docs to GitHub Pages
 
+# 自动部署文档到 GitHub Pages
+# 支持智能通知功能（本地开发时可配置桌面通知）
+
 on:
   push:
     branches:
@@ -54,6 +57,8 @@ jobs:
       - name: Build with VitePress
         run: |
           pnpm run build:docs
+          echo "📚 文档构建完成"
+          echo "🚀 准备部署到 GitHub Pages"
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
@@ -73,3 +78,10 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        
+      - name: Deployment Success
+        if: success()
+        run: |
+          echo "✅ 部署成功！"
+          echo "📖 文档地址: ${{ steps.deployment.outputs.page_url }}"
+          echo "💡 本地开发时可使用 'npm run test:notification' 测试桌面通知功能"
