@@ -1,0 +1,1 @@
+import{_ as r,c as e,o as a,am as o}from"./chunks/framework.CJ-qkA9M.js";const p=JSON.parse('{"title":"介绍","description":"","frontmatter":{},"headers":[],"relativePath":"guide/index.md","filePath":"guide/index.md"}'),i={name:"guide/index.md"};function s(n,t,l,h,d,g){return a(),e("div",null,t[0]||(t[0]=[o("",9)]))}const m=r(i,[["render",s]]);export{p as __pageData,m as default};
