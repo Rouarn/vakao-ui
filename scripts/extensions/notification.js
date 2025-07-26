@@ -137,7 +137,11 @@ class NotificationExtension {
         message: message.content,
         icon: this.getIconPath(message.type),
         sound: true,
-        wait: false
+        wait: false,
+        // 自定义应用名称，替换默认的 "SnoreToast"
+        appName: 'Vakao UI',
+        // Windows 特定配置
+        appID: 'com.vakao.ui.deploy'
       });
       
       console.log('🖥️  桌面通知已发送');
