@@ -5,7 +5,7 @@ import { ref, watch, onUnmounted, computed } from "vue";
  * 节流函数类型
  * @description 节流处理后的函数
  */
-export type ThrottledFunction<T extends (...args: any[]) => any> = (
+export type ThrottledFunction<T extends (...args: unknown[]) => unknown> = (
   ...args: Parameters<T>
 ) => void;
 
@@ -39,7 +39,7 @@ export type UseThrottledValueReturn<T> = ComputedRef<T>;
  * const [throttledFn, cancel, flush] = useThrottle(fn, 100);
  * ```
  */
-export type UseThrottledFunctionReturn<T extends (...args: any[]) => any> = [
+export type UseThrottledFunctionReturn<T extends (...args: unknown[]) => unknown> = [
   /** 节流处理后的函数 */
   ThrottledFunction<T>,
   /** 取消节流的函数 */
@@ -89,7 +89,7 @@ export function useThrottle<T>(
  * const [throttledSearch, cancel, flush] = useThrottle(search, 300, { trailing: false });
  * ```
  */
-export function useThrottle<T extends (..._args: any[]) => any>(
+export function useThrottle<T extends (..._args: unknown[]) => unknown>(
   fn: T,
   delay: number,
   options?: {
@@ -103,14 +103,14 @@ export function useThrottle<T extends (..._args: any[]) => any>(
  */
 export function useThrottle<T>(
 
-  valueOrFn: Ref<T> | ((..._args: any[]) => any),
+  valueOrFn: Ref<T> | ((..._args: unknown[]) => unknown),
 
   delay: number,
   options: {
     leading?: boolean;
     trailing?: boolean;
   } = {},
-): UseThrottledValueReturn<T> | UseThrottledFunctionReturn<any> {
+): UseThrottledValueReturn<T> | UseThrottledFunctionReturn<(..._args: unknown[]) => unknown> {
   // 如果第一个参数是 ref，则处理节流值
   if (typeof valueOrFn === "object" && "value" in valueOrFn) {
     return useThrottledValue(valueOrFn as Ref<T>, delay);
@@ -118,7 +118,7 @@ export function useThrottle<T>(
 
   // 否则处理节流函数
   return useThrottledFunction(
-    valueOrFn as (..._args: any[]) => any,
+    valueOrFn as (..._args: unknown[]) => unknown,
     delay,
     options,
   );
@@ -178,7 +178,7 @@ function useThrottledValue<T>(
 /**
  * 节流函数的内部实现
  */
-function useThrottledFunction<T extends (..._args: any[]) => any>(
+function useThrottledFunction<T extends (..._args: unknown[]) => unknown>(
   fn: T,
   delay: number,
   options: {

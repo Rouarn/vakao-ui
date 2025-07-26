@@ -41,7 +41,7 @@ export type SerializerFunction<T> = {
 /**
  * 默认序列化器
  */
-const defaultSerializer: SerializerFunction<any> = {
+const defaultSerializer: SerializerFunction<unknown> = {
   read: (value: string) => {
     try {
       return JSON.parse(value);
@@ -49,7 +49,7 @@ const defaultSerializer: SerializerFunction<any> = {
       return value;
     }
   },
-  write: (value: any) => JSON.stringify(value),
+  write: (value: unknown) => JSON.stringify(value),
 };
 
 /**
@@ -105,7 +105,7 @@ export function useLocalStorage<T>(
       if (item === null) {
         return defaultValue;
       }
-      return serializer.read(item);
+      return serializer.read(item) as T;
     } catch (error) {
       console.warn(`Error reading localStorage key "${prefixedKey}":`, error);
       return defaultValue;
@@ -196,7 +196,7 @@ export function useLocalStorage<T>(
 
       // 在 Vue 3 中，可以使用 onUnmounted 来清理
       // 但这里我们返回清理函数，让用户自己决定何时清理
-      (setValue as any).cleanup = cleanup;
+      (setValue as SetStorageFunction<T> & { cleanup?: () => void }).cleanup = cleanup;
     }
   }
 

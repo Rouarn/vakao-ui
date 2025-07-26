@@ -83,6 +83,70 @@ export const componentEmits = {
 export type ComponentEmits = ExtractPublicPropTypes<typeof componentEmits>;
 ```
 
+#### 类型安全规范
+
+**核心原则**：在开发中非必要的地方不要使用 `any` 类型，优先使用泛型和具体类型定义。
+
+**推荐做法**：
+
+- **优先使用泛型**：当类型不确定时，使用泛型而不是 `any`
+- **联合类型**：当有多种可能的类型时，使用联合类型
+- **类型断言**：在确定类型的情况下使用类型断言
+- **unknown 类型**：对于真正未知的类型，使用 `unknown` 而不是 `any`
+
+```typescript
+// ❌ 避免使用 any
+function processData(data: any): any {
+  return data.someProperty;
+}
+
+// ✅ 推荐使用泛型
+function processData<T>(data: T): T {
+  return data;
+}
+
+// ✅ 推荐使用具体类型
+function processUserData(data: { name: string; age: number }): string {
+  return data.name;
+}
+
+// ✅ 推荐使用联合类型
+type Status = 'loading' | 'success' | 'error';
+function handleStatus(status: Status): void {
+  // 处理逻辑
+}
+
+// ✅ 对于未知类型使用 unknown
+function parseJson(json: string): unknown {
+  return JSON.parse(json);
+}
+```
+
+**允许使用 `any` 的场景**：
+
+- 第三方库没有类型定义且无法推断类型时
+- 动态内容处理（如 JSON 解析后的复杂对象）
+- 渐进式迁移 JavaScript 代码到 TypeScript 时的临时方案
+- 与原生 DOM API 交互时的特殊情况
+
+```typescript
+// ✅ 合理使用 any 的场景
+
+// 第三方库无类型定义
+declare const legacyLibrary: any;
+
+// 复杂的动态内容
+function handleDynamicConfig(config: any): void {
+  // 处理复杂的动态配置
+}
+
+// 临时迁移方案（应添加 TODO 注释）
+// TODO: 为此函数添加具体类型定义
+function legacyFunction(param: any): any {
+  // 待重构的遗留代码
+}
+```
+
 ### 2.3 代码注释规范
 
 #### 2.3.1 注释原则

@@ -7,7 +7,7 @@ export interface UseControlledReturn<T> {
   /** 是否为受控模式 */
   isControlled: ComputedRef<boolean>;
   /** 内部值引用 */
-  internalValue: Ref<any>;
+  internalValue: Ref<T>;
   /** 当前值（受控或非受控） */
   currentValue: ComputedRef<T>;
   /** 更新值的方法 */
@@ -43,17 +43,17 @@ export interface UseControlledReturn<T> {
  * ```
  */
 export function useControlled<T>(
-  props: Record<string, any>,
+  props: Record<string, unknown>,
   propName: string,
   modelValuePropName: string,
-  emit: (..._args: any[]) => void,
+  emit: (event: string, ...args: unknown[]) => void,
   defaultValue: T,
 ): UseControlledReturn<T> {
   // 判断是否为受控模式
   const isControlled = computed(() => props[propName] !== undefined);
 
   // 内部状态值（非受控模式使用）
-  const internalValue = ref<T>(props[modelValuePropName] ?? defaultValue);
+  const internalValue = ref<T>((props[modelValuePropName] as T) ?? defaultValue);
 
   // 当前显示的值
   const currentValue = computed(() => {
@@ -82,7 +82,7 @@ export function useControlled<T>(
   return {
     isControlled,
     currentValue,
-    internalValue,
+    internalValue: internalValue as Ref<T>,
     updateValue,
   };
 }
@@ -107,8 +107,8 @@ export function useControlled<T>(
  * ```
  */
 export function useStandardControlled<T>(
-  props: Record<string, any>,
-  emit: (..._args: any[]) => void,
+  props: Record<string, unknown>,
+  emit: (event: string, ...args: unknown[]) => void,
   defaultValue: T,
 ): UseControlledReturn<T> {
   return useControlled(props, "value", "modelValue", emit, defaultValue);

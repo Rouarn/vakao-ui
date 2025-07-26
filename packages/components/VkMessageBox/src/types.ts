@@ -140,7 +140,7 @@ export interface MessageBoxResult {
 
 // MessageBox 事件定义
 export const messageBoxEmits = {
-  action: (_action: MessageBoxAction, _instance: any) => true,
+  action: (_action: MessageBoxAction, _instance: MessageBoxInstance) => true,
 } as const;
 
 // 导出事件类型

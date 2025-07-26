@@ -82,7 +82,7 @@ export interface VakaoUIInstance {
   /** 组件库版本号 */
   version: string;
   /** Vue 插件安装方法 */
-  install: (_app: App, ..._options: any[]) => void;
+  install: (_app: App, ..._options: unknown[]) => void;
 }
 
 /**

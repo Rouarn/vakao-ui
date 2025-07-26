@@ -5,7 +5,7 @@ import { ref, watch, onUnmounted, computed } from "vue";
  * 防抖函数类型
  * @description 防抖处理后的函数
  */
-export type DebouncedFunction<T extends (..._args: any[]) => any> = (
+export type DebouncedFunction<T extends (..._args: unknown[]) => unknown> = (
   ..._args: Parameters<T>
 ) => void;
 
@@ -39,7 +39,7 @@ export type UseDebouncedValueReturn<T> = ComputedRef<T>;
  * const [debouncedFn, cancel, flush] = useDebounce(fn, 300);
  * ```
  */
-export type UseDebouncedFunctionReturn<T extends (..._args: any[]) => any> = [
+export type UseDebouncedFunctionReturn<T extends (..._args: unknown[]) => unknown> = [
   /** 防抖处理后的函数 */
   DebouncedFunction<T>,
   /** 取消防抖的函数 */
@@ -89,7 +89,7 @@ export function useDebounce<T>(
  * const [debouncedSearch] = useDebounce(search, 500, { leading: true });
  * ```
  */
-export function useDebounce<T extends (..._args: any[]) => any>(
+export function useDebounce<T extends (..._args: unknown[]) => unknown>(
   fn: T,
   delay: number,
   options?: {
@@ -102,13 +102,13 @@ export function useDebounce<T extends (..._args: any[]) => any>(
  * 防抖钩子函数实现
  */
 export function useDebounce<T>(
-  valueOrFn: Ref<T> | ((..._args: any[]) => any),
+  valueOrFn: Ref<T> | ((..._args: unknown[]) => unknown),
   delay: number,
   options: {
     leading?: boolean;
     trailing?: boolean;
   } = {},
-): UseDebouncedValueReturn<T> | UseDebouncedFunctionReturn<any> {
+): UseDebouncedValueReturn<T> | UseDebouncedFunctionReturn<(..._args: unknown[]) => unknown> {
   // 如果第一个参数是 ref，则处理防抖值
   if (typeof valueOrFn === "object" && "value" in valueOrFn) {
     return useDebouncedValue(valueOrFn as Ref<T>, delay);
@@ -116,7 +116,7 @@ export function useDebounce<T>(
 
   // 否则处理防抖函数
   return useDebouncedFunction(
-    valueOrFn as (..._args: any[]) => any,
+    valueOrFn as (..._args: unknown[]) => unknown,
     delay,
     options,
   );
@@ -162,7 +162,7 @@ function useDebouncedValue<T>(
 /**
  * 防抖函数的内部实现
  */
-function useDebouncedFunction<T extends (...args: any[]) => any>(
+function useDebouncedFunction<T extends (...args: unknown[]) => unknown>(
   fn: T,
   delay: number,
   options: {

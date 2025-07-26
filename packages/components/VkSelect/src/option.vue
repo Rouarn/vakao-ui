@@ -17,8 +17,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, inject, onMounted, onUnmounted } from "vue";
-import { optionProps, optionEmits, type SelectOption } from "./types";
+import { defineComponent, computed, inject, onMounted, onUnmounted, type Ref } from "vue";
+import { optionProps, optionEmits, type SelectOption, type SelectValue } from "./types";
 import { useNamespace } from "@vakao-ui/utils";
 import VkIcon from "../../VkIcon";
 
@@ -34,12 +34,12 @@ export default defineComponent({
 
     // 注入选择器上下文
     const selectContext = inject<{
-      props: any;
+      props: Record<string, unknown>;
       addOption: (_option: SelectOption) => void;
-      removeOption: (_value: any) => void;
+      removeOption: (_value: SelectValue) => void;
       selectOption: (_option: SelectOption) => void;
-      isSelected: (_value: any) => boolean;
-      filteredOptions: any;
+      isSelected: (_value: SelectValue) => boolean;
+      filteredOptions: Ref<SelectOption[]>;
     }>("VkSelect");
 
     // 当前选项对象
@@ -74,7 +74,7 @@ export default defineComponent({
       return [
         ns.block(),
         ns.is("selected", isSelected.value),
-        ns.is("disabled", isDisabled.value),
+        ns.is("disabled", Boolean(isDisabled.value)),
       ];
     });
 

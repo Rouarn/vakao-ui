@@ -52,7 +52,7 @@ export const deepClone = <T>(obj: T): T => {
   const clonedObj = {} as T;
   for (const key in obj) {
     if (Object.prototype.hasOwnProperty.call(obj, key)) {
-      (clonedObj as any)[key] = deepClone((obj as any)[key]);
+      (clonedObj as Record<string, unknown>)[key] = deepClone((obj as Record<string, unknown>)[key]);
     }
   }
 
@@ -67,7 +67,7 @@ export const deepClone = <T>(obj: T): T => {
  */
 export const deepCloneWithCircular = <T>(
   obj: T,
-  visited: WeakMap<object, any> = new WeakMap(),
+  visited: WeakMap<object, unknown> = new WeakMap(),
 ): T => {
   // 处理 null 和 undefined
   if (obj === null || obj === undefined) {
@@ -81,10 +81,10 @@ export const deepCloneWithCircular = <T>(
 
   // 检查循环引用
   if (visited.has(obj as object)) {
-    return visited.get(obj as object);
+    return visited.get(obj as object) as T;
   }
 
-  let clonedObj: any;
+  let clonedObj: unknown;
 
   // 处理 Date 对象
   if (obj instanceof Date) {
@@ -99,7 +99,7 @@ export const deepCloneWithCircular = <T>(
     clonedObj = new Map();
     visited.set(obj as object, clonedObj);
     for (const [key, value] of obj) {
-      clonedObj.set(
+      (clonedObj as Map<unknown, unknown>).set(
         deepCloneWithCircular(key, visited),
         deepCloneWithCircular(value, visited),
       );
@@ -110,7 +110,7 @@ export const deepCloneWithCircular = <T>(
     clonedObj = new Set();
     visited.set(obj as object, clonedObj);
     for (const value of obj) {
-      clonedObj.add(deepCloneWithCircular(value, visited));
+      (clonedObj as Set<unknown>).add(deepCloneWithCircular(value, visited));
     }
   }
   // 处理数组
@@ -118,7 +118,7 @@ export const deepCloneWithCircular = <T>(
     clonedObj = [];
     visited.set(obj as object, clonedObj);
     for (let i = 0; i < obj.length; i++) {
-      clonedObj[i] = deepCloneWithCircular(obj[i], visited);
+      (clonedObj as unknown[])[i] = deepCloneWithCircular(obj[i], visited);
     }
   }
   // 处理普通对象
@@ -127,7 +127,7 @@ export const deepCloneWithCircular = <T>(
     visited.set(obj as object, clonedObj);
     for (const key in obj) {
       if (Object.prototype.hasOwnProperty.call(obj, key)) {
-        clonedObj[key] = deepCloneWithCircular((obj as any)[key], visited);
+        (clonedObj as Record<string, unknown>)[key] = deepCloneWithCircular((obj as Record<string, unknown>)[key], visited);
       }
     }
   }

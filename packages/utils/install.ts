@@ -18,10 +18,10 @@ export const withInstall = <T extends Component>(component: T) => {
 };
 
 // Install all components
-export const installAll = (app: App, components: Record<string, any>) => {
+export const installAll = (app: App, components: Record<string, WithInstall<Component>>) => {
   Object.keys(components).forEach((key) => {
     const component = components[key];
-    if (component.install) {
+    if (component && typeof component.install === 'function') {
       app.use(component);
     }
   });

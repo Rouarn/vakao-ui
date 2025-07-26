@@ -1,4 +1,4 @@
-import type { ExtractPropTypes, PropType } from "vue";
+import type { ExtractPropTypes, PropType, CSSProperties } from "vue";
 
 // 选择器尺寸
 export type SelectSize = "small" | "medium" | "large";
@@ -81,7 +81,7 @@ export const selectProps = {
     default: "",
   },
   customStyle: {
-    type: [String, Object] as PropType<string | Record<string, any>>,
+    type: [String, Object] as PropType<string | CSSProperties>,
     default: "",
   },
 } as const;

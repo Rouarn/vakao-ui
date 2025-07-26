@@ -34,7 +34,7 @@ export interface UseFetchOptions<T> {
   /** 重试延迟时间（毫秒），默认为 1000 */
   retryDelay?: number;
   /** 响应数据转换函数 */
-  transform?: (data: any) => T;
+  transform?: (data: unknown) => T;
   /** 请求前的钩子函数 */
   beforeRequest?: (url: string, options?: RequestInit) => void | Promise<void>;
   /** 请求后的钩子函数 */
@@ -136,7 +136,7 @@ export type PromiseFunction<T> = () => Promise<T>;
  * const [users, isLoading, fetchError, actions] = useFetch('/api/users');
  * ```
  */
-export function useFetch<T = any>(
+export function useFetch<T = unknown>(
   url: string | (() => string) | (() => Promise<T>),
   options: UseFetchOptions<T> = {},
   fetchOptions: RequestInit = {}
@@ -291,7 +291,7 @@ export function useFetch<T = any>(
             }
 
             // 解析响应数据
-            let responseData: any;
+            let responseData: unknown;
             const contentType = response.headers.get("content-type");
 
             if (contentType?.includes("application/json")) {
@@ -311,14 +311,14 @@ export function useFetch<T = any>(
             data.value = responseData;
             status.value = FetchStatus.SUCCESS;
             loading.value = false;
-          } catch (fetchError: any) {
+          } catch (fetchError: unknown) {
             clearTimeout(timeoutId);
             throw fetchError;
           }
         }
-      } catch (err: any) {
+      } catch (err: unknown) {
         // 如果是取消请求，不处理错误
-        if (err.name === "AbortError") {
+        if ((err as Error).name === "AbortError") {
           return;
         }
 
@@ -412,10 +412,10 @@ export function useFetch<T = any>(
  */
 export function createFetch(
   baseURL: string,
-  defaultOptions: UseFetchOptions<any> = {},
+  defaultOptions: UseFetchOptions<unknown> = {},
   defaultFetchOptions: RequestInit = {}
 ) {
-  return function <T = any>(
+  return function <T = unknown>(
     url: string | (() => string),
     options: UseFetchOptions<T> = {},
     fetchOptions: RequestInit = {}
@@ -426,6 +426,6 @@ export function createFetch(
     const mergedOptions = { ...defaultOptions, ...options };
     const mergedFetchOptions = { ...defaultFetchOptions, ...fetchOptions };
 
-    return useFetch(fullUrl, mergedOptions, mergedFetchOptions);
+    return useFetch(fullUrl, mergedOptions, mergedFetchOptions) as UseFetchReturn<T>;
   };
 }

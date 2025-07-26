@@ -91,11 +91,7 @@ import {
   onUnmounted,
   type PropType,
 } from "vue";
-import {
-  messageBoxProps,
-  messageBoxEmits,
-  type MessageBoxAction,
-} from "./types";
+import { messageBoxProps, messageBoxEmits, type MessageBoxAction, type MessageBoxInstance } from "./types";
 import type { ComponentType } from "../../../types";
 import VkButton from "../../VkButton";
 import VkIcon from "../../VkIcon";
@@ -114,7 +110,7 @@ export default defineComponent({
     ...messageBoxProps,
     onAction: {
       type: Function as PropType<
-        (_action: MessageBoxAction, _instance: any) => void
+        (_action: MessageBoxAction, _instance: MessageBoxInstance) => void
       >,
     },
   },
@@ -245,7 +241,7 @@ export default defineComponent({
 
     const getMessageBoxInstance = () => {
       return {
-        visible,
+        visible: visible.value,
         value: inputValue.value,
         close: () => {
           visible.value = false;

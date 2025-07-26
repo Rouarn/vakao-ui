@@ -5,7 +5,7 @@
  * @param b 第二个值
  * @returns 如果两个值相等返回 true，否则返回 false
  */
-export const isEqual = (a: any, b: any): boolean => {
+export const isEqual = (a: unknown, b: unknown): boolean => {
   // 严格相等检查（包括 NaN）
   if (Object.is(a, b)) {
     return true;
@@ -104,7 +104,7 @@ export const isEqual = (a: any, b: any): boolean => {
     if (!Object.prototype.hasOwnProperty.call(b, key)) {
       return false;
     }
-    if (!isEqual(a[key], b[key])) {
+    if (!isEqual((a as Record<string, unknown>)[key], (b as Record<string, unknown>)[key])) {
       return false;
     }
   }
@@ -121,8 +121,8 @@ export const isEqual = (a: any, b: any): boolean => {
  * @returns 如果两个值相等返回 true，否则返回 false
  */
 export const isEqualWithCircular = (
-  a: any,
-  b: any,
+  a: unknown,
+  b: unknown,
   visitedA: WeakMap<object, object> = new WeakMap(),
   visitedB: WeakMap<object, object> = new WeakMap(),
 ): boolean => {
@@ -240,7 +240,7 @@ export const isEqualWithCircular = (
       if (!Object.prototype.hasOwnProperty.call(b, key)) {
         return false;
       }
-      if (!isEqualWithCircular(a[key], b[key], visitedA, visitedB)) {
+      if (!isEqualWithCircular((a as Record<string, unknown>)[key], (b as Record<string, unknown>)[key], visitedA, visitedB)) {
         return false;
       }
     }
@@ -260,7 +260,7 @@ export const isEqualWithCircular = (
  * @param b 第二个对象
  * @returns 如果两个对象的第一层属性相等返回 true，否则返回 false
  */
-export const shallowEqual = (a: any, b: any): boolean => {
+export const shallowEqual = (a: unknown, b: unknown): boolean => {
   // 严格相等检查
   if (Object.is(a, b)) {
     return true;
@@ -288,7 +288,7 @@ export const shallowEqual = (a: any, b: any): boolean => {
   for (const key of keysA) {
     if (
       !Object.prototype.hasOwnProperty.call(b, key) ||
-      !Object.is(a[key], b[key])
+      !Object.is((a as Record<string, unknown>)[key], (b as Record<string, unknown>)[key])
     ) {
       return false;
     }
