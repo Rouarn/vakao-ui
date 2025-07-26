@@ -251,7 +251,9 @@ async function handleDeployOnly(options, deploymentEngine, interactive) {
       process.exit(1);
     }
   } catch (error) {
-    handleError("部署失败", error.message);
+    // 不要直接调用 handleError，让错误传播到部署引擎的 onError 钩子
+    log(`部署失败: ${error.message}`, "error");
+    throw error; // 重新抛出错误，确保进程正确退出
   }
 }
 
