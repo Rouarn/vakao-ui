@@ -98,60 +98,60 @@ export type ComponentEmits = ExtractPublicPropTypes<typeof componentEmits>;
 
 **文件级注释**：
 
-```typescript
+````typescript
 /**
  * 组件/工具的整体描述
- * 
+ *
  * 详细说明组件的功能、特性和使用场景。
  * 可以包含多行描述，解释设计思路和注意事项。
- * 
+ *
  * 主要特性：
  * - 特性1：具体说明
  * - 特性2：具体说明
  * - 特性3：具体说明
- * 
+ *
  * 使用示例：
  * ```typescript
  * // 基础用法示例
  * const example = useFunction();
- * 
+ *
  * // 高级用法示例
  * const advanced = useFunction({
  *   option1: 'value1',
  *   option2: true
  * });
  * ```
- * 
+ *
  * @version 1.0.0
  * @author Vakao UI Team
  * @since 2024-01-01
  */
-```
+````
 
 **函数/方法注释**：
 
-```typescript
+````typescript
 /**
  * 函数功能的简要描述
- * 
+ *
  * 详细描述函数的作用、算法逻辑、使用场景等。
  * 如果有复杂的业务逻辑，需要详细说明。
- * 
+ *
  * @param param1 - 参数1的描述，包括类型和作用
  * @param param2 - 参数2的描述，可选参数需要标明
  * @param options - 配置选项对象
  * @param options.immediate - 是否立即执行，默认为 true
  * @param options.timeout - 超时时间（毫秒），默认为 5000
- * 
+ *
  * @returns 返回值的详细描述，包括数据结构
- * 
+ *
  * @throws {Error} 可能抛出的错误类型和条件
- * 
+ *
  * @example
  * ```typescript
  * // 基础用法
  * const result = myFunction('input', { immediate: true });
- * 
+ *
  * // 错误处理
  * try {
  *   const result = myFunction('invalid');
@@ -159,32 +159,32 @@ export type ComponentEmits = ExtractPublicPropTypes<typeof componentEmits>;
  *   console.error('处理失败:', error.message);
  * }
  * ```
- * 
+ *
  * @see {@link RelatedFunction} 相关函数
  * @since 1.0.0
  */
 function myFunction(param1: string, options?: Options): Result {
   // 函数实现
 }
-```
+````
 
 **类型定义注释**：
 
-```typescript
+````typescript
 /**
  * 组件属性接口定义
- * 
+ *
  * 定义了组件所有可接受的属性及其类型约束。
  * 遵循 Vue 3 组件属性设计规范。
- * 
+ *
  * @interface ComponentProps
  */
 export interface ComponentProps {
   /**
    * 组件尺寸
-   * 
+   *
    * 控制组件的整体大小，影响内边距、字体大小等样式。
-   * 
+   *
    * @default 'medium'
    * @example
    * ```vue
@@ -192,24 +192,24 @@ export interface ComponentProps {
    * <VkButton size="small">小按钮</VkButton>
    * ```
    */
-  size?: 'small' | 'medium' | 'large';
-  
+  size?: "small" | "medium" | "large";
+
   /**
    * 是否禁用组件
-   * 
+   *
    * 禁用后组件不响应用户交互，并显示禁用状态样式。
-   * 
+   *
    * @default false
    */
   disabled?: boolean;
 }
-```
+````
 
 #### 2.3.3 Vue 组件注释规范
 
 **组件文件结构注释**：
 
-```vue
+````vue
 <template>
   <!-- 
     组件模板结构说明
@@ -230,21 +230,21 @@ export interface ComponentProps {
 <script setup lang="ts">
 /**
  * VkComponent 组件
- * 
+ *
  * 这是一个通用的 UI 组件，提供了基础的交互功能。
  * 支持多种尺寸、状态和自定义样式。
- * 
+ *
  * 主要特性：
  * - 响应式设计：适配不同屏幕尺寸
  * - 主题支持：支持亮色/暗色主题
  * - 无障碍性：完整的键盘导航和屏幕阅读器支持
  * - TypeScript：完整的类型定义和智能提示
- * 
+ *
  * 使用示例：
  * ```vue
  * <template>
- *   <VkComponent 
- *     size="large" 
+ *   <VkComponent
+ *     size="large"
  *     :disabled="false"
  *     @click="handleClick"
  *   >
@@ -252,7 +252,7 @@ export interface ComponentProps {
  *   </VkComponent>
  * </template>
  * ```
- * 
+ *
  * @version 1.0.0
  * @author Vakao UI Team
  */
@@ -282,9 +282,9 @@ const emit = defineEmits(componentEmits);
 
 // ==================== 响应式状态 ====================
 
-/** 
+/**
  * 组件内部状态
- * 
+ *
  * 管理组件的内部状态，如焦点状态、激活状态等。
  */
 const state = ref({
@@ -294,19 +294,19 @@ const state = ref({
 
 // ==================== 计算属性 ====================
 
-/** 
+/**
  * CSS 命名空间
- * 
+ *
  * 生成组件的 CSS 类名前缀，确保样式隔离。
  */
-const ns = useNamespace('component');
+const ns = useNamespace("component");
 
 /**
  * 合并后的 CSS 类名
- * 
+ *
  * 根据组件状态和属性生成最终的 CSS 类名。
  * 包含基础类名、尺寸类名、状态类名等。
- * 
+ *
  * @returns 完整的 CSS 类名字符串
  */
 const mergedClass = computed(() => {
@@ -314,8 +314,8 @@ const mergedClass = computed(() => {
     ns.b(), // 基础类名
     ns.m(props.size), // 尺寸修饰符
     {
-      [ns.is('disabled')]: props.disabled, // 禁用状态
-      [ns.is('focused')]: state.value.focused, // 焦点状态
+      [ns.is("disabled")]: props.disabled, // 禁用状态
+      [ns.is("focused")]: state.value.focused, // 焦点状态
     },
   ];
 });
@@ -324,10 +324,10 @@ const mergedClass = computed(() => {
 
 /**
  * 处理点击事件
- * 
+ *
  * 当组件被点击时触发，会进行状态检查并发出相应事件。
  * 如果组件处于禁用状态，则不会处理点击事件。
- * 
+ *
  * @param event - 鼠标点击事件对象
  */
 const handleClick = (event: MouseEvent) => {
@@ -335,14 +335,14 @@ const handleClick = (event: MouseEvent) => {
   if (props.disabled) {
     return;
   }
-  
+
   // 发出点击事件
-  emit('click', event);
+  emit("click", event);
 };
 
 /**
  * 处理焦点获得事件
- * 
+ *
  * 当组件获得焦点时更新内部状态。
  */
 const handleFocus = () => {
@@ -351,7 +351,7 @@ const handleFocus = () => {
 
 /**
  * 处理焦点失去事件
- * 
+ *
  * 当组件失去焦点时更新内部状态。
  */
 const handleBlur = () => {
@@ -362,13 +362,13 @@ const handleBlur = () => {
 
 /**
  * 暴露给父组件的方法
- * 
+ *
  * 允许父组件通过模板引用调用这些方法。
  */
 defineExpose({
   /**
    * 手动设置组件焦点
-   * 
+   *
    * @example
    * ```vue
    * <template>
@@ -401,63 +401,63 @@ defineExpose({
   position: relative;
   display: inline-flex;
   align-items: center;
-  
+
   /* 尺寸变体 */
   &--small {
     /* 小尺寸样式 */
   }
-  
+
   &--medium {
     /* 中等尺寸样式 */
   }
-  
+
   &--large {
     /* 大尺寸样式 */
   }
-  
+
   /* 状态样式 */
   &.is-disabled {
     /* 禁用状态样式 */
     opacity: 0.6;
     cursor: not-allowed;
   }
-  
+
   &.is-focused {
     /* 焦点状态样式 */
     outline: 2px solid var(--vk-color-primary);
   }
 }
 </style>
-```
+````
 
 #### 2.3.4 工具函数注释规范
 
-```typescript
+````typescript
 /**
  * 深度克隆对象
- * 
+ *
  * 创建对象的深度副本，支持嵌套对象、数组、Date、RegExp 等类型。
  * 使用递归算法实现，能够正确处理循环引用。
- * 
+ *
  * 支持的数据类型：
  * - 基础类型：string, number, boolean, null, undefined
  * - 对象类型：Object, Array, Date, RegExp, Map, Set
  * - 函数：直接返回原函数引用
- * 
+ *
  * @template T - 要克隆的对象类型
  * @param obj - 要克隆的对象
  * @param visited - 已访问对象的 WeakMap，用于处理循环引用
- * 
+ *
  * @returns 克隆后的对象
- * 
+ *
  * @throws {TypeError} 当传入不支持的数据类型时抛出错误
- * 
+ *
  * @example
  * ```typescript
  * // 克隆简单对象
  * const original = { name: 'John', age: 30 };
  * const cloned = deepClone(original);
- * 
+ *
  * // 克隆嵌套对象
  * const complex = {
  *   user: { name: 'John' },
@@ -465,57 +465,57 @@ defineExpose({
  *   settings: new Map([['theme', 'dark']])
  * };
  * const clonedComplex = deepClone(complex);
- * 
+ *
  * // 处理循环引用
  * const circular: any = { name: 'test' };
  * circular.self = circular;
  * const clonedCircular = deepClone(circular); // 不会导致无限递归
  * ```
- * 
+ *
  * @see {@link isEqual} 用于比较两个对象是否相等
  * @since 1.0.0
  */
 export function deepClone<T>(obj: T, visited = new WeakMap()): T {
   // 实现细节...
 }
-```
+````
 
 #### 2.3.5 Hooks 注释规范
 
-```typescript
+````typescript
 /**
  * 布尔值切换 Hook
- * 
+ *
  * 提供布尔状态管理功能，支持切换、设置真值、设置假值等操作。
  * 遵循 React Hooks 设计模式，返回数组格式便于解构使用。
- * 
+ *
  * 设计特点：
  * - 响应式：基于 Vue 3 ref 实现，自动触发视图更新
  * - 类型安全：完整的 TypeScript 类型定义
  * - 灵活性：支持初始值设置和多种操作方法
  * - 一致性：API 设计与其他 Hooks 保持一致
  * - 数组返回：避免对象形式，便于用户自定义命名
- * 
+ *
  * @param initialValue - 初始布尔值，默认为 false
- * 
+ *
  * @returns 返回包含状态和操作函数的数组
  * - [0] state: ComputedRef<boolean> - 只读的响应式布尔状态（计算属性）
  * - [1] toggle: () => void - 切换状态函数
  * - [2] setTrue: () => void - 设置为 true 的函数
  * - [3] setFalse: () => void - 设置为 false 的函数
- * 
+ *
  * @example
  * ```typescript
  * // 基础用法 - 只需要状态和切换功能
  * const [isVisible, toggle] = useToggle(false);
- * 
+ *
  * // 完整用法 - 使用所有返回值
  * const [isOpen, toggle, setTrue, setFalse] = useToggle(true);
- * 
+ *
  * // 自定义命名 - 便于多次使用
  * const [isLoading, toggleLoading, startLoading, stopLoading] = useToggle();
  * const [isModalOpen, toggleModal, openModal, closeModal] = useToggle();
- * 
+ *
  * // 异步操作示例
  * const handleSubmit = async () => {
  *   startLoading();
@@ -525,13 +525,13 @@ export function deepClone<T>(obj: T, visited = new WeakMap()): T {
  *     stopLoading();
  *   }
  * };
- * 
+ *
  * // 模态框控制示例
  * const handleOpenModal = () => {
  *   openModal();
  * };
  * ```
- * 
+ *
  * @see {@link useCounter} 数值状态管理
  * @see {@link useLocalStorage} 持久化状态管理
  * @since 1.0.0
@@ -539,7 +539,7 @@ export function deepClone<T>(obj: T, visited = new WeakMap()): T {
 export function useToggle(initialValue = false): UseToggleReturn {
   // 实现细节...
 }
-```
+````
 
 #### 2.3.6 注释质量要求
 
@@ -729,9 +729,9 @@ const [isLoading, toggleLoading, startLoading, stopLoading] = useToggle();
 const [isModalOpen, toggleModal, openModal, closeModal] = useToggle();
 
 // useFetch - 数据获取
-const [data, loading, error, refetch, cancel] = useFetch('/api/users');
+const [data, loading, error, refetch, cancel] = useFetch("/api/users");
 // 或者包含元数据
-const [data, loading, error, refetch, cancel, meta] = useFetch('/api/users');
+const [data, loading, error, refetch, cancel, meta] = useFetch("/api/users");
 
 // useCounter - 计数器
 const [count, increment, decrement, reset, setValue] = useCounter(0);
@@ -739,10 +739,16 @@ const [count, increment, decrement, reset, setValue] = useCounter(0);
 const [pageNum, nextPage, prevPage, resetPage, setPage] = useCounter(1);
 
 // useLocalStorage - 本地存储
-const [value, setValue, remove, clear] = useLocalStorage('key', defaultValue);
+const [value, setValue, remove, clear] = useLocalStorage("key", defaultValue);
 // 自定义命名示例
-const [theme, setTheme, removeTheme, clearTheme] = useLocalStorage('theme', 'light');
-const [userInfo, setUserInfo, removeUserInfo, clearUserInfo] = useLocalStorage('user', null);
+const [theme, setTheme, removeTheme, clearTheme] = useLocalStorage(
+  "theme",
+  "light",
+);
+const [userInfo, setUserInfo, removeUserInfo, clearUserInfo] = useLocalStorage(
+  "user",
+  null,
+);
 ```
 
 ### 6.4 TypeScript 类型定义
@@ -752,36 +758,36 @@ const [userInfo, setUserInfo, removeUserInfo, clearUserInfo] = useLocalStorage('
 ```typescript
 // 基础类型定义 - useToggle
 type UseToggleReturn = [
-  ComputedRef<boolean>,    // 只读状态（计算属性）
-  () => void,              // toggle 函数
-  () => void,              // setTrue 函数
-  () => void               // setFalse 函数
+  ComputedRef<boolean>, // 只读状态（计算属性）
+  () => void, // toggle 函数
+  () => void, // setTrue 函数
+  () => void, // setFalse 函数
 ];
 
 // 泛型类型定义 - useFetch
 type UseFetchReturn<T> = [
-  ComputedRef<T | null>,   // 只读数据状态（计算属性）
-  ComputedRef<boolean>,    // 只读加载状态（计算属性）
+  ComputedRef<T | null>, // 只读数据状态（计算属性）
+  ComputedRef<boolean>, // 只读加载状态（计算属性）
   ComputedRef<Error | null>, // 只读错误状态（计算属性）
-  () => Promise<void>,     // refetch 函数
-  () => void               // cancel 函数
+  () => Promise<void>, // refetch 函数
+  () => void, // cancel 函数
 ];
 
 // useCounter 类型定义
 type UseCounterReturn = [
-  ComputedRef<number>,     // 只读计数状态（计算属性）
-  () => void,              // increment 函数
-  () => void,              // decrement 函数
-  () => void,              // reset 函数
-  (value: number) => void  // setValue 函数
+  ComputedRef<number>, // 只读计数状态（计算属性）
+  () => void, // increment 函数
+  () => void, // decrement 函数
+  () => void, // reset 函数
+  (value: number) => void, // setValue 函数
 ];
 
 // useLocalStorage 类型定义
 type UseLocalStorageReturn<T> = [
-  ComputedRef<T>,          // 只读存储值（计算属性）
-  (value: T) => void,      // setValue 函数
-  () => void,              // remove 函数
-  () => void               // clear 函数
+  ComputedRef<T>, // 只读存储值（计算属性）
+  (value: T) => void, // setValue 函数
+  () => void, // remove 函数
+  () => void, // clear 函数
 ];
 ```
 
@@ -798,7 +804,7 @@ interface UseFetchOptions {
 // Hook 函数签名
 function useFetch<T>(
   url: string | (() => string),
-  options?: UseFetchOptions
+  options?: UseFetchOptions,
 ): UseFetchReturn<T>;
 ```
 
@@ -807,7 +813,7 @@ function useFetch<T>(
 #### 基本结构
 
 ```typescript
-import { ref, computed, type Ref, type ComputedRef } from 'vue';
+import { ref, computed, type Ref, type ComputedRef } from "vue";
 
 // 类型定义
 interface UseExampleOptions {
@@ -815,36 +821,36 @@ interface UseExampleOptions {
 }
 
 type UseExampleReturn = [
-  ComputedRef<any>,        // 只读状态（计算属性）
+  ComputedRef<any>, // 只读状态（计算属性）
   (newValue: any) => void, // 更新函数
-  () => void               // 重置函数
+  () => void, // 重置函数
 ];
 
 // Hook 实现
 export function useExample(
   initialValue?: any,
-  options?: UseExampleOptions
+  options?: UseExampleOptions,
 ): UseExampleReturn {
   // 1. 内部响应式状态
   const state = ref(initialValue);
-  
+
   // 2. 只读的计算属性状态
   const readonlyState = computed(() => state.value);
-  
+
   // 3. 操作函数
   const update = (newValue: any) => {
     state.value = newValue;
   };
-  
+
   const reset = () => {
     state.value = initialValue;
   };
-  
+
   // 4. 返回数组格式 - 第一项是计算属性，确保只读
   return [
-    readonlyState,    // 只读状态（计算属性），自动追踪依赖变化
-    update,           // 更新函数
-    reset             // 重置函数
+    readonlyState, // 只读状态（计算属性），自动追踪依赖变化
+    update, // 更新函数
+    reset, // 重置函数
   ] as const;
 }
 ```
@@ -852,41 +858,41 @@ export function useExample(
 #### 完整示例 - useToggle 实现
 
 ```typescript
-import { ref, computed, type ComputedRef } from 'vue';
+import { ref, computed, type ComputedRef } from "vue";
 
 type UseToggleReturn = [
   ComputedRef<boolean>,
   () => void,
   () => void,
-  () => void
+  () => void,
 ];
 
 export function useToggle(initialValue = false): UseToggleReturn {
   // 内部响应式状态
   const state = ref(initialValue);
-  
+
   // 只读的计算属性状态
   const readonlyState = computed(() => state.value);
-  
+
   // 操作函数
   const toggle = () => {
     state.value = !state.value;
   };
-  
+
   const setTrue = () => {
     state.value = true;
   };
-  
+
   const setFalse = () => {
     state.value = false;
   };
-  
+
   // 返回数组格式 - 第一项是计算属性
   return [
-    readonlyState,   // 只读状态（计算属性）
-    toggle,          // 切换函数
-    setTrue,         // 设置为 true
-    setFalse         // 设置为 false
+    readonlyState, // 只读状态（计算属性）
+    toggle, // 切换函数
+    setTrue, // 设置为 true
+    setFalse, // 设置为 false
   ] as const;
 }
 ```
@@ -894,14 +900,14 @@ export function useToggle(initialValue = false): UseToggleReturn {
 #### 错误处理示例 - useFetch 实现
 
 ```typescript
-import { ref, computed, type ComputedRef } from 'vue';
+import { ref, computed, type ComputedRef } from "vue";
 
 type UseFetchReturn<T> = [
   ComputedRef<T | null>,
   ComputedRef<boolean>,
   ComputedRef<Error | null>,
   () => Promise<void>,
-  () => void
+  () => void,
 ];
 
 export function useFetch<T>(url: string): UseFetchReturn<T> {
@@ -910,33 +916,33 @@ export function useFetch<T>(url: string): UseFetchReturn<T> {
   const loading = ref(false);
   const error = ref<Error | null>(null);
   let abortController: AbortController | null = null;
-  
+
   // 只读的计算属性状态
   const readonlyData = computed(() => data.value);
   const readonlyLoading = computed(() => loading.value);
   const readonlyError = computed(() => error.value);
-  
+
   const execute = async () => {
     try {
       loading.value = true;
       error.value = null;
-      
+
       // 创建新的 AbortController
       abortController = new AbortController();
-      
+
       // 模拟请求逻辑
       const response = await fetch(url, {
-        signal: abortController.signal
+        signal: abortController.signal,
       });
-      
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      
+
       const result = await response.json();
       data.value = result;
     } catch (err) {
-      if (err instanceof Error && err.name !== 'AbortError') {
+      if (err instanceof Error && err.name !== "AbortError") {
         error.value = err;
       }
     } finally {
@@ -944,20 +950,20 @@ export function useFetch<T>(url: string): UseFetchReturn<T> {
       abortController = null;
     }
   };
-  
+
   const cancel = () => {
     if (abortController) {
       abortController.abort();
     }
   };
-  
+
   // 返回数组格式 - 所有状态都是计算属性
   return [
-    readonlyData,    // 只读数据状态（计算属性）
+    readonlyData, // 只读数据状态（计算属性）
     readonlyLoading, // 只读加载状态（计算属性）
-    readonlyError,   // 只读错误状态（计算属性）
-    execute,         // 执行请求函数
-    cancel           // 取消请求函数
+    readonlyError, // 只读错误状态（计算属性）
+    execute, // 执行请求函数
+    cancel, // 取消请求函数
   ] as const;
 }
 ```
@@ -1001,6 +1007,7 @@ const [state, toggle, setTrue, setFalse] = useToggle(initialValue?);
 
 \`\`\`vue
 <template>
+
   <div>
     <p>状态: {{ isVisible }}</p>
     <button @click="toggleVisibility">切换</button>
@@ -1015,11 +1022,13 @@ import { useToggle } from '@/hooks/useToggle';
 // 数组解构，可自定义变量名
 const [isVisible, toggleVisibility, show, hide] = useToggle(false);
 </script>
+
 \`\`\`
 
 ### 多实例使用
 
 \`\`\`vue
+
 <script setup>
 import { useToggle } from '@/hooks/useToggle';
 
@@ -1028,30 +1037,31 @@ const [isModalOpen, toggleModal, openModal, closeModal] = useToggle();
 const [isLoading, toggleLoading, startLoading, stopLoading] = useToggle();
 const [isExpanded, toggleExpand, expand, collapse] = useToggle(true);
 </script>
+
 \`\`\`
 ```
 
 ### 6.7 测试规范
 
 ```typescript
-import { describe, it, expect } from 'vitest';
-import { useToggle } from '../useToggle';
+import { describe, it, expect } from "vitest";
+import { useToggle } from "../useToggle";
 
-describe('useToggle', () => {
-  it('should return array with initial state and actions', () => {
+describe("useToggle", () => {
+  it("should return array with initial state and actions", () => {
     const [state, actions] = useToggle(false);
-    
+
     expect(Array.isArray([state, actions])).toBe(true);
     expect(state.value).toBe(false);
-    expect(typeof actions.toggle).toBe('function');
+    expect(typeof actions.toggle).toBe("function");
   });
-  
-  it('should toggle state correctly', () => {
+
+  it("should toggle state correctly", () => {
     const [state, { toggle }] = useToggle(false);
-    
+
     toggle();
     expect(state.value).toBe(true);
-    
+
     toggle();
     expect(state.value).toBe(false);
   });

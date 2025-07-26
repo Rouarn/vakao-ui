@@ -97,7 +97,7 @@ export default defineComponent({
     const { currentValue, updateValue } = useStandardControlled(
       props,
       emit,
-      ""
+      "",
     );
 
     // 密码显示状态
@@ -166,7 +166,7 @@ export default defineComponent({
     const handleInput = (event: Event) => {
       const target = event.target as HTMLInputElement;
       const value = target.value;
-      
+
       updateValue(value);
       emit("input", value);
     };

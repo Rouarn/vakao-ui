@@ -22,6 +22,16 @@ const PROJECT_CONFIG = {
 };
 
 /**
+ * 包依赖关系定义
+ * 用于确定发布顺序，被依赖的包需要先发布
+ */
+const PACKAGE_DEPENDENCIES = {
+  main: ["utils", "hooks"], // 主包依赖 utils 和 hooks 包
+  hooks: [], // hooks 包无依赖
+  utils: [], // utils 包无依赖
+};
+
+/**
  * 包配置定义
  */
 const PACKAGES = {
@@ -31,6 +41,7 @@ const PACKAGES = {
     path: ".",
     icon: "📦",
     description: "Vue 3 组件库 - Vakao UI",
+    buildCommand: "pnpm run build",
     keywords: ["vue3", "components", "ui-library", "typescript", "vakao-ui"],
     peerDependencies: {
       vue: "^3.3.0",
@@ -135,6 +146,7 @@ export default defineConfig({
     path: "packages/hooks",
     icon: "🪝",
     description: "Vue 3 组合式函数库 - Vakao UI Hooks",
+    buildCommand: "pnpm run build",
     keywords: [
       "vue3",
       "hooks",
@@ -191,6 +203,7 @@ const [theme, setTheme] = useLocalStorage('theme', 'light');
     path: "packages/utils",
     icon: "🛠️",
     description: "Vue 3 工具函数库 - Vakao UI Utils",
+    buildCommand: "pnpm run build",
     keywords: [
       "vue3",
       "utils",
@@ -252,6 +265,7 @@ const MyComponent = withInstall(MyComponentImpl);
 const CONFIG = {
   ...PROJECT_CONFIG,
   packages: PACKAGES,
+  dependencies: PACKAGE_DEPENDENCIES,
   projectRoot: undefined, // 将在运行时设置
   buildRoot: undefined, // 将在运行时设置
 };
@@ -259,5 +273,6 @@ const CONFIG = {
 module.exports = {
   PROJECT_CONFIG,
   PACKAGES,
+  PACKAGE_DEPENDENCIES,
   CONFIG,
 };

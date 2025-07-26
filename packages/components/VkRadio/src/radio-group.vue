@@ -24,7 +24,7 @@ export default defineComponent({
       () => props.modelValue,
       (newValue) => {
         modelValue.value = newValue;
-      }
+      },
     );
 
     // 计算属性

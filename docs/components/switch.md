@@ -102,16 +102,10 @@ const enabled = ref(false);
 ```vue
 <template>
   <!-- 使用 @change 事件 -->
-  <vk-switch
-    :value="enabled1"
-    @change="setEnabled1"
-  />
+  <vk-switch :value="enabled1" @change="setEnabled1" />
 
   <!-- 使用 @update:modelValue 事件 -->
-  <vk-switch
-    :value="enabled2"
-    @update:modelValue="setEnabled2"
-  />
+  <vk-switch :value="enabled2" @update:modelValue="setEnabled2" />
 </template>
 
 <script setup>
@@ -120,11 +114,11 @@ import { ref } from "vue";
 const enabled1 = ref(false);
 const enabled2 = ref(false);
 
-const setEnabled1 = value => {
+const setEnabled1 = (value) => {
   enabled1.value = value;
 };
 
-const setEnabled2 = value => {
+const setEnabled2 = (value) => {
   enabled2.value = value;
 };
 </script>

@@ -46,17 +46,17 @@
 <script lang="ts">
 /**
  * VkButton 按钮组件
- * 
+ *
  * 一个功能丰富的按钮组件，支持多种样式、状态和配置选项。
  * 基于 Vue 3 Composition API 构建，提供完整的 TypeScript 支持。
- * 
+ *
  * 主要特性：
  * - 多种按钮类型和尺寸
  * - 支持图标和加载状态
  * - 灵活的样式定制
  * - 完整的无障碍支持
  * - 响应式设计
- * 
+ *
  * @example
  * ```vue
  * <template>
@@ -89,10 +89,10 @@ export default defineComponent({
 
     /**
      * 处理按钮点击事件
-     * 
+     *
      * 只有在按钮非禁用且非加载状态下才会触发点击事件，
      * 确保用户交互的一致性和可预期性。
-     * 
+     *
      * @param e - 鼠标点击事件对象
      */
     const handleClick = (e: MouseEvent) => {
@@ -103,7 +103,7 @@ export default defineComponent({
 
     /**
      * 过滤属性
-     * 
+     *
      * 从 attrs 中过滤掉 class 和 style 属性，避免与组件内部的
      * 样式合并逻辑冲突，其他属性正常传递给根元素。
      */
@@ -114,7 +114,7 @@ export default defineComponent({
 
     /**
      * 合并样式
-     * 
+     *
      * 将组件的 customStyle 属性和父组件传递的 style 属性合并，
      * 支持字符串和对象两种格式，确保类型安全。
      */
@@ -131,7 +131,7 @@ export default defineComponent({
 
     /**
      * 合并类名
-     * 
+     *
      * 根据组件的各种属性和状态生成完整的 CSS 类名列表，
      * 使用 BEM 命名规范，确保样式的模块化和可维护性。
      */
@@ -154,7 +154,7 @@ export default defineComponent({
 
     /**
      * 图标尺寸计算
-     * 
+     *
      * 根据按钮尺寸自动计算合适的图标大小，
      * 确保图标与按钮的视觉比例协调。
      */

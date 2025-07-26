@@ -23,16 +23,16 @@ const statePrefix = "is-";
 /**
  * 创建 CSS 命名空间工具函数
  * 基于 BEM (Block Element Modifier) 命名规范，用于生成一致的 CSS 类名
- * 
+ *
  * @param block 块名称，通常是组件名称（如 'button', 'input'）
  * @param namespace 命名空间前缀，默认为 'vk'
  * @returns 命名空间工具函数集合
- * 
+ *
  * @example
  * ```typescript
  * // 创建按钮组件的命名空间
  * const ns = useNamespace('button');
- * 
+ *
  * // 生成类名
  * ns.block();                    // 'vk-button'
  * ns.element('icon');            // 'vk-button__icon'

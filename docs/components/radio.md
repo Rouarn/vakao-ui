@@ -125,11 +125,11 @@ import { ref } from "vue";
 const radio1 = ref("option1");
 const radio2 = ref("option1");
 
-const setRadio1 = value => {
+const setRadio1 = (value) => {
   radio1.value = value;
 };
 
-const setRadio2 = value => {
+const setRadio2 = (value) => {
   radio2.value = value;
 };
 </script>

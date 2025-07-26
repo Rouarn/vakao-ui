@@ -98,7 +98,7 @@ function getPackageJson(packageKey) {
   const packagePath = path.join(
     PROJECT_ROOT,
     PACKAGES[packageKey].path,
-    "package.json"
+    "package.json",
   );
   if (!existsSync(packagePath)) {
     throw new Error(`package.json 不存在: ${packagePath}`);
@@ -116,7 +116,7 @@ function updatePackageVersion(packageKey, version) {
   const packagePath = path.join(
     PROJECT_ROOT,
     PACKAGES[packageKey].path,
-    "package.json"
+    "package.json",
   );
   const packageJson = getPackageJson(packageKey);
   packageJson.version = version;
@@ -156,17 +156,17 @@ function suggestNextVersion(currentVersion) {
  * @returns {Promise<string[]>} 选择的包列表
  */
 function askForPackages() {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     console.log("\n可用的包:");
     Object.entries(PACKAGES).forEach(([key, pkg], index) => {
       console.log(
-        `  ${index + 1}. ${pkg.icon} ${pkg.displayName} (${pkg.name})`
+        `  ${index + 1}. ${pkg.icon} ${pkg.displayName} (${pkg.name})`,
       );
     });
     console.log(`  ${Object.keys(PACKAGES).length + 1}. 🚀 全部发布`);
 
-    rl.question("\n请选择要发布的包 (输入数字，多个用逗号分隔): ", answer => {
-      const choices = answer.split(",").map(s => s.trim());
+    rl.question("\n请选择要发布的包 (输入数字，多个用逗号分隔): ", (answer) => {
+      const choices = answer.split(",").map((s) => s.trim());
       const packageKeys = [];
 
       for (const choice of choices) {
@@ -203,7 +203,7 @@ function askForPackages() {
  * @returns {Promise<Object>} 版本号映射
  */
 function askForVersions(packageKeys, syncVersion) {
-  return new Promise(async resolve => {
+  return new Promise(async (resolve) => {
     const versions = {};
 
     if (syncVersion && packageKeys.length > 1) {
@@ -218,10 +218,10 @@ function askForVersions(packageKeys, syncVersion) {
       const version = await askForSingleVersion(
         currentVersion,
         suggestedVersion,
-        "统一版本号"
+        "统一版本号",
       );
 
-      packageKeys.forEach(key => {
+      packageKeys.forEach((key) => {
         versions[key] = version;
       });
     } else {
@@ -232,14 +232,14 @@ function askForVersions(packageKeys, syncVersion) {
 
         log(
           `\n${PACKAGES[packageKey].icon} ${PACKAGES[packageKey].displayName}`,
-          "info"
+          "info",
         );
         log(`当前版本: ${currentVersion}`, "info");
 
         const version = await askForSingleVersion(
           currentVersion,
           suggestedVersion,
-          PACKAGES[packageKey].displayName
+          PACKAGES[packageKey].displayName,
         );
 
         versions[packageKey] = version;
@@ -259,10 +259,10 @@ function askForVersions(packageKeys, syncVersion) {
  * @returns {Promise<string>} 新版本号
  */
 function askForSingleVersion(currentVersion, suggestedVersion, packageName) {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     rl.question(
       `请输入 ${packageName} 的新版本号 (建议: ${suggestedVersion}, 留空使用建议版本): `,
-      version => {
+      (version) => {
         const newVersion = version || suggestedVersion;
 
         if (!isValidVersion(newVersion)) {
@@ -270,7 +270,7 @@ function askForSingleVersion(currentVersion, suggestedVersion, packageName) {
           askForSingleVersion(
             currentVersion,
             suggestedVersion,
-            packageName
+            packageName,
           ).then(resolve);
           return;
         }
@@ -280,14 +280,14 @@ function askForSingleVersion(currentVersion, suggestedVersion, packageName) {
           askForSingleVersion(
             currentVersion,
             suggestedVersion,
-            packageName
+            packageName,
           ).then(resolve);
           return;
         }
 
         log(`${packageName} 版本号验证通过: ${newVersion}`, "success");
         resolve(newVersion);
-      }
+      },
     );
   });
 }
@@ -311,7 +311,7 @@ function executePackagePublish(packageKey, version, isDryRun) {
 
     log(
       `\n${PACKAGES[packageKey].icon} 开始发布 ${PACKAGES[packageKey].displayName}...`,
-      "publish"
+      "publish",
     );
 
     // 先更新版本号
@@ -323,7 +323,7 @@ function executePackagePublish(packageKey, version, isDryRun) {
       cwd: PROJECT_ROOT,
     });
 
-    child.on("close", code => {
+    child.on("close", (code) => {
       if (code === 0) {
         log(`${PACKAGES[packageKey].displayName} 发布成功`, "success");
         resolve(true);
@@ -333,10 +333,10 @@ function executePackagePublish(packageKey, version, isDryRun) {
       }
     });
 
-    child.on("error", error => {
+    child.on("error", (error) => {
       log(
         `${PACKAGES[packageKey].displayName} 发布出错: ${error.message}`,
-        "error"
+        "error",
       );
       reject(error);
     });
@@ -357,17 +357,19 @@ function parseArguments() {
   };
 
   // 解析 --packages 参数
-  const packagesIndex = args.findIndex(arg => arg.startsWith("--packages"));
+  const packagesIndex = args.findIndex((arg) => arg.startsWith("--packages"));
   if (packagesIndex !== -1) {
     const packagesArg = args[packagesIndex];
     if (packagesArg.includes("=")) {
       const packagesList = packagesArg.split("=")[1];
-      options.packages = packagesList.split(",").map(p => p.trim());
+      options.packages = packagesList.split(",").map((p) => p.trim());
     } else if (
       args[packagesIndex + 1] &&
       !args[packagesIndex + 1].startsWith("--")
     ) {
-      options.packages = args[packagesIndex + 1].split(",").map(p => p.trim());
+      options.packages = args[packagesIndex + 1]
+        .split(",")
+        .map((p) => p.trim());
     }
   }
 
@@ -390,7 +392,7 @@ async function main() {
     log(`发布模式: ${options.isDryRun ? "测试模式" : "正式发布"}`, "info");
     log(
       `目标仓库: ${USE_PRIVATE_REGISTRY ? `私有制品仓库 (${PRIVATE_REGISTRY})` : "npm 官方仓库"}`,
-      "info"
+      "info",
     );
     if (options.syncVersion) {
       log(`版本同步: 启用`, "info");
@@ -401,13 +403,13 @@ async function main() {
     // 确定要发布的包
     let packageKeys;
     if (options.packages) {
-      packageKeys = options.packages.filter(key => PACKAGES[key]);
+      packageKeys = options.packages.filter((key) => PACKAGES[key]);
       if (packageKeys.length === 0) {
         throw new Error("指定的包不存在");
       }
       log(
-        `指定发布包: ${packageKeys.map(key => PACKAGES[key].displayName).join(", ")}`,
-        "info"
+        `指定发布包: ${packageKeys.map((key) => PACKAGES[key].displayName).join(", ")}`,
+        "info",
       );
     } else {
       packageKeys = await askForPackages();
@@ -422,24 +424,24 @@ async function main() {
 
     // 显示发布计划
     log("发布计划:", "info");
-    packageKeys.forEach(key => {
+    packageKeys.forEach((key) => {
       log(
         `  ${PACKAGES[key].icon} ${PACKAGES[key].displayName}: v${versions[key]}`,
-        "info"
+        "info",
       );
     });
 
     separator();
 
     // 确认发布
-    const confirmPublish = await new Promise(resolve => {
+    const confirmPublish = await new Promise((resolve) => {
       rl.question(
         `确认${options.isDryRun ? "测试" : "发布"}以上包？(y/N): `,
-        answer => {
+        (answer) => {
           resolve(
-            answer.toLowerCase() === "y" || answer.toLowerCase() === "yes"
+            answer.toLowerCase() === "y" || answer.toLowerCase() === "yes",
           );
-        }
+        },
       );
     });
 
@@ -457,7 +459,7 @@ async function main() {
         await executePackagePublish(
           packageKey,
           versions[packageKey],
-          options.isDryRun
+          options.isDryRun,
         );
         results.push({
           package: packageKey,
@@ -472,7 +474,7 @@ async function main() {
         });
         log(
           `${PACKAGES[packageKey].displayName} 发布失败，继续处理其他包...`,
-          "warning"
+          "warning",
         );
       }
     }
@@ -481,20 +483,20 @@ async function main() {
 
     // 显示发布结果
     log("发布结果汇总:", "info");
-    const successCount = results.filter(r => r.success).length;
-    const failCount = results.filter(r => !r.success).length;
+    const successCount = results.filter((r) => r.success).length;
+    const failCount = results.filter((r) => !r.success).length;
 
-    results.forEach(result => {
+    results.forEach((result) => {
       const pkg = PACKAGES[result.package];
       if (result.success) {
         log(
           `  ✅ ${pkg.icon} ${pkg.displayName} v${result.version} - 成功`,
-          "success"
+          "success",
         );
       } else {
         log(
           `  ❌ ${pkg.icon} ${pkg.displayName} - 失败: ${result.error}`,
-          "error"
+          "error",
         );
       }
     });
@@ -503,7 +505,7 @@ async function main() {
 
     if (failCount === 0) {
       showSuccess(
-        `所有包${options.isDryRun ? "测试" : "发布"}成功！(${successCount}/${packageKeys.length})`
+        `所有包${options.isDryRun ? "测试" : "发布"}成功！(${successCount}/${packageKeys.length})`,
       );
     } else {
       log(`发布完成：${successCount} 成功，${failCount} 失败`, "warning");
@@ -518,7 +520,7 @@ async function main() {
 // ==================== 程序入口 ====================
 
 // 运行主函数
-main().catch(err => {
+main().catch((err) => {
   console.error("包发布失败:", err);
   process.exit(1);
 });

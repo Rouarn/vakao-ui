@@ -107,15 +107,11 @@ export default defineConfig({
         },
         {
           text: "组件工具",
-          items: [
-            { text: "withInstall", link: "/utils/withInstall" },
-          ],
+          items: [{ text: "withInstall", link: "/utils/withInstall" }],
         },
         {
           text: "类型工具",
-          items: [
-            { text: "类型工具", link: "/utils/types" },
-          ],
+          items: [{ text: "类型工具", link: "/utils/types" }],
         },
         {
           text: "数据处理",
@@ -126,9 +122,7 @@ export default defineConfig({
         },
         {
           text: "日期处理",
-          items: [
-            { text: "formatDate", link: "/utils/formatDate" },
-          ],
+          items: [{ text: "formatDate", link: "/utils/formatDate" }],
         },
       ],
     },

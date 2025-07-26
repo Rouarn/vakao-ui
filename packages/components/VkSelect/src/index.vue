@@ -132,20 +132,22 @@ export default defineComponent({
     const options = reactive<SelectOption[]>([]);
 
     // 使用受控/非受控模式工具函数
-    const { currentValue, updateValue } = useControlled<SelectValue | SelectValue[]>(
+    const { currentValue, updateValue } = useControlled<
+      SelectValue | SelectValue[]
+    >(
       props,
-      'value',
-      'modelValue',
+      "value",
+      "modelValue",
       emit,
-      props.multiple ? [] as SelectValue[] : "" as SelectValue
+      props.multiple ? ([] as SelectValue[]) : ("" as SelectValue),
     );
-
-
 
     // 计算属性
     const hasValue = computed(() => {
       if (props.multiple) {
-        return Array.isArray(currentValue.value) && currentValue.value.length > 0;
+        return (
+          Array.isArray(currentValue.value) && currentValue.value.length > 0
+        );
       }
       return (
         currentValue.value !== undefined &&
@@ -156,15 +158,15 @@ export default defineComponent({
 
     const selectedOptions = computed(() => {
       if (!props.multiple || !Array.isArray(currentValue.value)) return [];
-      return options.filter(option =>
-        (currentValue.value as SelectValue[]).includes(option.value)
+      return options.filter((option) =>
+        (currentValue.value as SelectValue[]).includes(option.value),
       );
     });
 
     const displayValue = computed(() => {
       if (props.multiple) return "";
       if (!hasValue.value) return "";
-      const option = options.find(opt => opt.value === currentValue.value);
+      const option = options.find((opt) => opt.value === currentValue.value);
       return option ? option.label : String(currentValue.value);
     });
 
@@ -189,8 +191,8 @@ export default defineComponent({
       if (!props.filterable || !searchQuery.value) {
         return options;
       }
-      return options.filter(option =>
-        option.label.toLowerCase().includes(searchQuery.value.toLowerCase())
+      return options.filter((option) =>
+        option.label.toLowerCase().includes(searchQuery.value.toLowerCase()),
       );
     });
 
@@ -259,7 +261,7 @@ export default defineComponent({
       const newValue = props.multiple ? [] : "";
       updateValue(newValue);
       emit("change", newValue);
-      
+
       searchQuery.value = "";
       emit("clear");
       hideDropdown();
@@ -269,7 +271,7 @@ export default defineComponent({
       if (props.disabled || !props.multiple) return;
 
       const currentValues = currentValue.value as SelectValue[];
-      const newValues = currentValues.filter(v => v !== value);
+      const newValues = currentValues.filter((v) => v !== value);
       updateValue(newValues);
       emit("remove-tag", value);
       emit("change", newValues);
@@ -299,7 +301,7 @@ export default defineComponent({
     // 选项管理
     const addOption = (option: SelectOption) => {
       const existingIndex = options.findIndex(
-        opt => opt.value === option.value
+        (opt) => opt.value === option.value,
       );
       if (existingIndex === -1) {
         options.push(option);
@@ -309,7 +311,7 @@ export default defineComponent({
     };
 
     const removeOption = (value: SelectValue) => {
-      const index = options.findIndex(opt => opt.value === value);
+      const index = options.findIndex((opt) => opt.value === value);
       if (index > -1) {
         options.splice(index, 1);
       }
@@ -325,12 +327,12 @@ export default defineComponent({
 
         if (index > -1) {
           // 取消选择
-          newValues = currentValues.filter(v => v !== option.value);
+          newValues = currentValues.filter((v) => v !== option.value);
         } else {
           // 添加选择
           newValues = [...currentValues, option.value];
         }
-        
+
         updateValue(newValues);
         emit("change", newValues);
       } else {
@@ -344,7 +346,8 @@ export default defineComponent({
     const isSelected = (value: SelectValue) => {
       if (props.multiple) {
         return (
-          Array.isArray(currentValue.value) && currentValue.value.includes(value)
+          Array.isArray(currentValue.value) &&
+          currentValue.value.includes(value)
         );
       }
       return currentValue.value === value;

@@ -54,9 +54,18 @@ isEqual(regex1, regex3); // false（flags 不同）
 ### Map 对象
 
 ```ts
-const map1 = new Map([["key1", "value1"], ["key2", "value2"]]);
-const map2 = new Map([["key1", "value1"], ["key2", "value2"]]);
-const map3 = new Map([["key2", "value2"], ["key1", "value1"]]); // 顺序不同
+const map1 = new Map([
+  ["key1", "value1"],
+  ["key2", "value2"],
+]);
+const map2 = new Map([
+  ["key1", "value1"],
+  ["key2", "value2"],
+]);
+const map3 = new Map([
+  ["key2", "value2"],
+  ["key1", "value1"],
+]); // 顺序不同
 
 isEqual(map1, map2); // true
 isEqual(map1, map3); // true（Map 比较不考虑顺序）
@@ -81,25 +90,31 @@ isEqual(set1, set4); // false
 const complex1 = {
   users: [
     { id: 1, name: "张三", tags: new Set(["admin", "user"]) },
-    { id: 2, name: "李四", tags: new Set(["user"]) }
+    { id: 2, name: "李四", tags: new Set(["user"]) },
   ],
   metadata: {
     total: 2,
     created: new Date("2023-12-25"),
-    config: new Map([["theme", "dark"], ["lang", "zh-CN"]])
-  }
+    config: new Map([
+      ["theme", "dark"],
+      ["lang", "zh-CN"],
+    ]),
+  },
 };
 
 const complex2 = {
   users: [
     { id: 1, name: "张三", tags: new Set(["user", "admin"]) }, // Set 顺序不同
-    { id: 2, name: "李四", tags: new Set(["user"]) }
+    { id: 2, name: "李四", tags: new Set(["user"]) },
   ],
   metadata: {
     total: 2,
     created: new Date("2023-12-25"),
-    config: new Map([["lang", "zh-CN"], ["theme", "dark"]]) // Map 顺序不同
-  }
+    config: new Map([
+      ["lang", "zh-CN"],
+      ["theme", "dark"],
+    ]), // Map 顺序不同
+  },
 };
 
 isEqual(complex1, complex2); // true
@@ -127,7 +142,7 @@ isEqual(obj1, obj2); // true（深度比较）
 // React props 比较
 function MyComponent(props: { name: string; config: Config }) {
   const prevProps = usePrevious(props);
-  
+
   // 只比较第一层属性，性能更好
   if (shallowEqual(props, prevProps)) {
     return; // 跳过重新渲染
@@ -150,8 +165,8 @@ import { arrayEqual } from "vakao-ui/utils";
 // 浅比较数组元素
 const arr1 = [1, 2, 3];
 const arr2 = [1, 2, 3];
-const arr3 = [{a: 1}, {b: 2}];
-const arr4 = [{a: 1}, {b: 2}];
+const arr3 = [{ a: 1 }, { b: 2 }];
+const arr4 = [{ a: 1 }, { b: 2 }];
 
 arrayEqual(arr1, arr2); // true
 arrayEqual(arr3, arr4); // false（对象引用不同）
@@ -172,11 +187,11 @@ function fastArrayEqual<T>(a: T[], b: T[]): boolean {
 // 对于已排序的数组
 function sortedArrayEqual<T>(a: T[], b: T[]): boolean {
   if (a.length !== b.length) return false;
-  
+
   for (let i = 0; i < a.length; i++) {
     if (a[i] !== b[i]) return false;
   }
-  
+
   return true;
 }
 ```
@@ -232,7 +247,7 @@ isEqual({}, []); // false
 
 ```ts
 // 基本类型：使用 === 或 Object.is
-if (typeof a === 'string' && typeof b === 'string') {
+if (typeof a === "string" && typeof b === "string") {
   return a === b;
 }
 
@@ -265,7 +280,7 @@ if (Array.isArray(a) && Array.isArray(b)) {
 }
 
 // 对于对象，先比较键的数量
-if (typeof a === 'object' && a !== null && b !== null) {
+if (typeof a === "object" && a !== null && b !== null) {
   const keysA = Object.keys(a);
   const keysB = Object.keys(b);
   if (keysA.length !== keysB.length) return false;
@@ -280,22 +295,25 @@ return isEqual(a, b);
 ### React 组件优化
 
 ```ts
-import { memo } from 'react';
-import { shallowEqual } from 'vakao-ui/utils';
+import { memo } from "react";
+import { shallowEqual } from "vakao-ui/utils";
 
-const MyComponent = memo((props) => {
-  // 组件逻辑
-}, (prevProps, nextProps) => {
-  // 自定义比较逻辑
-  return shallowEqual(prevProps, nextProps);
-});
+const MyComponent = memo(
+  (props) => {
+    // 组件逻辑
+  },
+  (prevProps, nextProps) => {
+    // 自定义比较逻辑
+    return shallowEqual(prevProps, nextProps);
+  },
+);
 ```
 
 ### Vue 组件监听
 
 ```ts
-import { watch } from 'vue';
-import { isEqual } from 'vakao-ui/utils';
+import { watch } from "vue";
+import { isEqual } from "vakao-ui/utils";
 
 // 深度监听对象变化
 watch(
@@ -305,7 +323,7 @@ watch(
       // 处理变化
     }
   },
-  { deep: true }
+  { deep: true },
 );
 ```
 
@@ -321,7 +339,7 @@ function memoizedFunction(args: any[]) {
       return result;
     }
   }
-  
+
   // 计算结果
   const result = expensiveOperation(...args);
   cache.set(args, result);
@@ -349,10 +367,10 @@ function isEqual(a: any, b: any): boolean;
  * @returns 是否相等
  */
 function isEqualWithCircular(
-  a: any, 
-  b: any, 
-  visitedA?: WeakMap<object, object>, 
-  visitedB?: WeakMap<object, object>
+  a: any,
+  b: any,
+  visitedA?: WeakMap<object, object>,
+  visitedB?: WeakMap<object, object>,
 ): boolean;
 
 /**

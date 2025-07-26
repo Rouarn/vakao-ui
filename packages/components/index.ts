@@ -1,27 +1,27 @@
 /**
  * Vakao UI 组件库主入口文件
- * 
+ *
  * 这是组件库的核心导出文件，负责：
  * 1. 导出所有组件的类型定义和组件实例
  * 2. 提供完整的 Vue 插件安装功能
  * 3. 支持按需导入和全量导入两种使用方式
- * 
+ *
  * 使用方式：
- * 
+ *
  * 全量导入：
  * ```typescript
  * import { createApp } from 'vue';
  * import VakaoUI from '@vakao-ui/components';
  * import App from './App.vue';
- * 
+ *
  * const app = createApp(App);
  * app.use(VakaoUI);
  * ```
- * 
+ *
  * 按需导入：
  * ```typescript
  * import { VkButton, VkInput, VkIcon } from '@vakao-ui/components';
- * 
+ *
  * // 在组件中使用
  * export default {
  *   components: {
@@ -71,7 +71,7 @@ import { installAll } from "@vakao-ui/utils";
 
 /**
  * 组件注册列表
- * 
+ *
  * 包含所有需要全局注册的组件，用于插件安装时批量注册。
  * 组件名称作为 key，组件实例作为 value。
  */
@@ -79,10 +79,10 @@ const components = {
   // 按钮组件
   VkButton: VkButton,
   VkButtonGroup: VkButtonGroup,
-  
+
   // 输入组件
   VkInput: VkInput,
-  
+
   // 选择组件
   VkCheckbox: VkCheckbox,
   VkCheckboxGroup: VkCheckboxGroup,
@@ -92,31 +92,31 @@ const components = {
   VkSelect: VkSelect,
   VkOption: VkOption,
   VkOptionGroup: VkOptionGroup,
-  
+
   // 通用组件
   VkIcon: VkIcon,
-  
+
   // 反馈组件
   VkMessageBox: VkMessageBox,
 };
 
 /**
  * Vakao UI 组件库 Vue 插件
- * 
+ *
  * 提供完整的组件库安装功能，一次性注册所有组件到 Vue 应用实例。
  * 安装后可以在任何组件中直接使用所有 Vakao UI 组件。
- * 
+ *
  * @example
  * ```typescript
  * import { createApp } from 'vue';
  * import VakaoUI from '@vakao-ui/components';
  * import App from './App.vue';
- * 
+ *
  * const app = createApp(App);
  * app.use(VakaoUI); // 安装组件库
  * app.mount('#app');
  * ```
- * 
+ *
  * 安装后的使用：
  * ```vue
  * <template>
@@ -129,7 +129,7 @@ const components = {
 export default {
   /**
    * Vue 插件安装方法
-   * 
+   *
    * @param app - Vue 应用实例
    */
   install(app: App) {

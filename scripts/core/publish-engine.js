@@ -2,7 +2,7 @@
 
 /**
  * Vakao UI 发布引擎核心模块
- * 
+ *
  * 提供统一的包发布功能，支持：
  * - 多包管理
  * - 版本控制
@@ -10,16 +10,29 @@
  * - 发布流程
  * - 私有仓库支持
  * - 测试模式
- * 
+ *
  * @version 2.0.0
  * @author Vakao UI Team
  */
 
 const { execSync, spawn } = require("child_process");
-const { readFileSync, writeFileSync, existsSync, mkdirSync, copyFileSync, rmSync } = require("fs");
+const {
+  readFileSync,
+  writeFileSync,
+  existsSync,
+  mkdirSync,
+  copyFileSync,
+  rmSync,
+} = require("fs");
 const path = require("path");
 const readline = require("readline");
-const { log, separator, showBanner, showSuccess, handleError } = require("../utils");
+const {
+  log,
+  separator,
+  showBanner,
+  showSuccess,
+  handleError,
+} = require("../utils");
 
 /**
  * 发布引擎类
@@ -29,12 +42,12 @@ class PublishEngine {
     this.config = config;
     this.projectRoot = config.projectRoot || path.resolve(__dirname, "../..");
     this.buildRoot = config.buildRoot || path.resolve(this.projectRoot, "dist");
-    
+
     // Registry 配置
     this.defaultRegistry = "https://registry.npmjs.org/";
     this.privateRegistry = process.env.NPM_REGISTRY || this.defaultRegistry;
     this.usePrivateRegistry = this.privateRegistry !== this.defaultRegistry;
-    
+
     // 创建 readline 接口
     this.rl = readline.createInterface({
       input: process.stdin,
@@ -66,12 +79,16 @@ class PublishEngine {
     if (!packageConfig) {
       throw new Error(`未找到包配置: ${packageKey}`);
     }
-    
-    const packagePath = path.join(this.projectRoot, packageConfig.path, "package.json");
+
+    const packagePath = path.join(
+      this.projectRoot,
+      packageConfig.path,
+      "package.json",
+    );
     if (!existsSync(packagePath)) {
       throw new Error(`package.json 不存在: ${packagePath}`);
     }
-    
+
     return JSON.parse(readFileSync(packagePath, "utf8"));
   }
 
@@ -82,9 +99,13 @@ class PublishEngine {
    */
   updatePackageVersion(packageKey, version) {
     const packageConfig = this.config.packages[packageKey];
-    const packagePath = path.join(this.projectRoot, packageConfig.path, "package.json");
+    const packagePath = path.join(
+      this.projectRoot,
+      packageConfig.path,
+      "package.json",
+    );
     const packageJson = this.getPackageJson(packageKey);
-    
+
     packageJson.version = version;
     writeFileSync(packagePath, JSON.stringify(packageJson, null, 2) + "\n");
     log(`${packageConfig.name} 版本已更新为: ${version}`, "success");
@@ -98,6 +119,27 @@ class PublishEngine {
   isValidVersion(version) {
     const semverRegex = /^\d+\.\d+\.\d+$/;
     return semverRegex.test(version);
+  }
+
+  /**
+   * 比较两个版本号
+   * @param {string} version1 - 版本号1
+   * @param {string} version2 - 版本号2
+   * @returns {number} 1: version1 > version2, 0: 相等, -1: version1 < version2
+   */
+  compareVersions(version1, version2) {
+    const v1Parts = version1.split('.').map(Number);
+    const v2Parts = version2.split('.').map(Number);
+    
+    for (let i = 0; i < Math.max(v1Parts.length, v2Parts.length); i++) {
+      const v1Part = v1Parts[i] || 0;
+      const v2Part = v2Parts[i] || 0;
+      
+      if (v1Part > v2Part) return 1;
+      if (v1Part < v2Part) return -1;
+    }
+    
+    return 0;
   }
 
   /**
@@ -130,19 +172,27 @@ class PublishEngine {
 
           if (!this.isValidVersion(newVersion)) {
             log("版本号格式不正确！请使用 x.y.z 格式（如: 1.0.0）", "error");
-            this.askForVersion(currentVersion, suggestedVersion, packageName).then(resolve);
+            this.askForVersion(
+              currentVersion,
+              suggestedVersion,
+              packageName,
+            ).then(resolve);
             return;
           }
 
-          if (newVersion <= currentVersion) {
+          if (this.compareVersions(newVersion, currentVersion) <= 0) {
             log("新版本号必须大于当前版本！", "error");
-            this.askForVersion(currentVersion, suggestedVersion, packageName).then(resolve);
+            this.askForVersion(
+              currentVersion,
+              suggestedVersion,
+              packageName,
+            ).then(resolve);
             return;
           }
 
           log(`${packageName} 版本号验证通过: ${newVersion}`, "success");
           resolve(newVersion);
-        }
+        },
       );
     });
   }
@@ -155,20 +205,20 @@ class PublishEngine {
     const packageConfig = this.config.packages[packageKey];
     const packageRoot = path.join(this.projectRoot, packageConfig.path);
     const buildDir = path.join(this.buildRoot, packageKey);
-    
+
     log(`开始构建 ${packageConfig.displayName}...`, "build");
-    
+
     // 确保构建目录存在
     if (!existsSync(buildDir)) {
       mkdirSync(buildDir, { recursive: true });
     }
-    
+
     // 清理旧的构建文件
     if (existsSync(buildDir)) {
       rmSync(buildDir, { recursive: true, force: true });
       mkdirSync(buildDir, { recursive: true });
     }
-    
+
     // 执行构建命令
     if (packageConfig.buildCommand) {
       this.exec(packageConfig.buildCommand, packageRoot);
@@ -177,10 +227,10 @@ class PublishEngine {
       const tsconfigPath = path.resolve(this.projectRoot, "tsconfig.json");
       this.exec(
         `npx tsc --project ${tsconfigPath} --outDir ${buildDir} --declaration --emitDeclarationOnly false`,
-        packageRoot
+        packageRoot,
       );
     }
-    
+
     log(`${packageConfig.displayName} 构建完成`, "success");
     return buildDir;
   }
@@ -194,9 +244,9 @@ class PublishEngine {
   preparePublishFiles(packageKey, version, buildDir) {
     const packageConfig = this.config.packages[packageKey];
     const packageRoot = path.join(this.projectRoot, packageConfig.path);
-    
+
     log("准备发布文件...", "copy");
-    
+
     // 创建发布用的 package.json
     const publishPackageJson = {
       name: packageConfig.name,
@@ -207,16 +257,12 @@ class PublishEngine {
       types: "index.d.ts",
       exports: {
         ".": {
-          "import": "./index.js",
-          "require": "./index.js",
-          "types": "./index.d.ts"
-        }
+          import: "./index.js",
+          require: "./index.js",
+          types: "./index.d.ts",
+        },
       },
-      files: [
-        "*.js",
-        "*.d.ts",
-        "README.md"
-      ],
+      files: ["*.js", "*.d.ts", "README.md"],
       keywords: packageConfig.keywords || [],
       author: this.config.author || "Vakao UI Team",
       license: this.config.license || "私有",
@@ -225,27 +271,30 @@ class PublishEngine {
       peerDependencies: packageConfig.peerDependencies || {},
       publishConfig: {
         access: "public",
-        registry: this.privateRegistry
-      }
+        registry: this.privateRegistry,
+      },
     };
-    
+
     // 写入发布用的 package.json
     const publishPackageJsonPath = path.join(buildDir, "package.json");
-    writeFileSync(publishPackageJsonPath, JSON.stringify(publishPackageJson, null, 2) + "\n");
-    
+    writeFileSync(
+      publishPackageJsonPath,
+      JSON.stringify(publishPackageJson, null, 2) + "\n",
+    );
+
     // 复制 README.md
     const readmePath = path.join(packageRoot, "README.md");
     const publishReadmePath = path.join(buildDir, "README.md");
-    
+
     if (existsSync(readmePath)) {
       copyFileSync(readmePath, publishReadmePath);
     } else if (packageConfig.defaultReadme) {
       writeFileSync(publishReadmePath, packageConfig.defaultReadme);
     }
-    
+
     // 复制其他文件
     if (packageConfig.additionalFiles) {
-      packageConfig.additionalFiles.forEach(file => {
+      packageConfig.additionalFiles.forEach((file) => {
         const sourcePath = path.join(packageRoot, file);
         const targetPath = path.join(buildDir, file);
         if (existsSync(sourcePath)) {
@@ -253,7 +302,7 @@ class PublishEngine {
         }
       });
     }
-    
+
     log("发布文件准备完成", "success");
   }
 
@@ -265,18 +314,76 @@ class PublishEngine {
    */
   publishToNpm(packageKey, buildDir, isDryRun) {
     const packageConfig = this.config.packages[packageKey];
-    const registryInfo = this.usePrivateRegistry 
-      ? `私有制品仓库 (${this.privateRegistry})` 
+    const registryInfo = this.usePrivateRegistry
+      ? `私有制品仓库 (${this.privateRegistry})`
       : "npm 官方仓库";
-    
+
     if (isDryRun) {
-      log(`测试模式：跳过实际发布 ${packageConfig.displayName} 到 ${registryInfo}`, "warning");
+      log(
+        `测试模式：跳过实际发布 ${packageConfig.displayName} 到 ${registryInfo}`,
+        "warning",
+      );
       log("检查发布文件...", "check");
-      this.exec(`npm pack --dry-run --registry ${this.privateRegistry}`, buildDir);
+      this.exec(
+        `npm pack --dry-run --registry ${this.privateRegistry}`,
+        buildDir,
+      );
     } else {
-      log(`开始发布 ${packageConfig.displayName} 到 ${registryInfo}...`, "publish");
-      this.exec(`npm publish --access public --registry ${this.privateRegistry}`, buildDir);
+      log(
+        `开始发布 ${packageConfig.displayName} 到 ${registryInfo}...`,
+        "publish",
+      );
+      this.exec(
+        `npm publish --access public --registry ${this.privateRegistry}`,
+        buildDir,
+      );
     }
+  }
+
+  /**
+   * 根据依赖关系对包进行拓扑排序
+   * @param {string[]} packageKeys - 要发布的包列表
+   * @returns {string[]} 排序后的包列表
+   */
+  sortPackagesByDependencies(packageKeys) {
+    const dependencies = this.config.dependencies || {};
+    const visited = new Set();
+    const visiting = new Set();
+    const result = [];
+
+    const visit = (packageKey) => {
+      if (visiting.has(packageKey)) {
+        throw new Error(`检测到循环依赖: ${packageKey}`);
+      }
+      if (visited.has(packageKey)) {
+        return;
+      }
+
+      visiting.add(packageKey);
+
+      // 先访问依赖的包
+      const deps = dependencies[packageKey] || [];
+      for (const dep of deps) {
+        if (packageKeys.includes(dep)) {
+          visit(dep);
+        }
+      }
+
+      visiting.delete(packageKey);
+      visited.add(packageKey);
+      result.push(packageKey);
+    };
+
+    // 对所有包进行拓扑排序
+    for (const packageKey of packageKeys) {
+      visit(packageKey);
+    }
+
+    log(
+      `包发布顺序: ${result.map((key) => this.config.packages[key].displayName).join(" → ")}`,
+      "info",
+    );
+    return result;
   }
 
   /**
@@ -287,25 +394,27 @@ class PublishEngine {
    */
   async publishSinglePackage(packageKey, version, isDryRun) {
     const packageConfig = this.config.packages[packageKey];
-    
+
     try {
-      log(`\n${packageConfig.icon} 开始处理 ${packageConfig.displayName}...`, "info");
-      
+      log(
+        `\n${packageConfig.icon} 开始处理 ${packageConfig.displayName}...`,
+        "info",
+      );
+
       // 更新版本号
       this.updatePackageVersion(packageKey, version);
-      
+
       // 构建包
       const buildDir = this.buildPackage(packageKey);
-      
+
       // 准备发布文件
       this.preparePublishFiles(packageKey, version, buildDir);
-      
+
       // 发布
       this.publishToNpm(packageKey, buildDir, isDryRun);
-      
+
       log(`${packageConfig.displayName} 处理完成`, "success");
       return { success: true, version };
-      
     } catch (error) {
       log(`${packageConfig.displayName} 处理失败: ${error.message}`, "error");
       return { success: false, error: error.message };

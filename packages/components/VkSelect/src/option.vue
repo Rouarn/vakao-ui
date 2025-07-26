@@ -60,7 +60,9 @@ export default defineComponent({
     const isVisible = computed(() => {
       if (!selectContext) return true;
       if (!selectContext.props.filterable) return true;
-      return selectContext.filteredOptions.value.some((option: SelectOption) => option.value === props.value);
+      return selectContext.filteredOptions.value.some(
+        (option: SelectOption) => option.value === props.value,
+      );
     });
 
     // 样式类名

@@ -40,10 +40,10 @@ export type UseToggleReturn = [
 /**
  * 切换布尔值的钩子函数
  * 提供简单的布尔状态管理，支持切换、设置为 true 或 false
- * 
+ *
  * @param initialValue 初始值，默认为 false
  * @returns 返回数组 [state, toggle, setTrue, setFalse]，其中 state 是只读的
- * 
+ *
  * @example
  * ```typescript
  * // 基础用法 - 控制模态框显示
@@ -56,17 +56,17 @@ export type UseToggleReturn = [
  * toggleSidebar();  // 切换状态
  * openSidebar();    // 设置为 true
  * closeSidebar();   // 设置为 false
- * 
+ *
  * // 在模板中使用
  * // <div v-if="isVisible.value">内容</div>
  * // <button @click="toggle">切换</button>
- * 
+ *
  * // 实际应用场景
  * const [showModal, toggleModal, openModal, closeModal] = useToggle();
  * const [isLoading, , startLoading, stopLoading] = useToggle();
  * const [isDarkMode, toggleTheme] = useToggle(false);
  * ```
- * 
+ *
  * @remarks
  * - 返回的状态值是只读的计算属性，确保数据流的单向性
  * - 遵循 React Hooks 的设计模式，使用数组返回值便于重命名

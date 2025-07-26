@@ -34,7 +34,13 @@
  */
 
 const path = require("path");
-const { log, separator, showBanner, showSuccess, handleError } = require("./utils");
+const {
+  log,
+  separator,
+  showBanner,
+  showSuccess,
+  handleError,
+} = require("./utils");
 const PublishEngine = require("./core/publish-engine");
 const Interactive = require("./core/interactive");
 const { CONFIG } = require("./core/package-configs");
@@ -57,26 +63,30 @@ function parseArguments() {
     syncVersion: args.includes("--sync-version"),
     packages: null,
     singlePackage: null,
-    help: args.includes("--help") || args.includes("-h")
+    help: args.includes("--help") || args.includes("-h"),
   };
 
   // 解析 --packages 参数（多个包）
-  const packagesIndex = args.findIndex(arg => arg.startsWith("--packages"));
+  const packagesIndex = args.findIndex((arg) => arg.startsWith("--packages"));
   if (packagesIndex !== -1) {
     const packagesArg = args[packagesIndex];
     if (packagesArg.includes("=")) {
       const packagesList = packagesArg.split("=")[1];
-      options.packages = packagesList.split(",").map(p => p.trim());
+      options.packages = packagesList.split(",").map((p) => p.trim());
     } else if (
       args[packagesIndex + 1] &&
       !args[packagesIndex + 1].startsWith("--")
     ) {
-      options.packages = args[packagesIndex + 1].split(",").map(p => p.trim());
+      options.packages = args[packagesIndex + 1]
+        .split(",")
+        .map((p) => p.trim());
     }
   }
 
   // 解析 --package 参数（单个包）
-  const packageIndex = args.findIndex(arg => arg.startsWith("--package"));
+  const packageIndex = args.findIndex(
+    (arg) => arg.startsWith("--package") && !arg.startsWith("--packages"),
+  );
   if (packageIndex !== -1) {
     const packageArg = args[packageIndex];
     if (packageArg.includes("=")) {
@@ -123,17 +133,17 @@ function showHelp() {
  * @returns {string[]} 有效的包名列表
  */
 function validatePackages(packageKeys) {
-  const validPackages = packageKeys.filter(key => CONFIG.packages[key]);
-  const invalidPackages = packageKeys.filter(key => !CONFIG.packages[key]);
-  
+  const validPackages = packageKeys.filter((key) => CONFIG.packages[key]);
+  const invalidPackages = packageKeys.filter((key) => !CONFIG.packages[key]);
+
   if (invalidPackages.length > 0) {
     log(`无效的包名: ${invalidPackages.join(", ")}`, "error");
     log("可用的包:", "info");
-    Object.keys(CONFIG.packages).forEach(key => {
+    Object.keys(CONFIG.packages).forEach((key) => {
       log(`  ${key}`, "info");
     });
   }
-  
+
   return validPackages;
 }
 
@@ -145,44 +155,46 @@ function validatePackages(packageKeys) {
 async function main() {
   let publishEngine = null;
   let interactive = null;
-  
+
   try {
     // 解析命令行参数
     const options = parseArguments();
-    
+
     // 显示帮助信息
     if (options.help) {
       showHelp();
       return;
     }
-    
+
     // 显示 banner
     showBanner(TOOL_TITLE);
-    
+
     // 设置项目路径
     CONFIG.projectRoot = path.resolve(__dirname, "..");
     CONFIG.buildRoot = path.resolve(CONFIG.projectRoot, "dist");
-    
+
     // 初始化发布引擎
     publishEngine = new PublishEngine(CONFIG);
-    
+
     // 初始化交互界面
     interactive = new Interactive(CONFIG.packages);
-    
+
     // 显示配置信息
     log(`发布模式: ${options.isDryRun ? "测试模式" : "正式发布"}`, "info");
     log(
-      `目标仓库: ${publishEngine.usePrivateRegistry 
-        ? `私有制品仓库 (${publishEngine.privateRegistry})` 
-        : "npm 官方仓库"}`,
-      "info"
+      `目标仓库: ${
+        publishEngine.usePrivateRegistry
+          ? `私有制品仓库 (${publishEngine.privateRegistry})`
+          : "npm 官方仓库"
+      }`,
+      "info",
     );
     if (options.syncVersion) {
       log(`版本同步: 启用`, "info");
     }
-    
+
     separator();
-    
+
     // 确定要发布的包
     let packageKeys;
     if (options.singlePackage) {
@@ -201,85 +213,101 @@ async function main() {
       }
       packageKeys = validPackages;
       log(
-        `指定发布包: ${packageKeys.map(key => CONFIG.packages[key].displayName).join(", ")}`,
-        "info"
+        `指定发布包: ${packageKeys.map((key) => CONFIG.packages[key].displayName).join(", ")}`,
+        "info",
       );
     } else {
       // 交互式选择
       packageKeys = await interactive.askForPackages();
     }
-    
+
     separator();
-    
+
     // 确定版本号
     const versions = await interactive.askForVersions(
       packageKeys,
       options.syncVersion,
       (key) => publishEngine.getPackageJson(key),
-      (version) => publishEngine.suggestNextVersion(version)
+      (version) => publishEngine.suggestNextVersion(version),
     );
-    
+
     separator();
-    
+
     // 显示发布计划
     interactive.showPublishPlan(packageKeys, versions);
-    
+
     separator();
-    
+
     // 确认发布
     const confirmMessage = `确认${options.isDryRun ? "测试" : "发布"}以上包？`;
     const confirmPublish = await interactive.askForConfirmation(confirmMessage);
-    
+
     if (!confirmPublish) {
       log("发布已取消", "warning");
       return;
     }
-    
+
     separator();
-    
+
+    // 根据依赖关系对包进行排序
+    let sortedPackageKeys = packageKeys;
+    if (packageKeys.length > 1) {
+      try {
+        sortedPackageKeys =
+          publishEngine.sortPackagesByDependencies(packageKeys);
+        separator();
+      } catch (error) {
+        log(`依赖排序失败: ${error.message}`, "warning");
+        log("将按原顺序发布", "warning");
+        separator();
+      }
+    }
+
     // 执行发布
     const results = [];
-    for (const packageKey of packageKeys) {
+    for (const packageKey of sortedPackageKeys) {
       try {
         const result = await publishEngine.publishSinglePackage(
           packageKey,
           versions[packageKey],
-          options.isDryRun
+          options.isDryRun,
         );
         results.push({
           package: packageKey,
-          ...result
+          ...result,
         });
       } catch (error) {
         results.push({
           package: packageKey,
           success: false,
-          error: error.message
+          error: error.message,
         });
         log(
           `${CONFIG.packages[packageKey].displayName} 发布失败，继续处理其他包...`,
-          "warning"
+          "warning",
         );
       }
     }
-    
+
     separator();
-    
+
     // 显示发布结果
-    const { successCount, failCount } = interactive.showPublishResults(results, options.isDryRun);
-    
+    const { successCount, failCount } = interactive.showPublishResults(
+      results,
+      options.isDryRun,
+    );
+
     separator();
-    
+
     // 显示最终结果
     if (failCount === 0) {
       showSuccess(
-        `所有包${options.isDryRun ? "测试" : "发布"}成功！(${successCount}/${packageKeys.length})`
+        `所有包${options.isDryRun ? "测试" : "发布"}成功！(${successCount}/${packageKeys.length})`,
       );
     } else {
       log(`发布完成：${successCount} 成功，${failCount} 失败`, "warning");
       process.exit(1);
     }
-    
   } catch (error) {
     handleError("发布过程中出现错误", error);
   } finally {

@@ -2,32 +2,38 @@
 
 /**
  * @vakao-ui/hooks 包发布脚本
- * 
+ *
  * 专门用于构建并发布 hooks 包到 npm
  * 支持独立版本管理和发布流程
- * 
+ *
  * 功能特性：
  * - 独立版本号管理
  * - TypeScript 类型声明生成
  * - 自动化构建和发布流程
  * - 测试模式支持
  * - 完整的错误处理
- * 
+ *
  * 使用方法：
  * ```bash
  * # 正式发布
  * node scripts/publish-hooks.js
- * 
+ *
  * # 测试模式（不实际发布）
  * node scripts/publish-hooks.js --dry-run
  * ```
- * 
+ *
  * @version 1.0.0
  * @author Vakao UI Team
  */
 
 const { execSync } = require("child_process");
-const { readFileSync, writeFileSync, existsSync, mkdirSync, copyFileSync } = require("fs");
+const {
+  readFileSync,
+  writeFileSync,
+  existsSync,
+  mkdirSync,
+  copyFileSync,
+} = require("fs");
 const path = require("path");
 const readline = require("readline");
 const {
@@ -65,7 +71,7 @@ const USE_PRIVATE_REGISTRY = PRIVATE_REGISTRY !== DEFAULT_REGISTRY;
 
 /**
  * 创建 readline 接口
- * 
+ *
  * 用于与用户进行交互式输入
  */
 const rl = readline.createInterface({
@@ -75,7 +81,7 @@ const rl = readline.createInterface({
 
 /**
  * 执行命令并打印输出
- * 
+ *
  * @param {string} command - 要执行的命令
  * @param {string} cwd - 工作目录，默认为当前目录
  */
@@ -91,7 +97,7 @@ function exec(command, cwd = process.cwd()) {
 
 /**
  * 获取 hooks 包的 package.json
- * 
+ *
  * @returns {Object} package.json 内容
  */
 function getPackageJson() {
@@ -104,7 +110,7 @@ function getPackageJson() {
 
 /**
  * 更新 hooks 包的版本号
- * 
+ *
  * @param {string} version - 新版本号
  */
 function updateVersion(version) {
@@ -117,7 +123,7 @@ function updateVersion(version) {
 
 /**
  * 验证版本号格式
- * 
+ *
  * @param {string} version - 版本号
  * @returns {boolean} 是否有效
  */
@@ -128,7 +134,7 @@ function isValidVersion(version) {
 
 /**
  * 计算建议的新版本号
- * 
+ *
  * @param {string} currentVersion - 当前版本号
  * @returns {string} 建议的新版本号
  */
@@ -143,7 +149,7 @@ function suggestNextVersion(currentVersion) {
 
 /**
  * 递归询问版本号直到输入正确
- * 
+ *
  * @param {string} currentVersion - 当前版本号
  * @param {string} suggestedVersion - 建议版本号
  * @returns {Promise<string>} 新版本号
@@ -178,34 +184,37 @@ function askForVersion(currentVersion, suggestedVersion) {
 
 /**
  * 构建 hooks 包
- * 
+ *
  * 生成 TypeScript 类型声明和 ES 模块
  */
 function buildHooks() {
   log("开始构建 hooks 包...", "build");
-  
+
   // 确保构建目录存在
   if (!existsSync(BUILD_DIR)) {
     mkdirSync(BUILD_DIR, { recursive: true });
   }
-  
+
   // 使用 TypeScript 编译器生成类型声明和 JS 文件
   const tsconfigPath = path.resolve(__dirname, "../tsconfig.json");
-  exec(`npx tsc --project ${tsconfigPath} --outDir ${BUILD_DIR} --declaration --emitDeclarationOnly false`, PACKAGE_ROOT);
-  
+  exec(
+    `npx tsc --project ${tsconfigPath} --outDir ${BUILD_DIR} --declaration --emitDeclarationOnly false`,
+    PACKAGE_ROOT,
+  );
+
   log("hooks 包构建完成", "success");
 }
 
 /**
  * 准备发布文件
- * 
+ *
  * 复制必要的文件到构建目录
- * 
+ *
  * @param {string} version - 版本号
  */
 function preparePublishFiles(version) {
   log("准备发布文件...", "copy");
-  
+
   // 创建发布用的 package.json
   const publishPackageJson = {
     name: PACKAGE_NAME,
@@ -216,49 +225,48 @@ function preparePublishFiles(version) {
     types: "index.d.ts",
     exports: {
       ".": {
-        "import": "./index.js",
-        "require": "./index.js",
-        "types": "./index.d.ts"
-      }
+        import: "./index.js",
+        require: "./index.js",
+        types: "./index.d.ts",
+      },
     },
-    files: [
-      "*.js",
-      "*.d.ts",
-      "README.md"
-    ],
+    files: ["*.js", "*.d.ts", "README.md"],
     keywords: [
       "vue3",
       "hooks",
       "composables",
       "ui-library",
       "typescript",
-      "vakao-ui"
+      "vakao-ui",
     ],
     author: "Vakao UI Team",
     license: "MIT",
     repository: {
       type: "git",
       url: "https://github.com/vakao-ui/vakao-ui.git",
-      directory: "packages/hooks"
+      directory: "packages/hooks",
     },
     homepage: "https://vakao-ui.github.io/vakao-ui/hooks/",
     peerDependencies: {
-      vue: "^3.3.0"
+      vue: "^3.3.0",
     },
     publishConfig: {
       access: "public",
-      registry: PRIVATE_REGISTRY
-    }
+      registry: PRIVATE_REGISTRY,
+    },
   };
-  
+
   // 写入发布用的 package.json
   const publishPackageJsonPath = path.join(BUILD_DIR, "package.json");
-  writeFileSync(publishPackageJsonPath, JSON.stringify(publishPackageJson, null, 2) + "\n");
-  
+  writeFileSync(
+    publishPackageJsonPath,
+    JSON.stringify(publishPackageJson, null, 2) + "\n",
+  );
+
   // 复制 README.md（如果存在）
   const readmePath = path.join(PACKAGE_ROOT, "README.md");
   const publishReadmePath = path.join(BUILD_DIR, "README.md");
-  
+
   if (existsSync(readmePath)) {
     copyFileSync(readmePath, publishReadmePath);
   } else {
@@ -302,25 +310,30 @@ MIT
 `;
     writeFileSync(publishReadmePath, defaultReadme);
   }
-  
+
   log("发布文件准备完成", "success");
 }
 
 /**
  * 发布到 npm 或私有制品仓库
- * 
+ *
  * @param {boolean} isDryRun - 是否为测试模式
  */
 function publishToNpm(isDryRun) {
-  const registryInfo = USE_PRIVATE_REGISTRY ? `私有制品仓库 (${PRIVATE_REGISTRY})` : "npm 官方仓库";
-  
+  const registryInfo = USE_PRIVATE_REGISTRY
+    ? `私有制品仓库 (${PRIVATE_REGISTRY})`
+    : "npm 官方仓库";
+
   if (isDryRun) {
     log(`测试模式：跳过实际发布到 ${registryInfo}`, "warning");
     log("检查发布文件...", "check");
     exec(`npm pack --dry-run --registry ${PRIVATE_REGISTRY}`, BUILD_DIR);
   } else {
     log(`开始发布到 ${registryInfo}...`, "publish");
-    exec(`npm publish --access public --registry ${PRIVATE_REGISTRY}`, BUILD_DIR);
+    exec(
+      `npm publish --access public --registry ${PRIVATE_REGISTRY}`,
+      BUILD_DIR,
+    );
   }
 }
 
@@ -328,55 +341,59 @@ function publishToNpm(isDryRun) {
 
 /**
  * 主发布流程
- * 
+ *
  * 执行完整的构建和发布流程
  */
 async function main() {
   try {
     // 显示 banner
     showBanner(TOOL_TITLE);
-    
+
     // 检查是否为测试模式
     const isDryRun = process.argv.includes("--dry-run");
-    
+
     // 显示发布配置信息
     log(`发布模式: ${isDryRun ? "测试模式" : "正式发布"}`, "info");
-    log(`目标仓库: ${USE_PRIVATE_REGISTRY ? `私有制品仓库 (${PRIVATE_REGISTRY})` : "npm 官方仓库"}`, "info");
-    
+    log(
+      `目标仓库: ${USE_PRIVATE_REGISTRY ? `私有制品仓库 (${PRIVATE_REGISTRY})` : "npm 官方仓库"}`,
+      "info",
+    );
+
     // 获取当前版本信息
     const packageJson = getPackageJson();
     const currentVersion = packageJson.version;
     const suggestedVersion = suggestNextVersion(currentVersion);
-    
+
     log(`当前 hooks 包版本: ${currentVersion}`, "info");
     separator();
-    
+
     // 询问新版本号
     const newVersion = await askForVersion(currentVersion, suggestedVersion);
-    
+
     // 更新版本号
     if (newVersion !== currentVersion) {
       updateVersion(newVersion);
     }
-    
+
     separator();
-    
+
     // 构建包
     buildHooks();
-    
+
     separator();
-    
+
     // 准备发布文件
     preparePublishFiles(newVersion);
-    
+
     separator();
-    
+
     // 发布到 npm
     publishToNpm(isDryRun);
-    
+
     // 显示成功消息
-    showSuccess(`${PACKAGE_NAME} v${newVersion} ${isDryRun ? "测试" : "发布"}成功!`);
-    
+    showSuccess(
+      `${PACKAGE_NAME} v${newVersion} ${isDryRun ? "测试" : "发布"}成功!`,
+    );
   } catch (error) {
     handleError("hooks 包发布过程中出现错误", error);
   } finally {

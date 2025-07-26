@@ -7,6 +7,7 @@
 ### 1. 安装依赖
 
 确保项目依赖已安装：
+
 ```bash
 npm install
 ```
@@ -30,17 +31,20 @@ NPM_TOKEN=your-auth-token
 **方法一：使用 .npmrc 文件**
 
 在项目根目录创建 `.npmrc` 文件：
+
 ```
 registry=http://your-private-registry.com/repository/npm-private/
 //your-private-registry.com/repository/npm-private/:_authToken=your-auth-token
 ```
 
 **方法二：使用 npm login**
+
 ```bash
 npm login --registry=http://your-private-registry.com/repository/npm-private/
 ```
 
 **方法三：使用 npm config**
+
 ```bash
 npm config set registry http://your-private-registry.com/repository/npm-private/
 npm config set //your-private-registry.com/repository/npm-private/:_authToken your-auth-token
@@ -53,6 +57,7 @@ npm config set //your-private-registry.com/repository/npm-private/:_authToken yo
 Vakao UI 现在使用统一的发布系统，提供更强大和便捷的发布管理功能。
 
 #### 交互式发布（推荐）
+
 ```bash
 node scripts/publish.js
 ```
@@ -60,6 +65,7 @@ node scripts/publish.js
 #### 命令行参数发布
 
 **发布指定包：**
+
 ```bash
 # 发布多个包
 node scripts/publish.js --packages hooks,utils
@@ -69,16 +75,19 @@ node scripts/publish.js --package hooks
 ```
 
 **测试模式：**
+
 ```bash
 node scripts/publish.js --dry-run
 ```
 
 **同步版本号：**
+
 ```bash
 node scripts/publish.js --sync-version
 ```
 
 **查看帮助：**
+
 ```bash
 node scripts/publish.js --help
 ```
@@ -88,11 +97,13 @@ node scripts/publish.js --help
 为了方便使用，项目提供了预定义的 npm 脚本：
 
 **交互式发布：**
+
 ```bash
 npm run publish
 ```
 
 **发布单个包：**
+
 ```bash
 # 发布主包（组件库）
 npm run publish:main
@@ -108,6 +119,7 @@ npm run publish:utils:dry-run
 ```
 
 **批量发布：**
+
 ```bash
 # 发布所有包
 npm run publish:all
@@ -119,6 +131,7 @@ npm run publish:sync:dry-run
 ```
 
 **测试模式：**
+
 ```bash
 npm run publish:dry-run
 ```
@@ -178,6 +191,7 @@ npm run publish:dry-run
 - **修订号**: 向下兼容的问题修正
 
 示例：
+
 - `1.0.0` → `1.0.1` (修复 bug)
 - `1.0.1` → `1.1.0` (新增功能)
 - `1.1.0` → `2.0.0` (破坏性更改)
@@ -191,6 +205,7 @@ node scripts/publish.js --dry-run
 ```
 
 测试模式会执行所有步骤但不会实际发布，用于：
+
 - 验证构建过程
 - 检查版本号
 - 确认发布配置
@@ -200,6 +215,7 @@ node scripts/publish.js --dry-run
 ### 私有仓库相关问题
 
 **问题1: 认证失败**
+
 ```bash
 # 检查环境变量
 echo $NPM_REGISTRY
@@ -210,6 +226,7 @@ npm login --registry=http://your-private-registry.com/repository/npm-private/
 ```
 
 **问题2: 仓库连接失败**
+
 ```bash
 # 测试仓库连接
 npm ping --registry=http://your-private-registry.com/repository/npm-private/
@@ -219,6 +236,7 @@ curl -I http://your-private-registry.com/repository/npm-private/
 ```
 
 **问题3: 重新配置认证**
+
 ```bash
 # 清除现有配置
 npm config delete registry
@@ -232,19 +250,28 @@ npm login --registry=http://your-private-registry.com/repository/npm-private/
 ### 常见问题
 
 **问题1: 版本号已存在**
+
 - 检查远程仓库中的版本
 - 使用更高的版本号
 - 确认是否需要更新现有版本
 
 **问题2: 构建失败**
+
 - 检查依赖是否安装完整
 - 确认构建命令是否正确
 - 查看详细错误信息
 
 **问题3: 权限不足**
+
 - 确认账户有发布权限
 - 检查包名是否被占用
 - 联系仓库管理员
+
+**问题4: 输入问题（Windows 环境）**
+
+- 如果在交互式模式下出现输入重复或删除键异常
+- 运行测试工具验证：`node scripts/test-input.js`
+- 问题已在 v2.0.0 中修复，使用优化的 readline 配置
 
 ## 最佳实践
 

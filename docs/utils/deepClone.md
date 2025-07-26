@@ -13,8 +13,8 @@ const original = {
   hobbies: ["读书", "游泳"],
   info: {
     city: "北京",
-    job: "工程师"
-  }
+    job: "工程师",
+  },
 };
 
 const cloned = deepClone(original);
@@ -51,14 +51,14 @@ const clonedArr = deepClone(arr);
 const nested = {
   users: [
     { id: 1, name: "张三" },
-    { id: 2, name: "李四" }
+    { id: 2, name: "李四" },
   ],
   config: {
     theme: "dark",
     settings: {
-      autoSave: true
-    }
-  }
+      autoSave: true,
+    },
+  },
 };
 const clonedNested = deepClone(nested);
 ```
@@ -77,7 +77,10 @@ const clonedRegex = deepClone(regex);
 console.log(clonedRegex instanceof RegExp); // true
 
 // Map 对象
-const map = new Map([["key1", "value1"], ["key2", "value2"]]);
+const map = new Map([
+  ["key1", "value1"],
+  ["key2", "value2"],
+]);
 const clonedMap = deepClone(map);
 console.log(clonedMap instanceof Map); // true
 
@@ -122,14 +125,16 @@ const cloned2 = deepCloneWithCircular(complexObj);
 ```ts
 // 对于大型对象，考虑是否真的需要深拷贝
 const largeData = {
-  users: new Array(10000).fill(null).map((_, i) => ({ id: i, name: `User${i}` })),
-  metadata: { total: 10000, page: 1 }
+  users: new Array(10000)
+    .fill(null)
+    .map((_, i) => ({ id: i, name: `User${i}` })),
+  metadata: { total: 10000, page: 1 },
 };
 
 // 如果只需要修改 metadata，可以考虑浅拷贝 + 部分深拷贝
 const partialClone = {
   ...largeData,
-  metadata: deepClone(largeData.metadata)
+  metadata: deepClone(largeData.metadata),
 };
 ```
 
@@ -149,10 +154,7 @@ function deepClone<T>(obj: T): T;
  * @param visited 已访问对象的映射表（内部使用）
  * @returns 拷贝后的新对象
  */
-function deepCloneWithCircular<T>(
-  obj: T, 
-  visited?: WeakMap<object, any>
-): T;
+function deepCloneWithCircular<T>(obj: T, visited?: WeakMap<object, any>): T;
 ```
 
 ## 注意事项

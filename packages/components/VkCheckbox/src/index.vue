@@ -86,10 +86,10 @@ export default defineComponent({
     // 使用受控/非受控模式工具函数（仅在非组模式下使用）
     const { currentValue: currentChecked, updateValue } = useControlled(
       props,
-      'checked',
-      'modelValue',
+      "checked",
+      "modelValue",
       emit,
-      false
+      false,
     );
 
     // 计算属性
@@ -106,7 +106,7 @@ export default defineComponent({
     const isChecked = computed(() => {
       if (isGroup.value && checkboxGroup) {
         return checkboxGroup.modelValue.value.includes(
-          props.value as CheckboxValue
+          props.value as CheckboxValue,
         );
       }
       // 非组模式下使用受控/非受控逻辑

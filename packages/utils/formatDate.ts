@@ -176,15 +176,19 @@ export const formatRelativeTime = (
   // 选择时间单位
   const timeUnits = locale.startsWith("zh") ? cnUnits : enUnits;
   const suffix = locale.startsWith("zh")
-    ? isPast ? "前" : "后"
-    : isPast ? " ago" : " later";
+    ? isPast
+      ? "前"
+      : "后"
+    : isPast
+      ? " ago"
+      : " later";
 
   // 计算最合适的时间单位
   for (const [unit, ms] of Object.entries(units)) {
     if (absDiff >= ms) {
       const value = Math.floor(absDiff / ms);
       const unitText = timeUnits[unit as keyof typeof timeUnits];
-      
+
       if (locale.startsWith("zh")) {
         return `${value}${unitText}${suffix}`;
       } else {
@@ -206,7 +210,7 @@ export const formatRelativeTime = (
 export const isToday = (date: Date | number | string): boolean => {
   const dateObj = new Date(date);
   const today = new Date();
-  
+
   return (
     dateObj.getFullYear() === today.getFullYear() &&
     dateObj.getMonth() === today.getMonth() &&
@@ -223,7 +227,7 @@ export const isYesterday = (date: Date | number | string): boolean => {
   const dateObj = new Date(date);
   const yesterday = new Date();
   yesterday.setDate(yesterday.getDate() - 1);
-  
+
   return (
     dateObj.getFullYear() === yesterday.getFullYear() &&
     dateObj.getMonth() === yesterday.getMonth() &&
@@ -240,7 +244,7 @@ export const isTomorrow = (date: Date | number | string): boolean => {
   const dateObj = new Date(date);
   const tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1);
-  
+
   return (
     dateObj.getFullYear() === tomorrow.getFullYear() &&
     dateObj.getMonth() === tomorrow.getMonth() &&

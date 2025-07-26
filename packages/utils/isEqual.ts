@@ -175,7 +175,10 @@ export const isEqualWithCircular = (
         return false;
       }
       for (const [key, value] of a) {
-        if (!b.has(key) || !isEqualWithCircular(value, b.get(key), visitedA, visitedB)) {
+        if (
+          !b.has(key) ||
+          !isEqualWithCircular(value, b.get(key), visitedA, visitedB)
+        ) {
           return false;
         }
       }
@@ -264,7 +267,12 @@ export const shallowEqual = (a: any, b: any): boolean => {
   }
 
   // 类型不同或不是对象
-  if (typeof a !== "object" || typeof b !== "object" || a === null || b === null) {
+  if (
+    typeof a !== "object" ||
+    typeof b !== "object" ||
+    a === null ||
+    b === null
+  ) {
     return false;
   }
 
@@ -278,7 +286,10 @@ export const shallowEqual = (a: any, b: any): boolean => {
 
   // 比较每个属性（浅比较）
   for (const key of keysA) {
-    if (!Object.prototype.hasOwnProperty.call(b, key) || !Object.is(a[key], b[key])) {
+    if (
+      !Object.prototype.hasOwnProperty.call(b, key) ||
+      !Object.is(a[key], b[key])
+    ) {
       return false;
     }
   }

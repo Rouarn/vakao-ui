@@ -95,7 +95,7 @@ const [username, setUsername, clearUsername] = useLocalStorage("username", "");
       <label>
         <vk-checkbox
           :checked="settings.darkMode"
-          @change="checked => updateSettings('darkMode', checked)"
+          @change="(checked) => updateSettings('darkMode', checked)"
         />
         深色模式
       </label>
@@ -103,7 +103,7 @@ const [username, setUsername, clearUsername] = useLocalStorage("username", "");
         <label>语言:</label>
         <vk-select
           :value="settings.language"
-          @change="value => updateSettings('language', value)"
+          @change="(value) => updateSettings('language', value)"
         >
           <vk-option label="中文" value="zh"></vk-option>
           <vk-option label="English" value="en"></vk-option>
@@ -126,7 +126,7 @@ const defaultSettings = {
 
 const [settings, setSettings, resetSettings] = useLocalStorage(
   "user-settings",
-  defaultSettings
+  defaultSettings,
 );
 </script>
 ```
@@ -228,27 +228,27 @@ const reset = () => setCount(0);
         >姓名:
         <vk-input
           :value="userForm.name"
-          @input="value => updateForm('name', value)"
+          @input="(value) => updateForm('name', value)"
       /></label>
       <label
         >年龄:
         <vk-input
           :value="userForm.age"
-          @input="value => updateForm('age', value)"
+          @input="(value) => updateForm('age', value)"
           type="number"
       /></label>
       <label
         >邮箱:
         <vk-input
           :value="userForm.email"
-          @input="value => updateForm('email', value)"
+          @input="(value) => updateForm('email', value)"
           type="email"
       /></label>
       <label>
         城市:
         <vk-select
           :value="userForm.city"
-          @change="value => updateForm('city', value)"
+          @change="(value) => updateForm('city', value)"
           placeholder="请选择城市"
         >
           <vk-option label="北京" value="beijing"></vk-option>
@@ -278,7 +278,7 @@ const defaultForm = {
 
 const [userForm, setUserForm, clearForm] = useLocalStorage(
   "user-form",
-  defaultForm
+  defaultForm,
 );
 
 // 更新表单字段
@@ -350,7 +350,7 @@ const fillDemo = () => {
     <div>
       <vk-input
         :value="newTodo"
-        @input="value => (newTodo = value)"
+        @input="(value) => (newTodo = value)"
         @keyup.enter="addTodo"
         placeholder="输入新的待办事项"
       />
@@ -387,11 +387,11 @@ const newTodo = ref("");
 
 // 计算属性
 const completedCount = computed(
-  () => todoList.value.filter(todo => todo.completed).length
+  () => todoList.value.filter((todo) => todo.completed).length,
 );
 
 const hasCompleted = computed(() =>
-  todoList.value.some(todo => todo.completed)
+  todoList.value.some((todo) => todo.completed),
 );
 
 // 添加待办事项
@@ -409,22 +409,22 @@ const addTodo = () => {
 };
 
 // 切换完成状态
-const toggleTodo = index => {
+const toggleTodo = (index) => {
   setTodoList(
     todoList.value.map((todo, i) =>
-      i === index ? { ...todo, completed: !todo.completed } : todo
-    )
+      i === index ? { ...todo, completed: !todo.completed } : todo,
+    ),
   );
 };
 
 // 删除待办事项
-const removeTodo = index => {
+const removeTodo = (index) => {
   setTodoList(todoList.value.filter((_, i) => i !== index));
 };
 
 // 清除已完成
 const clearCompleted = () => {
-  setTodoList(todoList.value.filter(todo => !todo.completed));
+  setTodoList(todoList.value.filter((todo) => !todo.completed));
 };
 
 // 清空全部
@@ -560,7 +560,7 @@ interface CartItem {
 const [cart, setCart, clearCart] = useLocalStorage<CartItem[]>(
   "shopping-cart",
   [],
-  { syncAcrossTabs: true }
+  { syncAcrossTabs: true },
 );
 
 const addToCart = () => {
@@ -573,7 +573,7 @@ const addToCart = () => {
 };
 
 const removeFromCart = (id: number) => {
-  setCart(cart.value.filter(item => item.id !== id));
+  setCart(cart.value.filter((item) => item.id !== id));
 };
 </script>
 ```
@@ -668,7 +668,7 @@ interface UseLocalStorageOptions<T> {
 function useLocalStorage<T>(
   key: string,
   defaultValue: T,
-  options?: UseLocalStorageOptions<T>
+  options?: UseLocalStorageOptions<T>,
 ): UseLocalStorageReturn<T>;
 ```
 

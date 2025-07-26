@@ -107,11 +107,11 @@ import { ref } from "vue";
 const checked1 = ref(false);
 const checked2 = ref(false);
 
-const setChecked1 = value => {
+const setChecked1 = (value) => {
   checked1.value = value;
 };
 
-const setChecked2 = value => {
+const setChecked2 = (value) => {
   checked2.value = value;
 };
 </script>
@@ -240,11 +240,11 @@ const isIndeterminate = computed(() => {
   return checkedCount > 0 && checkedCount < cities.length;
 });
 
-const handleCheckAllChange = val => {
+const handleCheckAllChange = (val) => {
   checkedCities.value = val ? cities : [];
 };
 
-const handleCheckedCitiesChange = value => {
+const handleCheckedCitiesChange = (value) => {
   const checkedCount = value.length;
   checkAll.value = checkedCount === cities.length;
 };

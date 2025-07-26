@@ -23,39 +23,39 @@ formatDate(date, "MM/DD/YYYY HH:mm"); // "12/25/2023 15:30"
 
 ```ts
 const DATE_FORMATS = {
-  DATE: "YYYY-MM-DD",                    // 2023-12-25
-  DATETIME: "YYYY-MM-DD HH:mm:ss",       // 2023-12-25 15:30:45
-  DATETIME_SHORT: "YYYY-MM-DD HH:mm",    // 2023-12-25 15:30
-  TIME: "HH:mm:ss",                      // 15:30:45
-  TIME_SHORT: "HH:mm",                   // 15:30
-  DATE_CN: "YYYY年MM月DD日",              // 2023年12月25日
+  DATE: "YYYY-MM-DD", // 2023-12-25
+  DATETIME: "YYYY-MM-DD HH:mm:ss", // 2023-12-25 15:30:45
+  DATETIME_SHORT: "YYYY-MM-DD HH:mm", // 2023-12-25 15:30
+  TIME: "HH:mm:ss", // 15:30:45
+  TIME_SHORT: "HH:mm", // 15:30
+  DATE_CN: "YYYY年MM月DD日", // 2023年12月25日
   DATETIME_CN: "YYYY年MM月DD日 HH:mm:ss", // 2023年12月25日 15:30:45
-  DATE_US: "MM/DD/YYYY",                 // 12/25/2023
-  DATETIME_US: "MM/DD/YYYY HH:mm:ss",    // 12/25/2023 15:30:45
+  DATE_US: "MM/DD/YYYY", // 12/25/2023
+  DATETIME_US: "MM/DD/YYYY HH:mm:ss", // 12/25/2023 15:30:45
 };
 ```
 
 ## 格式化占位符
 
-| 占位符 | 说明 | 示例 |
-|--------|------|------|
-| YYYY | 四位年份 | 2023 |
-| YY | 两位年份 | 23 |
-| MM | 两位月份 | 01-12 |
-| M | 月份 | 1-12 |
-| DD | 两位日期 | 01-31 |
-| D | 日期 | 1-31 |
-| HH | 两位小时（24小时制） | 00-23 |
-| H | 小时（24小时制） | 0-23 |
-| hh | 两位小时（12小时制） | 01-12 |
-| h | 小时（12小时制） | 1-12 |
-| mm | 两位分钟 | 00-59 |
-| m | 分钟 | 0-59 |
-| ss | 两位秒数 | 00-59 |
-| s | 秒数 | 0-59 |
-| SSS | 三位毫秒 | 000-999 |
-| A | AM/PM | AM/PM |
-| a | am/pm | am/pm |
+| 占位符 | 说明                 | 示例    |
+| ------ | -------------------- | ------- |
+| YYYY   | 四位年份             | 2023    |
+| YY     | 两位年份             | 23      |
+| MM     | 两位月份             | 01-12   |
+| M      | 月份                 | 1-12    |
+| DD     | 两位日期             | 01-31   |
+| D      | 日期                 | 1-31    |
+| HH     | 两位小时（24小时制） | 00-23   |
+| H      | 小时（24小时制）     | 0-23    |
+| hh     | 两位小时（12小时制） | 01-12   |
+| h      | 小时（12小时制）     | 1-12    |
+| mm     | 两位分钟             | 00-59   |
+| m      | 分钟                 | 0-59    |
+| ss     | 两位秒数             | 00-59   |
+| s      | 秒数                 | 0-59    |
+| SSS    | 三位毫秒             | 000-999 |
+| A      | AM/PM                | AM/PM   |
+| a      | am/pm                | am/pm   |
 
 ## 自定义格式示例
 
@@ -153,9 +153,9 @@ isToday(Date.now()); // true
 
 ```ts
 interface FormatDateOptions {
-  locale?: string;     // 语言环境
-  timeZone?: string;   // 时区
-  hour12?: boolean;    // 是否使用12小时制
+  locale?: string; // 语言环境
+  timeZone?: string; // 时区
+  hour12?: boolean; // 是否使用12小时制
 }
 
 // 使用选项
@@ -182,8 +182,10 @@ const articles = [
   { title: "文章2", createdAt: new Date("2023-12-24 15:20:00") },
 ];
 
-articles.forEach(article => {
-  console.log(`${article.title} - ${formatDate(article.createdAt, DATE_FORMATS.DATETIME_SHORT)}`);
+articles.forEach((article) => {
+  console.log(
+    `${article.title} - ${formatDate(article.createdAt, DATE_FORMATS.DATETIME_SHORT)}`,
+  );
 });
 ```
 
@@ -193,7 +195,7 @@ articles.forEach(article => {
 // 消息时间显示
 function formatMessageTime(timestamp: number) {
   const date = new Date(timestamp);
-  
+
   if (isToday(date)) {
     return formatDate(date, "HH:mm");
   } else if (isYesterday(date)) {
@@ -212,7 +214,7 @@ function updateRelativeTime(element: HTMLElement, timestamp: number) {
   const update = () => {
     element.textContent = formatRelativeTime(timestamp);
   };
-  
+
   update(); // 立即更新
   setInterval(update, 60000); // 每分钟更新
 }
@@ -235,9 +237,9 @@ interface FormatDateOptions {
  * @returns 格式化后的日期字符串
  */
 function formatDate(
-  date: Date | number | string, 
-  format?: string, 
-  options?: FormatDateOptions
+  date: Date | number | string,
+  format?: string,
+  options?: FormatDateOptions,
 ): string;
 
 /**
@@ -248,9 +250,9 @@ function formatDate(
  * @returns 相对时间字符串
  */
 function formatRelativeTime(
-  date: Date | number | string, 
-  baseDate?: Date | number | string, 
-  options?: FormatDateOptions
+  date: Date | number | string,
+  baseDate?: Date | number | string,
+  options?: FormatDateOptions,
 ): string;
 
 /**

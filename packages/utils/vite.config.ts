@@ -1,17 +1,17 @@
-import { defineConfig } from 'vite';
-import vue from '@vitejs/plugin-vue';
-import dts from 'vite-plugin-dts';
-import { resolve } from 'path';
+import { defineConfig } from "vite";
+import vue from "@vitejs/plugin-vue";
+import dts from "vite-plugin-dts";
+import { resolve } from "path";
 
 export default defineConfig({
   plugins: [
     vue(),
     dts({
-      entryRoot: '.',
-      outDir: 'dist/types',
-      tsconfigPath: '../../tsconfig.json',
-      include: ['**/*.ts', '**/*.vue'],
-      exclude: ['node_modules', 'dist'],
+      entryRoot: ".",
+      outDir: "dist/types",
+      tsconfigPath: "../../tsconfig.json",
+      include: ["**/*.ts", "**/*.vue"],
+      exclude: ["node_modules", "dist"],
       rollupTypes: true,
       insertTypesEntry: true,
       copyDtsFiles: true,
@@ -20,26 +20,26 @@ export default defineConfig({
   ],
   build: {
     lib: {
-      entry: resolve(__dirname, 'index.ts'),
-      name: 'VakaoUIUtils',
+      entry: resolve(__dirname, "index.ts"),
+      name: "VakaoUIUtils",
       fileName: (format) => `vakao-ui-utils.${format}.js`,
-      formats: ['es', 'umd'],
+      formats: ["es", "umd"],
     },
     rollupOptions: {
-      external: ['vue'],
+      external: ["vue"],
       output: {
         globals: {
-          vue: 'Vue',
+          vue: "Vue",
         },
       },
     },
-    outDir: 'dist',
+    outDir: "dist",
     emptyOutDir: true,
     cssCodeSplit: false,
   },
   resolve: {
     alias: {
-      '@': resolve(__dirname, '.'),
+      "@": resolve(__dirname, "."),
     },
   },
 });

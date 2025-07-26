@@ -78,7 +78,7 @@ export default defineComponent({
       "value",
       "modelValue",
       emit,
-      false as SwitchValue
+      false as SwitchValue,
     );
 
     // 计算属性

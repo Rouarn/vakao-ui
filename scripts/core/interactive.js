@@ -1,11 +1,11 @@
 /**
  * Vakao UI 交互式界面模块
- * 
+ *
  * 提供用户交互功能：
  * - 包选择
  * - 版本输入
  * - 确认操作
- * 
+ *
  * @version 2.0.0
  * @author Vakao UI Team
  */
@@ -22,6 +22,8 @@ class Interactive {
     this.rl = readline.createInterface({
       input: process.stdin,
       output: process.stdout,
+      terminal: false, // 禁用终端模式，避免输入重复问题
+      crlfDelay: Infinity, // 处理 Windows 换行符
     });
   }
 
@@ -30,42 +32,45 @@ class Interactive {
    * @returns {Promise<string[]>} 选择的包列表
    */
   askForPackages() {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       console.log("\n可用的包:");
       Object.entries(this.packages).forEach(([key, pkg], index) => {
         console.log(
-          `  ${index + 1}. ${pkg.icon} ${pkg.displayName} (${pkg.name})`
+          `  ${index + 1}. ${pkg.icon} ${pkg.displayName} (${pkg.name})`,
         );
       });
       console.log(`  ${Object.keys(this.packages).length + 1}. 🚀 全部发布`);
 
-      this.rl.question("\n请选择要发布的包 (输入数字，多个用逗号分隔): ", answer => {
-        const choices = answer.split(",").map(s => s.trim());
-        const packageKeys = [];
+      this.rl.question(
+        "\n请选择要发布的包 (输入数字，多个用逗号分隔): ",
+        (answer) => {
+          const choices = answer.split(",").map((s) => s.trim());
+          const packageKeys = [];
 
-        for (const choice of choices) {
-          const index = parseInt(choice) - 1;
-          const packageEntries = Object.entries(this.packages);
+          for (const choice of choices) {
+            const index = parseInt(choice) - 1;
+            const packageEntries = Object.entries(this.packages);
 
-          if (index >= 0 && index < packageEntries.length) {
-            packageKeys.push(packageEntries[index][0]);
-          } else if (parseInt(choice) === packageEntries.length + 1) {
-            // 选择全部
-            packageKeys.push(...Object.keys(this.packages));
-            break;
+            if (index >= 0 && index < packageEntries.length) {
+              packageKeys.push(packageEntries[index][0]);
+            } else if (parseInt(choice) === packageEntries.length + 1) {
+              // 选择全部
+              packageKeys.push(...Object.keys(this.packages));
+              break;
+            }
           }
-        }
 
-        if (packageKeys.length === 0) {
-          log("无效选择，请重新选择", "error");
-          this.askForPackages().then(resolve);
-          return;
-        }
+          if (packageKeys.length === 0) {
+            log("无效选择，请重新选择", "error");
+            this.askForPackages().then(resolve);
+            return;
+          }
 
-        // 去重
-        const uniquePackages = [...new Set(packageKeys)];
-        resolve(uniquePackages);
-      });
+          // 去重
+          const uniquePackages = [...new Set(packageKeys)];
+          resolve(uniquePackages);
+        },
+      );
     });
   }
 
@@ -77,7 +82,12 @@ class Interactive {
    * @param {Function} suggestNextVersion - 建议版本号的函数
    * @returns {Promise<Object>} 版本号映射
    */
-  async askForVersions(packageKeys, syncVersion, getPackageJson, suggestNextVersion) {
+  async askForVersions(
+    packageKeys,
+    syncVersion,
+    getPackageJson,
+    suggestNextVersion,
+  ) {
     const versions = {};
 
     if (syncVersion && packageKeys.length > 1) {
@@ -92,10 +102,10 @@ class Interactive {
       const version = await this.askForSingleVersion(
         currentVersion,
         suggestedVersion,
-        "统一版本号"
+        "统一版本号",
       );
 
-      packageKeys.forEach(key => {
+      packageKeys.forEach((key) => {
         versions[key] = version;
       });
     } else {
@@ -106,14 +116,14 @@ class Interactive {
 
         log(
           `\n${this.packages[packageKey].icon} ${this.packages[packageKey].displayName}`,
-          "info"
+          "info",
         );
         log(`当前版本: ${currentVersion}`, "info");
 
         const version = await this.askForSingleVersion(
           currentVersion,
           suggestedVersion,
-          this.packages[packageKey].displayName
+          this.packages[packageKey].displayName,
         );
 
         versions[packageKey] = version;
@@ -124,6 +134,27 @@ class Interactive {
   }
 
   /**
+   * 比较两个版本号
+   * @param {string} version1 - 版本号1
+   * @param {string} version2 - 版本号2
+   * @returns {number} 1: version1 > version2, 0: 相等, -1: version1 < version2
+   */
+  compareVersions(version1, version2) {
+    const v1Parts = version1.split('.').map(Number);
+    const v2Parts = version2.split('.').map(Number);
+    
+    for (let i = 0; i < Math.max(v1Parts.length, v2Parts.length); i++) {
+      const v1Part = v1Parts[i] || 0;
+      const v2Part = v2Parts[i] || 0;
+      
+      if (v1Part > v2Part) return 1;
+      if (v1Part < v2Part) return -1;
+    }
+    
+    return 0;
+  }
+
+  /**
    * 询问单个版本号
    * @param {string} currentVersion - 当前版本号
    * @param {string} suggestedVersion - 建议版本号
@@ -131,10 +162,10 @@ class Interactive {
    * @returns {Promise<string>} 新版本号
    */
   askForSingleVersion(currentVersion, suggestedVersion, packageName) {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       this.rl.question(
         `请输入 ${packageName} 的新版本号 (建议: ${suggestedVersion}, 留空使用建议版本): `,
-        version => {
+        (version) => {
           const newVersion = version || suggestedVersion;
 
           // 验证版本号格式
@@ -144,25 +175,25 @@ class Interactive {
             this.askForSingleVersion(
               currentVersion,
               suggestedVersion,
-              packageName
+              packageName,
             ).then(resolve);
             return;
           }
 
           // 检查版本号是否比当前版本新
-          if (newVersion <= currentVersion) {
+          if (this.compareVersions(newVersion, currentVersion) <= 0) {
             log("新版本号必须大于当前版本！", "error");
             this.askForSingleVersion(
               currentVersion,
               suggestedVersion,
-              packageName
+              packageName,
             ).then(resolve);
             return;
           }
 
           log(`${packageName} 版本号验证通过: ${newVersion}`, "success");
           resolve(newVersion);
-        }
+        },
       );
     });
   }
@@ -173,11 +204,9 @@ class Interactive {
    * @returns {Promise<boolean>} 是否确认
    */
   askForConfirmation(message) {
-    return new Promise(resolve => {
-      this.rl.question(`${message} (y/N): `, answer => {
-        resolve(
-          answer.toLowerCase() === "y" || answer.toLowerCase() === "yes"
-        );
+    return new Promise((resolve) => {
+      this.rl.question(`${message} (y/N): `, (answer) => {
+        resolve(answer.toLowerCase() === "y" || answer.toLowerCase() === "yes");
       });
     });
   }
@@ -189,10 +218,10 @@ class Interactive {
    */
   showPublishPlan(packageKeys, versions) {
     log("发布计划:", "info");
-    packageKeys.forEach(key => {
+    packageKeys.forEach((key) => {
       log(
         `  ${this.packages[key].icon} ${this.packages[key].displayName}: v${versions[key]}`,
-        "info"
+        "info",
       );
     });
   }
@@ -204,20 +233,20 @@ class Interactive {
    */
   showPublishResults(results, isDryRun) {
     log("发布结果汇总:", "info");
-    const successCount = results.filter(r => r.success).length;
-    const failCount = results.filter(r => !r.success).length;
+    const successCount = results.filter((r) => r.success).length;
+    const failCount = results.filter((r) => !r.success).length;
 
-    results.forEach(result => {
+    results.forEach((result) => {
       const pkg = this.packages[result.package];
       if (result.success) {
         log(
           `  ✅ ${pkg.icon} ${pkg.displayName} v${result.version} - 成功`,
-          "success"
+          "success",
         );
       } else {
         log(
           `  ❌ ${pkg.icon} ${pkg.displayName} - 失败: ${result.error}`,
-          "error"
+          "error",
         );
       }
     });

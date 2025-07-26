@@ -117,11 +117,7 @@ const value = ref("");
 ```vue
 <template>
   <!-- 使用 @change 事件 -->
-  <vk-select
-    :value="value1"
-    @change="setValue1"
-    placeholder="请选择"
-  >
+  <vk-select :value="value1" @change="setValue1" placeholder="请选择">
     <vk-option label="选项一" value="option1" />
     <vk-option label="选项二" value="option2" />
     <vk-option label="选项三" value="option3" />
@@ -145,11 +141,11 @@ import { ref } from "vue";
 const value1 = ref("");
 const value2 = ref("");
 
-const setValue1 = value => {
+const setValue1 = (value) => {
   value1.value = value;
 };
 
-const setValue2 = value => {
+const setValue2 = (value) => {
   value2.value = value;
 };
 </script>
@@ -226,7 +222,7 @@ import { ref } from "vue";
 const multiValue1 = ref([]);
 const multiValue2 = ref([]);
 
-const setMultiValue2 = value => {
+const setMultiValue2 = (value) => {
   multiValue2.value = value;
 };
 </script>

@@ -175,7 +175,10 @@ export function useLocalStorage<T>(
         try {
           storedValue.value = serializer.read(e.newValue);
         } catch (error) {
-          console.warn(`Error parsing storage event for key "${prefixedKey}":`, error);
+          console.warn(
+            `Error parsing storage event for key "${prefixedKey}":`,
+            error,
+          );
         }
       } else if (e.key === prefixedKey && e.newValue === null) {
         storedValue.value = defaultValue;

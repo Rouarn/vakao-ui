@@ -2,10 +2,10 @@
 
 /**
  * 发布系统迁移脚本
- * 
+ *
  * 将旧的发布脚本移动到 legacy 目录
  * 并提供迁移指南
- * 
+ *
  * @version 1.0.0
  * @author Vakao UI Team
  */
@@ -21,7 +21,7 @@ const TOOL_TITLE = "🔄 Vakao UI 发布系统迁移工具 🔄";
 const LEGACY_FILES = [
   "publish-hooks.js",
   "publish-utils.js",
-  "publish-packages.js"
+  "publish-packages.js",
 ];
 
 /**
@@ -43,11 +43,11 @@ function createLegacyDirectory() {
 function moveFilesToLegacy(legacyDir) {
   const scriptsDir = __dirname;
   let movedCount = 0;
-  
-  LEGACY_FILES.forEach(filename => {
+
+  LEGACY_FILES.forEach((filename) => {
     const sourcePath = path.join(scriptsDir, filename);
     const targetPath = path.join(legacyDir, filename);
-    
+
     if (existsSync(sourcePath)) {
       try {
         renameSync(sourcePath, targetPath);
@@ -60,7 +60,7 @@ function moveFilesToLegacy(legacyDir) {
       log(`文件不存在: ${filename}`, "warning");
     }
   });
-  
+
   return movedCount;
 }
 
@@ -157,7 +157,7 @@ node scripts/publish.js --help
 
 迁移时间: ${new Date().toLocaleString()}
 `;
-  
+
   const guidePath = path.join(legacyDir, "MIGRATION_GUIDE.md");
   writeFileSync(guidePath, guideContent);
   log("创建迁移说明文件: MIGRATION_GUIDE.md", "success");
@@ -192,7 +192,7 @@ node scripts/publish.js
 
 存档时间: ${new Date().toLocaleString()}
 `;
-  
+
   const readmePath = path.join(legacyDir, "README.md");
   writeFileSync(readmePath, readmeContent);
   log("创建 legacy README.md", "success");
@@ -205,30 +205,31 @@ function main() {
   try {
     // 显示 banner
     showBanner(TOOL_TITLE);
-    
+
     log("开始迁移旧版发布脚本...", "info");
     separator();
-    
+
     // 创建 legacy 目录
     const legacyDir = createLegacyDirectory();
-    
+
     // 移动文件
     const movedCount = moveFilesToLegacy(legacyDir);
-    
+
     // 创建说明文件
     createMigrationGuide(legacyDir);
     createLegacyReadme(legacyDir);
-    
+
     separator();
-    
+
     if (movedCount > 0) {
       showSuccess(`迁移完成！已移动 ${movedCount} 个文件到 legacy 目录`);
-      console.log("\n📖 请查看 scripts/legacy/MIGRATION_GUIDE.md 了解详细迁移说明");
+      console.log(
+        "\n📖 请查看 scripts/legacy/MIGRATION_GUIDE.md 了解详细迁移说明",
+      );
       console.log("🚀 现在可以使用新的统一发布系统: node scripts/publish.js");
     } else {
       log("没有找到需要迁移的文件", "warning");
     }
-    
   } catch (error) {
     log(`迁移过程中出现错误: ${error.message}`, "error");
     process.exit(1);

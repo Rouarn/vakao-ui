@@ -64,10 +64,10 @@ export default defineComponent({
     // 使用受控/非受控模式工具函数（仅在非组模式下使用）
     const { currentValue, updateValue } = useControlled<RadioValue | undefined>(
       props,
-      'modelValue',
-      'modelValue',
+      "modelValue",
+      "modelValue",
       emit,
-      undefined
+      undefined,
     );
 
     // 计算属性

@@ -16,31 +16,31 @@
 <script setup lang="ts">
 /**
  * VkIcon 图标组件
- * 
+ *
  * 一个灵活的图标组件，支持多种图标来源和样式定制。
  * 基于 Vue 3 Composition API 和 setup 语法糖构建。
- * 
+ *
  * 主要特性：
  * - 支持 Iconify 图标库（数万个图标）
  * - 支持自定义图片图标
  * - 支持插槽自定义内容
  * - 灵活的尺寸和颜色配置
  * - 完整的 TypeScript 支持
- * 
+ *
  * 渲染优先级：
  * 1. src 属性 - 渲染为 img 元素
  * 2. icon 属性 - 渲染为 Iconify 图标
  * 3. 默认插槽 - 渲染插槽内容
- * 
+ *
  * @example
  * ```vue
  * <template>
  *   <!-- Iconify 图标 -->
  *   <VkIcon icon="mdi:home" size="24px" color="#409eff" />
- *   
+ *
  *   <!-- 自定义图片 -->
  *   <VkIcon src="/logo.svg" size="32" />
- *   
+ *
  *   <!-- 插槽内容 -->
  *   <VkIcon size="1.5em" color="red">
  *     <svg viewBox="0 0 24 24">...</svg>
@@ -70,7 +70,7 @@ const ns = useNamespace("icon");
 
 /**
  * 合并 CSS 类名
- * 
+ *
  * 将组件的基础类名与用户自定义类名合并，
  * 使用 BEM 命名规范确保样式的模块化。
  */
@@ -80,7 +80,7 @@ const mergedClass = computed(() => {
 
 /**
  * 合并样式
- * 
+ *
  * 将组件的基础样式（尺寸和颜色）与用户自定义样式合并。
  * 支持字符串和对象两种格式的自定义样式。
  */
