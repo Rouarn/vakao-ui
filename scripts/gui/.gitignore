@@ -1,0 +1,178 @@
+# Vakao UI Publisher - Git 忽略文件配置
+
+# ==================== 构建产物 ====================
+
+# Electron 构建输出目录
+dist/
+build/release/
+out/
+release/
+
+# 打包临时文件
+*.tgz
+*.tar.gz
+
+# ==================== 依赖和缓存 ====================
+
+# Node.js 依赖
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# 包管理器锁文件（保留 package-lock.json，忽略其他）
+yarn.lock
+pnpm-lock.yaml
+
+# 缓存目录
+.npm/
+.yarn/
+.pnpm/
+.electron-cache/
+.electron-gyp/
+
+# ==================== 环境配置 ====================
+
+# 环境变量文件
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# ==================== 开发工具 ====================
+
+# IDE 配置文件
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 编辑器临时文件
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# ==================== 日志文件 ====================
+
+# 应用日志
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# 运行时日志
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# ==================== 临时文件 ====================
+
+# 系统临时文件
+.tmp/
+temp/
+*.tmp
+*.temp
+
+# 构建临时文件
+.cache/
+.parcel-cache/
+.next/
+.nuxt/
+.vuepress/dist/
+
+# ==================== 测试相关 ====================
+
+# 测试覆盖率报告
+coverage/
+*.lcov
+.nyc_output/
+
+# 测试结果
+test-results/
+junit.xml
+
+# ==================== 安全相关 ====================
+
+# 证书和密钥文件
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+
+# 敏感配置
+secrets/
+credentials/
+
+# ==================== 平台特定 ====================
+
+# Windows
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# ==================== 构建工具 ====================
+
+# Electron Builder
+electron-builder-effective-config.yaml
+builder-effective-config.yaml
+
+# 自动生成的文件
+src/build-info.json
+
+# ==================== 其他 ====================
+
+# 备份文件
+*.bak
+*.backup
+*.old
+
+# 压缩文件
+*.zip
+*.rar
+*.7z
+
+# 文档生成
+docs/dist/
+docs/.vitepress/cache/
+docs/.vitepress/dist/
+
+# 本地配置
+local.config.js
+local.config.json

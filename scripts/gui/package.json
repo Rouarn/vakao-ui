@@ -6,36 +6,143 @@
   "scripts": {
     "start": "electron .",
     "dev": "electron . --dev --disable-gpu --no-sandbox",
-    "build": "electron-builder",
-    "build:win": "electron-builder --win",
-    "build:mac": "electron-builder --mac",
-    "build:linux": "electron-builder --linux",
+    "build": "npm run build:prepare && electron-builder",
+    "build:win": "npm run build:prepare && electron-builder --win",
+    "build:mac": "npm run build:prepare && electron-builder --mac",
+    "build:linux": "npm run build:prepare && electron-builder --linux",
+    "build:all": "npm run build:prepare && electron-builder --win --mac --linux",
+    "build:prepare": "node build/prepare.js",
     "pack": "electron-builder --dir",
-    "dist": "npm run build"
+    "pack:win": "electron-builder --win --dir",
+    "pack:mac": "electron-builder --mac --dir",
+    "pack:linux": "electron-builder --linux --dir",
+    "publish": "npm run build && electron-builder --publish=always",
+    "publish:win": "npm run build:win && electron-builder --win --publish=always",
+    "clean": "npx rimraf release",
+    "clean:all": "npx rimraf release node_modules package-lock.json && npm install",
+    "postinstall": "electron-builder install-app-deps"
   },
   "build": {
     "appId": "com.vakao-ui.publisher",
     "productName": "Vakao UI Publisher",
+    "copyright": "Copyright © 2025 Vakao UI Team",
+    "forceCodeSigning": false,
     "directories": {
-      "output": "dist"
+      "output": "release",
+      "buildResources": "assets"
     },
     "files": [
       "src/**/*",
       "assets/**/*",
       "node_modules/**/*",
-      "package.json"
+      "package.json",
+      "!**/node_modules/*/{CHANGELOG.md,README.md,README,readme.md,readme}",
+      "!**/node_modules/*/{test,__tests__,tests,powered-test,example,examples}",
+      "!**/node_modules/*.d.ts",
+      "!**/node_modules/.bin",
+      "!**/*.{iml,o,hprof,orig,pyc,pyo,rbc,swp,csproj,sln,xproj}",
+      "!.editorconfig",
+      "!**/._*",
+      "!**/{.DS_Store,.git,.hg,.svn,CVS,RCS,SCCS,.gitignore,.gitattributes}",
+      "!**/{__pycache__,thumbs.db,.flowconfig,.idea,.vs,.nyc_output}",
+      "!**/{appveyor.yml,.travis.yml,circle.yml}",
+      "!**/{npm-debug.log,yarn.lock,.yarn-integrity,.yarn-metadata.json}"
+    ],
+    "extraResources": [
+      {
+        "from": "assets/",
+        "to": "assets/",
+        "filter": [
+          "**/*"
+        ]
+      }
     ],
     "win": {
-      "target": "nsis",
-      "icon": "assets/icon.ico"
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "requestedExecutionLevel": "asInvoker",
+      "artifactName": "${productName}-${version}-${arch}.${ext}",
+      "sign": null,
+      "signAndEditExecutable": false,
+      "signDlls": false
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Vakao UI Publisher",
+      "include": "build/installer.nsh"
+    },
+    "portable": {
+      "artifactName": "${productName}-${version}-portable.${ext}"
     },
     "mac": {
-      "target": "dmg",
-      "icon": "assets/icon.icns"
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        }
+      ],
+      "icon": "../../public/favicon.ico",
+      "category": "public.app-category.developer-tools",
+      "artifactName": "${productName}-${version}-${arch}.${ext}"
+    },
+    "dmg": {
+      "contents": [
+        {
+          "x": 130,
+          "y": 220
+        },
+        {
+          "x": 410,
+          "y": 220,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ],
+      "title": "${productName} ${version}"
     },
     "linux": {
-      "target": "AppImage",
-      "icon": "assets/icon.png"
+      "target": [
+        {
+          "target": "AppImage",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "deb",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "assets/favicon.ico",
+      "category": "Development",
+      "artifactName": "${productName}-${version}-${arch}.${ext}"
+    },
+    "publish": {
+      "provider": "github",
+      "owner": "vakao-ui",
+      "repo": "vakao-ui",
+      "private": false
     }
   },
   "keywords": [
@@ -48,8 +155,9 @@
   "author": "我与夏季",
   "license": "MIT",
   "devDependencies": {
-    "electron": "^27.0.0",
-    "electron-builder": "^24.6.4"
+    "electron": "^28.3.3",
+    "electron-builder": "^24.13.3",
+    "rimraf": "^5.0.5"
   },
   "dependencies": {
     "electron-store": "^8.1.0",

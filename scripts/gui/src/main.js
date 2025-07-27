@@ -52,7 +52,9 @@ let mainWindow = null;
 let publishProcess = null;
 
 /** 项目根目录 */
-const PROJECT_ROOT = path.resolve(__dirname, "../../..");
+const PROJECT_ROOT = app.isPackaged 
+  ? path.dirname(process.execPath) // 打包后：可执行文件所在目录
+  : path.resolve(__dirname, "../../.."); // 开发时：相对于源码的项目根目录
 
 /** 发布脚本路径 */
 const PUBLISH_SCRIPT = path.join(PROJECT_ROOT, "publish.js");
