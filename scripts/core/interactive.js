@@ -27,6 +27,39 @@ class Interactive {
       terminal: false, // 禁用终端模式，避免输入重复问题
       crlfDelay: Infinity, // 处理 Windows 换行符
     });
+    
+    // 检测是否在GUI环境中运行
+    this.isGUIMode = this.detectGUIMode();
+  }
+  
+  /**
+   * 检测是否在GUI环境中运行
+   * @returns {boolean} 是否为GUI模式
+   */
+  detectGUIMode() {
+    // 检查是否从GUI启动（通过环境变量或进程参数）
+    try {
+      // 检查环境变量
+      if (process.env.VAKAO_GUI_MODE === 'true') {
+        return true;
+      }
+      
+      // 检查是否在Electron环境中
+      if (typeof process !== 'undefined' && 
+          process.versions && 
+          process.versions.electron) {
+        return true;
+      }
+      
+      // 检查父进程是否为Electron
+      if (process.env.ELECTRON_RUN_AS_NODE) {
+        return true;
+      }
+      
+      return false;
+    } catch (error) {
+      return false;
+    }
   }
 
   /**
@@ -165,6 +198,131 @@ class Interactive {
    * @returns {Promise<string>} 新版本号
    */
   askForSingleVersion(currentVersion, suggestedVersion, packageName) {
+    if (this.isGUIMode) {
+      return this.askForSingleVersionGUI(currentVersion, suggestedVersion, packageName);
+    } else {
+      return this.askForSingleVersionCLI(currentVersion, suggestedVersion, packageName);
+    }
+  }
+  
+  /**
+   * GUI模式下询问单个版本号
+   * @param {string} currentVersion - 当前版本号
+   * @param {string} suggestedVersion - 建议版本号
+   * @param {string} packageName - 包名称
+   * @returns {Promise<string>} 新版本号
+   */
+  async askForSingleVersionGUI(currentVersion, suggestedVersion, packageName) {
+    try {
+      // 通过进程间通信请求用户输入
+      const inputRequest = {
+        title: '版本号输入',
+        message: `请输入 ${packageName} 的新版本号`,
+        type: 'text',
+        defaultValue: suggestedVersion,
+        required: false,
+        validation: {
+          pattern: '^\\d+\\.\\d+\\.\\d+$',
+          patternMessage: '版本号格式不正确！请使用 x.y.z 格式（如: 1.0.0）'
+        },
+        helpText: `当前版本: ${currentVersion}，建议版本: ${suggestedVersion}，留空使用建议版本`
+      };
+      
+      // 发送输入请求到主进程
+      const result = await this.requestGUIInput(inputRequest);
+      
+      if (result.cancelled) {
+        throw new Error('用户取消了版本号输入');
+      }
+      
+      const newVersion = result.value || suggestedVersion;
+      
+      // 验证版本号格式
+      const semverRegex = /^\d+\.\d+\.\d+$/;
+      if (!semverRegex.test(newVersion)) {
+        log("版本号格式不正确！请使用 x.y.z 格式（如: 1.0.0）", "error");
+        return this.askForSingleVersionGUI(currentVersion, suggestedVersion, packageName);
+      }
+      
+      // 检查版本号是否比当前版本新
+      if (this.compareVersions(newVersion, currentVersion) <= 0) {
+        log("新版本号必须大于当前版本！", "error");
+        return this.askForSingleVersionGUI(currentVersion, suggestedVersion, packageName);
+      }
+      
+      log(`${packageName} 版本号验证通过: ${newVersion}`, "success");
+      return newVersion;
+      
+    } catch (error) {
+      log(`GUI输入失败，回退到命令行模式: ${error.message}`, "warning");
+      return this.askForSingleVersionCLI(currentVersion, suggestedVersion, packageName);
+    }
+  }
+  
+  /**
+   * 通过进程间通信请求GUI输入
+   * @param {Object} inputRequest - 输入请求对象
+   * @returns {Promise<Object>} 输入结果
+   */
+  requestGUIInput(inputRequest) {
+    return new Promise((resolve, reject) => {
+      try {
+        // 生成唯一的请求ID
+        const requestId = Date.now().toString(36) + Math.random().toString(36).substr(2);
+        
+        // 创建请求对象
+        const request = {
+          id: requestId,
+          type: 'user-input-request',
+          data: inputRequest
+        };
+        
+        // 监听响应
+        const responseHandler = (data) => {
+          try {
+            const response = JSON.parse(data.toString());
+            if (response.id === requestId && response.type === 'user-input-response') {
+              process.stdin.removeListener('data', responseHandler);
+              resolve(response.data);
+            }
+          } catch (error) {
+            // 忽略解析错误，可能是其他数据
+          }
+        };
+        
+        // 设置超时
+        const timeout = setTimeout(() => {
+          process.stdin.removeListener('data', responseHandler);
+          reject(new Error('GUI输入请求超时'));
+        }, 30000);
+        
+        // 监听标准输入
+        process.stdin.on('data', responseHandler);
+        
+        // 发送请求到标准输出（主进程会捕获）
+        process.stdout.write('\n__VAKAO_GUI_REQUEST__' + JSON.stringify(request) + '__VAKAO_GUI_REQUEST_END__\n');
+        
+        // 清理超时
+        const originalResolve = resolve;
+        resolve = (result) => {
+          clearTimeout(timeout);
+          originalResolve(result);
+        };
+        
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+  
+  /**
+   * 命令行模式下询问单个版本号
+   * @param {string} currentVersion - 当前版本号
+   * @param {string} suggestedVersion - 建议版本号
+   * @param {string} packageName - 包名称
+   * @returns {Promise<string>} 新版本号
+   */
+  askForSingleVersionCLI(currentVersion, suggestedVersion, packageName) {
     return new Promise((resolve) => {
       this.rl.question(
         `请输入 ${packageName} 的新版本号 (建议: ${suggestedVersion}, 留空使用建议版本): `,
@@ -175,7 +333,7 @@ class Interactive {
           const semverRegex = /^\d+\.\d+\.\d+$/;
           if (!semverRegex.test(newVersion)) {
             log("版本号格式不正确！请使用 x.y.z 格式（如: 1.0.0）", "error");
-            this.askForSingleVersion(
+            this.askForSingleVersionCLI(
               currentVersion,
               suggestedVersion,
               packageName,
@@ -186,7 +344,7 @@ class Interactive {
           // 检查版本号是否比当前版本新
           if (this.compareVersions(newVersion, currentVersion) <= 0) {
             log("新版本号必须大于当前版本！", "error");
-            this.askForSingleVersion(
+            this.askForSingleVersionCLI(
               currentVersion,
               suggestedVersion,
               packageName,

@@ -512,6 +512,7 @@ ipcMain.handle("execute-publish", async (event, options) => {
           ...process.env,
           NO_COLOR: "1", // 禁用颜色输出
           CHCP: "65001", // 设置UTF-8编码
+          VAKAO_GUI_MODE: "true", // 标记为GUI模式
         },
       });
 
@@ -523,12 +524,39 @@ ipcMain.handle("execute-publish", async (event, options) => {
         const text = data.toString("utf8");
         output += text;
 
-        // 实时发送输出到渲染进程
-        if (mainWindow) {
-          mainWindow.webContents.send("log-output", {
-            type: "stdout",
-            data: text,
-          });
+        // 检查是否包含GUI输入请求
+        const guiRequestMatch = text.match(/__VAKAO_GUI_REQUEST__(.+?)__VAKAO_GUI_REQUEST_END__/s);
+        if (guiRequestMatch) {
+          try {
+            const request = JSON.parse(guiRequestMatch[1]);
+            handleGUIInputRequest(request, publishProcess);
+            
+            // 移除GUI请求标记，只发送普通输出
+            const cleanText = text.replace(/__VAKAO_GUI_REQUEST__.+?__VAKAO_GUI_REQUEST_END__/gs, '');
+            if (cleanText.trim() && mainWindow) {
+              mainWindow.webContents.send("log-output", {
+                type: "stdout",
+                data: cleanText,
+              });
+            }
+          } catch (error) {
+            console.error('解析GUI输入请求失败:', error);
+            // 如果解析失败，发送原始输出
+            if (mainWindow) {
+              mainWindow.webContents.send("log-output", {
+                type: "stdout",
+                data: text,
+              });
+            }
+          }
+        } else {
+          // 普通输出，直接发送到渲染进程
+          if (mainWindow) {
+            mainWindow.webContents.send("log-output", {
+              type: "stdout",
+              data: text,
+            });
+          }
         }
       });
 
@@ -630,6 +658,120 @@ ipcMain.handle("kill-publish-process", async () => {
 });
 
 /**
+ * 处理GUI输入请求
+ * @param {Object} request - 输入请求对象
+ * @param {Object} process - 发布进程对象
+ */
+async function handleGUIInputRequest(request, process) {
+  try {
+    console.log('主进程: 开始处理GUI输入请求', request.id);
+    
+    if (!request || !request.id || !request.data) {
+      console.error('无效的GUI输入请求:', request);
+      return;
+    }
+
+    // 构建请求对象
+    const requestObject = {
+      id: request.id,
+      title: request.data.title,
+      message: request.data.message,
+      description: request.data.description || '',
+      type: request.data.type,
+      defaultValue: request.data.defaultValue || '',
+      options: request.data.options || [],
+      required: request.data.required || false,
+      validation: request.data.validation || {},
+      helpText: request.data.helpText || '',
+      timestamp: Date.now()
+    };
+
+    // 存储请求数据到pendingInputRequests
+    console.log('主进程: 存储请求数据到pendingInputRequests');
+    pendingInputRequests.set(request.id, {
+      request: requestObject,
+      resolve: null,
+      reject: null,
+    });
+
+    // 向渲染进程发送用户输入请求
+    if (mainWindow) {
+      console.log('主进程: 向渲染进程发送用户输入请求');
+      mainWindow.webContents.send("user-input-request", requestObject);
+    }
+
+    console.log('主进程: 等待用户响应...');
+    // 等待用户响应
+    const userResponse = await waitForUserResponse(request.id);
+    console.log('主进程: 收到用户响应:', userResponse);
+
+    // 将响应发送回发布进程
+    const response = {
+      id: request.id,
+      type: 'user-input-response',
+      data: userResponse
+    };
+
+    console.log('主进程: 准备将响应发送回发布进程:', response);
+    if (process && process.stdin && process.stdin.writable) {
+      process.stdin.write(JSON.stringify(response) + '\n');
+      console.log('主进程: 响应已发送到发布进程');
+    } else {
+      console.error('主进程: 发布进程的stdin不可写或不存在');
+    }
+
+  } catch (error) {
+    console.error('处理GUI输入请求失败:', error);
+    
+    // 发送错误响应
+    const errorResponse = {
+      id: request.id,
+      type: 'user-input-response',
+      data: {
+        success: false,
+        cancelled: true,
+        error: error.message
+      }
+    };
+
+    console.log('主进程: 发送错误响应到发布进程:', errorResponse);
+    if (process && process.stdin && process.stdin.writable) {
+      process.stdin.write(JSON.stringify(errorResponse) + '\n');
+    }
+  }
+}
+
+/**
+ * 等待用户响应
+ * @param {string} requestId - 请求ID
+ * @returns {Promise<Object>} 用户响应
+ */
+function waitForUserResponse(requestId) {
+  return new Promise((resolve, reject) => {
+    // 存储请求信息
+    const requestData = pendingInputRequests.get(requestId);
+    if (requestData) {
+      requestData.resolve = resolve;
+      requestData.reject = reject;
+    } else {
+      // 如果没有找到请求，说明数据结构有问题
+      console.error('waitForUserResponse: 找不到请求数据，requestId:', requestId);
+      console.error('当前 pendingInputRequests:', Array.from(pendingInputRequests.entries()));
+      reject(new Error('找不到对应的输入请求'));
+      return;
+    }
+
+    // 设置超时
+    setTimeout(() => {
+      if (pendingInputRequests.has(requestId)) {
+        pendingInputRequests.delete(requestId);
+        reject(new Error('用户输入超时'));
+      }
+    }, 30000);
+  });
+}
+
+/**
  * 清理 ANSI 转义序列和控制字符
  * @param {string} text - 要清理的文本
  * @returns {string} 清理后的文本
@@ -665,6 +807,7 @@ ipcMain.handle("execute-command", async (event, command) => {
           ...process.env,
           NO_COLOR: "1", // 禁用颜色输出
           CHCP: "65001", // 设置UTF-8编码
+          VAKAO_GUI_MODE: "true", // 标记为GUI模式
         },
       });
 
@@ -673,16 +816,43 @@ ipcMain.handle("execute-command", async (event, command) => {
 
       // 处理标准输出
       commandProcess.stdout.on("data", data => {
-        const rawText = data.toString("utf8");
-        const cleanText = cleanAnsiCodes(rawText);
-        output += cleanText;
+        const text = data.toString("utf8");
+        output += text;
 
-        // 实时发送清理后的输出到渲染进程
-        if (mainWindow && cleanText.trim()) {
-          mainWindow.webContents.send("log-output", {
-            type: "stdout",
-            data: cleanText,
-          });
+        // 检查是否包含GUI输入请求
+        const guiRequestMatch = text.match(/__VAKAO_GUI_REQUEST__(.+?)__VAKAO_GUI_REQUEST_END__/s);
+        if (guiRequestMatch) {
+          try {
+            const request = JSON.parse(guiRequestMatch[1]);
+            handleGUIInputRequest(request, commandProcess);
+            
+            // 移除GUI请求标记，只发送普通输出
+            const cleanText = text.replace(/__VAKAO_GUI_REQUEST__.+?__VAKAO_GUI_REQUEST_END__/gs, '');
+            if (cleanText.trim() && mainWindow) {
+              mainWindow.webContents.send("log-output", {
+                type: "stdout",
+                data: cleanAnsiCodes(cleanText),
+              });
+            }
+          } catch (error) {
+            console.error('解析GUI输入请求失败:', error);
+            // 如果解析失败，发送原始输出
+            if (mainWindow && text.trim()) {
+              mainWindow.webContents.send("log-output", {
+                type: "stdout",
+                data: cleanAnsiCodes(text),
+              });
+            }
+          }
+        } else {
+          // 没有GUI请求，正常处理输出
+          const cleanText = cleanAnsiCodes(text);
+          if (mainWindow && cleanText.trim()) {
+            mainWindow.webContents.send("log-output", {
+              type: "stdout",
+              data: cleanText,
+            });
+          }
         }
       });
 
@@ -930,6 +1100,298 @@ ipcMain.handle("export-logs", async (event, content) => {
     };
   }
 });
+
+// ==================== 用户输入交互处理器 ====================
+
+// 存储待处理的用户输入请求
+const pendingInputRequests = new Map();
+
+/**
+ * 生成唯一的请求ID
+ * @returns {string} 请求ID
+ */
+function generateRequestId() {
+  return `input_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+}
+
+/**
+ * 验证输入值
+ * @param {any} value - 输入值
+ * @param {Object} validation - 验证规则
+ * @param {string} type - 输入类型
+ * @returns {Object} 验证结果
+ */
+function validateInput(value, validation, type) {
+  const errors = [];
+
+  if (!validation) {
+    return { valid: true, errors: [] };
+  }
+
+  // 必填验证
+  if (validation.required && (!value || value.toString().trim() === "")) {
+    errors.push("此字段为必填项");
+    return { valid: false, errors };
+  }
+
+  // 如果值为空且非必填，跳过其他验证
+  if (!value || value.toString().trim() === "") {
+    return { valid: true, errors: [] };
+  }
+
+  // 长度验证
+  if (validation.minLength && value.toString().length < validation.minLength) {
+    errors.push(`最少需要 ${validation.minLength} 个字符`);
+  }
+  if (validation.maxLength && value.toString().length > validation.maxLength) {
+    errors.push(`最多允许 ${validation.maxLength} 个字符`);
+  }
+
+  // 数值验证
+  if (type === "number") {
+    const numValue = parseFloat(value);
+    if (isNaN(numValue)) {
+      errors.push("请输入有效的数字");
+    } else {
+      if (validation.min !== undefined && numValue < validation.min) {
+        errors.push(`数值不能小于 ${validation.min}`);
+      }
+      if (validation.max !== undefined && numValue > validation.max) {
+        errors.push(`数值不能大于 ${validation.max}`);
+      }
+    }
+  }
+
+  // 正则表达式验证
+  if (validation.pattern) {
+    const regex = new RegExp(validation.pattern);
+    if (!regex.test(value.toString())) {
+      errors.push(validation.patternMessage || "输入格式不正确");
+    }
+  }
+
+  // 自定义验证函数
+  if (validation.custom && typeof validation.custom === "function") {
+    try {
+      const customResult = validation.custom(value);
+      if (customResult !== true) {
+        errors.push(customResult || "输入值不符合要求");
+      }
+    } catch (error) {
+      errors.push("验证过程中发生错误");
+    }
+  }
+
+  return { valid: errors.length === 0, errors };
+}
+
+/**
+ * 请求用户输入
+ */
+ipcMain.handle("request-user-input", async (event, inputRequest) => {
+  try {
+    const requestId = generateRequestId();
+    
+    // 验证输入请求参数
+    if (!inputRequest || !inputRequest.title || !inputRequest.message || !inputRequest.type) {
+      return {
+        success: false,
+        error: "输入请求参数不完整",
+      };
+    }
+
+    // 支持的输入类型
+    const supportedTypes = ["text", "password", "number", "select", "checkbox", "radio", "textarea"];
+    if (!supportedTypes.includes(inputRequest.type)) {
+      return {
+        success: false,
+        error: `不支持的输入类型: ${inputRequest.type}`,
+      };
+    }
+
+    // 为选择类型验证选项
+    if (["select", "checkbox", "radio"].includes(inputRequest.type)) {
+      if (!inputRequest.options || !Array.isArray(inputRequest.options) || inputRequest.options.length === 0) {
+        return {
+          success: false,
+          error: `${inputRequest.type} 类型需要提供选项列表`,
+        };
+      }
+    }
+
+    // 创建输入请求对象
+    const request = {
+      id: requestId,
+      title: inputRequest.title,
+      message: inputRequest.message,
+      description: inputRequest.description || "",
+      type: inputRequest.type,
+      defaultValue: inputRequest.defaultValue || "",
+      options: inputRequest.options || [],
+      required: inputRequest.required || false,
+      validation: inputRequest.validation || {},
+      timestamp: Date.now(),
+    };
+
+    // 存储请求
+    pendingInputRequests.set(requestId, {
+      request,
+      resolve: null,
+      reject: null,
+    });
+
+    // 向渲染进程发送输入请求
+    mainWindow.webContents.send("user-input-request", request);
+
+    // 返回一个 Promise，等待用户响应
+    return new Promise((resolve, reject) => {
+      const requestData = pendingInputRequests.get(requestId);
+      if (requestData) {
+        requestData.resolve = resolve;
+        requestData.reject = reject;
+        
+        // 设置超时（30秒）
+        setTimeout(() => {
+          if (pendingInputRequests.has(requestId)) {
+            pendingInputRequests.delete(requestId);
+            resolve({
+              success: false,
+              error: "用户输入超时",
+              cancelled: true,
+            });
+          }
+        }, 30000);
+      } else {
+        reject(new Error("无法创建输入请求"));
+      }
+    });
+  } catch (error) {
+    return {
+      success: false,
+      error: error.message,
+    };
+  }
+});
+
+/**
+ * 响应用户输入
+ */
+ipcMain.handle("respond-user-input", async (event, requestId, response) => {
+  try {
+    console.log('主进程: 收到渲染进程的用户输入响应', { requestId, response });
+    
+    const requestData = pendingInputRequests.get(requestId);
+    if (!requestData) {
+      console.error('主进程: 找不到对应的输入请求', requestId);
+      return {
+        success: false,
+        error: "找不到对应的输入请求",
+      };
+    }
+
+    console.log('主进程: 找到对应的请求数据:', requestData);
+    console.log('主进程: requestData.request:', requestData.request);
+    console.log('主进程: requestData.resolve:', typeof requestData.resolve);
+    
+    const { request, resolve } = requestData;
+    console.log('主进程: 解构后的request:', request);
+    console.log('主进程: 解构后的resolve:', typeof resolve);
+
+    // 移除请求
+    pendingInputRequests.delete(requestId);
+    console.log('主进程: 已从待处理请求中移除请求', requestId);
+
+    // 如果用户取消了输入
+    if (response.cancelled) {
+      console.log('主进程: 用户取消了输入');
+      const result = {
+        success: false,
+        cancelled: true,
+        error: "用户取消了输入",
+      };
+      
+      if (resolve) {
+        console.log('主进程: 调用resolve函数返回取消结果');
+        resolve(result);
+      }
+      return { success: true };
+    }
+
+    // 验证输入值
+    const validationResult = validateInput(response.value, request.validation, request.type);
+    console.log('主进程: 输入验证结果:', validationResult);
+    
+    if (!validationResult.valid) {
+      console.log('主进程: 验证失败，重新发送请求');
+      // 验证失败，重新发送请求
+      const newRequestId = generateRequestId();
+      const newRequest = {
+        ...request,
+        id: newRequestId,
+        validationErrors: validationResult.errors,
+      };
+
+      pendingInputRequests.set(newRequestId, {
+        request: newRequest,
+        resolve,
+        reject: requestData.reject,
+      });
+
+      mainWindow.webContents.send("user-input-request", newRequest);
+      return { success: true };
+    }
+
+    // 验证成功，返回结果
+    const result = {
+      success: true,
+      value: response.value,
+      cancelled: false,
+    };
+    
+    console.log('主进程: 验证成功，准备调用resolve函数:', result);
+    if (resolve) {
+      console.log('主进程: 调用resolve函数返回成功结果');
+      resolve(result);
+    } else {
+      console.error('主进程: resolve函数不存在!');
+    }
+
+    return { success: true };
+  } catch (error) {
+    console.error('主进程: 处理用户输入响应时发生错误:', error);
+    return {
+      success: false,
+      error: error.message,
+    };
+  }
+});
+
+/**
+ * 清理过期的输入请求
+ */
+setInterval(() => {
+  const now = Date.now();
+  const expiredRequests = [];
+  
+  for (const [requestId, requestData] of pendingInputRequests.entries()) {
+    // 清理超过5分钟的请求
+    if (now - requestData.request.timestamp > 5 * 60 * 1000) {
+      expiredRequests.push(requestId);
+    }
+  }
+  
+  expiredRequests.forEach(requestId => {
+    const requestData = pendingInputRequests.get(requestId);
+    if (requestData && requestData.resolve) {
+      requestData.resolve({
+        success: false,
+        error: "输入请求已过期",
+        cancelled: true,
+      });
+    }
+    pendingInputRequests.delete(requestId);
+  });
+}, 60000); // 每分钟检查一次
 
 // ==================== 错误处理 ====================
 

@@ -168,6 +168,49 @@ const electronAPI = {
    */
   showOpenDialog: (options) => ipcRenderer.invoke("show-open-dialog", options),
 
+  // ==================== 用户输入交互 ====================
+
+  /**
+   * 请求用户输入
+   * @param {Object} inputRequest - 输入请求配置
+   * @param {string} inputRequest.title - 输入对话框标题
+   * @param {string} inputRequest.message - 输入提示信息
+   * @param {string} inputRequest.type - 输入类型 (text|password|number|select|checkbox|radio|textarea)
+   * @param {string} [inputRequest.defaultValue] - 默认值
+   * @param {Array} [inputRequest.options] - 选项列表 (用于select/checkbox/radio)
+   * @param {boolean} [inputRequest.required] - 是否必填
+   * @param {Object} [inputRequest.validation] - 验证规则
+   * @returns {Promise<{success: boolean, value: any, cancelled: boolean}>} 用户输入结果
+   */
+  requestUserInput: (inputRequest) => ipcRenderer.invoke("request-user-input", inputRequest),
+
+  /**
+   * 监听用户输入请求事件
+   * @param {Function} callback - 回调函数
+   */
+  onUserInputRequest: (callback) => {
+    ipcRenderer.on("user-input-request", (event, inputRequest) => callback(inputRequest));
+  },
+
+  /**
+   * 移除用户输入请求监听
+   * @param {Function} callback - 回调函数
+   */
+  offUserInputRequest: (callback) => {
+    ipcRenderer.removeListener("user-input-request", callback);
+  },
+
+  /**
+   * 响应用户输入
+   * @param {string} requestId - 请求ID
+   * @param {Object} response - 响应数据
+   * @param {boolean} response.success - 是否成功
+   * @param {any} response.value - 输入值
+   * @param {boolean} response.cancelled - 是否取消
+   * @returns {Promise<void>}
+   */
+  respondUserInput: (requestId, response) => ipcRenderer.invoke("respond-user-input", requestId, response),
+
   // ==================== 通知 ====================
 
   /**

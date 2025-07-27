@@ -1968,27 +1968,423 @@ body {
 
 /* ==================== 用户输入模态框样式 ==================== */
 
-.user-input-content {
-  padding: var(--spacing-md) 0;
+/* 用户输入模态框特定样式 */
+#userInputModal {
+  animation: modalFadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.user-input-content p {
-  margin-bottom: var(--spacing-md);
-  color: var(--text-primary);
+#userInputModal.active {
+  display: flex !important;
+}
+
+#userInputModal .modal-content {
+  max-width: 520px;
+  min-width: 450px;
+  border-radius: 16px;
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.15),
+    0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  overflow: hidden;
+  animation: modalSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes modalFadeOut {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+}
+
+#userInputModal .modal-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: var(--text-inverse);
+  border-bottom: none;
+  padding: 24px 28px;
+  position: relative;
+}
+
+#userInputModal .modal-header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+  pointer-events: none;
+}
+
+#userInputModal .modal-header h3 {
+  color: var(--text-inverse);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+  position: relative;
+  z-index: 1;
+}
+
+#userInputModal .modal-header h3::before {
+  content: "\f2b5";
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  font-size: 20px;
+  background: linear-gradient(45deg, #fff, #e0e7ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+#userInputModal .modal-close {
+  color: var(--text-inverse);
+  opacity: 0.9;
+  transition: all var(--transition-fast);
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 8px;
+  font-size: 16px;
+  position: relative;
+  z-index: 1;
+}
+
+#userInputModal .modal-close:hover {
+  color: var(--text-inverse);
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.05);
+}
+
+#userInputModal .modal-body {
+  padding: 28px;
+  background: var(--bg-primary);
+}
+
+/* 输入提示区域 */
+.input-prompt {
+  margin-bottom: var(--spacing-lg);
+  padding: 20px;
+  background: linear-gradient(
+    135deg,
+    rgba(102, 126, 234, 0.05) 0%,
+    rgba(118, 75, 162, 0.05) 100%
+  );
+  border-radius: 12px;
+  border: 1px solid rgba(102, 126, 234, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.input-prompt::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 0 2px 2px 0;
+}
+
+.input-prompt h4 {
   font-size: var(--font-size-md);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-sm);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
 }
 
-.user-input-hint {
+.input-prompt h4 i {
+  color: var(--info-color);
+  font-size: var(--font-size-lg);
+}
+
+.input-prompt p {
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.input-prompt .input-description {
   margin-top: var(--spacing-sm);
+  font-size: var(--font-size-sm);
+  color: var(--text-tertiary);
 }
 
-.user-input-hint small {
+/* 输入容器 */
+.input-container {
+  margin-bottom: var(--spacing-md);
+}
+
+.input-group {
+  margin-bottom: var(--spacing-md);
+}
+
+.input-group:last-child {
+  margin-bottom: 0;
+}
+
+.input-label {
+  display: block;
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-xs);
+}
+
+.input-label.required::after {
+  content: " *";
+  color: var(--error-color);
+}
+
+.input-field {
+  width: 100%;
+  padding: 14px 16px;
+  border: 2px solid rgba(102, 126, 234, 0.15);
+  border-radius: 10px;
+  font-size: var(--font-size-md);
+  color: var(--text-primary);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.8) 0%,
+    rgba(248, 250, 252, 0.8) 100%
+  );
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(5px);
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow:
+    0 0 0 4px rgba(102, 126, 234, 0.1),
+    0 4px 12px rgba(102, 126, 234, 0.15);
+  transform: translateY(-1px);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(248, 250, 252, 0.95) 100%
+  );
+}
+
+.input-field:hover:not(:focus) {
+  border-color: rgba(102, 126, 234, 0.25);
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.08);
+}
+
+.input-field::placeholder {
   color: var(--text-tertiary);
-  font-style: italic;
+}
+
+/* 文本域特殊样式 */
+.input-field.textarea {
+  min-height: 80px;
+  resize: vertical;
+  font-family: var(--font-family);
+}
+
+/* 选择框样式 */
+.input-field.select {
+  cursor: pointer;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right var(--spacing-sm) center;
+  background-size: 16px;
+  padding-right: calc(var(--spacing-md) + 20px);
+}
+
+/* 复选框和单选框容器 */
+.checkbox-group,
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.checkbox-item,
+.radio-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-xs);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+}
+
+.checkbox-item:hover,
+.radio-item:hover {
+  background-color: var(--bg-hover);
+}
+
+.checkbox-item input,
+.radio-item input {
+  margin: 0;
+}
+
+.checkbox-item label,
+.radio-item label {
+  margin: 0;
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  color: var(--text-primary);
+}
+
+/* 输入提示文本 */
+.input-hint {
+  margin-top: var(--spacing-xs);
+  font-size: var(--font-size-xs);
+  color: var(--text-tertiary);
+  line-height: 1.4;
+}
+
+/* 用户输入模态框底部按钮样式 */
+#userInputModal .modal-footer {
+  padding: 20px 28px;
+  background: linear-gradient(
+    135deg,
+    rgba(248, 250, 252, 0.8) 0%,
+    rgba(241, 245, 249, 0.8) 100%
+  );
+  border-top: 1px solid rgba(102, 126, 234, 0.1);
+  gap: 12px;
+}
+
+#userInputModal .modal-footer .btn {
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  min-width: 100px;
+}
+
+#userInputModal .modal-footer .btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transition: left 0.5s;
+}
+
+#userInputModal .modal-footer .btn:hover::before {
+  left: 100%;
+}
+
+#userInputModal .modal-footer .btn-secondary {
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  border: 2px solid rgba(148, 163, 184, 0.3);
+  color: #475569;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+#userInputModal .modal-footer .btn-secondary:hover {
+  background: linear-gradient(135deg, #f1f5f9 0%, #d1d5db 100%);
+  border-color: rgba(148, 163, 184, 0.5);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+}
+
+#userInputModal .modal-footer .btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: 2px solid transparent;
+  color: white;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+#userInputModal .modal-footer .btn-primary:hover {
+  background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+  transform: translateY(-2px);
+}
+
+/* 验证错误信息 */
+.input-validation {
+  margin-top: var(--spacing-md);
+  padding: 16px 20px;
+  background: linear-gradient(
+    135deg,
+    rgba(239, 68, 68, 0.08) 0%,
+    rgba(220, 38, 38, 0.08) 100%
+  );
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: 10px;
+  color: var(--error-color);
+  font-size: var(--font-size-sm);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  backdrop-filter: blur(5px);
+}
+
+.input-validation i {
+  font-size: var(--font-size-md);
+  flex-shrink: 0;
+}
+
+.input-validation ul {
+  margin: 0;
+  padding-left: var(--spacing-md);
+  list-style-type: disc;
+}
+
+.input-validation li {
+  margin-bottom: var(--spacing-xs);
+}
+
+.input-validation li:last-child {
+  margin-bottom: 0;
 }
 
 /* 输入框错误状态 */
-.form-input.error {
+.input-field.error {
   border-color: var(--error-color);
   box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.1);
   animation: inputError 0.3s ease-in-out;
@@ -2007,7 +2403,44 @@ body {
   }
 }
 
-/* 深色主题下的错误状态 */
-[data-theme="dark"] .form-input.error {
+/* 深色主题适配 */
+[data-theme="dark"] .input-prompt {
+  background-color: var(--bg-tertiary);
+}
+
+[data-theme="dark"] .input-field {
+  background-color: var(--bg-secondary);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .input-field:focus {
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+[data-theme="dark"] .input-field.error {
   box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2);
+}
+
+[data-theme="dark"] .input-validation {
+  background-color: rgba(239, 68, 68, 0.15);
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+[data-theme="dark"] .checkbox-item:hover,
+[data-theme="dark"] .radio-item:hover {
+  background-color: var(--bg-active);
+}
+
+#userInputValue {
+  background-color: var(--bg-secondary);
+  border-color: var(--border-color);
+  flex: 1;
+  height: 40px;
+  padding: 10px;
+  margin-left: 5px;
+  font-size: 16px;
+  color: var(--text-primary);
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.3s ease-in-out;
 }

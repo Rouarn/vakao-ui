@@ -62,7 +62,7 @@ function formatDateToChinese(date) {
   const hours = date.getHours();
   const minutes = date.getMinutes();
   const seconds = date.getSeconds();
-  
+
   return `${year}年${month}月${day}日 ${hours}点${minutes}分${seconds}秒`;
 }
 
@@ -182,7 +182,7 @@ function initializeElements() {
   // 导航相关
   $elements.navItems = $(".nav-item");
   $elements.tabContents = $(".tab-content");
-  
+
   // 移动端菜单
   $elements.mobileMenuToggle = $("#mobileMenuToggle");
   $elements.sidebar = $("#sidebar");
@@ -317,10 +317,10 @@ function bindEventListeners() {
 
   // 键盘快捷键
   bindKeyboardShortcuts();
-  
+
   // 移动端菜单事件
   bindMobileMenuEvents();
-  
+
   // 动态按钮事件
   bindDynamicButtonEvents();
 }
@@ -451,6 +451,11 @@ function bindIPCEvents() {
     showError(error.message);
     updateStatus("error", "错误: " + error.message);
   });
+
+  // 监听用户输入请求
+  window.electronAPI.onUserInputRequest(request => {
+    showUserInputModal(request);
+  });
 }
 
 /**
@@ -458,32 +463,32 @@ function bindIPCEvents() {
  */
 function bindMobileMenuEvents() {
   // 汉堡菜单按钮点击事件
-  $elements.mobileMenuToggle.on('click', function() {
+  $elements.mobileMenuToggle.on("click", function () {
     toggleMobileMenu();
   });
-  
+
   // 遮罩层点击事件 - 关闭菜单
-  $elements.mobileOverlay.on('click', function() {
+  $elements.mobileOverlay.on("click", function () {
     closeMobileMenu();
   });
-  
+
   // 导航项点击后自动关闭移动端菜单
-  $elements.navItems.on('click', function() {
+  $elements.navItems.on("click", function () {
     if (window.innerWidth <= 768) {
       closeMobileMenu();
     }
   });
-  
+
   // 监听窗口大小变化
-  $(window).on('resize', function() {
+  $(window).on("resize", function () {
     if (window.innerWidth > 768) {
       closeMobileMenu();
     }
   });
-  
+
   // ESC 键关闭移动端菜单
-  $(document).on('keydown', function(e) {
-    if (e.key === 'Escape' && $elements.sidebar.hasClass('mobile-open')) {
+  $(document).on("keydown", function (e) {
+    if (e.key === "Escape" && $elements.sidebar.hasClass("mobile-open")) {
       closeMobileMenu();
     }
   });
@@ -493,7 +498,7 @@ function bindMobileMenuEvents() {
  * 切换移动端菜单显示状态
  */
 function toggleMobileMenu() {
-  if ($elements.sidebar.hasClass('mobile-open')) {
+  if ($elements.sidebar.hasClass("mobile-open")) {
     closeMobileMenu();
   } else {
     openMobileMenu();
@@ -504,28 +509,34 @@ function toggleMobileMenu() {
  * 打开移动端菜单
  */
 function openMobileMenu() {
-  $elements.sidebar.addClass('mobile-open');
-  $elements.mobileOverlay.addClass('active');
-  
+  $elements.sidebar.addClass("mobile-open");
+  $elements.mobileOverlay.addClass("active");
+
   // 防止背景滚动
-  $('body').css('overflow', 'hidden');
-  
+  $("body").css("overflow", "hidden");
+
   // 更新汉堡菜单图标
-  $elements.mobileMenuToggle.find('i').removeClass('fa-bars').addClass('fa-times');
+  $elements.mobileMenuToggle
+    .find("i")
+    .removeClass("fa-bars")
+    .addClass("fa-times");
 }
 
 /**
  * 关闭移动端菜单
  */
 function closeMobileMenu() {
-  $elements.sidebar.removeClass('mobile-open');
-  $elements.mobileOverlay.removeClass('active');
-  
+  $elements.sidebar.removeClass("mobile-open");
+  $elements.mobileOverlay.removeClass("active");
+
   // 恢复背景滚动
-  $('body').css('overflow', '');
-  
+  $("body").css("overflow", "");
+
   // 恢复汉堡菜单图标
-  $elements.mobileMenuToggle.find('i').removeClass('fa-times').addClass('fa-bars');
+  $elements.mobileMenuToggle
+    .find("i")
+    .removeClass("fa-times")
+    .addClass("fa-bars");
 }
 
 /**
@@ -533,19 +544,19 @@ function closeMobileMenu() {
  */
 function bindDynamicButtonEvents() {
   // 使用事件委托处理动态生成的按钮
-  $(document).on('click', '#refreshPackagesBtn', function() {
+  $(document).on("click", "#refreshPackagesBtn", function () {
     loadPackages();
   });
-  
-  $(document).on('click', '[data-action="open-directory"]', function() {
-    const path = $(this).data('path');
+
+  $(document).on("click", '[data-action="open-directory"]', function () {
+    const path = $(this).data("path");
     if (path) {
       openPackageDirectory(path);
     }
   });
-  
-  $(document).on('click', '[data-action="build-package"]', function() {
-    const packageId = $(this).data('package-id');
+
+  $(document).on("click", '[data-action="build-package"]', function () {
+    const packageId = $(this).data("package-id");
     if (packageId) {
       buildPackage(packageId);
     }
@@ -2659,6 +2670,397 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 });
 
+// ==================== 用户输入交互功能 ====================
+
+/**
+ * 显示用户输入模态框
+ * @param {Object} request - 输入请求对象
+ */
+function showUserInputModal(request) {
+  const $modal = $("#userInputModal");
+  const $title = $("#inputModalTitle");
+  const $prompt = $modal.find(".input-prompt");
+  const $inputContainer = $modal.find(".input-container");
+  const $validationInfo = $("#inputValidation");
+  const $confirmBtn = $("#confirmInputBtn");
+  const $cancelBtn = $("#cancelInputBtn");
+
+  // 设置标题和提示
+  $title.text(request.title);
+  $prompt.html(`
+    <p>${request.message}</p>
+    ${request.description ? `<p class="description">${request.description}</p>` : ""}
+  `);
+
+  // 清空之前的验证信息
+  $validationInfo.empty().hide();
+
+  // 根据输入类型生成输入控件
+  const inputHtml = generateInputControl(request);
+  $inputContainer.html(inputHtml);
+
+  // 显示验证错误（如果有）
+  if (request.validationErrors && request.validationErrors.length > 0) {
+    showValidationErrors(request.validationErrors);
+  }
+
+  // 绑定确认按钮事件
+  $confirmBtn.off("click").on("click", function () {
+    console.log("确认按钮被点击，开始处理用户输入");
+    handleUserInputConfirm(request);
+  });
+
+  // 绑定取消按钮事件
+  $cancelBtn.off("click").on("click", function () {
+    handleUserInputCancel(request);
+  });
+
+  // 绑定模态框关闭事件
+  $modal
+    .find(".modal-close")
+    .off("click")
+    .on("click", function () {
+      handleUserInputCancel(request);
+    });
+
+  // 禁止点击背景关闭用户输入模态框
+  // $modal.off("click").on("click", function(e) {
+  //   if (e.target === this) {
+  //     handleUserInputCancel(request);
+  //   }
+  // });
+
+  // 绑定ESC键关闭事件
+  $(document)
+    .off("keydown.userInput")
+    .on("keydown.userInput", function (e) {
+      if (e.key === "Escape") {
+        handleUserInputCancel(request);
+      }
+    });
+
+  // 显示模态框
+  $modal.addClass("active");
+
+  // 聚焦到第一个输入控件
+  setTimeout(() => {
+    $inputContainer.find("input, textarea, select").first().focus();
+  }, 200);
+}
+
+/**
+ * 生成输入控件HTML
+ * @param {Object} request - 输入请求对象
+ * @returns {string} 输入控件HTML
+ */
+function generateInputControl(request) {
+  const { type, defaultValue, options, required } = request;
+  const requiredAttr = required ? "required" : "";
+  const requiredMark = required ? "<span class='required-mark'>*</span>" : "";
+
+  switch (type) {
+    case "text":
+      return `
+        <div class="input-field">
+          <label>请输入内容${requiredMark}</label>
+          <input type="text" id="userInputValue" value="${defaultValue || ""}" ${requiredAttr} placeholder="请输入...">
+        </div>
+      `;
+
+    case "password":
+      return `
+        <div class="input-field">
+          <label>请输入密码${requiredMark}</label>
+          <input type="password" id="userInputValue" value="${defaultValue || ""}" ${requiredAttr} placeholder="请输入密码...">
+        </div>
+      `;
+
+    case "number":
+      return `
+        <div class="input-field">
+          <label>请输入数字${requiredMark}</label>
+          <input type="number" id="userInputValue" value="${defaultValue || ""}" ${requiredAttr} placeholder="请输入数字...">
+        </div>
+      `;
+
+    case "textarea":
+      return `
+        <div class="input-field">
+          <label>请输入内容${requiredMark}</label>
+          <textarea id="userInputValue" ${requiredAttr} placeholder="请输入内容..." rows="4">${defaultValue || ""}</textarea>
+        </div>
+      `;
+
+    case "select":
+      const selectOptions = options
+        .map(option => {
+          const value = typeof option === "string" ? option : option.value;
+          const label = typeof option === "string" ? option : option.label;
+          const selected = value === defaultValue ? "selected" : "";
+          return `<option value="${value}" ${selected}>${label}</option>`;
+        })
+        .join("");
+      return `
+        <div class="input-field">
+          <label>请选择选项${requiredMark}</label>
+          <select id="userInputValue" ${requiredAttr}>
+            ${!required ? '<option value="">请选择...</option>' : ""}
+            ${selectOptions}
+          </select>
+        </div>
+      `;
+
+    case "radio":
+      const radioOptions = options
+        .map((option, index) => {
+          const value = typeof option === "string" ? option : option.value;
+          const label = typeof option === "string" ? option : option.label;
+          const checked = value === defaultValue ? "checked" : "";
+          return `
+          <div class="radio-option">
+            <input type="radio" id="radio_${index}" name="userInputValue" value="${value}" ${checked} ${requiredAttr}>
+            <label for="radio_${index}">${label}</label>
+          </div>
+        `;
+        })
+        .join("");
+      return `
+        <div class="input-field">
+          <label>请选择选项${requiredMark}</label>
+          <div class="radio-group">
+            ${radioOptions}
+          </div>
+        </div>
+      `;
+
+    case "checkbox":
+      const checkboxOptions = options
+        .map((option, index) => {
+          const value = typeof option === "string" ? option : option.value;
+          const label = typeof option === "string" ? option : option.label;
+          const checked =
+            Array.isArray(defaultValue) && defaultValue.includes(value)
+              ? "checked"
+              : "";
+          return `
+          <div class="checkbox-option">
+            <input type="checkbox" id="checkbox_${index}" name="userInputValue" value="${value}" ${checked}>
+            <label for="checkbox_${index}">${label}</label>
+          </div>
+        `;
+        })
+        .join("");
+      return `
+        <div class="input-field">
+          <label>请选择选项${requiredMark}</label>
+          <div class="checkbox-group">
+            ${checkboxOptions}
+          </div>
+        </div>
+      `;
+
+    default:
+      return `
+        <div class="input-field">
+          <label>请输入内容${requiredMark}</label>
+          <input type="text" id="userInputValue" value="${defaultValue || ""}" ${requiredAttr} placeholder="请输入...">
+        </div>
+      `;
+  }
+}
+
+/**
+ * 获取用户输入值
+ * @param {string} type - 输入类型
+ * @returns {any} 输入值
+ */
+function getUserInputValue(type) {
+  switch (type) {
+    case "radio":
+      return $("input[name='userInputValue']:checked").val() || "";
+
+    case "checkbox":
+      const checkedValues = [];
+      $("input[name='userInputValue']:checked").each(function () {
+        checkedValues.push($(this).val());
+      });
+      return checkedValues;
+
+    case "number":
+      const numValue = $("#userInputValue").val();
+      return numValue ? parseFloat(numValue) : "";
+
+    default:
+      return $("#userInputValue").val() || "";
+  }
+}
+
+/**
+ * 处理用户输入确认
+ * @param {Object} request - 输入请求对象
+ */
+async function handleUserInputConfirm(request) {
+  console.log("handleUserInputConfirm 开始执行");
+  console.log("request: ", request);
+  
+  const value = getUserInputValue(request.type);
+  console.log("获取到的用户输入值:", value);
+
+  // 客户端验证
+  const validationResult = validateUserInput(value, request);
+  console.log("验证结果:", validationResult);
+  
+  if (!validationResult.valid) {
+    console.log("验证失败，显示错误信息:", validationResult.errors);
+    showValidationErrors(validationResult.errors);
+    return;
+  }
+
+  try {
+    console.log("开始发送响应到主进程");
+    // 发送响应到主进程
+    await window.electronAPI.respondUserInput(request.id, {
+      value: value,
+      cancelled: false,
+    });
+    console.log("响应发送成功");
+
+    // 关闭模态框
+    hideUserInputModal();
+    console.log("模态框已关闭");
+  } catch (error) {
+    console.error("响应用户输入失败:", error);
+    showValidationErrors(["响应失败，请重试"]);
+  }
+}
+
+/**
+ * 处理用户输入取消
+ * @param {Object} request - 输入请求对象
+ */
+async function handleUserInputCancel(request) {
+  try {
+    // 发送取消响应到主进程
+    await window.electronAPI.respondUserInput(request.id, {
+      value: null,
+      cancelled: true,
+    });
+
+    // 关闭模态框
+    hideUserInputModal();
+  } catch (error) {
+    console.error("取消用户输入失败:", error);
+    // 即使失败也要关闭模态框
+    hideUserInputModal();
+  }
+}
+
+/**
+ * 隐藏用户输入模态框
+ */
+function hideUserInputModal() {
+  const $modal = $("#userInputModal");
+
+  // 添加淡出动画
+  $modal.css("animation", "modalFadeOut 0.2s cubic-bezier(0.4, 0, 0.2, 1)");
+
+  setTimeout(() => {
+    $modal.removeClass("active").css("animation", "");
+    // 移除事件监听器
+    $(document).off("keydown.userInput");
+  }, 200);
+}
+
+/**
+ * 客户端输入验证
+ * @param {any} value - 输入值
+ * @param {Object} request - 输入请求对象
+ * @returns {Object} 验证结果
+ */
+function validateUserInput(value, request) {
+  const errors = [];
+  const { validation, type, required } = request;
+
+  // 必填验证
+  if (required) {
+    if (type === "checkbox") {
+      if (!Array.isArray(value) || value.length === 0) {
+        errors.push("请至少选择一个选项");
+      }
+    } else if (!value || value.toString().trim() === "") {
+      errors.push("此字段为必填项");
+    }
+  }
+
+  // 如果值为空且非必填，跳过其他验证
+  if (!required && (!value || value.toString().trim() === "")) {
+    return { valid: true, errors: [] };
+  }
+
+  if (!validation) {
+    return { valid: errors.length === 0, errors };
+  }
+
+  // 长度验证
+  if (validation.minLength && value.toString().length < validation.minLength) {
+    errors.push(`最少需要 ${validation.minLength} 个字符`);
+  }
+  if (validation.maxLength && value.toString().length > validation.maxLength) {
+    errors.push(`最多允许 ${validation.maxLength} 个字符`);
+  }
+
+  // 数值验证
+  if (type === "number") {
+    const numValue = parseFloat(value);
+    if (isNaN(numValue)) {
+      errors.push("请输入有效的数字");
+    } else {
+      if (validation.min !== undefined && numValue < validation.min) {
+        errors.push(`数值不能小于 ${validation.min}`);
+      }
+      if (validation.max !== undefined && numValue > validation.max) {
+        errors.push(`数值不能大于 ${validation.max}`);
+      }
+    }
+  }
+
+  // 正则表达式验证
+  if (validation.pattern) {
+    const regex = new RegExp(validation.pattern);
+    if (!regex.test(value.toString())) {
+      errors.push(validation.patternMessage || "输入格式不正确");
+    }
+  }
+
+  return { valid: errors.length === 0, errors };
+}
+
+/**
+ * 显示验证错误信息
+ * @param {Array} errors - 错误信息数组
+ */
+function showValidationErrors(errors) {
+  const $validationInfo = $("#inputValidation");
+
+  if (errors && errors.length > 0) {
+    const errorHtml = errors
+      .map(error => `<div class="error-item">${error}</div>`)
+      .join("");
+    $validationInfo.html(errorHtml).show();
+
+    // 添加错误样式到输入控件
+    $("#userInputValue, input[name='userInputValue']").addClass("error");
+
+    // 3秒后自动移除错误样式
+    setTimeout(() => {
+      $("#userInputValue, input[name='userInputValue']").removeClass("error");
+    }, 3000);
+  } else {
+    $validationInfo.hide();
+    $("#userInputValue, input[name='userInputValue']").removeClass("error");
+  }
+}
+
 // 导出全局函数供 HTML 调用
 window.openPackageDirectory = openPackageDirectory;
 window.buildPackage = buildPackage;
@@ -2668,3 +3070,5 @@ window.executeCommand = executeCommand;
 window.changeTheme = changeTheme;
 window.clearLogs = clearLogs;
 window.exportLogs = exportLogs;
+window.showUserInputModal = showUserInputModal;
+window.hideUserInputModal = hideUserInputModal;
