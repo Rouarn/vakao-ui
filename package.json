@@ -51,7 +51,7 @@
     "publish:sync": "node ./scripts/publish.js --sync-version",
     "publish:sync:dry-run": "node ./scripts/publish.js --sync-version --dry-run",
     "test:notification": "node -e \"const notifier = require('node-notifier'); notifier.notify({title: '测试通知', message: '桌面通知功能正常', sound: true});\"",
-    "script:gui": "pnpm -C scripts/gui start --disable-gpu --no-sandbox"
+    "script:gui": "pnpm -C scripts/gui dev"
   },
   "keywords": [
     "vue3",
