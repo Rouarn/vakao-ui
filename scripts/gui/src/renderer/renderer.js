@@ -1,3 +1,4 @@
+/* eslint-disable comma-dangle */
 /**
  * Vakao UI Publisher GUI - 渲染进程脚本
  *
@@ -164,7 +165,7 @@ function initializeElements() {
   $elements.packageGrid = $("#packageGrid");
   $elements.publishBtn = $("#publishBtn");
   $elements.previewBtn = $("#previewBtn");
-  $elements.setVersionBtn = $("#setVersionBtn");
+
   $elements.dryRunCheckbox = $("#dryRunCheck");
   $elements.syncVersionCheckbox = $("#syncVersionCheck");
   $elements.skipDeployCheckbox = $("#deployCheck");
@@ -207,17 +208,6 @@ function initializeElements() {
   // 日志状态指示器
   $elements.logStatusIndicator = $("#logStatusIndicator");
 
-  // 用户输入模态框
-  $elements.userInputModal = $("#userInputModal");
-  $elements.userInputTitle = $("#userInputTitle");
-  $elements.userInputPrompt = $("#userInputPrompt");
-  $elements.userInputLabel = $("#userInputLabel");
-  $elements.userInputField = $("#userInputField");
-  $elements.userInputHint = $("#userInputHint");
-  $elements.closeUserInputModal = $("#closeUserInputModal");
-  $elements.cancelUserInputBtn = $("#cancelUserInputBtn");
-  $elements.confirmUserInputBtn = $("#confirmUserInputBtn");
-
   // 设置
   $elements.themeSelect = $("#themeSelect");
   $elements.autoScrollCheckbox = $("#autoScrollCheck");
@@ -245,11 +235,10 @@ function bindEventListeners() {
 
   // 发布管理事件
   $elements.publishBtn.on("click", handlePublish);
-  $elements.previewBtn.on("click", function() {
+  $elements.previewBtn.on("click", function () {
     const command = buildPublishCommand();
     showCommandPreviewModal("发布命令预览", command, false);
   });
-  $elements.setVersionBtn.on("click", handleSetVersion);
 
   // 发布选项事件 - 使用 jQuery 链式调用
   $elements.dryRunCheckbox.on("change", function () {
@@ -288,16 +277,6 @@ function bindEventListeners() {
   $elements.copyCommandBtn.on("click", copyCommandFromPreview);
   $elements.executeFromPreviewBtn.on("click", executeCommandFromPreview);
 
-  // 用户输入模态框事件
-  $elements.closeUserInputModal.on("click", hideUserInputModal);
-  $elements.cancelUserInputBtn.on("click", hideUserInputModal);
-  $elements.confirmUserInputBtn.on("click", confirmUserInput);
-  $elements.userInputField.on("keypress", function(e) {
-    if (e.which === 13) { // Enter键
-      confirmUserInput();
-    }
-  });
-
   // 设置事件
   bindSettingsEvents();
 
@@ -313,30 +292,34 @@ function bindEventListeners() {
  */
 function bindDeploymentEvents() {
   // 使用事件委托绑定所有部署按钮
-  $(document).on("click", ".deploy-btn", function() {
+  $(document).on("click", ".deploy-btn", function () {
     const strategy = $(this).data("strategy");
+    console.log("strategy: ", strategy);
     let title = "";
     let command = "";
-    
-    switch(strategy) {
+
+    switch (strategy) {
       case "docs":
         title = "部署文档到 GitHub Pages";
-        command = "node scripts/publish.js --deploy-only --deploy-strategy docs";
+        command =
+          "node scripts/publish.js --deploy-only --deploy-strategy docs";
         break;
       case "github-pages":
         title = "部署到 GitHub Pages";
-        command = "node scripts/publish.js --deploy-only --deploy-strategy github-pages";
+        command =
+          "node scripts/publish.js --deploy-only --deploy-strategy github-pages";
         break;
       case "static":
         title = "生成静态文件";
-        command = "node scripts/publish.js --deploy-only --deploy-strategy static";
+        command =
+          "node scripts/publish.js --deploy-only --deploy-strategy static";
         break;
       default:
         console.warn("未知的部署策略:", strategy);
         return;
     }
-    
-    showCommandPreviewModal(title, command, false); // 部署命令预览不显示执行按钮
+
+    showCommandPreviewModal(title, command, true); // 部署命令预览不显示执行按钮
   });
 }
 
@@ -383,19 +366,19 @@ function bindSettingsEvents() {
  */
 function bindIPCEvents() {
   // 监听日志输出
-  window.electronAPI.onLogOutput(data => {
+  window.electronAPI.onLogOutput((data) => {
     // 根据输出类型设置日志类型
     const logType = data.type === "stderr" ? "error" : "info";
     addLog(logType, data.data);
   });
 
   // 监听进程状态变化
-  window.electronAPI.onProcessStatus(status => {
+  window.electronAPI.onProcessStatus((status) => {
     handleProcessStatus(status);
   });
 
   // 监听错误
-  window.electronAPI.onError(error => {
+  window.electronAPI.onError((error) => {
     showError(error.message);
     updateStatus("error", "错误: " + error.message);
   });
@@ -425,9 +408,15 @@ function bindKeyboardShortcuts() {
     // Escape: 关闭模态框
     if (e.key === "Escape") {
       // 检查哪个模态框是打开的并关闭它
-      if ($elements.commandPreviewModal && $elements.commandPreviewModal.hasClass("active")) {
+      if (
+        $elements.commandPreviewModal &&
+        $elements.commandPreviewModal.hasClass("active")
+      ) {
         hideCommandPreviewModal();
-      } else if ($elements.commandModal && $elements.commandModal.hasClass("active")) {
+      } else if (
+        $elements.commandModal &&
+        $elements.commandModal.hasClass("active")
+      ) {
         hideCommandModal();
       }
     }
@@ -727,7 +716,7 @@ function updatePackageGrid(packages) {
             刷新
           </button>
         </div>
-      `
+      `,
         )
         .fadeIn(300);
       return;
@@ -896,7 +885,7 @@ function togglePackageSelection(packageId, $card) {
  * @returns {string} 包名称
  */
 function getPackageName(packageId) {
-  const pkg = AppState.packages.find(p => p.id === packageId);
+  const pkg = AppState.packages.find((p) => p.id === packageId);
   return pkg ? pkg.displayName || pkg.name : packageId;
 }
 
@@ -911,10 +900,10 @@ function updateSelectionCounter() {
     if ($counter.length === 0) {
       // 创建计数器
       $(
-        '<div class="selection-counter" style="margin-bottom: 12px; padding: 8px 12px; background: var(--primary-color); color: white; border-radius: var(--radius-md); text-align: center; font-size: var(--font-size-sm);">'
+        '<div class="selection-counter" style="margin-bottom: 12px; padding: 8px 12px; background: var(--primary-color); color: white; border-radius: var(--radius-md); text-align: center; font-size: var(--font-size-sm);">',
       )
         .html(
-          `<i class="fas fa-check-circle"></i> 已选择 <span class="count">${count}</span> 个包`
+          `<i class="fas fa-check-circle"></i> 已选择 <span class="count">${count}</span> 个包`,
         )
         .prependTo($elements.packageGrid.parent())
         .hide()
@@ -950,7 +939,7 @@ function updatePublishButton() {
       .addClass("btn-primary")
       .html(`<i class="fas fa-rocket"></i> 发布选中的包 (${count})`)
       .addClass("btn-pulse-animation");
-    
+
     // 动画完成后移除类名
     setTimeout(() => {
       $publishBtn.removeClass("btn-pulse-animation");
@@ -1001,7 +990,7 @@ function updatePackagesOverview(packages) {
 
   $elements.packagesOverview.empty();
 
-  packages.forEach(pkg => {
+  packages.forEach((pkg) => {
     const card = createPackageOverviewCard(pkg);
     $elements.packagesOverview.append(card);
   });
@@ -1063,13 +1052,13 @@ function updatePublishOptions() {
   if ($elements.syncVersionCheckbox && $elements.syncVersionCheckbox.length) {
     $elements.syncVersionCheckbox.prop(
       "checked",
-      AppState.publishOptions.syncVersion
+      AppState.publishOptions.syncVersion,
     );
   }
   if ($elements.skipDeployCheckbox && $elements.skipDeployCheckbox.length) {
     $elements.skipDeployCheckbox.prop(
       "checked",
-      AppState.publishOptions.skipDeploy
+      AppState.publishOptions.skipDeploy,
     );
   }
   if ($elements.deployStrategySelect && $elements.deployStrategySelect.length) {
@@ -1093,7 +1082,7 @@ function updateSettingsUI() {
   ) {
     $elements.notificationsCheckbox.prop(
       "checked",
-      AppState.settings.notifications
+      AppState.settings.notifications,
     );
   }
 }
@@ -1175,7 +1164,7 @@ async function openPackageDirectory(packagePath) {
  */
 async function buildPackage(packageId) {
   try {
-    const pkg = AppState.packages.find(p => p.id === packageId);
+    const pkg = AppState.packages.find((p) => p.id === packageId);
     if (!pkg || !pkg.buildCommand) {
       showError("包不存在或没有构建命令");
       return;
@@ -1301,7 +1290,7 @@ function updateLogDisplay() {
           <h3>暂无日志</h3>
           <p>执行命令后日志将显示在这里</p>
         </div>
-      `
+      `,
         )
         .fadeIn(300);
       return;
@@ -1382,14 +1371,14 @@ function clearLogs() {
         <h3>日志已清空</h3>
         <p>执行命令后日志将显示在这里</p>
       </div>
-    `
+    `,
         )
         .hide()
         .fadeIn(300);
 
       showToast("日志已清空", "success");
     },
-    $logContainer.children(".log-entry").length * 20 + 200
+    $logContainer.children(".log-entry").length * 20 + 200,
   );
 }
 
@@ -1397,7 +1386,7 @@ function clearLogs() {
  * 异步清空日志，返回 Promise
  */
 function clearLogsAsync() {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     const $logContainer = $elements.logContainer;
     if (!$logContainer || !$logContainer.length) {
       resolve();
@@ -1431,7 +1420,7 @@ function clearLogsAsync() {
 
         resolve();
       },
-      $entries.length * 20 + 200
+      $entries.length * 20 + 200,
     );
   });
 }
@@ -1457,7 +1446,8 @@ async function exportLogs() {
 
     const content = AppState.logs
       .map(
-        log => `[${log.timestamp}] [${log.type.toUpperCase()}] ${log.message}`
+        (log) =>
+          `[${log.timestamp}] [${log.type.toUpperCase()}] ${log.message}`,
       )
       .join("\n");
 
@@ -1532,7 +1522,7 @@ function showCommandModal(title, command) {
       {
         scale: 1,
       },
-      200
+      200,
     );
 
   // 聚焦到取消按钮
@@ -1566,7 +1556,7 @@ function hideCommandModal() {
       {
         scale: 0.8,
       },
-      200
+      200,
     )
     .end()
     .fadeOut(300, function () {
@@ -1665,7 +1655,7 @@ function showCommandPreviewModal(title, command, showExecuteButton = true) {
       {
         scale: 1,
       },
-      200
+      200,
     );
 
   // 添加键盘事件监听
@@ -1691,7 +1681,7 @@ function hideCommandPreviewModal() {
       {
         scale: 0.8,
       },
-      200
+      200,
     )
     .end()
     .fadeOut(300, function () {
@@ -1722,7 +1712,7 @@ function copyCommandFromPreview() {
     .then(() => {
       showToast("命令已复制到剪贴板", "success");
     })
-    .catch(err => {
+    .catch((err) => {
       console.error("复制失败:", err);
       showError("复制命令失败");
     });
@@ -1783,8 +1773,7 @@ function handleProcessStatus(status) {
     case "completed":
       AppState.currentProcess = null;
       hideLogExecutionStatus();
-      const exitCode = status.code || 0;
-      if (exitCode === 0) {
+      if ((status.code || 0) === 0) {
         updateStatus("success", "执行成功");
         addLog("success", status.message || "命令执行完成");
         showToast("命令执行成功！", "success");
@@ -1804,9 +1793,11 @@ function handleProcessStatus(status) {
     case "failed":
       AppState.currentProcess = null;
       hideLogExecutionStatus();
-      const failCode = status.code || 1;
-      updateStatus("error", `执行失败 (退出码: ${failCode})`);
-      addLog("error", status.message || `进程执行失败，退出码: ${failCode}`);
+      updateStatus("error", `执行失败 (退出码: ${status.code ?? 1})`);
+      addLog(
+        "error",
+        status.message || `进程执行失败，退出码: ${status.code ?? 1}`,
+      );
       showToast(status.message || "命令执行失败", "error");
       if (AppState.settings.notifications) {
         showNotification("执行失败", status.message || "命令执行失败");
@@ -1865,8 +1856,8 @@ function showLoading(text = "加载中...") {
  */
 function showLogExecutionStatus(text = "执行中...") {
   const $indicator = $elements.logStatusIndicator;
-  const $textElement = $indicator.find('.executing-text');
-  
+  const $textElement = $indicator.find(".executing-text");
+
   if ($indicator && $indicator.length) {
     if ($textElement.length) {
       $textElement.text(text);
@@ -1880,177 +1871,10 @@ function showLogExecutionStatus(text = "执行中...") {
  */
 function hideLogExecutionStatus() {
   const $indicator = $elements.logStatusIndicator;
-  
+
   if ($indicator && $indicator.length) {
     $indicator.fadeOut(300);
   }
-}
-
-/**
- * 显示用户输入模态框
- * @param {Object} options - 输入选项
- * @param {string} options.title - 模态框标题
- * @param {string} options.prompt - 提示文本
- * @param {string} options.label - 输入框标签
- * @param {string} options.placeholder - 输入框占位符
- * @param {string} options.hint - 提示信息
- * @param {string} options.defaultValue - 默认值
- * @param {Function} options.onConfirm - 确认回调函数
- * @param {Function} options.onCancel - 取消回调函数
- */
-function showUserInputModal(options = {}) {
-  const {
-    title = "用户输入",
-    prompt = "请输入所需信息：",
-    label = "输入：",
-    placeholder = "请输入...",
-    hint = "",
-    defaultValue = "",
-    onConfirm = null,
-    onCancel = null
-  } = options;
-
-  const $modal = $elements.userInputModal;
-  
-  if (!$modal || !$modal.length) return;
-
-  // 设置内容
-  $elements.userInputTitle.text(title);
-  $elements.userInputPrompt.text(prompt);
-  $elements.userInputLabel.text(label);
-  $elements.userInputField.attr("placeholder", placeholder).val(defaultValue);
-  
-  // 设置提示信息
-  if (hint) {
-    $elements.userInputHint.find("small").text(hint);
-    $elements.userInputHint.show();
-  } else {
-    $elements.userInputHint.hide();
-  }
-
-  // 存储回调函数
-  $modal.data("onConfirm", onConfirm);
-  $modal.data("onCancel", onCancel);
-
-  // 显示模态框
-  $modal
-    .addClass("active")
-    .hide()
-    .fadeIn(300)
-    .find(".modal-content")
-    .css("transform", "scale(0.8)")
-    .animate({
-      scale: 1
-    }, 200);
-
-  // 聚焦输入框
-  setTimeout(() => {
-    $elements.userInputField.focus().select();
-  }, 350);
-
-  // 添加键盘事件监听
-  $(document).on("keydown.userInputModal", function(e) {
-    if (e.key === "Escape") {
-      hideUserInputModal();
-    }
-  });
-}
-
-/**
- * 隐藏用户输入模态框
- */
-function hideUserInputModal() {
-  const $modal = $elements.userInputModal;
-  
-  if (!$modal || !$modal.length) return;
-
-  // 获取取消回调
-  const onCancel = $modal.data("onCancel");
-  
-  // 隐藏模态框
-  $modal
-    .find(".modal-content")
-    .animate({
-      scale: 0.8
-    }, 200)
-    .end()
-    .fadeOut(300, function() {
-      $(this).removeClass("active");
-    });
-
-  // 清除数据和事件
-  $modal.removeData("onConfirm").removeData("onCancel");
-  $(document).off("keydown.userInputModal");
-  
-  // 执行取消回调
-  if (typeof onCancel === "function") {
-    onCancel();
-  }
-}
-
-/**
- * 确认用户输入
- */
-function confirmUserInput() {
-  const $modal = $elements.userInputModal;
-  const value = $elements.userInputField.val().trim();
-  
-  if (!$modal || !$modal.length) return;
-
-  // 获取确认回调
-  const onConfirm = $modal.data("onConfirm");
-  
-  // 验证输入
-  if (!value) {
-    $elements.userInputField.addClass("error").focus();
-    showToast("请输入有效内容", "warning");
-    return;
-  }
-  
-  // 移除错误样式
-  $elements.userInputField.removeClass("error");
-  
-  // 隐藏模态框
-  $modal
-    .find(".modal-content")
-    .animate({
-      scale: 0.8
-    }, 200)
-    .end()
-    .fadeOut(300, function() {
-      $(this).removeClass("active");
-    });
-
-  // 清除数据和事件
-  $modal.removeData("onConfirm").removeData("onCancel");
-  $(document).off("keydown.userInputModal");
-  
-  // 执行确认回调
-  if (typeof onConfirm === "function") {
-    onConfirm(value);
-  }
-}
-
-/**
- * 处理设置版本号
- * 显示用户输入模态框，让用户输入新的版本号
- */
-function handleSetVersion() {
-  showUserInputModal(
-    '设置版本号',
-    '请输入新的版本号（例如：1.0.0）',
-    '版本号',
-    '',
-    '请使用语义化版本格式，如 1.0.0',
-    function(version) {
-      // 这里可以添加版本号设置的具体逻辑
-      console.log('设置版本号为:', version);
-      showToast(`版本号已设置为: ${version}`, 'success');
-      
-      // 可以在这里调用实际的版本号设置API
-      // 例如：updatePackageVersion(version);
-    }
-  );
 }
 
 /**
@@ -2082,7 +1906,7 @@ function updateStatus(type, text) {
       .removeClass()
       .addClass(`status-indicator ${type}`)
       .addClass("status-pulse-animation");
-    
+
     // 动画完成后移除类名
     setTimeout(() => {
       $statusIndicator.removeClass("status-pulse-animation");
@@ -2133,7 +1957,7 @@ function scrollToBottom(element) {
         scrollTop: $target[0].scrollHeight,
       },
       300,
-      "swing"
+      "swing",
     );
   }
 }
@@ -2179,7 +2003,7 @@ function showSuccess(message) {
 function showNotification(title, message, type = "info") {
   if ("Notification" in window && Notification.permission === "granted") {
     // 创建简单的 SVG 图标作为 data URL，避免文件路径问题
-    const getIconDataUrl = notificationType => {
+    const getIconDataUrl = (notificationType) => {
       const iconMap = {
         success:
           "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTAiIGZpbGw9IiMyOGE3NDUiLz4KPHBhdGggZD0ibTkgMTIgMiAyIDQtNCIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPC9zdmc+",
@@ -2239,7 +2063,7 @@ function showToast(message, type = "info", duration = 3000) {
   `);
 
   // 存储自动移除的定时器ID
-  let autoRemoveTimer;
+  const autoRemoveTimer = null;
 
   // 绑定关闭事件
   $toast.find(".toast-close").on("click", function (e) {
@@ -2260,7 +2084,7 @@ function showToast(message, type = "info", duration = 3000) {
   $toast.appendTo($toastContainer).hide().slideDown(300);
 
   // 设置自动移除定时器
-  autoRemoveTimer = setTimeout(() => {
+  setTimeout(() => {
     // 检查元素是否仍然存在（可能已被手动关闭）
     if ($toast.length && $toast.parent().length) {
       removeToast($toast);
@@ -2307,7 +2131,7 @@ function copyToClipboard(text) {
       .then(() => {
         console.log("文本已复制到剪贴板");
       })
-      .catch(err => {
+      .catch((err) => {
         console.error("复制失败:", err);
         fallbackCopyTextToClipboard(text);
       });
@@ -2513,7 +2337,7 @@ function initializeBatchOperations() {
         $btn.prop("disabled", false).html(originalText);
         showToast("包信息已刷新", "success");
       })
-      .catch(error => {
+      .catch((error) => {
         $btn.prop("disabled", false).html(originalText);
         showError("刷新失败: " + error.message);
       });
@@ -2526,7 +2350,7 @@ function initializeBatchOperations() {
  * 等待 electronAPI 准备就绪
  */
 function waitForElectronAPI() {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     if (window.electronAPI) {
       resolve();
     } else {

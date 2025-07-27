@@ -46,12 +46,12 @@ class NotificationExtension {
     extensionManager.registerHook(
       "afterDeploy",
       this.onDeployComplete.bind(this),
-      this.name
+      this.name,
     );
     extensionManager.registerHook(
       "onError",
       this.onError.bind(this),
-      this.name
+      this.name,
     );
 
     log(`${this.name} 扩展已初始化`, "info");
@@ -171,7 +171,7 @@ class NotificationExtension {
       const nodemailer = require("nodemailer");
 
       const transporter = nodemailer.createTransporter(
-        this.notificationConfig.email.smtp
+        this.notificationConfig.email.smtp,
       );
 
       const mailOptions = {
@@ -221,7 +221,7 @@ class NotificationExtension {
         },
       };
 
-      const req = client.request(options, res => {
+      const req = client.request(options, (res) => {
         if (res.statusCode >= 200 && res.statusCode < 300) {
           log("🔗 Webhook 通知已发送", "info");
         } else {
@@ -229,7 +229,7 @@ class NotificationExtension {
         }
       });
 
-      req.on("error", error => {
+      req.on("error", (error) => {
         log("🔗 Webhook 通知发送失败:" + error.message, "error");
       });
 

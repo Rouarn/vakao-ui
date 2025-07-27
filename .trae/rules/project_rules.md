@@ -111,7 +111,7 @@ function processUserData(data: { name: string; age: number }): string {
 }
 
 // ✅ 推荐使用联合类型
-type Status = 'loading' | 'success' | 'error';
+type Status = "loading" | "success" | "error";
 function handleStatus(status: Status): void {
   // 处理逻辑
 }

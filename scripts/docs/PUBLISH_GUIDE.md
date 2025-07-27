@@ -39,6 +39,7 @@ GITHUB_TOKEN=ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
 
 **通知方式说明：**
+
 - 🖥️ **桌面通知**：自动启用，无需配置，支持 Windows/macOS/Linux
 - 📧 **邮件通知**：可选配置，支持 SMTP 协议
 - 🔗 **Webhook 通知**：可选配置，支持 Slack、Discord 等第三方服务
@@ -226,18 +227,21 @@ npm run test:notification
 ### 新系统特性
 
 #### 统一入口
+
 - 所有发布操作通过单一脚本 `scripts/publish.js` 完成
 - 支持交互式和命令行两种使用方式
 - 提供丰富的配置选项和参数
 - 集成扩展系统，支持自定义功能
 
 #### 模块化架构
+
 - **发布引擎（PublishEngine）**：负责包的构建和发布
 - **部署引擎（DeploymentEngine）**：负责文档部署和多策略支持
 - **扩展管理器（ExtensionManager）**：管理扩展生命周期和钩子系统
 - **交互界面（InteractiveInterface）**：提供用户友好的交互体验
 
 #### 扩展系统
+
 - **插件化架构**：支持自定义扩展开发
 - **钩子机制**：beforeDeploy、afterDeploy、onError 等生命周期钩子
 - **内置扩展**：
@@ -247,30 +251,35 @@ npm run test:notification
 - **扩展目录**：`scripts/extensions/` 和 `scripts/plugins/`（别名）
 
 #### 批量发布
+
 - 支持一次性发布多个包
 - 智能依赖关系处理和排序
 - 并行构建优化
 - 发布结果统计和报告
 
 #### 版本同步
+
 - 自动同步所有包的版本号
 - 支持语义化版本控制
 - 版本冲突检测和解决
 - 智能版本号建议
 
 #### 测试模式
+
 - `--dry-run` 参数支持
 - 模拟发布流程，不实际发布
 - 验证配置和依赖
 - 测试通知功能
 
 #### 私有仓库
+
 - 支持私有 npm 仓库
 - 灵活的认证配置
 - 多仓库支持
 - 自动仓库检测
 
 #### 交互式界面
+
 - 美观的命令行界面
 - 实时进度显示
 - 错误信息友好提示
@@ -278,6 +287,7 @@ npm run test:notification
 - 彩色日志输出
 
 #### 智能通知系统
+
 - **桌面通知**：
   - 自动检测部署状态并发送相应通知
   - 支持 Windows、macOS 和 Linux 系统
@@ -298,6 +308,7 @@ npm run test:notification
   - 错误处理
 
 #### 部署策略
+
 - **GitHub Pages**：自动部署到 GitHub Pages
 - **Legacy Docs**：兼容传统文档部署方式
 - **智能策略选择**：根据发布结果自动选择合适的部署策略
@@ -439,14 +450,16 @@ npm login --registry=http://your-private-registry.com/repository/npm-private/
 
 **问题5: 桌面通知问题**
 
-*通知未显示：*
+_通知未显示：_
+
 - 确认 `node-notifier` 依赖已安装：`pnpm list node-notifier`
 - 检查系统通知权限设置
 - 验证通知扩展是否正确加载
 - 测试桌面通知功能：`pnpm run test:notification`
 - 在 Windows 系统中，确保通知服务已启用
 
-*部署失败时通知未触发：*
+_部署失败时通知未触发：_
+
 - 确保错误处理流程正确传播错误
 - 检查 `onError` 钩子是否正确注册
 - 验证部署引擎的错误处理逻辑
@@ -454,19 +467,22 @@ npm login --registry=http://your-private-registry.com/repository/npm-private/
 
 **问题6: 扩展系统问题**
 
-*扩展未加载：*
+_扩展未加载：_
+
 - 检查文件路径和命名
 - 确保扩展类正确导出
 - 检查控制台错误信息
 - 验证扩展目录权限
 
-*钩子未执行：*
+_钩子未执行：_
+
 - 确保在 `initialize` 方法中注册了钩子
 - 检查钩子名称是否正确
 - 确保钩子方法存在且可调用
 - 查看扩展管理器日志
 
-*扩展报错：*
+_扩展报错：_
+
 - 添加 try-catch 错误处理
 - 检查依赖是否正确安装
 - 验证配置和环境变量
@@ -474,13 +490,15 @@ npm login --registry=http://your-private-registry.com/repository/npm-private/
 
 **问题7: 部署问题**
 
-*GitHub Pages 部署失败：*
+_GitHub Pages 部署失败：_
+
 - 检查 GitHub 仓库权限
 - 验证 Git 状态和未推送的提交
 - 确认 `gh-pages` 分支状态
 - 检查构建产物是否正确生成
 
-*部署策略选择错误：*
+_部署策略选择错误：_
+
 - 使用 `--deploy-strategy` 参数指定策略
 - 检查可用的部署策略列表
 - 验证策略配置是否正确
@@ -620,11 +638,13 @@ WEBHOOK_URL=https://discord.com/api/webhooks/YOUR/DISCORD/WEBHOOK
 #### 创建自定义扩展
 
 1. **使用模板创建**：
+
    ```bash
    node scripts/publish.js --create-extension my-extension
    ```
 
 2. **手动创建**：
+
    ```javascript
    // scripts/extensions/my-extension.js
    class MyExtension {
@@ -632,22 +652,27 @@ WEBHOOK_URL=https://discord.com/api/webhooks/YOUR/DISCORD/WEBHOOK
        this.name = "my-extension";
        this.version = "1.0.0";
      }
-   
+
      async initialize(extensionManager) {
-       extensionManager.registerHook('afterDeploy', this.onSuccess.bind(this), this.name);
+       extensionManager.registerHook(
+         "afterDeploy",
+         this.onSuccess.bind(this),
+         this.name,
+       );
      }
-   
+
      async onSuccess(context) {
-       console.log('部署成功！');
+       console.log("部署成功！");
      }
    }
-   
+
    module.exports = MyExtension;
    ```
 
 #### 扩展最佳实践
 
 1. **错误处理**：
+
    ```javascript
    async onDeploySuccess(context) {
      try {
@@ -660,6 +685,7 @@ WEBHOOK_URL=https://discord.com/api/webhooks/YOUR/DISCORD/WEBHOOK
    ```
 
 2. **配置管理**：
+
    ```javascript
    constructor(config) {
      this.config = {
@@ -789,22 +815,22 @@ pnpm run test:notification
 
 ### 4. 功能对比
 
-| 功能 | 旧系统 | 新系统 | 说明 |
-|------|--------|--------|----------|
-| 单包发布 | ✅ | ✅ | 保持兼容 |
-| 批量发布 | ❌ | ✅ | 新增功能 |
-| 交互式界面 | ❌ | ✅ | 美观的 CLI 界面 |
-| 版本同步 | ❌ | ✅ | 智能版本管理 |
-| 测试模式 | ❌ | ✅ | dry-run 支持 |
-| 桌面通知 | ❌ | ✅ | 跨平台通知 |
-| 邮件通知 | ❌ | ✅ | SMTP 支持 |
-| Webhook 通知 | ❌ | ✅ | 第三方集成 |
-| 扩展系统 | ❌ | ✅ | 插件化架构 |
-| GitHub 集成 | ❌ | ✅ | 自动化工作流 |
-| 部署策略 | 单一 | 多种 | 灵活的部署选项 |
-| 私有仓库 | ✅ | ✅ | 增强支持 |
-| 错误处理 | 基础 | 增强 | 详细错误信息 |
-| 日志系统 | 简单 | 丰富 | 彩色日志输出 |
+| 功能         | 旧系统 | 新系统 | 说明            |
+| ------------ | ------ | ------ | --------------- |
+| 单包发布     | ✅     | ✅     | 保持兼容        |
+| 批量发布     | ❌     | ✅     | 新增功能        |
+| 交互式界面   | ❌     | ✅     | 美观的 CLI 界面 |
+| 版本同步     | ❌     | ✅     | 智能版本管理    |
+| 测试模式     | ❌     | ✅     | dry-run 支持    |
+| 桌面通知     | ❌     | ✅     | 跨平台通知      |
+| 邮件通知     | ❌     | ✅     | SMTP 支持       |
+| Webhook 通知 | ❌     | ✅     | 第三方集成      |
+| 扩展系统     | ❌     | ✅     | 插件化架构      |
+| GitHub 集成  | ❌     | ✅     | 自动化工作流    |
+| 部署策略     | 单一   | 多种   | 灵活的部署选项  |
+| 私有仓库     | ✅     | ✅     | 增强支持        |
+| 错误处理     | 基础   | 增强   | 详细错误信息    |
+| 日志系统     | 简单   | 丰富   | 彩色日志输出    |
 
 ### 5. 迁移步骤
 

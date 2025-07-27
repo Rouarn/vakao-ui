@@ -6,10 +6,7 @@
         class="vk-message-box-wrapper"
         @click="handleWrapperClick"
       >
-        <div
-          class="vk-message-box"
-          :class="messageBoxClass"
-        >
+        <div class="vk-message-box" :class="messageBoxClass">
           <!-- 头部 -->
           <div class="vk-message-box__header">
             <div class="vk-message-box__title">
@@ -36,10 +33,7 @@
               {{ message }}
             </div>
             <!-- 输入框 (用于 prompt 类型) -->
-            <div
-              v-if="showInput"
-              class="vk-message-box__input"
-            >
+            <div v-if="showInput" class="vk-message-box__input">
               <VkInput
                 ref="inputRef"
                 v-model="inputValue"
@@ -91,7 +85,12 @@ import {
   onUnmounted,
   type PropType,
 } from "vue";
-import { messageBoxProps, messageBoxEmits, type MessageBoxAction, type MessageBoxInstance } from "./types";
+import {
+  messageBoxProps,
+  messageBoxEmits,
+  type MessageBoxAction,
+  type MessageBoxInstance,
+} from "./types";
 import type { ComponentType } from "../../../types";
 import VkButton from "../../VkButton";
 import VkIcon from "../../VkIcon";
@@ -168,7 +167,7 @@ export default defineComponent({
     const validateInput = (showError = true) => {
       if (!props.showInput) return true;
 
-      const {value} = inputValue;
+      const { value } = inputValue;
 
       // 如果还没有交互过且不强制显示错误，则不验证
       if (!hasInputBlurred.value && !showError) {

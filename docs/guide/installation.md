@@ -76,6 +76,7 @@ node -e "const notifier = require('node-notifier'); notifier.notify({title: '测
 如果桌面通知无法正常显示：
 
 1. 确认 `node-notifier` 依赖已安装：
+
    ```bash
    pnpm list node-notifier
    ```

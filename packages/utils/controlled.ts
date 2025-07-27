@@ -53,7 +53,9 @@ export function useControlled<T>(
   const isControlled = computed(() => props[propName] !== undefined);
 
   // 内部状态值（非受控模式使用）
-  const internalValue = ref<T>((props[modelValuePropName] as T) ?? defaultValue);
+  const internalValue = ref<T>(
+    (props[modelValuePropName] as T) ?? defaultValue,
+  );
 
   // 当前显示的值
   const currentValue = computed(() => {

@@ -216,13 +216,13 @@ GITHUB_REPO=Rouarn/vakao-ui
    pnpm run serve
    ```
 
-2. 检查构建产物：
+3. 检查构建产物：
 
    ```bash
    ls -la docs/.vitepress/dist
    ```
 
-3. 查看 GitHub Actions 日志：
+4. 查看 GitHub Actions 日志：
    - 进入仓库的 **Actions** 页面
    - 点击相应的工作流运行
    - 查看详细日志

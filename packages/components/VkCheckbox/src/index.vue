@@ -1,9 +1,5 @@
 <template>
-  <label
-    :class="mergedClass"
-    :style="mergedStyle"
-    @click="handleClick"
-  >
+  <label :class="mergedClass" :style="mergedStyle" @click="handleClick">
     <span class="vk-checkbox__input">
       <input
         ref="inputRef"
@@ -13,7 +9,7 @@
         :checked="isChecked"
         :value="value"
         @change="handleChange"
-      >
+      />
       <span
         class="vk-checkbox__inner"
         :class="[
@@ -40,10 +36,7 @@
         />
       </span>
     </span>
-    <span
-      v-if="$slots.default || label"
-      class="vk-checkbox__label"
-    >
+    <span v-if="$slots.default || label" class="vk-checkbox__label">
       <slot>{{ label }}</slot>
     </span>
   </label>
@@ -153,7 +146,7 @@ export default defineComponent({
       }
 
       const target = event.target as HTMLInputElement;
-      const {checked} = target;
+      const { checked } = target;
 
       if (isGroup.value && checkboxGroup) {
         const value = props.value as CheckboxValue;

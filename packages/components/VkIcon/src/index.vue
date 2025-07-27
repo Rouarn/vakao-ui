@@ -1,16 +1,7 @@
 <template>
-  <span
-    :class="mergedClass"
-    :style="mergedStyle"
-    v-bind="$attrs"
-  >
+  <span :class="mergedClass" :style="mergedStyle" v-bind="$attrs">
     <!-- 自定义图片 -->
-    <img
-      v-if="props.src"
-      :src="props.src"
-      alt="icon"
-      class="vk-icon__image"
-    >
+    <img v-if="props.src" :src="props.src" alt="icon" class="vk-icon__image" />
     <!-- Iconify 图标 -->
     <Icon
       v-else-if="props.icon"

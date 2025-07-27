@@ -1,3 +1,4 @@
+/* eslint-disable no-control-regex */
 /**
  * Vakao UI Publisher GUI - Electron 主进程
  *
@@ -7,7 +8,14 @@
  * @author 我与夏季
  */
 
-const { app, BrowserWindow, ipcMain, dialog, shell, Menu } = require("electron");
+const {
+  app,
+  BrowserWindow,
+  ipcMain,
+  dialog,
+  shell,
+  Menu,
+} = require("electron");
 const path = require("path");
 const fs = require("fs");
 const { execSync, spawn } = require("child_process");
@@ -39,100 +47,113 @@ const PUBLISH_SCRIPT = path.join(PROJECT_ROOT, "publish.js");
 function createApplicationMenu() {
   const template = [
     {
-      label: '文件',
+      label: "文件",
       submenu: [
         {
-          label: '打开项目目录',
-          accelerator: 'CmdOrCtrl+O',
+          label: "打开项目目录",
+          accelerator: "CmdOrCtrl+O",
           click: () => {
             shell.openPath(PROJECT_ROOT);
-          }
+          },
         },
         {
-          label: '导出日志',
-          accelerator: 'CmdOrCtrl+E',
+          label: "导出日志",
+          accelerator: "CmdOrCtrl+E",
           click: () => {
             if (mainWindow) {
-              mainWindow.webContents.send('export-logs');
+              mainWindow.webContents.send("export-logs");
             }
-          }
+          },
         },
-        { type: 'separator' },
+        { type: "separator" },
         {
-          label: '退出',
-          accelerator: process.platform === 'darwin' ? 'Cmd+Q' : 'Ctrl+Q',
+          label: "退出",
+          accelerator: process.platform === "darwin" ? "Cmd+Q" : "Ctrl+Q",
           click: () => {
             app.quit();
-          }
-        }
-      ]
+          },
+        },
+      ],
     },
     {
-      label: '编辑',
+      label: "编辑",
       submenu: [
-        { label: '撤销', accelerator: 'CmdOrCtrl+Z', role: 'undo' },
-        { label: '重做', accelerator: 'Shift+CmdOrCtrl+Z', role: 'redo' },
-        { type: 'separator' },
-        { label: '剪切', accelerator: 'CmdOrCtrl+X', role: 'cut' },
-        { label: '复制', accelerator: 'CmdOrCtrl+C', role: 'copy' },
-        { label: '粘贴', accelerator: 'CmdOrCtrl+V', role: 'paste' },
-        { label: '全选', accelerator: 'CmdOrCtrl+A', role: 'selectall' }
-      ]
+        { label: "撤销", accelerator: "CmdOrCtrl+Z", role: "undo" },
+        { label: "重做", accelerator: "Shift+CmdOrCtrl+Z", role: "redo" },
+        { type: "separator" },
+        { label: "剪切", accelerator: "CmdOrCtrl+X", role: "cut" },
+        { label: "复制", accelerator: "CmdOrCtrl+C", role: "copy" },
+        { label: "粘贴", accelerator: "CmdOrCtrl+V", role: "paste" },
+        { label: "全选", accelerator: "CmdOrCtrl+A", role: "selectall" },
+      ],
     },
     {
-      label: '视图',
+      label: "视图",
       submenu: [
-        { label: '重新加载', accelerator: 'CmdOrCtrl+R', role: 'reload' },
-        { label: '强制重新加载', accelerator: 'CmdOrCtrl+Shift+R', role: 'forceReload' },
-        { label: '开发者工具', accelerator: 'F12', role: 'toggleDevTools' },
-        { type: 'separator' },
-        { label: '实际大小', accelerator: 'CmdOrCtrl+0', role: 'resetZoom' },
-        { label: '放大', accelerator: 'CmdOrCtrl+Plus', role: 'zoomIn' },
-        { label: '缩小', accelerator: 'CmdOrCtrl+-', role: 'zoomOut' },
-        { type: 'separator' },
-        { label: '全屏', accelerator: 'F11', role: 'togglefullscreen' }
-      ]
+        { label: "重新加载", accelerator: "CmdOrCtrl+R", role: "reload" },
+        {
+          label: "强制重新加载",
+          accelerator: "CmdOrCtrl+Shift+R",
+          role: "forceReload",
+        },
+        { label: "开发者工具", accelerator: "F12", role: "toggleDevTools" },
+        { type: "separator" },
+        { label: "实际大小", accelerator: "CmdOrCtrl+0", role: "resetZoom" },
+        { label: "放大", accelerator: "CmdOrCtrl+Plus", role: "zoomIn" },
+        { label: "缩小", accelerator: "CmdOrCtrl+-", role: "zoomOut" },
+        { type: "separator" },
+        { label: "全屏", accelerator: "F11", role: "togglefullscreen" },
+      ],
     },
     {
-      label: '窗口',
+      label: "窗口",
       submenu: [
-        { label: '最小化', accelerator: 'CmdOrCtrl+M', role: 'minimize' },
-        { label: '关闭', accelerator: 'CmdOrCtrl+W', role: 'close' }
-      ]
+        { label: "最小化", accelerator: "CmdOrCtrl+M", role: "minimize" },
+        { label: "关闭", accelerator: "CmdOrCtrl+W", role: "close" },
+      ],
     },
     {
-      label: '帮助',
+      label: "帮助",
       submenu: [
         {
-          label: '关于',
+          label: "关于",
           click: () => {
             dialog.showMessageBox(mainWindow, {
-              type: 'info',
-              title: '关于 Vakao UI Publisher',
-              message: 'Vakao UI Publisher',
-              detail: 'Version 1.0.0\n\n一个现代化的 UI 组件库发布工具\n\n© 2024 我与夏季'
+              type: "info",
+              title: "关于 Vakao UI Publisher",
+              message: "Vakao UI Publisher",
+              detail:
+                "Version 1.0.0\n\n一个现代化的 UI 组件库发布工具\n\n© 2024 我与夏季",
             });
-          }
-        }
-      ]
-    }
+          },
+        },
+      ],
+    },
   ];
 
   // macOS 特殊处理
-  if (process.platform === 'darwin') {
+  if (process.platform === "darwin") {
     template.unshift({
       label: app.getName(),
       submenu: [
-        { label: '关于 ' + app.getName(), role: 'about' },
-        { type: 'separator' },
-        { label: '服务', role: 'services', submenu: [] },
-        { type: 'separator' },
-        { label: '隐藏 ' + app.getName(), accelerator: 'Command+H', role: 'hide' },
-        { label: '隐藏其他', accelerator: 'Command+Shift+H', role: 'hideothers' },
-        { label: '显示全部', role: 'unhide' },
-        { type: 'separator' },
-        { label: '退出', accelerator: 'Command+Q', click: () => app.quit() }
-      ]
+        { label: "关于 " + app.getName(), role: "about" },
+        { type: "separator" },
+        { label: "服务", role: "services", submenu: [] },
+        { type: "separator" },
+        {
+          label: "隐藏 " + app.getName(),
+          accelerator: "Command+H",
+          role: "hide",
+        },
+        {
+          label: "隐藏其他",
+          accelerator: "Command+Shift+H",
+          role: "hideothers",
+        },
+        { label: "显示全部", role: "unhide" },
+        { type: "separator" },
+        { label: "退出", accelerator: "Command+Q", click: () => app.quit() },
+      ],
     });
   }
 
@@ -264,7 +285,7 @@ ipcMain.handle("get-project-info", async () => {
     // 读取包配置
     const configPath = path.join(
       PROJECT_ROOT,
-      "scripts/core/package-configs.js"
+      "scripts/core/package-configs.js",
     );
     delete require.cache[require.resolve(configPath)];
     const { CONFIG } = require(configPath);
@@ -297,7 +318,7 @@ ipcMain.handle("get-packages", async () => {
   try {
     const configPath = path.join(
       PROJECT_ROOT,
-      "scripts/core/package-configs.js"
+      "scripts/core/package-configs.js",
     );
     delete require.cache[require.resolve(configPath)];
     const { CONFIG } = require(configPath);
@@ -321,7 +342,7 @@ ipcMain.handle("get-package-versions", async () => {
   try {
     const configPath = path.join(
       PROJECT_ROOT,
-      "scripts/core/package-configs.js"
+      "scripts/core/package-configs.js",
     );
     delete require.cache[require.resolve(configPath)];
     const { CONFIG } = require(configPath);
@@ -359,7 +380,7 @@ ipcMain.handle("get-package-versions", async () => {
  * 执行发布命令
  */
 ipcMain.handle("execute-publish", async (event, options) => {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     try {
       // 构建命令参数
       const args = ["scripts/publish.js"];
@@ -397,20 +418,20 @@ ipcMain.handle("execute-publish", async (event, options) => {
         cwd: PROJECT_ROOT,
         stdio: ["pipe", "pipe", "pipe"],
         shell: true,
-        encoding: 'utf8',
-        env: { 
-          ...process.env, 
-          FORCE_COLOR: '0',
-          CHCP: '65001' // 设置UTF-8编码
-        }
+        encoding: "utf8",
+        env: {
+          ...process.env,
+          FORCE_COLOR: "0",
+          CHCP: "65001", // 设置UTF-8编码
+        },
       });
 
       let output = "";
       let errorOutput = "";
 
       // 处理标准输出
-      publishProcess.stdout.on("data", data => {
-        const text = data.toString('utf8');
+      publishProcess.stdout.on("data", (data) => {
+        const text = data.toString("utf8");
         output += text;
 
         // 实时发送输出到渲染进程
@@ -423,8 +444,8 @@ ipcMain.handle("execute-publish", async (event, options) => {
       });
 
       // 处理错误输出
-      publishProcess.stderr.on("data", data => {
-        const text = data.toString('utf8');
+      publishProcess.stderr.on("data", (data) => {
+        const text = data.toString("utf8");
         errorOutput += text;
 
         // 实时发送错误输出到渲染进程
@@ -445,7 +466,7 @@ ipcMain.handle("execute-publish", async (event, options) => {
       }
 
       // 处理进程结束
-      publishProcess.on("close", code => {
+      publishProcess.on("close", (code) => {
         publishProcess = null;
 
         const success = code === 0;
@@ -477,7 +498,7 @@ ipcMain.handle("execute-publish", async (event, options) => {
       });
 
       // 处理进程错误
-      publishProcess.on("error", error => {
+      publishProcess.on("error", (error) => {
         publishProcess = null;
 
         // 发送错误事件
@@ -527,45 +548,45 @@ ipcMain.handle("kill-publish-process", async () => {
 function cleanAnsiCodes(text) {
   // 移除 ANSI 转义序列（颜色代码、光标控制等）
   return text
-    .replace(/\x1b\[[0-9;]*m/g, '') // 移除颜色代码
-    .replace(/\x1b\[[0-9;]*[A-Za-z]/g, '') // 移除其他 ANSI 序列
-    .replace(/\x1b\[\?[0-9;]*[hl]/g, '') // 移除模式设置
-    .replace(/\x1b\[[0-9;]*[JK]/g, '') // 移除清屏序列
-    .replace(/\r\n/g, '\n') // 统一换行符
-    .replace(/\r/g, '\n'); // 处理单独的回车符
+    .replace(/\x1b\[[0-9;]*m/g, "") // 移除颜色代码
+    .replace(/\x1b\[[0-9;]*[A-Za-z]/g, "") // 移除其他 ANSI 序列
+    .replace(/\x1b\[\?[0-9;]*[hl]/g, "") // 移除模式设置
+    .replace(/\x1b\[[0-9;]*[JK]/g, "") // 移除清屏序列
+    .replace(/\r\n/g, "\n") // 统一换行符
+    .replace(/\r/g, "\n"); // 处理单独的回车符
 }
 
 /**
  * 执行通用命令
  */
 ipcMain.handle("execute-command", async (event, command) => {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     try {
       // 解析命令
-      const args = command.split(' ');
+      const args = command.split(" ");
       const cmd = args.shift();
-      
+
       // 启动命令进程
       const commandProcess = spawn(cmd, args, {
         cwd: PROJECT_ROOT,
         stdio: ["pipe", "pipe", "pipe"],
         shell: true,
-        encoding: 'utf8',
-        env: { 
-          ...process.env, 
-          FORCE_COLOR: '0', // 禁用颜色输出
-          NO_COLOR: '1', // 另一种禁用颜色的方式
-          TERM: 'dumb', // 设置为哑终端
-          CHCP: '65001' // 设置UTF-8编码
-        }
+        encoding: "utf8",
+        env: {
+          ...process.env,
+          FORCE_COLOR: "0", // 禁用颜色输出
+          NO_COLOR: "1", // 另一种禁用颜色的方式
+          TERM: "dumb", // 设置为哑终端
+          CHCP: "65001", // 设置UTF-8编码
+        },
       });
 
       let output = "";
       let errorOutput = "";
 
       // 处理标准输出
-      commandProcess.stdout.on("data", data => {
-        const rawText = data.toString('utf8');
+      commandProcess.stdout.on("data", (data) => {
+        const rawText = data.toString("utf8");
         const cleanText = cleanAnsiCodes(rawText);
         output += cleanText;
 
@@ -579,8 +600,8 @@ ipcMain.handle("execute-command", async (event, command) => {
       });
 
       // 处理错误输出
-      commandProcess.stderr.on("data", data => {
-        const rawText = data.toString('utf8');
+      commandProcess.stderr.on("data", (data) => {
+        const rawText = data.toString("utf8");
         const cleanText = cleanAnsiCodes(rawText);
         errorOutput += cleanText;
 
@@ -602,7 +623,7 @@ ipcMain.handle("execute-command", async (event, command) => {
       }
 
       // 处理进程结束
-      commandProcess.on("close", code => {
+      commandProcess.on("close", (code) => {
         const success = code === 0;
         const result = {
           success,
@@ -624,7 +645,7 @@ ipcMain.handle("execute-command", async (event, command) => {
       });
 
       // 处理进程错误
-      commandProcess.on("error", error => {
+      commandProcess.on("error", (error) => {
         // 发送错误事件
         if (mainWindow) {
           mainWindow.webContents.send("error", {
@@ -656,7 +677,7 @@ ipcMain.handle("open-directory", async (event, directoryPath) => {
     if (!directoryPath) {
       return { success: false, error: "目录路径不能为空" };
     }
-    
+
     // 将相对路径转换为绝对路径
     let absolutePath;
     if (path.isAbsolute(directoryPath)) {
@@ -665,12 +686,12 @@ ipcMain.handle("open-directory", async (event, directoryPath) => {
       // 相对于项目根目录解析路径
       absolutePath = path.resolve(PROJECT_ROOT, directoryPath);
     }
-    
+
     // 检查路径是否存在
     if (!fs.existsSync(absolutePath)) {
       return { success: false, error: `目录不存在: ${absolutePath}` };
     }
-    
+
     await shell.openPath(absolutePath);
     return { success: true };
   } catch (error) {
@@ -747,7 +768,7 @@ ipcMain.handle("reset-settings", async () => {
       notifications: true,
       defaultDryRun: false,
     };
-    
+
     store.set("settings", defaultSettings);
     return { success: true, data: defaultSettings };
   } catch (error) {
@@ -784,7 +805,7 @@ ipcMain.handle("show-save-dialog", async (event, options) => {
 /**
  * 处理未捕获的异常
  */
-process.on("uncaughtException", error => {
+process.on("uncaughtException", (error) => {
   console.error("未捕获的异常:", error);
 
   // 显示错误对话框

@@ -1,9 +1,5 @@
 <template>
-  <div
-    :class="mergedClass"
-    :style="mergedStyle"
-    @click="handleClick"
-  >
+  <div :class="mergedClass" :style="mergedStyle" @click="handleClick">
     <!-- 未选中状态的文字 -->
     <span
       v-if="inactiveText && !inlinePrompt"
@@ -13,27 +9,15 @@
     </span>
 
     <!-- 开关主体 -->
-    <span
-      ref="switchRef"
-      :class="switchClass"
-    >
+    <span ref="switchRef" :class="switchClass">
       <!-- 加载图标 -->
-      <span
-        v-if="loading"
-        :class="ns.element('loading')"
-      >
-        <VkIcon
-          size="12px"
-          icon="mdi:reload"
-        />
+      <span v-if="loading" :class="ns.element('loading')">
+        <VkIcon size="12px" icon="mdi:reload" />
       </span>
 
       <!-- 内联提示 -->
       <template v-if="inlinePrompt">
-        <span
-          v-if="isChecked"
-          :class="ns.element('inner')"
-        >
+        <span v-if="isChecked" :class="ns.element('inner')">
           <VkIcon
             v-if="activeIcon"
             size="12px"
@@ -42,10 +26,7 @@
           />
           <span v-else-if="activeText">{{ activeText }}</span>
         </span>
-        <span
-          v-else
-          :class="ns.element('inner')"
-        >
+        <span v-else :class="ns.element('inner')">
           <VkIcon
             v-if="inactiveIcon"
             size="12px"

@@ -79,3 +79,6 @@ coverage/
 scripts/legacy/
 DEPLOY.md
 PUBLISH_GUIDE.md
+
+# 第三方库文件
+scripts/gui/src/js/jquery-3.7.1.min.js

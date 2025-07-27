@@ -89,7 +89,7 @@ function log(message, type = "info") {
 
   // 打印主要内容
   console.log(
-    `${colors.dim}[${timestamp}]${colors.reset} ${icon} ${color}${cleanMessage}${colors.reset}`
+    `${colors.dim}[${timestamp}]${colors.reset} ${icon} ${color}${cleanMessage}${colors.reset}`,
   );
 
   // 如果结尾有换行符，后打印换行

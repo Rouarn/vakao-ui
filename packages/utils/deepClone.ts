@@ -52,7 +52,9 @@ export const deepClone = <T>(obj: T): T => {
   const clonedObj = {} as T;
   for (const key in obj) {
     if (Object.prototype.hasOwnProperty.call(obj, key)) {
-      (clonedObj as Record<string, unknown>)[key] = deepClone((obj as Record<string, unknown>)[key]);
+      (clonedObj as Record<string, unknown>)[key] = deepClone(
+        (obj as Record<string, unknown>)[key],
+      );
     }
   }
 
@@ -127,7 +129,10 @@ export const deepCloneWithCircular = <T>(
     visited.set(obj as object, clonedObj);
     for (const key in obj) {
       if (Object.prototype.hasOwnProperty.call(obj, key)) {
-        (clonedObj as Record<string, unknown>)[key] = deepCloneWithCircular((obj as Record<string, unknown>)[key], visited);
+        (clonedObj as Record<string, unknown>)[key] = deepCloneWithCircular(
+          (obj as Record<string, unknown>)[key],
+          visited,
+        );
       }
     }
   }

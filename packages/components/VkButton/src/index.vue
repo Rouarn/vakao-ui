@@ -8,20 +8,14 @@
     :type="nativeType"
     @click="handleClick"
   >
-    <span
-      v-if="loading"
-      class="vk-button__loading"
-    >
+    <span v-if="loading" class="vk-button__loading">
       <span class="vk-button__loading-indicator" />
     </span>
     <span
       v-if="icon && iconPosition === 'left'"
       class="vk-button__icon vk-button__icon--left"
     >
-      <component
-        :is="icon"
-        v-if="typeof icon === 'object'"
-      />
+      <component :is="icon" v-if="typeof icon === 'object'" />
       <VkIcon
         v-else-if="typeof icon === 'string'"
         :size="iconSize"
@@ -36,10 +30,7 @@
       v-if="icon && iconPosition === 'right'"
       class="vk-button__icon vk-button__icon--right"
     >
-      <component
-        :is="icon"
-        v-if="typeof icon === 'object'"
-      />
+      <component :is="icon" v-if="typeof icon === 'object'" />
       <VkIcon
         v-else-if="typeof icon === 'string'"
         :size="iconSize"

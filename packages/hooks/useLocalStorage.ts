@@ -196,7 +196,8 @@ export function useLocalStorage<T>(
 
       // 在 Vue 3 中，可以使用 onUnmounted 来清理
       // 但这里我们返回清理函数，让用户自己决定何时清理
-      (setValue as SetStorageFunction<T> & { cleanup?: () => void }).cleanup = cleanup;
+      (setValue as SetStorageFunction<T> & { cleanup?: () => void }).cleanup =
+        cleanup;
     }
   }
 

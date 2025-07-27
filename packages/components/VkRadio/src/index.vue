@@ -1,9 +1,5 @@
 <template>
-  <label
-    :class="mergedClass"
-    :style="mergedStyle"
-    @click="handleClick"
-  >
+  <label :class="mergedClass" :style="mergedStyle" @click="handleClick">
     <span class="vk-radio__input">
       <input
         ref="inputRef"
@@ -13,7 +9,7 @@
         :checked="isChecked"
         :value="value"
         @change="handleChange"
-      >
+      />
       <span
         class="vk-radio__inner"
         :class="[
@@ -23,16 +19,10 @@
           },
         ]"
       >
-        <span
-          v-if="isChecked"
-          class="vk-radio__dot"
-        />
+        <span v-if="isChecked" class="vk-radio__dot" />
       </span>
     </span>
-    <span
-      v-if="$slots.default || label"
-      class="vk-radio__label"
-    >
+    <span v-if="$slots.default || label" class="vk-radio__label">
       <slot>{{ label }}</slot>
     </span>
   </label>
@@ -122,7 +112,7 @@ export default defineComponent({
         return;
       }
 
-      const {value} = props;
+      const { value } = props;
 
       if (isGroup.value && radioGroup) {
         radioGroup.changeEvent(value);

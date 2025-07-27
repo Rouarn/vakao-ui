@@ -32,15 +32,19 @@ class MyExtension {
 
   async initialize(extensionManager) {
     // 注册钩子
-    extensionManager.registerHook('beforeDeploy', this.beforeDeploy.bind(this), this.name);
+    extensionManager.registerHook(
+      "beforeDeploy",
+      this.beforeDeploy.bind(this),
+      this.name,
+    );
   }
 
   async beforeDeploy(context) {
-    console.log('执行部署前操作');
+    console.log("执行部署前操作");
   }
 
   async destroy() {
-    console.log('清理资源');
+    console.log("清理资源");
   }
 }
 
@@ -124,6 +128,7 @@ async beforeDeploy(context) {
 - 🔗 Webhook 通知
 
 **桌面通知特性：**
+
 - 自动检测部署状态并发送相应通知
 - 支持 Windows、macOS 和 Linux 系统
 - 通过 `node-notifier` 库实现跨平台支持
@@ -168,8 +173,12 @@ class MyCustomExtension {
    */
   async initialize(extensionManager) {
     // 注册钩子
-    extensionManager.registerHook('afterDeploy', this.onDeploySuccess.bind(this), this.name);
-    
+    extensionManager.registerHook(
+      "afterDeploy",
+      this.onDeploySuccess.bind(this),
+      this.name,
+    );
+
     console.log(`${this.name} 扩展已初始化`);
   }
 
@@ -178,12 +187,12 @@ class MyCustomExtension {
    */
   async onDeploySuccess(context) {
     const { result, duration } = context;
-    
+
     // 发送自定义通知
     await this.sendCustomNotification({
       message: `部署成功: ${result.message}`,
       duration: Math.round(duration / 1000),
-      url: result.url
+      url: result.url,
     });
   }
 
@@ -192,7 +201,7 @@ class MyCustomExtension {
    */
   async sendCustomNotification(data) {
     // 实现您的自定义通知逻辑
-    console.log('📢 自定义通知:', data);
+    console.log("📢 自定义通知:", data);
   }
 
   /**
@@ -254,7 +263,7 @@ async onDeploySuccess(context) {
     this.updateDatabase(),
     this.callWebhook()
   ]);
-  
+
   results.forEach((result, index) => {
     if (result.status === 'rejected') {
       console.error(`操作 ${index} 失败:`, result.reason);
@@ -331,22 +340,26 @@ async onDeploySuccess(context) {
    - 验证部署引擎的错误处理逻辑
 
 3. **测试桌面通知**
+
    ```javascript
    // 创建测试文件 test-notification.js
-   const notifier = require('node-notifier');
-   
-   notifier.notify({
-     title: '测试通知',
-     message: '桌面通知功能正常',
-     sound: true,
-     wait: false
-   }, (err, response) => {
-     if (err) {
-       console.error('通知发送失败:', err);
-     } else {
-       console.log('通知发送成功:', response);
-     }
-   });
+   const notifier = require("node-notifier");
+
+   notifier.notify(
+     {
+       title: "测试通知",
+       message: "桌面通知功能正常",
+       sound: true,
+       wait: false,
+     },
+     (err, response) => {
+       if (err) {
+         console.error("通知发送失败:", err);
+       } else {
+         console.log("通知发送成功:", response);
+       }
+     },
+   );
    ```
 
 ## 贡献扩展

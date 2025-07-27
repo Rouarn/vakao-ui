@@ -49,7 +49,10 @@ class ExtensionManager {
     await this.loadAllExtensions();
 
     this.isInitialized = true;
-    log(`扩展管理器初始化完成，已加载 ${this.extensions.size} 个扩展`, "success");
+    log(
+      `扩展管理器初始化完成，已加载 ${this.extensions.size} 个扩展`,
+      "success",
+    );
   }
 
   /**
@@ -111,7 +114,9 @@ class ExtensionManager {
     // 读取扩展配置
     if (fs.existsSync(packageJsonPath)) {
       try {
-        const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf8"));
+        const packageJson = JSON.parse(
+          fs.readFileSync(packageJsonPath, "utf8"),
+        );
         extensionConfig = {
           name: packageJson.name,
           version: packageJson.version,
@@ -150,9 +155,10 @@ class ExtensionManager {
       delete require.cache[require.resolve(extensionPath)];
 
       const extensionModule = require(extensionPath);
-      const extension = typeof extensionModule === "function" 
-        ? new extensionModule(this.config) 
-        : extensionModule;
+      const extension =
+        typeof extensionModule === "function"
+          ? new extensionModule(this.config)
+          : extensionModule;
 
       // 验证扩展结构
       if (!this.validateExtension(extension)) {
@@ -160,7 +166,8 @@ class ExtensionManager {
         return;
       }
 
-      const extensionName = extension.name || config.name || path.basename(extensionPath, ".js");
+      const extensionName =
+        extension.name || config.name || path.basename(extensionPath, ".js");
 
       // 合并配置
       const finalConfig = {
@@ -179,7 +186,10 @@ class ExtensionManager {
         await extension.initialize(this);
       }
 
-      log(`加载扩展: ${extensionName} (${finalConfig.version || "unknown"})`, "success");
+      log(
+        `加载扩展: ${extensionName} (${finalConfig.version || "unknown"})`,
+        "success",
+      );
     } catch (error) {
       log(`加载扩展失败: ${extensionPath} - ${error.message}`, "error");
     }
@@ -361,7 +371,7 @@ class ExtensionManager {
    */
   async createExtensionTemplate(name, options = {}) {
     const extensionDir = path.join(this.extensionPaths[0], name);
-    
+
     if (fs.existsSync(extensionDir)) {
       throw new Error(`扩展目录已存在: ${extensionDir}`);
     }

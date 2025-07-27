@@ -39,7 +39,9 @@ export type UseDebouncedValueReturn<T> = ComputedRef<T>;
  * const [debouncedFn, cancel, flush] = useDebounce(fn, 300);
  * ```
  */
-export type UseDebouncedFunctionReturn<T extends (..._args: unknown[]) => unknown> = [
+export type UseDebouncedFunctionReturn<
+  T extends (..._args: unknown[]) => unknown,
+> = [
   /** 防抖处理后的函数 */
   DebouncedFunction<T>,
   /** 取消防抖的函数 */
@@ -67,7 +69,7 @@ export type UseDebouncedFunctionReturn<T extends (..._args: unknown[]) => unknow
  */
 export function useDebounce<T>(
   value: Ref<T>,
-  delay: number
+  delay: number,
 ): UseDebouncedValueReturn<T>;
 
 /**
@@ -95,7 +97,7 @@ export function useDebounce<T extends (..._args: unknown[]) => unknown>(
   options?: {
     leading?: boolean;
     trailing?: boolean;
-  }
+  },
 ): UseDebouncedFunctionReturn<T>;
 
 /**
@@ -108,7 +110,9 @@ export function useDebounce<T>(
     leading?: boolean;
     trailing?: boolean;
   } = {},
-): UseDebouncedValueReturn<T> | UseDebouncedFunctionReturn<(..._args: unknown[]) => unknown> {
+):
+  | UseDebouncedValueReturn<T>
+  | UseDebouncedFunctionReturn<(..._args: unknown[]) => unknown> {
   // 如果第一个参数是 ref，则处理防抖值
   if (typeof valueOrFn === "object" && "value" in valueOrFn) {
     return useDebouncedValue(valueOrFn as Ref<T>, delay);

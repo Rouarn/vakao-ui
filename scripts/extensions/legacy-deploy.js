@@ -169,7 +169,7 @@ class LegacyDeployExtension {
       });
       const currentBranch = this.execCommand(
         "git rev-parse --abbrev-ref HEAD",
-        { silent: true }
+        { silent: true },
       ).trim();
 
       const hasUncommittedChanges = !!status.trim();

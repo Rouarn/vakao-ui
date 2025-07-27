@@ -48,21 +48,21 @@ async function deploy() {
       cwd: path.resolve(__dirname, "..", ".."),
     });
 
-    child.on("close", code => {
+    child.on("close", (code) => {
       if (code === 0) {
         showSuccess("部署完成！");
         log("📖 文档地址: https://rouarn.github.io/vakao-ui/", "info");
         log("⏰ 请等待几分钟让 GitHub Pages 更新", "warning");
         log(
           "\n💡 提示: 下次可以直接使用 'node scripts/publish.js --deploy-only'",
-          "info"
+          "info",
         );
       } else {
         process.exit(code);
       }
     });
 
-    child.on("error", error => {
+    child.on("error", (error) => {
       handleError("调用统一发布系统失败", error.message);
     });
   } catch (error) {

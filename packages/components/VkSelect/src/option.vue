@@ -1,9 +1,5 @@
 <template>
-  <li
-    v-show="isVisible"
-    :class="mergedClass"
-    @click.stop="handleClick"
-  >
+  <li v-show="isVisible" :class="mergedClass" @click.stop="handleClick">
     <slot>
       {{ label }}
     </slot>
@@ -17,8 +13,20 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, inject, onMounted, onUnmounted, type Ref } from "vue";
-import { optionProps, optionEmits, type SelectOption, type SelectValue } from "./types";
+import {
+  defineComponent,
+  computed,
+  inject,
+  onMounted,
+  onUnmounted,
+  type Ref,
+} from "vue";
+import {
+  optionProps,
+  optionEmits,
+  type SelectOption,
+  type SelectValue,
+} from "./types";
 import { useNamespace } from "@vakao-ui/utils";
 import VkIcon from "../../VkIcon";
 

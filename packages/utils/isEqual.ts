@@ -104,7 +104,12 @@ export const isEqual = (a: unknown, b: unknown): boolean => {
     if (!Object.prototype.hasOwnProperty.call(b, key)) {
       return false;
     }
-    if (!isEqual((a as Record<string, unknown>)[key], (b as Record<string, unknown>)[key])) {
+    if (
+      !isEqual(
+        (a as Record<string, unknown>)[key],
+        (b as Record<string, unknown>)[key],
+      )
+    ) {
       return false;
     }
   }
@@ -240,7 +245,14 @@ export const isEqualWithCircular = (
       if (!Object.prototype.hasOwnProperty.call(b, key)) {
         return false;
       }
-      if (!isEqualWithCircular((a as Record<string, unknown>)[key], (b as Record<string, unknown>)[key], visitedA, visitedB)) {
+      if (
+        !isEqualWithCircular(
+          (a as Record<string, unknown>)[key],
+          (b as Record<string, unknown>)[key],
+          visitedA,
+          visitedB,
+        )
+      ) {
         return false;
       }
     }
@@ -288,7 +300,10 @@ export const shallowEqual = (a: unknown, b: unknown): boolean => {
   for (const key of keysA) {
     if (
       !Object.prototype.hasOwnProperty.call(b, key) ||
-      !Object.is((a as Record<string, unknown>)[key], (b as Record<string, unknown>)[key])
+      !Object.is(
+        (a as Record<string, unknown>)[key],
+        (b as Record<string, unknown>)[key],
+      )
     ) {
       return false;
     }

@@ -199,6 +199,7 @@ module.exports = {
       rules: {
         "no-console": "off",
         "@typescript-eslint/no-var-requires": "off",
+        "comma-dangle": "off", // 关闭尾随逗号要求
       },
     },
     {
@@ -226,6 +227,54 @@ module.exports = {
         "vue/require-default-prop": "off",
         "vue/multi-word-component-names": "off",
         "no-console": "off",
+      },
+    },
+    {
+      // Electron GUI 应用
+      files: ["scripts/gui/**/*.js", "scripts/gui/**/*.html"],
+      env: {
+        node: true,
+        browser: true,
+        es2022: true,
+      },
+      rules: {
+        // 允许控制台输出和调试
+        "no-console": "off",
+        "no-debugger": "off",
+
+        // 允许 Node.js 特性
+        "@typescript-eslint/no-var-requires": "off",
+        "no-undef": "off",
+
+        // 禁用 Vue 相关规则（Electron 应用不使用 Vue）
+        "vue/multi-word-component-names": "off",
+        "vue/require-default-prop": "off",
+        "vue/no-v-html": "off",
+        "vue/component-tags-order": "off",
+        "vue/component-definition-name-casing": "off",
+        "vue/custom-event-name-casing": "off",
+        "vue/prop-name-casing": "off",
+        "vue/no-mutating-props": "off",
+        "vue/require-name-property": "off",
+        "vue/attributes-order": "off",
+
+        // 禁用 TypeScript 相关规则（GUI 使用原生 JavaScript）
+        "@typescript-eslint/no-unused-vars": "off",
+        "@typescript-eslint/no-redeclare": "off",
+        "@typescript-eslint/consistent-type-imports": "off",
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/explicit-function-return-type": "off",
+        "@typescript-eslint/explicit-module-boundary-types": "off",
+
+        // 允许 Electron 特定的模式
+        "no-empty-function": "off",
+        "prefer-const": "warn", // 降级为警告
+        "no-var": "warn", // 降级为警告
+
+        // 允许灵活的代码风格（适应 Electron 开发）
+        "object-shorthand": "off",
+        "prefer-destructuring": "off",
+        "comma-dangle": "off", // 关闭尾随逗号要求
       },
     },
   ],

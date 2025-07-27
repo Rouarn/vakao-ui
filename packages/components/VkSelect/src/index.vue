@@ -37,10 +37,7 @@
         @focus="handleFocus"
         @blur="handleBlur"
       />
-      <span
-        v-else
-        :class="ns.element('inner')"
-      >
+      <span v-else :class="ns.element('inner')">
         {{ displayValue }}
       </span>
 
@@ -72,31 +69,18 @@
         :class="ns.element('dropdown')"
       >
         <!-- 加载状态 -->
-        <div
-          v-if="loading"
-          :class="ns.element('loading')"
-        >
-          <VkIcon
-            icon="mdi:loading"
-            size="16px"
-            class="rotating"
-          />
+        <div v-if="loading" :class="ns.element('loading')">
+          <VkIcon icon="mdi:loading" size="16px" class="rotating" />
           <span>{{ loadingText }}</span>
         </div>
 
         <!-- 选项列表 -->
-        <ul
-          v-else-if="hasVisibleOptions"
-          :class="ns.element('options')"
-        >
+        <ul v-else-if="hasVisibleOptions" :class="ns.element('options')">
           <slot />
         </ul>
 
         <!-- 无数据 -->
-        <div
-          v-else
-          :class="ns.element('empty')"
-        >
+        <div v-else :class="ns.element('empty')">
           {{ searchQuery ? noMatchText : noDataText }}
         </div>
       </div>
