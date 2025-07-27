@@ -887,6 +887,50 @@ ipcMain.handle("show-save-dialog", async (event, options) => {
   }
 });
 
+/**
+ * 导出日志文件
+ */
+ipcMain.handle("export-logs", async (event, content) => {
+  try {
+    // 显示保存对话框
+    const result = await dialog.showSaveDialog(mainWindow, {
+      title: "导出日志文件",
+      defaultPath: `vakao-ui-logs-${new Date().toISOString().slice(0, 19).replace(/:/g, "-")}.txt`,
+      filters: [
+        { name: "文本文件", extensions: ["txt"] },
+        { name: "日志文件", extensions: ["log"] },
+        { name: "所有文件", extensions: ["*"] },
+      ],
+    });
+
+    // 如果用户取消了保存
+    if (result.canceled) {
+      return { success: false, error: "用户取消了保存操作" };
+    }
+
+    // 写入文件
+    fs.writeFileSync(result.filePath, content, "utf8");
+
+    // 自动打开包含导出文件的文件夹
+    const fileDirectory = path.dirname(result.filePath);
+    await shell.openPath(fileDirectory);
+
+    return {
+      success: true,
+      data: {
+        filePath: result.filePath,
+        fileDirectory: fileDirectory,
+        message: "日志文件导出成功，已打开文件夹",
+      },
+    };
+  } catch (error) {
+    return {
+      success: false,
+      error: error.message,
+    };
+  }
+});
+
 // ==================== 错误处理 ====================
 
 /**
