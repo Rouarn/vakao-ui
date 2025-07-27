@@ -510,7 +510,7 @@ ipcMain.handle("execute-publish", async (event, options) => {
         encoding: "utf8",
         env: {
           ...process.env,
-          FORCE_COLOR: "0",
+          NO_COLOR: "1", // 禁用颜色输出
           CHCP: "65001", // 设置UTF-8编码
         },
       });
@@ -663,9 +663,7 @@ ipcMain.handle("execute-command", async (event, command) => {
         encoding: "utf8",
         env: {
           ...process.env,
-          FORCE_COLOR: "0", // 禁用颜色输出
-          NO_COLOR: "1", // 另一种禁用颜色的方式
-          TERM: "dumb", // 设置为哑终端
+          NO_COLOR: "1", // 禁用颜色输出
           CHCP: "65001", // 设置UTF-8编码
         },
       });

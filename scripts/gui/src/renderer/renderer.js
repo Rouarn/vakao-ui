@@ -320,6 +320,9 @@ function bindEventListeners() {
   
   // 移动端菜单事件
   bindMobileMenuEvents();
+  
+  // 动态按钮事件
+  bindDynamicButtonEvents();
 }
 
 /**
@@ -523,6 +526,30 @@ function closeMobileMenu() {
   
   // 恢复汉堡菜单图标
   $elements.mobileMenuToggle.find('i').removeClass('fa-times').addClass('fa-bars');
+}
+
+/**
+ * 绑定动态生成按钮的事件
+ */
+function bindDynamicButtonEvents() {
+  // 使用事件委托处理动态生成的按钮
+  $(document).on('click', '#refreshPackagesBtn', function() {
+    loadPackages();
+  });
+  
+  $(document).on('click', '[data-action="open-directory"]', function() {
+    const path = $(this).data('path');
+    if (path) {
+      openPackageDirectory(path);
+    }
+  });
+  
+  $(document).on('click', '[data-action="build-package"]', function() {
+    const packageId = $(this).data('package-id');
+    if (packageId) {
+      buildPackage(packageId);
+    }
+  });
 }
 
 /**
@@ -867,7 +894,7 @@ function updatePackageGrid(packages) {
           <i class="fas fa-box-open"></i>
           <h3>暂无包信息</h3>
           <p>点击刷新按钮重新加载包信息</p>
-          <button class="btn btn-primary" onclick="loadPackages()">
+          <button class="btn btn-primary" id="refreshPackagesBtn">
             <i class="fas fa-refresh"></i>
             刷新
           </button>
@@ -1185,11 +1212,11 @@ function createPackageOverviewCard(pkg) {
       </div>
     </div>
     <div class="package-overview-actions">
-      <button class="btn btn-secondary btn-small" onclick="openPackageDirectory('${pkg.path}')">
+      <button class="btn btn-secondary btn-small" data-action="open-directory" data-path="${pkg.path}">
         <i class="fas fa-folder-open"></i>
         打开目录
       </button>
-      <button class="btn btn-primary btn-small" onclick="buildPackage('${pkg.id}')">
+      <button class="btn btn-primary btn-small" data-action="build-package" data-package-id="${pkg.id}">
         <i class="fas fa-hammer"></i>
         构建
       </button>
