@@ -182,6 +182,11 @@ function initializeElements() {
   // 导航相关
   $elements.navItems = $(".nav-item");
   $elements.tabContents = $(".tab-content");
+  
+  // 移动端菜单
+  $elements.mobileMenuToggle = $("#mobileMenuToggle");
+  $elements.sidebar = $("#sidebar");
+  $elements.mobileOverlay = $("#mobileOverlay");
 
   // 发布管理
   $elements.packageGrid = $("#packageGrid");
@@ -312,6 +317,9 @@ function bindEventListeners() {
 
   // 键盘快捷键
   bindKeyboardShortcuts();
+  
+  // 移动端菜单事件
+  bindMobileMenuEvents();
 }
 
 /**
@@ -440,6 +448,81 @@ function bindIPCEvents() {
     showError(error.message);
     updateStatus("error", "错误: " + error.message);
   });
+}
+
+/**
+ * 绑定移动端菜单事件
+ */
+function bindMobileMenuEvents() {
+  // 汉堡菜单按钮点击事件
+  $elements.mobileMenuToggle.on('click', function() {
+    toggleMobileMenu();
+  });
+  
+  // 遮罩层点击事件 - 关闭菜单
+  $elements.mobileOverlay.on('click', function() {
+    closeMobileMenu();
+  });
+  
+  // 导航项点击后自动关闭移动端菜单
+  $elements.navItems.on('click', function() {
+    if (window.innerWidth <= 768) {
+      closeMobileMenu();
+    }
+  });
+  
+  // 监听窗口大小变化
+  $(window).on('resize', function() {
+    if (window.innerWidth > 768) {
+      closeMobileMenu();
+    }
+  });
+  
+  // ESC 键关闭移动端菜单
+  $(document).on('keydown', function(e) {
+    if (e.key === 'Escape' && $elements.sidebar.hasClass('mobile-open')) {
+      closeMobileMenu();
+    }
+  });
+}
+
+/**
+ * 切换移动端菜单显示状态
+ */
+function toggleMobileMenu() {
+  if ($elements.sidebar.hasClass('mobile-open')) {
+    closeMobileMenu();
+  } else {
+    openMobileMenu();
+  }
+}
+
+/**
+ * 打开移动端菜单
+ */
+function openMobileMenu() {
+  $elements.sidebar.addClass('mobile-open');
+  $elements.mobileOverlay.addClass('active');
+  
+  // 防止背景滚动
+  $('body').css('overflow', 'hidden');
+  
+  // 更新汉堡菜单图标
+  $elements.mobileMenuToggle.find('i').removeClass('fa-bars').addClass('fa-times');
+}
+
+/**
+ * 关闭移动端菜单
+ */
+function closeMobileMenu() {
+  $elements.sidebar.removeClass('mobile-open');
+  $elements.mobileOverlay.removeClass('active');
+  
+  // 恢复背景滚动
+  $('body').css('overflow', '');
+  
+  // 恢复汉堡菜单图标
+  $elements.mobileMenuToggle.find('i').removeClass('fa-times').addClass('fa-bars');
 }
 
 /**

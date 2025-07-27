@@ -17,6 +17,9 @@
       <!-- 标题栏 -->
       <header class="header">
         <div class="header-left">
+          <button class="mobile-menu-toggle" id="mobileMenuToggle" title="菜单">
+            <i class="fas fa-bars"></i>
+          </button>
           <div class="logo">
             <i class="fas fa-cube"></i>
             <span>Vakao UI Publisher</span>
@@ -32,10 +35,13 @@
         </div>
       </header>
 
+      <!-- 移动端遮罩层 -->
+      <div class="mobile-overlay" id="mobileOverlay"></div>
+
       <!-- 主内容区 -->
       <main class="main">
         <!-- 侧边栏 -->
-        <aside class="sidebar">
+        <aside class="sidebar" id="sidebar">
           <nav class="nav">
             <button class="nav-item active" data-tab="publish">
               <i class="fas fa-rocket"></i>
@@ -214,7 +220,6 @@
               <h2><i class="fas fa-file-alt"></i> 日志查看</h2>
               <p>查看发布和部署的详细日志</p>
             </div>
-            logStatusIndicator
 
             <div class="card">
               <div class="card-header">
@@ -429,38 +434,44 @@
             <h4><i class="fas fa-rocket"></i> 发布管理</h4>
             <p>管理项目版本发布的完整流程，支持语义化版本控制。</p>
             <ul class="help-list">
-              <li><strong>主版本发布：</strong>包含重大更改或不兼容的API修改</li>
+              <li>
+                <strong>主版本发布：</strong>包含重大更改或不兼容的API修改
+              </li>
               <li><strong>次版本发布：</strong>添加新功能但保持向后兼容</li>
               <li><strong>补丁版本发布：</strong>修复bug和小幅改进</li>
               <li><strong>测试模式：</strong>预览命令而不实际执行，确保安全</li>
               <li><strong>实时日志：</strong>监控发布进度和状态信息</li>
             </ul>
           </div>
-          
+
           <div class="help-section">
             <h4><i class="fas fa-box"></i> 包管理</h4>
             <p>高效管理项目依赖和包的生命周期。</p>
             <ul class="help-list">
-              <li><strong>安装依赖：</strong>执行 npm install 安装所有项目依赖</li>
+              <li>
+                <strong>安装依赖：</strong>执行 npm install 安装所有项目依赖
+              </li>
               <li><strong>更新依赖：</strong>检查并更新过时的包到最新版本</li>
               <li><strong>清理缓存：</strong>清除 npm 缓存解决依赖冲突</li>
               <li><strong>审计安全：</strong>检查依赖包的安全漏洞</li>
               <li><strong>依赖分析：</strong>查看包的依赖关系和大小</li>
             </ul>
           </div>
-          
+
           <div class="help-section">
             <h4><i class="fas fa-cloud-upload-alt"></i> 部署管理</h4>
             <p>自动化部署流程，从构建到上线的完整解决方案。</p>
             <ul class="help-list">
               <li><strong>构建项目：</strong>生成优化的生产环境代码</li>
-              <li><strong>部署到服务器：</strong>自动上传构建结果到目标服务器</li>
+              <li>
+                <strong>部署到服务器：</strong>自动上传构建结果到目标服务器
+              </li>
               <li><strong>回滚版本：</strong>快速恢复到之前的稳定版本</li>
               <li><strong>环境配置：</strong>管理不同环境的配置文件</li>
               <li><strong>健康检查：</strong>部署后自动验证服务状态</li>
             </ul>
           </div>
-          
+
           <div class="help-section">
             <h4><i class="fas fa-keyboard"></i> 快捷键</h4>
             <p>提高工作效率的键盘快捷键组合。</p>

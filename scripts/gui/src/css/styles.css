@@ -1342,46 +1342,171 @@ body {
   word-break: break-all;
 }
 
+/* ==================== 移动端汉堡菜单 ==================== */
+
+.mobile-menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  font-size: var(--font-size-xl);
+  cursor: pointer;
+  padding: var(--spacing-sm);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+}
+
+.mobile-menu-toggle:hover {
+  background-color: var(--bg-hover);
+}
+
+.mobile-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+.mobile-overlay.active {
+  display: block;
+}
+
 /* ==================== 响应式设计 ==================== */
 
+/* 平板设备 (768px - 1024px) */
+@media (max-width: 1024px) {
+  .packages-overview {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+
+  .package-overview-details {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 移动设备 (481px - 768px) */
 @media (max-width: 768px) {
+  .mobile-menu-toggle {
+    display: block;
+  }
+
+  .main {
+    position: relative;
+  }
+
   .sidebar {
-    width: 200px;
+    position: fixed;
+    top: 60px;
+    left: -240px;
+    height: calc(100vh - 60px);
+    width: 240px;
+    z-index: 1000;
+    transition: left var(--transition-normal);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .sidebar.mobile-open {
+    left: 0;
   }
 
   .content {
     padding: var(--spacing-md);
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .header {
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+
+  .header-left {
+    gap: var(--spacing-md);
   }
 
   .form-grid {
     grid-template-columns: 1fr;
+    gap: var(--spacing-md);
   }
 
   .package-grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+  }
+
+  .packages-overview {
     grid-template-columns: 1fr;
   }
 
   .deploy-actions {
     grid-template-columns: 1fr;
+    gap: var(--spacing-md);
   }
 
   .action-bar {
     flex-direction: column;
+    gap: var(--spacing-md);
   }
 
   .modal-content {
     width: 95%;
     margin: var(--spacing-md);
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .project-info {
+    grid-template-columns: 1fr;
+  }
+
+  /* 优化按钮触摸体验 */
+  .btn {
+    min-height: 44px;
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+
+  .nav-item {
+    min-height: 48px;
+    padding: var(--spacing-md);
+  }
+
+  /* 优化表单元素 */
+  .form-input,
+  .form-select,
+  .form-textarea {
+    min-height: 44px;
+    font-size: var(--font-size-md);
+  }
+
+  /* 优化卡片间距 */
+  .card {
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .card-body {
+    padding: var(--spacing-md);
   }
 }
 
+/* 小屏移动设备 (320px - 480px) */
 @media (max-width: 480px) {
   .header {
     padding: var(--spacing-xs) var(--spacing-sm);
+    min-height: 56px;
+  }
+
+  .logo span {
+    display: none;
   }
 
   .sidebar {
-    width: 180px;
+    width: 280px;
+    left: -280px;
+    top: 0;
+    height: 100%;
   }
 
   .nav {
@@ -1389,12 +1514,203 @@ body {
   }
 
   .nav-item {
-    padding: var(--spacing-xs) var(--spacing-sm);
-    font-size: var(--font-size-xs);
+    padding: var(--spacing-md) var(--spacing-sm);
+    font-size: var(--font-size-sm);
+    min-height: 52px;
+  }
+
+  .nav-item i {
+    font-size: var(--font-size-lg);
+  }
+
+  .content {
+    padding: var(--spacing-sm);
+  }
+
+  .tab-header {
+    padding: var(--spacing-md) 0;
   }
 
   .tab-header h2 {
     font-size: var(--font-size-xl);
+  }
+
+  .tab-header p {
+    font-size: var(--font-size-sm);
+  }
+
+  .card {
+    border-radius: var(--radius-md);
+  }
+
+  .card-header {
+    padding: var(--spacing-md) var(--spacing-sm);
+  }
+
+  .card-body {
+    padding: var(--spacing-sm);
+  }
+
+  .form-grid {
+    gap: var(--spacing-sm);
+  }
+
+  .action-bar {
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md) 0;
+  }
+
+  .btn-large {
+    padding: var(--spacing-md) var(--spacing-lg);
+    font-size: var(--font-size-md);
+  }
+
+  /* 优化模态框 */
+  .modal-content {
+    width: 98%;
+    margin: var(--spacing-xs);
+    border-radius: var(--radius-md);
+  }
+
+  .modal-header {
+    padding: var(--spacing-md) var(--spacing-sm);
+  }
+
+  .modal-body {
+    padding: var(--spacing-sm);
+  }
+
+  .modal-footer {
+    padding: var(--spacing-md) var(--spacing-sm);
+    gap: var(--spacing-sm);
+  }
+
+  /* 优化包卡片 */
+  .package-card {
+    padding: var(--spacing-sm);
+  }
+
+  .package-overview-card {
+    padding: var(--spacing-md);
+  }
+
+  .package-overview-actions {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+
+  /* 优化日志显示 */
+  .log-container {
+    font-size: var(--font-size-sm);
+  }
+
+  .log-entry {
+    padding: var(--spacing-xs) var(--spacing-sm);
+  }
+}
+
+/* 超小屏设备 (< 320px) */
+@media (max-width: 320px) {
+  .header {
+    padding: var(--spacing-xs);
+  }
+
+  .header-right {
+    gap: var(--spacing-xs);
+  }
+
+  .btn-icon {
+    padding: var(--spacing-xs);
+  }
+
+  .sidebar {
+    width: 100%;
+    left: -100%;
+  }
+
+  .content {
+    padding: var(--spacing-xs);
+  }
+
+  .card-header h3 {
+    font-size: var(--font-size-md);
+  }
+
+  .tab-header h2 {
+    font-size: var(--font-size-lg);
+  }
+}
+
+/* 横屏模式优化 */
+@media (max-height: 500px) and (orientation: landscape) {
+  .header {
+    min-height: 48px;
+  }
+
+  .sidebar {
+    top: 48px;
+    height: calc(100vh - 48px);
+  }
+
+  .nav {
+    padding: var(--spacing-xs);
+  }
+
+  .nav-item {
+    padding: var(--spacing-sm);
+    min-height: 40px;
+  }
+
+  .content {
+    padding: var(--spacing-sm);
+  }
+
+  .tab-header {
+    padding: var(--spacing-sm) 0;
+  }
+
+  .card {
+    margin-bottom: var(--spacing-md);
+  }
+}
+
+/* 触摸设备优化 */
+@media (hover: none) and (pointer: coarse) {
+  .btn:hover {
+    background-color: initial;
+    transform: none;
+  }
+
+  .nav-item:hover {
+    background-color: initial;
+  }
+
+  .package-card:hover {
+    transform: none;
+    box-shadow: var(--shadow-sm);
+  }
+
+  /* 增加触摸反馈 */
+  .btn:active {
+    transform: scale(0.98);
+    transition: transform 0.1s;
+  }
+
+  .nav-item:active {
+    background-color: var(--bg-hover);
+  }
+}
+
+/* 高分辨率屏幕优化 */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .logo i {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .nav-item i {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
 
