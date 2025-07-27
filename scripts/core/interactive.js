@@ -30,6 +30,29 @@ class Interactive {
     
     // 检测是否在GUI环境中运行
     this.isGUIMode = this.detectGUIMode();
+    
+    if (this.isGUIMode) {
+      log("检测到GUI模式，将使用图形界面进行交互", "info");
+      
+      // 监听来自主进程的IPC消息
+      if (process.send) {
+        process.on('message', (message) => {
+          if (message.type === 'gui-input-response' && global.guiInputCallbacks) {
+            // 兼容不同的ID字段名
+            const requestId = message.requestId || message.id;
+            const callback = global.guiInputCallbacks.get(requestId);
+            if (callback && callback.resolve) {
+              if (message.error) {
+                callback.reject(new Error(message.error));
+              } else {
+                callback.resolve(message.response);
+              }
+              global.guiInputCallbacks.delete(requestId);
+            }
+          }
+        });
+      }
+    }
   }
   
   /**
@@ -270,44 +293,44 @@ class Interactive {
         // 生成唯一的请求ID
         const requestId = Date.now().toString(36) + Math.random().toString(36).substr(2);
         
-        // 创建请求对象
-        const request = {
+        // 添加请求ID到输入请求对象
+        const requestWithId = {
+          ...inputRequest,
           id: requestId,
-          type: 'user-input-request',
-          data: inputRequest
+          timestamp: Date.now()
         };
         
-        // 监听响应
-        const responseHandler = (data) => {
-          try {
-            const response = JSON.parse(data.toString());
-            if (response.id === requestId && response.type === 'user-input-response') {
-              process.stdin.removeListener('data', responseHandler);
-              resolve(response.data);
-            }
-          } catch (error) {
-            // 忽略解析错误，可能是其他数据
-          }
-        };
+        // 存储resolve和reject函数，供主进程调用
+        if (!global.guiInputCallbacks) {
+          global.guiInputCallbacks = new Map();
+        }
+        global.guiInputCallbacks.set(requestId, { resolve, reject });
         
         // 设置超时
         const timeout = setTimeout(() => {
-          process.stdin.removeListener('data', responseHandler);
-          reject(new Error('GUI输入请求超时'));
+          if (global.guiInputCallbacks && global.guiInputCallbacks.has(requestId)) {
+            global.guiInputCallbacks.delete(requestId);
+            reject(new Error('GUI输入请求超时'));
+          }
         }, 30000);
         
-        // 监听标准输入
-        process.stdin.on('data', responseHandler);
-        
         // 发送请求到标准输出（主进程会捕获）
-        process.stdout.write('\n__VAKAO_GUI_REQUEST__' + JSON.stringify(request) + '__VAKAO_GUI_REQUEST_END__\n');
+        console.log(`[GUI_INPUT_REQUEST] ${JSON.stringify(requestWithId)}`);
         
-        // 清理超时
+        // 清理超时的原始resolve
         const originalResolve = resolve;
-        resolve = (result) => {
+        const wrappedResolve = (result) => {
           clearTimeout(timeout);
+          if (global.guiInputCallbacks && global.guiInputCallbacks.has(requestId)) {
+            global.guiInputCallbacks.delete(requestId);
+          }
           originalResolve(result);
         };
+        
+        // 更新回调
+        if (global.guiInputCallbacks) {
+          global.guiInputCallbacks.set(requestId, { resolve: wrappedResolve, reject });
+        }
         
       } catch (error) {
         reject(error);
@@ -544,6 +567,9 @@ class Interactive {
    */
   askForConfirmation(message) {
     return new Promise((resolve) => {
+      // 使用 GUI 请求标记格式输出确认提示
+      console.log(`[GUI_INPUT_REQUEST] ${message} (y/N):`);
+      
       this.rl.question(`${message} (y/N): `, (answer) => {
         resolve(answer.toLowerCase() === "y" || answer.toLowerCase() === "yes");
       });
