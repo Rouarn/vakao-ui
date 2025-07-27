@@ -7,6 +7,12 @@
  * @author 我与夏季
  */
 
+const fs = require("fs");
+const path = require("path");
+
+// 项目根目录路径
+const PROJECT_ROOT = path.resolve(__dirname, "../..");
+
 /**
  * 项目基础配置
  */
@@ -33,20 +39,79 @@ const PACKAGE_DEPENDENCIES = {
 };
 
 /**
+ * 动态读取包的package.json文件内容
+ * @param {string} packagePath - 包的路径
+ * @returns {Object|null} package.json内容或null
+ */
+function readPackageJson(packagePath) {
+  try {
+    const packageJsonPath = path.join(
+      PROJECT_ROOT,
+      packagePath,
+      "package.json"
+    );
+    if (fs.existsSync(packageJsonPath)) {
+      const content = fs.readFileSync(packageJsonPath, "utf8");
+      return JSON.parse(content);
+    }
+  } catch (error) {
+    console.warn(`无法读取 ${packagePath}/package.json:`, error.message);
+  }
+  return null;
+}
+
+/**
  * 包配置定义
+ * 现在从真实的package.json文件中读取信息，减少硬编码
  */
 const PACKAGES = {
   main: {
-    name: "vakao-ui",
+    // 从根目录package.json读取基本信息
+    get name() {
+      const pkg = readPackageJson(".");
+      return pkg?.name || "vakao-ui";
+    },
+    get description() {
+      const pkg = readPackageJson(".");
+      return pkg?.description || "Vue 3 组件库 - Vakao UI";
+    },
+    get keywords() {
+      const pkg = readPackageJson(".");
+      return (
+        pkg?.keywords || [
+          "vue3",
+          "components",
+          "ui-library",
+          "typescript",
+          "vakao-ui",
+        ]
+      );
+    },
+    get peerDependencies() {
+      const pkg = readPackageJson(".");
+      return pkg?.peerDependencies || { vue: "^3.3.0" };
+    },
+    get author() {
+      const pkg = readPackageJson(".");
+      return pkg?.author || "Vakao UI Team";
+    },
+    get license() {
+      const pkg = readPackageJson(".");
+      return pkg?.license || "MIT";
+    },
+    get homepage() {
+      const pkg = readPackageJson(".");
+      return pkg?.homepage;
+    },
+    get repository() {
+      const pkg = readPackageJson(".");
+      return pkg?.repository;
+    },
+    // 静态配置信息
     displayName: "Main (组件库主包)",
     path: ".",
     icon: "📦",
-    description: "Vue 3 组件库 - Vakao UI",
     buildCommand: "pnpm run build",
-    keywords: ["vue3", "components", "ui-library", "typescript", "vakao-ui"],
-    peerDependencies: {
-      vue: "^3.3.0",
-    },
     defaultReadme: `# Vakao UI
 
 一个基于 Vue 3 + TypeScript 的现代化组件库。
@@ -142,23 +207,53 @@ export default defineConfig({
   },
 
   hooks: {
-    name: "@vakao-ui/hooks",
+    // 从packages/hooks/package.json读取基本信息
+    get name() {
+      const pkg = readPackageJson("packages/hooks");
+      return pkg?.name || "@vakao-ui/hooks";
+    },
+    get description() {
+      const pkg = readPackageJson("packages/hooks");
+      return pkg?.description || "Vue 3 组合式函数库 - Vakao UI Hooks";
+    },
+    get keywords() {
+      const pkg = readPackageJson("packages/hooks");
+      return (
+        pkg?.keywords || [
+          "vue3",
+          "hooks",
+          "composables",
+          "ui-library",
+          "typescript",
+          "vakao-ui",
+        ]
+      );
+    },
+    get peerDependencies() {
+      const pkg = readPackageJson("packages/hooks");
+      return pkg?.peerDependencies || { vue: "^3.3.0" };
+    },
+    get author() {
+      const pkg = readPackageJson("packages/hooks");
+      return pkg?.author || "Vakao UI Team";
+    },
+    get license() {
+      const pkg = readPackageJson("packages/hooks");
+      return pkg?.license || "MIT";
+    },
+    get homepage() {
+      const pkg = readPackageJson("packages/hooks");
+      return pkg?.homepage;
+    },
+    get repository() {
+      const pkg = readPackageJson("packages/hooks");
+      return pkg?.repository;
+    },
+    // 静态配置信息
     displayName: "Hooks (组合式函数)",
     path: "packages/hooks",
     icon: "🪝",
-    description: "Vue 3 组合式函数库 - Vakao UI Hooks",
     buildCommand: "pnpm run build",
-    keywords: [
-      "vue3",
-      "hooks",
-      "composables",
-      "ui-library",
-      "typescript",
-      "vakao-ui",
-    ],
-    peerDependencies: {
-      vue: "^3.3.0",
-    },
     defaultReadme: `# @vakao-ui/hooks
 
 Vue 3 组合式函数库，提供一系列可复用的 Hooks。
@@ -199,24 +294,54 @@ const [theme, setTheme] = useLocalStorage('theme', 'light');
   },
 
   utils: {
-    name: "@vakao-ui/utils",
+    // 从packages/utils/package.json读取基本信息
+    get name() {
+      const pkg = readPackageJson("packages/utils");
+      return pkg?.name || "@vakao-ui/utils";
+    },
+    get description() {
+      const pkg = readPackageJson("packages/utils");
+      return pkg?.description || "Vue 3 工具函数库 - Vakao UI Utils";
+    },
+    get keywords() {
+      const pkg = readPackageJson("packages/utils");
+      return (
+        pkg?.keywords || [
+          "vue3",
+          "utils",
+          "utilities",
+          "helpers",
+          "ui-library",
+          "typescript",
+          "vakao-ui",
+        ]
+      );
+    },
+    get peerDependencies() {
+      const pkg = readPackageJson("packages/utils");
+      return pkg?.peerDependencies || { vue: "^3.3.0" };
+    },
+    get author() {
+      const pkg = readPackageJson("packages/utils");
+      return pkg?.author || "Vakao UI Team";
+    },
+    get license() {
+      const pkg = readPackageJson("packages/utils");
+      return pkg?.license || "MIT";
+    },
+    get homepage() {
+      const pkg = readPackageJson("packages/utils");
+      return pkg?.homepage;
+    },
+    get repository() {
+      const pkg = readPackageJson("packages/utils");
+      return pkg?.repository;
+    },
+    // 静态配置信息
     displayName: "Utils (工具函数)",
     path: "packages/utils",
     icon: "🛠️",
-    description: "Vue 3 工具函数库 - Vakao UI Utils",
     buildCommand: "pnpm run build",
-    keywords: [
-      "vue3",
-      "utils",
-      "utilities",
-      "helpers",
-      "ui-library",
-      "typescript",
-      "vakao-ui",
-    ],
-    peerDependencies: {
-      vue: "^3.3.0",
-    },
     defaultReadme: `# @vakao-ui/utils
 
 Vue 3 工具函数库，提供一系列实用的工具函数。
@@ -260,13 +385,48 @@ const MyComponent = withInstall(MyComponentImpl);
   },
 
   docs: {
-    name: "vakao-ui-docs",
+    // 从docs/package.json读取基本信息
+    get name() {
+      const pkg = readPackageJson("docs");
+      return pkg?.name || "@vakao-ui/docs";
+    },
+    get description() {
+      const pkg = readPackageJson("docs");
+      return pkg?.description || "Vakao UI 组件库文档站点";
+    },
+    get keywords() {
+      const pkg = readPackageJson("docs");
+      return (
+        pkg?.keywords || [
+          "vue3",
+          "docs",
+          "vitepress",
+          "documentation",
+          "vakao-ui",
+        ]
+      );
+    },
+    get author() {
+      const pkg = readPackageJson("docs");
+      return pkg?.author || "Vakao UI Team";
+    },
+    get license() {
+      const pkg = readPackageJson("docs");
+      return pkg?.license || "MIT";
+    },
+    get homepage() {
+      const pkg = readPackageJson("docs");
+      return pkg?.homepage;
+    },
+    get repository() {
+      const pkg = readPackageJson("docs");
+      return pkg?.repository;
+    },
+    // 静态配置信息
     displayName: "Docs (文档站点)",
     path: "docs",
     icon: "📚",
-    description: "Vakao UI 组件库文档站点",
     buildCommand: "pnpm run build:docs",
-    keywords: ["vue3", "docs", "vitepress", "documentation", "vakao-ui"],
     // 文档包不需要发布到npm，只需要部署
     skipPublish: true,
     // 文档包支持的部署策略

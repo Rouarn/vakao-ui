@@ -173,6 +173,10 @@
   background: #6c757d;
 }
 
+.status-indicator.needs-build {
+  background: #fd7e14;
+}
+
 /* 选择计数器样式 */
 .selection-counter {
   background: linear-gradient(135deg, #007bff, #0056b3);

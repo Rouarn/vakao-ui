@@ -22,6 +22,24 @@ const { execSync, spawn } = require("child_process");
 const Store = require("electron-store");
 const notifier = require("node-notifier");
 
+// ==================== 工具函数 ====================
+
+/**
+ * 将日期格式化为中文格式：2025年7月27日 17点56分xx秒
+ * @param {Date} date - 要格式化的日期对象
+ * @returns {string} 格式化后的中文日期字符串
+ */
+function formatDateToChinese(date) {
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+  const seconds = date.getSeconds();
+  
+  return `${year}年${month}月${day}日 ${hours}点${minutes}分${seconds}秒`;
+}
+
 // ==================== 配置和状态 ====================
 
 /** 应用配置存储 */
@@ -123,7 +141,7 @@ function createApplicationMenu() {
               title: "关于 Vakao UI Publisher",
               message: "Vakao UI Publisher",
               detail:
-                "Version 1.0.0\n\n一个现代化的 UI 组件库发布工具\n\n© 2024 我与夏季",
+                "Version 1.0.0\n\n一个现代化的 UI 组件库发布工具\n\n© 2025 我与夏季",
             });
           },
         },
@@ -285,7 +303,7 @@ ipcMain.handle("get-project-info", async () => {
     // 读取包配置
     const configPath = path.join(
       PROJECT_ROOT,
-      "scripts/core/package-configs.js",
+      "scripts/core/package-configs.js"
     );
     delete require.cache[require.resolve(configPath)];
     const { CONFIG } = require(configPath);
@@ -312,20 +330,85 @@ ipcMain.handle("get-project-info", async () => {
 });
 
 /**
+ * 检查包的状态
+ * @param {string} packageKey - 包标识符
+ * @param {Object} packageConfig - 包配置
+ * @returns {string} 包状态
+ */
+function checkPackageStatus(packageKey, packageConfig) {
+  try {
+    const packagePath = path.join(PROJECT_ROOT, packageConfig.path, "package.json");
+    const distPath = path.join(PROJECT_ROOT, packageConfig.path, "dist");
+    const libPath = path.join(PROJECT_ROOT, packageConfig.path, "lib");
+    
+    // 检查 package.json 是否存在
+    if (!fs.existsSync(packagePath)) {
+      return "error";
+    }
+    
+    // 检查是否有构建产物
+    const hasDistFolder = fs.existsSync(distPath);
+    const hasLibFolder = fs.existsSync(libPath);
+    
+    if (hasDistFolder || hasLibFolder) {
+      // 检查构建产物是否是最新的
+      const packageJson = JSON.parse(fs.readFileSync(packagePath, "utf8"));
+      if (packageJson.version) {
+        return "ready";
+      }
+    }
+    
+    // 如果没有构建产物，但有 package.json，说明需要构建
+    return "needs-build";
+  } catch (error) {
+    console.warn(`检查包 ${packageKey} 状态时出错:`, error.message);
+    return "error";
+  }
+}
+
+/**
  * 获取包列表
  */
 ipcMain.handle("get-packages", async () => {
   try {
     const configPath = path.join(
       PROJECT_ROOT,
-      "scripts/core/package-configs.js",
+      "scripts/core/package-configs.js"
     );
     delete require.cache[require.resolve(configPath)];
     const { CONFIG } = require(configPath);
 
+    // 为每个包添加状态信息和版本信息
+    const packagesWithStatus = {};
+    for (const [key, pkg] of Object.entries(CONFIG.packages)) {
+      // 读取包的版本信息
+      let version = null;
+      let lastModified = null;
+      try {
+        const packagePath = path.join(PROJECT_ROOT, pkg.path, "package.json");
+        if (fs.existsSync(packagePath)) {
+          const packageJson = JSON.parse(fs.readFileSync(packagePath, "utf8"));
+          version = packageJson.version;
+          
+          // 获取文件最后修改时间
+          const stats = fs.statSync(packagePath);
+          lastModified = formatDateToChinese(stats.mtime);
+        }
+      } catch (err) {
+        console.warn(`无法读取包 ${key} 的版本信息:`, err.message);
+      }
+
+      packagesWithStatus[key] = {
+        ...pkg,
+        status: checkPackageStatus(key, pkg),
+        version: version,
+        lastModified: lastModified,
+      };
+    }
+
     return {
       success: true,
-      data: CONFIG.packages,
+      data: packagesWithStatus,
     };
   } catch (error) {
     return {
@@ -342,7 +425,7 @@ ipcMain.handle("get-package-versions", async () => {
   try {
     const configPath = path.join(
       PROJECT_ROOT,
-      "scripts/core/package-configs.js",
+      "scripts/core/package-configs.js"
     );
     delete require.cache[require.resolve(configPath)];
     const { CONFIG } = require(configPath);
@@ -380,7 +463,7 @@ ipcMain.handle("get-package-versions", async () => {
  * 执行发布命令
  */
 ipcMain.handle("execute-publish", async (event, options) => {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     try {
       // 构建命令参数
       const args = ["scripts/publish.js"];
@@ -430,7 +513,7 @@ ipcMain.handle("execute-publish", async (event, options) => {
       let errorOutput = "";
 
       // 处理标准输出
-      publishProcess.stdout.on("data", (data) => {
+      publishProcess.stdout.on("data", data => {
         const text = data.toString("utf8");
         output += text;
 
@@ -444,7 +527,7 @@ ipcMain.handle("execute-publish", async (event, options) => {
       });
 
       // 处理错误输出
-      publishProcess.stderr.on("data", (data) => {
+      publishProcess.stderr.on("data", data => {
         const text = data.toString("utf8");
         errorOutput += text;
 
@@ -466,7 +549,7 @@ ipcMain.handle("execute-publish", async (event, options) => {
       }
 
       // 处理进程结束
-      publishProcess.on("close", (code) => {
+      publishProcess.on("close", code => {
         publishProcess = null;
 
         const success = code === 0;
@@ -498,7 +581,7 @@ ipcMain.handle("execute-publish", async (event, options) => {
       });
 
       // 处理进程错误
-      publishProcess.on("error", (error) => {
+      publishProcess.on("error", error => {
         publishProcess = null;
 
         // 发送错误事件
@@ -560,7 +643,7 @@ function cleanAnsiCodes(text) {
  * 执行通用命令
  */
 ipcMain.handle("execute-command", async (event, command) => {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     try {
       // 解析命令
       const args = command.split(" ");
@@ -585,7 +668,7 @@ ipcMain.handle("execute-command", async (event, command) => {
       let errorOutput = "";
 
       // 处理标准输出
-      commandProcess.stdout.on("data", (data) => {
+      commandProcess.stdout.on("data", data => {
         const rawText = data.toString("utf8");
         const cleanText = cleanAnsiCodes(rawText);
         output += cleanText;
@@ -600,7 +683,7 @@ ipcMain.handle("execute-command", async (event, command) => {
       });
 
       // 处理错误输出
-      commandProcess.stderr.on("data", (data) => {
+      commandProcess.stderr.on("data", data => {
         const rawText = data.toString("utf8");
         const cleanText = cleanAnsiCodes(rawText);
         errorOutput += cleanText;
@@ -623,7 +706,7 @@ ipcMain.handle("execute-command", async (event, command) => {
       }
 
       // 处理进程结束
-      commandProcess.on("close", (code) => {
+      commandProcess.on("close", code => {
         const success = code === 0;
         const result = {
           success,
@@ -645,7 +728,7 @@ ipcMain.handle("execute-command", async (event, command) => {
       });
 
       // 处理进程错误
-      commandProcess.on("error", (error) => {
+      commandProcess.on("error", error => {
         // 发送错误事件
         if (mainWindow) {
           mainWindow.webContents.send("error", {
@@ -805,7 +888,7 @@ ipcMain.handle("show-save-dialog", async (event, options) => {
 /**
  * 处理未捕获的异常
  */
-process.on("uncaughtException", (error) => {
+process.on("uncaughtException", error => {
   console.error("未捕获的异常:", error);
 
   // 显示错误对话框

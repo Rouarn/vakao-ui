@@ -1,7 +1,7 @@
 {
   "name": "vakao-ui-publisher-gui",
   "version": "1.0.0",
-  "description": "Vakao UI 发布工具 GUI 版本",
+  "description": "Vakao UI 发布管理工具 - 图形界面版本",
   "main": "src/main.js",
   "scripts": {
     "start": "electron .",

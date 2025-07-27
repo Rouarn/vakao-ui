@@ -1,7 +1,7 @@
 {
   "name": "vakao-ui",
   "version": "0.0.2",
-  "description": "A Vue 3 component library based on NaiveUI",
+  "description": "基于 Vue 3 和 TypeScript 的现代化组件库",
   "main": "dist/vakao-ui.umd.js",
   "module": "dist/vakao-ui.es.js",
   "types": "dist/types/index.d.ts",

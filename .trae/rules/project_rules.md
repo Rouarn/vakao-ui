@@ -188,7 +188,7 @@ function legacyFunction(param: any): any {
  *
  * @version 1.0.0
  * @author Vakao UI Team
- * @since 2024-01-01
+ * @since 2025-07-27
  */
 ````
 
@@ -807,11 +807,11 @@ const [value, setValue, remove, clear] = useLocalStorage("key", defaultValue);
 // 自定义命名示例
 const [theme, setTheme, removeTheme, clearTheme] = useLocalStorage(
   "theme",
-  "light",
+  "light"
 );
 const [userInfo, setUserInfo, removeUserInfo, clearUserInfo] = useLocalStorage(
   "user",
-  null,
+  null
 );
 ```
 
@@ -868,7 +868,7 @@ interface UseFetchOptions {
 // Hook 函数签名
 function useFetch<T>(
   url: string | (() => string),
-  options?: UseFetchOptions,
+  options?: UseFetchOptions
 ): UseFetchReturn<T>;
 ```
 
@@ -893,7 +893,7 @@ type UseExampleReturn = [
 // Hook 实现
 export function useExample(
   initialValue?: any,
-  options?: UseExampleOptions,
+  options?: UseExampleOptions
 ): UseExampleReturn {
   // 1. 内部响应式状态
   const state = ref(initialValue);

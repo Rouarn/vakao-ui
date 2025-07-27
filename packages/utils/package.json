@@ -1,7 +1,7 @@
 {
   "name": "@vakao-ui/utils",
   "version": "0.0.2",
-  "description": "Utility functions for Vakao UI - A collection of reusable utility functions",
+  "description": "Vakao UI 工具函数库 - 实用工具函数集合",
   "main": "dist/vakao-ui-utils.umd.js",
   "module": "dist/vakao-ui-utils.es.js",
   "types": "dist/types/index.d.ts",

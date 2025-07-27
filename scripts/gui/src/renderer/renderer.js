@@ -43,8 +43,28 @@ const AppState = {
     theme: "light",
     autoScroll: true,
     notifications: true,
+    autoSave: true,
+    defaultDryRun: false,
   },
 };
+
+// ==================== 工具函数 ====================
+
+/**
+ * 将日期格式化为中文格式：2025年7月27日 17点56分xx秒
+ * @param {Date} date - 要格式化的日期对象
+ * @returns {string} 格式化后的中文日期字符串
+ */
+function formatDateToChinese(date) {
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+  const seconds = date.getSeconds();
+  
+  return `${year}年${month}月${day}日 ${hours}点${minutes}分${seconds}秒`;
+}
 
 // ==================== jQuery DOM 元素缓存 ====================
 
@@ -104,6 +124,8 @@ const $elements = {
   themeSelect: null,
   autoScrollCheckbox: null,
   notificationsCheckbox: null,
+  autoSaveCheckbox: null,
+  defaultDryRunCheckbox: null,
 
   // 项目信息
   projectName: null,
@@ -212,6 +234,8 @@ function initializeElements() {
   $elements.themeSelect = $("#themeSelect");
   $elements.autoScrollCheckbox = $("#autoScrollCheck");
   $elements.notificationsCheckbox = $("#notificationsCheck");
+  $elements.autoSaveCheckbox = $("#autoSaveCheck");
+  $elements.defaultDryRunCheckbox = $("#defaultDryRunCheck");
 
   // 项目信息
   $elements.projectName = $("#projectName");
@@ -277,6 +301,9 @@ function bindEventListeners() {
   $elements.copyCommandBtn.on("click", copyCommandFromPreview);
   $elements.executeFromPreviewBtn.on("click", executeCommandFromPreview);
 
+  // 头部按钮事件
+  bindHeaderEvents();
+
   // 设置事件
   bindSettingsEvents();
 
@@ -324,6 +351,27 @@ function bindDeploymentEvents() {
 }
 
 /**
+ * 绑定头部按钮事件
+ */
+function bindHeaderEvents() {
+  // 设置按钮
+  const settingsBtn = document.getElementById("settingsBtn");
+  if (settingsBtn) {
+    settingsBtn.addEventListener("click", () => {
+      switchTab("settings");
+    });
+  }
+
+  // 帮助按钮
+  const helpBtn = document.getElementById("helpBtn");
+  if (helpBtn) {
+    helpBtn.addEventListener("click", () => {
+      showHelpModal();
+    });
+  }
+}
+
+/**
  * 使用 jQuery 绑定设置相关事件
  */
 function bindSettingsEvents() {
@@ -333,12 +381,22 @@ function bindSettingsEvents() {
 
   $elements.autoScrollCheckbox.on("change", function () {
     AppState.settings.autoScroll = $(this).is(":checked");
-    saveSettings();
+    // 不立即保存，等待用户点击保存按钮
   });
 
   $elements.notificationsCheckbox.on("change", function () {
     AppState.settings.notifications = $(this).is(":checked");
-    saveSettings();
+    // 不立即保存，等待用户点击保存按钮
+  });
+
+  $elements.autoSaveCheckbox.on("change", function () {
+    AppState.settings.autoSave = $(this).is(":checked");
+    // 不立即保存，等待用户点击保存按钮
+  });
+
+  $elements.defaultDryRunCheckbox.on("change", function () {
+    AppState.settings.defaultDryRun = $(this).is(":checked");
+    // 不立即保存，等待用户点击保存按钮
   });
 
   // 设置按钮事件
@@ -366,19 +424,19 @@ function bindSettingsEvents() {
  */
 function bindIPCEvents() {
   // 监听日志输出
-  window.electronAPI.onLogOutput((data) => {
+  window.electronAPI.onLogOutput(data => {
     // 根据输出类型设置日志类型
     const logType = data.type === "stderr" ? "error" : "info";
     addLog(logType, data.data);
   });
 
   // 监听进程状态变化
-  window.electronAPI.onProcessStatus((status) => {
+  window.electronAPI.onProcessStatus(status => {
     handleProcessStatus(status);
   });
 
   // 监听错误
-  window.electronAPI.onError((error) => {
+  window.electronAPI.onError(error => {
     showError(error.message);
     updateStatus("error", "错误: " + error.message);
   });
@@ -408,7 +466,10 @@ function bindKeyboardShortcuts() {
     // Escape: 关闭模态框
     if (e.key === "Escape") {
       // 检查哪个模态框是打开的并关闭它
-      if (
+      const $helpModal = $("#helpModal");
+      if ($helpModal.length && $helpModal.hasClass("active")) {
+        hideHelpModal();
+      } else if (
         $elements.commandPreviewModal &&
         $elements.commandPreviewModal.hasClass("active")
       ) {
@@ -547,9 +608,14 @@ async function loadPackages() {
  */
 async function loadSettings() {
   try {
-    const settings = await window.electronAPI.getSettings();
-    AppState.settings = { ...AppState.settings, ...settings };
-    updateSettingsUI();
+    const response = await window.electronAPI.getSettings();
+    if (response.success && response.data) {
+      AppState.settings = { ...AppState.settings, ...response.data };
+      updateSettingsUI();
+      console.log("设置加载成功:", AppState.settings);
+    } else {
+      console.error("加载设置失败:", response.error);
+    }
   } catch (error) {
     console.error("加载设置失败:", error);
   }
@@ -560,9 +626,16 @@ async function loadSettings() {
  */
 async function saveSettings() {
   try {
-    await window.electronAPI.saveSettings(AppState.settings);
+    const response = await window.electronAPI.saveSettings(AppState.settings);
+    if (response.success) {
+      console.log("设置保存成功:", AppState.settings);
+    } else {
+      console.error("保存设置失败:", response.error);
+      showError("保存设置失败: " + response.error);
+    }
   } catch (error) {
     console.error("保存设置失败:", error);
+    showError("保存设置失败: " + error.message);
   }
 }
 
@@ -577,25 +650,25 @@ async function resetSettings() {
       return;
     }
 
-    // 重置到默认设置
-    const defaultSettings = {
-      theme: "light",
-      autoScroll: true,
-      notifications: true,
-    };
-
-    AppState.settings = defaultSettings;
-
     // 调用主进程重置设置
-    await window.electronAPI.resetSettings();
+    const response = await window.electronAPI.resetSettings();
 
-    // 更新UI
-    updateSettingsUI();
+    if (response.success && response.data) {
+      // 使用主进程返回的默认设置
+      AppState.settings = { ...AppState.settings, ...response.data };
 
-    // 应用主题
-    applyTheme(defaultSettings.theme);
+      // 更新UI
+      updateSettingsUI();
 
-    showToast("设置已重置为默认值", "success");
+      // 应用主题
+      applyTheme(AppState.settings.theme);
+
+      showToast("设置已重置为默认值", "success");
+      console.log("设置重置成功:", AppState.settings);
+    } else {
+      console.error("重置设置失败:", response.error);
+      showError("重置设置失败: " + response.error);
+    }
   } catch (error) {
     console.error("重置设置失败:", error);
     showError("重置设置失败: " + error.message);
@@ -716,7 +789,7 @@ function updatePackageGrid(packages) {
             刷新
           </button>
         </div>
-      `,
+      `
         )
         .fadeIn(300);
       return;
@@ -817,6 +890,7 @@ function getPackageStatusText(status) {
     building: "构建中",
     error: "错误",
     published: "已发布",
+    "needs-build": "需要构建",
     unknown: "未知",
   };
   return statusMap[status] || "未知";
@@ -885,7 +959,7 @@ function togglePackageSelection(packageId, $card) {
  * @returns {string} 包名称
  */
 function getPackageName(packageId) {
-  const pkg = AppState.packages.find((p) => p.id === packageId);
+  const pkg = AppState.packages.find(p => p.id === packageId);
   return pkg ? pkg.displayName || pkg.name : packageId;
 }
 
@@ -900,10 +974,10 @@ function updateSelectionCounter() {
     if ($counter.length === 0) {
       // 创建计数器
       $(
-        '<div class="selection-counter" style="margin-bottom: 12px; padding: 8px 12px; background: var(--primary-color); color: white; border-radius: var(--radius-md); text-align: center; font-size: var(--font-size-sm);">',
+        '<div class="selection-counter" style="margin-bottom: 12px; padding: 8px 12px; background: var(--primary-color); color: white; border-radius: var(--radius-md); text-align: center; font-size: var(--font-size-sm);">'
       )
         .html(
-          `<i class="fas fa-check-circle"></i> 已选择 <span class="count">${count}</span> 个包`,
+          `<i class="fas fa-check-circle"></i> 已选择 <span class="count">${count}</span> 个包`
         )
         .prependTo($elements.packageGrid.parent())
         .hide()
@@ -990,7 +1064,7 @@ function updatePackagesOverview(packages) {
 
   $elements.packagesOverview.empty();
 
-  packages.forEach((pkg) => {
+  packages.forEach(pkg => {
     const card = createPackageOverviewCard(pkg);
     $elements.packagesOverview.append(card);
   });
@@ -1052,13 +1126,13 @@ function updatePublishOptions() {
   if ($elements.syncVersionCheckbox && $elements.syncVersionCheckbox.length) {
     $elements.syncVersionCheckbox.prop(
       "checked",
-      AppState.publishOptions.syncVersion,
+      AppState.publishOptions.syncVersion
     );
   }
   if ($elements.skipDeployCheckbox && $elements.skipDeployCheckbox.length) {
     $elements.skipDeployCheckbox.prop(
       "checked",
-      AppState.publishOptions.skipDeploy,
+      AppState.publishOptions.skipDeploy
     );
   }
   if ($elements.deployStrategySelect && $elements.deployStrategySelect.length) {
@@ -1082,7 +1156,19 @@ function updateSettingsUI() {
   ) {
     $elements.notificationsCheckbox.prop(
       "checked",
-      AppState.settings.notifications,
+      AppState.settings.notifications
+    );
+  }
+  if ($elements.autoSaveCheckbox && $elements.autoSaveCheckbox.length) {
+    $elements.autoSaveCheckbox.prop("checked", AppState.settings.autoSave);
+  }
+  if (
+    $elements.defaultDryRunCheckbox &&
+    $elements.defaultDryRunCheckbox.length
+  ) {
+    $elements.defaultDryRunCheckbox.prop(
+      "checked",
+      AppState.settings.defaultDryRun
     );
   }
 }
@@ -1164,7 +1250,7 @@ async function openPackageDirectory(packagePath) {
  */
 async function buildPackage(packageId) {
   try {
-    const pkg = AppState.packages.find((p) => p.id === packageId);
+    const pkg = AppState.packages.find(p => p.id === packageId);
     if (!pkg || !pkg.buildCommand) {
       showError("包不存在或没有构建命令");
       return;
@@ -1187,7 +1273,7 @@ async function buildPackage(packageId) {
  * @param {string} message - 日志消息
  */
 function addLog(type, message) {
-  const timestamp = new Date().toLocaleTimeString();
+  const timestamp = formatDateToChinese(new Date());
   const logEntry = {
     timestamp,
     type,
@@ -1290,7 +1376,7 @@ function updateLogDisplay() {
           <h3>暂无日志</h3>
           <p>执行命令后日志将显示在这里</p>
         </div>
-      `,
+      `
         )
         .fadeIn(300);
       return;
@@ -1371,14 +1457,14 @@ function clearLogs() {
         <h3>日志已清空</h3>
         <p>执行命令后日志将显示在这里</p>
       </div>
-    `,
+    `
         )
         .hide()
         .fadeIn(300);
 
       showToast("日志已清空", "success");
     },
-    $logContainer.children(".log-entry").length * 20 + 200,
+    $logContainer.children(".log-entry").length * 20 + 200
   );
 }
 
@@ -1386,7 +1472,7 @@ function clearLogs() {
  * 异步清空日志，返回 Promise
  */
 function clearLogsAsync() {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     const $logContainer = $elements.logContainer;
     if (!$logContainer || !$logContainer.length) {
       resolve();
@@ -1420,7 +1506,7 @@ function clearLogsAsync() {
 
         resolve();
       },
-      $entries.length * 20 + 200,
+      $entries.length * 20 + 200
     );
   });
 }
@@ -1446,8 +1532,7 @@ async function exportLogs() {
 
     const content = AppState.logs
       .map(
-        (log) =>
-          `[${log.timestamp}] [${log.type.toUpperCase()}] ${log.message}`,
+        log => `[${log.timestamp}] [${log.type.toUpperCase()}] ${log.message}`
       )
       .join("\n");
 
@@ -1522,7 +1607,7 @@ function showCommandModal(title, command) {
       {
         scale: 1,
       },
-      200,
+      200
     );
 
   // 聚焦到取消按钮
@@ -1556,7 +1641,7 @@ function hideCommandModal() {
       {
         scale: 0.8,
       },
-      200,
+      200
     )
     .end()
     .fadeOut(300, function () {
@@ -1655,7 +1740,7 @@ function showCommandPreviewModal(title, command, showExecuteButton = true) {
       {
         scale: 1,
       },
-      200,
+      200
     );
 
   // 添加键盘事件监听
@@ -1681,7 +1766,7 @@ function hideCommandPreviewModal() {
       {
         scale: 0.8,
       },
-      200,
+      200
     )
     .end()
     .fadeOut(300, function () {
@@ -1712,7 +1797,7 @@ function copyCommandFromPreview() {
     .then(() => {
       showToast("命令已复制到剪贴板", "success");
     })
-    .catch((err) => {
+    .catch(err => {
       console.error("复制失败:", err);
       showError("复制命令失败");
     });
@@ -1796,7 +1881,7 @@ function handleProcessStatus(status) {
       updateStatus("error", `执行失败 (退出码: ${status.code ?? 1})`);
       addLog(
         "error",
-        status.message || `进程执行失败，退出码: ${status.code ?? 1}`,
+        status.message || `进程执行失败，退出码: ${status.code ?? 1}`
       );
       showToast(status.message || "命令执行失败", "error");
       if (AppState.settings.notifications) {
@@ -1819,7 +1904,7 @@ function handleProcessStatus(status) {
 function changeTheme(theme) {
   AppState.settings.theme = theme;
   applyTheme(theme);
-  saveSettings();
+  // 不立即保存，等待用户点击保存按钮
 }
 
 /**
@@ -1828,6 +1913,82 @@ function changeTheme(theme) {
  */
 function applyTheme(theme) {
   document.documentElement.setAttribute("data-theme", theme);
+}
+
+// ==================== 帮助功能 ====================
+
+/**
+ * 显示帮助模态框
+ */
+function showHelpModal() {
+  const $helpModal = $("#helpModal");
+
+  if (!$helpModal.length) {
+    console.error("帮助模态框元素未找到");
+    return;
+  }
+
+  // 绑定关闭事件（使用 off 先解绑避免重复绑定）
+  $helpModal
+    .find(".modal-close")
+    .off("click.helpModal")
+    .on("click.helpModal", function () {
+      hideHelpModal($helpModal);
+    });
+
+  $helpModal
+    .find("#closeHelpModalBtn")
+    .off("click.helpModal")
+    .on("click.helpModal", function () {
+      hideHelpModal($helpModal);
+    });
+
+  // 点击背景关闭
+  $helpModal.off("click.helpModal").on("click.helpModal", function (e) {
+    if (e.target === this) {
+      hideHelpModal($helpModal);
+    }
+  });
+
+  // 显示模态框
+  $helpModal
+    .addClass("active")
+    .hide()
+    .fadeIn(300)
+    .find(".modal-content")
+    .css("transform", "scale(0.8)")
+    .animate({ scale: 1 }, 200);
+}
+
+/**
+ * 隐藏帮助模态框
+ * @param {jQuery} $modal - 模态框元素
+ */
+function hideHelpModal($modal) {
+  if ($modal && $modal.length) {
+    $modal
+      .find(".modal-content")
+      .animate({ scale: 0.8 }, 200)
+      .end()
+      .fadeOut(300, function () {
+        $(this).removeClass("active");
+        // 解绑事件避免内存泄漏
+        $(this).off(".helpModal");
+      });
+  } else {
+    // 如果没有传入模态框参数，查找现有的帮助模态框
+    const $existingModal = $("#helpModal");
+    if ($existingModal.length) {
+      $existingModal
+        .find(".modal-content")
+        .animate({ scale: 0.8 }, 200)
+        .end()
+        .fadeOut(300, function () {
+          $(this).removeClass("active");
+          $(this).off(".helpModal");
+        });
+    }
+  }
 }
 
 // ==================== 工具函数 ====================
@@ -1957,7 +2118,7 @@ function scrollToBottom(element) {
         scrollTop: $target[0].scrollHeight,
       },
       300,
-      "swing",
+      "swing"
     );
   }
 }
@@ -2003,7 +2164,7 @@ function showSuccess(message) {
 function showNotification(title, message, type = "info") {
   if ("Notification" in window && Notification.permission === "granted") {
     // 创建简单的 SVG 图标作为 data URL，避免文件路径问题
-    const getIconDataUrl = (notificationType) => {
+    const getIconDataUrl = notificationType => {
       const iconMap = {
         success:
           "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTAiIGZpbGw9IiMyOGE3NDUiLz4KPHBhdGggZD0ibTkgMTIgMiAyIDQtNCIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPC9zdmc+",
@@ -2131,7 +2292,7 @@ function copyToClipboard(text) {
       .then(() => {
         console.log("文本已复制到剪贴板");
       })
-      .catch((err) => {
+      .catch(err => {
         console.error("复制失败:", err);
         fallbackCopyTextToClipboard(text);
       });
@@ -2208,7 +2369,9 @@ function showPackageDetails(pkg) {
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-secondary modal-close">关闭</button>
+          <button class="btn btn-secondary modal-close">
+            <i class="fas fa-times"></i> 关闭
+          </button>
           <button class="btn btn-primary open-directory" data-path="${pkg.path}">
             <i class="fas fa-folder-open"></i> 打开目录
           </button>
@@ -2337,7 +2500,7 @@ function initializeBatchOperations() {
         $btn.prop("disabled", false).html(originalText);
         showToast("包信息已刷新", "success");
       })
-      .catch((error) => {
+      .catch(error => {
         $btn.prop("disabled", false).html(originalText);
         showError("刷新失败: " + error.message);
       });
@@ -2350,7 +2513,7 @@ function initializeBatchOperations() {
  * 等待 electronAPI 准备就绪
  */
 function waitForElectronAPI() {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     if (window.electronAPI) {
       resolve();
     } else {

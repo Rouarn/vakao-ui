@@ -1,7 +1,7 @@
 {
   "name": "@vakao-ui/docs",
   "version": "0.0.2",
-  "description": "Documentation for vakao-ui",
+  "description": "Vakao UI 组件库文档站点",
   "type": "module",
   "scripts": {
     "dev": "vitepress dev",

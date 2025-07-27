@@ -201,7 +201,7 @@ module.exports = {
         "@typescript-eslint/no-var-requires": "off",
         "comma-dangle": "off", // 关闭尾随逗号要求
       },
-    },
+    }
     {
       // TypeScript 声明文件
       files: ["*.d.ts"],

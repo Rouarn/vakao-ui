@@ -1,7 +1,7 @@
 {
   "name": "@vakao-ui/components",
   "version": "1.0.0",
-  "description": "Components for vakao-ui",
+  "description": "Vakao UI 核心组件库",
   "main": "index.ts",
   "module": "index.ts",
   "types": "index.ts",
