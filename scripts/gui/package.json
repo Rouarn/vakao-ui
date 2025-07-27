@@ -4,8 +4,8 @@
   "description": "Vakao UI 发布管理工具 - 图形界面版本",
   "main": "src/main.js",
   "scripts": {
-    "start": "electron .",
-    "dev": "electron . --dev --disable-gpu --no-sandbox",
+    "start": "chcp 65001 && electron .",
+    "dev": "chcp 65001 && electron . --dev --disable-gpu --no-sandbox",
     "build": "npm run build:prepare && electron-builder",
     "build:win": "npm run build:prepare && electron-builder --win",
     "build:mac": "npm run build:prepare && electron-builder --mac",

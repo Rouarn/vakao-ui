@@ -36,7 +36,7 @@ function formatDateToChinese(date) {
   const hours = date.getHours();
   const minutes = date.getMinutes();
   const seconds = date.getSeconds();
-  
+
   return `${year}年${month}月${day}日 ${hours}点${minutes}分${seconds}秒`;
 }
 
@@ -52,7 +52,7 @@ let mainWindow = null;
 let publishProcess = null;
 
 /** 项目根目录 */
-const PROJECT_ROOT = app.isPackaged 
+const PROJECT_ROOT = app.isPackaged
   ? path.dirname(process.execPath) // 打包后：可执行文件所在目录
   : path.resolve(__dirname, "../../.."); // 开发时：相对于源码的项目根目录
 
@@ -339,19 +339,23 @@ ipcMain.handle("get-project-info", async () => {
  */
 function checkPackageStatus(packageKey, packageConfig) {
   try {
-    const packagePath = path.join(PROJECT_ROOT, packageConfig.path, "package.json");
+    const packagePath = path.join(
+      PROJECT_ROOT,
+      packageConfig.path,
+      "package.json"
+    );
     const distPath = path.join(PROJECT_ROOT, packageConfig.path, "dist");
     const libPath = path.join(PROJECT_ROOT, packageConfig.path, "lib");
-    
+
     // 检查 package.json 是否存在
     if (!fs.existsSync(packagePath)) {
       return "error";
     }
-    
+
     // 检查是否有构建产物
     const hasDistFolder = fs.existsSync(distPath);
     const hasLibFolder = fs.existsSync(libPath);
-    
+
     if (hasDistFolder || hasLibFolder) {
       // 检查构建产物是否是最新的
       const packageJson = JSON.parse(fs.readFileSync(packagePath, "utf8"));
@@ -359,7 +363,7 @@ function checkPackageStatus(packageKey, packageConfig) {
         return "ready";
       }
     }
-    
+
     // 如果没有构建产物，但有 package.json，说明需要构建
     return "needs-build";
   } catch (error) {
@@ -391,7 +395,7 @@ ipcMain.handle("get-packages", async () => {
         if (fs.existsSync(packagePath)) {
           const packageJson = JSON.parse(fs.readFileSync(packagePath, "utf8"));
           version = packageJson.version;
-          
+
           // 获取文件最后修改时间
           const stats = fs.statSync(packagePath);
           lastModified = formatDateToChinese(stats.mtime);
@@ -906,6 +910,16 @@ process.on("unhandledRejection", (reason, promise) => {
   console.error("未处理的 Promise 拒绝:", reason);
 });
 
-console.log("Vakao UI Publisher GUI 启动完成");
-console.log("项目根目录:", PROJECT_ROOT);
-console.log("发布脚本路径:", PUBLISH_SCRIPT);
+// 使用 Buffer 确保中文字符正确输出
+const logMessage = message => {
+  if (process.platform === "win32") {
+    // Windows 平台使用 UTF-8 编码输出
+    process.stdout.write(Buffer.from(message + "\n", "utf8"));
+  } else {
+    console.log(message);
+  }
+};
+
+logMessage("Vakao UI Publisher GUI 启动完成");
+logMessage("项目根目录: " + PROJECT_ROOT);
+logMessage("发布脚本路径: " + PUBLISH_SCRIPT);

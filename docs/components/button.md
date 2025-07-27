@@ -12,7 +12,7 @@
   <vk-button type="success">成功按钮</vk-button>
   <vk-button type="info">信息按钮</vk-button>
   <vk-button type="warning">警告按钮</vk-button>
-  <vk-button type="error">错误按钮</vk-button>
+  <vk-button type="danger">错误按钮</vk-button>
   
   <template #code>
 
@@ -23,7 +23,7 @@
   <vk-button type="success">成功按钮</vk-button>
   <vk-button type="info">信息按钮</vk-button>
   <vk-button type="warning">警告按钮</vk-button>
-  <vk-button type="error">错误按钮</vk-button>
+  <vk-button type="danger">错误按钮</vk-button>
 </template>
 ```
 
@@ -253,7 +253,7 @@
 
 | 名称         | 类型                                                                                  | 默认值      | 说明                                                                               |
 | ------------ | ------------------------------------------------------------------------------------- | ----------- | ---------------------------------------------------------------------------------- |
-| type         | `'default' \| 'tertiary' \| 'primary' \| 'success' \| 'info' \| 'warning' \| 'error'` | `'default'` | 按钮类型                                                                           |
+| type         | `'default' \| 'tertiary' \| 'primary' \| 'success' \| 'info' \| 'warning' \| 'danger'` | `'default'` | 按钮类型                                                                           |
 | size         | `'tiny' \| 'small' \| 'medium' \| 'large'`                                            | `'medium'`  | 按钮大小                                                                           |
 | disabled     | `boolean`                                                                             | `false`     | 是否禁用                                                                           |
 | loading      | `boolean`                                                                             | `false`     | 是否加载中                                                                         |
