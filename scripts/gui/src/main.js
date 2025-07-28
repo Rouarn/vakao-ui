@@ -524,15 +524,40 @@ ipcMain.handle("execute-publish", async (event, options) => {
         const text = data.toString("utf8");
         output += text;
 
-        // 使用通用的GUI输入检测函数
-        detectAndHandleGUIInput(text, publishProcess, (normalText) => {
-          if (mainWindow && normalText.trim()) {
+        // 检查是否包含GUI输入请求
+        const guiRequestMatch = text.match(/__VAKAO_GUI_REQUEST__(.+?)__VAKAO_GUI_REQUEST_END__/s);
+        if (guiRequestMatch) {
+          try {
+            const request = JSON.parse(guiRequestMatch[1]);
+            handleGUIInputRequest(request, publishProcess);
+            
+            // 移除GUI请求标记，只发送普通输出
+            const cleanText = text.replace(/__VAKAO_GUI_REQUEST__.+?__VAKAO_GUI_REQUEST_END__/gs, '');
+            if (cleanText.trim() && mainWindow) {
+              mainWindow.webContents.send("log-output", {
+                type: "stdout",
+                data: cleanText,
+              });
+            }
+          } catch (error) {
+            console.error('解析GUI输入请求失败:', error);
+            // 如果解析失败，发送原始输出
+            if (mainWindow) {
+              mainWindow.webContents.send("log-output", {
+                type: "stdout",
+                data: text,
+              });
+            }
+          }
+        } else {
+          // 普通输出，直接发送到渲染进程
+          if (mainWindow) {
             mainWindow.webContents.send("log-output", {
               type: "stdout",
-              data: normalText,
+              data: text,
             });
           }
-        });
+        }
       });
 
       // 处理错误输出
@@ -631,44 +656,6 @@ ipcMain.handle("kill-publish-process", async () => {
     return { success: false, error: error.message };
   }
 });
-
-/**
- * 通用的GUI输入检测和处理函数
- * @param {string} text - 输出文本
- * @param {Object} process - 子进程对象
- * @param {Function} onNormalOutput - 处理普通输出的回调函数
- * @returns {boolean} 是否检测到GUI输入请求
- */
-function detectAndHandleGUIInput(text, process, onNormalOutput) {
-  // 检查是否包含GUI输入请求
-  const guiRequestMatch = text.match(/__VAKAO_GUI_REQUEST__(.+?)__VAKAO_GUI_REQUEST_END__/s);
-  if (guiRequestMatch) {
-    try {
-      const request = JSON.parse(guiRequestMatch[1]);
-      handleGUIInputRequest(request, process);
-      
-      // 移除GUI请求标记，只发送普通输出
-      const cleanText = text.replace(/__VAKAO_GUI_REQUEST__.+?__VAKAO_GUI_REQUEST_END__/gs, '');
-      if (cleanText.trim() && onNormalOutput) {
-        onNormalOutput(cleanText);
-      }
-      return true;
-    } catch (error) {
-      console.error('解析GUI输入请求失败:', error);
-      // 如果解析失败，发送原始输出
-      if (onNormalOutput) {
-        onNormalOutput(text);
-      }
-      return false;
-    }
-  } else {
-    // 没有GUI请求，正常处理输出
-    if (onNormalOutput) {
-      onNormalOutput(text);
-    }
-    return false;
-  }
-}
 
 /**
  * 处理GUI输入请求
@@ -832,16 +819,41 @@ ipcMain.handle("execute-command", async (event, command) => {
         const text = data.toString("utf8");
         output += text;
 
-        // 使用通用的GUI输入检测函数
-        detectAndHandleGUIInput(text, commandProcess, (normalText) => {
-          const cleanText = cleanAnsiCodes(normalText);
+        // 检查是否包含GUI输入请求
+        const guiRequestMatch = text.match(/__VAKAO_GUI_REQUEST__(.+?)__VAKAO_GUI_REQUEST_END__/s);
+        if (guiRequestMatch) {
+          try {
+            const request = JSON.parse(guiRequestMatch[1]);
+            handleGUIInputRequest(request, commandProcess);
+            
+            // 移除GUI请求标记，只发送普通输出
+            const cleanText = text.replace(/__VAKAO_GUI_REQUEST__.+?__VAKAO_GUI_REQUEST_END__/gs, '');
+            if (cleanText.trim() && mainWindow) {
+              mainWindow.webContents.send("log-output", {
+                type: "stdout",
+                data: cleanAnsiCodes(cleanText),
+              });
+            }
+          } catch (error) {
+            console.error('解析GUI输入请求失败:', error);
+            // 如果解析失败，发送原始输出
+            if (mainWindow && text.trim()) {
+              mainWindow.webContents.send("log-output", {
+                type: "stdout",
+                data: cleanAnsiCodes(text),
+              });
+            }
+          }
+        } else {
+          // 没有GUI请求，正常处理输出
+          const cleanText = cleanAnsiCodes(text);
           if (mainWindow && cleanText.trim()) {
             mainWindow.webContents.send("log-output", {
               type: "stdout",
               data: cleanText,
             });
           }
-        });
+        }
       });
 
       // 处理错误输出
