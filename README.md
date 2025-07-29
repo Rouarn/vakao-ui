@@ -252,7 +252,7 @@ pnpm deploy:docs
 pnpm deploy:preview
 ```
 
-详细部署说明请参考 [DEPLOY.md](./scripts/docs/DEPLOY.md/DEPLOY.md)
+详细部署说明请参考 [DEPLOY.md](./scripts/docs/DEPLOY.md)
 
 ### 发布组件库
 
