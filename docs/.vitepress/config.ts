@@ -91,6 +91,8 @@ export default defineConfig({
           items: [
             { text: "useToggle", link: "/hooks/use-toggle" },
             { text: "useCounter", link: "/hooks/use-counter" },
+            { text: "useBoolean", link: "/hooks/use-boolean" },
+            { text: "useArray", link: "/hooks/use-array" },
             { text: "useLocalStorage", link: "/hooks/use-local-storage" },
           ],
         },
@@ -103,7 +105,35 @@ export default defineConfig({
         },
         {
           text: "数据获取",
-          items: [{ text: "useFetch", link: "/hooks/use-fetch" }],
+          items: [
+            { text: "useFetch", link: "/hooks/use-fetch" },
+            { text: "useAsync", link: "/hooks/use-async" },
+          ],
+        },
+        {
+          text: "DOM 操作",
+          items: [
+            { text: "useClickOutside", link: "/hooks/use-click-outside" },
+            { text: "useEventListener", link: "/hooks/use-event-listener" },
+            { text: "useWindowSize", link: "/hooks/use-window-size" },
+            { text: "useFullscreen", link: "/hooks/use-fullscreen" },
+          ],
+        },
+        {
+          text: "用户交互",
+          items: [
+            { text: "useHover", link: "/hooks/use-hover" },
+            { text: "useKeyPress", link: "/hooks/use-key-press" },
+            { text: "useDrag", link: "/hooks/use-drag" },
+            { text: "useMouse", link: "/hooks/use-mouse" },
+          ],
+        },
+        {
+          text: "系统功能",
+          items: [
+            { text: "useClipboard", link: "/hooks/use-clipboard" },
+            { text: "usePagination", link: "/hooks/use-pagination" },
+          ],
         },
       ],
       "/utils/": [

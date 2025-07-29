@@ -15,6 +15,8 @@ Vakao UI 提供了一系列实用的 Vue 3 Composition API hooks，帮助您更�
 
 - [useToggle](/hooks/use-toggle) - 布尔值切换钩子
 - [useCounter](/hooks/use-counter) - 计数器钩子
+- [useBoolean](/hooks/use-boolean) - 布尔状态管理钩子
+- [useArray](/hooks/use-array) - 数组操作钩子
 - [useLocalStorage](/hooks/use-local-storage) - 本地存储钩子
 
 ### 性能优化
@@ -25,6 +27,26 @@ Vakao UI 提供了一系列实用的 Vue 3 Composition API hooks，帮助您更�
 ### 数据获取
 
 - [useFetch](/hooks/use-fetch) - 数据获取钩子
+- [useAsync](/hooks/use-async) - 异步操作钩子
+
+### DOM 操作
+
+- [useClickOutside](/hooks/use-click-outside) - 外部点击检测钩子
+- [useEventListener](/hooks/use-event-listener) - 事件监听钩子
+- [useWindowSize](/hooks/use-window-size) - 窗口尺寸监听钩子
+- [useFullscreen](/hooks/use-fullscreen) - 全屏操作钩子
+
+### 用户交互
+
+- [useHover](/hooks/use-hover) - 悬停状态检测钩子
+- [useKeyPress](/hooks/use-key-press) - 按键检测钩子
+- [useDrag](/hooks/use-drag) - 拖拽操作钩子
+- [useMouse](/hooks/use-mouse) - 鼠标跟踪和手势识别钩子
+
+### 系统功能
+
+- [useClipboard](/hooks/use-clipboard) - 剪贴板操作钩子
+- [usePagination](/hooks/use-pagination) - 分页管理钩子
 
 ## 使用方式
 
