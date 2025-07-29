@@ -1792,7 +1792,7 @@ onUnmounted(() => {
 
 `useMouse` 返回一个包含鼠标状态的响应式对象：
 
-```typescript
+```javascript
 const mouse = useMouse(target, options);
 ```
 
@@ -1804,30 +1804,20 @@ const mouse = useMouse(target, options);
 
 ### 类型定义
 
-```typescript
-export interface Position {
-  x: number;
-  y: number;
-}
-
-export type MouseSourceType = "mouse" | "touch" | null;
-
-export interface UseMouseOptions {
-  touch?: boolean;
-  resetOnTouchEnds?: boolean;
-  initialValue?: Position;
-}
-
-export interface UseMouseReturn {
-  x: Ref<number>;
-  y: Ref<number>;
-  sourceType: Ref<MouseSourceType>;
-}
-
-export function useMouse(
-  target?: MaybeRefOrGetter<Element>,
-  options?: UseMouseOptions
-): UseMouseReturn;
+```javascript
+// 类型定义（仅供参考）
+// Position: { x: number, y: number }
+// MouseSourceType: "mouse" | "touch" | null
+// UseMouseOptions: {
+//   touch?: boolean,
+//   resetOnTouchEnds?: boolean,
+//   initialValue?: Position
+// }
+// UseMouseReturn: {
+//   x: Ref<number>,
+//   y: Ref<number>,
+//   sourceType: Ref<MouseSourceType>
+// }
 ```
 
 ## 使用场景
@@ -1843,8 +1833,8 @@ export function useMouse(
 
 ### 相对坐标计算
 
-```typescript
-const container = ref<HTMLElement>();
+```javascript
+const container = ref();
 const mouse = useMouse(container);
 
 // 获取相对于容器的坐标
@@ -1861,7 +1851,7 @@ const relativePosition = computed(() => {
 
 ### 鼠标按键检测
 
-```typescript
+```javascript
 const mouse = useMouse();
 const mouseButtons = ref(0);
 

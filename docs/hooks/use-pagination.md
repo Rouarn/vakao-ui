@@ -386,7 +386,7 @@
 
 `usePagination` 返回一个包含分页信息和操作方法的数组：
 
-```typescript
+```javascript
 const [paginationInfo, actions] = usePagination(options);
 ```
 
@@ -423,47 +423,30 @@ const [paginationInfo, actions] = usePagination(options);
 
 ### 类型定义
 
-```typescript
-export interface UsePaginationOptions {
-  initialPage?: number;
-  initialPageSize?: number;
-  total?: number | Ref<number>;
-  pageSizeOptions?: number[];
-  onPageChange?: (page: number) => void;
-  onPageSizeChange?: (pageSize: number) => void;
-  onChange?: (page: number, pageSize: number) => void;
-}
-
-export interface PaginationInfo {
-  current: number;
-  pageSize: number;
-  total: number;
-  totalPages: number;
-  hasPrev: boolean;
-  hasNext: boolean;
-  startIndex: number;
-  endIndex: number;
-}
-
-export interface PaginationActions {
-  goToPage: (page: number) => void;
-  prev: () => void;
-  next: () => void;
-  first: () => void;
-  last: () => void;
-  setPageSize: (pageSize: number) => void;
-  setTotal: (total: number) => void;
-  reset: () => void;
-}
-
-export type UsePaginationReturn = [
-  ComputedRef<PaginationInfo>,
-  PaginationActions,
-];
-
-export function usePagination(
-  options?: UsePaginationOptions
-): UsePaginationReturn;
+```javascript
+// 类型定义（仅供参考）
+// UsePaginationOptions: {
+//   initialPage?: number,
+//   initialPageSize?: number,
+//   total?: number | Ref,
+//   pageSizeOptions?: number[],
+//   onPageChange?: function,
+//   onPageSizeChange?: function,
+//   onChange?: function
+// }
+//
+// PaginationInfo: {
+//   current: number,
+//   pageSize: number,
+//   total: number,
+//   totalPages: number,
+//   hasPrev: boolean,
+//   hasNext: boolean,
+//   startIndex: number,
+//   endIndex: number
+// }
+//
+// 返回值: [paginationInfo, actions]
 ```
 
 ## 使用场景
@@ -479,7 +462,7 @@ export function usePagination(
 
 ### 服务端分页
 
-```typescript
+```javascript
 const total = ref(0);
 const loading = ref(false);
 const data = ref([]);
@@ -495,7 +478,7 @@ const [pagination, actions] = usePagination({
   },
 });
 
-const loadData = async (page: number, pageSize: number) => {
+const loadData = async (page, pageSize) => {
   loading.value = true;
   try {
     const response = await api.getData({ page, pageSize });
@@ -509,7 +492,7 @@ const loadData = async (page: number, pageSize: number) => {
 
 ### 前端分页
 
-```typescript
+```javascript
 const allData = ref([
   /* 所有数据 */
 ]);
@@ -527,7 +510,7 @@ const currentPageData = computed(() => {
 
 ### 搜索结果分页
 
-```typescript
+```javascript
 const searchKeyword = ref("");
 const filteredData = computed(() => {
   return allData.value.filter(item => item.name.includes(searchKeyword.value));
@@ -545,7 +528,7 @@ watch(searchKeyword, () => {
 
 ### 无限滚动
 
-```typescript
+```javascript
 const loadedData = ref([]);
 const [pagination, actions] = usePagination({
   initialPageSize: 20,
@@ -574,7 +557,7 @@ watch(
 
 ### URL 同步
 
-```typescript
+```javascript
 const route = useRoute();
 const router = useRouter();
 

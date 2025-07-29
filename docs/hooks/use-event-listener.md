@@ -500,22 +500,23 @@ cleanup();
 
 ### 类型定义
 
-```typescript
-export interface UseEventListenerOptions {
-  capture?: boolean | Ref<boolean>;
-  once?: boolean | Ref<boolean>;
-  passive?: boolean | Ref<boolean>;
-  enabled?: boolean | Ref<boolean>;
-}
-
-export type UseEventListenerReturn = () => void;
-
-export function useEventListener(
-  target: EventTarget | Ref<EventTarget | null>,
-  event: string,
-  handler: EventListener,
-  options?: UseEventListenerOptions
-): UseEventListenerReturn;
+```javascript
+// 类型定义（仅供参考）
+// UseEventListenerOptions: {
+//   capture?: boolean | Ref<boolean>,
+//   once?: boolean | Ref<boolean>,
+//   passive?: boolean | Ref<boolean>,
+//   enabled?: boolean | Ref<boolean>
+// }
+//
+// UseEventListenerReturn: () => void
+//
+// useEventListener(
+//   target: EventTarget | Ref<EventTarget | null>,
+//   event: string,
+//   handler: EventListener,
+//   options?: UseEventListenerOptions
+// ): UseEventListenerReturn
 ```
 
 ## 使用场景
@@ -530,8 +531,8 @@ export function useEventListener(
 
 ### 监听多个事件
 
-```typescript
-const elementRef = ref<HTMLElement>();
+```javascript
+const elementRef = ref();
 
 // 监听多个事件
 useEventListener(elementRef, "mouseenter", handleMouseEnter);
@@ -541,8 +542,8 @@ useEventListener(elementRef, "click", handleClick);
 
 ### 全局键盘快捷键
 
-```typescript
-useEventListener(window, "keydown", (event: KeyboardEvent) => {
+```javascript
+useEventListener(window, "keydown", (event) => {
   if (event.ctrlKey && event.key === "s") {
     event.preventDefault();
     handleSave();
@@ -552,7 +553,7 @@ useEventListener(window, "keydown", (event: KeyboardEvent) => {
 
 ### 响应式选项
 
-```typescript
+```javascript
 const isEnabled = ref(true);
 const useCapture = ref(false);
 
@@ -564,7 +565,7 @@ useEventListener(elementRef, "click", handleClick, {
 
 ### 性能优化
 
-```typescript
+```javascript
 // 滚动事件优化
 useEventListener(window, "scroll", handleScroll, { passive: true });
 

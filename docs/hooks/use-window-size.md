@@ -288,7 +288,7 @@
 
 `useWindowSize` 返回一个包含窗口尺寸信息和控制函数的数组：
 
-```typescript
+```javascript
 const [size, updateSize, setEnabled] = useWindowSize(options);
 ```
 
@@ -307,29 +307,18 @@ const [size, updateSize, setEnabled] = useWindowSize(options);
 
 ### 类型定义
 
-```typescript
-export interface WindowSize {
-  width: number;
-  height: number;
-}
-
-export interface UseWindowSizeOptions {
-  immediate?: boolean;
-  listen?: boolean;
-  debounce?: number;
-  initialWidth?: number;
-  initialHeight?: number;
-}
-
-export type UseWindowSizeReturn = [
-  ComputedRef<WindowSize>,
-  () => void,
-  (enabled: boolean) => void,
-];
-
-export function useWindowSize(
-  options?: UseWindowSizeOptions
-): UseWindowSizeReturn;
+```javascript
+// 类型定义（仅供参考）
+// WindowSize: { width: number, height: number }
+// UseWindowSizeOptions: {
+//   immediate?: boolean,
+//   listen?: boolean,
+//   debounce?: number,
+//   initialWidth?: number,
+//   initialHeight?: number
+// }
+// 
+// 返回值: [windowSize, refresh, setEnabled]
 ```
 
 ## 使用场景
@@ -345,7 +334,8 @@ export function useWindowSize(
 
 ### 响应式断点系统
 
-```typescript
+```javascript
+// 响应式断点系统
 const [windowSize] = useWindowSize();
 
 // 定义断点
@@ -383,7 +373,7 @@ const deviceType = computed(() => {
 
 ### 防抖优化
 
-```typescript
+```javascript
 // 防抖处理，避免频繁更新
 const [debouncedSize] = useWindowSize({
   debounce: 300, // 300ms 防抖
@@ -402,7 +392,7 @@ watch(
 
 ### 条件监听
 
-```typescript
+```javascript
 const [size, updateSize, setEnabled] = useWindowSize({
   listen: false, // 初始不监听
 });
@@ -422,7 +412,7 @@ const handleRefresh = () => {
 
 ### 服务端渲染支持
 
-```typescript
+```javascript
 // SSR 环境下的初始尺寸
 const [size] = useWindowSize({
   initialWidth: 1920,
@@ -439,7 +429,7 @@ onMounted(() => {
 
 ### 响应式网格系统
 
-```typescript
+```javascript
 const [windowSize] = useWindowSize();
 
 // 动态列数
@@ -462,7 +452,7 @@ const gridStyle = computed(() => ({
 
 ### 图表自适应
 
-```typescript
+```javascript
 const [windowSize] = useWindowSize({ debounce: 200 });
 
 // 图表尺寸计算
@@ -488,7 +478,7 @@ watch(
 
 ### 性能监控
 
-```typescript
+```javascript
 const [windowSize] = useWindowSize();
 const resizeCount = ref(0);
 const lastResizeTime = ref(Date.now());

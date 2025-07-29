@@ -250,17 +250,18 @@ const [state, setValue, setTrue, setFalse] = useBoolean(initialValue);
 
 ## 类型定义
 
-```typescript
-export type SetValueFunction = (value: boolean) => void;
-export type SetTrueFunction = () => void;
-export type SetFalseFunction = () => void;
+```javascript
+// 类型定义（仅供参考）
+// SetValueFunction: (value: boolean) => void
+// SetTrueFunction: () => void
+// SetFalseFunction: () => void
 
-export type UseBooleanReturn = [
-  ComputedRef<boolean>,
-  SetValueFunction,
-  SetTrueFunction,
-  SetFalseFunction,
-];
+// UseBooleanReturn: [
+//   ComputedRef<boolean>,
+//   SetValueFunction,
+//   SetTrueFunction,
+//   SetFalseFunction
+// ]
 ```
 
 ## 使用场景

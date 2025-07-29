@@ -576,7 +576,7 @@ const closeImageViewer = () => {
 
 `useFullscreen` 返回一个数组，包含以下元素：
 
-```typescript
+```javascript
 const [isFullscreen, toggle, enter, exit, isSupported] = useFullscreen(
   target,
   options
@@ -593,7 +593,7 @@ const [isFullscreen, toggle, enter, exit, isSupported] = useFullscreen(
 
 ### 类型定义
 
-```typescript
+```javascript
 export interface UseFullscreenOptions {
   onEnter?: () => void;
   onExit?: () => void;

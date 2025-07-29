@@ -790,11 +790,11 @@ kbd {
 
 支持多种按键过滤器格式：
 
-```typescript
-type KeyFilter =
-  | string // 单个按键
-  | string[] // 组合键数组
-  | ((event: KeyboardEvent) => boolean); // 自定义过滤函数
+```javascript
+// KeyFilter 支持以下格式：
+// - string: 单个按键
+// - string[]: 组合键数组  
+// - function: 自定义过滤函数
 ```
 
 ### UseKeyPressOptions
@@ -811,7 +811,7 @@ type KeyFilter =
 
 `useKeyPress` 返回一个响应式的布尔值：
 
-```typescript
+```javascript
 const isPressed = useKeyPress(keyFilter, options);
 ```
 
@@ -821,21 +821,16 @@ const isPressed = useKeyPress(keyFilter, options);
 
 ### 类型定义
 
-```typescript
-export type KeyFilter = string | string[] | ((event: KeyboardEvent) => boolean);
-
-export interface UseKeyPressOptions {
-  target?: EventTarget | Ref<EventTarget | null>;
-  eventName?: "keydown" | "keyup";
-  exactMatch?: boolean;
-  useCapture?: boolean;
-  enabled?: boolean | Ref<boolean>;
-}
-
-export function useKeyPress(
-  keyFilter: KeyFilter,
-  options?: UseKeyPressOptions
-): Ref<boolean>;
+```javascript
+// 类型定义（仅供参考）
+// KeyFilter: string | string[] | function
+// UseKeyPressOptions: {
+//   target?: EventTarget | Ref,
+//   eventName?: 'keydown' | 'keyup',
+//   exactMatch?: boolean,
+//   useCapture?: boolean,
+//   enabled?: boolean | Ref
+// }
 ```
 
 ## 使用场景
@@ -850,7 +845,7 @@ export function useKeyPress(
 
 ### 组合键检测
 
-```typescript
+```javascript
 // 检测 Ctrl+S
 const ctrlS = useKeyPress(["ctrl", "s"]);
 
@@ -863,22 +858,22 @@ const altF4 = useKeyPress(["alt", "F4"]);
 
 ### 自定义过滤函数
 
-```typescript
+```javascript
 // 检测任意数字键
-const isNumberKey = useKeyPress((event: KeyboardEvent) => {
+const isNumberKey = useKeyPress((event) => {
   return /^[0-9]$/.test(event.key);
 });
 
 // 检测功能键 (F1-F12)
-const isFunctionKey = useKeyPress((event: KeyboardEvent) => {
+const isFunctionKey = useKeyPress((event) => {
   return /^F([1-9]|1[0-2])$/.test(event.key);
 });
 ```
 
 ### 特定元素监听
 
-```typescript
-const inputRef = ref<HTMLInputElement>();
+```javascript
+const inputRef = ref();
 const enterPressed = useKeyPress("Enter", {
   target: inputRef,
 });
