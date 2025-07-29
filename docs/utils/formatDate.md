@@ -4,7 +4,7 @@
 
 ## 基础用法
 
-```ts
+```js
 import { formatDate, DATE_FORMATS } from "vakao-ui/utils";
 
 const date = new Date("2023-12-25 15:30:45");
@@ -21,7 +21,7 @@ formatDate(date, "MM/DD/YYYY HH:mm"); // "12/25/2023 15:30"
 
 ## 预定义格式
 
-```ts
+```js
 const DATE_FORMATS = {
   DATE: "YYYY-MM-DD", // 2023-12-25
   DATETIME: "YYYY-MM-DD HH:mm:ss", // 2023-12-25 15:30:45
@@ -59,7 +59,7 @@ const DATE_FORMATS = {
 
 ## 自定义格式示例
 
-```ts
+```js
 const date = new Date("2023-12-25 15:30:45.123");
 
 // 基础格式
@@ -83,7 +83,7 @@ formatDate(date, "YYYY.MM.DD HH-mm-ss"); // "2023.12.25 15-30-45"
 
 ## 相对时间格式化
 
-```ts
+```js
 import { formatRelativeTime } from "vakao-ui/utils";
 
 const now = new Date();
@@ -101,7 +101,7 @@ formatRelativeTime(tomorrow, now, { locale: "en-US" }); // "in 1 day"
 
 ### 相对时间示例
 
-```ts
+```js
 const now = new Date();
 
 // 过去时间
@@ -125,7 +125,7 @@ formatRelativeTime(inOneWeek); // "7天后"
 
 ## 日期判断函数
 
-```ts
+```js
 import { isToday, isYesterday, isTomorrow } from "vakao-ui/utils";
 
 const today = new Date();
@@ -151,12 +151,13 @@ isToday(Date.now()); // true
 
 ## 格式化选项
 
-```ts
-interface FormatDateOptions {
-  locale?: string; // 语言环境
-  timeZone?: string; // 时区
-  hour12?: boolean; // 是否使用12小时制
-}
+```js
+// 格式化选项
+// {
+//   locale?: string; // 语言环境
+//   timeZone?: string; // 时区
+//   hour12?: boolean; // 是否使用12小时制
+// }
 
 // 使用选项
 const date = new Date("2023-12-25 15:30:45");
@@ -175,7 +176,7 @@ formatDate(date, "hh:mm A", { hour12: true });
 
 ### 列表显示
 
-```ts
+```js
 // 文章列表
 const articles = [
   { title: "文章1", createdAt: new Date("2023-12-25 10:30:00") },
@@ -191,9 +192,9 @@ articles.forEach((article) => {
 
 ### 聊天消息
 
-```ts
+```js
 // 消息时间显示
-function formatMessageTime(timestamp: number) {
+function formatMessageTime(timestamp) {
   const date = new Date(timestamp);
 
   if (isToday(date)) {
@@ -208,9 +209,9 @@ function formatMessageTime(timestamp: number) {
 
 ### 动态时间更新
 
-```ts
+```js
 // 实时更新相对时间
-function updateRelativeTime(element: HTMLElement, timestamp: number) {
+function updateRelativeTime(element, timestamp) {
   const update = () => {
     element.textContent = formatRelativeTime(timestamp);
   };
@@ -222,53 +223,62 @@ function updateRelativeTime(element: HTMLElement, timestamp: number) {
 
 ## 类型定义
 
-```ts
-interface FormatDateOptions {
-  locale?: string;
-  timeZone?: string;
-  hour12?: boolean;
-}
+```js
+// 格式化选项接口
+// FormatDateOptions {
+//   locale?: string;
+//   timeZone?: string;
+//   hour12?: boolean;
+// }
 
 /**
  * 格式化日期
- * @param date 日期对象、时间戳或日期字符串
- * @param format 格式化模板
- * @param options 格式化选项
- * @returns 格式化后的日期字符串
+ * @param {Date | number | string} date 日期对象、时间戳或日期字符串
+ * @param {string} format 格式化模板
+ * @param {Object} options 格式化选项
+ * @returns {string} 格式化后的日期字符串
  */
-function formatDate(
-  date: Date | number | string,
-  format?: string,
-  options?: FormatDateOptions,
-): string;
+function formatDate(date, format, options) {
+  // 实现代码
+}
 
 /**
  * 格式化相对时间
- * @param date 目标日期
- * @param baseDate 基准日期（默认为当前时间）
- * @param options 格式化选项
- * @returns 相对时间字符串
+ * @param {Date | number | string} date 目标日期
+ * @param {Date | number | string} baseDate 基准日期（默认为当前时间）
+ * @param {Object} options 格式化选项
+ * @returns {string} 相对时间字符串
  */
-function formatRelativeTime(
-  date: Date | number | string,
-  baseDate?: Date | number | string,
-  options?: FormatDateOptions,
-): string;
+function formatRelativeTime(date, baseDate, options) {
+  // 实现代码
+}
 
 /**
  * 判断是否为今天
+ * @param {Date | number | string} date
+ * @returns {boolean}
  */
-function isToday(date: Date | number | string): boolean;
+function isToday(date) {
+  // 实现代码
+}
 
 /**
  * 判断是否为昨天
+ * @param {Date | number | string} date
+ * @returns {boolean}
  */
-function isYesterday(date: Date | number | string): boolean;
+function isYesterday(date) {
+  // 实现代码
+}
 
 /**
  * 判断是否为明天
+ * @param {Date | number | string} date
+ * @returns {boolean}
  */
-function isTomorrow(date: Date | number | string): boolean;
+function isTomorrow(date) {
+  // 实现代码
+}
 ```
 
 ## 注意事项

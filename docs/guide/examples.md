@@ -145,7 +145,7 @@ const { state, toggle } = useToggle(false);
 如果你发现组件没有样式，请检查是否已经导入了样式文件：
 
 ```ts
-import "vakao-ui/dist/style.css";
+import "vakao-ui/style.css";
 ```
 
 这个导入语句应该放在你的入口文件（如 `main.ts`）中，确保在应用启动时加载样式。
