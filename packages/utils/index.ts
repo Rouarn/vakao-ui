@@ -20,20 +20,20 @@
  */
 
 // 组件安装相关工具
-export * from "./install";
+export * from "./modules/install";
 
 // CSS 命名空间工具
-export * from "./namespace";
+export * from "./modules/namespace";
 
 // URL 处理工具
-export * from "./url";
+export * from "./modules/url";
 
 // 受控/非受控模式工具
-export * from "./controlled";
+export * from "./modules/controlled";
 
 // 数据处理工具
-export * from "./deepClone";
-export * from "./isEqual";
+export * from "./modules/deepClone";
+export * from "./modules/isEqual";
 
 // 日期处理工具
-export * from "./formatDate";
+export * from "./modules/formatDate";

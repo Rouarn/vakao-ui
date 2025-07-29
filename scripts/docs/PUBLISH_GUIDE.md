@@ -442,7 +442,6 @@ npm login --registry=http://your-private-registry.com/repository/npm-private/
 **问题4: 输入问题（Windows 环境）**
 
 - 如果在交互式模式下出现输入重复或删除键异常
-- 运行测试工具验证：`node scripts/test-input.js`
 - 使用 PowerShell 或 Git Bash
 - 确保终端支持 UTF-8 编码
 - 更新到最新版本的 Node.js
@@ -657,7 +656,7 @@ WEBHOOK_URL=https://discord.com/api/webhooks/YOUR/DISCORD/WEBHOOK
        extensionManager.registerHook(
          "afterDeploy",
          this.onSuccess.bind(this),
-         this.name,
+         this.name
        );
      }
 

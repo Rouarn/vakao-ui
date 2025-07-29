@@ -9,9 +9,11 @@
 <Demo>
   <div>
     <p>当前状态: {{ basicState ? '开启' : '关闭' }}</p>
-    <vk-button @click="basicToggle">切换状态</vk-button>
-    <vk-button @click="basicSetTrue">设为开启</vk-button>
-    <vk-button @click="basicSetFalse">设为关闭</vk-button>
+    <vk-button-group>
+      <vk-button @click="basicToggle">切换状态</vk-button>
+      <vk-button @click="basicSetTrue">设为开启</vk-button>
+      <vk-button @click="basicSetFalse">设为关闭</vk-button>
+    </vk-button-group>
   </div>
   
   <template #code>
@@ -19,10 +21,12 @@
 ```vue
 <template>
   <div>
-    <p>当前状态: {{ state ? "开启" : "关闭" }}</p>
-    <vk-button @click="toggle">切换状态</vk-button>
-    <vk-button @click="setTrue">设为开启</vk-button>
-    <vk-button @click="setFalse">设为关闭</vk-button>
+    <p>当前状态: {{ basicState ? "开启" : "关闭" }}</p>
+    <vk-button-group>
+      <vk-button @click="basicToggle">切换状态</vk-button>
+      <vk-button @click="basicSetTrue">设为开启</vk-button>
+      <vk-button @click="basicSetFalse">设为关闭</vk-button>
+    </vk-button-group>
   </div>
 </template>
 
@@ -164,7 +168,7 @@ const fetchData = async () => {
 
   try {
     // 模拟 API 请求
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    await new Promise(resolve => setTimeout(resolve, 2000));
     data.value = { message: "数据加载成功!", timestamp: Date.now() };
   } finally {
     stopLoading();
