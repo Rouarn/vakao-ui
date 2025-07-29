@@ -1,5 +1,6 @@
 import type { ComputedRef } from "vue";
 import { ref, computed } from "vue";
+import type { ResetFunction } from "../types/shared";
 
 /**
  * 增加计数的函数类型
@@ -12,12 +13,6 @@ export type IncrementFunction = (_delta?: number) => void;
  * @description 将计数值减少指定数量
  */
 export type DecrementFunction = (_delta?: number) => void;
-
-/**
- * 重置计数的函数类型
- * @description 将计数值重置为初始值
- */
-export type ResetFunction = () => void;
 
 /**
  * 设置计数的函数类型

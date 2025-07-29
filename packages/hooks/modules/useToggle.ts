@@ -1,23 +1,12 @@
 import type { ComputedRef } from "vue";
 import { ref, computed } from "vue";
+import type { SetTrueFunction, SetFalseFunction } from "../types/shared";
 
 /**
  * 切换状态的函数类型
  * @description 切换当前布尔状态值
  */
 export type ToggleFunction = () => void;
-
-/**
- * 设置状态为 true 的函数类型
- * @description 将状态设置为 true
- */
-export type SetTrueFunction = () => void;
-
-/**
- * 设置状态为 false 的函数类型
- * @description 将状态设置为 false
- */
-export type SetFalseFunction = () => void;
 
 /**
  * useToggle 钩子函数的返回值类型

@@ -47,7 +47,7 @@ export interface UseFetchOptions<T> {
  * 执行请求的函数类型
  * @description 手动执行请求
  */
-export type ExecuteFunction = () => Promise<void>;
+export type FetchExecuteFunction = () => Promise<void>;
 
 /**
  * 取消请求的函数类型
@@ -87,7 +87,7 @@ export type UseFetchReturn<T> = [
     /** 是否完成的计算属性 */
     finished: ComputedRef<boolean>;
     /** 手动执行请求的函数 */
-    execute: ExecuteFunction;
+    execute: FetchExecuteFunction;
     /** 取消请求的函数 */
     cancel: CancelFunction;
     /** 重新请求的函数 */
