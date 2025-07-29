@@ -163,7 +163,7 @@ export function useArray<T>(initialValue: T[] = []): UseArrayReturn<T> {
      * 删除/插入元素
      */
     splice: (start: number, deleteCount?: number, ...items: T[]) => {
-      return array.value.splice(start, deleteCount, ...items);
+      return array.value.splice(start, deleteCount ?? 0, ...items);
     },
 
     /**

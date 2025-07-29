@@ -191,7 +191,6 @@ export function usePagination(
     initialPage = 1,
     initialPageSize = 10,
     total: totalOption = 0,
-    pageSizeOptions = [10, 20, 50, 100],
     onPageChange,
     onPageSizeChange,
     onChange,

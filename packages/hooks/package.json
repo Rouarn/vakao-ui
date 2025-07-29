@@ -12,6 +12,11 @@
       "types": "./dist/types/index.d.ts"
     }
   },
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite build --watch",
+    "clean": "rimraf dist"
+  },
   "files": [
     "dist",
     "README.md",
@@ -35,11 +40,6 @@
   },
   "bugs": {
     "url": "https://github.com/vakao-ui/vakao-ui/issues"
-  },
-  "scripts": {
-    "build": "vite build",
-    "dev": "vite build --watch",
-    "clean": "rimraf dist"
   },
   "peerDependencies": {
     "vue": "^3.3.0"

@@ -76,7 +76,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { useArray } from '@vakao-ui/hooks';
 import { ref } from 'vue';
 
@@ -90,7 +90,7 @@ const addItem = () => {
   }
 };
 
-const editItem = (index: number) => {
+const editItem = (index) => {
   const newValue = prompt('编辑待办事项:', list.value[index]);
   if (newValue !== null && newValue.trim()) {
     actions.updateAt(index, newValue.trim());
@@ -261,7 +261,7 @@ import { useArray } from '@vakao-ui/hooks';
 import { ref, computed } from 'vue';
 
 // 基础用法示例
-const [list, actions, length, isEmpty] = useArray<string>([]);
+const [list, actions, length, isEmpty] = useArray([]);
 const newItem = ref('');
 
 const addItem = () => {
@@ -271,7 +271,7 @@ const addItem = () => {
   }
 };
 
-const editItem = (index: number) => {
+const editItem = (index) => {
   const newValue = prompt('编辑待办事项:', list.value[index]);
   if (newValue !== null && newValue.trim()) {
     actions.updateAt(index, newValue.trim());
@@ -279,7 +279,7 @@ const editItem = (index: number) => {
 };
 
 // 数字数组操作示例
-const [numberList, numberActions, numberLength] = useArray<number>([]);
+const [numberList, numberActions, numberLength] = useArray([]);
 
 const sum = computed(() => {
   return numberList.value.reduce((acc, num) => acc + num, 0);

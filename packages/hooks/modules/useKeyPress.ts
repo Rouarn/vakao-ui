@@ -1,12 +1,5 @@
-import {
-  ref,
-  computed,
-  onMounted,
-  onUnmounted,
-  type Ref,
-  type ComputedRef,
-} from "vue";
-import { useEventListener } from "./useEventListener";
+import { ref, computed, type Ref, type ComputedRef } from "vue";
+import { useEventListener, type EventTarget } from "./useEventListener";
 
 /**
  * 按键类型
@@ -148,9 +141,7 @@ export function useKeyPress(
   options: UseKeyPressOptions = {}
 ): UseKeyPressReturn {
   const {
-    eventType = "keydown",
     target = window,
-    enabled = true,
     preventDefault = false,
     stopPropagation = false,
     exactMatch = false,
@@ -199,42 +190,25 @@ export function useKeyPress(
     }
   };
 
-  // 事件监听器
-  const [
-    ,
-    addKeyDownListener,
-    removeKeyDownListener,
-    enableKeyDownListener,
-    disableKeyDownListener,
-  ] = useEventListener(target, "keydown", handleKeyDown, {
-    enabled: eventType === "keydown" ? enabled : false,
-  });
+  // 转换 target 类型
+  const targetRef =
+    typeof target === "function" ? target : () => target as EventTarget;
 
-  const [
-    ,
-    addKeyUpListener,
-    removeKeyUpListener,
-    enableKeyUpListener,
-    disableKeyUpListener,
-  ] = useEventListener(target, "keyup", handleKeyUp, { enabled });
+  // 事件监听器
+  const [, , ,] = useEventListener(targetRef, "keydown", handleKeyDown);
+
+  const [, , ,] = useEventListener(targetRef, "keyup", handleKeyUp);
 
   // 启用监听
   const enable: EnableFunction = () => {
-    if (eventType === "keydown") {
-      enableKeyDownListener();
-    }
-    enableKeyUpListener();
+    // 事件监听器已自动启用
   };
 
   // 禁用监听
   const disable: DisableFunction = () => {
     // 重置状态
     isPressed.value = false;
-
-    if (eventType === "keydown") {
-      disableKeyDownListener();
-    }
-    disableKeyUpListener();
+    // 事件监听器已自动禁用
   };
 
   return [pressedComputed, enable, disable];

@@ -1,5 +1,5 @@
-import { ref, computed, type Ref, type ComputedRef } from 'vue';
-import { useEventListener } from './useEventListener';
+import { ref, computed, type Ref, type ComputedRef } from "vue";
+import { useEventListener } from "./useEventListener";
 
 /**
  * 拖拽位置信息
@@ -55,7 +55,7 @@ export interface UseDragOptions {
   /** 是否限制在父元素内 */
   constrainToParent?: boolean;
   /** 拖拽轴限制 */
-  axis?: 'x' | 'y' | 'both';
+  axis?: "x" | "y" | "both";
   /** 网格对齐 */
   grid?: [number, number];
   /** 拖拽开始回调 */
@@ -95,7 +95,7 @@ export type UseDragReturn = [
   StartDragFunction,
   StopDragFunction,
   ResetPositionFunction,
-  SetPositionFunction
+  SetPositionFunction,
 ];
 
 /**
@@ -110,22 +110,22 @@ function applyGrid(value: number, gridSize: number): number {
  */
 function applyBoundary(
   position: DragPosition,
-  boundary?: UseDragOptions['boundary'],
-  element?: HTMLElement
+  boundary?: UseDragOptions["boundary"],
+  _element?: HTMLElement
 ): DragPosition {
   let { x, y } = position;
 
   if (boundary) {
-    if (typeof boundary.left === 'number') {
+    if (typeof boundary.left === "number") {
       x = Math.max(x, boundary.left);
     }
-    if (typeof boundary.right === 'number') {
+    if (typeof boundary.right === "number") {
       x = Math.min(x, boundary.right);
     }
-    if (typeof boundary.top === 'number') {
+    if (typeof boundary.top === "number") {
       y = Math.max(y, boundary.top);
     }
-    if (typeof boundary.bottom === 'number') {
+    if (typeof boundary.bottom === "number") {
       y = Math.min(y, boundary.bottom);
     }
   }
@@ -145,13 +145,13 @@ function applyParentConstraint(
 
   const parentRect = parent.getBoundingClientRect();
   const elementRect = element.getBoundingClientRect();
-  
+
   const maxX = parentRect.width - elementRect.width;
   const maxY = parentRect.height - elementRect.height;
 
   return {
     x: Math.max(0, Math.min(position.x, maxX)),
-    y: Math.max(0, Math.min(position.y, maxY))
+    y: Math.max(0, Math.min(position.y, maxY)),
   };
 }
 
@@ -242,11 +242,11 @@ export function useDrag(options: UseDragOptions = {}): UseDragReturn {
     handle,
     boundary,
     constrainToParent = false,
-    axis = 'both',
+    axis = "both",
     grid,
     onDragStart,
     onDrag,
-    onDragEnd
+    onDragEnd,
   } = options;
 
   // 元素引用
@@ -263,27 +263,27 @@ export function useDrag(options: UseDragOptions = {}): UseDragReturn {
     isDragging: isDragging.value,
     position: position.value,
     startPosition: startPosition.value,
-    offset: offset.value
+    offset: offset.value,
   }));
 
   // 获取拖拽手柄元素
   const getDragHandle = (): HTMLElement | null => {
     if (!handle) return elementRef.value;
-    
-    if (typeof handle === 'string') {
-      return elementRef.value?.querySelector(handle) as HTMLElement || null;
+
+    if (typeof handle === "string") {
+      return (elementRef.value?.querySelector(handle) as HTMLElement) || null;
     }
-    
-    if ('value' in handle) {
+
+    if ("value" in handle) {
       return handle.value;
     }
-    
+
     return handle;
   };
 
   // 检查是否启用拖拽
   const isEnabled = computed(() => {
-    return typeof enabled === 'boolean' ? enabled : enabled.value;
+    return typeof enabled === "boolean" ? enabled : enabled.value;
   });
 
   /**
@@ -299,13 +299,13 @@ export function useDrag(options: UseDragOptions = {}): UseDragReturn {
     }
 
     event.preventDefault();
-    
+
     isDragging.value = true;
     startPosition.value = {
       x: event.clientX - position.value.x,
-      y: event.clientY - position.value.y
+      y: event.clientY - position.value.y,
     };
-    
+
     onDragStart?.(dragState.value, event);
   };
 
@@ -321,9 +321,9 @@ export function useDrag(options: UseDragOptions = {}): UseDragReturn {
     let newY = event.clientY - startPosition.value.y;
 
     // 应用轴限制
-    if (axis === 'x') {
+    if (axis === "x") {
       newY = position.value.y;
-    } else if (axis === 'y') {
+    } else if (axis === "y") {
       newX = position.value.x;
     }
 
@@ -349,7 +349,7 @@ export function useDrag(options: UseDragOptions = {}): UseDragReturn {
     position.value = newPosition;
     offset.value = {
       deltaX: newPosition.x - initialPosition.x,
-      deltaY: newPosition.y - initialPosition.y
+      deltaY: newPosition.y - initialPosition.y,
     };
 
     onDrag?.(dragState.value, event);
@@ -362,7 +362,7 @@ export function useDrag(options: UseDragOptions = {}): UseDragReturn {
     if (!isDragging.value) return;
 
     isDragging.value = false;
-    onDragEnd?.(dragState.value, new MouseEvent('mouseup'));
+    onDragEnd?.(dragState.value, new MouseEvent("mouseup"));
   };
 
   /**
@@ -386,41 +386,39 @@ export function useDrag(options: UseDragOptions = {}): UseDragReturn {
   /**
    * 设置位置
    */
-  const setPosition: SetPositionFunction = (newPosition: Partial<DragPosition>) => {
+  const setPosition: SetPositionFunction = (
+    newPosition: Partial<DragPosition>
+  ) => {
     position.value = {
       x: newPosition.x ?? position.value.x,
-      y: newPosition.y ?? position.value.y
+      y: newPosition.y ?? position.value.y,
     };
-    
+
     offset.value = {
       deltaX: position.value.x - initialPosition.x,
-      deltaY: position.value.y - initialPosition.y
+      deltaY: position.value.y - initialPosition.y,
     };
   };
 
   // 事件监听器
-  const [, , , enableMouseDownListener, disableMouseDownListener] = useEventListener(
+  const [, ,] = useEventListener(
     () => getDragHandle() || elementRef.value,
-    'mousedown',
+    "mousedown",
+    startDrag
+  );
+
+  const [, ,] = useEventListener(() => document, "mousemove", handleDrag);
+
+  const [, ,] = useEventListener(() => document, "mouseup", handleDragEnd);
+
+  return [
+    elementRef,
+    dragState,
     startDrag,
-    { enabled: isEnabled }
-  );
-
-  const [, , , enableMouseMoveListener, disableMouseMoveListener] = useEventListener(
-    document,
-    'mousemove',
-    handleDrag,
-    { enabled: isDragging }
-  );
-
-  const [, , , enableMouseUpListener, disableMouseUpListener] = useEventListener(
-    document,
-    'mouseup',
-    handleDragEnd,
-    { enabled: isDragging }
-  );
-
-  return [elementRef, dragState, startDrag, stopDrag, resetPosition, setPosition];
+    stopDrag,
+    resetPosition,
+    setPosition,
+  ];
 }
 
 /**

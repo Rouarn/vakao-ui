@@ -1,4 +1,4 @@
-import { ref, computed, onMounted, onUnmounted, type Ref, type ComputedRef } from 'vue';
+import { ref, computed, onMounted, type Ref, type ComputedRef } from 'vue';
 import { useEventListener } from './useEventListener';
 
 /**
@@ -220,27 +220,27 @@ export function useFullscreen(
   };
 
   // 监听全屏状态变化事件
-  const [, , , enableListener, disableListener] = useEventListener(
-    document,
+  const [, ,] = useEventListener(
+    () => document,
     'fullscreenchange',
     updateFullscreenState
   );
 
   // 兼容性事件监听
-  const [, , , enableWebkitListener] = useEventListener(
-    document,
+  const [, ,] = useEventListener(
+    () => document,
     'webkitfullscreenchange',
     updateFullscreenState
   );
 
-  const [, , , enableMozListener] = useEventListener(
-    document,
+  const [, ,] = useEventListener(
+    () => document,
     'mozfullscreenchange',
     updateFullscreenState
   );
 
-  const [, , , enableMsListener] = useEventListener(
-    document,
+  const [, ,] = useEventListener(
+    () => document,
     'MSFullscreenChange',
     updateFullscreenState
   );
