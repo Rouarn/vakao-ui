@@ -252,7 +252,7 @@ pnpm deploy:docs
 pnpm deploy:preview
 ```
 
-详细部署说明请参考 [DEPLOY.md](./DEPLOY.md)
+详细部署说明请参考 [DEPLOY.md](./scripts/docs/DEPLOY.md/DEPLOY.md)
 
 ### 发布组件库
 
@@ -279,7 +279,7 @@ pnpm publish
 - 📧 邮件通知：支持配置邮件通知（可选）
 - 🔗 Webhook 通知：支持集成第三方服务（可选）
 
-详细的发布和部署说明请参考 [PUBLISH_GUIDE.md](./PUBLISH_GUIDE.md)
+详细的发布和部署说明请参考 [PUBLISH_GUIDE.md](./scripts/docs/PUBLISH_GUIDE.md)
 
 ### GUI 发布工具
 
