@@ -133,8 +133,7 @@ import { ref, reactive } from "vue";
 import { useHover } from "@vakao-ui/hooks";
 
 // 基础悬停
-const basicHoverRef = ref<HTMLElement>();
-const basicIsHovered = useHover(basicHoverRef);
+const [basicHoverRef, basicIsHovered] = useHover();
 
 // 卡片数据
 const cards = [
@@ -166,7 +165,8 @@ const cardRefs = ref<HTMLElement[]>([]);
 const cardHoverStates = ref<any[]>([]);
 
 cards.forEach((_, index) => {
-  const isHovered = useHover(() => cardRefs.value[index]);
+  const [cardRef, isHovered] = useHover();
+  cardRefs.value[index] = cardRef;
   cardHoverStates.value[index] = isHovered;
 });
 
@@ -183,7 +183,8 @@ const buttonRefs = ref<HTMLElement[]>([]);
 const buttonHoverStates = ref<any[]>([]);
 
 buttons.forEach((_, index) => {
-  const isHovered = useHover(() => buttonRefs.value[index]);
+  const [buttonRef, isHovered] = useHover();
+  buttonRefs.value[index] = buttonRef;
   buttonHoverStates.value[index] = isHovered;
 });
 </script>
@@ -471,22 +472,22 @@ import { ref, reactive, watch } from "vue";
 import { useHover } from "@vakao-ui/hooks";
 
 // 延迟悬停
-const delayHoverRef = ref<HTMLElement>();
-const delayIsHovered = useHover(delayHoverRef, {
+const [delayHoverRef, delayIsHovered] = useHover({
   enterDelay: 300,
   leaveDelay: 100,
 });
 
 // 条件悬停
-const conditionalHoverRef = ref<HTMLElement>();
+const [conditionalHoverRef, conditionalIsHovered, setConditionalEnabled] = useHover();
 const hoverEnabled = ref(true);
-const conditionalIsHovered = useHover(conditionalHoverRef, {
-  enabled: hoverEnabled,
-});
+
+// 监听启用状态变化
+watch(hoverEnabled, (enabled) => {
+  setConditionalEnabled(enabled);
+}, { immediate: true });
 
 // 悬停计数器
-const counterHoverRef = ref<HTMLElement>();
-const counterIsHovered = useHover(counterHoverRef);
+const [counterHoverRef, counterIsHovered] = useHover();
 const hoverCount = ref(0);
 
 watch(counterIsHovered, (newValue, oldValue) => {
@@ -507,7 +508,8 @@ const tooltipRefs = ref<HTMLElement[]>([]);
 const tooltipHoverStates = ref<any[]>([]);
 
 tooltips.forEach((_, index) => {
-  const isHovered = useHover(() => tooltipRefs.value[index]);
+  const [tooltipRef, isHovered] = useHover();
+  tooltipRefs.value[index] = tooltipRef;
   tooltipHoverStates.value[index] = isHovered;
 });
 </script>
@@ -675,48 +677,55 @@ tooltips.forEach((_, index) => {
 
 ### 参数
 
-| 参数    | 类型                                                      | 默认值 | 说明     |
-| ------- | --------------------------------------------------------- | ------ | -------- |
-| target  | `Ref<HTMLElement \| null> \| (() => HTMLElement \| null)` | -      | 目标元素 |
-| options | `UseHoverOptions`                                         | `{}`   | 配置选项 |
+| 参数    | 类型              | 默认值 | 说明     |
+| ------- | ----------------- | ------ | -------- |
+| options | `UseHoverOptions` | `{}`   | 配置选项 |
 
 ### UseHoverOptions
 
-| 属性       | 类型                      | 默认值 | 说明                 |
-| ---------- | ------------------------- | ------ | -------------------- |
-| enterDelay | `number`                  | `0`    | 进入延迟时间（毫秒） |
-| leaveDelay | `number`                  | `0`    | 离开延迟时间（毫秒） |
-| enabled    | `boolean \| Ref<boolean>` | `true` | 是否启用悬停检测     |
-| onEnter    | `() => void`              | -      | 进入悬停回调         |
-| onLeave    | `() => void`              | -      | 离开悬停回调         |
+| 属性       | 类型                                | 默认值 | 说明                     |
+| ---------- | ----------------------------------- | ------ | ------------------------ |
+| immediate  | `boolean`                           | `true` | 是否立即启用检测         |
+| onEnter    | `(event: MouseEvent) => void`       | -      | 鼠标进入时的回调函数     |
+| onLeave    | `(event: MouseEvent) => void`       | -      | 鼠标离开时的回调函数     |
+| enterDelay | `number`                            | `0`    | 进入延迟时间（毫秒）     |
+| leaveDelay | `number`                            | `0`    | 离开延迟时间（毫秒）     |
 
 ### 返回值
 
-`useHover` 返回一个响应式的布尔值：
+`useHover` 返回一个包含目标元素引用、悬停状态和控制函数的数组：
 
 ```typescript
-const isHovered = useHover(target, options);
+const [targetRef, isHovered, setEnabled] = useHover(options);
 ```
 
-| 类型           | 说明             |
-| -------------- | ---------------- |
-| `Ref<boolean>` | 是否处于悬停状态 |
+| 索引 | 类型                              | 说明                     |
+| ---- | --------------------------------- | ------------------------ |
+| 0    | `Ref<HTMLElement \| null>`        | 目标元素的响应式引用     |
+| 1    | `ComputedRef<boolean>`            | 悬停状态的只读响应式引用 |
+| 2    | `(enabled: boolean) => void`      | 启用/禁用悬停检测的函数  |
 
 ### 类型定义
 
 ```typescript
+export type MouseEnterCallback = (event: MouseEvent) => void;
+export type MouseLeaveCallback = (event: MouseEvent) => void;
+
 export interface UseHoverOptions {
+  immediate?: boolean;
+  onEnter?: MouseEnterCallback;
+  onLeave?: MouseLeaveCallback;
   enterDelay?: number;
   leaveDelay?: number;
-  enabled?: boolean | Ref<boolean>;
-  onEnter?: () => void;
-  onLeave?: () => void;
 }
 
-export function useHover(
-  target: Ref<HTMLElement | null> | (() => HTMLElement | null),
-  options?: UseHoverOptions
-): Ref<boolean>;
+export type UseHoverReturn = [
+  Ref<HTMLElement | null>,
+  ComputedRef<boolean>,
+  SetEnabledFunction,
+];
+
+export function useHover(options?: UseHoverOptions): UseHoverReturn;
 ```
 
 ## 使用场景
@@ -751,21 +760,33 @@ const isHovered = useHover(elementRef, {
 ### 回调函数
 
 ```typescript
-const isHovered = useHover(elementRef, {
-  onEnter: () => {
-    console.log("鼠标进入");
+const [elementRef, isHovered] = useHover({
+  onEnter: (event) => {
+    console.log("鼠标进入", event);
   },
-  onLeave: () => {
-    console.log("鼠标离开");
+  onLeave: (event) => {
+    console.log("鼠标离开", event);
   },
 });
 ```
 
-### 动态目标
+### 延迟触发
 
 ```typescript
-const elementRef = ref<HTMLElement>();
-const isHovered = useHover(() => elementRef.value);
+const [elementRef, isHovered] = useHover({
+  enterDelay: 300,
+  leaveDelay: 100,
+});
+```
+
+### 条件控制
+
+```typescript
+const [elementRef, isHovered, setEnabled] = useHover();
+
+// 动态控制启用状态
+setEnabled(false); // 禁用悬停检测
+setEnabled(true);  // 启用悬停检测
 ```
 
 ### 多元素悬停
@@ -775,7 +796,8 @@ const elements = ref<HTMLElement[]>([]);
 const hoverStates = reactive<boolean[]>([]);
 
 elements.value.forEach((_, index) => {
-  const isHovered = useHover(() => elements.value[index]);
+  const [elementRef, isHovered] = useHover();
+  elements.value[index] = elementRef;
   hoverStates[index] = isHovered;
 });
 ```
@@ -794,8 +816,7 @@ import { ref, reactive, watch } from 'vue';
 import { useHover } from '@vakao-ui/hooks';
 
 // 基础用法
-const basicHoverRef = ref<HTMLElement>();
-const basicIsHovered = useHover(basicHoverRef);
+const [basicHoverRef, basicIsHovered] = useHover();
 
 // 卡片数据和状态
 const cards = [
@@ -826,7 +847,8 @@ const cardRefs = ref<HTMLElement[]>([]);
 const cardHoverStates = ref<any[]>([]);
 
 cards.forEach((_, index) => {
-  const isHovered = useHover(() => cardRefs.value[index]);
+  const [cardRef, isHovered] = useHover();
+  cardRefs.value[index] = cardRef;
   cardHoverStates.value[index] = isHovered;
 });
 
@@ -842,25 +864,26 @@ const buttonRefs = ref<HTMLElement[]>([]);
 const buttonHoverStates = ref<any[]>([]);
 
 buttons.forEach((_, index) => {
-  const isHovered = useHover(() => buttonRefs.value[index]);
+  const [buttonRef, isHovered] = useHover();
+  buttonRefs.value[index] = buttonRef;
   buttonHoverStates.value[index] = isHovered;
 });
 
 // 高级用法
-const delayHoverRef = ref<HTMLElement>();
-const delayIsHovered = useHover(delayHoverRef, {
+const [delayHoverRef, delayIsHovered] = useHover({
   enterDelay: 300,
   leaveDelay: 100
 });
 
-const conditionalHoverRef = ref<HTMLElement>();
+const [conditionalHoverRef, conditionalIsHovered, setConditionalEnabled] = useHover();
 const hoverEnabled = ref(true);
-const conditionalIsHovered = useHover(conditionalHoverRef, {
-  enabled: hoverEnabled
-});
 
-const counterHoverRef = ref<HTMLElement>();
-const counterIsHovered = useHover(counterHoverRef);
+// 监听启用状态变化
+watch(hoverEnabled, (enabled) => {
+  setConditionalEnabled(enabled);
+}, { immediate: true });
+
+const [counterHoverRef, counterIsHovered] = useHover();
 const hoverCount = ref(0);
 
 watch(counterIsHovered, (newValue, oldValue) => {
@@ -880,7 +903,8 @@ const tooltipRefs = ref<HTMLElement[]>([]);
 const tooltipHoverStates = reactive<boolean[]>([]);
 
 tooltips.forEach((_, index) => {
-  const isHovered = useHover(() => tooltipRefs.value[index]);
+  const [tooltipRef, isHovered] = useHover();
+  tooltipRefs.value[index] = tooltipRef;
   tooltipHoverStates[index] = isHovered;
 });
 </script>

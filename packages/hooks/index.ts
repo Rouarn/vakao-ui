@@ -67,6 +67,7 @@ export * from "./modules/useFullscreen";
 // 用户交互 hooks
 export * from "./modules/useHover";
 export * from "./modules/useKeyPress";
+export * from "./modules/useMouse";
 export * from "./modules/useDrag";
 
 // 异步操作 hooks
