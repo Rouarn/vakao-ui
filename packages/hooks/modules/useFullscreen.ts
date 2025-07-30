@@ -1,5 +1,5 @@
-import { ref, computed, onMounted, type Ref, type ComputedRef } from 'vue';
-import { useEventListener } from './useEventListener';
+import { ref, computed, onMounted, type Ref, type ComputedRef } from "vue";
+import { useEventListener } from "./useEventListener";
 
 /**
  * 全屏操作配置选项
@@ -38,7 +38,7 @@ export type UseFullscreenReturn = [
   EnterFullscreenFunction,
   ExitFullscreenFunction,
   ToggleFullscreenFunction,
-  ComputedRef<boolean>
+  ComputedRef<boolean>,
 ];
 
 /**
@@ -67,7 +67,7 @@ function requestFullscreen(element: HTMLElement): Promise<void> {
   } else if ((element as any).msRequestFullscreen) {
     return (element as any).msRequestFullscreen();
   }
-  return Promise.reject(new Error('全屏 API 不被支持'));
+  return Promise.reject(new Error("全屏 API 不被支持"));
 }
 
 /**
@@ -83,7 +83,7 @@ function exitFullscreen(): Promise<void> {
   } else if ((document as any).msExitFullscreen) {
     return (document as any).msExitFullscreen();
   }
-  return Promise.reject(new Error('退出全屏 API 不被支持'));
+  return Promise.reject(new Error("退出全屏 API 不被支持"));
 }
 
 /**
@@ -176,12 +176,7 @@ export function useFullscreen(
   target?: Ref<HTMLElement | null> | HTMLElement,
   options: UseFullscreenOptions = {}
 ): UseFullscreenReturn {
-  const {
-    onEnter,
-    onExit,
-    onChange,
-    onError
-  } = options;
+  const { onEnter, onExit, onChange, onError } = options;
 
   // 状态管理
   const isFullscreen = ref(false);
@@ -193,11 +188,11 @@ export function useFullscreen(
     if (!target) {
       return document.documentElement;
     }
-    
-    if ('value' in target) {
+
+    if ("value" in target) {
       return target.value || document.documentElement;
     }
-    
+
     return target;
   };
 
@@ -206,11 +201,11 @@ export function useFullscreen(
     const fullscreenElement = getFullscreenElement();
     const targetElement = getTargetElement();
     const newIsFullscreen = fullscreenElement === targetElement;
-    
+
     if (isFullscreen.value !== newIsFullscreen) {
       isFullscreen.value = newIsFullscreen;
       onChange?.(newIsFullscreen);
-      
+
       if (newIsFullscreen) {
         onEnter?.();
       } else {
@@ -222,26 +217,26 @@ export function useFullscreen(
   // 监听全屏状态变化事件
   const [, ,] = useEventListener(
     () => document,
-    'fullscreenchange',
+    "fullscreenchange",
     updateFullscreenState
   );
 
   // 兼容性事件监听
   const [, ,] = useEventListener(
     () => document,
-    'webkitfullscreenchange',
+    "webkitfullscreenchange",
     updateFullscreenState
   );
 
   const [, ,] = useEventListener(
     () => document,
-    'mozfullscreenchange',
+    "mozfullscreenchange",
     updateFullscreenState
   );
 
   const [, ,] = useEventListener(
     () => document,
-    'MSFullscreenChange',
+    "MSFullscreenChange",
     updateFullscreenState
   );
 
@@ -251,9 +246,9 @@ export function useFullscreen(
   const enter: EnterFullscreenFunction = async () => {
     try {
       if (!isSupported.value) {
-        throw new Error('浏览器不支持全屏 API');
+        throw new Error("浏览器不支持全屏 API");
       }
-      
+
       const targetElement = getTargetElement();
       await requestFullscreen(targetElement);
     } catch (error) {
@@ -269,9 +264,9 @@ export function useFullscreen(
   const exit: ExitFullscreenFunction = async () => {
     try {
       if (!isSupported.value) {
-        throw new Error('浏览器不支持全屏 API');
+        throw new Error("浏览器不支持全屏 API");
       }
-      
+
       if (getFullscreenElement()) {
         await exitFullscreen();
       }
@@ -298,7 +293,7 @@ export function useFullscreen(
     updateFullscreenState();
   });
 
-  return [isFullscreenComputed, enter, exit, toggle, isSupported];
+  return [isFullscreenComputed, toggle, enter, exit, isSupported];
 }
 
 /**
