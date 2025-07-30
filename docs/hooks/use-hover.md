@@ -32,14 +32,14 @@
              :ref="el => cardRefs[index] = el"
              style="padding: 20px; border-radius: 12px; cursor: pointer; transition: all 0.3s; user-select: none; position: relative; overflow: hidden;"
              :style="{ 
-               background: cardHoverStates[index] ? card.hoverColor : card.color,
-               transform: cardHoverStates[index] ? 'translateY(-4px) scale(1.02)' : 'translateY(0) scale(1)',
-               boxShadow: cardHoverStates[index] ? '0 12px 32px rgba(0,0,0,0.15)' : '0 4px 12px rgba(0,0,0,0.1)'
+               background: cardHoverStates[index]?.value ? card.hoverColor : card.color,
+               transform: cardHoverStates[index]?.value ? 'translateY(-4px) scale(1.02)' : 'translateY(0) scale(1)',
+               boxShadow: cardHoverStates[index]?.value ? '0 12px 32px rgba(0,0,0,0.15)' : '0 4px 12px rgba(0,0,0,0.1)'
              }">
           <div style="font-size: 32px; margin-bottom: 8px;">{{ card.icon }}</div>
           <h5 style="margin: 0 0 8px 0; color: white; font-size: 16px;">{{ card.title }}</h5>
           <p style="margin: 0; color: rgba(255,255,255,0.9); font-size: 14px; line-height: 1.4;">{{ card.description }}</p>
-          <div v-if="cardHoverStates[index]" 
+          <div v-if="cardHoverStates[index]?.value" 
                style="position: absolute; top: 12px; right: 12px; background: rgba(255,255,255,0.2); border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: 12px;">
             ✨
           </div>
@@ -54,10 +54,10 @@
                 :ref="el => buttonRefs[index] = el"
                 style="padding: 12px 24px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; transition: all 0.2s; user-select: none;"
                 :style="{ 
-                  background: buttonHoverStates[index] ? btn.hoverColor : btn.color,
+                  background: buttonHoverStates[index]?.value ? btn.hoverColor : btn.color,
                   color: 'white',
-                  transform: buttonHoverStates[index] ? 'scale(1.05)' : 'scale(1)',
-                  boxShadow: buttonHoverStates[index] ? '0 6px 20px rgba(0,0,0,0.2)' : '0 2px 8px rgba(0,0,0,0.1)'
+                  transform: buttonHoverStates[index]?.value ? 'scale(1.05)' : 'scale(1)',
+                  boxShadow: buttonHoverStates[index]?.value ? '0 6px 20px rgba(0,0,0,0.2)' : '0 2px 8px rgba(0,0,0,0.1)'
                 }">
           {{ btn.text }}
         </button>
@@ -94,15 +94,15 @@
           :key="index"
           :ref="el => (cardRefs[index] = el)"
           class="card"
-          :class="{ hovered: cardHoverStates[index] }"
+          :class="{ hovered: cardHoverStates[index]?.value }"
           :style="{
-            background: cardHoverStates[index] ? card.hoverColor : card.color,
+            background: cardHoverStates[index]?.value ? card.hoverColor : card.color,
           }"
         >
           <div class="card-icon">{{ card.icon }}</div>
           <h5 class="card-title">{{ card.title }}</h5>
           <p class="card-description">{{ card.description }}</p>
-          <div v-if="cardHoverStates[index]" class="card-indicator">✨</div>
+          <div v-if="cardHoverStates[index]?.value" class="card-indicator">✨</div>
         </div>
       </div>
     </div>
@@ -116,9 +116,9 @@
           :key="index"
           :ref="el => (buttonRefs[index] = el)"
           class="interactive-button"
-          :class="{ hovered: buttonHoverStates[index] }"
+          :class="{ hovered: buttonHoverStates[index]?.value }"
           :style="{
-            background: buttonHoverStates[index] ? btn.hoverColor : btn.color,
+            background: buttonHoverStates[index]?.value ? btn.hoverColor : btn.color,
           }"
         >
           {{ btn.text }}
@@ -163,11 +163,11 @@ const cards = [
 
 // 卡片悬停状态
 const cardRefs = ref<HTMLElement[]>([]);
-const cardHoverStates = reactive<boolean[]>([]);
+const cardHoverStates = ref<any[]>([]);
 
 cards.forEach((_, index) => {
   const isHovered = useHover(() => cardRefs.value[index]);
-  cardHoverStates[index] = isHovered;
+  cardHoverStates.value[index] = isHovered;
 });
 
 // 按钮数据
@@ -180,11 +180,11 @@ const buttons = [
 
 // 按钮悬停状态
 const buttonRefs = ref<HTMLElement[]>([]);
-const buttonHoverStates = reactive<boolean[]>([]);
+const buttonHoverStates = ref<any[]>([]);
 
 buttons.forEach((_, index) => {
   const isHovered = useHover(() => buttonRefs.value[index]);
-  buttonHoverStates[index] = isHovered;
+  buttonHoverStates.value[index] = isHovered;
 });
 </script>
 
@@ -504,11 +504,11 @@ const tooltips = [
 ];
 
 const tooltipRefs = ref<HTMLElement[]>([]);
-const tooltipHoverStates = reactive<boolean[]>([]);
+const tooltipHoverStates = ref<any[]>([]);
 
 tooltips.forEach((_, index) => {
   const isHovered = useHover(() => tooltipRefs.value[index]);
-  tooltipHoverStates[index] = isHovered;
+  tooltipHoverStates.value[index] = isHovered;
 });
 </script>
 
@@ -823,11 +823,11 @@ const cards = [
 ];
 
 const cardRefs = ref<HTMLElement[]>([]);
-const cardHoverStates = reactive<boolean[]>([]);
+const cardHoverStates = ref<any[]>([]);
 
 cards.forEach((_, index) => {
   const isHovered = useHover(() => cardRefs.value[index]);
-  cardHoverStates[index] = isHovered;
+  cardHoverStates.value[index] = isHovered;
 });
 
 // 按钮数据和状态
@@ -839,11 +839,11 @@ const buttons = [
 ];
 
 const buttonRefs = ref<HTMLElement[]>([]);
-const buttonHoverStates = reactive<boolean[]>([]);
+const buttonHoverStates = ref<any[]>([]);
 
 buttons.forEach((_, index) => {
   const isHovered = useHover(() => buttonRefs.value[index]);
-  buttonHoverStates[index] = isHovered;
+  buttonHoverStates.value[index] = isHovered;
 });
 
 // 高级用法

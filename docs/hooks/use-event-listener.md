@@ -158,15 +158,17 @@ useEventListener(keyboardTargetRef, "keydown", (event: KeyboardEvent) => {
 const windowSize = reactive({ width: 0, height: 0 });
 
 const updateWindowSize = () => {
-  windowSize.width = window.innerWidth;
-  windowSize.height = window.innerHeight;
+  if (typeof window !== 'undefined') {
+    windowSize.width = window.innerWidth;
+    windowSize.height = window.innerHeight;
+  }
 };
 
 // 初始化窗口尺寸
 updateWindowSize();
 
 // 监听窗口大小变化
-useEventListener(window, "resize", updateWindowSize);
+useEventListener(() => typeof window !== 'undefined' ? window : null, "resize", updateWindowSize);
 </script>
 
 <style scoped>
@@ -626,12 +628,17 @@ useEventListener(keyboardTargetRef, 'keydown', (event: KeyboardEvent) => {
 const windowSize = reactive({ width: 0, height: 0 });
 
 const updateWindowSize = () => {
-  windowSize.width = window.innerWidth;
-  windowSize.height = window.innerHeight;
+  if (typeof window !== 'undefined') {
+    windowSize.width = window.innerWidth;
+    windowSize.height = window.innerHeight;
+  }
 };
 
+// 初始化窗口尺寸
 updateWindowSize();
-useEventListener(window, 'resize', updateWindowSize);
+
+// 监听窗口大小变化
+useEventListener(() => typeof window !== 'undefined' ? window : null, 'resize', updateWindowSize);
 
 // 高级用法
 const optionsTargetRef = ref<HTMLElement>();

@@ -14,14 +14,14 @@
         <div v-for="key in singleKeys" :key="key.name"
              style="padding: 12px; border-radius: 8px; text-align: center; font-weight: bold; transition: all 0.2s;"
              :style="{ 
-               background: key.isPressed ? 'linear-gradient(45deg, #1890ff, #52c41a)' : '#f5f5f5',
-               color: key.isPressed ? 'white' : '#666',
-               transform: key.isPressed ? 'scale(1.05)' : 'scale(1)',
-               boxShadow: key.isPressed ? '0 4px 12px rgba(24, 144, 255, 0.3)' : '0 2px 4px rgba(0,0,0,0.1)'
+               background: key.isPressed.value ? 'linear-gradient(45deg, #1890ff, #52c41a)' : '#f5f5f5',
+               color: key.isPressed.value ? 'white' : '#666',
+               transform: key.isPressed.value ? 'scale(1.05)' : 'scale(1)',
+               boxShadow: key.isPressed.value ? '0 4px 12px rgba(24, 144, 255, 0.3)' : '0 2px 4px rgba(0,0,0,0.1)'
              }">
           <div style="font-size: 18px; margin-bottom: 4px;">{{ key.icon }}</div>
           <div style="font-size: 12px;">{{ key.name }}</div>
-          <div style="font-size: 10px; opacity: 0.8;">{{ key.isPressed ? '按下' : '释放' }}</div>
+          <div style="font-size: 10px; opacity: 0.8;">{{ key.isPressed.value ? '按下' : '释放' }}</div>
         </div>
       </div>
       <div style="padding: 12px; background: #f6ffed; border: 1px solid #b7eb8f; border-radius: 6px; font-size: 14px;">
@@ -38,15 +38,15 @@
         <div v-for="combo in comboKeys" :key="combo.name"
              style="padding: 16px; border-radius: 8px; text-align: center; font-weight: bold; transition: all 0.2s;"
              :style="{ 
-               background: combo.isPressed ? 'linear-gradient(45deg, #722ed1, #eb2f96)' : '#f5f5f5',
-               color: combo.isPressed ? 'white' : '#666',
-               transform: combo.isPressed ? 'scale(1.05)' : 'scale(1)',
-               boxShadow: combo.isPressed ? '0 4px 12px rgba(114, 46, 209, 0.3)' : '0 2px 4px rgba(0,0,0,0.1)'
+               background: combo.isPressed.value ? 'linear-gradient(45deg, #722ed1, #eb2f96)' : '#f5f5f5',
+               color: combo.isPressed.value ? 'white' : '#666',
+               transform: combo.isPressed.value ? 'scale(1.05)' : 'scale(1)',
+               boxShadow: combo.isPressed.value ? '0 4px 12px rgba(114, 46, 209, 0.3)' : '0 2px 4px rgba(0,0,0,0.1)'
              }">
           <div style="font-size: 20px; margin-bottom: 6px;">{{ combo.icon }}</div>
           <div style="font-size: 12px; margin-bottom: 4px;">{{ combo.name }}</div>
           <div style="font-size: 10px; opacity: 0.8;">{{ combo.description }}</div>
-          <div v-if="combo.isPressed" style="font-size: 10px; margin-top: 4px; color: #fff; opacity: 0.9;">✅ 激活</div>
+          <div v-if="combo.isPressed.value" style="font-size: 10px; margin-top: 4px; color: #fff; opacity: 0.9;">✅ 激活</div>
         </div>
       </div>
       <div style="padding: 12px; background: #fff7e6; border: 1px solid #ffd591; border-radius: 6px; font-size: 14px;">
@@ -64,9 +64,9 @@
         <!-- 上 -->
         <div style="padding: 12px 16px; border-radius: 6px; font-weight: bold; transition: all 0.2s;"
              :style="{ 
-               background: arrowKeys.up ? 'linear-gradient(45deg, #fa8c16, #f759ab)' : '#f5f5f5',
-               color: arrowKeys.up ? 'white' : '#666',
-               transform: arrowKeys.up ? 'scale(1.1)' : 'scale(1)'
+               background: arrowKeys.up.value ? 'linear-gradient(45deg, #fa8c16, #f759ab)' : '#f5f5f5',
+               color: arrowKeys.up.value ? 'white' : '#666',
+               transform: arrowKeys.up.value ? 'scale(1.1)' : 'scale(1)'
              }">
           ↑
         </div>
@@ -74,25 +74,25 @@
         <div style="display: flex; gap: 8px;">
           <div style="padding: 12px 16px; border-radius: 6px; font-weight: bold; transition: all 0.2s;"
                :style="{ 
-                 background: arrowKeys.left ? 'linear-gradient(45deg, #fa8c16, #f759ab)' : '#f5f5f5',
-                 color: arrowKeys.left ? 'white' : '#666',
-                 transform: arrowKeys.left ? 'scale(1.1)' : 'scale(1)'
+                 background: arrowKeys.left.value ? 'linear-gradient(45deg, #fa8c16, #f759ab)' : '#f5f5f5',
+                 color: arrowKeys.left.value ? 'white' : '#666',
+                 transform: arrowKeys.left.value ? 'scale(1.1)' : 'scale(1)'
                }">
             ←
           </div>
           <div style="padding: 12px 16px; border-radius: 6px; font-weight: bold; transition: all 0.2s;"
                :style="{ 
-                 background: arrowKeys.down ? 'linear-gradient(45deg, #fa8c16, #f759ab)' : '#f5f5f5',
-                 color: arrowKeys.down ? 'white' : '#666',
-                 transform: arrowKeys.down ? 'scale(1.1)' : 'scale(1)'
+                 background: arrowKeys.down.value ? 'linear-gradient(45deg, #fa8c16, #f759ab)' : '#f5f5f5',
+                 color: arrowKeys.down.value ? 'white' : '#666',
+                 transform: arrowKeys.down.value ? 'scale(1.1)' : 'scale(1)'
                }">
             ↓
           </div>
           <div style="padding: 12px 16px; border-radius: 6px; font-weight: bold; transition: all 0.2s;"
                :style="{ 
-                 background: arrowKeys.right ? 'linear-gradient(45deg, #fa8c16, #f759ab)' : '#f5f5f5',
-                 color: arrowKeys.right ? 'white' : '#666',
-                 transform: arrowKeys.right ? 'scale(1.1)' : 'scale(1)'
+                 background: arrowKeys.right.value ? 'linear-gradient(45deg, #fa8c16, #f759ab)' : '#f5f5f5',
+                 color: arrowKeys.right.value ? 'white' : '#666',
+                 transform: arrowKeys.right.value ? 'scale(1.1)' : 'scale(1)'
                }">
             →
           </div>
@@ -175,47 +175,62 @@ import { reactive } from "vue";
 import { useKeyPress } from "@vakao-ui/hooks";
 
 // 单键检测
+const spacePressed = useKeyPress(" ");
+const enterPressed = useKeyPress("Enter");
+const escapePressed = useKeyPress("Escape");
+const tabPressed = useKeyPress("Tab");
+
 const singleKeys = reactive([
-  { name: "Space", icon: "⎵", isPressed: useKeyPress(" ") },
-  { name: "Enter", icon: "⏎", isPressed: useKeyPress("Enter") },
-  { name: "Escape", icon: "⎋", isPressed: useKeyPress("Escape") },
-  { name: "Tab", icon: "⇥", isPressed: useKeyPress("Tab") },
+  { name: "Space", icon: "⎵", isPressed: spacePressed },
+  { name: "Enter", icon: "⏎", isPressed: enterPressed },
+  { name: "Escape", icon: "⎋", isPressed: escapePressed },
+  { name: "Tab", icon: "⇥", isPressed: tabPressed },
 ]);
 
 // 组合键检测
+const ctrlSPressed = useKeyPress(["ctrl", "s"]);
+const ctrlCPressed = useKeyPress(["ctrl", "c"]);
+const ctrlZPressed = useKeyPress(["ctrl", "z"]);
+const altTabPressed = useKeyPress(["alt", "tab"]);
+
 const comboKeys = reactive([
   {
     name: "Ctrl+S",
     icon: "💾",
     description: "保存",
-    isPressed: useKeyPress(["ctrl", "s"]),
+    isPressed: ctrlSPressed,
   },
   {
     name: "Ctrl+C",
     icon: "📋",
     description: "复制",
-    isPressed: useKeyPress(["ctrl", "c"]),
+    isPressed: ctrlCPressed,
   },
   {
     name: "Ctrl+Z",
     icon: "↶",
     description: "撤销",
-    isPressed: useKeyPress(["ctrl", "z"]),
+    isPressed: ctrlZPressed,
   },
   {
     name: "Alt+Tab",
     icon: "🔄",
     description: "切换",
-    isPressed: useKeyPress(["alt", "tab"]),
+    isPressed: altTabPressed,
   },
 ]);
 
 // 方向键检测
+const upPressed = useKeyPress("ArrowUp");
+const downPressed = useKeyPress("ArrowDown");
+const leftPressed = useKeyPress("ArrowLeft");
+const rightPressed = useKeyPress("ArrowRight");
+
 const arrowKeys = reactive({
-  up: useKeyPress("ArrowUp"),
-  down: useKeyPress("ArrowDown"),
-  left: useKeyPress("ArrowLeft"),
-  right: useKeyPress("ArrowRight"),
+  up: upPressed,
+  down: downPressed,
+  left: leftPressed,
+  right: rightPressed,
 });
 
 // 获取当前按下的键
