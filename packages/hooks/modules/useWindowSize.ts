@@ -1,5 +1,5 @@
 import type { ComputedRef } from "vue";
-import { ref, computed, onMounted } from "vue";
+import { ref, computed, onMounted, onUnmounted } from "vue";
 import { useEventListener } from "./useEventListener";
 import type { SetEnabledFunction, UpdateFunction } from "../types/shared";
 

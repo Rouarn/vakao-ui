@@ -4,8 +4,8 @@
 
 如果你对打包后的文件大小不是很在乎，那么使用完整导入会更方便。
 
-```js
-// main.js
+```ts
+// main.ts
 import { createApp } from "vue";
 import VakaoUI from "vakao-ui";
 // 导入样式文件（重要！）
@@ -24,7 +24,7 @@ app.mount("#app");
 
 ### 手动按需引入
 
-```js
+```ts
 // main.ts
 import { createApp } from "vue";
 import { VKButton, VKInput } from "vakao-ui";
@@ -49,8 +49,8 @@ app.mount("#app");
 
 我们推荐使用 [unplugin-vue-components](https://github.com/antfu/unplugin-vue-components) 来实现自动导入组件。
 
-```js
-// vite.config.js
+```ts
+// vite.config.ts
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import Components from "unplugin-vue-components/vite";
@@ -73,7 +73,7 @@ export default defineConfig({
   <vk-button type="primary">按钮</vk-button>
 </template>
 
-<script setup>
+<script setup lang="ts">
 // 无需导入，插件会自动处理
 </script>
 ```
@@ -90,7 +90,7 @@ Vakao UI 使用 TypeScript 编写，提供完整的类型定义。所有组件�
   </vk-button>
 </template>
 
-<script setup>
+<script setup lang="ts">
 const handleClick = () => {
   console.log("按钮被点击");
 };
@@ -124,8 +124,8 @@ npm install -D unplugin-vue-components
 
 #### Vite
 
-```js
-// vite.config.js
+```ts
+// vite.config.ts
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import Components from "unplugin-vue-components/vite";
@@ -184,7 +184,7 @@ Vakao UI 提供了一系列的组合式 API，可以在 `setup` 中使用：
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { useToggle } from "vakao-ui";
 
 const [state, toggle] = useToggle(false);

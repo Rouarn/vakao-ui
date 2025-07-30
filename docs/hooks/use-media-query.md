@@ -978,7 +978,7 @@ const mobileMenuOpen = ref(false);
 
 `useMediaQuery` 返回一个响应式的布尔值：
 
-```javascript
+```typescript
 const matches = useMediaQuery(query, options);
 ```
 
@@ -988,19 +988,23 @@ const matches = useMediaQuery(query, options);
 
 ### 类型定义
 
-```javascript
-// 类型定义（仅供参考）
-// UseMediaQueryOptions: {
-//   window?: Window,
-//   initialValue?: boolean
-// }
+```typescript
+export interface UseMediaQueryOptions {
+  window?: Window;
+  initialValue?: boolean;
+}
+
+export function useMediaQuery(
+  query: string,
+  options?: UseMediaQueryOptions
+): Ref<boolean>;
 ```
 
 ## 常用媒体查询
 
 ### 屏幕尺寸
 
-```javascript
+```typescript
 // 移动设备
 const isMobile = useMediaQuery("(max-width: 768px)");
 
@@ -1080,7 +1084,7 @@ const isTabletLandscape = useMediaQuery(
 
 ### 动态媒体查询
 
-```javascript
+```typescript
 const breakpoint = ref("768px");
 const query = computed(() => `(max-width: ${breakpoint.value})`);
 const matches = useMediaQuery(query);
@@ -1088,9 +1092,9 @@ const matches = useMediaQuery(query);
 
 ### 媒体查询工具函数
 
-```javascript
+```typescript
 // 创建断点检测器
-const createBreakpoint = (size) => {
+const createBreakpoint = (size: string) => {
   return {
     up: useMediaQuery(`(min-width: ${size})`),
     down: useMediaQuery(`(max-width: ${size})`),
@@ -1108,7 +1112,7 @@ const xl = createBreakpoint("1200px");
 
 ### 条件渲染组件
 
-```javascript
+```typescript
 // 根据屏幕尺寸渲染不同组件
 const MobileComponent = defineAsyncComponent(
   () => import("./MobileComponent.vue")

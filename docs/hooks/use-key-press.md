@@ -790,11 +790,11 @@ kbd {
 
 支持多种按键过滤器格式：
 
-```javascript
-// KeyFilter 支持以下格式：
-// - string: 单个按键
-// - string[]: 组合键数组  
-// - function: 自定义过滤函数
+```typescript
+type KeyFilter =
+  | string // 单个按键
+  | string[] // 组合键数组
+  | ((event: KeyboardEvent) => boolean); // 自定义过滤函数
 ```
 
 ### UseKeyPressOptions
@@ -811,7 +811,7 @@ kbd {
 
 `useKeyPress` 返回一个响应式的布尔值：
 
-```javascript
+```typescript
 const isPressed = useKeyPress(keyFilter, options);
 ```
 
@@ -821,16 +821,21 @@ const isPressed = useKeyPress(keyFilter, options);
 
 ### 类型定义
 
-```javascript
-// 类型定义（仅供参考）
-// KeyFilter: string | string[] | function
-// UseKeyPressOptions: {
-//   target?: EventTarget | Ref,
-//   eventName?: 'keydown' | 'keyup',
-//   exactMatch?: boolean,
-//   useCapture?: boolean,
-//   enabled?: boolean | Ref
-// }
+```typescript
+export type KeyFilter = string | string[] | ((event: KeyboardEvent) => boolean);
+
+export interface UseKeyPressOptions {
+  target?: EventTarget | Ref<EventTarget | null>;
+  eventName?: "keydown" | "keyup";
+  exactMatch?: boolean;
+  useCapture?: boolean;
+  enabled?: boolean | Ref<boolean>;
+}
+
+export function useKeyPress(
+  keyFilter: KeyFilter,
+  options?: UseKeyPressOptions
+): Ref<boolean>;
 ```
 
 ## 使用场景
@@ -845,7 +850,7 @@ const isPressed = useKeyPress(keyFilter, options);
 
 ### 组合键检测
 
-```javascript
+```typescript
 // 检测 Ctrl+S
 const ctrlS = useKeyPress(["ctrl", "s"]);
 
@@ -858,22 +863,22 @@ const altF4 = useKeyPress(["alt", "F4"]);
 
 ### 自定义过滤函数
 
-```javascript
+```typescript
 // 检测任意数字键
-const isNumberKey = useKeyPress((event) => {
+const isNumberKey = useKeyPress((event: KeyboardEvent) => {
   return /^[0-9]$/.test(event.key);
 });
 
 // 检测功能键 (F1-F12)
-const isFunctionKey = useKeyPress((event) => {
+const isFunctionKey = useKeyPress((event: KeyboardEvent) => {
   return /^F([1-9]|1[0-2])$/.test(event.key);
 });
 ```
 
 ### 特定元素监听
 
-```javascript
-const inputRef = ref();
+```typescript
+const inputRef = ref<HTMLInputElement>();
 const enterPressed = useKeyPress("Enter", {
   target: inputRef,
 });

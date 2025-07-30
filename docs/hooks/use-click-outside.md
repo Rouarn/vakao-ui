@@ -303,16 +303,20 @@ const [targetRef, setEnabled] = useClickOutside(callback, options);
 
 ## 类型定义
 
-```javascript
-// 类型定义（仅供参考）
-// UseClickOutsideOptions: {
-//   events?: string[],
-//   immediate?: boolean,
-//   capture?: boolean,
-//   exclude?: HTMLElement[]
-// }
-// 
-// 返回值: [targetRef, setEnabled]
+```typescript
+export interface UseClickOutsideOptions {
+  events?: string[];
+  immediate?: boolean;
+  capture?: boolean;
+  exclude?: MaybeRefOrGetter<HTMLElement>[];
+}
+
+export type SetEnabledFunction = (enabled: boolean) => void;
+
+export type UseClickOutsideReturn = [
+  Ref<HTMLElement | null>,
+  SetEnabledFunction,
+];
 ```
 
 ## 使用场景
@@ -327,8 +331,8 @@ const [targetRef, setEnabled] = useClickOutside(callback, options);
 
 ### 排除特定元素
 
-```javascript
-const triggerRef = ref();
+```typescript
+const triggerRef = ref<HTMLElement>();
 const [targetRef] = useClickOutside(
   () => {
     // 点击外部的回调
@@ -341,7 +345,7 @@ const [targetRef] = useClickOutside(
 
 ### 条件启用
 
-```javascript
+```typescript
 const [targetRef, setEnabled] = useClickOutside(
   () => {
     // 回调函数
@@ -357,7 +361,7 @@ watch(isVisible, visible => {
 
 ### 自定义事件
 
-```javascript
+```typescript
 const [targetRef] = useClickOutside(
   () => {
     // 回调函数

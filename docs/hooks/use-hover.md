@@ -704,15 +704,19 @@ const isHovered = useHover(target, options);
 
 ### 类型定义
 
-```javascript
-// 类型定义（仅供参考）
-// UseHoverOptions: {
-//   enterDelay?: number,
-//   leaveDelay?: number,
-//   enabled?: boolean | Ref<boolean>,
-//   onEnter?: () => void,
-//   onLeave?: () => void
-// }
+```typescript
+export interface UseHoverOptions {
+  enterDelay?: number;
+  leaveDelay?: number;
+  enabled?: boolean | Ref<boolean>;
+  onEnter?: () => void;
+  onLeave?: () => void;
+}
+
+export function useHover(
+  target: Ref<HTMLElement | null> | (() => HTMLElement | null),
+  options?: UseHoverOptions
+): Ref<boolean>;
 ```
 
 ## 使用场景
@@ -727,7 +731,7 @@ const isHovered = useHover(target, options);
 
 ### 延迟控制
 
-```javascript
+```typescript
 // 进入延迟 300ms，离开延迟 100ms
 const isHovered = useHover(elementRef, {
   enterDelay: 300,
@@ -737,7 +741,7 @@ const isHovered = useHover(elementRef, {
 
 ### 条件启用
 
-```javascript
+```typescript
 const isEnabled = ref(true);
 const isHovered = useHover(elementRef, {
   enabled: isEnabled,
@@ -746,7 +750,7 @@ const isHovered = useHover(elementRef, {
 
 ### 回调函数
 
-```javascript
+```typescript
 const isHovered = useHover(elementRef, {
   onEnter: () => {
     console.log("鼠标进入");
@@ -759,14 +763,14 @@ const isHovered = useHover(elementRef, {
 
 ### 动态目标
 
-```javascript
-const elementRef = ref();
+```typescript
+const elementRef = ref<HTMLElement>();
 const isHovered = useHover(() => elementRef.value);
 ```
 
 ### 多元素悬停
 
-```javascript
+```typescript
 const elements = ref<HTMLElement[]>([]);
 const hoverStates = reactive<boolean[]>([]);
 

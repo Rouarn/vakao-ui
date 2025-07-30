@@ -346,33 +346,47 @@ const [elementRef, dragState, startDrag, stopDrag, resetPosition, setPosition] =
 
 ### 类型定义
 
-```javascript
-// 类型定义（仅供参考）
-// Position: { x: number, y: number }
-// Boundary: {
-//   left?: number,
-//   top?: number,
-//   right?: number,
-//   bottom?: number
-// }
-// DragState: {
-//   position: Position,
-//   isDragging: boolean,
-//   startPosition: Position,
-//   offset: Position
-// }
-// UseDragOptions: {
-//   initialPosition?: Position,
-//   axis?: "x" | "y" | "both",
-//   grid?: [number, number],
-//   boundary?: Boundary,
-//   constrainToParent?: boolean,
-//   handle?: string,
-//   disabled?: boolean,
-//   onDragStart?: (state, event) => void,
-//   onDrag?: (state, event) => void,
-//   onDragEnd?: (state, event) => void
-// }
+```typescript
+export interface Position {
+  x: number;
+  y: number;
+}
+
+export interface Boundary {
+  left?: number;
+  top?: number;
+  right?: number;
+  bottom?: number;
+}
+
+export interface DragState {
+  position: Position;
+  isDragging: boolean;
+  startPosition: Position;
+  offset: Position;
+}
+
+export interface UseDragOptions {
+  initialPosition?: Position;
+  axis?: "x" | "y" | "both";
+  grid?: [number, number];
+  boundary?: Boundary;
+  constrainToParent?: boolean;
+  handle?: string;
+  disabled?: boolean;
+  onDragStart?: (state: DragState, event: MouseEvent) => void;
+  onDrag?: (state: DragState, event: MouseEvent) => void;
+  onDragEnd?: (state: DragState, event: MouseEvent) => void;
+}
+
+export type UseDragReturn = [
+  Ref<HTMLElement | null>,
+  ComputedRef<DragState>,
+  (event: MouseEvent) => void,
+  () => void,
+  () => void,
+  (x: number, y: number) => void,
+];
 ```
 
 ## 使用场景
@@ -387,7 +401,7 @@ const [elementRef, dragState, startDrag, stopDrag, resetPosition, setPosition] =
 
 ### 拖拽手柄
 
-```javascript
+```typescript
 const [dragRef, dragState] = useDrag({
   handle: ".drag-handle", // 只有 .drag-handle 元素可以拖拽
 });
@@ -395,7 +409,7 @@ const [dragRef, dragState] = useDrag({
 
 ### 约束到父元素
 
-```javascript
+```typescript
 const [dragRef, dragState] = useDrag({
   constrainToParent: true, // 自动约束在父元素内
 });
@@ -403,7 +417,7 @@ const [dragRef, dragState] = useDrag({
 
 ### 回调函数
 
-```javascript
+```typescript
 const [dragRef, dragState] = useDrag({
   onDragStart: (state, event) => {
     console.log("开始拖拽", state.position);

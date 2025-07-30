@@ -101,8 +101,8 @@ const [uploadData, uploading, uploadError, uploadFile, resetUpload, status] =
     }
   );
 
-const handleFileSelect = (event) => {
-  const target = event.target;
+const handleFileSelect = (event: Event) => {
+  const target = event.target as HTMLInputElement;
   selectedFile.value = target.files?.[0] || null;
 };
 
@@ -256,34 +256,33 @@ type AsyncStatus = "idle" | "pending" | "success" | "error";
 
 ## 类型定义
 
-```javascript
-// 异步函数类型
-// AsyncFunction<T, P> = (...args: P) => Promise<T>
+```typescript
+export type AsyncFunction<T, P extends any[] = any[]> = (
+  ...args: P
+) => Promise<T>;
 
-// 执行函数类型
-// AsyncExecuteFunction<P> = (...args: P) => Promise<void>
+export type AsyncExecuteFunction<P extends any[] = any[]> = (
+  ...args: P
+) => Promise<void>;
 
-// 重置函数类型
-// ResetFunction = () => void
+export type ResetFunction = () => void;
 
-// 配置选项
-// UseAsyncOptions = {
-//   immediate?: boolean,
-//   resetDelay?: number,
-//   onSuccess?: (data: any) => void,
-//   onError?: (error: Error) => void,
-//   onFinally?: () => void
-// }
+export interface UseAsyncOptions {
+  immediate?: boolean;
+  resetDelay?: number;
+  onSuccess?: (data: any) => void;
+  onError?: (error: Error) => void;
+  onFinally?: () => void;
+}
 
-// 返回值类型
-// UseAsyncReturn<T, P> = [
-//   ComputedRef<T | null>,     // data
-//   ComputedRef<boolean>,      // loading
-//   ComputedRef<Error | null>, // error
-//   AsyncExecuteFunction<P>,   // execute
-//   ResetFunction,             // reset
-//   ComputedRef<AsyncStatus>   // status
-// ]
+export type UseAsyncReturn<T, P extends any[] = any[]> = [
+  ComputedRef<T | null>,
+  ComputedRef<boolean>,
+  ComputedRef<Error | null>,
+  AsyncExecuteFunction<P>,
+  ResetFunction,
+  ComputedRef<AsyncStatus>,
+];
 ```
 
 ## 使用场景
@@ -306,10 +305,17 @@ import { useAsync } from '@vakao-ui/hooks';
 import { ref } from 'vue';
 
 // 文件上传示例
-const selectedFile = ref(null);
+interface UploadResult {
+  id: string;
+  filename: string;
+  size: number;
+  uploadTime: string;
+}
+
+const selectedFile = ref<File | null>(null);
 
 const [uploadData, uploading, uploadError, uploadFile, resetUpload, status] = useAsync(
-  async (file) => {
+  async (file: File): Promise<UploadResult> => {
     // 模拟文件上传
     await new Promise(resolve => setTimeout(resolve, 2000));
     
@@ -341,8 +347,20 @@ const handleFileSelect = (event: Event) => {
 };
 
 // 统计数据示例
+interface StatItem {
+  value: number;
+  label: string;
+}
+
+interface StatsData {
+  users: StatItem;
+  orders: StatItem;
+  revenue: StatItem;
+  growth: StatItem;
+}
+
 const [statsData, statsLoading, statsError, refreshStats, resetStats] = useAsync(
-  async () => {
+  async (): Promise<StatsData> => {
     // 模拟 API 请求
     await new Promise(resolve => setTimeout(resolve, 1500));
     

@@ -287,24 +287,25 @@ const [text, copy, read, isSupported, isSecureContext] = useClipboard(options);
 
 ## 类型定义
 
-```javascript
-// 类型定义（仅供参考）
-// UseClipboardOptions: {
-//   legacy?: boolean,
-//   onCopy?: (text: string) => void,
-//   onError?: (error: Error) => void,
-//   onRead?: (text: string) => void,
-//   onReadError?: (error: Error) => void
-// }
-// CopyFunction: (text: string) => Promise<boolean>
-// ReadFunction: () => Promise<string>
-// UseClipboardReturn: [
-//   Ref<string>,
-//   CopyFunction,
-//   ReadFunction,
-//   ComputedRef<boolean>,
-//   ComputedRef<boolean>
-// ]
+```typescript
+export interface UseClipboardOptions {
+  legacy?: boolean;
+  onCopy?: (text: string) => void;
+  onError?: (error: Error) => void;
+  onRead?: (text: string) => void;
+  onReadError?: (error: Error) => void;
+}
+
+export type CopyFunction = (text: string) => Promise<boolean>;
+export type ReadFunction = () => Promise<string>;
+
+export type UseClipboardReturn = [
+  Ref<string>,
+  CopyFunction,
+  ReadFunction,
+  ComputedRef<boolean>,
+  ComputedRef<boolean>,
+];
 ```
 
 ## 使用场景

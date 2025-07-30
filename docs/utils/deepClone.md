@@ -4,7 +4,7 @@
 
 ## 基础用法
 
-```js
+```ts
 import { deepClone } from "vakao-ui/utils";
 
 const original = {
@@ -27,7 +27,7 @@ console.log(cloned.hobbies); // ["读书", "游泳", "跑步"]
 
 ### 基本类型
 
-```js
+```ts
 // 基本类型
 deepClone("hello"); // "hello"
 deepClone(123); // 123
@@ -38,7 +38,7 @@ deepClone(undefined); // undefined
 
 ### 对象和数组
 
-```js
+```ts
 // 对象
 const obj = { name: "张三", age: 25 };
 const clonedObj = deepClone(obj);
@@ -65,7 +65,7 @@ const clonedNested = deepClone(nested);
 
 ### 特殊对象类型
 
-```js
+```ts
 // 日期对象
 const date = new Date("2023-12-25");
 const clonedDate = deepClone(date);
@@ -94,10 +94,10 @@ console.log(clonedSet instanceof Set); // true
 
 对于包含循环引用的对象，请使用 `deepCloneWithCircular` 函数：
 
-```js
+```ts
 import { deepCloneWithCircular } from "vakao-ui/utils";
 
-const obj = { name: "test" };
+const obj: any = { name: "test" };
 obj.self = obj; // 创建循环引用
 
 const cloned = deepCloneWithCircular(obj);
@@ -109,20 +109,20 @@ console.log(cloned !== obj); // true
 
 ### 选择合适的函数
 
-```js
+```ts
 // 对于没有循环引用的对象，使用 deepClone（性能更好）
 const simpleObj = { name: "张三", hobbies: ["读书"] };
 const cloned1 = deepClone(simpleObj);
 
 // 对于可能包含循环引用的对象，使用 deepCloneWithCircular
-const complexObj = { name: "李四" };
+const complexObj: any = { name: "李四" };
 complexObj.parent = complexObj;
 const cloned2 = deepCloneWithCircular(complexObj);
 ```
 
 ### 大对象处理
 
-```js
+```ts
 // 对于大型对象，考虑是否真的需要深拷贝
 const largeData = {
   users: new Array(10000)
@@ -140,13 +140,13 @@ const partialClone = {
 
 ## 类型定义
 
-```js
+```ts
 /**
  * 深拷贝函数（不支持循环引用）
  * @param obj 要拷贝的对象
  * @returns 拷贝后的新对象
  */
-function deepClone(obj) { /* ... */ }
+function deepClone<T>(obj: T): T;
 
 /**
  * 深拷贝函数（支持循环引用）
@@ -154,7 +154,7 @@ function deepClone(obj) { /* ... */ }
  * @param visited 已访问对象的映射表（内部使用）
  * @returns 拷贝后的新对象
  */
-function deepCloneWithCircular(obj, visited) { /* ... */ }
+function deepCloneWithCircular<T>(obj: T, visited?: WeakMap<object, any>): T;
 ```
 
 ## 注意事项

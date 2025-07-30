@@ -645,10 +645,10 @@ const [data, loading, error, { refresh }] = useFetch(
 
 ### useFetch
 
-```javascript
+```ts
 function useFetch<T = any>(
   url: string | (() => string),
-  options?: UseFetchOptions<T>,
+  options?: UseFetchOptions<T>
 ): UseFetchReturn<T>;
 ```
 
@@ -754,7 +754,7 @@ type UseFetchReturn<T> = [
  */
 function useFetch<T = any>(
   url: string | (() => string),
-  options?: UseFetchOptions<T>,
+  options?: UseFetchOptions<T>
 ): UseFetchReturn<T>;
 
 /**
@@ -786,13 +786,31 @@ function createFetch(config: CreateFetchConfig): typeof useFetch;
 - 搜索和过滤
 - 数据同步
 
-<script>
+<script lang="ts">
 // 类型定义
-// 类型定义（仅供参考）
-// User: { id: number, name: string, email: string }
-// CreateUserData: { name: string, email: string }
-// ApiResponse: { message: string, timestamp: number }
-// UserStats: { totalUsers: number, activeUsers: number, averageAge: number, emailDomains: object, lastUpdated: string }
+interface User {
+  id: number;
+  name: string;
+  email: string;
+}
+
+interface CreateUserData {
+  name: string;
+  email: string;
+}
+
+interface ApiResponse {
+  message: string;
+  timestamp: number;
+}
+
+interface UserStats {
+  totalUsers: number;
+  activeUsers: number;
+  averageAge: number;
+  emailDomains: Record<string, number>;
+  lastUpdated: string;
+}
 </script>
 
 <script setup lang="ts">
