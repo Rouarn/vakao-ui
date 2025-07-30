@@ -380,7 +380,7 @@ const [targetRef] = useClickOutside(
 4. 支持排除特定元素，避免误触发
 5. 组件卸载时会自动清理事件监听器
 
-<script setup>
+<script setup lang="ts">
 import { useClickOutside } from '@vakao-ui/hooks';
 import { ref, reactive, watch } from 'vue';
 

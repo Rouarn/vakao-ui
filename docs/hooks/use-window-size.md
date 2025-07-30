@@ -5,7 +5,6 @@
 ## 基础用法
 
 <Demo>
-  <template>
     <div style="padding: 20px; border: 1px solid #e8e8e8; border-radius: 8px; width: 100%;">
       <h3 style="margin-top: 0;">📐 窗口尺寸监听</h3>
       <!-- 基础尺寸显示 -->
@@ -123,13 +122,11 @@
         </div>
       </div>
     </div>
-  </template>
 </Demo>
 
 ## 高级用法
 
 <Demo>
-  <template>
     <div style="padding: 20px; border: 1px solid #e8e8e8; border-radius: 8px; width: 100%;">
       <h3 style="margin-top: 0;">🚀 高级窗口尺寸功能</h3>
       <!-- 防抖优化 -->
@@ -263,7 +260,6 @@
       </div>
     </div>
 
-  </template>
 </Demo>
 
 ## API 参考

@@ -789,7 +789,7 @@ elements.value.forEach((_, index) => {
 5. 支持动态目标元素
 6. 在移动设备上可能需要特殊处理
 
-<script setup>
+<script setup lang="ts">
 import { ref, reactive, watch } from 'vue';
 import { useHover } from '@vakao-ui/hooks';
 

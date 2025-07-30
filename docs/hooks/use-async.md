@@ -267,7 +267,7 @@ export type AsyncExecuteFunction<P extends any[] = any[]> = (
 
 export type ResetFunction = () => void;
 
-export interface UseAsyncOptions {
+export type UseAsyncOptions {
   immediate?: boolean;
   resetDelay?: number;
   onSuccess?: (data: any) => void;
@@ -305,17 +305,10 @@ import { useAsync } from '@vakao-ui/hooks';
 import { ref } from 'vue';
 
 // 文件上传示例
-interface UploadResult {
-  id: string;
-  filename: string;
-  size: number;
-  uploadTime: string;
-}
-
-const selectedFile = ref<File | null>(null);
+const selectedFile = ref(null);
 
 const [uploadData, uploading, uploadError, uploadFile, resetUpload, status] = useAsync(
-  async (file: File): Promise<UploadResult> => {
+  async (file) => {
     // 模拟文件上传
     await new Promise(resolve => setTimeout(resolve, 2000));
     
@@ -341,26 +334,14 @@ const [uploadData, uploading, uploadError, uploadFile, resetUpload, status] = us
   }
 );
 
-const handleFileSelect = (event: Event) => {
-  const target = event.target as HTMLInputElement;
+const handleFileSelect = (event) => {
+  const target = event.target;
   selectedFile.value = target.files?.[0] || null;
 };
 
 // 统计数据示例
-interface StatItem {
-  value: number;
-  label: string;
-}
-
-interface StatsData {
-  users: StatItem;
-  orders: StatItem;
-  revenue: StatItem;
-  growth: StatItem;
-}
-
 const [statsData, statsLoading, statsError, refreshStats, resetStats] = useAsync(
-  async (): Promise<StatsData> => {
+  async () => {
     // 模拟 API 请求
     await new Promise(resolve => setTimeout(resolve, 1500));
     

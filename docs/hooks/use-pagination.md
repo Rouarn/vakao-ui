@@ -5,7 +5,6 @@
 ## 基础用法
 
 <Demo>
-  <template>
     <div style="padding: 20px; border: 1px solid #e8e8e8; border-radius: 8px; width: 100%;">
       <h3 style="margin-top: 0;">📄 基础分页功能</h3>
       <!-- 基础分页 -->
@@ -203,13 +202,11 @@
         </div>
       </div>
     </div>
-  </template>
 </Demo>
 
 ## 高级用法
 
 <Demo>
-  <template>
     <div style="padding: 20px; border: 1px solid #e8e8e8; border-radius: 8px; width: 100%;">
       <h3 style="margin-top: 0;">🚀 高级分页功能</h3>
       <!-- 响应式数据源 -->
@@ -359,7 +356,6 @@
       </div>
     </div>
 
-  </template>
 </Demo>
 
 ## API 参考

@@ -581,7 +581,7 @@ useEventListener(elementRef, "click", handleFirstClick, { once: true });
 5. 可以通过返回的清理函数手动移除监听器
 6. 支持所有标准的 DOM 事件和自定义事件
 
-<script setup>
+<script setup lang="ts">
 import { ref, reactive, computed } from 'vue';
 import { useEventListener } from '@vakao-ui/hooks';
 

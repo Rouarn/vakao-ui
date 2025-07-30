@@ -346,7 +346,7 @@ export type UseClipboardReturn = [
 4. 旧版后备方案的兼容性更好但功能有限
 5. 建议提供用户反馈，告知操作结果
 
-<script setup>
+<script setup lang="ts">
 import { useClipboard } from '@vakao-ui/hooks';
 import { ref } from 'vue';
 
@@ -411,7 +411,7 @@ const codeSnippets: CodeSnippet[] = [
 
 <script setup>
 const message = ref('Hello Vue 3!');
-</script>`
+<\/script>`
 
 },
 {

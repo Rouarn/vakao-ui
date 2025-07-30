@@ -692,7 +692,7 @@ useEventListener(window, "keydown", (event: KeyboardEvent) => {
 5. 使用 ESC 键可以退出全屏模式
 6. 全屏状态会自动同步到响应式状态
 
-<script setup>
+<script setup lang="ts">
 import { ref, computed } from 'vue';
 import { useFullscreen } from '@vakao-ui/hooks';
 
