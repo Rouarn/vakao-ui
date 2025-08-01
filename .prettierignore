@@ -49,6 +49,10 @@ docs/.vitepress/cache
 .DS_Store
 Thumbs.db
 
+# TypeScript 配置文件（包含注释）
+tsconfig.json
+**/tsconfig.json
+
 # 第三方库文件
 scripts/gui/src/js/jquery-3.7.1.min.js
 

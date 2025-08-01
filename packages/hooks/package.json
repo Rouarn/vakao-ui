@@ -17,8 +17,19 @@
     "dev": "vite build --watch",
     "clean": "rimraf dist"
   },
-  "files": ["dist", "README.md", "CHANGELOG.md"],
-  "keywords": ["vue3", "hooks", "composition-api", "ui-library", "typescript", "vakao-ui"],
+  "files": [
+    "dist",
+    "README.md",
+    "CHANGELOG.md"
+  ],
+  "keywords": [
+    "vue3",
+    "hooks",
+    "composition-api",
+    "ui-library",
+    "typescript",
+    "vakao-ui"
+  ],
   "author": "Vakao UI Team",
   "license": "MIT",
   "homepage": "https://github.com/vakao-ui/vakao-ui#readme",

@@ -124,7 +124,7 @@ export const isEqualWithCircular = (
   a: unknown,
   b: unknown,
   visitedA: WeakMap<object, object> = new WeakMap(),
-  visitedB: WeakMap<object, object> = new WeakMap()
+  visitedB: WeakMap<object, object> = new WeakMap(),
 ): boolean => {
   // 严格相等检查（包括 NaN）
   if (Object.is(a, b)) {

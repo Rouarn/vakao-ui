@@ -120,7 +120,7 @@ export const formatDate = (date: Date | number | string, format: string = DATE_F
 export const formatRelativeTime = (
   date: Date | number | string,
   baseDate: Date | number | string = new Date(),
-  options?: FormatDateOptions
+  options?: FormatDateOptions,
 ): string => {
   const dateObj = new Date(date);
   const baseDateObj = new Date(baseDate);

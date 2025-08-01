@@ -350,7 +350,7 @@ function useThrottle<T>(value: Ref<T>, delay: number, options?: UseThrottleOptio
 function useThrottle<T extends (...args: any[]) => any>(
   fn: T,
   delay: number,
-  options?: UseThrottleOptions
+  options?: UseThrottleOptions,
 ): [ThrottledFunction<T>, ThrottleCancelFunction, ThrottleFlushFunction];
 ```
 

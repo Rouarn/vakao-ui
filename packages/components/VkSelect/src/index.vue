@@ -94,7 +94,7 @@ export default defineComponent({
       "value",
       "modelValue",
       emit as (event: string, ...args: unknown[]) => void,
-      props.multiple ? ([] as SelectValue[]) : ("" as SelectValue)
+      props.multiple ? ([] as SelectValue[]) : ("" as SelectValue),
     );
 
     // 计算属性

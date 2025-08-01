@@ -472,7 +472,7 @@ watch(
   (enabled) => {
     setConditionalEnabled(enabled);
   },
-  { immediate: true }
+  { immediate: true },
 );
 
 // 悬停计数器

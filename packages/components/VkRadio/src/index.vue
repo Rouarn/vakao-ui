@@ -60,7 +60,7 @@ export default defineComponent({
       "modelValue",
       "modelValue",
       emit as (event: string, ...args: unknown[]) => void,
-      undefined
+      undefined,
     );
 
     // 计算属性

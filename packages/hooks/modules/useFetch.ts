@@ -139,7 +139,7 @@ export type PromiseFunction<T> = () => Promise<T>;
 export function useFetch<T = unknown>(
   url: string | (() => string) | (() => Promise<T>),
   options: UseFetchOptions<T> = {},
-  fetchOptions: RequestInit = {}
+  fetchOptions: RequestInit = {},
 ): UseFetchReturn<T> {
   const { immediate = true, timeout = 10000, retries = 0, retryDelay = 1000, transform, beforeRequest, afterRequest, onError } = options;
 
@@ -393,7 +393,7 @@ export function createFetch(baseURL: string, defaultOptions: UseFetchOptions<unk
   return function <T = unknown>(
     url: string | (() => string),
     options: UseFetchOptions<T> = {},
-    fetchOptions: RequestInit = {}
+    fetchOptions: RequestInit = {},
   ): UseFetchReturn<T> {
     const fullUrl = typeof url === "function" ? () => baseURL + url() : baseURL + url;
 

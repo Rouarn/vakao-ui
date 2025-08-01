@@ -57,6 +57,6 @@ watch(
       console.warn(`[VkCheckboxGroup] 选择数量不能超过 ${props.max} 个`);
     }
   },
-  { immediate: true }
+  { immediate: true },
 );
 </script>

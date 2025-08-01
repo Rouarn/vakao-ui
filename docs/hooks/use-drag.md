@@ -16,7 +16,7 @@
     </div>
     <div style="margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap;">
       <vk-button @click="() => basicResetPosition()" size="small">重置位置</vk-button>
-      <vk-button @click="() => basicSetPosition(100, 100)" size="small">设置位置 (100, 100)</vk-button>
+      <vk-button @click="() => basicSetPosition({x: 100, y: 100})" size="small">设置位置 (100, 100)</vk-button>
     </div>
     <div style="margin-top: 12px; padding: 8px; background: #f0f0f0; border-radius: 4px; font-family: monospace; font-size: 12px;">
       位置: ({{ basicDragState.position.x }}, {{ basicDragState.position.y }})<br>
@@ -43,7 +43,7 @@
   </div>
 
   <vk-button @click="() => basicResetPosition()" size="small">重置位置</vk-button>
-  <vk-button @click="() => basicSetPosition(100, 100)" size="small">设置位置 (100, 100)</vk-button>
+  <vk-button @click="() => basicSetPosition({ x: 100, y: 100 })" size="small">设置位置 (100, 100)</vk-button>
 
   <div>
     位置: ({{ basicDragState.position.x }}, {{ basicDragState.position.y }})<br />

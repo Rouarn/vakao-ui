@@ -1291,7 +1291,7 @@ watch(
     if (isBottom) {
       loadMore();
     }
-  }
+  },
 );
 ```
 

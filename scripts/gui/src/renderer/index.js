@@ -892,7 +892,7 @@ function updatePackageGrid(packages) {
             刷新
           </button>
         </div>
-      `
+      `,
         )
         .fadeIn(300);
       return;
@@ -1069,7 +1069,7 @@ function updateSelectionCounter() {
     if ($counter.length === 0) {
       // 创建计数器
       $(
-        '<div class="selection-counter" style="margin-bottom: 12px; padding: 8px 12px; background: var(--primary-color); color: white; border-radius: var(--radius-md); text-align: center; font-size: var(--font-size-sm);">'
+        '<div class="selection-counter" style="margin-bottom: 12px; padding: 8px 12px; background: var(--primary-color); color: white; border-radius: var(--radius-md); text-align: center; font-size: var(--font-size-sm);">',
       )
         .html(`<i class="fas fa-check-circle"></i> 已选择 <span class="count">${count}</span> 个包`)
         .prependTo($elements.packageGrid.parent())
@@ -1445,7 +1445,7 @@ function updateLogDisplay() {
           <h3>暂无日志</h3>
           <p>执行命令后日志将显示在这里</p>
         </div>
-      `
+      `,
         )
         .fadeIn(300);
       return;
@@ -1526,14 +1526,14 @@ function clearLogs() {
         <h3>日志已清空</h3>
         <p>执行命令后日志将显示在这里</p>
       </div>
-    `
+    `,
         )
         .hide()
         .fadeIn(300);
 
       showToast("日志已清空", "success");
     },
-    $logContainer.children(".log-entry").length * 20 + 200
+    $logContainer.children(".log-entry").length * 20 + 200,
   );
 }
 
@@ -1575,7 +1575,7 @@ function clearLogsAsync() {
 
         resolve();
       },
-      $entries.length * 20 + 200
+      $entries.length * 20 + 200,
     );
   });
 }
@@ -1664,7 +1664,7 @@ function showCommandModal(title, command) {
     {
       scale: 1,
     },
-    200
+    200,
   );
 
   // 聚焦到取消按钮
@@ -1698,7 +1698,7 @@ function hideCommandModal() {
       {
         scale: 0.8,
       },
-      200
+      200,
     )
     .end()
     .fadeOut(300, function () {
@@ -1788,7 +1788,7 @@ function showCommandPreviewModal(title, command, showExecuteButton = true) {
     {
       scale: 1,
     },
-    200
+    200,
   );
 
   // 添加键盘事件监听
@@ -1814,7 +1814,7 @@ function hideCommandPreviewModal() {
       {
         scale: 0.8,
       },
-      200
+      200,
     )
     .end()
     .fadeOut(300, function () {
@@ -2150,7 +2150,7 @@ function scrollToBottom(element) {
         scrollTop: $target[0].scrollHeight,
       },
       300,
-      "swing"
+      "swing",
     );
   }
 }

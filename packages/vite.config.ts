@@ -60,7 +60,7 @@ export default defineConfig({
         // 将类似 "../../../../packages/dist/types/utils" 的路径替换为正确的相对路径
         updatedContent = updatedContent.replace(
           /import\(["'][^"']*\/packages\/dist\/types\/utils["']\)/g,
-          `import("${normalizeRelativePath(utilsPath)}")`
+          `import("${normalizeRelativePath(utilsPath)}")`,
         );
 
         // 修复其他可能的错误路径

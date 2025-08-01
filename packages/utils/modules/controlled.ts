@@ -47,7 +47,7 @@ export function useControlled<T>(
   propName: string,
   modelValuePropName: string,
   emit: (event: string, ...args: unknown[]) => void,
-  defaultValue: T
+  defaultValue: T,
 ): UseControlledReturn<T> {
   // 判断是否为受控模式
   const isControlled = computed(() => props[propName] !== undefined);
@@ -67,7 +67,7 @@ export function useControlled<T>(
       if (!isControlled.value && newValue !== undefined) {
         internalValue.value = newValue;
       }
-    }
+    },
   );
 
   // 更新值的方法
@@ -109,7 +109,7 @@ export function useControlled<T>(
 export function useStandardControlled<T>(
   props: Record<string, unknown>,
   emit: (event: string, ...args: unknown[]) => void,
-  defaultValue: T
+  defaultValue: T,
 ): UseControlledReturn<T> {
   return useControlled(props, "value", "modelValue", emit, defaultValue);
 }

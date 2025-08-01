@@ -8,7 +8,12 @@
     "build": "pnpm run -C ../ build:deps && vitepress build",
     "docs:preview": "vitepress serve"
   },
-  "keywords": ["vue3", "components", "ui-library", "documentation"],
+  "keywords": [
+    "vue3",
+    "components",
+    "ui-library",
+    "documentation"
+  ],
   "author": "",
   "license": "MIT",
   "dependencies": {

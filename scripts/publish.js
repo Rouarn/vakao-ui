@@ -381,7 +381,7 @@ async function main() {
       packageKeys,
       options.syncVersion,
       (key) => publishEngine.getPackageJson(key),
-      (version) => publishEngine.suggestNextVersion(version)
+      (version) => publishEngine.suggestNextVersion(version),
     );
 
     separator();

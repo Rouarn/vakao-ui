@@ -150,7 +150,7 @@ watch(
   () => {
     normalUpdateCount.value++;
   },
-  { deep: true }
+  { deep: true },
 );
 
 watch(
@@ -158,7 +158,7 @@ watch(
   () => {
     debouncedUpdateCount.value++;
   },
-  { deep: true }
+  { deep: true },
 );
 </script>
 ```

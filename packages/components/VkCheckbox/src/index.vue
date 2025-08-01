@@ -68,7 +68,7 @@ export default defineComponent({
       "checked",
       "modelValue",
       emit as (event: string, ...args: unknown[]) => void,
-      false
+      false,
     );
 
     // 计算属性

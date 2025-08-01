@@ -305,7 +305,7 @@ const MyComponent = memo(
   (prevProps, nextProps) => {
     // 自定义比较逻辑
     return shallowEqual(prevProps, nextProps);
-  }
+  },
 );
 ```
 
@@ -323,7 +323,7 @@ watch(
       // 处理变化
     }
   },
-  { deep: true }
+  { deep: true },
 );
 ```
 

@@ -350,7 +350,7 @@ async onDeploySuccess(context) {
        } else {
          console.log("通知发送成功:", response);
        }
-     }
+     },
    );
    ```
 

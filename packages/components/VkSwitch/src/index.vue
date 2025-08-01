@@ -70,7 +70,7 @@ export default defineComponent({
       "value",
       "modelValue",
       emit as (event: string, ...args: unknown[]) => void,
-      false as SwitchValue
+      false as SwitchValue,
     );
 
     // 计算属性

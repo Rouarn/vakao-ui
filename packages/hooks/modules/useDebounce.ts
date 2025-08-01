@@ -90,7 +90,7 @@ export function useDebounce<T extends (..._args: unknown[]) => unknown>(
   options?: {
     leading?: boolean;
     trailing?: boolean;
-  }
+  },
 ): UseDebouncedFunctionReturn<T>;
 
 /**
@@ -102,7 +102,7 @@ export function useDebounce<T>(
   options: {
     leading?: boolean;
     trailing?: boolean;
-  } = {}
+  } = {},
 ): UseDebouncedValueReturn<T> | UseDebouncedFunctionReturn<(..._args: unknown[]) => unknown> {
   // 如果第一个参数是 ref，则处理防抖值
   if (typeof valueOrFn === "object" && "value" in valueOrFn) {
@@ -135,7 +135,7 @@ function useDebouncedValue<T>(value: Ref<T>, delay: number): UseDebouncedValueRe
       }
       timeoutId = setTimeout(updateDebouncedValue, delay);
     },
-    { immediate: false }
+    { immediate: false },
   );
 
   onUnmounted(() => {
@@ -156,7 +156,7 @@ function useDebouncedFunction<T extends (...args: unknown[]) => unknown>(
   options: {
     leading?: boolean;
     trailing?: boolean;
-  } = {}
+  } = {},
 ): UseDebouncedFunctionReturn<T> {
   const { leading = false, trailing = true } = options;
 

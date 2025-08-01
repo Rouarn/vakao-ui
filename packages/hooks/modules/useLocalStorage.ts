@@ -87,7 +87,7 @@ export function useLocalStorage<T>(
   options: {
     serializer?: SerializerFunction<T>;
     syncAcrossTabs?: boolean;
-  } = {}
+  } = {},
 ): UseLocalStorageReturn<T> {
   const { serializer = defaultSerializer, syncAcrossTabs = true } = options;
 
@@ -163,7 +163,7 @@ export function useLocalStorage<T>(
     (newValue) => {
       writeToStorage(newValue);
     },
-    { deep: true }
+    { deep: true },
   );
 
   // 监听存储变化（跨标签页同步）

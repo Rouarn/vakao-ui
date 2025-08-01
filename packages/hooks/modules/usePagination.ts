@@ -201,7 +201,7 @@ export function usePagination(options: UsePaginationOptions = {}): UsePagination
           currentPage.value = maxPage;
         }
       },
-      { immediate: true }
+      { immediate: true },
     );
   }
 

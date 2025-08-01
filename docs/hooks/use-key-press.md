@@ -157,10 +157,10 @@ import { reactive } from "vue";
 import { useKeyPress } from "@vakao-ui/hooks";
 
 // 单键检测
-const spacePressed = useKeyPress(" ");
-const enterPressed = useKeyPress("Enter");
-const escapePressed = useKeyPress("Escape");
-const tabPressed = useKeyPress("Tab");
+const [spacePressed] = useKeyPress(" ");
+const [enterPressed] = useKeyPress("Enter");
+const [escapePressed] = useKeyPress("Escape");
+const [tabPressed] = useKeyPress("Tab");
 
 const singleKeys = reactive([
   { name: "Space", icon: "⎵", isPressed: spacePressed },
@@ -170,10 +170,10 @@ const singleKeys = reactive([
 ]);
 
 // 组合键检测
-const ctrlSPressed = useKeyPress(["ctrl", "s"]);
-const ctrlCPressed = useKeyPress(["ctrl", "c"]);
-const ctrlZPressed = useKeyPress(["ctrl", "z"]);
-const altTabPressed = useKeyPress(["alt", "tab"]);
+const [ctrlSPressed] = useKeyPress(["ctrl", "s"]);
+const [ctrlCPressed] = useKeyPress(["ctrl", "c"]);
+const [ctrlZPressed] = useKeyPress(["ctrl", "z"]);
+const [altTabPressed] = useKeyPress(["alt", "tab"]);
 
 const comboKeys = reactive([
   {
@@ -203,10 +203,10 @@ const comboKeys = reactive([
 ]);
 
 // 方向键检测
-const upPressed = useKeyPress("ArrowUp");
-const downPressed = useKeyPress("ArrowDown");
-const leftPressed = useKeyPress("ArrowLeft");
-const rightPressed = useKeyPress("ArrowRight");
+const [upPressed] = useKeyPress("ArrowUp");
+const [downPressed] = useKeyPress("ArrowDown");
+const [leftPressed] = useKeyPress("ArrowLeft");
+const [rightPressed] = useKeyPress("ArrowRight");
 
 const arrowKeys = reactive({
   up: upPressed,
@@ -536,11 +536,11 @@ const playerPosition = reactive({ x: 100, y: 85 });
 const gameSpeed = ref(1);
 
 // 移动控制
-const moveUp = useKeyPress(["w", "ArrowUp"]);
-const moveDown = useKeyPress(["s", "ArrowDown"]);
-const moveLeft = useKeyPress(["a", "ArrowLeft"]);
-const moveRight = useKeyPress(["d", "ArrowRight"]);
-const speedBoost = useKeyPress("shift");
+const [moveUp] = useKeyPress(["w", "ArrowUp"]);
+const [moveDown] = useKeyPress(["s", "ArrowDown"]);
+const [moveLeft] = useKeyPress(["a", "ArrowLeft"]);
+const [moveRight] = useKeyPress(["d", "ArrowRight"]);
+const [speedBoost] = useKeyPress("shift");
 
 // 游戏循环
 let gameLoop: number;
@@ -574,28 +574,28 @@ const editorShortcuts = reactive([
   {
     name: "Ctrl+A",
     description: "全选",
-    isPressed: useKeyPress(["ctrl", "a"]),
+    isPressed: useKeyPress(["ctrl", "a"])[0],
   },
   {
     name: "Ctrl+Z",
     description: "撤销",
-    isPressed: useKeyPress(["ctrl", "z"]),
+    isPressed: useKeyPress(["ctrl", "z"])[0],
   },
   {
     name: "Ctrl+Y",
     description: "重做",
-    isPressed: useKeyPress(["ctrl", "y"]),
+    isPressed: useKeyPress(["ctrl", "y"])[0],
   },
   {
     name: "Ctrl+X",
     description: "剪切",
-    isPressed: useKeyPress(["ctrl", "x"]),
+    isPressed: useKeyPress(["ctrl", "x"])[0],
   },
 ]);
 
 // 快捷键帮助
 const helpVisible = ref(false);
-const helpToggle = useKeyPress("F1");
+const [helpToggle] = useKeyPress("F1");
 
 watch(helpToggle, (pressed, wasPrevPressed) => {
   if (pressed && !wasPrevPressed) {
@@ -791,30 +791,37 @@ type KeyFilter =
 
 ### 返回值
 
-`useKeyPress` 返回一个响应式的布尔值：
+`useKeyPress` 返回一个包含三个元素的数组：
 
 ```typescript
-const isPressed = useKeyPress(keyFilter, options);
+const [isPressed, enable, disable] = useKeyPress(keyFilter, options);
 ```
 
-| 类型           | 说明           |
-| -------------- | -------------- |
-| `Ref<boolean>` | 按键是否被按下 |
+| 索引 | 类型                   | 说明               |
+| ---- | ---------------------- | ------------------ |
+| 0    | `ComputedRef<boolean>` | 按键是否被按下     |
+| 1    | `() => void`           | 启用按键监听的函数 |
+| 2    | `() => void`           | 禁用按键监听的函数 |
 
 ### 类型定义
 
 ```typescript
-export type KeyFilter = string | string[] | ((event: KeyboardEvent) => boolean);
+export type KeyType = string | string[];
 
 export interface UseKeyPressOptions {
-  target?: EventTarget | Ref<EventTarget | null>;
-  eventName?: "keydown" | "keyup";
-  exactMatch?: boolean;
-  useCapture?: boolean;
+  eventType?: "keydown" | "keyup";
+  target?: Window | Document | HTMLElement | Ref<HTMLElement | null> | (() => HTMLElement | null);
   enabled?: boolean | Ref<boolean>;
+  preventDefault?: boolean;
+  stopPropagation?: boolean;
+  exactMatch?: boolean;
+  onKeyDown?: (event: KeyboardEvent) => void;
+  onKeyUp?: (event: KeyboardEvent) => void;
 }
 
-export function useKeyPress(keyFilter: KeyFilter, options?: UseKeyPressOptions): Ref<boolean>;
+export type UseKeyPressReturn = [ComputedRef<boolean>, () => void, () => void];
+
+export function useKeyPress(keys: KeyType, options?: UseKeyPressOptions): UseKeyPressReturn;
 ```
 
 ## 使用场景
@@ -831,34 +838,30 @@ export function useKeyPress(keyFilter: KeyFilter, options?: UseKeyPressOptions):
 
 ```typescript
 // 检测 Ctrl+S
-const ctrlS = useKeyPress(["ctrl", "s"]);
+const [ctrlS] = useKeyPress(["ctrl", "s"]);
 
 // 检测 Ctrl+Shift+Z
-const ctrlShiftZ = useKeyPress(["ctrl", "shift", "z"]);
+const [ctrlShiftZ] = useKeyPress(["ctrl", "shift", "z"]);
 
 // 检测 Alt+F4
-const altF4 = useKeyPress(["alt", "F4"]);
+const [altF4] = useKeyPress(["alt", "F4"]);
 ```
 
 ### 自定义过滤函数
 
 ```typescript
 // 检测任意数字键
-const isNumberKey = useKeyPress((event: KeyboardEvent) => {
-  return /^[0-9]$/.test(event.key);
-});
+const [isNumberKey] = useKeyPress(["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]);
 
 // 检测功能键 (F1-F12)
-const isFunctionKey = useKeyPress((event: KeyboardEvent) => {
-  return /^F([1-9]|1[0-2])$/.test(event.key);
-});
+const [isFunctionKey] = useKeyPress(["F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12"]);
 ```
 
 ### 特定元素监听
 
 ```typescript
 const inputRef = ref<HTMLInputElement>();
-const enterPressed = useKeyPress("Enter", {
+const [enterPressed] = useKeyPress("Enter", {
   target: inputRef,
 });
 ```
@@ -867,7 +870,7 @@ const enterPressed = useKeyPress("Enter", {
 
 ```typescript
 const isEnabled = ref(true);
-const spacePressed = useKeyPress(" ", {
+const [spacePressed] = useKeyPress(" ", {
   enabled: isEnabled,
 });
 ```
@@ -876,7 +879,7 @@ const spacePressed = useKeyPress(" ", {
 
 ```typescript
 // 只有同时按下 Ctrl+S 才触发，不允许其他修饰键
-const exactCtrlS = useKeyPress(["ctrl", "s"], {
+const [exactCtrlS] = useKeyPress(["ctrl", "s"], {
   exactMatch: true,
 });
 ```

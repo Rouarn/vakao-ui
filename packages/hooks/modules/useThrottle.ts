@@ -90,7 +90,7 @@ export function useThrottle<T extends (..._args: unknown[]) => unknown>(
   options?: {
     leading?: boolean;
     trailing?: boolean;
-  }
+  },
 ): UseThrottledFunctionReturn<T>;
 
 /**
@@ -103,7 +103,7 @@ export function useThrottle<T>(
   options: {
     leading?: boolean;
     trailing?: boolean;
-  } = {}
+  } = {},
 ): UseThrottledValueReturn<T> | UseThrottledFunctionReturn<(..._args: unknown[]) => unknown> {
   // 如果第一个参数是 ref，则处理节流值
   if (typeof valueOrFn === "object" && "value" in valueOrFn) {
@@ -150,7 +150,7 @@ function useThrottledValue<T>(value: Ref<T>, delay: number): UseThrottledValueRe
         }, delay - timeSinceLastUpdate);
       }
     },
-    { immediate: false }
+    { immediate: false },
   );
 
   onUnmounted(() => {
@@ -171,7 +171,7 @@ function useThrottledFunction<T extends (..._args: unknown[]) => unknown>(
   options: {
     leading?: boolean;
     trailing?: boolean;
-  } = {}
+  } = {},
 ): UseThrottledFunctionReturn<T> {
   const { leading = true, trailing = true } = options;
 

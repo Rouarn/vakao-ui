@@ -399,7 +399,7 @@ function useDebounce<T>(value: Ref<T>, delay: number, options?: UseDebounceOptio
 function useDebounce<T extends (...args: any[]) => any>(
   fn: T,
   delay: number,
-  options?: UseDebounceOptions
+  options?: UseDebounceOptions,
 ): [DebouncedFunction<T>, DebounceCancelFunction, DebounceFlushFunction];
 ```
 

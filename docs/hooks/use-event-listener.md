@@ -374,7 +374,7 @@ useEventListener(
   () => {
     optionsClickCount.value++;
   },
-  eventOptions
+  eventOptions,
 );
 
 // 条件监听
@@ -392,7 +392,7 @@ useEventListener(
   () => {
     conditionalClickCount.value++;
   },
-  { enabled: isListening }
+  { enabled: isListening },
 );
 
 // 多事件监听
@@ -488,7 +488,7 @@ export function useEventListener(
   target: EventTarget | Ref<EventTarget | null>,
   event: string,
   handler: EventListener,
-  options?: UseEventListenerOptions
+  options?: UseEventListenerOptions,
 ): UseEventListenerReturn;
 ```
 

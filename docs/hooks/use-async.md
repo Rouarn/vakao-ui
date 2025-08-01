@@ -90,7 +90,7 @@ const [uploadData, uploading, uploadError, uploadFile, resetUpload, status] = us
     onError: (error) => {
       console.error("上传失败:", error);
     },
-  }
+  },
 );
 
 const handleFileSelect = (event: Event) => {
@@ -187,7 +187,7 @@ const [statsData, statsLoading, statsError, refreshStats, resetStats] = useAsync
       growth: { value: Math.floor(Math.random() * 100), label: "增长率 (%)" },
     };
   },
-  { immediate: true } // 立即执行
+  { immediate: true }, // 立即执行
 );
 </script>
 ```
