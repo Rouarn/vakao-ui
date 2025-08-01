@@ -592,7 +592,7 @@ const getCurrentLayout = () => {
             :class="{ 'no-animation': prefersReducedMotion }"
           ></div>
         </div>
-        <p>💡 如果用户偏好减少动画，上面的动画效果会被禁用</p>
+        <p>如果用户偏好减少动画，上面的动画效果会被禁用</p>
       </div>
     </div>
 
@@ -606,9 +606,7 @@ const getCurrentLayout = () => {
             <strong>{{ hasTouch ? "触摸设备" : "鼠标设备" }}</strong>
           </p>
           <p>
-            {{
-              hasTouch ? "检测到粗糙指针（手指触摸）" : "检测到精确指针（鼠标）"
-            }}
+            {{ hasTouch ? "检测到粗糙指针（手指触摸）" : "检测到精确指针（鼠标）" }}
           </p>
         </div>
 
@@ -996,7 +994,7 @@ export interface UseMediaQueryOptions {
 
 export function useMediaQuery(
   query: string,
-  options?: UseMediaQueryOptions,
+  options?: UseMediaQueryOptions
 ): Ref<boolean>;
 ```
 
@@ -1075,10 +1073,10 @@ const isScreen = useMediaQuery("screen");
 
 ```typescript
 const isMobilePortrait = useMediaQuery(
-  "(max-width: 768px) and (orientation: portrait)",
+  "(max-width: 768px) and (orientation: portrait)"
 );
 const isTabletLandscape = useMediaQuery(
-  "(min-width: 769px) and (max-width: 1024px) and (orientation: landscape)",
+  "(min-width: 769px) and (max-width: 1024px) and (orientation: landscape)"
 );
 ```
 
@@ -1099,7 +1097,7 @@ const createBreakpoint = (size: string) => {
     up: useMediaQuery(`(min-width: ${size})`),
     down: useMediaQuery(`(max-width: ${size})`),
     only: useMediaQuery(
-      `(min-width: ${size}) and (max-width: ${getNextSize(size)})`,
+      `(min-width: ${size}) and (max-width: ${getNextSize(size)})`
     ),
   };
 };
@@ -1115,10 +1113,10 @@ const xl = createBreakpoint("1200px");
 ```typescript
 // 根据屏幕尺寸渲染不同组件
 const MobileComponent = defineAsyncComponent(
-  () => import("./MobileComponent.vue"),
+  () => import("./MobileComponent.vue")
 );
 const DesktopComponent = defineAsyncComponent(
-  () => import("./DesktopComponent.vue"),
+  () => import("./DesktopComponent.vue")
 );
 
 const isMobile = useMediaQuery("(max-width: 768px)");
@@ -1137,7 +1135,7 @@ const isMobile = useMediaQuery("(max-width: 768px)");
 5. 注意不同浏览器对媒体查询特性的支持差异
 6. 在移动设备上，屏幕方向变化可能有延迟
 
-<script setup>
+<script lang="ts" setup>
 import { ref, computed } from 'vue';
 import { useMediaQuery } from '@vakao-ui/hooks';
 

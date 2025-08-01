@@ -4,9 +4,8 @@
   "description": "Vakao UI 组件库文档站点",
   "type": "module",
   "scripts": {
-    "dev": "pnpm run build:deps & vitepress dev",
-    "build": "pnpm run build:deps && vitepress build",
-    "build:deps": "pnpm -C ../packages/utils build && pnpm -C ../packages/hooks build",
+    "dev": "pnpm run -C ../ build:deps && vitepress dev",
+    "build": "pnpm run -C ../ build:deps && vitepress build",
     "serve": "vitepress serve"
   },
   "keywords": [

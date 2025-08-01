@@ -24,11 +24,11 @@
   ],
   "scripts": {
     "dev": "pnpm -C docs dev",
-    "build": "pnpm run build:deps && pnpm -C packages build",
+    "build": "pnpm -C packages build",
     "build:deps": "pnpm -C packages/utils build && pnpm -C packages/hooks build",
     "build:utils": "pnpm -C packages/utils build",
     "build:hooks": "pnpm -C packages/hooks build",
-    "build:docs": "pnpm run build:deps && pnpm -C docs build",
+    "build:docs": "pnpm -C docs build",
     "deploy:docs": "node ./scripts/publish.js --deploy-only --deploy-strategy docs",
     "deploy:github-pages": "node ./scripts/publish.js --deploy-only --deploy-strategy github-pages",
     "deploy:preview": "pnpm run build:docs && pnpm -C docs serve",
