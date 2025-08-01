@@ -48,6 +48,11 @@ export type UseKeyPressReturn = [ComputedRef<boolean>, EnableFunction, DisableFu
  * 标准化按键名称
  */
 function normalizeKey(key: string, exactMatch: boolean = false): string {
+  // 确保 key 是字符串类型
+  if (typeof key !== "string") {
+    return "";
+  }
+
   if (exactMatch) {
     return key;
   }
@@ -58,6 +63,11 @@ function normalizeKey(key: string, exactMatch: boolean = false): string {
  * 检查按键是否匹配
  */
 function isKeyMatch(event: KeyboardEvent, targetKeys: string[], exactMatch: boolean = false): boolean {
+  // 确保 event.key 和 event.code 存在且为字符串
+  if (!event.key || !event.code || typeof event.key !== "string" || typeof event.code !== "string") {
+    return false;
+  }
+
   const eventKey = normalizeKey(event.key, exactMatch);
   const eventCode = normalizeKey(event.code, exactMatch);
 
@@ -124,14 +134,26 @@ function isKeyMatch(event: KeyboardEvent, targetKeys: string[], exactMatch: bool
  * @author Vakao UI Team
  */
 export function useKeyPress(keys: KeyType, options: UseKeyPressOptions = {}): UseKeyPressReturn {
-  const { target = window, preventDefault = false, stopPropagation = false, exactMatch = false, onKeyDown, onKeyUp } = options;
+  const {
+    target = window,
+    preventDefault = false,
+    stopPropagation = false,
+    exactMatch = false,
+    enabled = true,
+    eventType = "keydown",
+    onKeyDown,
+    onKeyUp,
+  } = options;
 
-  // 标准化按键数组
-  const targetKeys = Array.isArray(keys) ? keys : [keys];
+  // 标准化按键数组，确保所有元素都是字符串
+  const targetKeys = (Array.isArray(keys) ? keys : [keys]).filter((key): key is string => typeof key === "string" && key.length > 0);
 
   // 按键状态
   const isPressed = ref(false);
   const pressedComputed = computed(() => isPressed.value);
+
+  // 处理 enabled 的响应式
+  const enabledRef = typeof enabled === "boolean" ? ref(enabled) : enabled;
 
   // 按键按下处理
   const handleKeyDown = (event: KeyboardEvent) => {
@@ -153,7 +175,15 @@ export function useKeyPress(keys: KeyType, options: UseKeyPressOptions = {}): Us
   // 按键释放处理
   const handleKeyUp = (event: KeyboardEvent) => {
     if (isKeyMatch(event, targetKeys, exactMatch)) {
-      if (isPressed.value) {
+      if (eventType === "keyup") {
+        // 对于只监听keyup的情况，在keyup时短暂设置为true表示"释放"事件发生
+        isPressed.value = true;
+        onKeyUp?.(event);
+        // 短暂延迟后重置为false
+        setTimeout(() => {
+          isPressed.value = false;
+        }, 100);
+      } else if (isPressed.value) {
         isPressed.value = false;
         onKeyUp?.(event);
       }
@@ -170,21 +200,55 @@ export function useKeyPress(keys: KeyType, options: UseKeyPressOptions = {}): Us
   // 转换 target 类型
   const targetRef = typeof target === "function" ? target : () => target as EventTarget;
 
-  // 事件监听器
-  const [, , ,] = useEventListener(targetRef, "keydown", handleKeyDown);
+  // 根据 eventType 决定监听的事件
+  let setKeyDownEnabled: (enabled: boolean) => void;
+  let setKeyUpEnabled: (enabled: boolean) => void;
 
-  const [, , ,] = useEventListener(targetRef, "keyup", handleKeyUp);
+  if (eventType === "keydown" || eventType === undefined) {
+    // 监听 keydown 和 keyup 事件（默认行为）
+    const [, , setDownEnabled] = useEventListener(targetRef, "keydown", handleKeyDown, { immediate: enabledRef.value });
+
+    const [, , setUpEnabled] = useEventListener(targetRef, "keyup", handleKeyUp, { immediate: enabledRef.value });
+
+    setKeyDownEnabled = setDownEnabled;
+    setKeyUpEnabled = setUpEnabled;
+  } else {
+    // 只监听 keyup 事件，keydown时不改变状态，只在keyup时短暂变为true
+    const handleKeyDownForKeyUp = (event: KeyboardEvent) => {
+      // keydown时不改变isPressed状态，保持false表示"等待释放"
+      if (isKeyMatch(event, targetKeys, exactMatch)) {
+        onKeyDown?.(event);
+        if (preventDefault) {
+          event.preventDefault();
+        }
+        if (stopPropagation) {
+          event.stopPropagation();
+        }
+      }
+    };
+
+    const [, , setDownEnabled] = useEventListener(targetRef, "keydown", handleKeyDownForKeyUp, { immediate: enabledRef.value });
+    const [, , setUpEnabled] = useEventListener(targetRef, "keyup", handleKeyUp, { immediate: enabledRef.value });
+
+    setKeyDownEnabled = setDownEnabled;
+    setKeyUpEnabled = setUpEnabled;
+  }
 
   // 启用监听
   const enable: EnableFunction = () => {
-    // 事件监听器已自动启用
+    enabledRef.value = true;
+    setKeyDownEnabled(true);
+    setKeyUpEnabled(true);
   };
 
   // 禁用监听
   const disable: DisableFunction = () => {
     // 重置状态
     isPressed.value = false;
-    // 事件监听器已自动禁用
+    enabledRef.value = false;
+    // 禁用事件监听器
+    setKeyDownEnabled(false);
+    setKeyUpEnabled(false);
   };
 
   return [pressedComputed, enable, disable];

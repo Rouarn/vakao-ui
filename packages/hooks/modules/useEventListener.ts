@@ -186,6 +186,14 @@ export function useEventListener<T extends Event = Event>(
    */
   const isListenerAdded = ref<boolean>(false);
 
+  /**
+   * 包装的事件处理函数引用
+   *
+   * 存储包装后的事件处理函数，用于正确添加和移除监听器。
+   * 特别是对于 once 选项，需要保持同一个函数引用。
+   */
+  let wrappedHandler: EventListener | null = null;
+
   // ==================== 计算属性 ====================
 
   /**
@@ -210,6 +218,7 @@ export function useEventListener<T extends Event = Event>(
    *
    * 在当前目标上添加指定的事件监听器。
    * 会检查目标是否存在和监听器是否已添加，避免重复操作。
+   * 特别处理 once 选项，确保状态同步。
    */
   const addListener: AddListenerFunction = () => {
     const element = currentTarget.value;
@@ -219,8 +228,20 @@ export function useEventListener<T extends Event = Event>(
       return;
     }
 
+    // 创建包装的事件处理函数，处理 once 选项
+    wrappedHandler = (event: Event) => {
+      // 调用原始处理函数
+      handler(event as T);
+
+      // 如果是 once 选项，更新状态
+      if (listenerOptions.once) {
+        isListenerAdded.value = false;
+        wrappedHandler = null;
+      }
+    };
+
     // 添加事件监听器
-    element.addEventListener(event, handler as EventListener, listenerOptions);
+    element.addEventListener(event, wrappedHandler, listenerOptions);
     isListenerAdded.value = true;
   };
 
@@ -229,18 +250,20 @@ export function useEventListener<T extends Event = Event>(
    *
    * 从当前目标上移除指定的事件监听器。
    * 会检查监听器是否已添加，避免重复移除。
+   * 使用保存的包装函数引用确保正确移除。
    */
   const removeListener: RemoveListenerFunction = () => {
     const element = currentTarget.value;
 
     // 目标不存在或监听器未添加时直接返回
-    if (!element || !isListenerAdded.value) {
+    if (!element || !isListenerAdded.value || !wrappedHandler) {
       return;
     }
 
     // 移除事件监听器
-    element.removeEventListener(event, handler as EventListener, listenerOptions);
+    element.removeEventListener(event, wrappedHandler, listenerOptions);
     isListenerAdded.value = false;
+    wrappedHandler = null;
   };
 
   /**
@@ -298,9 +321,10 @@ export function useEventListener<T extends Event = Event>(
       }
 
       // 移除旧目标上的监听器
-      if (oldTarget && isListenerAdded.value) {
-        oldTarget.removeEventListener(event, handler as EventListener, listenerOptions);
+      if (oldTarget && isListenerAdded.value && wrappedHandler) {
+        oldTarget.removeEventListener(event, wrappedHandler, listenerOptions);
         isListenerAdded.value = false;
+        wrappedHandler = null;
       }
 
       // 在新目标上添加监听器
