@@ -125,9 +125,7 @@ const cloned2 = deepCloneWithCircular(complexObj);
 ```ts
 // 对于大型对象，考虑是否真的需要深拷贝
 const largeData = {
-  users: new Array(10000)
-    .fill(null)
-    .map((_, i) => ({ id: i, name: `User${i}` })),
+  users: new Array(10000).fill(null).map((_, i) => ({ id: i, name: `User${i}` })),
   metadata: { total: 10000, page: 1 },
 };
 

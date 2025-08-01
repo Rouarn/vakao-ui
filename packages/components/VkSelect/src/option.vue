@@ -1,36 +1,15 @@
 <template>
-  <li
-    v-show="isVisible"
-    :class="mergedClass"
-    @click.stop="handleClick"
-  >
+  <li v-show="isVisible" :class="mergedClass" @click.stop="handleClick">
     <slot>
       {{ label }}
     </slot>
-    <VkIcon
-      v-if="isSelected"
-      class="vk-select-option__check"
-      icon="mdi:check"
-      size="14px"
-    />
+    <VkIcon v-if="isSelected" class="vk-select-option__check" icon="mdi:check" size="14px" />
   </li>
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  computed,
-  inject,
-  onMounted,
-  onUnmounted,
-  type Ref,
-} from "vue";
-import {
-  optionProps,
-  optionEmits,
-  type SelectOption,
-  type SelectValue,
-} from "./types";
+import { defineComponent, computed, inject, onMounted, onUnmounted, type Ref } from "vue";
+import { optionProps, optionEmits, type SelectOption, type SelectValue } from "./types";
 import { useNamespace } from "@vakao-ui/utils";
 import VkIcon from "../../VkIcon";
 
@@ -76,18 +55,12 @@ export default defineComponent({
     const isVisible = computed(() => {
       if (!selectContext) return true;
       if (!selectContext.props.filterable) return true;
-      return selectContext.filteredOptions.value.some(
-        (option: SelectOption) => option.value === props.value,
-      );
+      return selectContext.filteredOptions.value.some((option: SelectOption) => option.value === props.value);
     });
 
     // 样式类名
     const mergedClass = computed(() => {
-      return [
-        ns.block(),
-        ns.is("selected", isSelected.value),
-        ns.is("disabled", Boolean(isDisabled.value)),
-      ];
+      return [ns.block(), ns.is("selected", isSelected.value), ns.is("disabled", Boolean(isDisabled.value))];
     });
 
     // 点击处理

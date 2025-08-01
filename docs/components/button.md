@@ -149,18 +149,10 @@
 
 ```vue
 <template>
-  <vk-button
-    customClass="my-button"
-    customStyle="background: linear-gradient(45deg, #ff6b6b, #4ecdc4); color: white; border: none;"
-  >
+  <vk-button customClass="my-button" customStyle="background: linear-gradient(45deg, #ff6b6b, #4ecdc4); color: white; border: none;">
     渐变按钮
   </vk-button>
-  <vk-button
-    class="shadow-button"
-    style="box-shadow: 0 4px 8px rgba(0,0,0,0.2); border-radius: 20px;"
-  >
-    阴影按钮
-  </vk-button>
+  <vk-button class="shadow-button" style="box-shadow: 0 4px 8px rgba(0,0,0,0.2); border-radius: 20px;"> 阴影按钮 </vk-button>
 </template>
 
 <style>
@@ -234,13 +226,7 @@
 
 ```vue
 <template>
-  <vk-button
-    data-testid="test-button"
-    aria-label="测试按钮"
-    title="这是一个测试按钮"
-  >
-    可访问性按钮
-  </vk-button>
+  <vk-button data-testid="test-button" aria-label="测试按钮" title="这是一个测试按钮"> 可访问性按钮 </vk-button>
 </template>
 ```
 

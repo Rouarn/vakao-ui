@@ -35,10 +35,7 @@
 ```vue
 <template>
   <div>
-    <div
-      @mousemove="updateMousePosition"
-      style="width: 400px; height: 300px; border: 1px solid #ccc; position: relative;"
-    >
+    <div @mousemove="updateMousePosition" style="width: 400px; height: 300px; border: 1px solid #ccc; position: relative;">
       <div
         style="position: absolute; background: red; width: 10px; height: 10px; border-radius: 50%;"
         :style="{ left: mouseX + 'px', top: mouseY + 'px' }"
@@ -118,10 +115,7 @@ const handleClick = () => {
   throttledCount.value++;
 };
 
-const [throttledClick, cancelThrottle, flushThrottle] = useThrottle(
-  handleClick,
-  1000,
-);
+const [throttledClick, cancelThrottle, flushThrottle] = useThrottle(handleClick, 1000);
 
 const onClick = () => {
   clickCount.value++;
@@ -140,18 +134,12 @@ const onClick = () => {
 ```vue
 <template>
   <div>
-    <div
-      ref="scrollContainer"
-      @scroll="throttledScroll"
-      style="height: 200px; overflow-y: auto; border: 1px solid #ccc;"
-    >
+    <div ref="scrollContainer" @scroll="throttledScroll" style="height: 200px; overflow-y: auto; border: 1px solid #ccc;">
       <div style="height: 1000px; padding: 20px;">
         <p>滚动位置: {{ scrollTop }}</p>
         <p>节流滚动位置: {{ throttledScrollTop }}</p>
         <p>滚动百分比: {{ scrollPercentage }}%</p>
-        <div v-for="i in 50" :key="i" style="margin: 10px 0;">
-          内容行 {{ i }}
-        </div>
+        <div v-for="i in 50" :key="i" style="margin: 10px 0;">内容行 {{ i }}</div>
       </div>
     </div>
   </div>
@@ -223,11 +211,7 @@ onUnmounted(() => {
 <template>
   <div>
     <h3>搜索建议 (节流)</h3>
-    <input
-      v-model="searchQuery"
-      placeholder="输入搜索关键词"
-      @input="throttledSearch"
-    />
+    <input v-model="searchQuery" placeholder="输入搜索关键词" @input="throttledSearch" />
     <div v-if="loading">搜索中...</div>
     <ul v-else>
       <li v-for="suggestion in suggestions" :key="suggestion">
@@ -321,9 +305,7 @@ const [throttledSearch] = useThrottle(() => {
 /**
  * 节流函数类型
  */
-type ThrottledFunction<T extends (...args: any[]) => any> = (
-  ...args: Parameters<T>
-) => void;
+type ThrottledFunction<T extends (...args: any[]) => any> = (...args: Parameters<T>) => void;
 
 /**
  * 取消函数类型
@@ -354,11 +336,7 @@ interface UseThrottleOptions {
  * @example
  * const throttledValue = useThrottle(scrollTop, 100);
  */
-function useThrottle<T>(
-  value: Ref<T>,
-  delay: number,
-  options?: UseThrottleOptions,
-): Ref<T>;
+function useThrottle<T>(value: Ref<T>, delay: number, options?: UseThrottleOptions): Ref<T>;
 
 /**
  * 节流钩子 - 函数版本
@@ -372,7 +350,7 @@ function useThrottle<T>(
 function useThrottle<T extends (...args: any[]) => any>(
   fn: T,
   delay: number,
-  options?: UseThrottleOptions,
+  options?: UseThrottleOptions
 ): [ThrottledFunction<T>, ThrottleCancelFunction, ThrottleFlushFunction];
 ```
 

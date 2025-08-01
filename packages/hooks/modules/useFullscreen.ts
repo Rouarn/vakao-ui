@@ -181,10 +181,7 @@ function isFullscreenSupported(): boolean {
  * @since 0.0.2
  * @author Vakao UI Team
  */
-export function useFullscreen(
-  target?: Ref<HTMLElement | null> | HTMLElement,
-  options: UseFullscreenOptions = {},
-): UseFullscreenReturn {
+export function useFullscreen(target?: Ref<HTMLElement | null> | HTMLElement, options: UseFullscreenOptions = {}): UseFullscreenReturn {
   const { onEnter, onExit, onChange, onError } = options;
 
   // 状态管理
@@ -224,30 +221,14 @@ export function useFullscreen(
   };
 
   // 监听全屏状态变化事件
-  const [, ,] = useEventListener(
-    () => document,
-    "fullscreenchange",
-    updateFullscreenState,
-  );
+  const [, ,] = useEventListener(() => document, "fullscreenchange", updateFullscreenState);
 
   // 兼容性事件监听
-  const [, ,] = useEventListener(
-    () => document,
-    "webkitfullscreenchange",
-    updateFullscreenState,
-  );
+  const [, ,] = useEventListener(() => document, "webkitfullscreenchange", updateFullscreenState);
 
-  const [, ,] = useEventListener(
-    () => document,
-    "mozfullscreenchange",
-    updateFullscreenState,
-  );
+  const [, ,] = useEventListener(() => document, "mozfullscreenchange", updateFullscreenState);
 
-  const [, ,] = useEventListener(
-    () => document,
-    "MSFullscreenChange",
-    updateFullscreenState,
-  );
+  const [, ,] = useEventListener(() => document, "MSFullscreenChange", updateFullscreenState);
 
   /**
    * 进入全屏

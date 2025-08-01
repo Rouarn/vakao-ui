@@ -8,14 +8,7 @@
  * @author 我与夏季
  */
 
-const {
-  app,
-  BrowserWindow,
-  ipcMain,
-  dialog,
-  shell,
-  Menu,
-} = require("electron");
+const { app, BrowserWindow, ipcMain, dialog, shell, Menu } = require("electron");
 const path = require("path");
 const fs = require("fs");
 const { execSync, spawn } = require("child_process");
@@ -142,8 +135,7 @@ function createApplicationMenu() {
               type: "info",
               title: "关于 Vakao UI Publisher",
               message: "Vakao UI Publisher",
-              detail:
-                "Version 1.0.0\n\n一个现代化的 UI 组件库发布工具\n\n© 2025 我与夏季",
+              detail: "Version 1.0.0\n\n一个现代化的 UI 组件库发布工具\n\n© 2025 我与夏季",
             });
           },
         },
@@ -303,10 +295,7 @@ ipcMain.handle("get-project-info", async () => {
     const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf8"));
 
     // 读取包配置
-    const configPath = path.join(
-      PROJECT_ROOT,
-      "scripts/core/package-configs.js",
-    );
+    const configPath = path.join(PROJECT_ROOT, "scripts/core/package-configs.js");
     delete require.cache[require.resolve(configPath)];
     const { CONFIG } = require(configPath);
 
@@ -339,11 +328,7 @@ ipcMain.handle("get-project-info", async () => {
  */
 function checkPackageStatus(packageKey, packageConfig) {
   try {
-    const packagePath = path.join(
-      PROJECT_ROOT,
-      packageConfig.path,
-      "package.json",
-    );
+    const packagePath = path.join(PROJECT_ROOT, packageConfig.path, "package.json");
     const distPath = path.join(PROJECT_ROOT, packageConfig.path, "dist");
     const libPath = path.join(PROJECT_ROOT, packageConfig.path, "lib");
 
@@ -377,10 +362,7 @@ function checkPackageStatus(packageKey, packageConfig) {
  */
 ipcMain.handle("get-packages", async () => {
   try {
-    const configPath = path.join(
-      PROJECT_ROOT,
-      "scripts/core/package-configs.js",
-    );
+    const configPath = path.join(PROJECT_ROOT, "scripts/core/package-configs.js");
     delete require.cache[require.resolve(configPath)];
     const { CONFIG } = require(configPath);
 
@@ -429,10 +411,7 @@ ipcMain.handle("get-packages", async () => {
  */
 ipcMain.handle("get-package-versions", async () => {
   try {
-    const configPath = path.join(
-      PROJECT_ROOT,
-      "scripts/core/package-configs.js",
-    );
+    const configPath = path.join(PROJECT_ROOT, "scripts/core/package-configs.js");
     delete require.cache[require.resolve(configPath)];
     const { CONFIG } = require(configPath);
 
@@ -525,19 +504,14 @@ ipcMain.handle("execute-publish", async (event, options) => {
         output += text;
 
         // 检查是否包含GUI输入请求
-        const guiRequestMatch = text.match(
-          /__VAKAO_GUI_REQUEST__(.+?)__VAKAO_GUI_REQUEST_END__/s,
-        );
+        const guiRequestMatch = text.match(/__VAKAO_GUI_REQUEST__(.+?)__VAKAO_GUI_REQUEST_END__/s);
         if (guiRequestMatch) {
           try {
             const request = JSON.parse(guiRequestMatch[1]);
             handleGUIInputRequest(request, publishProcess);
 
             // 移除GUI请求标记，只发送普通输出
-            const cleanText = text.replace(
-              /__VAKAO_GUI_REQUEST__.+?__VAKAO_GUI_REQUEST_END__/gs,
-              "",
-            );
+            const cleanText = text.replace(/__VAKAO_GUI_REQUEST__.+?__VAKAO_GUI_REQUEST_END__/gs, "");
             if (cleanText.trim() && mainWindow) {
               mainWindow.webContents.send("log-output", {
                 type: "stdout",
@@ -759,14 +733,8 @@ function waitForUserResponse(requestId) {
       requestData.reject = reject;
     } else {
       // 如果没有找到请求，说明数据结构有问题
-      console.error(
-        "waitForUserResponse: 找不到请求数据，requestId:",
-        requestId,
-      );
-      console.error(
-        "当前 pendingInputRequests:",
-        Array.from(pendingInputRequests.entries()),
-      );
+      console.error("waitForUserResponse: 找不到请求数据，requestId:", requestId);
+      console.error("当前 pendingInputRequests:", Array.from(pendingInputRequests.entries()));
       reject(new Error("找不到对应的输入请求"));
       return;
     }
@@ -830,19 +798,14 @@ ipcMain.handle("execute-command", async (event, command) => {
         output += text;
 
         // 检查是否包含GUI输入请求
-        const guiRequestMatch = text.match(
-          /__VAKAO_GUI_REQUEST__(.+?)__VAKAO_GUI_REQUEST_END__/s,
-        );
+        const guiRequestMatch = text.match(/__VAKAO_GUI_REQUEST__(.+?)__VAKAO_GUI_REQUEST_END__/s);
         if (guiRequestMatch) {
           try {
             const request = JSON.parse(guiRequestMatch[1]);
             handleGUIInputRequest(request, commandProcess);
 
             // 移除GUI请求标记，只发送普通输出
-            const cleanText = text.replace(
-              /__VAKAO_GUI_REQUEST__.+?__VAKAO_GUI_REQUEST_END__/gs,
-              "",
-            );
+            const cleanText = text.replace(/__VAKAO_GUI_REQUEST__.+?__VAKAO_GUI_REQUEST_END__/gs, "");
             if (cleanText.trim() && mainWindow) {
               mainWindow.webContents.send("log-output", {
                 type: "stdout",
@@ -1208,12 +1171,7 @@ ipcMain.handle("request-user-input", async (event, inputRequest) => {
     const requestId = generateRequestId();
 
     // 验证输入请求参数
-    if (
-      !inputRequest ||
-      !inputRequest.title ||
-      !inputRequest.message ||
-      !inputRequest.type
-    ) {
+    if (!inputRequest || !inputRequest.title || !inputRequest.message || !inputRequest.type) {
       return {
         success: false,
         error: "输入请求参数不完整",
@@ -1221,15 +1179,7 @@ ipcMain.handle("request-user-input", async (event, inputRequest) => {
     }
 
     // 支持的输入类型
-    const supportedTypes = [
-      "text",
-      "password",
-      "number",
-      "select",
-      "checkbox",
-      "radio",
-      "textarea",
-    ];
+    const supportedTypes = ["text", "password", "number", "select", "checkbox", "radio", "textarea"];
     if (!supportedTypes.includes(inputRequest.type)) {
       return {
         success: false,
@@ -1239,11 +1189,7 @@ ipcMain.handle("request-user-input", async (event, inputRequest) => {
 
     // 为选择类型验证选项
     if (["select", "checkbox", "radio"].includes(inputRequest.type)) {
-      if (
-        !inputRequest.options ||
-        !Array.isArray(inputRequest.options) ||
-        inputRequest.options.length === 0
-      ) {
+      if (!inputRequest.options || !Array.isArray(inputRequest.options) || inputRequest.options.length === 0) {
         return {
           success: false,
           error: `${inputRequest.type} 类型需要提供选项列表`,
@@ -1350,11 +1296,7 @@ ipcMain.handle("respond-user-input", async (event, requestId, response) => {
     }
 
     // 验证输入值
-    const validationResult = validateInput(
-      response.value,
-      request.validation,
-      request.type,
-    );
+    const validationResult = validateInput(response.value, request.validation, request.type);
     console.log("主进程: 输入验证结果:", validationResult);
 
     if (!validationResult.valid) {

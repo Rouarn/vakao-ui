@@ -32,11 +32,7 @@
   <div style="width: 100%;">
     <div>
       <label>用户名:</label>
-      <vk-input
-        :value="username"
-        @input="setUsername"
-        placeholder="请输入用户名"
-      />
+      <vk-input :value="username" @input="setUsername" placeholder="请输入用户名" />
     </div>
     <vk-button @click="clearUsername">清除用户名</vk-button>
     <p>存储的值: {{ username || "(空)" }}</p>
@@ -93,18 +89,12 @@ const [username, setUsername, clearUsername] = useLocalStorage("username", "");
     <h4>用户设置</h4>
     <div>
       <label>
-        <vk-checkbox
-          :checked="settings.darkMode"
-          @change="(checked) => updateSettings('darkMode', checked)"
-        />
+        <vk-checkbox :checked="settings.darkMode" @change="(checked) => updateSettings('darkMode', checked)" />
         深色模式
       </label>
       <div>
         <label>语言:</label>
-        <vk-select
-          :value="settings.language"
-          @change="(value) => updateSettings('language', value)"
-        >
+        <vk-select :value="settings.language" @change="(value) => updateSettings('language', value)">
           <vk-option label="中文" value="zh"></vk-option>
           <vk-option label="English" value="en"></vk-option>
           <vk-option label="日本語" value="ja"></vk-option>
@@ -124,10 +114,7 @@ const defaultSettings = {
   language: "zh",
 };
 
-const [settings, setSettings, resetSettings] = useLocalStorage(
-  "user-settings",
-  defaultSettings,
-);
+const [settings, setSettings, resetSettings] = useLocalStorage("user-settings", defaultSettings);
 </script>
 ```
 
@@ -224,33 +211,12 @@ const reset = () => setCount(0);
 <template>
   <div style="width: 100%;">
     <div>
-      <label
-        >姓名:
-        <vk-input
-          :value="userForm.name"
-          @input="(value) => updateForm('name', value)"
-      /></label>
-      <label
-        >年龄:
-        <vk-input
-          :value="userForm.age"
-          @input="(value) => updateForm('age', value)"
-          type="number"
-      /></label>
-      <label
-        >邮箱:
-        <vk-input
-          :value="userForm.email"
-          @input="(value) => updateForm('email', value)"
-          type="email"
-      /></label>
+      <label>姓名: <vk-input :value="userForm.name" @input="(value) => updateForm('name', value)" /></label>
+      <label>年龄: <vk-input :value="userForm.age" @input="(value) => updateForm('age', value)" type="number" /></label>
+      <label>邮箱: <vk-input :value="userForm.email" @input="(value) => updateForm('email', value)" type="email" /></label>
       <label>
         城市:
-        <vk-select
-          :value="userForm.city"
-          @change="(value) => updateForm('city', value)"
-          placeholder="请选择城市"
-        >
+        <vk-select :value="userForm.city" @change="(value) => updateForm('city', value)" placeholder="请选择城市">
           <vk-option label="北京" value="beijing"></vk-option>
           <vk-option label="上海" value="shanghai"></vk-option>
           <vk-option label="广州" value="guangzhou"></vk-option>
@@ -276,10 +242,7 @@ const defaultForm = {
   city: "",
 };
 
-const [userForm, setUserForm, clearForm] = useLocalStorage(
-  "user-form",
-  defaultForm,
-);
+const [userForm, setUserForm, clearForm] = useLocalStorage("user-form", defaultForm);
 
 // 更新表单字段
 const updateForm = (field, value) => {
@@ -348,22 +311,14 @@ const fillDemo = () => {
   <div style="width: 100%;">
     <h3>待办事项列表</h3>
     <div>
-      <vk-input
-        :value="newTodo"
-        @input="(value) => (newTodo = value)"
-        @keyup.enter="addTodo"
-        placeholder="输入新的待办事项"
-      />
+      <vk-input :value="newTodo" @input="(value) => (newTodo = value)" @keyup.enter="addTodo" placeholder="输入新的待办事项" />
       <vk-button @click="addTodo" :disabled="!newTodo.trim()">添加</vk-button>
     </div>
 
     <div v-if="todoList.length === 0">暂无待办事项</div>
     <div v-else>
       <div v-for="(todo, index) in todoList" :key="todo.id">
-        <vk-checkbox
-          :checked="todo.completed"
-          @change="() => toggleTodo(index)"
-        />
+        <vk-checkbox :checked="todo.completed" @change="() => toggleTodo(index)" />
         <span :class="{ completed: todo.completed }">{{ todo.text }}</span>
         <vk-button @click="removeTodo(index)">删除</vk-button>
       </div>
@@ -386,13 +341,9 @@ const [todoList, setTodoList] = useLocalStorage("todo-list", []);
 const newTodo = ref("");
 
 // 计算属性
-const completedCount = computed(
-  () => todoList.value.filter((todo) => todo.completed).length,
-);
+const completedCount = computed(() => todoList.value.filter((todo) => todo.completed).length);
 
-const hasCompleted = computed(() =>
-  todoList.value.some((todo) => todo.completed),
-);
+const hasCompleted = computed(() => todoList.value.some((todo) => todo.completed));
 
 // 添加待办事项
 const addTodo = () => {
@@ -410,11 +361,7 @@ const addTodo = () => {
 
 // 切换完成状态
 const toggleTodo = (index) => {
-  setTodoList(
-    todoList.value.map((todo, i) =>
-      i === index ? { ...todo, completed: !todo.completed } : todo,
-    ),
-  );
+  setTodoList(todoList.value.map((todo, i) => (i === index ? { ...todo, completed: !todo.completed } : todo)));
 };
 
 // 删除待办事项
@@ -469,11 +416,7 @@ const clearAll = () => {
 ```vue
 <template>
   <div style="width: 100%;">
-    <vk-input
-      type="date"
-      :value="lastVisit?.toISOString().split('T')[0]"
-      @input="updateLastVisit"
-    />
+    <vk-input type="date" :value="lastVisit?.toISOString().split('T')[0]" @input="updateLastVisit" />
     <p>上次访问: {{ lastVisit?.toLocaleString() }}</p>
   </div>
 </template>
@@ -539,9 +482,7 @@ const updateLastVisit = (value: string) => {
     <h3>购物车 (跨标签页同步)</h3>
     <div v-for="item in cart" :key="item.id">
       {{ item.name }} - 数量: {{ item.quantity }}
-      <vk-button @click="removeFromCart(item.id)" size="small" type="danger">
-        移除
-      </vk-button>
+      <vk-button @click="removeFromCart(item.id)" size="small" type="danger"> 移除 </vk-button>
     </div>
     <vk-button @click="addToCart" type="primary">添加商品</vk-button>
     <vk-button @click="clearCart" type="warning">清空购物车</vk-button>
@@ -557,11 +498,7 @@ interface CartItem {
   quantity: number;
 }
 
-const [cart, setCart, clearCart] = useLocalStorage<CartItem[]>(
-  "shopping-cart",
-  [],
-  { syncAcrossTabs: true },
-);
+const [cart, setCart, clearCart] = useLocalStorage<CartItem[]>("shopping-cart", [], { syncAcrossTabs: true });
 
 const addToCart = () => {
   const newItem: CartItem = {
@@ -665,11 +602,7 @@ interface UseLocalStorageOptions<T> {
  * @example
  * const [username, setUsername, removeUsername] = useLocalStorage('username', '');
  */
-function useLocalStorage<T>(
-  key: string,
-  defaultValue: T,
-  options?: UseLocalStorageOptions<T>,
-): UseLocalStorageReturn<T>;
+function useLocalStorage<T>(key: string, defaultValue: T, options?: UseLocalStorageOptions<T>): UseLocalStorageReturn<T>;
 ```
 
 ## 注意事项

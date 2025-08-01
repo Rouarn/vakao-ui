@@ -73,16 +73,10 @@
     <!-- 基础悬停 -->
     <div>
       <h4>基础悬停</h4>
-      <div
-        ref="basicHoverRef"
-        class="basic-hover-target"
-        :class="{ hovered: basicIsHovered }"
-      >
+      <div ref="basicHoverRef" class="basic-hover-target" :class="{ hovered: basicIsHovered }">
         {{ basicIsHovered ? "🎉 悬停中！" : "🖱️ 悬停我" }}
       </div>
-      <div class="hover-status">
-        悬停状态: {{ basicIsHovered ? "是" : "否" }}
-      </div>
+      <div class="hover-status">悬停状态: {{ basicIsHovered ? "是" : "否" }}</div>
     </div>
 
     <!-- 卡片悬停效果 -->
@@ -96,17 +90,13 @@
           class="card"
           :class="{ hovered: cardHoverStates[index]?.value }"
           :style="{
-            background: cardHoverStates[index]?.value
-              ? card.hoverColor
-              : card.color,
+            background: cardHoverStates[index]?.value ? card.hoverColor : card.color,
           }"
         >
           <div class="card-icon">{{ card.icon }}</div>
           <h5 class="card-title">{{ card.title }}</h5>
           <p class="card-description">{{ card.description }}</p>
-          <div v-if="cardHoverStates[index]?.value" class="card-indicator">
-            ✨
-          </div>
+          <div v-if="cardHoverStates[index]?.value" class="card-indicator">✨</div>
         </div>
       </div>
     </div>
@@ -122,9 +112,7 @@
           class="interactive-button"
           :class="{ hovered: buttonHoverStates[index]?.value }"
           :style="{
-            background: buttonHoverStates[index]?.value
-              ? btn.hoverColor
-              : btn.color,
+            background: buttonHoverStates[index]?.value ? btn.hoverColor : btn.color,
           }"
         >
           {{ btn.text }}
@@ -409,18 +397,10 @@ onMounted(() => {
     <!-- 延迟悬停 -->
     <div>
       <h4>延迟悬停 (300ms)</h4>
-      <div
-        ref="delayHoverRef"
-        class="delay-hover-target"
-        :class="{ hovered: delayIsHovered }"
-      >
-        {{
-          delayIsHovered ? "⏰ 延迟悬停激活！" : "🐌 慢慢悬停我 (300ms 延迟)"
-        }}
+      <div ref="delayHoverRef" class="delay-hover-target" :class="{ hovered: delayIsHovered }">
+        {{ delayIsHovered ? "⏰ 延迟悬停激活！" : "🐌 慢慢悬停我 (300ms 延迟)" }}
       </div>
-      <div class="delay-status">
-        状态: {{ delayIsHovered ? "已激活" : "等待中..." }}
-      </div>
+      <div class="delay-status">状态: {{ delayIsHovered ? "已激活" : "等待中..." }}</div>
     </div>
 
     <!-- 条件悬停 -->
@@ -438,24 +418,14 @@ onMounted(() => {
           disabled: !hoverEnabled,
         }"
       >
-        {{
-          hoverEnabled
-            ? conditionalIsHovered
-              ? "🎯 条件悬停激活！"
-              : "🔧 条件悬停我"
-            : "❌ 悬停已禁用"
-        }}
+        {{ hoverEnabled ? (conditionalIsHovered ? "🎯 条件悬停激活！" : "🔧 条件悬停我") : "❌ 悬停已禁用" }}
       </div>
     </div>
 
     <!-- 悬停计数器 -->
     <div>
       <h4>悬停计数器</h4>
-      <div
-        ref="counterHoverRef"
-        class="counter-hover-target"
-        :class="{ hovered: counterIsHovered }"
-      >
+      <div ref="counterHoverRef" class="counter-hover-target" :class="{ hovered: counterIsHovered }">
         <div class="counter-icon">{{ counterIsHovered ? "🎉" : "📊" }}</div>
         <div>悬停次数: {{ hoverCount }}</div>
         <div class="counter-subtitle">
@@ -468,16 +438,8 @@ onMounted(() => {
     <div>
       <h4>工具提示</h4>
       <div class="tooltip-group">
-        <div
-          v-for="(tooltip, index) in tooltips"
-          :key="index"
-          :ref="(el) => (tooltipRefs[index] = el)"
-          class="tooltip-container"
-        >
-          <button
-            class="tooltip-button"
-            :class="{ hovered: tooltipHoverStates[index] }"
-          >
+        <div v-for="(tooltip, index) in tooltips" :key="index" :ref="(el) => (tooltipRefs[index] = el)" class="tooltip-container">
+          <button class="tooltip-button" :class="{ hovered: tooltipHoverStates[index] }">
             {{ tooltip.text }}
           </button>
           <div v-if="tooltipHoverStates[index]" class="tooltip">
@@ -501,8 +463,7 @@ const [delayHoverRef, delayIsHovered] = useHover({
 });
 
 // 条件悬停
-const [conditionalHoverRef, conditionalIsHovered, setConditionalEnabled] =
-  useHover();
+const [conditionalHoverRef, conditionalIsHovered, setConditionalEnabled] = useHover();
 const hoverEnabled = ref(true);
 
 // 监听启用状态变化
@@ -511,7 +472,7 @@ watch(
   (enabled) => {
     setConditionalEnabled(enabled);
   },
-  { immediate: true },
+  { immediate: true }
 );
 
 // 悬停计数器
@@ -747,11 +708,7 @@ export interface UseHoverOptions {
   leaveDelay?: number;
 }
 
-export type UseHoverReturn = [
-  Ref<HTMLElement | null>,
-  ComputedRef<boolean>,
-  SetEnabledFunction,
-];
+export type UseHoverReturn = [Ref<HTMLElement | null>, ComputedRef<boolean>, SetEnabledFunction];
 
 export function useHover(options?: UseHoverOptions): UseHoverReturn;
 ```
@@ -896,9 +853,7 @@ const [imageRef, isImageHovered] = useHover();
 const imageStyle = computed(() => ({
   transform: isImageHovered.value ? "scale(1.1)" : "scale(1)",
   filter: isImageHovered.value ? "brightness(1.2)" : "brightness(1)",
-  boxShadow: isImageHovered.value
-    ? "0 10px 20px rgba(0,0,0,0.2)"
-    : "0 2px 5px rgba(0,0,0,0.1)",
+  boxShadow: isImageHovered.value ? "0 10px 20px rgba(0,0,0,0.2)" : "0 2px 5px rgba(0,0,0,0.1)",
   transition: "all 0.3s ease",
 }));
 ```

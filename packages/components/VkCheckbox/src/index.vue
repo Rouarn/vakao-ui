@@ -1,9 +1,5 @@
 <template>
-  <label
-    :class="mergedClass"
-    :style="mergedStyle"
-    @click="handleClick"
-  >
+  <label :class="mergedClass" :style="mergedStyle" @click="handleClick">
     <span class="vk-checkbox__input">
       <input
         ref="inputRef"
@@ -13,7 +9,7 @@
         :checked="isChecked"
         :value="value"
         @change="handleChange"
-      >
+      />
       <span
         class="vk-checkbox__inner"
         :class="[
@@ -24,40 +20,18 @@
           },
         ]"
       >
-        <VkIcon
-          v-if="isChecked && !indeterminate"
-          class="vk-checkbox__icon"
-          size="12px"
-          color="#ffffff"
-          icon="mdi:check"
-        />
-        <VkIcon
-          v-if="indeterminate"
-          class="vk-checkbox__icon"
-          size="12px"
-          color="#ffffff"
-          icon="mdi:minus"
-        />
+        <VkIcon v-if="isChecked && !indeterminate" class="vk-checkbox__icon" size="12px" color="#ffffff" icon="mdi:check" />
+        <VkIcon v-if="indeterminate" class="vk-checkbox__icon" size="12px" color="#ffffff" icon="mdi:minus" />
       </span>
     </span>
-    <span
-      v-if="$slots.default || label"
-      class="vk-checkbox__label"
-    >
+    <span v-if="$slots.default || label" class="vk-checkbox__label">
       <slot>{{ label }}</slot>
     </span>
   </label>
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  ref,
-  computed,
-  inject,
-  type Ref,
-  type ComputedRef,
-} from "vue";
+import { defineComponent, ref, computed, inject, type Ref, type ComputedRef } from "vue";
 import { checkboxProps, checkboxEmits, type CheckboxValue } from "./types";
 import { useNamespace, useControlled } from "@vakao-ui/utils";
 import VkIcon from "../../VkIcon";
@@ -94,7 +68,7 @@ export default defineComponent({
       "checked",
       "modelValue",
       emit as (event: string, ...args: unknown[]) => void,
-      false,
+      false
     );
 
     // 计算属性
@@ -110,9 +84,7 @@ export default defineComponent({
 
     const isChecked = computed(() => {
       if (isGroup.value && checkboxGroup) {
-        return checkboxGroup.modelValue.value.includes(
-          props.value as CheckboxValue,
-        );
+        return checkboxGroup.modelValue.value.includes(props.value as CheckboxValue);
       }
       // 非组模式下使用受控/非受控逻辑
       return currentChecked.value;
@@ -122,10 +94,7 @@ export default defineComponent({
       if (!isGroup.value || !checkboxGroup) return false;
 
       const { min, max, modelValue: groupValue } = checkboxGroup;
-      return (
-        (!isChecked.value && groupValue.value.length >= max.value) ||
-        (isChecked.value && groupValue.value.length <= min.value)
-      );
+      return (!isChecked.value && groupValue.value.length >= max.value) || (isChecked.value && groupValue.value.length <= min.value);
     });
 
     // 样式类名

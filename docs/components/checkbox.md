@@ -94,11 +94,7 @@ const checked = ref(false);
   <vk-checkbox :checked="checked1" @change="setChecked1" label="同意条款" />
 
   <!-- 使用 @update:modelValue 事件 -->
-  <vk-checkbox
-    :checked="checked2"
-    @update:modelValue="setChecked2"
-    label="同意条款"
-  />
+  <vk-checkbox :checked="checked2" @update:modelValue="setChecked2" label="同意条款" />
 </template>
 
 <script setup>
@@ -207,24 +203,10 @@ const checkList = ref(["selected"]);
 
 ```vue
 <template>
-  <vk-checkbox
-    v-model="checkAll"
-    :indeterminate="isIndeterminate"
-    @change="handleCheckAllChange"
-  >
-    全选
-  </vk-checkbox>
+  <vk-checkbox v-model="checkAll" :indeterminate="isIndeterminate" @change="handleCheckAllChange"> 全选 </vk-checkbox>
   <div style="margin: 15px 0;"></div>
-  <vk-checkbox-group
-    v-model="checkedCities"
-    @change="handleCheckedCitiesChange"
-  >
-    <vk-checkbox
-      v-for="city in cities"
-      :key="city"
-      :label="city"
-      :value="city"
-    />
+  <vk-checkbox-group v-model="checkedCities" @change="handleCheckedCitiesChange">
+    <vk-checkbox v-for="city in cities" :key="city" :label="city" :value="city" />
   </vk-checkbox-group>
 </template>
 
@@ -268,12 +250,7 @@ const handleCheckedCitiesChange = (value) => {
 ```vue
 <template>
   <vk-checkbox-group v-model="checkedCities" :min="1" :max="2">
-    <vk-checkbox
-      v-for="city in cities"
-      :key="city"
-      :label="city"
-      :value="city"
-    />
+    <vk-checkbox v-for="city in cities" :key="city" :label="city" :value="city" />
   </vk-checkbox-group>
 </template>
 

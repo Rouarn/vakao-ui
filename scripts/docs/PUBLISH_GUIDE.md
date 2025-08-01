@@ -653,11 +653,7 @@ WEBHOOK_URL=https://discord.com/api/webhooks/YOUR/DISCORD/WEBHOOK
      }
 
      async initialize(extensionManager) {
-       extensionManager.registerHook(
-         "afterDeploy",
-         this.onSuccess.bind(this),
-         this.name,
-       );
+       extensionManager.registerHook("afterDeploy", this.onSuccess.bind(this), this.name);
      }
 
      async onSuccess(context) {

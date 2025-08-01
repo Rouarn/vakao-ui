@@ -29,23 +29,13 @@ export type ReadFunction = () => Promise<string>;
 /**
  * useClipboard 返回值类型
  */
-export type UseClipboardReturn = [
-  ComputedRef<string>,
-  CopyFunction,
-  ReadFunction,
-  ComputedRef<boolean>,
-  ComputedRef<boolean>,
-];
+export type UseClipboardReturn = [ComputedRef<string>, CopyFunction, ReadFunction, ComputedRef<boolean>, ComputedRef<boolean>];
 
 /**
  * 检查是否支持现代剪贴板 API
  */
 function isClipboardApiSupported(): boolean {
-  return (
-    typeof navigator !== "undefined" &&
-    "clipboard" in navigator &&
-    typeof navigator.clipboard.writeText === "function"
-  );
+  return typeof navigator !== "undefined" && "clipboard" in navigator && typeof navigator.clipboard.writeText === "function";
 }
 
 /**
@@ -141,9 +131,7 @@ function legacyCopy(text: string): boolean {
  * @since 0.0.2
  * @author Vakao UI Team
  */
-export function useClipboard(
-  options: UseClipboardOptions = {},
-): UseClipboardReturn {
+export function useClipboard(options: UseClipboardOptions = {}): UseClipboardReturn {
   const { legacy = true, onCopy, onError, onRead, onReadError } = options;
 
   // 状态管理
@@ -152,10 +140,7 @@ export function useClipboard(
 
   // 支持检测
   const isSupported = computed(() => {
-    return (
-      isClipboardApiSupported() ||
-      (legacy && typeof document !== "undefined" && document.queryCommandSupported?.("copy"))
-    );
+    return isClipboardApiSupported() || (legacy && typeof document !== "undefined" && document.queryCommandSupported?.("copy"));
   });
 
   const isSecureContext = computed(() => {

@@ -5,11 +5,7 @@
   "main": "index.ts",
   "module": "index.ts",
   "types": "index.ts",
-  "keywords": [
-    "vue3",
-    "components",
-    "ui-library"
-  ],
+  "keywords": ["vue3", "components", "ui-library"],
   "author": "",
   "license": "MIT",
   "peerDependencies": {

@@ -113,45 +113,27 @@
     <div>
       <h4>单键检测</h4>
       <div class="key-grid">
-        <div
-          v-for="key in singleKeys"
-          :key="key.name"
-          class="key-indicator"
-          :class="{ pressed: key.isPressed }"
-        >
+        <div v-for="key in singleKeys" :key="key.name" class="key-indicator" :class="{ pressed: key.isPressed }">
           <div class="key-icon">{{ key.icon }}</div>
           <div class="key-name">{{ key.name }}</div>
           <div class="key-status">{{ key.isPressed ? "按下" : "释放" }}</div>
         </div>
       </div>
-      <div class="tip">
-        💡 试试按下 <kbd>Space</kbd>、<kbd>Enter</kbd>、<kbd>Escape</kbd> 或
-        <kbd>Tab</kbd> 键
-      </div>
+      <div class="tip">💡 试试按下 <kbd>Space</kbd>、<kbd>Enter</kbd>、<kbd>Escape</kbd> 或 <kbd>Tab</kbd> 键</div>
     </div>
 
     <!-- 组合键检测 -->
     <div>
       <h4>组合键检测</h4>
       <div class="combo-grid">
-        <div
-          v-for="combo in comboKeys"
-          :key="combo.name"
-          class="combo-indicator"
-          :class="{ pressed: combo.isPressed }"
-        >
+        <div v-for="combo in comboKeys" :key="combo.name" class="combo-indicator" :class="{ pressed: combo.isPressed }">
           <div class="combo-icon">{{ combo.icon }}</div>
           <div class="combo-name">{{ combo.name }}</div>
           <div class="combo-description">{{ combo.description }}</div>
           <div v-if="combo.isPressed" class="combo-active">✅ 激活</div>
         </div>
       </div>
-      <div class="tip">
-        🎯 试试按下组合键：<kbd>Ctrl+S</kbd>、<kbd>Ctrl+C</kbd>、<kbd
-          >Ctrl+Z</kbd
-        >
-        或 <kbd>Alt+Tab</kbd>
-      </div>
+      <div class="tip">🎯 试试按下组合键：<kbd>Ctrl+S</kbd>、<kbd>Ctrl+C</kbd>、<kbd>Ctrl+Z</kbd> 或 <kbd>Alt+Tab</kbd></div>
     </div>
 
     <!-- 方向键检测 -->
@@ -246,10 +228,7 @@ const getCurrentPressedKeys = () => {
   });
 
   Object.entries(arrowKeys).forEach(([direction, isPressed]) => {
-    if (isPressed)
-      pressed.push(
-        `Arrow${direction.charAt(0).toUpperCase() + direction.slice(1)}`,
-      );
+    if (isPressed) pressed.push(`Arrow${direction.charAt(0).toUpperCase() + direction.slice(1)}`);
   });
 
   return pressed.length > 0 ? pressed.join(", ") : "无";
@@ -503,10 +482,7 @@ kbd {
             速度: {{ gameSpeed }}x
             <div>按住 Shift 加速</div>
           </div>
-          <div class="position-info">
-            位置: ({{ Math.round(playerPosition.x) }},
-            {{ Math.round(playerPosition.y) }})
-          </div>
+          <div class="position-info">位置: ({{ Math.round(playerPosition.x) }}, {{ Math.round(playerPosition.y) }})</div>
         </div>
       </div>
     </div>
@@ -524,12 +500,7 @@ kbd {
         ></textarea>
       </div>
       <div class="shortcut-indicators">
-        <span
-          v-for="shortcut in editorShortcuts"
-          :key="shortcut.name"
-          class="shortcut-indicator"
-          :class="{ active: shortcut.isPressed }"
-        >
+        <span v-for="shortcut in editorShortcuts" :key="shortcut.name" class="shortcut-indicator" :class="{ active: shortcut.isPressed }">
           {{ shortcut.name }}: {{ shortcut.description }}
         </span>
       </div>
@@ -540,9 +511,7 @@ kbd {
       <h4>快捷键帮助面板</h4>
       <div class="help-trigger">
         <span>按 </span><kbd>F1</kbd><span> 显示/隐藏帮助面板</span>
-        <span class="help-status"
-          >(当前: {{ helpVisible ? "显示" : "隐藏" }})</span
-        >
+        <span class="help-status">(当前: {{ helpVisible ? "显示" : "隐藏" }})</span>
       </div>
 
       <div v-if="helpVisible" class="help-panel">
@@ -598,9 +567,7 @@ const startGameLoop = () => {
 startGameLoop();
 
 // 文本编辑器快捷键
-const editorContent = ref(
-  "这是一个支持快捷键的文本编辑器。\n试试使用 Ctrl+A 全选文本，或者 Ctrl+Z 撤销操作。",
-);
+const editorContent = ref("这是一个支持快捷键的文本编辑器。\n试试使用 Ctrl+A 全选文本，或者 Ctrl+Z 撤销操作。");
 const editorRef = ref<HTMLTextAreaElement>();
 
 const editorShortcuts = reactive([
@@ -847,10 +814,7 @@ export interface UseKeyPressOptions {
   enabled?: boolean | Ref<boolean>;
 }
 
-export function useKeyPress(
-  keyFilter: KeyFilter,
-  options?: UseKeyPressOptions,
-): Ref<boolean>;
+export function useKeyPress(keyFilter: KeyFilter, options?: UseKeyPressOptions): Ref<boolean>;
 ```
 
 ## 使用场景

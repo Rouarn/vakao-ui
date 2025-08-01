@@ -18,12 +18,7 @@ export interface UseKeyPressOptions {
   /** 监听的事件类型 */
   eventType?: "keydown" | "keyup";
   /** 监听目标 */
-  target?:
-    | Window
-    | Document
-    | HTMLElement
-    | Ref<HTMLElement | null>
-    | (() => HTMLElement | null);
+  target?: Window | Document | HTMLElement | Ref<HTMLElement | null> | (() => HTMLElement | null);
   /** 是否启用监听 */
   enabled?: boolean | Ref<boolean>;
   /** 是否阻止默认行为 */
@@ -47,11 +42,7 @@ export type DisableFunction = () => void;
 /**
  * useKeyPress 返回值类型
  */
-export type UseKeyPressReturn = [
-  ComputedRef<boolean>,
-  EnableFunction,
-  DisableFunction,
-];
+export type UseKeyPressReturn = [ComputedRef<boolean>, EnableFunction, DisableFunction];
 
 /**
  * 标准化按键名称
@@ -66,11 +57,7 @@ function normalizeKey(key: string, exactMatch: boolean = false): string {
 /**
  * 检查按键是否匹配
  */
-function isKeyMatch(
-  event: KeyboardEvent,
-  targetKeys: string[],
-  exactMatch: boolean = false,
-): boolean {
+function isKeyMatch(event: KeyboardEvent, targetKeys: string[], exactMatch: boolean = false): boolean {
   const eventKey = normalizeKey(event.key, exactMatch);
   const eventCode = normalizeKey(event.code, exactMatch);
 
@@ -136,18 +123,8 @@ function isKeyMatch(
  * @since 0.0.2
  * @author Vakao UI Team
  */
-export function useKeyPress(
-  keys: KeyType,
-  options: UseKeyPressOptions = {},
-): UseKeyPressReturn {
-  const {
-    target = window,
-    preventDefault = false,
-    stopPropagation = false,
-    exactMatch = false,
-    onKeyDown,
-    onKeyUp,
-  } = options;
+export function useKeyPress(keys: KeyType, options: UseKeyPressOptions = {}): UseKeyPressReturn {
+  const { target = window, preventDefault = false, stopPropagation = false, exactMatch = false, onKeyDown, onKeyUp } = options;
 
   // 标准化按键数组
   const targetKeys = Array.isArray(keys) ? keys : [keys];
@@ -191,8 +168,7 @@ export function useKeyPress(
   };
 
   // 转换 target 类型
-  const targetRef =
-    typeof target === "function" ? target : () => target as EventTarget;
+  const targetRef = typeof target === "function" ? target : () => target as EventTarget;
 
   // 事件监听器
   const [, , ,] = useEventListener(targetRef, "keydown", handleKeyDown);

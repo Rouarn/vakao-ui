@@ -19,16 +19,8 @@ class GitHubIntegrationExtension {
    */
   async initialize(extensionManager) {
     // 注册钩子
-    extensionManager.registerHook(
-      "beforeDeploy",
-      this.beforeDeploy.bind(this),
-      this.name,
-    );
-    extensionManager.registerHook(
-      "afterDeploy",
-      this.afterDeploy.bind(this),
-      this.name,
-    );
+    extensionManager.registerHook("beforeDeploy", this.beforeDeploy.bind(this), this.name);
+    extensionManager.registerHook("afterDeploy", this.afterDeploy.bind(this), this.name);
 
     log(`${this.name} 扩展已初始化`, "info");
   }

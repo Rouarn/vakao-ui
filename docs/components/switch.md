@@ -19,11 +19,7 @@
 ```vue
 <template>
   <vk-switch v-model="value1" />
-  <vk-switch
-    v-model="value2"
-    class="ml-2"
-    style="--vk-switch-on-color: #13ce66; --vk-switch-off-color: #ff4949"
-  />
+  <vk-switch v-model="value2" class="ml-2" style="--vk-switch-on-color: #13ce66; --vk-switch-off-color: #ff4949" />
 </template>
 
 <script setup>
@@ -196,12 +192,7 @@ const value3 = ref(true);
 
 ```vue
 <template>
-  <vk-switch
-    v-model="value1"
-    class="mb-2"
-    active-text="Pay by month"
-    inactive-text="Pay by year"
-  />
+  <vk-switch v-model="value1" class="mb-2" active-text="Pay by month" inactive-text="Pay by year" />
   <br />
   <vk-switch
     v-model="value2"
@@ -255,20 +246,9 @@ const value4 = ref(true);
 
 ```vue
 <template>
-  <vk-switch
-    v-model="value1"
-    active-icon="mdi:check"
-    inactive-icon="mdi:close"
-  />
+  <vk-switch v-model="value1" active-icon="mdi:check" inactive-icon="mdi:close" />
   <br />
-  <vk-switch
-    v-model="value2"
-    class="mt-2"
-    style="margin-left: 24px"
-    inline-prompt
-    active-icon="mdi:check"
-    inactive-icon="mdi:close"
-  />
+  <vk-switch v-model="value2" class="mt-2" style="margin-left: 24px" inline-prompt active-icon="mdi:check" inactive-icon="mdi:close" />
 </template>
 
 <script setup>

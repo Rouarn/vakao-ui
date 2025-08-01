@@ -65,7 +65,7 @@ export function useCounter(
   options: {
     min?: number;
     max?: number;
-  } = {},
+  } = {}
 ): UseCounterReturn {
   const { min, max } = options;
   const count = ref(initialValue);

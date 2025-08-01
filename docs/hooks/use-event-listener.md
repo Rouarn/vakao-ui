@@ -62,23 +62,13 @@
     <!-- 点击事件 -->
     <div>
       <h4>点击事件</h4>
-      <div
-        ref="clickTargetRef"
-        class="click-target"
-        :class="{ clicked: isClicked }"
-      >
-        点击我 ({{ clickCount }})
-      </div>
+      <div ref="clickTargetRef" class="click-target" :class="{ clicked: isClicked }">点击我 ({{ clickCount }})</div>
     </div>
 
     <!-- 鼠标悬停事件 -->
     <div>
       <h4>鼠标悬停</h4>
-      <div
-        ref="hoverTargetRef"
-        class="hover-target"
-        :class="{ hovered: isHovered }"
-      >
+      <div ref="hoverTargetRef" class="hover-target" :class="{ hovered: isHovered }">
         {{ isHovered ? "悬停中 ✨" : "悬停我" }}
       </div>
     </div>
@@ -168,11 +158,7 @@ const updateWindowSize = () => {
 updateWindowSize();
 
 // 监听窗口大小变化
-useEventListener(
-  () => (typeof window !== "undefined" ? window : null),
-  "resize",
-  updateWindowSize,
-);
+useEventListener(() => (typeof window !== "undefined" ? window : null), "resize", updateWindowSize);
 </script>
 
 <style scoped>
@@ -330,35 +316,22 @@ useEventListener(
     <div>
       <h4>事件选项控制</h4>
       <div>
-        <label
-          ><input type="checkbox" v-model="passiveEnabled" /> Passive</label
-        >
-        <label
-          ><input type="checkbox" v-model="captureEnabled" /> Capture</label
-        >
+        <label><input type="checkbox" v-model="passiveEnabled" /> Passive</label>
+        <label><input type="checkbox" v-model="captureEnabled" /> Capture</label>
         <label><input type="checkbox" v-model="onceEnabled" /> Once</label>
       </div>
-      <div ref="optionsTargetRef" class="options-target">
-        点击测试事件选项 ({{ optionsClickCount }})
-      </div>
+      <div ref="optionsTargetRef" class="options-target">点击测试事件选项 ({{ optionsClickCount }})</div>
     </div>
 
     <!-- 条件监听 -->
     <div>
       <h4>条件监听</h4>
-      <vk-button
-        @click="toggleListening"
-        :type="isListening ? 'primary' : 'default'"
-      >
+      <vk-button @click="toggleListening" :type="isListening ? 'primary' : 'default'">
         {{ isListening ? "停止监听" : "开始监听" }}
       </vk-button>
       <span>状态: {{ isListening ? "监听中" : "已停止" }}</span>
 
-      <div
-        ref="conditionalTargetRef"
-        class="conditional-target"
-        :class="{ listening: isListening }"
-      >
+      <div ref="conditionalTargetRef" class="conditional-target" :class="{ listening: isListening }">
         {{ isListening ? `点击我 (${conditionalClickCount})` : "监听已停止" }}
       </div>
     </div>
@@ -366,17 +339,12 @@ useEventListener(
     <!-- 多事件监听 -->
     <div>
       <h4>多事件监听</h4>
-      <div
-        ref="multiEventTargetRef"
-        class="multi-event-target"
-        :class="{ active: multiEventState.isActive }"
-      >
+      <div ref="multiEventTargetRef" class="multi-event-target" :class="{ active: multiEventState.isActive }">
         <div>多事件目标</div>
         <div>{{ multiEventState.lastEvent }}</div>
       </div>
       <div class="event-stats">
-        点击: {{ multiEventState.clickCount }} | 双击:
-        {{ multiEventState.dblClickCount }} | 右键:
+        点击: {{ multiEventState.clickCount }} | 双击: {{ multiEventState.dblClickCount }} | 右键:
         {{ multiEventState.contextMenuCount }}
       </div>
     </div>
@@ -406,7 +374,7 @@ useEventListener(
   () => {
     optionsClickCount.value++;
   },
-  eventOptions,
+  eventOptions
 );
 
 // 条件监听
@@ -424,7 +392,7 @@ useEventListener(
   () => {
     conditionalClickCount.value++;
   },
-  { enabled: isListening },
+  { enabled: isListening }
 );
 
 // 多事件监听
@@ -520,7 +488,7 @@ export function useEventListener(
   target: EventTarget | Ref<EventTarget | null>,
   event: string,
   handler: EventListener,
-  options?: UseEventListenerOptions,
+  options?: UseEventListenerOptions
 ): UseEventListenerReturn;
 ```
 

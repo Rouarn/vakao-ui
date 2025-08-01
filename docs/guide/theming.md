@@ -54,9 +54,7 @@ Vakao UI 使用 CSS 变量来定义主题，您可以通过覆盖这些变量来
   --vk-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 
   /* 字体 */
-  --vk-font-family:
-    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
-    Arial, sans-serif;
+  --vk-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --vk-font-size-base: 14px;
   --vk-font-size-small: 12px;
   --vk-font-size-large: 16px;
@@ -204,12 +202,7 @@ export function initTheme() {
 
 ```vue
 <template>
-  <vk-button
-    customClass="my-custom-button"
-    customStyle="background: linear-gradient(45deg, #ff6b6b, #4ecdc4)"
-  >
-    自定义按钮
-  </vk-button>
+  <vk-button customClass="my-custom-button" customStyle="background: linear-gradient(45deg, #ff6b6b, #4ecdc4)"> 自定义按钮 </vk-button>
 </template>
 
 <style>

@@ -139,18 +139,9 @@ export type PromiseFunction<T> = () => Promise<T>;
 export function useFetch<T = unknown>(
   url: string | (() => string) | (() => Promise<T>),
   options: UseFetchOptions<T> = {},
-  fetchOptions: RequestInit = {},
+  fetchOptions: RequestInit = {}
 ): UseFetchReturn<T> {
-  const {
-    immediate = true,
-    timeout = 10000,
-    retries = 0,
-    retryDelay = 1000,
-    transform,
-    beforeRequest,
-    afterRequest,
-    onError,
-  } = options;
+  const { immediate = true, timeout = 10000, retries = 0, retryDelay = 1000, transform, beforeRequest, afterRequest, onError } = options;
 
   // 响应式状态
   const data = ref<T | null>(null);
@@ -162,11 +153,7 @@ export function useFetch<T = unknown>(
   const readonlyData = computed(() => data.value);
 
   // 计算属性
-  const finished = computed(
-    () =>
-      status.value === FetchStatus.SUCCESS ||
-      status.value === FetchStatus.ERROR,
-  );
+  const finished = computed(() => status.value === FetchStatus.SUCCESS || status.value === FetchStatus.ERROR);
 
   // 请求控制
   let abortController: AbortController | null = null;
@@ -238,10 +225,7 @@ export function useFetch<T = unknown>(
             }, timeout);
           });
 
-          const responseData = await Promise.race([
-            promiseFunction(),
-            timeoutPromise,
-          ]);
+          const responseData = await Promise.race([promiseFunction(), timeoutPromise]);
 
           // 数据转换
           let finalData: T = responseData;
@@ -285,10 +269,7 @@ export function useFetch<T = unknown>(
             }
 
             if (!response.ok) {
-              throw createError(
-                `HTTP Error: ${response.status} ${response.statusText}`,
-                response,
-              );
+              throw createError(`HTTP Error: ${response.status} ${response.statusText}`, response);
             }
 
             // 解析响应数据
@@ -323,10 +304,7 @@ export function useFetch<T = unknown>(
           return;
         }
 
-        const fetchError =
-          err instanceof Error
-            ? createError(err.message)
-            : createError("Unknown error occurred");
+        const fetchError = err instanceof Error ? createError(err.message) : createError("Unknown error occurred");
 
         // 重试逻辑
         if (retryCount < retries) {
@@ -411,26 +389,17 @@ export function useFetch<T = unknown>(
  * const [data] = useApi('/users');
  * ```
  */
-export function createFetch(
-  baseURL: string,
-  defaultOptions: UseFetchOptions<unknown> = {},
-  defaultFetchOptions: RequestInit = {},
-) {
+export function createFetch(baseURL: string, defaultOptions: UseFetchOptions<unknown> = {}, defaultFetchOptions: RequestInit = {}) {
   return function <T = unknown>(
     url: string | (() => string),
     options: UseFetchOptions<T> = {},
-    fetchOptions: RequestInit = {},
+    fetchOptions: RequestInit = {}
   ): UseFetchReturn<T> {
-    const fullUrl =
-      typeof url === "function" ? () => baseURL + url() : baseURL + url;
+    const fullUrl = typeof url === "function" ? () => baseURL + url() : baseURL + url;
 
     const mergedOptions = { ...defaultOptions, ...options };
     const mergedFetchOptions = { ...defaultFetchOptions, ...fetchOptions };
 
-    return useFetch(
-      fullUrl,
-      mergedOptions,
-      mergedFetchOptions,
-    ) as UseFetchReturn<T>;
+    return useFetch(fullUrl, mergedOptions, mergedFetchOptions) as UseFetchReturn<T>;
   };
 }

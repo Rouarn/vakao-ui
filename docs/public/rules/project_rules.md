@@ -805,14 +805,8 @@ const [pageNum, nextPage, prevPage, resetPage, setPage] = useCounter(1);
 // useLocalStorage - 本地存储
 const [value, setValue, remove, clear] = useLocalStorage("key", defaultValue);
 // 自定义命名示例
-const [theme, setTheme, removeTheme, clearTheme] = useLocalStorage(
-  "theme",
-  "light",
-);
-const [userInfo, setUserInfo, removeUserInfo, clearUserInfo] = useLocalStorage(
-  "user",
-  null,
-);
+const [theme, setTheme, removeTheme, clearTheme] = useLocalStorage("theme", "light");
+const [userInfo, setUserInfo, removeUserInfo, clearUserInfo] = useLocalStorage("user", null);
 ```
 
 ### 6.4 TypeScript 类型定义
@@ -866,10 +860,7 @@ interface UseFetchOptions {
 }
 
 // Hook 函数签名
-function useFetch<T>(
-  url: string | (() => string),
-  options?: UseFetchOptions,
-): UseFetchReturn<T>;
+function useFetch<T>(url: string | (() => string), options?: UseFetchOptions): UseFetchReturn<T>;
 ```
 
 ### 6.5 实现规范
@@ -891,10 +882,7 @@ type UseExampleReturn = [
 ];
 
 // Hook 实现
-export function useExample(
-  initialValue?: any,
-  options?: UseExampleOptions,
-): UseExampleReturn {
+export function useExample(initialValue?: any, options?: UseExampleOptions): UseExampleReturn {
   // 1. 内部响应式状态
   const state = ref(initialValue);
 
@@ -924,12 +912,7 @@ export function useExample(
 ```typescript
 import { ref, computed, type ComputedRef } from "vue";
 
-type UseToggleReturn = [
-  ComputedRef<boolean>,
-  () => void,
-  () => void,
-  () => void,
-];
+type UseToggleReturn = [ComputedRef<boolean>, () => void, () => void, () => void];
 
 export function useToggle(initialValue = false): UseToggleReturn {
   // 内部响应式状态
@@ -966,13 +949,7 @@ export function useToggle(initialValue = false): UseToggleReturn {
 ```typescript
 import { ref, computed, type ComputedRef } from "vue";
 
-type UseFetchReturn<T> = [
-  ComputedRef<T | null>,
-  ComputedRef<boolean>,
-  ComputedRef<Error | null>,
-  () => Promise<void>,
-  () => void,
-];
+type UseFetchReturn<T> = [ComputedRef<T | null>, ComputedRef<boolean>, ComputedRef<Error | null>, () => Promise<void>, () => void];
 
 export function useFetch<T>(url: string): UseFetchReturn<T> {
   // 内部响应式状态

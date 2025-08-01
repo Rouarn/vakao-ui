@@ -6,11 +6,7 @@
  */
 
 import type { PropType, CSSProperties, VNode } from "vue";
-import type {
-  ExtractPublicPropTypes,
-  ComponentType,
-  ComponentSize,
-} from "../../../types";
+import type { ExtractPublicPropTypes, ComponentType, ComponentSize } from "../../../types";
 
 /**
  * 按钮类型

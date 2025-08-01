@@ -339,18 +339,15 @@ function bindDeploymentEvents() {
     switch (strategy) {
       case "docs":
         title = "部署文档到 GitHub Pages";
-        command =
-          "node scripts/publish.js --deploy-only --deploy-strategy docs";
+        command = "node scripts/publish.js --deploy-only --deploy-strategy docs";
         break;
       case "github-pages":
         title = "部署到 GitHub Pages";
-        command =
-          "node scripts/publish.js --deploy-only --deploy-strategy github-pages";
+        command = "node scripts/publish.js --deploy-only --deploy-strategy github-pages";
         break;
       case "static":
         title = "生成静态文件";
-        command =
-          "node scripts/publish.js --deploy-only --deploy-strategy static";
+        command = "node scripts/publish.js --deploy-only --deploy-strategy static";
         break;
       default:
         console.warn("未知的部署策略:", strategy);
@@ -516,10 +513,7 @@ function openMobileMenu() {
   $("body").css("overflow", "hidden");
 
   // 更新汉堡菜单图标
-  $elements.mobileMenuToggle
-    .find("i")
-    .removeClass("fa-bars")
-    .addClass("fa-times");
+  $elements.mobileMenuToggle.find("i").removeClass("fa-bars").addClass("fa-times");
 }
 
 /**
@@ -533,10 +527,7 @@ function closeMobileMenu() {
   $("body").css("overflow", "");
 
   // 恢复汉堡菜单图标
-  $elements.mobileMenuToggle
-    .find("i")
-    .removeClass("fa-times")
-    .addClass("fa-bars");
+  $elements.mobileMenuToggle.find("i").removeClass("fa-times").addClass("fa-bars");
 }
 
 /**
@@ -590,15 +581,9 @@ function bindKeyboardShortcuts() {
       const $helpModal = $("#helpModal");
       if ($helpModal.length && $helpModal.hasClass("active")) {
         hideHelpModal();
-      } else if (
-        $elements.commandPreviewModal &&
-        $elements.commandPreviewModal.hasClass("active")
-      ) {
+      } else if ($elements.commandPreviewModal && $elements.commandPreviewModal.hasClass("active")) {
         hideCommandPreviewModal();
-      } else if (
-        $elements.commandModal &&
-        $elements.commandModal.hasClass("active")
-      ) {
+      } else if ($elements.commandModal && $elements.commandModal.hasClass("active")) {
         hideCommandModal();
       }
     }
@@ -624,10 +609,7 @@ function switchTab(tabId) {
   AppState.activeTab = tabId;
 
   // 更新导航样式 - 使用 jQuery 链式调用
-  $elements.navItems
-    .removeClass("active")
-    .filter(`[data-tab="${tabId}"]`)
-    .addClass("active");
+  $elements.navItems.removeClass("active").filter(`[data-tab="${tabId}"]`).addClass("active");
 
   // 更新内容显示 - 添加淡入淡出效果
   $elements.tabContents.removeClass("active").fadeOut(150);
@@ -910,7 +892,7 @@ function updatePackageGrid(packages) {
             刷新
           </button>
         </div>
-      `,
+      `
         )
         .fadeIn(300);
       return;
@@ -1044,21 +1026,13 @@ function togglePackageSelection(packageId, $card) {
   if (isSelected) {
     // 取消选择
     AppState.selectedPackages.delete(packageId);
-    $card
-      .removeClass("selected")
-      .find(".package-icon")
-      .animate({ scale: 0.9 }, 100)
-      .animate({ scale: 1 }, 100);
+    $card.removeClass("selected").find(".package-icon").animate({ scale: 0.9 }, 100).animate({ scale: 1 }, 100);
 
     showToast(`已取消选择 ${getPackageName(packageId)}`, "info");
   } else {
     // 选择包
     AppState.selectedPackages.add(packageId);
-    $card
-      .addClass("selected")
-      .find(".package-icon")
-      .animate({ scale: 1.2 }, 100)
-      .animate({ scale: 1 }, 100);
+    $card.addClass("selected").find(".package-icon").animate({ scale: 1.2 }, 100).animate({ scale: 1 }, 100);
 
     // 添加选择特效 - 使用 CSS 动画替代 jQuery UI effect
     $card.addClass("package-selected-animation");
@@ -1095,11 +1069,9 @@ function updateSelectionCounter() {
     if ($counter.length === 0) {
       // 创建计数器
       $(
-        '<div class="selection-counter" style="margin-bottom: 12px; padding: 8px 12px; background: var(--primary-color); color: white; border-radius: var(--radius-md); text-align: center; font-size: var(--font-size-sm);">',
+        '<div class="selection-counter" style="margin-bottom: 12px; padding: 8px 12px; background: var(--primary-color); color: white; border-radius: var(--radius-md); text-align: center; font-size: var(--font-size-sm);">'
       )
-        .html(
-          `<i class="fas fa-check-circle"></i> 已选择 <span class="count">${count}</span> 个包`,
-        )
+        .html(`<i class="fas fa-check-circle"></i> 已选择 <span class="count">${count}</span> 个包`)
         .prependTo($elements.packageGrid.parent())
         .hide()
         .slideDown(200);
@@ -1164,15 +1136,9 @@ function updatePublishOptionsPanel(hasSelection) {
   const $optionsPanel = $(".publish-options");
 
   if (hasSelection) {
-    $optionsPanel
-      .removeClass("disabled")
-      .find("input, select")
-      .prop("disabled", false);
+    $optionsPanel.removeClass("disabled").find("input, select").prop("disabled", false);
   } else {
-    $optionsPanel
-      .addClass("disabled")
-      .find("input, select")
-      .prop("disabled", true);
+    $optionsPanel.addClass("disabled").find("input, select").prop("disabled", true);
   }
 }
 
@@ -1245,16 +1211,10 @@ function updatePublishOptions() {
     $elements.dryRunCheckbox.prop("checked", AppState.publishOptions.dryRun);
   }
   if ($elements.syncVersionCheckbox && $elements.syncVersionCheckbox.length) {
-    $elements.syncVersionCheckbox.prop(
-      "checked",
-      AppState.publishOptions.syncVersion,
-    );
+    $elements.syncVersionCheckbox.prop("checked", AppState.publishOptions.syncVersion);
   }
   if ($elements.skipDeployCheckbox && $elements.skipDeployCheckbox.length) {
-    $elements.skipDeployCheckbox.prop(
-      "checked",
-      AppState.publishOptions.skipDeploy,
-    );
+    $elements.skipDeployCheckbox.prop("checked", AppState.publishOptions.skipDeploy);
   }
   if ($elements.deployStrategySelect && $elements.deployStrategySelect.length) {
     $elements.deployStrategySelect.val(AppState.publishOptions.deployStrategy);
@@ -1271,26 +1231,14 @@ function updateSettingsUI() {
   if ($elements.autoScrollCheckbox && $elements.autoScrollCheckbox.length) {
     $elements.autoScrollCheckbox.prop("checked", AppState.settings.autoScroll);
   }
-  if (
-    $elements.notificationsCheckbox &&
-    $elements.notificationsCheckbox.length
-  ) {
-    $elements.notificationsCheckbox.prop(
-      "checked",
-      AppState.settings.notifications,
-    );
+  if ($elements.notificationsCheckbox && $elements.notificationsCheckbox.length) {
+    $elements.notificationsCheckbox.prop("checked", AppState.settings.notifications);
   }
   if ($elements.autoSaveCheckbox && $elements.autoSaveCheckbox.length) {
     $elements.autoSaveCheckbox.prop("checked", AppState.settings.autoSave);
   }
-  if (
-    $elements.defaultDryRunCheckbox &&
-    $elements.defaultDryRunCheckbox.length
-  ) {
-    $elements.defaultDryRunCheckbox.prop(
-      "checked",
-      AppState.settings.defaultDryRun,
-    );
+  if ($elements.defaultDryRunCheckbox && $elements.defaultDryRunCheckbox.length) {
+    $elements.defaultDryRunCheckbox.prop("checked", AppState.settings.defaultDryRun);
   }
 }
 
@@ -1497,7 +1445,7 @@ function updateLogDisplay() {
           <h3>暂无日志</h3>
           <p>执行命令后日志将显示在这里</p>
         </div>
-      `,
+      `
         )
         .fadeIn(300);
       return;
@@ -1578,14 +1526,14 @@ function clearLogs() {
         <h3>日志已清空</h3>
         <p>执行命令后日志将显示在这里</p>
       </div>
-    `,
+    `
         )
         .hide()
         .fadeIn(300);
 
       showToast("日志已清空", "success");
     },
-    $logContainer.children(".log-entry").length * 20 + 200,
+    $logContainer.children(".log-entry").length * 20 + 200
   );
 }
 
@@ -1627,7 +1575,7 @@ function clearLogsAsync() {
 
         resolve();
       },
-      $entries.length * 20 + 200,
+      $entries.length * 20 + 200
     );
   });
 }
@@ -1647,16 +1595,9 @@ async function exportLogs() {
     const $exportBtn = $elements.exportLogsBtn;
     const originalText = $exportBtn.html();
 
-    $exportBtn
-      .prop("disabled", true)
-      .html('<i class="fas fa-spinner fa-spin"></i> 导出中...');
+    $exportBtn.prop("disabled", true).html('<i class="fas fa-spinner fa-spin"></i> 导出中...');
 
-    const content = AppState.logs
-      .map(
-        (log) =>
-          `[${log.timestamp}] [${log.type.toUpperCase()}] ${log.message}`,
-      )
-      .join("\n");
+    const content = AppState.logs.map((log) => `[${log.timestamp}] [${log.type.toUpperCase()}] ${log.message}`).join("\n");
 
     await window.electronAPI.exportLogs(content);
 
@@ -1719,18 +1660,12 @@ function showCommandModal(title, command) {
   }
 
   // 显示模态框动画
-  $modal
-    .addClass("active")
-    .hide()
-    .fadeIn(300)
-    .find(".modal-content")
-    .css("transform", "scale(0.8)")
-    .animate(
-      {
-        scale: 1,
-      },
-      200,
-    );
+  $modal.addClass("active").hide().fadeIn(300).find(".modal-content").css("transform", "scale(0.8)").animate(
+    {
+      scale: 1,
+    },
+    200
+  );
 
   // 聚焦到取消按钮
   setTimeout(() => {
@@ -1763,7 +1698,7 @@ function hideCommandModal() {
       {
         scale: 0.8,
       },
-      200,
+      200
     )
     .end()
     .fadeOut(300, function () {
@@ -1781,10 +1716,7 @@ function hideCommandModal() {
  * 执行命令
  */
 async function executeCommand() {
-  const command =
-    $elements.commandModal && $elements.commandModal.length
-      ? $elements.commandModal.data("command")
-      : null;
+  const command = $elements.commandModal && $elements.commandModal.length ? $elements.commandModal.data("command") : null;
   if (!command) return;
 
   try {
@@ -1852,18 +1784,12 @@ function showCommandPreviewModal(title, command, showExecuteButton = true) {
   }
 
   // 显示模态框动画
-  $modal
-    .addClass("active")
-    .hide()
-    .fadeIn(300)
-    .find(".modal-content")
-    .css("transform", "scale(0.8)")
-    .animate(
-      {
-        scale: 1,
-      },
-      200,
-    );
+  $modal.addClass("active").hide().fadeIn(300).find(".modal-content").css("transform", "scale(0.8)").animate(
+    {
+      scale: 1,
+    },
+    200
+  );
 
   // 添加键盘事件监听
   $(document).on("keydown.previewModal", function (e) {
@@ -1888,7 +1814,7 @@ function hideCommandPreviewModal() {
       {
         scale: 0.8,
       },
-      200,
+      200
     )
     .end()
     .fadeOut(300, function () {
@@ -1907,9 +1833,7 @@ function hideCommandPreviewModal() {
  */
 function copyCommandFromPreview() {
   const command =
-    $elements.commandPreviewModal && $elements.commandPreviewModal.length
-      ? $elements.commandPreviewModal.data("command")
-      : null;
+    $elements.commandPreviewModal && $elements.commandPreviewModal.length ? $elements.commandPreviewModal.data("command") : null;
 
   if (!command) return;
 
@@ -1930,9 +1854,7 @@ function copyCommandFromPreview() {
  */
 async function executeCommandFromPreview() {
   const command =
-    $elements.commandPreviewModal && $elements.commandPreviewModal.length
-      ? $elements.commandPreviewModal.data("command")
-      : null;
+    $elements.commandPreviewModal && $elements.commandPreviewModal.length ? $elements.commandPreviewModal.data("command") : null;
 
   if (!command) return;
 
@@ -2001,10 +1923,7 @@ function handleProcessStatus(status) {
       AppState.currentProcess = null;
       hideLogExecutionStatus();
       updateStatus("error", `执行失败 (退出码: ${status.code ?? 1})`);
-      addLog(
-        "error",
-        status.message || `进程执行失败，退出码: ${status.code ?? 1}`,
-      );
+      addLog("error", status.message || `进程执行失败，退出码: ${status.code ?? 1}`);
       showToast(status.message || "命令执行失败", "error");
       if (AppState.settings.notifications) {
         showNotification("执行失败", status.message || "命令执行失败");
@@ -2073,13 +1992,7 @@ function showHelpModal() {
   });
 
   // 显示模态框
-  $helpModal
-    .addClass("active")
-    .hide()
-    .fadeIn(300)
-    .find(".modal-content")
-    .css("transform", "scale(0.8)")
-    .animate({ scale: 1 }, 200);
+  $helpModal.addClass("active").hide().fadeIn(300).find(".modal-content").css("transform", "scale(0.8)").animate({ scale: 1 }, 200);
 }
 
 /**
@@ -2185,10 +2098,7 @@ function updateStatus(type, text) {
   const $statusText = $elements.statusText;
 
   if ($statusIndicator && $statusIndicator.length) {
-    $statusIndicator
-      .removeClass()
-      .addClass(`status-indicator ${type}`)
-      .addClass("status-pulse-animation");
+    $statusIndicator.removeClass().addClass(`status-indicator ${type}`).addClass("status-pulse-animation");
 
     // 动画完成后移除类名
     setTimeout(() => {
@@ -2240,7 +2150,7 @@ function scrollToBottom(element) {
         scrollTop: $target[0].scrollHeight,
       },
       300,
-      "swing",
+      "swing"
     );
   }
 }
@@ -2531,13 +2441,7 @@ function showPackageDetails(pkg) {
   });
 
   // 显示模态框
-  $detailModal
-    .appendTo("body")
-    .hide()
-    .fadeIn(300)
-    .find(".modal-content")
-    .css("transform", "scale(0.8)")
-    .animate({ scale: 1 }, 200);
+  $detailModal.appendTo("body").hide().fadeIn(300).find(".modal-content").css("transform", "scale(0.8)").animate({ scale: 1 }, 200);
 }
 
 /**
@@ -2612,9 +2516,7 @@ function initializeBatchOperations() {
     const $btn = $(this);
     const originalText = $btn.html();
 
-    $btn
-      .prop("disabled", true)
-      .html('<i class="fas fa-spinner fa-spin"></i> 刷新中...');
+    $btn.prop("disabled", true).html('<i class="fas fa-spinner fa-spin"></i> 刷新中...');
 
     // 刷新包信息
     loadPackages()
@@ -2839,10 +2741,7 @@ function generateInputControl(request) {
         .map((option, index) => {
           const value = typeof option === "string" ? option : option.value;
           const label = typeof option === "string" ? option : option.label;
-          const checked =
-            Array.isArray(defaultValue) && defaultValue.includes(value)
-              ? "checked"
-              : "";
+          const checked = Array.isArray(defaultValue) && defaultValue.includes(value) ? "checked" : "";
           return `
           <div class="checkbox-option">
             <input type="checkbox" id="checkbox_${index}" name="userInputValue" value="${value}" ${checked}>
@@ -3044,9 +2943,7 @@ function showValidationErrors(errors) {
   const $validationInfo = $("#inputValidation");
 
   if (errors && errors.length > 0) {
-    const errorHtml = errors
-      .map((error) => `<div class="error-item">${error}</div>`)
-      .join("");
+    const errorHtml = errors.map((error) => `<div class="error-item">${error}</div>`).join("");
     $validationInfo.html(errorHtml).show();
 
     // 添加错误样式到输入控件

@@ -5,9 +5,7 @@ import type { ResetFunction } from "../types/shared";
 /**
  * 异步函数类型
  */
-export type AsyncFunction<T, P extends any[] = any[]> = (
-  ...args: P
-) => Promise<T>;
+export type AsyncFunction<T, P extends any[] = any[]> = (...args: P) => Promise<T>;
 
 /**
  * 异步操作状态枚举
@@ -38,9 +36,7 @@ export interface AsyncState<T> {
 /**
  * 执行异步操作的函数类型
  */
-export type AsyncExecuteFunction<P extends any[] = any[]> = (
-  ...args: P
-) => Promise<void>;
+export type AsyncExecuteFunction<P extends any[] = any[]> = (...args: P) => Promise<void>;
 
 /**
  * 成功回调函数类型
@@ -127,17 +123,8 @@ export type UseAsyncReturn<T, P extends any[] = any[]> = [
  * @since 0.0.2
  * @author Vakao UI Team
  */
-export function useAsync<T, P extends any[] = any[]>(
-  asyncFn: AsyncFunction<T, P>,
-  options: UseAsyncOptions = {},
-): UseAsyncReturn<T, P> {
-  const {
-    immediate = false,
-    resetDelay = 0,
-    onSuccess,
-    onError,
-    onFinally,
-  } = options;
+export function useAsync<T, P extends any[] = any[]>(asyncFn: AsyncFunction<T, P>, options: UseAsyncOptions = {}): UseAsyncReturn<T, P> {
+  const { immediate = false, resetDelay = 0, onSuccess, onError, onFinally } = options;
 
   // 状态管理
   const state = ref<AsyncState<T>>({

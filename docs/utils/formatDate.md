@@ -183,9 +183,7 @@ const articles = [
 ];
 
 articles.forEach((article) => {
-  console.log(
-    `${article.title} - ${formatDate(article.createdAt, DATE_FORMATS.DATETIME_SHORT)}`,
-  );
+  console.log(`${article.title} - ${formatDate(article.createdAt, DATE_FORMATS.DATETIME_SHORT)}`);
 });
 ```
 
@@ -236,11 +234,7 @@ interface FormatDateOptions {
  * @param options 格式化选项
  * @returns 格式化后的日期字符串
  */
-function formatDate(
-  date: Date | number | string,
-  format?: string,
-  options?: FormatDateOptions,
-): string;
+function formatDate(date: Date | number | string, format?: string, options?: FormatDateOptions): string;
 
 /**
  * 格式化相对时间
@@ -249,11 +243,7 @@ function formatDate(
  * @param options 格式化选项
  * @returns 相对时间字符串
  */
-function formatRelativeTime(
-  date: Date | number | string,
-  baseDate?: Date | number | string,
-  options?: FormatDateOptions,
-): string;
+function formatRelativeTime(date: Date | number | string, baseDate?: Date | number | string, options?: FormatDateOptions): string;
 
 /**
  * 判断是否为今天

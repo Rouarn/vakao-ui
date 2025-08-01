@@ -25,10 +25,7 @@ class ExtensionManager {
     this.extensions = new Map();
     this.extensionConfigs = new Map();
     this.hooks = new Map();
-    this.extensionPaths = [
-      path.join(config.projectRoot, "scripts", "extensions"),
-      path.join(config.projectRoot, "scripts", "plugins"),
-    ];
+    this.extensionPaths = [path.join(config.projectRoot, "scripts", "extensions"), path.join(config.projectRoot, "scripts", "plugins")];
     this.isInitialized = false;
   }
 
@@ -49,10 +46,7 @@ class ExtensionManager {
     await this.loadAllExtensions();
 
     this.isInitialized = true;
-    log(
-      `扩展管理器初始化完成，已加载 ${this.extensions.size} 个扩展`,
-      "success",
-    );
+    log(`扩展管理器初始化完成，已加载 ${this.extensions.size} 个扩展`, "success");
   }
 
   /**
@@ -114,9 +108,7 @@ class ExtensionManager {
     // 读取扩展配置
     if (fs.existsSync(packageJsonPath)) {
       try {
-        const packageJson = JSON.parse(
-          fs.readFileSync(packageJsonPath, "utf8"),
-        );
+        const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf8"));
         extensionConfig = {
           name: packageJson.name,
           version: packageJson.version,
@@ -155,10 +147,7 @@ class ExtensionManager {
       delete require.cache[require.resolve(extensionPath)];
 
       const extensionModule = require(extensionPath);
-      const extension =
-        typeof extensionModule === "function"
-          ? new extensionModule(this.config)
-          : extensionModule;
+      const extension = typeof extensionModule === "function" ? new extensionModule(this.config) : extensionModule;
 
       // 验证扩展结构
       if (!this.validateExtension(extension)) {
@@ -166,8 +155,7 @@ class ExtensionManager {
         return;
       }
 
-      const extensionName =
-        extension.name || config.name || path.basename(extensionPath, ".js");
+      const extensionName = extension.name || config.name || path.basename(extensionPath, ".js");
 
       // 合并配置
       const finalConfig = {
@@ -186,10 +174,7 @@ class ExtensionManager {
         await extension.initialize(this);
       }
 
-      log(
-        `加载扩展: ${extensionName} (${finalConfig.version || "unknown"})`,
-        "success",
-      );
+      log(`加载扩展: ${extensionName} (${finalConfig.version || "unknown"})`, "success");
     } catch (error) {
       log(`加载扩展失败: ${extensionPath} - ${error.message}`, "error");
     }
@@ -346,10 +331,7 @@ class ExtensionManager {
    */
   getStats() {
     const extensions = this.getAllExtensions();
-    const hookCount = Array.from(this.hooks.values()).reduce(
-      (total, hooks) => total + hooks.length,
-      0,
-    );
+    const hookCount = Array.from(this.hooks.values()).reduce((total, hooks) => total + hooks.length, 0);
 
     return {
       extensionCount: extensions.length,
@@ -391,10 +373,7 @@ class ExtensionManager {
       },
     };
 
-    fs.writeFileSync(
-      path.join(extensionDir, "package.json"),
-      JSON.stringify(packageJson, null, 2),
-    );
+    fs.writeFileSync(path.join(extensionDir, "package.json"), JSON.stringify(packageJson, null, 2));
 
     // 创建主文件
     const indexContent = `/**

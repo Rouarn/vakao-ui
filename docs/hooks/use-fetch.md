@@ -142,9 +142,7 @@ const [data, loading, error, { refresh }] = useFetch(() => {
     <div>
       <label>用户ID:</label>
       <vk-input v-model="userId" placeholder="请输入用户ID" />
-      <vk-button @click="handleSearch" :disabled="!userId || loading">
-        查询用户
-      </vk-button>
+      <vk-button @click="handleSearch" :disabled="!userId || loading"> 查询用户 </vk-button>
     </div>
 
     <div v-if="loading">查询中...</div>
@@ -568,9 +566,7 @@ watch(loading, (isLoading) => {
       <p>平均年龄: {{ data.averageAge }}</p>
 
       <h4>邮箱域名分布</h4>
-      <div v-for="(count, domain) in data.emailDomains" :key="domain">
-        {{ domain }}: {{ count }}
-      </div>
+      <div v-for="(count, domain) in data.emailDomains" :key="domain">{{ domain }}: {{ count }}</div>
     </div>
   </div>
 </template>
@@ -646,10 +642,7 @@ const [data, loading, error, { refresh }] = useFetch(
 ### useFetch
 
 ```ts
-function useFetch<T = any>(
-  url: string | (() => string),
-  options?: UseFetchOptions<T>,
-): UseFetchReturn<T>;
+function useFetch<T = any>(url: string | (() => string), options?: UseFetchOptions<T>): UseFetchReturn<T>;
 ```
 
 ### 配置选项
@@ -752,10 +745,7 @@ type UseFetchReturn<T> = [
  * @example
  * const [data, loading, error] = useFetch('/api/users');
  */
-function useFetch<T = any>(
-  url: string | (() => string),
-  options?: UseFetchOptions<T>,
-): UseFetchReturn<T>;
+function useFetch<T = any>(url: string | (() => string), options?: UseFetchOptions<T>): UseFetchReturn<T>;
 
 /**
  * 创建可复用的 fetch 实例

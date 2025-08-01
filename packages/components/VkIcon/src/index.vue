@@ -1,22 +1,9 @@
 <template>
-  <span
-    :class="mergedClass"
-    :style="mergedStyle"
-    v-bind="$attrs"
-  >
+  <span :class="mergedClass" :style="mergedStyle" v-bind="$attrs">
     <!-- 自定义图片 -->
-    <img
-      v-if="props.src"
-      :src="props.src"
-      alt="icon"
-      class="vk-icon__image"
-    >
+    <img v-if="props.src" :src="props.src" alt="icon" class="vk-icon__image" />
     <!-- Iconify 图标 -->
-    <Icon
-      v-else-if="props.icon"
-      :icon="props.icon || ''"
-      class="vk-icon__icon"
-    />
+    <Icon v-else-if="props.icon" :icon="props.icon || ''" class="vk-icon__icon" />
     <!-- 默认插槽内容 -->
     <slot v-else />
   </span>
@@ -103,10 +90,7 @@ const mergedStyle = computed(() => {
   // 如果自定义样式是字符串格式，需要转换并合并
   if (typeof props.customStyle === "string") {
     return `${Object.entries(baseStyle)
-      .map(
-        ([key, value]) =>
-          `${key.replace(/([A-Z])/g, "-$1").toLowerCase()}: ${value}`,
-      )
+      .map(([key, value]) => `${key.replace(/([A-Z])/g, "-$1").toLowerCase()}: ${value}`)
       .join("; ")}; ${props.customStyle}`;
   }
 

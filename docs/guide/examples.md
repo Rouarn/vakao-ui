@@ -61,9 +61,7 @@ app.mount("#app");
 <template>
   <div class="container">
     <h1>Vakao UI 按需引入示例</h1>
-    <vk-button type="primary" @click="toggle"
-      >切换状态: {{ state ? "开" : "关" }}</vk-button
-    >
+    <vk-button type="primary" @click="toggle">切换状态: {{ state ? "开" : "关" }}</vk-button>
   </div>
 </template>
 

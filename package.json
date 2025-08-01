@@ -18,10 +18,7 @@
       "types": "./dist/types/resolver.d.ts"
     }
   },
-  "files": [
-    "dist",
-    "README.md"
-  ],
+  "files": ["dist", "README.md"],
   "scripts": {
     "dev": "pnpm -C docs dev",
     "build": "pnpm -C packages build",
@@ -53,12 +50,7 @@
     "test:notification": "node -e \"const notifier = require('node-notifier'); notifier.notify({title: '测试通知', message: '桌面通知功能正常', sound: true});\"",
     "script:gui": "pnpm -C scripts/gui dev"
   },
-  "keywords": [
-    "vue3",
-    "components",
-    "ui-library",
-    "typescript"
-  ],
+  "keywords": ["vue3", "components", "ui-library", "typescript"],
   "author": "我与夏季",
   "email": "woyuxiaji@foxmail.com",
   "homepage": "https://rouarn.github.io/vakao-ui/",

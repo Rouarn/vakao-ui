@@ -118,9 +118,7 @@ Vakao UI 使用 TypeScript 编写，提供完整的类型定义：
 ```vue
 <template>
   <!-- 完整的类型支持和智能提示 -->
-  <vk-button type="primary" size="large" :disabled="false" @click="handleClick">
-    按钮
-  </vk-button>
+  <vk-button type="primary" size="large" :disabled="false" @click="handleClick"> 按钮 </vk-button>
 </template>
 
 <script setup lang="ts">
@@ -137,20 +135,10 @@ const handleClick = () => {
 ```vue
 <template>
   <!-- 使用 customClass 和 customStyle 属性 -->
-  <vk-button
-    customClass="my-button"
-    customStyle="background: linear-gradient(45deg, #ff6b6b, #4ecdc4);"
-  >
-    渐变按钮
-  </vk-button>
+  <vk-button customClass="my-button" customStyle="background: linear-gradient(45deg, #ff6b6b, #4ecdc4);"> 渐变按钮 </vk-button>
 
   <!-- 直接使用 class 和 style 属性 -->
-  <vk-button
-    class="shadow-button"
-    style="box-shadow: 0 4px 8px rgba(0,0,0,0.2);"
-  >
-    阴影按钮
-  </vk-button>
+  <vk-button class="shadow-button" style="box-shadow: 0 4px 8px rgba(0,0,0,0.2);"> 阴影按钮 </vk-button>
 </template>
 ```
 

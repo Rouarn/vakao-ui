@@ -43,19 +43,13 @@
 ```vue
 <template>
   <div style="position: relative; display: inline-block;">
-    <vk-button @click="toggleDropdown" type="primary">
-      {{ isDropdownOpen ? "关闭菜单" : "打开菜单" }} ▼
-    </vk-button>
+    <vk-button @click="toggleDropdown" type="primary"> {{ isDropdownOpen ? "关闭菜单" : "打开菜单" }} ▼ </vk-button>
 
     <div v-if="isDropdownOpen" ref="dropdownRef" class="dropdown-menu">
-      <div class="menu-item" @click="handleMenuClick('profile')">
-        👤 个人资料
-      </div>
+      <div class="menu-item" @click="handleMenuClick('profile')">👤 个人资料</div>
       <div class="menu-item" @click="handleMenuClick('settings')">⚙️ 设置</div>
       <div class="divider"></div>
-      <div class="menu-item danger" @click="handleMenuClick('logout')">
-        🚪 退出登录
-      </div>
+      <div class="menu-item danger" @click="handleMenuClick('logout')">🚪 退出登录</div>
     </div>
   </div>
 
@@ -203,7 +197,7 @@ const [modalRef, setModalEnabled] = useClickOutside(
   () => {
     closeModal();
   },
-  { immediate: false },
+  { immediate: false }
 );
 
 // 当模态框打开时启用点击外部检测
@@ -313,10 +307,7 @@ export interface UseClickOutsideOptions {
 
 export type SetEnabledFunction = (enabled: boolean) => void;
 
-export type UseClickOutsideReturn = [
-  Ref<HTMLElement | null>,
-  SetEnabledFunction,
-];
+export type UseClickOutsideReturn = [Ref<HTMLElement | null>, SetEnabledFunction];
 ```
 
 ## 使用场景
@@ -339,7 +330,7 @@ const [targetRef] = useClickOutside(
   },
   {
     exclude: [triggerRef], // 排除触发元素
-  },
+  }
 );
 ```
 
@@ -350,7 +341,7 @@ const [targetRef, setEnabled] = useClickOutside(
   () => {
     // 回调函数
   },
-  { immediate: false },
+  { immediate: false }
 );
 
 // 根据条件启用/禁用
@@ -368,7 +359,7 @@ const [targetRef] = useClickOutside(
   },
   {
     events: ["click", "contextmenu"], // 监听点击和右键菜单
-  },
+  }
 );
 ```
 

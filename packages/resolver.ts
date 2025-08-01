@@ -13,9 +13,7 @@ export interface VakaoUIResolverOptions {
  * @param options 解析器选项
  * @returns 组件解析器
  */
-export function VakaoUIResolver(
-  options: VakaoUIResolverOptions = {},
-): ComponentResolver {
+export function VakaoUIResolver(options: VakaoUIResolverOptions = {}): ComponentResolver {
   const { prefix = "vk" } = options;
 
   return {
@@ -23,8 +21,7 @@ export function VakaoUIResolver(
     resolve: (name: string) => {
       // 支持多种命名格式：VKButton, VkButton, vk-button
       const upperPrefix = prefix.toUpperCase();
-      const capitalPrefix =
-        prefix.charAt(0).toUpperCase() + prefix.slice(1).toLowerCase();
+      const capitalPrefix = prefix.charAt(0).toUpperCase() + prefix.slice(1).toLowerCase();
       const kebabPrefix = `${prefix.toLowerCase()}-`;
 
       let compName = "";
@@ -37,13 +34,8 @@ export function VakaoUIResolver(
         compName = upperPrefix + name.slice(capitalPrefix.length);
       } else if (name.startsWith(kebabPrefix)) {
         // vk-button -> VKButton
-        const pascalName = name
-          .replace(kebabPrefix, "")
-          .replace(/-([a-z])/g, (_, letter) => letter.toUpperCase());
-        compName =
-          upperPrefix +
-          pascalName.charAt(0).toUpperCase() +
-          pascalName.slice(1);
+        const pascalName = name.replace(kebabPrefix, "").replace(/-([a-z])/g, (_, letter) => letter.toUpperCase());
+        compName = upperPrefix + pascalName.charAt(0).toUpperCase() + pascalName.slice(1);
       }
 
       if (compName) {

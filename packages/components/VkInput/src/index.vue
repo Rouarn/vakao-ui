@@ -1,13 +1,7 @@
 <template>
-  <div
-    :class="mergedClass"
-    :style="mergedStyle"
-  >
+  <div :class="mergedClass" :style="mergedStyle">
     <!-- 前缀插槽 -->
-    <div
-      v-if="$slots.prefix || prefixIcon"
-      class="vk-input__prefix"
-    >
+    <div v-if="$slots.prefix || prefixIcon" class="vk-input__prefix">
       <slot name="prefix">
         <VkIcon
           v-if="prefixIcon"
@@ -36,31 +30,18 @@
         @focus="handleFocus"
         @blur="handleBlur"
         @keydown.enter="handleEnter"
-      >
+      />
     </div>
 
     <!-- 后缀插槽 -->
-    <div
-      v-if="showSuffix"
-      class="vk-input__suffix"
-    >
+    <div v-if="showSuffix" class="vk-input__suffix">
       <!-- 清除按钮 -->
-      <VkIcon
-        v-if="showClear"
-        size="16px"
-        class="vk-input__clear"
-        @click="handleClear"
-      >
+      <VkIcon v-if="showClear" size="16px" class="vk-input__clear" @click="handleClear">
         <Icon icon="mdi:close-circle" />
       </VkIcon>
 
       <!-- 密码切换按钮 -->
-      <VkIcon
-        v-if="showPassword"
-        size="16px"
-        class="vk-input__password-toggle"
-        @click="togglePasswordVisible"
-      >
+      <VkIcon v-if="showPassword" size="16px" class="vk-input__password-toggle" @click="togglePasswordVisible">
         <Icon :icon="showPasswordVisible ? 'mdi:eye-off' : 'mdi:eye'" />
       </VkIcon>
 
@@ -101,11 +82,7 @@ export default defineComponent({
     const inputRef = ref<HTMLInputElement>();
 
     // 使用受控/非受控模式工具函数
-    const { currentValue, updateValue } = useStandardControlled(
-      props,
-      emit as (event: string, ...args: unknown[]) => void,
-      "",
-    );
+    const { currentValue, updateValue } = useStandardControlled(props, emit as (event: string, ...args: unknown[]) => void, "");
 
     // 密码显示状态
     const showPasswordVisible = ref(false);
@@ -151,22 +128,12 @@ export default defineComponent({
 
     // 是否显示清除按钮
     const showClear = computed(() => {
-      return (
-        props.clearable &&
-        !props.disabled &&
-        !props.readonly &&
-        !!currentValue.value
-      );
+      return props.clearable && !props.disabled && !props.readonly && !!currentValue.value;
     });
 
     // 是否显示后缀
     const showSuffix = computed(() => {
-      return (
-        showClear.value ||
-        props.showPassword ||
-        props.suffixIcon ||
-        slots.suffix
-      );
+      return showClear.value || props.showPassword || props.suffixIcon || slots.suffix;
     });
 
     // 事件处理

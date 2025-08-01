@@ -117,18 +117,10 @@ export interface UseClickOutsideOptions {
  * @since 1.0.0
  * @author Vakao UI Team
  */
-export function useClickOutside(
-  callback: ClickOutsideCallback,
-  options: UseClickOutsideOptions = {},
-): UseClickOutsideReturn {
+export function useClickOutside(callback: ClickOutsideCallback, options: UseClickOutsideOptions = {}): UseClickOutsideReturn {
   // ==================== 配置选项 ====================
 
-  const {
-    immediate = true,
-    eventType = "mousedown",
-    capture = true,
-    ignore = [],
-  } = options;
+  const { immediate = true, eventType = "mousedown", capture = true, ignore = [] } = options;
 
   // ==================== 响应式状态 ====================
 
@@ -167,10 +159,7 @@ export function useClickOutside(
       } else {
         // 元素引用方式
         const ignoreElement = item.value;
-        return (
-          ignoreElement &&
-          (element === ignoreElement || ignoreElement.contains(element))
-        );
+        return ignoreElement && (element === ignoreElement || ignoreElement.contains(element));
       }
     });
   };
@@ -202,8 +191,7 @@ export function useClickOutside(
     }
 
     // 检查是否点击在目标元素内部
-    const isClickInside =
-      target === clickedElement || target.contains(clickedElement);
+    const isClickInside = target === clickedElement || target.contains(clickedElement);
     if (isClickInside) {
       return;
     }

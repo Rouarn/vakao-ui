@@ -1,9 +1,5 @@
 <template>
-  <div
-    :class="mergedClass"
-    :style="mergedStyle"
-    role="radiogroup"
-  >
+  <div :class="mergedClass" :style="mergedStyle" role="radiogroup">
     <slot />
   </div>
 </template>
@@ -28,7 +24,7 @@ export default defineComponent({
       () => props.modelValue,
       (newValue) => {
         modelValue.value = newValue;
-      },
+      }
     );
 
     // 计算属性
@@ -37,12 +33,7 @@ export default defineComponent({
 
     // 样式类名
     const mergedClass = computed(() => {
-      return [
-        ns.block(),
-        `${ns.block()}--size-${currentSize.value}`,
-        ns.is("disabled", isDisabled.value),
-        props.customClass,
-      ];
+      return [ns.block(), `${ns.block()}--size-${currentSize.value}`, ns.is("disabled", isDisabled.value), props.customClass];
     });
 
     // 合并样式

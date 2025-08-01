@@ -80,9 +80,7 @@ export const checkboxGroupProps = {
 
 // 导出属性类型
 export type CheckboxProps = ExtractPublicPropTypes<typeof checkboxProps>;
-export type CheckboxGroupProps = ExtractPublicPropTypes<
-  typeof checkboxGroupProps
->;
+export type CheckboxGroupProps = ExtractPublicPropTypes<typeof checkboxGroupProps>;
 
 // 复选框事件定义
 export const checkboxEmits = {
@@ -97,6 +95,4 @@ export const checkboxGroupEmits = {
 
 // 导出事件类型
 export type CheckboxEmits = ExtractPublicPropTypes<typeof checkboxEmits>;
-export type CheckboxGroupEmits = ExtractPublicPropTypes<
-  typeof checkboxGroupEmits
->;
+export type CheckboxGroupEmits = ExtractPublicPropTypes<typeof checkboxGroupEmits>;

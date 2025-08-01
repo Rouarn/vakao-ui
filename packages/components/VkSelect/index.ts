@@ -6,11 +6,7 @@ import { withInstall } from "@vakao-ui/utils";
 export const _VkSelect = withInstall(VkSelect);
 export const _VkOption = withInstall(VkOption);
 export const _VkOptionGroup = withInstall(VkOptionGroup);
-export {
-  _VkSelect as VkSelect,
-  _VkOption as VkOption,
-  _VkOptionGroup as VkOptionGroup,
-};
+export { _VkSelect as VkSelect, _VkOption as VkOption, _VkOptionGroup as VkOptionGroup };
 export default _VkSelect;
 export * from "./src/types";
 

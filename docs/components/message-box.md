@@ -91,8 +91,7 @@ import { VkMessageBox } from "vakao-ui";
 
 const handlePrompt = () => {
   VkMessageBox.prompt("请输入邮箱", "提示", {
-    inputPattern:
-      /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
+    inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
     inputErrorMessage: "邮箱格式不正确",
   })
     .then(({ value }) => {
@@ -167,12 +166,8 @@ const handleCustomValidator = () => {
 
 ```vue
 <template>
-  <vk-button type="success" @click="() => showMessage('success')">
-    成功
-  </vk-button>
-  <vk-button type="warning" @click="() => showMessage('warning')">
-    警告
-  </vk-button>
+  <vk-button type="success" @click="() => showMessage('success')"> 成功 </vk-button>
+  <vk-button type="warning" @click="() => showMessage('warning')"> 警告 </vk-button>
   <vk-button type="info" @click="() => showMessage('info')">消息</vk-button>
   <vk-button type="danger" @click="() => showMessage('error')">错误</vk-button>
 </template>
@@ -216,15 +211,11 @@ const showMessage = (type) => {
 import { VkMessageBox } from "vakao-ui";
 
 const handleCustomButtons = () => {
-  VkMessageBox.confirm(
-    "检测到未保存的内容，是否在离开页面前保存修改？",
-    "确认信息",
-    {
-      confirmText: "保存",
-      cancelText: "放弃修改",
-      type: "warning",
-    },
-  )
+  VkMessageBox.confirm("检测到未保存的内容，是否在离开页面前保存修改？", "确认信息", {
+    confirmText: "保存",
+    cancelText: "放弃修改",
+    type: "warning",
+  })
     .then(() => {
       console.log("保存修改");
     })

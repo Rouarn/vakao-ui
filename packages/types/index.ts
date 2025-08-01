@@ -144,10 +144,4 @@ export type ComponentSize = "small" | "medium" | "large";
  * ]);
  * ```
  */
-export type ComponentType =
-  | "default"
-  | "primary"
-  | "success"
-  | "warning"
-  | "info"
-  | "danger";
+export type ComponentType = "default" | "primary" | "success" | "warning" | "info" | "danger";

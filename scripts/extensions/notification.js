@@ -43,16 +43,8 @@ class NotificationExtension {
    */
   async initialize(extensionManager) {
     // 注册钩子
-    extensionManager.registerHook(
-      "afterDeploy",
-      this.onDeployComplete.bind(this),
-      this.name,
-    );
-    extensionManager.registerHook(
-      "onError",
-      this.onError.bind(this),
-      this.name,
-    );
+    extensionManager.registerHook("afterDeploy", this.onDeployComplete.bind(this), this.name);
+    extensionManager.registerHook("onError", this.onError.bind(this), this.name);
 
     log(`${this.name} 扩展已初始化`, "info");
     this.logNotificationConfig();
@@ -64,10 +56,8 @@ class NotificationExtension {
   logNotificationConfig() {
     const enabledMethods = [];
     if (this.notificationConfig.email.enabled) enabledMethods.push("📧 邮件");
-    if (this.notificationConfig.webhook.enabled)
-      enabledMethods.push("🔗 Webhook");
-    if (this.notificationConfig.desktop.enabled)
-      enabledMethods.push("🖥️  桌面");
+    if (this.notificationConfig.webhook.enabled) enabledMethods.push("🔗 Webhook");
+    if (this.notificationConfig.desktop.enabled) enabledMethods.push("🖥️  桌面");
 
     if (enabledMethods.length > 0) {
       log(`📢 通知方式: ${enabledMethods.join(", ")}`, "info");
@@ -170,9 +160,7 @@ class NotificationExtension {
     try {
       const nodemailer = require("nodemailer");
 
-      const transporter = nodemailer.createTransporter(
-        this.notificationConfig.email.smtp,
-      );
+      const transporter = nodemailer.createTransporter(this.notificationConfig.email.smtp);
 
       const mailOptions = {
         from: this.notificationConfig.email.from,

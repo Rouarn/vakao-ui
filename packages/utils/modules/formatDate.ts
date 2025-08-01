@@ -58,11 +58,7 @@ export const DATE_FORMATS = {
  * @param options 格式化选项
  * @returns 格式化后的日期字符串
  */
-export const formatDate = (
-  date: Date | number | string,
-  format: string = DATE_FORMATS.DATETIME,
-  _options?: FormatDateOptions,
-): string => {
+export const formatDate = (date: Date | number | string, format: string = DATE_FORMATS.DATETIME, _options?: FormatDateOptions): string => {
   // 转换为 Date 对象
   const dateObj = new Date(date);
 
@@ -124,7 +120,7 @@ export const formatDate = (
 export const formatRelativeTime = (
   date: Date | number | string,
   baseDate: Date | number | string = new Date(),
-  options?: FormatDateOptions,
+  options?: FormatDateOptions
 ): string => {
   const dateObj = new Date(date);
   const baseDateObj = new Date(baseDate);
@@ -175,13 +171,7 @@ export const formatRelativeTime = (
 
   // 选择时间单位
   const timeUnits = locale.startsWith("zh") ? cnUnits : enUnits;
-  const suffix = locale.startsWith("zh")
-    ? isPast
-      ? "前"
-      : "后"
-    : isPast
-      ? " ago"
-      : " later";
+  const suffix = locale.startsWith("zh") ? (isPast ? "前" : "后") : isPast ? " ago" : " later";
 
   // 计算最合适的时间单位
   for (const [unit, ms] of Object.entries(units)) {
@@ -211,11 +201,7 @@ export const isToday = (date: Date | number | string): boolean => {
   const dateObj = new Date(date);
   const today = new Date();
 
-  return (
-    dateObj.getFullYear() === today.getFullYear() &&
-    dateObj.getMonth() === today.getMonth() &&
-    dateObj.getDate() === today.getDate()
-  );
+  return dateObj.getFullYear() === today.getFullYear() && dateObj.getMonth() === today.getMonth() && dateObj.getDate() === today.getDate();
 };
 
 /**

@@ -26,11 +26,7 @@ module.exports = {
   },
 
   // 继承的规则集
-  extends: [
-    "eslint:recommended",
-    "plugin:vue/vue3-recommended",
-    "plugin:@typescript-eslint/recommended",
-  ],
+  extends: ["eslint:recommended", "plugin:vue/vue3-recommended", "plugin:@typescript-eslint/recommended"],
 
   // 解析器配置
   parser: "vue-eslint-parser",
@@ -189,13 +185,7 @@ module.exports = {
   overrides: [
     {
       // 构建脚本和配置文件
-      files: [
-        "scripts/**/*.js",
-        "*.config.js",
-        "*.config.ts",
-        "vite.config.*",
-        "vitest.config.*",
-      ],
+      files: ["scripts/**/*.js", "*.config.js", "*.config.ts", "vite.config.*", "vitest.config.*"],
       rules: {
         "no-console": "off",
         "@typescript-eslint/no-var-requires": "off",

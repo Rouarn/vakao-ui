@@ -1,31 +1,15 @@
 <template>
   <Teleport to="body">
     <Transition name="vk-message-box-fade">
-      <div
-        v-if="visible"
-        class="vk-message-box-wrapper"
-        @click="handleWrapperClick"
-      >
-        <div
-          class="vk-message-box"
-          :class="messageBoxClass"
-        >
+      <div v-if="visible" class="vk-message-box-wrapper" @click="handleWrapperClick">
+        <div class="vk-message-box" :class="messageBoxClass">
           <!-- 头部 -->
           <div class="vk-message-box__header">
             <div class="vk-message-box__title">
-              <VkIcon
-                v-if="iconName"
-                :class="iconClass"
-                :icon="iconName"
-                :color="iconColor"
-              />
+              <VkIcon v-if="iconName" :class="iconClass" :icon="iconName" :color="iconColor" />
               {{ title }}
             </div>
-            <button
-              v-if="showClose"
-              class="vk-message-box__close"
-              @click="handleClose"
-            >
+            <button v-if="showClose" class="vk-message-box__close" @click="handleClose">
               <Icon icon="mdi:close" />
             </button>
           </div>
@@ -36,10 +20,7 @@
               {{ message }}
             </div>
             <!-- 输入框 (用于 prompt 类型) -->
-            <div
-              v-if="showInput"
-              class="vk-message-box__input"
-            >
+            <div v-if="showInput" class="vk-message-box__input">
               <VkInput
                 ref="inputRef"
                 v-model="inputValue"
@@ -49,10 +30,7 @@
                 @keydown.enter="handleConfirm"
                 @blur="handleInputBlur"
               />
-              <div
-                v-if="inputErrorMessage"
-                class="vk-message-box__error-message"
-              >
+              <div v-if="inputErrorMessage" class="vk-message-box__error-message">
                 {{ inputErrorMessage }}
               </div>
             </div>
@@ -60,19 +38,10 @@
 
           <!-- 底部按钮 -->
           <div class="vk-message-box__footer">
-            <VkButton
-              v-if="showCancelButton"
-              :class="cancelButtonClass"
-              @click="handleCancel"
-            >
+            <VkButton v-if="showCancelButton" :class="cancelButtonClass" @click="handleCancel">
               {{ cancelText }}
             </VkButton>
-            <VkButton
-              v-if="showConfirmButton"
-              :type="confirmButtonType"
-              :class="confirmButtonClass"
-              @click="handleConfirm"
-            >
+            <VkButton v-if="showConfirmButton" :type="confirmButtonType" :class="confirmButtonClass" @click="handleConfirm">
               {{ confirmText }}
             </VkButton>
           </div>
@@ -83,20 +52,8 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  ref,
-  computed,
-  onMounted,
-  onUnmounted,
-  type PropType,
-} from "vue";
-import {
-  messageBoxProps,
-  messageBoxEmits,
-  type MessageBoxAction,
-  type MessageBoxInstance,
-} from "./types";
+import { defineComponent, ref, computed, onMounted, onUnmounted, type PropType } from "vue";
+import { messageBoxProps, messageBoxEmits, type MessageBoxAction, type MessageBoxInstance } from "./types";
 import type { ComponentType } from "../../../types";
 import VkButton from "../../VkButton";
 import VkIcon from "../../VkIcon";
@@ -114,9 +71,7 @@ export default defineComponent({
   props: {
     ...messageBoxProps,
     onAction: {
-      type: Function as PropType<
-        (_action: MessageBoxAction, _instance: MessageBoxInstance) => void
-      >,
+      type: Function as PropType<(_action: MessageBoxAction, _instance: MessageBoxInstance) => void>,
     },
   },
   emits: messageBoxEmits,
@@ -150,10 +105,7 @@ export default defineComponent({
       return colorMap[props.type];
     });
 
-    const iconClass = computed(() => [
-      "vk-message-box__icon",
-      `vk-message-box__icon--${props.type}`,
-    ]);
+    const iconClass = computed(() => ["vk-message-box__icon", `vk-message-box__icon--${props.type}`]);
 
     const confirmButtonType = computed((): ComponentType => {
       const typeMap: Record<string, ComponentType> = {
@@ -195,8 +147,7 @@ export default defineComponent({
 
       // 使用正则表达式验证
       if (props.inputPattern && !props.inputPattern.test(value)) {
-        if (showError)
-          inputErrorMessage.value = props.inputErrorMessage || "输入格式不正确";
+        if (showError) inputErrorMessage.value = props.inputErrorMessage || "输入格式不正确";
         return false;
       }
 

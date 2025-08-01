@@ -51,25 +51,13 @@
   <div>
     <vk-input v-model="textToCopy" placeholder="输入要复制的文本" />
 
-    <vk-button
-      @click="handleCopy"
-      :disabled="!textToCopy.trim()"
-      type="primary"
-    >
-      📋 复制文本
-    </vk-button>
-    <vk-button @click="handleRead" :disabled="!isSupported">
-      📖 读取剪贴板
-    </vk-button>
-    <vk-button @click="copyPreset('Hello, World!')" type="success">
-      复制预设文本
-    </vk-button>
+    <vk-button @click="handleCopy" :disabled="!textToCopy.trim()" type="primary"> 📋 复制文本 </vk-button>
+    <vk-button @click="handleRead" :disabled="!isSupported"> 📖 读取剪贴板 </vk-button>
+    <vk-button @click="copyPreset('Hello, World!')" type="success"> 复制预设文本 </vk-button>
 
     <div v-if="!isSupported">⚠️ 当前浏览器不支持剪贴板操作</div>
 
-    <div v-if="!isSecureContext">
-      🔒 剪贴板 API 需要在安全上下文（HTTPS）中使用
-    </div>
+    <div v-if="!isSecureContext">🔒 剪贴板 API 需要在安全上下文（HTTPS）中使用</div>
 
     <div v-if="copyMessage">
       {{ copyMessage }}
@@ -299,13 +287,7 @@ export interface UseClipboardOptions {
 export type CopyFunction = (text: string) => Promise<boolean>;
 export type ReadFunction = () => Promise<string>;
 
-export type UseClipboardReturn = [
-  Ref<string>,
-  CopyFunction,
-  ReadFunction,
-  ComputedRef<boolean>,
-  ComputedRef<boolean>,
-];
+export type UseClipboardReturn = [Ref<string>, CopyFunction, ReadFunction, ComputedRef<boolean>, ComputedRef<boolean>];
 ```
 
 ## 使用场景

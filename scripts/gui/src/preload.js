@@ -35,8 +35,7 @@ const electronAPI = {
    * @param {string} packageId - 包 ID
    * @returns {Promise<Object>} 包版本信息
    */
-  getPackageVersions: (packageId) =>
-    ipcRenderer.invoke("get-package-versions", packageId),
+  getPackageVersions: (packageId) => ipcRenderer.invoke("get-package-versions", packageId),
 
   // ==================== 命令执行 ====================
 
@@ -65,16 +64,14 @@ const electronAPI = {
    * @param {string} processId - 进程 ID
    * @returns {Promise<boolean>} 是否成功终止
    */
-  terminateProcess: (processId) =>
-    ipcRenderer.invoke("terminate-process", processId),
+  terminateProcess: (processId) => ipcRenderer.invoke("terminate-process", processId),
 
   /**
    * 获取进程状态
    * @param {string} processId - 进程 ID
    * @returns {Promise<Object>} 进程状态
    */
-  getProcessStatus: (processId) =>
-    ipcRenderer.invoke("get-process-status", processId),
+  getProcessStatus: (processId) => ipcRenderer.invoke("get-process-status", processId),
 
   // ==================== 文件系统操作 ====================
 
@@ -133,8 +130,7 @@ const electronAPI = {
    * @param {string} message - 消息
    * @returns {Promise<void>}
    */
-  showInfoDialog: (title, message) =>
-    ipcRenderer.invoke("show-info-dialog", title, message),
+  showInfoDialog: (title, message) => ipcRenderer.invoke("show-info-dialog", title, message),
 
   /**
    * 显示错误对话框
@@ -142,8 +138,7 @@ const electronAPI = {
    * @param {string} message - 消息
    * @returns {Promise<void>}
    */
-  showErrorDialog: (title, message) =>
-    ipcRenderer.invoke("show-error-dialog", title, message),
+  showErrorDialog: (title, message) => ipcRenderer.invoke("show-error-dialog", title, message),
 
   /**
    * 显示确认对话框
@@ -151,8 +146,7 @@ const electronAPI = {
    * @param {string} message - 消息
    * @returns {Promise<boolean>} 用户是否确认
    */
-  showConfirmDialog: (title, message) =>
-    ipcRenderer.invoke("show-confirm-dialog", title, message),
+  showConfirmDialog: (title, message) => ipcRenderer.invoke("show-confirm-dialog", title, message),
 
   /**
    * 显示文件保存对话框
@@ -182,17 +176,14 @@ const electronAPI = {
    * @param {Object} [inputRequest.validation] - 验证规则
    * @returns {Promise<{success: boolean, value: any, cancelled: boolean}>} 用户输入结果
    */
-  requestUserInput: (inputRequest) =>
-    ipcRenderer.invoke("request-user-input", inputRequest),
+  requestUserInput: (inputRequest) => ipcRenderer.invoke("request-user-input", inputRequest),
 
   /**
    * 监听用户输入请求事件
    * @param {Function} callback - 回调函数
    */
   onUserInputRequest: (callback) => {
-    ipcRenderer.on("user-input-request", (event, inputRequest) =>
-      callback(inputRequest),
-    );
+    ipcRenderer.on("user-input-request", (event, inputRequest) => callback(inputRequest));
   },
 
   /**
@@ -212,8 +203,7 @@ const electronAPI = {
    * @param {boolean} response.cancelled - 是否取消
    * @returns {Promise<void>}
    */
-  respondUserInput: (requestId, response) =>
-    ipcRenderer.invoke("respond-user-input", requestId, response),
+  respondUserInput: (requestId, response) => ipcRenderer.invoke("respond-user-input", requestId, response),
 
   // ==================== 通知 ====================
 
@@ -224,8 +214,7 @@ const electronAPI = {
    * @param {string} icon - 通知图标
    * @returns {Promise<void>}
    */
-  showNotification: (title, body, icon) =>
-    ipcRenderer.invoke("show-notification", title, body, icon),
+  showNotification: (title, body, icon) => ipcRenderer.invoke("show-notification", title, body, icon),
 
   // ==================== 应用控制 ====================
 

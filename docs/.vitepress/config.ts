@@ -76,9 +76,7 @@ export default defineConfig({
         },
         {
           text: "反馈组件",
-          items: [
-            { text: "MessageBox 消息弹框", link: "/components/message-box" },
-          ],
+          items: [{ text: "MessageBox 消息弹框", link: "/components/message-box" }],
         },
       ],
       "/hooks/": [
@@ -162,9 +160,7 @@ export default defineConfig({
         },
       ],
     },
-    socialLinks: [
-      { icon: "github", link: "https://github.com/Rouarn/vakao-ui" },
-    ],
+    socialLinks: [{ icon: "github", link: "https://github.com/Rouarn/vakao-ui" }],
     footer: {
       message: "基于 MIT 协议发布",
       copyright: "Copyright © 2025-present Vakao UI",

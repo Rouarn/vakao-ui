@@ -107,10 +107,7 @@ export interface PaginationActions {
 /**
  * usePagination 返回值类型
  */
-export type UsePaginationReturn = [
-  ComputedRef<PaginationInfo>,
-  PaginationActions,
-];
+export type UsePaginationReturn = [ComputedRef<PaginationInfo>, PaginationActions];
 
 /**
  * 分页管理 Hook
@@ -184,24 +181,13 @@ export type UsePaginationReturn = [
  * @since 0.0.2
  * @author Vakao UI Team
  */
-export function usePagination(
-  options: UsePaginationOptions = {},
-): UsePaginationReturn {
-  const {
-    initialPage = 1,
-    initialPageSize = 10,
-    total: totalOption = 0,
-    onPageChange,
-    onPageSizeChange,
-    onChange,
-  } = options;
+export function usePagination(options: UsePaginationOptions = {}): UsePaginationReturn {
+  const { initialPage = 1, initialPageSize = 10, total: totalOption = 0, onPageChange, onPageSizeChange, onChange } = options;
 
   // 状态管理
   const currentPage = ref(initialPage);
   const pageSize = ref(initialPageSize);
-  const total = ref(
-    typeof totalOption === "number" ? totalOption : totalOption.value,
-  );
+  const total = ref(typeof totalOption === "number" ? totalOption : totalOption.value);
 
   // 监听响应式 total
   if (typeof totalOption !== "number") {
@@ -215,7 +201,7 @@ export function usePagination(
           currentPage.value = maxPage;
         }
       },
-      { immediate: true },
+      { immediate: true }
     );
   }
 
@@ -244,10 +230,7 @@ export function usePagination(
      * 跳转到指定页
      */
     goToPage: (page: number) => {
-      const targetPage = Math.max(
-        1,
-        Math.min(page, paginationInfo.value.totalPages),
-      );
+      const targetPage = Math.max(1, Math.min(page, paginationInfo.value.totalPages));
       if (targetPage !== currentPage.value) {
         currentPage.value = targetPage;
         onPageChange?.(targetPage);
@@ -297,10 +280,7 @@ export function usePagination(
 
         // 计算新的页码，尽量保持当前数据位置
         const currentStartIndex = (currentPage.value - 1) * oldPageSize;
-        const newPage = Math.max(
-          1,
-          Math.ceil((currentStartIndex + 1) / newPageSize),
-        );
+        const newPage = Math.max(1, Math.ceil((currentStartIndex + 1) / newPageSize));
 
         currentPage.value = newPage;
         onPageSizeChange?.(newPageSize);
@@ -329,8 +309,7 @@ export function usePagination(
     reset: () => {
       currentPage.value = initialPage;
       pageSize.value = initialPageSize;
-      total.value =
-        typeof totalOption === "number" ? totalOption : totalOption.value;
+      total.value = typeof totalOption === "number" ? totalOption : totalOption.value;
       onChange?.(initialPage, initialPageSize);
     },
   };

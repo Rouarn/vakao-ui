@@ -5,9 +5,7 @@ import { ref, watch, onUnmounted, computed } from "vue";
  * 防抖函数类型
  * @description 防抖处理后的函数
  */
-export type DebouncedFunction<T extends (..._args: unknown[]) => unknown> = (
-  ..._args: Parameters<T>
-) => void;
+export type DebouncedFunction<T extends (..._args: unknown[]) => unknown> = (..._args: Parameters<T>) => void;
 
 /**
  * 取消防抖的函数类型
@@ -39,9 +37,7 @@ export type UseDebouncedValueReturn<T> = ComputedRef<T>;
  * const [debouncedFn, cancel, flush] = useDebounce(fn, 300);
  * ```
  */
-export type UseDebouncedFunctionReturn<
-  T extends (..._args: unknown[]) => unknown,
-> = [
+export type UseDebouncedFunctionReturn<T extends (..._args: unknown[]) => unknown> = [
   /** 防抖处理后的函数 */
   DebouncedFunction<T>,
   /** 取消防抖的函数 */
@@ -67,10 +63,7 @@ export type UseDebouncedFunctionReturn<
  * });
  * ```
  */
-export function useDebounce<T>(
-  value: Ref<T>,
-  delay: number,
-): UseDebouncedValueReturn<T>;
+export function useDebounce<T>(value: Ref<T>, delay: number): UseDebouncedValueReturn<T>;
 
 /**
  * 防抖函数钩子函数
@@ -97,7 +90,7 @@ export function useDebounce<T extends (..._args: unknown[]) => unknown>(
   options?: {
     leading?: boolean;
     trailing?: boolean;
-  },
+  }
 ): UseDebouncedFunctionReturn<T>;
 
 /**
@@ -109,30 +102,21 @@ export function useDebounce<T>(
   options: {
     leading?: boolean;
     trailing?: boolean;
-  } = {},
-):
-  | UseDebouncedValueReturn<T>
-  | UseDebouncedFunctionReturn<(..._args: unknown[]) => unknown> {
+  } = {}
+): UseDebouncedValueReturn<T> | UseDebouncedFunctionReturn<(..._args: unknown[]) => unknown> {
   // 如果第一个参数是 ref，则处理防抖值
   if (typeof valueOrFn === "object" && "value" in valueOrFn) {
     return useDebouncedValue(valueOrFn as Ref<T>, delay);
   }
 
   // 否则处理防抖函数
-  return useDebouncedFunction(
-    valueOrFn as (..._args: unknown[]) => unknown,
-    delay,
-    options,
-  );
+  return useDebouncedFunction(valueOrFn as (..._args: unknown[]) => unknown, delay, options);
 }
 
 /**
  * 防抖值的内部实现
  */
-function useDebouncedValue<T>(
-  value: Ref<T>,
-  delay: number,
-): UseDebouncedValueReturn<T> {
+function useDebouncedValue<T>(value: Ref<T>, delay: number): UseDebouncedValueReturn<T> {
   const debouncedValue = ref<T>(value.value) as Ref<T>;
   let timeoutId: ReturnType<typeof setTimeout> | null = null;
 
@@ -151,7 +135,7 @@ function useDebouncedValue<T>(
       }
       timeoutId = setTimeout(updateDebouncedValue, delay);
     },
-    { immediate: false },
+    { immediate: false }
   );
 
   onUnmounted(() => {
@@ -172,7 +156,7 @@ function useDebouncedFunction<T extends (...args: unknown[]) => unknown>(
   options: {
     leading?: boolean;
     trailing?: boolean;
-  } = {},
+  } = {}
 ): UseDebouncedFunctionReturn<T> {
   const { leading = false, trailing = true } = options;
 
@@ -200,8 +184,7 @@ function useDebouncedFunction<T extends (...args: unknown[]) => unknown>(
     const now = Date.now();
     lastArgs = args;
 
-    const shouldCallLeading =
-      leading && (lastCallTime === null || now - lastCallTime >= delay);
+    const shouldCallLeading = leading && (lastCallTime === null || now - lastCallTime >= delay);
 
     if (shouldCallLeading) {
       lastCallTime = now;
@@ -214,10 +197,7 @@ function useDebouncedFunction<T extends (...args: unknown[]) => unknown>(
 
     if (trailing) {
       timeoutId = setTimeout(() => {
-        if (
-          !leading ||
-          (lastCallTime !== null && now - lastCallTime >= delay)
-        ) {
+        if (!leading || (lastCallTime !== null && now - lastCallTime >= delay)) {
           fn(...args);
         }
         lastCallTime = Date.now();

@@ -5,9 +5,7 @@ import { ref, watch, onUnmounted, computed } from "vue";
  * 节流函数类型
  * @description 节流处理后的函数
  */
-export type ThrottledFunction<T extends (...args: unknown[]) => unknown> = (
-  ...args: Parameters<T>
-) => void;
+export type ThrottledFunction<T extends (...args: unknown[]) => unknown> = (...args: Parameters<T>) => void;
 
 /**
  * 取消节流的函数类型
@@ -39,9 +37,7 @@ export type UseThrottledValueReturn<T> = ComputedRef<T>;
  * const [throttledFn, cancel, flush] = useThrottle(fn, 100);
  * ```
  */
-export type UseThrottledFunctionReturn<
-  T extends (...args: unknown[]) => unknown,
-> = [
+export type UseThrottledFunctionReturn<T extends (...args: unknown[]) => unknown> = [
   /** 节流处理后的函数 */
   ThrottledFunction<T>,
   /** 取消节流的函数 */
@@ -67,10 +63,7 @@ export type UseThrottledFunctionReturn<
  * });
  * ```
  */
-export function useThrottle<T>(
-  value: Ref<T>,
-  delay: number,
-): UseThrottledValueReturn<T>;
+export function useThrottle<T>(value: Ref<T>, delay: number): UseThrottledValueReturn<T>;
 
 /**
  * 节流函数钩子函数
@@ -97,7 +90,7 @@ export function useThrottle<T extends (..._args: unknown[]) => unknown>(
   options?: {
     leading?: boolean;
     trailing?: boolean;
-  },
+  }
 ): UseThrottledFunctionReturn<T>;
 
 /**
@@ -110,30 +103,21 @@ export function useThrottle<T>(
   options: {
     leading?: boolean;
     trailing?: boolean;
-  } = {},
-):
-  | UseThrottledValueReturn<T>
-  | UseThrottledFunctionReturn<(..._args: unknown[]) => unknown> {
+  } = {}
+): UseThrottledValueReturn<T> | UseThrottledFunctionReturn<(..._args: unknown[]) => unknown> {
   // 如果第一个参数是 ref，则处理节流值
   if (typeof valueOrFn === "object" && "value" in valueOrFn) {
     return useThrottledValue(valueOrFn as Ref<T>, delay);
   }
 
   // 否则处理节流函数
-  return useThrottledFunction(
-    valueOrFn as (..._args: unknown[]) => unknown,
-    delay,
-    options,
-  );
+  return useThrottledFunction(valueOrFn as (..._args: unknown[]) => unknown, delay, options);
 }
 
 /**
  * 节流值的内部实现
  */
-function useThrottledValue<T>(
-  value: Ref<T>,
-  delay: number,
-): UseThrottledValueReturn<T> {
+function useThrottledValue<T>(value: Ref<T>, delay: number): UseThrottledValueReturn<T> {
   const throttledValue = ref<T>(value.value) as Ref<T>;
   let lastUpdateTime = 0;
   let timeoutId: ReturnType<typeof setTimeout> | null = null;
@@ -166,7 +150,7 @@ function useThrottledValue<T>(
         }, delay - timeSinceLastUpdate);
       }
     },
-    { immediate: false },
+    { immediate: false }
   );
 
   onUnmounted(() => {
@@ -187,7 +171,7 @@ function useThrottledFunction<T extends (..._args: unknown[]) => unknown>(
   options: {
     leading?: boolean;
     trailing?: boolean;
-  } = {},
+  } = {}
 ): UseThrottledFunctionReturn<T> {
   const { leading = true, trailing = true } = options;
 

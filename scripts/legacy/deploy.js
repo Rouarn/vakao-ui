@@ -34,12 +34,7 @@ async function deploy() {
     const { spawn } = require("child_process");
 
     // 调用统一发布系统的部署功能
-    const args = [
-      "scripts/publish.js",
-      "--deploy-only",
-      "--deploy-strategy",
-      "docs",
-    ];
+    const args = ["scripts/publish.js", "--deploy-only", "--deploy-strategy", "docs"];
 
     log("执行命令: node " + args.join(" "), "command");
 
@@ -53,10 +48,7 @@ async function deploy() {
         showSuccess("部署完成！");
         log("📖 文档地址: https://rouarn.github.io/vakao-ui/", "info");
         log("⏰ 请等待几分钟让 GitHub Pages 更新", "warning");
-        log(
-          "\n💡 提示: 下次可以直接使用 'node scripts/publish.js --deploy-only'",
-          "info",
-        );
+        log("\n💡 提示: 下次可以直接使用 'node scripts/publish.js --deploy-only'", "info");
       } else {
         process.exit(code);
       }

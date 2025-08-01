@@ -1,9 +1,5 @@
 <template>
-  <label
-    :class="mergedClass"
-    :style="mergedStyle"
-    @click="handleClick"
-  >
+  <label :class="mergedClass" :style="mergedStyle" @click="handleClick">
     <span class="vk-radio__input">
       <input
         ref="inputRef"
@@ -13,7 +9,7 @@
         :checked="isChecked"
         :value="value"
         @change="handleChange"
-      >
+      />
       <span
         class="vk-radio__inner"
         :class="[
@@ -23,30 +19,17 @@
           },
         ]"
       >
-        <span
-          v-if="isChecked"
-          class="vk-radio__dot"
-        />
+        <span v-if="isChecked" class="vk-radio__dot" />
       </span>
     </span>
-    <span
-      v-if="$slots.default || label"
-      class="vk-radio__label"
-    >
+    <span v-if="$slots.default || label" class="vk-radio__label">
       <slot>{{ label }}</slot>
     </span>
   </label>
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  ref,
-  computed,
-  inject,
-  type Ref,
-  type ComputedRef,
-} from "vue";
+import { defineComponent, ref, computed, inject, type Ref, type ComputedRef } from "vue";
 import { radioProps, radioEmits, type RadioValue } from "./types";
 import { useNamespace, useControlled } from "@vakao-ui/utils";
 
@@ -77,7 +60,7 @@ export default defineComponent({
       "modelValue",
       "modelValue",
       emit as (event: string, ...args: unknown[]) => void,
-      undefined,
+      undefined
     );
 
     // 计算属性

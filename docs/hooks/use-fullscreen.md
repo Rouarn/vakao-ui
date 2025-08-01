@@ -61,18 +61,11 @@
     <div>
       <h4>页面全屏</h4>
       <div>
-        <vk-button
-          @click="pageToggle"
-          :type="pageIsFullscreen ? 'primary' : 'default'"
-        >
+        <vk-button @click="pageToggle" :type="pageIsFullscreen ? 'primary' : 'default'">
           {{ pageIsFullscreen ? "退出全屏" : "进入全屏" }}
         </vk-button>
-        <vk-button @click="pageEnter" :disabled="pageIsFullscreen"
-          >进入</vk-button
-        >
-        <vk-button @click="pageExit" :disabled="!pageIsFullscreen"
-          >退出</vk-button
-        >
+        <vk-button @click="pageEnter" :disabled="pageIsFullscreen">进入</vk-button>
+        <vk-button @click="pageExit" :disabled="!pageIsFullscreen">退出</vk-button>
       </div>
       <div class="status-info">
         <div>
@@ -87,30 +80,16 @@
     <div>
       <h4>元素全屏</h4>
       <div>
-        <vk-button
-          @click="elementToggle"
-          :type="elementIsFullscreen ? 'primary' : 'default'"
-        >
+        <vk-button @click="elementToggle" :type="elementIsFullscreen ? 'primary' : 'default'">
           {{ elementIsFullscreen ? "退出全屏" : "元素全屏" }}
         </vk-button>
-        <vk-button @click="elementEnter" :disabled="elementIsFullscreen"
-          >进入</vk-button
-        >
-        <vk-button @click="elementExit" :disabled="!elementIsFullscreen"
-          >退出</vk-button
-        >
+        <vk-button @click="elementEnter" :disabled="elementIsFullscreen">进入</vk-button>
+        <vk-button @click="elementExit" :disabled="!elementIsFullscreen">退出</vk-button>
       </div>
-      <div
-        ref="fullscreenElementRef"
-        class="fullscreen-target"
-        :class="{ fullscreen: elementIsFullscreen }"
-        @click="elementToggle"
-      >
+      <div ref="fullscreenElementRef" class="fullscreen-target" :class="{ fullscreen: elementIsFullscreen }" @click="elementToggle">
         <div>{{ elementIsFullscreen ? "🎯 全屏中" : "📱 点击全屏" }}</div>
         <div>{{ elementIsFullscreen ? "按 ESC 退出" : "或使用按钮控制" }}</div>
-        <div v-if="elementIsFullscreen" class="fullscreen-indicator">
-          全屏模式
-        </div>
+        <div v-if="elementIsFullscreen" class="fullscreen-indicator">全屏模式</div>
       </div>
       <div class="element-status">
         <div>
@@ -128,18 +107,11 @@ import { useFullscreen } from "@vakao-ui/hooks";
 import { ref } from "vue";
 
 // 页面全屏
-const [pageIsFullscreen, pageToggle, pageEnter, pageExit, pageIsSupported] =
-  useFullscreen();
+const [pageIsFullscreen, pageToggle, pageEnter, pageExit, pageIsSupported] = useFullscreen();
 
 // 元素全屏
 const fullscreenElementRef = ref<HTMLElement>();
-const [
-  elementIsFullscreen,
-  elementToggle,
-  elementEnter,
-  elementExit,
-  elementIsSupported,
-] = useFullscreen(fullscreenElementRef);
+const [elementIsFullscreen, elementToggle, elementEnter, elementExit, elementIsSupported] = useFullscreen(fullscreenElementRef);
 </script>
 
 <style scoped>
@@ -308,13 +280,9 @@ const [
           <div class="video-title">
             {{ videoIsFullscreen ? "全屏播放中" : "模拟视频播放器" }}
           </div>
-          <div class="video-subtitle">
-            点击{{ videoIsFullscreen ? "退出" : "进入" }}全屏
-          </div>
+          <div class="video-subtitle">点击{{ videoIsFullscreen ? "退出" : "进入" }}全屏</div>
         </div>
-        <div v-if="videoIsFullscreen" class="fullscreen-tip">
-          全屏模式 - 按 ESC 退出
-        </div>
+        <div v-if="videoIsFullscreen" class="fullscreen-tip">全屏模式 - 按 ESC 退出</div>
         <div class="video-controls">
           <button @click.stop="togglePlay" class="control-btn">
             {{ videoIsPlaying ? "暂停" : "播放" }}
@@ -330,24 +298,14 @@ const [
     <div>
       <h4>图片查看器</h4>
       <div class="image-grid">
-        <div
-          v-for="(image, index) in images"
-          :key="index"
-          @click="openImageViewer(index)"
-          class="image-thumbnail"
-        >
+        <div v-for="(image, index) in images" :key="index" @click="openImageViewer(index)" class="image-thumbnail">
           {{ image.emoji }}
         </div>
       </div>
     </div>
 
     <!-- 图片查看器全屏模态框 -->
-    <div
-      v-if="imageViewerVisible"
-      ref="imageViewerRef"
-      class="image-viewer-modal"
-      @click="closeImageViewer"
-    >
+    <div v-if="imageViewerVisible" ref="imageViewerRef" class="image-viewer-modal" @click="closeImageViewer">
       <div class="image-viewer-content" @click.stop>
         <div class="image-display">
           <div class="image-emoji">{{ currentImage?.emoji }}</div>
@@ -358,9 +316,7 @@ const [
           <button @click="imageViewerToggle" class="control-btn primary">
             {{ imageViewerIsFullscreen ? "退出全屏" : "全屏查看" }}
           </button>
-          <button @click="closeImageViewer" class="control-btn danger">
-            关闭
-          </button>
+          <button @click="closeImageViewer" class="control-btn danger">关闭</button>
         </div>
       </div>
     </div>
@@ -392,8 +348,7 @@ const imageViewerVisible = ref(false);
 const currentImageIndex = ref(0);
 const currentImage = computed(() => images[currentImageIndex.value]);
 const imageViewerRef = ref<HTMLElement>();
-const [imageViewerIsFullscreen, imageViewerToggle] =
-  useFullscreen(imageViewerRef);
+const [imageViewerIsFullscreen, imageViewerToggle] = useFullscreen(imageViewerRef);
 
 const openImageViewer = (index: number) => {
   currentImageIndex.value = index;
@@ -577,10 +532,7 @@ const closeImageViewer = () => {
 `useFullscreen` 返回一个数组，包含以下元素：
 
 ```typescript
-const [isFullscreen, toggle, enter, exit, isSupported] = useFullscreen(
-  target,
-  options,
-);
+const [isFullscreen, toggle, enter, exit, isSupported] = useFullscreen(target, options);
 ```
 
 | 索引 | 名称         | 类型                  | 说明             |
@@ -600,18 +552,9 @@ export interface UseFullscreenOptions {
   onError?: (error: Error) => void;
 }
 
-export type UseFullscreenReturn = [
-  Ref<boolean>,
-  () => Promise<void>,
-  () => Promise<void>,
-  () => Promise<void>,
-  Ref<boolean>,
-];
+export type UseFullscreenReturn = [Ref<boolean>, () => Promise<void>, () => Promise<void>, () => Promise<void>, Ref<boolean>];
 
-export function useFullscreen(
-  target?: Ref<HTMLElement | null>,
-  options?: UseFullscreenOptions,
-): UseFullscreenReturn;
+export function useFullscreen(target?: Ref<HTMLElement | null>, options?: UseFullscreenOptions): UseFullscreenReturn;
 ```
 
 ## 使用场景

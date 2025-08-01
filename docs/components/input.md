@@ -91,18 +91,10 @@ const username = ref("");
 ```vue
 <template>
   <!-- 使用 @input 事件 -->
-  <vk-input
-    :value="username1"
-    @input="setUsername1"
-    placeholder="请输入用户名"
-  />
+  <vk-input :value="username1" @input="setUsername1" placeholder="请输入用户名" />
 
   <!-- 使用 @update:modelValue 事件 -->
-  <vk-input
-    :value="username2"
-    @update:modelValue="setUsername2"
-    placeholder="请输入用户名"
-  />
+  <vk-input :value="username2" @update:modelValue="setUsername2" placeholder="请输入用户名" />
 </template>
 
 <script setup>
@@ -183,12 +175,7 @@ const value = ref("");
 
 ```vue
 <template>
-  <vk-input
-    v-model="value"
-    type="password"
-    show-password
-    placeholder="请输入密码"
-  />
+  <vk-input v-model="value" type="password" show-password placeholder="请输入密码" />
 </template>
 
 <script setup>
@@ -219,25 +206,13 @@ const value = ref("");
 ```vue
 <template>
   <!-- Iconify 图标名称 -->
-  <vk-input
-    v-model="value1"
-    prefix-icon="mdi:magnify"
-    placeholder="Iconify 图标"
-  />
+  <vk-input v-model="value1" prefix-icon="mdi:magnify" placeholder="Iconify 图标" />
 
   <!-- 图片 URL -->
-  <vk-input
-    v-model="value2"
-    suffix-icon="https://api.iconify.design/simple-icons/github.svg"
-    placeholder="图片 URL"
-  />
+  <vk-input v-model="value2" suffix-icon="https://api.iconify.design/simple-icons/github.svg" placeholder="图片 URL" />
 
   <!-- 本地图片路径 -->
-  <vk-input
-    v-model="value3"
-    prefix-icon="/public/logo.svg"
-    placeholder="本地图片"
-  />
+  <vk-input v-model="value3" prefix-icon="/public/logo.svg" placeholder="本地图片" />
 </template>
 
 <script setup>

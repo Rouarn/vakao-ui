@@ -16,14 +16,7 @@
  */
 
 const { execSync } = require("child_process");
-const {
-  readFileSync,
-  writeFileSync,
-  existsSync,
-  mkdirSync,
-  copyFileSync,
-  rmSync,
-} = require("fs");
+const { readFileSync, writeFileSync, existsSync, mkdirSync, copyFileSync, rmSync } = require("fs");
 const path = require("path");
 const readline = require("readline");
 const { log } = require("../utils/");
@@ -73,11 +66,7 @@ class PublishEngine {
         stdio: "pipe",
       }).trim();
 
-      if (
-        npmRegistry &&
-        npmRegistry !== "undefined" &&
-        npmRegistry !== this.defaultRegistry
-      ) {
+      if (npmRegistry && npmRegistry !== "undefined" && npmRegistry !== this.defaultRegistry) {
         log(`使用 npm 全局配置的 registry: ${npmRegistry}`, "info");
         return npmRegistry;
       }
@@ -115,11 +104,7 @@ class PublishEngine {
       throw new Error(`未找到包配置: ${packageKey}`);
     }
 
-    const packagePath = path.join(
-      this.projectRoot,
-      packageConfig.path,
-      "package.json",
-    );
+    const packagePath = path.join(this.projectRoot, packageConfig.path, "package.json");
     if (!existsSync(packagePath)) {
       throw new Error(`package.json 不存在: ${packagePath}`);
     }
@@ -134,11 +119,7 @@ class PublishEngine {
    */
   updatePackageVersion(packageKey, version) {
     const packageConfig = this.config.packages[packageKey];
-    const packagePath = path.join(
-      this.projectRoot,
-      packageConfig.path,
-      "package.json",
-    );
+    const packagePath = path.join(this.projectRoot, packageConfig.path, "package.json");
     const packageJson = this.getPackageJson(packageKey);
 
     packageJson.version = version;
@@ -200,35 +181,24 @@ class PublishEngine {
    */
   askForVersion(currentVersion, suggestedVersion, packageName) {
     return new Promise((resolve) => {
-      this.rl.question(
-        `请输入 ${packageName} 的新版本号 (建议: ${suggestedVersion}, 留空使用建议版本): `,
-        (version) => {
-          const newVersion = version || suggestedVersion;
+      this.rl.question(`请输入 ${packageName} 的新版本号 (建议: ${suggestedVersion}, 留空使用建议版本): `, (version) => {
+        const newVersion = version || suggestedVersion;
 
-          if (!this.isValidVersion(newVersion)) {
-            log("版本号格式不正确！请使用 x.y.z 格式（如: 1.0.0）", "error");
-            this.askForVersion(
-              currentVersion,
-              suggestedVersion,
-              packageName,
-            ).then(resolve);
-            return;
-          }
+        if (!this.isValidVersion(newVersion)) {
+          log("版本号格式不正确！请使用 x.y.z 格式（如: 1.0.0）", "error");
+          this.askForVersion(currentVersion, suggestedVersion, packageName).then(resolve);
+          return;
+        }
 
-          if (this.compareVersions(newVersion, currentVersion) <= 0) {
-            log("新版本号必须大于当前版本！", "error");
-            this.askForVersion(
-              currentVersion,
-              suggestedVersion,
-              packageName,
-            ).then(resolve);
-            return;
-          }
+        if (this.compareVersions(newVersion, currentVersion) <= 0) {
+          log("新版本号必须大于当前版本！", "error");
+          this.askForVersion(currentVersion, suggestedVersion, packageName).then(resolve);
+          return;
+        }
 
-          log(`${packageName} 版本号验证通过: ${newVersion}`, "success");
-          resolve(newVersion);
-        },
-      );
+        log(`${packageName} 版本号验证通过: ${newVersion}`, "success");
+        resolve(newVersion);
+      });
     });
   }
 
@@ -260,10 +230,7 @@ class PublishEngine {
     } else {
       // 默认 TypeScript 构建
       const tsconfigPath = path.resolve(this.projectRoot, "tsconfig.json");
-      this.exec(
-        `npx tsc --project ${tsconfigPath} --outDir ${buildDir} --declaration --emitDeclarationOnly false`,
-        packageRoot,
-      );
+      this.exec(`npx tsc --project ${tsconfigPath} --outDir ${buildDir} --declaration --emitDeclarationOnly false`, packageRoot);
     }
 
     log(`${packageConfig.displayName} 构建完成`, "success");
@@ -312,10 +279,7 @@ class PublishEngine {
 
     // 写入发布用的 package.json
     const publishPackageJsonPath = path.join(buildDir, "package.json");
-    writeFileSync(
-      publishPackageJsonPath,
-      `${JSON.stringify(publishPackageJson, null, 2)}\n`,
-    );
+    writeFileSync(publishPackageJsonPath, `${JSON.stringify(publishPackageJson, null, 2)}\n`);
 
     // 复制 README.md
     const readmePath = path.join(packageRoot, "README.md");
@@ -349,29 +313,15 @@ class PublishEngine {
    */
   publishToNpm(packageKey, buildDir, isDryRun) {
     const packageConfig = this.config.packages[packageKey];
-    const registryInfo = this.usePrivateRegistry
-      ? `私有制品仓库 (${this.privateRegistry})`
-      : "npm 官方仓库";
+    const registryInfo = this.usePrivateRegistry ? `私有制品仓库 (${this.privateRegistry})` : "npm 官方仓库";
 
     if (isDryRun) {
-      log(
-        `测试模式：跳过实际发布 ${packageConfig.displayName} 到 ${registryInfo}`,
-        "warning",
-      );
+      log(`测试模式：跳过实际发布 ${packageConfig.displayName} 到 ${registryInfo}`, "warning");
       log("检查发布文件...", "check");
-      this.exec(
-        `npm pack --dry-run --registry ${this.privateRegistry}`,
-        buildDir,
-      );
+      this.exec(`npm pack --dry-run --registry ${this.privateRegistry}`, buildDir);
     } else {
-      log(
-        `开始发布 ${packageConfig.displayName} 到 ${registryInfo}...`,
-        "publish",
-      );
-      this.exec(
-        `npm publish --access public --registry ${this.privateRegistry}`,
-        buildDir,
-      );
+      log(`开始发布 ${packageConfig.displayName} 到 ${registryInfo}...`, "publish");
+      this.exec(`npm publish --access public --registry ${this.privateRegistry}`, buildDir);
     }
   }
 
@@ -414,10 +364,7 @@ class PublishEngine {
       visit(packageKey);
     }
 
-    log(
-      `包发布顺序: ${result.map((key) => this.config.packages[key].displayName).join(" → ")}`,
-      "info",
-    );
+    log(`包发布顺序: ${result.map((key) => this.config.packages[key].displayName).join(" → ")}`, "info");
     return result;
   }
 
@@ -431,10 +378,7 @@ class PublishEngine {
     const packageConfig = this.config.packages[packageKey];
 
     try {
-      log(
-        `\n${packageConfig.icon} 开始处理 ${packageConfig.displayName}...`,
-        "info",
-      );
+      log(`\n${packageConfig.icon} 开始处理 ${packageConfig.displayName}...`, "info");
 
       // 更新版本号
       this.updatePackageVersion(packageKey, version);

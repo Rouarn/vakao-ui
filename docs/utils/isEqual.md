@@ -305,7 +305,7 @@ const MyComponent = memo(
   (prevProps, nextProps) => {
     // 自定义比较逻辑
     return shallowEqual(prevProps, nextProps);
-  },
+  }
 );
 ```
 
@@ -323,7 +323,7 @@ watch(
       // 处理变化
     }
   },
-  { deep: true },
+  { deep: true }
 );
 ```
 
@@ -366,12 +366,7 @@ function isEqual(a: any, b: any): boolean;
  * @param visitedB 已访问的对象映射（内部使用）
  * @returns 是否相等
  */
-function isEqualWithCircular(
-  a: any,
-  b: any,
-  visitedA?: WeakMap<object, object>,
-  visitedB?: WeakMap<object, object>,
-): boolean;
+function isEqualWithCircular(a: any, b: any, visitedA?: WeakMap<object, object>, visitedB?: WeakMap<object, object>): boolean;
 
 /**
  * 浅比较两个对象的第一层属性

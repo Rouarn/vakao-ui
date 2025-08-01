@@ -163,13 +163,7 @@ export interface UseHoverOptions {
 export function useHover(options: UseHoverOptions = {}): UseHoverReturn {
   // ==================== 配置选项 ====================
 
-  const {
-    immediate = true,
-    onEnter,
-    onLeave,
-    enterDelay = 0,
-    leaveDelay = 0,
-  } = options;
+  const { immediate = true, onEnter, onLeave, enterDelay = 0, leaveDelay = 0 } = options;
 
   // ==================== 响应式状态 ====================
 
@@ -309,30 +303,20 @@ export function useHover(options: UseHoverOptions = {}): UseHoverReturn {
    *
    * 监听目标元素的 mouseenter 事件。
    */
-  const [, , setEnterListenerEnabled] = useEventListener(
-    targetRef,
-    "mouseenter",
-    handleMouseEnter,
-    {
-      immediate,
-      passive: true,
-    },
-  );
+  const [, , setEnterListenerEnabled] = useEventListener(targetRef, "mouseenter", handleMouseEnter, {
+    immediate,
+    passive: true,
+  });
 
   /**
    * 鼠标离开事件监听器
    *
    * 监听目标元素的 mouseleave 事件。
    */
-  const [, , setLeaveListenerEnabled] = useEventListener(
-    targetRef,
-    "mouseleave",
-    handleMouseLeave,
-    {
-      immediate,
-      passive: true,
-    },
-  );
+  const [, , setLeaveListenerEnabled] = useEventListener(targetRef, "mouseleave", handleMouseLeave, {
+    immediate,
+    passive: true,
+  });
 
   // ==================== 操作函数 ====================
 

@@ -87,7 +87,7 @@ export function useLocalStorage<T>(
   options: {
     serializer?: SerializerFunction<T>;
     syncAcrossTabs?: boolean;
-  } = {},
+  } = {}
 ): UseLocalStorageReturn<T> {
   const { serializer = defaultSerializer, syncAcrossTabs = true } = options;
 
@@ -145,10 +145,7 @@ export function useLocalStorage<T>(
 
   // 设置值
   function setValue(value: T | ((prevValue: T) => T)): void {
-    const newValue =
-      typeof value === "function"
-        ? (value as (prevValue: T) => T)(storedValue.value)
-        : value;
+    const newValue = typeof value === "function" ? (value as (prevValue: T) => T)(storedValue.value) : value;
 
     storedValue.value = newValue;
     writeToStorage(newValue);
@@ -166,7 +163,7 @@ export function useLocalStorage<T>(
     (newValue) => {
       writeToStorage(newValue);
     },
-    { deep: true },
+    { deep: true }
   );
 
   // 监听存储变化（跨标签页同步）
@@ -176,10 +173,7 @@ export function useLocalStorage<T>(
         try {
           storedValue.value = serializer.read(e.newValue);
         } catch (error) {
-          console.warn(
-            `Error parsing storage event for key "${prefixedKey}":`,
-            error,
-          );
+          console.warn(`Error parsing storage event for key "${prefixedKey}":`, error);
         }
       } else if (e.key === prefixedKey && e.newValue === null) {
         storedValue.value = defaultValue;
@@ -196,8 +190,7 @@ export function useLocalStorage<T>(
 
       // 在 Vue 3 中，可以使用 onUnmounted 来清理
       // 但这里我们返回清理函数，让用户自己决定何时清理
-      (setValue as SetStorageFunction<T> & { cleanup?: () => void }).cleanup =
-        cleanup;
+      (setValue as SetStorageFunction<T> & { cleanup?: () => void }).cleanup = cleanup;
     }
   }
 

@@ -1,39 +1,20 @@
 <template>
-  <div
-    :class="mergedClass"
-    :style="mergedStyle"
-    @click="handleClick"
-  >
+  <div :class="mergedClass" :style="mergedStyle" @click="handleClick">
     <!-- 未选中状态的文字 -->
-    <span
-      v-if="inactiveText && !inlinePrompt"
-      :class="[ns.element('label'), ns.element('label--left')]"
-    >
+    <span v-if="inactiveText && !inlinePrompt" :class="[ns.element('label'), ns.element('label--left')]">
       {{ inactiveText }}
     </span>
 
     <!-- 开关主体 -->
-    <span
-      ref="switchRef"
-      :class="switchClass"
-    >
+    <span ref="switchRef" :class="switchClass">
       <!-- 加载图标 -->
-      <span
-        v-if="loading"
-        :class="ns.element('loading')"
-      >
-        <VkIcon
-          size="12px"
-          icon="mdi:reload"
-        />
+      <span v-if="loading" :class="ns.element('loading')">
+        <VkIcon size="12px" icon="mdi:reload" />
       </span>
 
       <!-- 内联提示 -->
       <template v-if="inlinePrompt">
-        <span
-          v-if="isChecked"
-          :class="ns.element('inner')"
-        >
+        <span v-if="isChecked" :class="ns.element('inner')">
           <VkIcon
             v-if="activeIcon"
             size="12px"
@@ -42,10 +23,7 @@
           />
           <span v-else-if="activeText">{{ activeText }}</span>
         </span>
-        <span
-          v-else
-          :class="ns.element('inner')"
-        >
+        <span v-else :class="ns.element('inner')">
           <VkIcon
             v-if="inactiveIcon"
             size="12px"
@@ -61,10 +39,7 @@
     </span>
 
     <!-- 选中状态的文字 -->
-    <span
-      v-if="activeText && !inlinePrompt"
-      :class="[ns.element('label'), ns.element('label--right')]"
-    >
+    <span v-if="activeText && !inlinePrompt" :class="[ns.element('label'), ns.element('label--right')]">
       {{ activeText }}
     </span>
   </div>
@@ -95,7 +70,7 @@ export default defineComponent({
       "value",
       "modelValue",
       emit as (event: string, ...args: unknown[]) => void,
-      false as SwitchValue,
+      false as SwitchValue
     );
 
     // 计算属性
@@ -137,9 +112,7 @@ export default defineComponent({
     const handleClick = async () => {
       if (isDisabled.value) return;
 
-      const newValue = isChecked.value
-        ? props.inactiveValue
-        : props.activeValue;
+      const newValue = isChecked.value ? props.inactiveValue : props.activeValue;
 
       // 如果有 beforeChange 钩子，先执行
       if (props.beforeChange) {

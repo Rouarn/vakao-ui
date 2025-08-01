@@ -45,40 +45,16 @@
 <template>
   <div>
     <div style="margin-bottom: 16px; display: flex; gap: 8px;">
-      <vk-input
-        v-model="newItem"
-        placeholder="输入新的待办事项"
-        @keyup.enter="addItem"
-        style="flex: 1;"
-      />
-      <vk-button @click="addItem" type="primary" :disabled="!newItem.trim()"
-        >添加</vk-button
-      >
+      <vk-input v-model="newItem" placeholder="输入新的待办事项" @keyup.enter="addItem" style="flex: 1;" />
+      <vk-button @click="addItem" type="primary" :disabled="!newItem.trim()">添加</vk-button>
     </div>
 
     <div style="margin-bottom: 16px; display: flex; gap: 8px; flex-wrap: wrap;">
-      <vk-button @click="() => actions.unshift('紧急任务')" size="small"
-        >添加到开头</vk-button
-      >
-      <vk-button @click="() => actions.pop()" size="small" :disabled="isEmpty"
-        >移除最后一个</vk-button
-      >
-      <vk-button @click="() => actions.shift()" size="small" :disabled="isEmpty"
-        >移除第一个</vk-button
-      >
-      <vk-button
-        @click="() => actions.reverse()"
-        size="small"
-        :disabled="isEmpty"
-        >反转顺序</vk-button
-      >
-      <vk-button
-        @click="() => actions.clear()"
-        size="small"
-        type="danger"
-        :disabled="isEmpty"
-        >清空</vk-button
-      >
+      <vk-button @click="() => actions.unshift('紧急任务')" size="small">添加到开头</vk-button>
+      <vk-button @click="() => actions.pop()" size="small" :disabled="isEmpty">移除最后一个</vk-button>
+      <vk-button @click="() => actions.shift()" size="small" :disabled="isEmpty">移除第一个</vk-button>
+      <vk-button @click="() => actions.reverse()" size="small" :disabled="isEmpty">反转顺序</vk-button>
+      <vk-button @click="() => actions.clear()" size="small" type="danger" :disabled="isEmpty">清空</vk-button>
     </div>
 
     <div v-if="isEmpty">📝 暂无待办事项，添加一个开始吧！</div>
@@ -87,12 +63,7 @@
       <div v-for="(item, index) in list" :key="index">
         {{ index + 1 }}. {{ item }}
         <vk-button @click="() => editItem(index)" size="small">编辑</vk-button>
-        <vk-button
-          @click="() => actions.removeAt(index)"
-          size="small"
-          type="danger"
-          >删除</vk-button
-        >
+        <vk-button @click="() => actions.removeAt(index)" size="small" type="danger">删除</vk-button>
       </div>
     </div>
   </div>
@@ -158,32 +129,11 @@ const editItem = (index) => {
 <template>
   <div>
     <div style="margin-bottom: 16px; display: flex; gap: 8px; flex-wrap: wrap;">
-      <vk-button
-        @click="() => numberActions.push(Math.floor(Math.random() * 100))"
-        type="primary"
-        >添加随机数</vk-button
-      >
-      <vk-button
-        @click="() => numberActions.sort((a, b) => a - b)"
-        :disabled="numberList.length === 0"
-        >升序排序</vk-button
-      >
-      <vk-button
-        @click="() => numberActions.sort((a, b) => b - a)"
-        :disabled="numberList.length === 0"
-        >降序排序</vk-button
-      >
-      <vk-button
-        @click="() => numberActions.filter((n) => n % 2 === 0)"
-        :disabled="numberList.length === 0"
-        >只保留偶数</vk-button
-      >
-      <vk-button
-        @click="() => numberActions.clear()"
-        type="danger"
-        :disabled="numberList.length === 0"
-        >清空</vk-button
-      >
+      <vk-button @click="() => numberActions.push(Math.floor(Math.random() * 100))" type="primary">添加随机数</vk-button>
+      <vk-button @click="() => numberActions.sort((a, b) => a - b)" :disabled="numberList.length === 0">升序排序</vk-button>
+      <vk-button @click="() => numberActions.sort((a, b) => b - a)" :disabled="numberList.length === 0">降序排序</vk-button>
+      <vk-button @click="() => numberActions.filter((n) => n % 2 === 0)" :disabled="numberList.length === 0">只保留偶数</vk-button>
+      <vk-button @click="() => numberActions.clear()" type="danger" :disabled="numberList.length === 0">清空</vk-button>
     </div>
 
     <div v-if="numberList.length === 0">🔢 点击"添加随机数"开始操作</div>
@@ -258,12 +208,7 @@ const [list, actions, length, isEmpty] = useArray<T>(initialValue);
 ## 类型定义
 
 ```typescript
-export type UseArrayReturn<T> = [
-  ComputedRef<readonly T[]>,
-  ArrayActions<T>,
-  ComputedRef<number>,
-  ComputedRef<boolean>,
-];
+export type UseArrayReturn<T> = [ComputedRef<readonly T[]>, ArrayActions<T>, ComputedRef<number>, ComputedRef<boolean>];
 
 export interface ArrayActions<T> {
   push: (...items: T[]) => void;

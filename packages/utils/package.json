@@ -12,20 +12,8 @@
       "types": "./dist/types/index.d.ts"
     }
   },
-  "files": [
-    "dist",
-    "README.md",
-    "CHANGELOG.md"
-  ],
-  "keywords": [
-    "vue3",
-    "utils",
-    "utilities",
-    "helpers",
-    "ui-library",
-    "typescript",
-    "vakao-ui"
-  ],
+  "files": ["dist", "README.md", "CHANGELOG.md"],
+  "keywords": ["vue3", "utils", "utilities", "helpers", "ui-library", "typescript", "vakao-ui"],
   "author": "Vakao UI Team",
   "license": "MIT",
   "homepage": "https://github.com/vakao-ui/vakao-ui#readme",

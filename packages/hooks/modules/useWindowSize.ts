@@ -155,18 +155,10 @@ export interface UseWindowSizeOptions {
  * @since 1.0.0
  * @author Vakao UI Team
  */
-export function useWindowSize(
-  options: UseWindowSizeOptions = {},
-): UseWindowSizeReturn {
+export function useWindowSize(options: UseWindowSizeOptions = {}): UseWindowSizeReturn {
   // ==================== 配置选项 ====================
 
-  const {
-    immediate = true,
-    listen = true,
-    debounce = 0,
-    initialWidth = 1024,
-    initialHeight = 768,
-  } = options;
+  const { immediate = true, listen = true, debounce = 0, initialWidth = 1024, initialHeight = 768 } = options;
 
   // ==================== 响应式状态 ====================
 
@@ -313,15 +305,10 @@ export function useWindowSize(
    * 使用 useEventListener 监听窗口的 resize 事件。
    * 支持动态启用/禁用监听功能。
    */
-  const [, , setListenerEnabled] = useEventListener(
-    () => window,
-    "resize",
-    debouncedUpdate,
-    {
-      immediate: listen,
-      passive: true, // 使用被动监听器优化性能
-    },
-  );
+  const [, , setListenerEnabled] = useEventListener(() => window, "resize", debouncedUpdate, {
+    immediate: listen,
+    passive: true, // 使用被动监听器优化性能
+  });
 
   /**
    * 启用/禁用窗口尺寸监听

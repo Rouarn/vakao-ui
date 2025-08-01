@@ -37,26 +37,10 @@
 ```vue
 <template>
   <div>
-    <vk-button @click="startLoading" :disabled="isLoading" type="primary">
-      开始加载
-    </vk-button>
-    <vk-button @click="stopLoading" :disabled="!isLoading">
-      停止加载
-    </vk-button>
-    <vk-button
-      @click="() => setLoading(true)"
-      :disabled="isLoading"
-      type="success"
-    >
-      设置为 true
-    </vk-button>
-    <vk-button
-      @click="() => setLoading(false)"
-      :disabled="!isLoading"
-      type="warning"
-    >
-      设置为 false
-    </vk-button>
+    <vk-button @click="startLoading" :disabled="isLoading" type="primary"> 开始加载 </vk-button>
+    <vk-button @click="stopLoading" :disabled="!isLoading"> 停止加载 </vk-button>
+    <vk-button @click="() => setLoading(true)" :disabled="isLoading" type="success"> 设置为 true </vk-button>
+    <vk-button @click="() => setLoading(false)" :disabled="!isLoading" type="warning"> 设置为 false </vk-button>
 
     <div :style="{ background: isLoading ? '#e6f7ff' : '#f6ffed' }">
       {{ isLoading ? "⏳ 正在加载..." : "✅ 加载完成" }}
@@ -142,18 +126,11 @@ const [isLoading, setLoading, startLoading, stopLoading] = useBoolean(false);
 
     <div>
       <label>邮箱:</label>
-      <vk-input
-        v-model="email"
-        @input="validateEmail"
-        placeholder="请输入邮箱地址"
-        :class="{ error: hasEmailError }"
-      />
+      <vk-input v-model="email" @input="validateEmail" placeholder="请输入邮箱地址" :class="{ error: hasEmailError }" />
       <div v-if="hasEmailError">请输入有效的邮箱地址</div>
     </div>
 
-    <vk-button @click="submitForm" :disabled="!isFormValid" type="primary">
-      提交表单
-    </vk-button>
+    <vk-button @click="submitForm" :disabled="!isFormValid" type="primary"> 提交表单 </vk-button>
     <vk-button @click="resetForm">重置</vk-button>
 
     <div>
@@ -172,22 +149,11 @@ import { ref, computed } from "vue";
 const username = ref("");
 const email = ref("");
 
-const [
-  hasUsernameError,
-  setUsernameError,
-  showUsernameError,
-  hideUsernameError,
-] = useBoolean(false);
-const [hasEmailError, setEmailError, showEmailError, hideEmailError] =
-  useBoolean(false);
+const [hasUsernameError, setUsernameError, showUsernameError, hideUsernameError] = useBoolean(false);
+const [hasEmailError, setEmailError, showEmailError, hideEmailError] = useBoolean(false);
 
 const isFormValid = computed(() => {
-  return (
-    !hasUsernameError.value &&
-    !hasEmailError.value &&
-    username.value &&
-    email.value
-  );
+  return !hasUsernameError.value && !hasEmailError.value && username.value && email.value;
 });
 
 const validateUsername = () => {
@@ -255,12 +221,7 @@ export type SetValueFunction = (value: boolean) => void;
 export type SetTrueFunction = () => void;
 export type SetFalseFunction = () => void;
 
-export type UseBooleanReturn = [
-  ComputedRef<boolean>,
-  SetValueFunction,
-  SetTrueFunction,
-  SetFalseFunction,
-];
+export type UseBooleanReturn = [ComputedRef<boolean>, SetValueFunction, SetTrueFunction, SetFalseFunction];
 ```
 
 ## 使用场景

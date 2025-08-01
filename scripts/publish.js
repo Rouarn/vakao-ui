@@ -39,13 +39,7 @@ const PublishEngine = require("./core/publish-engine");
 const DeploymentEngine = require("./core/deployment-engine");
 const Interactive = require("./core/interactive");
 const ExtensionManager = require("./core/extension-manager");
-const {
-  log,
-  separator,
-  showBanner,
-  showSuccess,
-  handleError,
-} = require("./utils");
+const { log, separator, showBanner, showSuccess, handleError } = require("./utils");
 
 // ==================== 配置常量 ====================
 
@@ -80,44 +74,29 @@ function parseArguments() {
     if (packagesArg.includes("=")) {
       const packagesList = packagesArg.split("=")[1];
       options.packages = packagesList.split(",").map((p) => p.trim());
-    } else if (
-      args[packagesIndex + 1] &&
-      !args[packagesIndex + 1].startsWith("--")
-    ) {
-      options.packages = args[packagesIndex + 1]
-        .split(",")
-        .map((p) => p.trim());
+    } else if (args[packagesIndex + 1] && !args[packagesIndex + 1].startsWith("--")) {
+      options.packages = args[packagesIndex + 1].split(",").map((p) => p.trim());
     }
   }
 
   // 解析 --package 参数（单个包）
-  const packageIndex = args.findIndex(
-    (arg) => arg.startsWith("--package") && !arg.startsWith("--packages"),
-  );
+  const packageIndex = args.findIndex((arg) => arg.startsWith("--package") && !arg.startsWith("--packages"));
   if (packageIndex !== -1) {
     const packageArg = args[packageIndex];
     if (packageArg.includes("=")) {
       options.singlePackage = packageArg.split("=")[1].trim();
-    } else if (
-      args[packageIndex + 1] &&
-      !args[packageIndex + 1].startsWith("--")
-    ) {
+    } else if (args[packageIndex + 1] && !args[packageIndex + 1].startsWith("--")) {
       options.singlePackage = args[packageIndex + 1].trim();
     }
   }
 
   // 解析 --deploy-strategy 参数
-  const deployStrategyIndex = args.findIndex((arg) =>
-    arg.startsWith("--deploy-strategy"),
-  );
+  const deployStrategyIndex = args.findIndex((arg) => arg.startsWith("--deploy-strategy"));
   if (deployStrategyIndex !== -1) {
     const strategyArg = args[deployStrategyIndex];
     if (strategyArg.includes("=")) {
       options.deployStrategy = strategyArg.split("=")[1].trim();
-    } else if (
-      args[deployStrategyIndex + 1] &&
-      !args[deployStrategyIndex + 1].startsWith("--")
-    ) {
+    } else if (args[deployStrategyIndex + 1] && !args[deployStrategyIndex + 1].startsWith("--")) {
       options.deployStrategy = args[deployStrategyIndex + 1].trim();
     }
   }
@@ -152,10 +131,7 @@ function showHelp() {
   log("\n部署示例:", "info");
   log("  node scripts/publish.js --deploy", "info");
   log("  node scripts/publish.js --deploy-only --deploy-strategy docs", "info");
-  log(
-    "  node scripts/publish.js --package main --deploy --deploy-strategy github-pages",
-    "info",
-  );
+  log("  node scripts/publish.js --package main --deploy --deploy-strategy github-pages", "info");
   log("\n可用的包:", "info");
   Object.entries(CONFIG.packages).forEach(([key, pkg]) => {
     log(`  ${key.padEnd(8)} ${pkg.icon} ${pkg.displayName}`, "info");
@@ -203,9 +179,7 @@ async function handleDeployOnly(options, deploymentEngine, _interactive) {
 
     // 智能过滤策略：如果没有指定包，默认为文档部署
     const supportedStrategies = ["docs", "github-pages"];
-    const filteredStrategies = strategies.filter((s) =>
-      supportedStrategies.includes(s.key),
-    );
+    const filteredStrategies = strategies.filter((s) => supportedStrategies.includes(s.key));
 
     const choices = filteredStrategies.map((s) => ({
       name: `${s.icon} ${s.name}`,
@@ -267,12 +241,7 @@ async function handleDeployOnly(options, deploymentEngine, _interactive) {
  * @param {Interactive} interactive - 交互界面
  * @param {Array} publishResults - 发布结果
  */
-async function handleDeployment(
-  options,
-  deploymentEngine,
-  interactive,
-  publishResults,
-) {
+async function handleDeployment(options, deploymentEngine, interactive, publishResults) {
   separator();
   log("开始部署流程", "deploy");
 
@@ -286,9 +255,7 @@ async function handleDeployment(
     };
 
     // 根据发布结果调整部署选项
-    const hasMainPackage = publishResults.some(
-      (r) => r.package === "main" && r.success,
-    );
+    const hasMainPackage = publishResults.some((r) => r.package === "main" && r.success);
     if (hasMainPackage && !options.deployStrategy) {
       // 如果发布了主包，默认部署到 GitHub Pages
       strategy = "github-pages";
@@ -356,14 +323,7 @@ async function main() {
 
     // 显示配置信息
     log(`发布模式: ${options.isDryRun ? "测试模式" : "正式发布"}`, "info");
-    log(
-      `目标仓库: ${
-        publishEngine.usePrivateRegistry
-          ? `私有制品仓库 (${publishEngine.privateRegistry})`
-          : "npm 官方仓库"
-      }`,
-      "info",
-    );
+    log(`目标仓库: ${publishEngine.usePrivateRegistry ? `私有制品仓库 (${publishEngine.privateRegistry})` : "npm 官方仓库"}`, "info");
     if (options.syncVersion) {
       log("版本同步: 启用", "info");
     }
@@ -393,10 +353,7 @@ async function main() {
         throw new Error("指定的包不存在");
       }
       packageKeys = validPackages;
-      log(
-        `指定发布包: ${packageKeys.map((key) => CONFIG.packages[key].displayName).join(", ")}`,
-        "info",
-      );
+      log(`指定发布包: ${packageKeys.map((key) => CONFIG.packages[key].displayName).join(", ")}`, "info");
     } else {
       // 交互式选择
       packageKeys = await interactive.askForPackages();
@@ -405,13 +362,7 @@ async function main() {
     separator();
 
     // 在交互模式下询问部署选项（如果没有通过命令行指定）
-    if (
-      !options.singlePackage &&
-      !options.packages &&
-      !options.deploy &&
-      !options.deployOnly &&
-      !options.deployStrategy
-    ) {
+    if (!options.singlePackage && !options.packages && !options.deploy && !options.deployOnly && !options.deployStrategy) {
       const deploymentOptions = await interactive.askForDeployment(packageKeys);
       // 合并部署选项到 options
       Object.assign(options, deploymentOptions);
@@ -430,7 +381,7 @@ async function main() {
       packageKeys,
       options.syncVersion,
       (key) => publishEngine.getPackageJson(key),
-      (version) => publishEngine.suggestNextVersion(version),
+      (version) => publishEngine.suggestNextVersion(version)
     );
 
     separator();
@@ -455,8 +406,7 @@ async function main() {
     let sortedPackageKeys = packageKeys;
     if (packageKeys.length > 1) {
       try {
-        sortedPackageKeys =
-          publishEngine.sortPackagesByDependencies(packageKeys);
+        sortedPackageKeys = publishEngine.sortPackagesByDependencies(packageKeys);
         separator();
       } catch (error) {
         log(`依赖排序失败: ${error.message}`, "warning");
@@ -469,11 +419,7 @@ async function main() {
     const results = [];
     for (const packageKey of sortedPackageKeys) {
       try {
-        const result = await publishEngine.publishSinglePackage(
-          packageKey,
-          versions[packageKey],
-          options.isDryRun,
-        );
+        const result = await publishEngine.publishSinglePackage(packageKey, versions[packageKey], options.isDryRun);
         results.push({
           package: packageKey,
           ...result,
@@ -484,28 +430,20 @@ async function main() {
           success: false,
           error: error.message,
         });
-        log(
-          `${CONFIG.packages[packageKey].displayName} 发布失败，继续处理其他包...`,
-          "warning",
-        );
+        log(`${CONFIG.packages[packageKey].displayName} 发布失败，继续处理其他包...`, "warning");
       }
     }
 
     separator();
 
     // 显示发布结果
-    const { successCount, failCount } = interactive.showPublishResults(
-      results,
-      options.isDryRun,
-    );
+    const { successCount, failCount } = interactive.showPublishResults(results, options.isDryRun);
 
     separator();
 
     // 显示最终结果
     if (failCount === 0) {
-      showSuccess(
-        `所有包${options.isDryRun ? "测试" : "发布"}成功！(${successCount}/${packageKeys.length})`,
-      );
+      showSuccess(`所有包${options.isDryRun ? "测试" : "发布"}成功！(${successCount}/${packageKeys.length})`);
 
       // 执行部署（如果启用）
       if ((options.deploy || options.deployStrategy) && !options.skipDeploy) {

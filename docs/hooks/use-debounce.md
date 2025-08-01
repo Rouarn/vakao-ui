@@ -354,9 +354,7 @@ const submitForm = () => {
 /**
  * 防抖函数类型
  */
-type DebouncedFunction<T extends (...args: any[]) => any> = (
-  ...args: Parameters<T>
-) => void;
+type DebouncedFunction<T extends (...args: any[]) => any> = (...args: Parameters<T>) => void;
 
 /**
  * 取消函数类型
@@ -387,11 +385,7 @@ interface UseDebounceOptions {
  * @example
  * const debouncedValue = useDebounce(inputValue, 300);
  */
-function useDebounce<T>(
-  value: Ref<T>,
-  delay: number,
-  options?: UseDebounceOptions,
-): Ref<T>;
+function useDebounce<T>(value: Ref<T>, delay: number, options?: UseDebounceOptions): Ref<T>;
 
 /**
  * 防抖钩子 - 函数版本
@@ -405,7 +399,7 @@ function useDebounce<T>(
 function useDebounce<T extends (...args: any[]) => any>(
   fn: T,
   delay: number,
-  options?: UseDebounceOptions,
+  options?: UseDebounceOptions
 ): [DebouncedFunction<T>, DebounceCancelFunction, DebounceFlushFunction];
 ```
 

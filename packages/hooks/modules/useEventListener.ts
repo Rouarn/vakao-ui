@@ -163,7 +163,7 @@ export function useEventListener<T extends Event = Event>(
   target: EventTargetRef,
   event: string,
   handler: EventHandler<T>,
-  options: UseEventListenerOptions = {},
+  options: UseEventListenerOptions = {}
 ): UseEventListenerReturn {
   // ==================== 配置选项 ====================
 
@@ -239,11 +239,7 @@ export function useEventListener<T extends Event = Event>(
     }
 
     // 移除事件监听器
-    element.removeEventListener(
-      event,
-      handler as EventListener,
-      listenerOptions,
-    );
+    element.removeEventListener(event, handler as EventListener, listenerOptions);
     isListenerAdded.value = false;
   };
 
@@ -303,11 +299,7 @@ export function useEventListener<T extends Event = Event>(
 
       // 移除旧目标上的监听器
       if (oldTarget && isListenerAdded.value) {
-        oldTarget.removeEventListener(
-          event,
-          handler as EventListener,
-          listenerOptions,
-        );
+        oldTarget.removeEventListener(event, handler as EventListener, listenerOptions);
         isListenerAdded.value = false;
       }
 
@@ -316,7 +308,7 @@ export function useEventListener<T extends Event = Event>(
         addListener();
       }
     },
-    { flush: "post" },
+    { flush: "post" }
   );
 
   /**
@@ -333,7 +325,7 @@ export function useEventListener<T extends Event = Event>(
         removeListener();
       }
     },
-    { flush: "post" },
+    { flush: "post" }
   );
 
   // ==================== 生命周期管理 ====================

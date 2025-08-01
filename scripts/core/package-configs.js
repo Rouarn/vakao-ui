@@ -45,11 +45,7 @@ const PACKAGE_DEPENDENCIES = {
  */
 function readPackageJson(packagePath) {
   try {
-    const packageJsonPath = path.join(
-      PROJECT_ROOT,
-      packagePath,
-      "package.json",
-    );
+    const packageJsonPath = path.join(PROJECT_ROOT, packagePath, "package.json");
     if (fs.existsSync(packageJsonPath)) {
       const content = fs.readFileSync(packageJsonPath, "utf8");
       return JSON.parse(content);
@@ -77,15 +73,7 @@ const PACKAGES = {
     },
     get keywords() {
       const pkg = readPackageJson(".");
-      return (
-        pkg?.keywords || [
-          "vue3",
-          "components",
-          "ui-library",
-          "typescript",
-          "vakao-ui",
-        ]
-      );
+      return pkg?.keywords || ["vue3", "components", "ui-library", "typescript", "vakao-ui"];
     },
     get peerDependencies() {
       const pkg = readPackageJson(".");
@@ -218,16 +206,7 @@ export default defineConfig({
     },
     get keywords() {
       const pkg = readPackageJson("packages/hooks");
-      return (
-        pkg?.keywords || [
-          "vue3",
-          "hooks",
-          "composables",
-          "ui-library",
-          "typescript",
-          "vakao-ui",
-        ]
-      );
+      return pkg?.keywords || ["vue3", "hooks", "composables", "ui-library", "typescript", "vakao-ui"];
     },
     get peerDependencies() {
       const pkg = readPackageJson("packages/hooks");
@@ -305,17 +284,7 @@ const [theme, setTheme] = useLocalStorage('theme', 'light');
     },
     get keywords() {
       const pkg = readPackageJson("packages/utils");
-      return (
-        pkg?.keywords || [
-          "vue3",
-          "utils",
-          "utilities",
-          "helpers",
-          "ui-library",
-          "typescript",
-          "vakao-ui",
-        ]
-      );
+      return pkg?.keywords || ["vue3", "utils", "utilities", "helpers", "ui-library", "typescript", "vakao-ui"];
     },
     get peerDependencies() {
       const pkg = readPackageJson("packages/utils");
@@ -396,15 +365,7 @@ const MyComponent = withInstall(MyComponentImpl);
     },
     get keywords() {
       const pkg = readPackageJson("docs");
-      return (
-        pkg?.keywords || [
-          "vue3",
-          "docs",
-          "vitepress",
-          "documentation",
-          "vakao-ui",
-        ]
-      );
+      return pkg?.keywords || ["vue3", "docs", "vitepress", "documentation", "vakao-ui"];
     },
     get author() {
       const pkg = readPackageJson("docs");

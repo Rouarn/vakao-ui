@@ -71,11 +71,7 @@ const { x, y, sourceType } = useMouse();
 <template>
   <div>
     <div ref="container" class="container">
-      <div
-        v-if="elementX >= 0 && elementY >= 0"
-        class="pointer"
-        :style="{ left: elementX + 'px', top: elementY + 'px' }"
-      ></div>
+      <div v-if="elementX >= 0 && elementY >= 0" class="pointer" :style="{ left: elementX + 'px', top: elementY + 'px' }"></div>
     </div>
     <p>相对 X 坐标: {{ elementX }}px</p>
     <p>相对 Y 坐标: {{ elementY }}px</p>

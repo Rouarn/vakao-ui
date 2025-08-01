@@ -27,22 +27,10 @@
  */
 
 const { execSync } = require("child_process");
-const {
-  readFileSync,
-  writeFileSync,
-  existsSync,
-  mkdirSync,
-  copyFileSync,
-} = require("fs");
+const { readFileSync, writeFileSync, existsSync, mkdirSync, copyFileSync } = require("fs");
 const path = require("path");
 const readline = require("readline");
-const {
-  log,
-  separator,
-  showBanner,
-  showSuccess,
-  handleError,
-} = require("../utils/");
+const { log, separator, showBanner, showSuccess, handleError } = require("../utils/");
 
 // ==================== 配置常量 ====================
 
@@ -156,29 +144,26 @@ function suggestNextVersion(currentVersion) {
  */
 function askForVersion(currentVersion, suggestedVersion) {
   return new Promise((resolve) => {
-    rl.question(
-      `请输入新版本号 (建议: ${suggestedVersion}, 留空使用建议版本): `,
-      (version) => {
-        const newVersion = version || suggestedVersion;
+    rl.question(`请输入新版本号 (建议: ${suggestedVersion}, 留空使用建议版本): `, (version) => {
+      const newVersion = version || suggestedVersion;
 
-        // 验证版本号格式
-        if (!isValidVersion(newVersion)) {
-          log("版本号格式不正确！请使用 x.y.z 格式（如: 1.0.0）", "error");
-          askForVersion(currentVersion, suggestedVersion).then(resolve);
-          return;
-        }
+      // 验证版本号格式
+      if (!isValidVersion(newVersion)) {
+        log("版本号格式不正确！请使用 x.y.z 格式（如: 1.0.0）", "error");
+        askForVersion(currentVersion, suggestedVersion).then(resolve);
+        return;
+      }
 
-        // 检查版本号是否比当前版本新
-        if (newVersion <= currentVersion) {
-          log("新版本号必须大于当前版本！", "error");
-          askForVersion(currentVersion, suggestedVersion).then(resolve);
-          return;
-        }
+      // 检查版本号是否比当前版本新
+      if (newVersion <= currentVersion) {
+        log("新版本号必须大于当前版本！", "error");
+        askForVersion(currentVersion, suggestedVersion).then(resolve);
+        return;
+      }
 
-        log("版本号验证通过", "success");
-        resolve(newVersion);
-      },
-    );
+      log("版本号验证通过", "success");
+      resolve(newVersion);
+    });
   });
 }
 
@@ -197,10 +182,7 @@ function buildUtils() {
 
   // 使用 TypeScript 编译器生成类型声明和 JS 文件
   const tsconfigPath = path.resolve(__dirname, "../tsconfig.json");
-  exec(
-    `npx tsc --project ${tsconfigPath} --outDir ${BUILD_DIR} --declaration --emitDeclarationOnly false`,
-    PACKAGE_ROOT,
-  );
+  exec(`npx tsc --project ${tsconfigPath} --outDir ${BUILD_DIR} --declaration --emitDeclarationOnly false`, PACKAGE_ROOT);
 
   log("utils 包构建完成", "success");
 }
@@ -231,15 +213,7 @@ function preparePublishFiles(version) {
       },
     },
     files: ["*.js", "*.d.ts", "README.md"],
-    keywords: [
-      "vue3",
-      "utils",
-      "utilities",
-      "helpers",
-      "ui-library",
-      "typescript",
-      "vakao-ui",
-    ],
+    keywords: ["vue3", "utils", "utilities", "helpers", "ui-library", "typescript", "vakao-ui"],
     author: "Vakao UI Team",
     license: "MIT",
     repository: {
@@ -259,10 +233,7 @@ function preparePublishFiles(version) {
 
   // 写入发布用的 package.json
   const publishPackageJsonPath = path.join(BUILD_DIR, "package.json");
-  writeFileSync(
-    publishPackageJsonPath,
-    JSON.stringify(publishPackageJson, null, 2) + "\n",
-  );
+  writeFileSync(publishPackageJsonPath, JSON.stringify(publishPackageJson, null, 2) + "\n");
 
   // 复制 README.md（如果存在）
   const readmePath = path.join(PACKAGE_ROOT, "README.md");
@@ -324,9 +295,7 @@ MIT
  * @param {boolean} isDryRun - 是否为测试模式
  */
 function publishToNpm(isDryRun) {
-  const registryInfo = USE_PRIVATE_REGISTRY
-    ? `私有制品仓库 (${PRIVATE_REGISTRY})`
-    : "npm 官方仓库";
+  const registryInfo = USE_PRIVATE_REGISTRY ? `私有制品仓库 (${PRIVATE_REGISTRY})` : "npm 官方仓库";
 
   if (isDryRun) {
     log(`测试模式：跳过实际发布到 ${registryInfo}`, "warning");
@@ -334,10 +303,7 @@ function publishToNpm(isDryRun) {
     exec(`npm pack --dry-run --registry ${PRIVATE_REGISTRY}`, BUILD_DIR);
   } else {
     log(`开始发布到 ${registryInfo}...`, "publish");
-    exec(
-      `npm publish --access public --registry ${PRIVATE_REGISTRY}`,
-      BUILD_DIR,
-    );
+    exec(`npm publish --access public --registry ${PRIVATE_REGISTRY}`, BUILD_DIR);
   }
 }
 
@@ -358,10 +324,7 @@ async function main() {
 
     // 显示发布配置信息
     log(`发布模式: ${isDryRun ? "测试模式" : "正式发布"}`, "info");
-    log(
-      `目标仓库: ${USE_PRIVATE_REGISTRY ? `私有制品仓库 (${PRIVATE_REGISTRY})` : "npm 官方仓库"}`,
-      "info",
-    );
+    log(`目标仓库: ${USE_PRIVATE_REGISTRY ? `私有制品仓库 (${PRIVATE_REGISTRY})` : "npm 官方仓库"}`, "info");
 
     // 获取当前版本信息
     const packageJson = getPackageJson();
@@ -395,9 +358,7 @@ async function main() {
     publishToNpm(isDryRun);
 
     // 显示成功消息
-    showSuccess(
-      `${PACKAGE_NAME} v${newVersion} ${isDryRun ? "测试" : "发布"}成功!`,
-    );
+    showSuccess(`${PACKAGE_NAME} v${newVersion} ${isDryRun ? "测试" : "发布"}成功!`);
   } catch (error) {
     handleError("utils 包发布过程中出现错误", error);
   } finally {

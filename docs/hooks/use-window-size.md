@@ -76,9 +76,7 @@ import { useWindowSize } from "vakao-ui";
 const [size] = useWindowSize();
 
 const isMobile = computed(() => size.value.width < 768);
-const isTablet = computed(
-  () => size.value.width >= 768 && size.value.width < 1024,
-);
+const isTablet = computed(() => size.value.width >= 768 && size.value.width < 1024);
 const isDesktop = computed(() => size.value.width >= 1024);
 
 const deviceType = computed(() => {
@@ -152,7 +150,7 @@ watch(
   () => {
     normalUpdateCount.value++;
   },
-  { deep: true },
+  { deep: true }
 );
 
 watch(
@@ -160,7 +158,7 @@ watch(
   () => {
     debouncedUpdateCount.value++;
   },
-  { deep: true },
+  { deep: true }
 );
 </script>
 ```

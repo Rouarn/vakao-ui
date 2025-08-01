@@ -52,24 +52,18 @@
       {
         "from": "assets/",
         "to": "assets/",
-        "filter": [
-          "**/*"
-        ]
+        "filter": ["**/*"]
       }
     ],
     "win": {
       "target": [
         {
           "target": "nsis",
-          "arch": [
-            "x64"
-          ]
+          "arch": ["x64"]
         },
         {
           "target": "portable",
-          "arch": [
-            "x64"
-          ]
+          "arch": ["x64"]
         }
       ],
       "requestedExecutionLevel": "asInvoker",
@@ -94,10 +88,7 @@
       "target": [
         {
           "target": "dmg",
-          "arch": [
-            "x64",
-            "arm64"
-          ]
+          "arch": ["x64", "arm64"]
         }
       ],
       "icon": "../../public/favicon.ico",
@@ -123,15 +114,11 @@
       "target": [
         {
           "target": "AppImage",
-          "arch": [
-            "x64"
-          ]
+          "arch": ["x64"]
         },
         {
           "target": "deb",
-          "arch": [
-            "x64"
-          ]
+          "arch": ["x64"]
         }
       ],
       "icon": "assets/favicon.ico",
@@ -145,13 +132,7 @@
       "private": false
     }
   },
-  "keywords": [
-    "vakao-ui",
-    "publisher",
-    "gui",
-    "electron",
-    "vue"
-  ],
+  "keywords": ["vakao-ui", "publisher", "gui", "electron", "vue"],
   "author": "我与夏季",
   "license": "MIT",
   "devDependencies": {

@@ -167,10 +167,7 @@ class LegacyDeployExtension {
       const status = this.execCommand("git status --porcelain", {
         silent: true,
       });
-      const currentBranch = this.execCommand(
-        "git rev-parse --abbrev-ref HEAD",
-        { silent: true },
-      ).trim();
+      const currentBranch = this.execCommand("git rev-parse --abbrev-ref HEAD", { silent: true }).trim();
 
       const hasUncommittedChanges = !!status.trim();
 

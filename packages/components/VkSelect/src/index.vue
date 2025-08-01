@@ -1,26 +1,12 @@
 <template>
-  <div
-    ref="selectRef"
-    :class="mergedClass"
-    :style="mergedStyle"
-    @click="handleClick"
-  >
+  <div ref="selectRef" :class="mergedClass" :style="mergedStyle" @click="handleClick">
     <!-- 选择器输入区域 -->
     <div :class="ns.element('input')">
       <!-- 多选标签 -->
       <template v-if="multiple && selectedOptions.length > 0">
-        <span
-          v-for="option in selectedOptions"
-          :key="String(option.value)"
-          :class="ns.element('tag')"
-        >
+        <span v-for="option in selectedOptions" :key="String(option.value)" :class="ns.element('tag')">
           {{ option.label }}
-          <VkIcon
-            :class="ns.element('tag-close')"
-            icon="mdi:close"
-            size="12px"
-            @click.stop="removeTag(option.value)"
-          />
+          <VkIcon :class="ns.element('tag-close')" icon="mdi:close" size="12px" @click.stop="removeTag(option.value)" />
         </span>
       </template>
 
@@ -37,66 +23,35 @@
         @focus="handleFocus"
         @blur="handleBlur"
       />
-      <span
-        v-else
-        :class="ns.element('inner')"
-      >
+      <span v-else :class="ns.element('inner')">
         {{ displayValue }}
       </span>
 
       <!-- 后缀图标 -->
       <div :class="ns.element('suffix')">
         <!-- 清空按钮 -->
-        <VkIcon
-          v-if="showClearIcon"
-          :class="ns.element('clear')"
-          icon="mdi:close-circle"
-          size="16px"
-          @click.stop="handleClear"
-        />
+        <VkIcon v-if="showClearIcon" :class="ns.element('clear')" icon="mdi:close-circle" size="16px" @click.stop="handleClear" />
         <!-- 下拉箭头 -->
-        <VkIcon
-          v-else
-          :class="[ns.element('arrow'), ns.is('reverse', dropdownVisible)]"
-          icon="mdi:chevron-down"
-          size="16px"
-        />
+        <VkIcon v-else :class="[ns.element('arrow'), ns.is('reverse', dropdownVisible)]" icon="mdi:chevron-down" size="16px" />
       </div>
     </div>
 
     <!-- 下拉面板 -->
     <Transition name="vk-select-dropdown">
-      <div
-        v-show="dropdownVisible"
-        ref="dropdownRef"
-        :class="ns.element('dropdown')"
-      >
+      <div v-show="dropdownVisible" ref="dropdownRef" :class="ns.element('dropdown')">
         <!-- 加载状态 -->
-        <div
-          v-if="loading"
-          :class="ns.element('loading')"
-        >
-          <VkIcon
-            icon="mdi:loading"
-            size="16px"
-            class="rotating"
-          />
+        <div v-if="loading" :class="ns.element('loading')">
+          <VkIcon icon="mdi:loading" size="16px" class="rotating" />
           <span>{{ loadingText }}</span>
         </div>
 
         <!-- 选项列表 -->
-        <ul
-          v-else-if="hasVisibleOptions"
-          :class="ns.element('options')"
-        >
+        <ul v-else-if="hasVisibleOptions" :class="ns.element('options')">
           <slot />
         </ul>
 
         <!-- 无数据 -->
-        <div
-          v-else
-          :class="ns.element('empty')"
-        >
+        <div v-else :class="ns.element('empty')">
           {{ searchQuery ? noMatchText : noDataText }}
         </div>
       </div>
@@ -105,22 +60,8 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  ref,
-  reactive,
-  computed,
-  provide,
-  onMounted,
-  onUnmounted,
-  type StyleValue,
-} from "vue";
-import {
-  selectProps,
-  selectEmits,
-  type SelectValue,
-  type SelectOption,
-} from "./types";
+import { defineComponent, ref, reactive, computed, provide, onMounted, onUnmounted, type StyleValue } from "vue";
+import { selectProps, selectEmits, type SelectValue, type SelectOption } from "./types";
 import { useNamespace, useControlled } from "@vakao-ui/utils";
 import VkIcon from "../../VkIcon";
 import VkInput from "../../VkInput";
@@ -148,35 +89,25 @@ export default defineComponent({
     const options = reactive<SelectOption[]>([]);
 
     // 使用受控/非受控模式工具函数
-    const { currentValue, updateValue } = useControlled<
-      SelectValue | SelectValue[]
-    >(
+    const { currentValue, updateValue } = useControlled<SelectValue | SelectValue[]>(
       props,
       "value",
       "modelValue",
       emit as (event: string, ...args: unknown[]) => void,
-      props.multiple ? ([] as SelectValue[]) : ("" as SelectValue),
+      props.multiple ? ([] as SelectValue[]) : ("" as SelectValue)
     );
 
     // 计算属性
     const hasValue = computed(() => {
       if (props.multiple) {
-        return (
-          Array.isArray(currentValue.value) && currentValue.value.length > 0
-        );
+        return Array.isArray(currentValue.value) && currentValue.value.length > 0;
       }
-      return (
-        currentValue.value !== undefined &&
-        currentValue.value !== null &&
-        currentValue.value !== ""
-      );
+      return currentValue.value !== undefined && currentValue.value !== null && currentValue.value !== "";
     });
 
     const selectedOptions = computed(() => {
       if (!props.multiple || !Array.isArray(currentValue.value)) return [];
-      return options.filter((option) =>
-        (currentValue.value as SelectValue[]).includes(option.value),
-      );
+      return options.filter((option) => (currentValue.value as SelectValue[]).includes(option.value));
     });
 
     const displayValue = computed(() => {
@@ -207,9 +138,7 @@ export default defineComponent({
       if (!props.filterable || !searchQuery.value) {
         return options;
       }
-      return options.filter((option) =>
-        option.label.toLowerCase().includes(searchQuery.value.toLowerCase()),
-      );
+      return options.filter((option) => option.label.toLowerCase().includes(searchQuery.value.toLowerCase()));
     });
 
     const showClearIcon = computed(() => {
@@ -316,9 +245,7 @@ export default defineComponent({
 
     // 选项管理
     const addOption = (option: SelectOption) => {
-      const existingIndex = options.findIndex(
-        (opt) => opt.value === option.value,
-      );
+      const existingIndex = options.findIndex((opt) => opt.value === option.value);
       if (existingIndex === -1) {
         options.push(option);
       } else {
@@ -361,10 +288,7 @@ export default defineComponent({
 
     const isSelected = (value: SelectValue) => {
       if (props.multiple) {
-        return (
-          Array.isArray(currentValue.value) &&
-          currentValue.value.includes(value)
-        );
+        return Array.isArray(currentValue.value) && currentValue.value.includes(value);
       }
       return currentValue.value === value;
     };

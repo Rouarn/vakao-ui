@@ -42,16 +42,11 @@
     </div>
   </div>
 
-  <vk-button @click="() => basicResetPosition()" size="small"
-    >重置位置</vk-button
-  >
-  <vk-button @click="() => basicSetPosition(100, 100)" size="small"
-    >设置位置 (100, 100)</vk-button
-  >
+  <vk-button @click="() => basicResetPosition()" size="small">重置位置</vk-button>
+  <vk-button @click="() => basicSetPosition(100, 100)" size="small">设置位置 (100, 100)</vk-button>
 
   <div>
-    位置: ({{ basicDragState.position.x }},
-    {{ basicDragState.position.y }})<br />
+    位置: ({{ basicDragState.position.x }}, {{ basicDragState.position.y }})<br />
     拖拽中: {{ basicDragState.isDragging }}
   </div>
 </template>
@@ -59,8 +54,7 @@
 <script setup lang="ts">
 import { useDrag } from "@vakao-ui/hooks";
 
-const [basicDragRef, basicDragState, , , basicResetPosition, basicSetPosition] =
-  useDrag();
+const [basicDragRef, basicDragState, , , basicResetPosition, basicSetPosition] = useDrag();
 </script>
 
 <style scoped>
@@ -264,20 +258,8 @@ const [gridDragRef, gridDragState] = useDrag({
   width: 100%;
   height: 200px;
   background:
-    repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 19px,
-      #e8e8e8 19px,
-      #e8e8e8 20px
-    ),
-    repeating-linear-gradient(
-      90deg,
-      transparent,
-      transparent 19px,
-      #e8e8e8 19px,
-      #e8e8e8 20px
-    );
+    repeating-linear-gradient(0deg, transparent, transparent 19px, #e8e8e8 19px, #e8e8e8 20px),
+    repeating-linear-gradient(90deg, transparent, transparent 19px, #e8e8e8 19px, #e8e8e8 20px);
   border: 2px solid #d9d9d9;
   border-radius: 8px;
   overflow: hidden;
@@ -331,8 +313,7 @@ const [gridDragRef, gridDragState] = useDrag({
 `useDrag` 返回一个数组，包含以下元素：
 
 ```typescript
-const [elementRef, dragState, startDrag, stopDrag, resetPosition, setPosition] =
-  useDrag(options);
+const [elementRef, dragState, startDrag, stopDrag, resetPosition, setPosition] = useDrag(options);
 ```
 
 | 索引 | 名称          | 类型                             | 说明           |

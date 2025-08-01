@@ -212,10 +212,7 @@ interface UseCounterOptions {
  * @example
  * const [count, increment, decrement, reset, setCount] = useCounter(0, { min: 0, max: 100 });
  */
-function useCounter(
-  initialValue?: number,
-  options?: UseCounterOptions,
-): UseCounterReturn;
+function useCounter(initialValue?: number, options?: UseCounterOptions): UseCounterReturn;
 ```
 
 ## 注意事项

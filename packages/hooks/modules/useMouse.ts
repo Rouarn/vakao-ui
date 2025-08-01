@@ -138,12 +138,7 @@ export interface UseMouseOptions {
 export function useMouse(options: UseMouseOptions = {}): UseMouseReturn {
   // ==================== 配置选项 ====================
 
-  const {
-    target,
-    touch = true,
-    resetOnTouchEnds = false,
-    initialValue = { x: 0, y: 0 },
-  } = options;
+  const { target, touch = true, resetOnTouchEnds = false, initialValue = { x: 0, y: 0 } } = options;
 
   // ==================== 响应式状态 ====================
 
@@ -205,12 +200,7 @@ export function useMouse(options: UseMouseOptions = {}): UseMouseReturn {
     const relativeX = elementX.value;
     const relativeY = elementY.value;
 
-    return (
-      relativeX >= 0 &&
-      relativeY >= 0 &&
-      relativeX <= elementWidth.value &&
-      relativeY <= elementHeight.value
-    );
+    return relativeX >= 0 && relativeY >= 0 && relativeX <= elementWidth.value && relativeY <= elementHeight.value;
   });
 
   // ==================== 工具函数 ====================

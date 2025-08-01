@@ -2,13 +2,7 @@ import type { PropType, CSSProperties } from "vue";
 import type { ExtractPublicPropTypes, ComponentSize } from "../../../types";
 
 // 输入框类型
-export type InputType =
-  | "text"
-  | "password"
-  | "email"
-  | "number"
-  | "tel"
-  | "url";
+export type InputType = "text" | "password" | "email" | "number" | "tel" | "url";
 
 // 输入框尺寸
 export type InputSize = ComponentSize;

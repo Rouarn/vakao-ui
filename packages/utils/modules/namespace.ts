@@ -44,10 +44,7 @@ const statePrefix = "is-";
  * ns.bem('icon', 'primary');     // 'vk-button__icon--primary'
  * ```
  */
-export const useNamespace = (
-  block: string,
-  namespace: string = defaultNamespace,
-): UseNamespaceReturn => {
+export const useNamespace = (block: string, namespace: string = defaultNamespace): UseNamespaceReturn => {
   const blockClass = `${namespace}-${block}`;
 
   /**

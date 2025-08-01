@@ -124,11 +124,7 @@ const value = ref("");
   </vk-select>
 
   <!-- 使用 @update:modelValue 事件 -->
-  <vk-select
-    :value="value2"
-    @update:modelValue="setValue2"
-    placeholder="请选择"
-  >
+  <vk-select :value="value2" @update:modelValue="setValue2" placeholder="请选择">
     <vk-option label="选项一" value="option1" />
     <vk-option label="选项二" value="option2" />
     <vk-option label="选项三" value="option3" />
@@ -203,12 +199,7 @@ const setValue2 = (value) => {
   </vk-select>
 
   <!-- 受控多选 -->
-  <vk-select
-    :value="multiValue2"
-    @change="setMultiValue2"
-    multiple
-    placeholder="请选择"
-  >
+  <vk-select :value="multiValue2" @change="setMultiValue2" multiple placeholder="请选择">
     <vk-option label="选项一" value="option1" />
     <vk-option label="选项二" value="option2" />
     <vk-option label="选项三" value="option3" />
@@ -439,12 +430,7 @@ Select 组件提供除了默认值以外的三种尺寸，可以在不同场景�
 ```vue
 <template>
   <div style="display: flex; flex-direction: column; gap: 16px;  width: 100%;">
-    <vk-select
-      v-model="value1"
-      size="small"
-      placeholder="小尺寸"
-      style="width: 100%;"
-    >
+    <vk-select v-model="value1" size="small" placeholder="小尺寸" style="width: 100%;">
       <vk-option label="选项一" value="option1" />
       <vk-option label="选项二" value="option2" />
       <vk-option label="选项三" value="option3" />

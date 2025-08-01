@@ -45,11 +45,7 @@ class Interactive {
       }
 
       // 检查是否在Electron环境中
-      if (
-        typeof process !== "undefined" &&
-        process.versions &&
-        process.versions.electron
-      ) {
+      if (typeof process !== "undefined" && process.versions && process.versions.electron) {
         return true;
       }
 
@@ -72,43 +68,37 @@ class Interactive {
     return new Promise((resolve) => {
       log("\n可用的包:", "info");
       Object.entries(this.packages).forEach(([_key, pkg], index) => {
-        log(
-          `  ${index + 1}. ${pkg.icon} ${pkg.displayName} (${pkg.name})`,
-          "info",
-        );
+        log(`  ${index + 1}. ${pkg.icon} ${pkg.displayName} (${pkg.name})`, "info");
       });
       log(`  ${Object.keys(this.packages).length + 1}. 🚀 全部发布`, "info");
 
-      this.rl.question(
-        "\n请选择要发布的包 (输入数字，多个用逗号分隔): ",
-        (answer) => {
-          const choices = answer.split(",").map((s) => s.trim());
-          const packageKeys = [];
+      this.rl.question("\n请选择要发布的包 (输入数字，多个用逗号分隔): ", (answer) => {
+        const choices = answer.split(",").map((s) => s.trim());
+        const packageKeys = [];
 
-          for (const choice of choices) {
-            const index = parseInt(choice) - 1;
-            const packageEntries = Object.entries(this.packages);
+        for (const choice of choices) {
+          const index = parseInt(choice) - 1;
+          const packageEntries = Object.entries(this.packages);
 
-            if (index >= 0 && index < packageEntries.length) {
-              packageKeys.push(packageEntries[index][0]);
-            } else if (parseInt(choice) === packageEntries.length + 1) {
-              // 选择全部
-              packageKeys.push(...Object.keys(this.packages));
-              break;
-            }
+          if (index >= 0 && index < packageEntries.length) {
+            packageKeys.push(packageEntries[index][0]);
+          } else if (parseInt(choice) === packageEntries.length + 1) {
+            // 选择全部
+            packageKeys.push(...Object.keys(this.packages));
+            break;
           }
+        }
 
-          if (packageKeys.length === 0) {
-            log("无效选择，请重新选择", "error");
-            this.askForPackages().then(resolve);
-            return;
-          }
+        if (packageKeys.length === 0) {
+          log("无效选择，请重新选择", "error");
+          this.askForPackages().then(resolve);
+          return;
+        }
 
-          // 去重
-          const uniquePackages = [...new Set(packageKeys)];
-          resolve(uniquePackages);
-        },
-      );
+        // 去重
+        const uniquePackages = [...new Set(packageKeys)];
+        resolve(uniquePackages);
+      });
     });
   }
 
@@ -120,12 +110,7 @@ class Interactive {
    * @param {Function} suggestNextVersion - 建议版本号的函数
    * @returns {Promise<Object>} 版本号映射
    */
-  async askForVersions(
-    packageKeys,
-    syncVersion,
-    getPackageJson,
-    suggestNextVersion,
-  ) {
+  async askForVersions(packageKeys, syncVersion, getPackageJson, suggestNextVersion) {
     const versions = {};
 
     if (syncVersion && packageKeys.length > 1) {
@@ -137,11 +122,7 @@ class Interactive {
       log("\n同步版本模式：所有包将使用相同版本号", "info");
       log(`当前版本: ${currentVersion}`, "info");
 
-      const version = await this.askForSingleVersion(
-        currentVersion,
-        suggestedVersion,
-        "统一版本号",
-      );
+      const version = await this.askForSingleVersion(currentVersion, suggestedVersion, "统一版本号");
 
       packageKeys.forEach((key) => {
         versions[key] = version;
@@ -152,17 +133,10 @@ class Interactive {
         const currentVersion = getPackageJson(packageKey).version;
         const suggestedVersion = suggestNextVersion(currentVersion);
 
-        log(
-          `\n${this.packages[packageKey].icon} ${this.packages[packageKey].displayName}`,
-          "info",
-        );
+        log(`\n${this.packages[packageKey].icon} ${this.packages[packageKey].displayName}`, "info");
         log(`当前版本: ${currentVersion}`, "info");
 
-        const version = await this.askForSingleVersion(
-          currentVersion,
-          suggestedVersion,
-          this.packages[packageKey].displayName,
-        );
+        const version = await this.askForSingleVersion(currentVersion, suggestedVersion, this.packages[packageKey].displayName);
 
         versions[packageKey] = version;
       }
@@ -201,17 +175,9 @@ class Interactive {
    */
   askForSingleVersion(currentVersion, suggestedVersion, packageName) {
     if (this.isGUIMode) {
-      return this.askForSingleVersionGUI(
-        currentVersion,
-        suggestedVersion,
-        packageName,
-      );
+      return this.askForSingleVersionGUI(currentVersion, suggestedVersion, packageName);
     } else {
-      return this.askForSingleVersionCLI(
-        currentVersion,
-        suggestedVersion,
-        packageName,
-      );
+      return this.askForSingleVersionCLI(currentVersion, suggestedVersion, packageName);
     }
   }
 
@@ -251,32 +217,20 @@ class Interactive {
       const semverRegex = /^\d+\.\d+\.\d+$/;
       if (!semverRegex.test(newVersion)) {
         log("版本号格式不正确！请使用 x.y.z 格式（如: 1.0.0）", "error");
-        return this.askForSingleVersionGUI(
-          currentVersion,
-          suggestedVersion,
-          packageName,
-        );
+        return this.askForSingleVersionGUI(currentVersion, suggestedVersion, packageName);
       }
 
       // 检查版本号是否比当前版本新
       if (this.compareVersions(newVersion, currentVersion) <= 0) {
         log("新版本号必须大于当前版本！", "error");
-        return this.askForSingleVersionGUI(
-          currentVersion,
-          suggestedVersion,
-          packageName,
-        );
+        return this.askForSingleVersionGUI(currentVersion, suggestedVersion, packageName);
       }
 
       log(`${packageName} 版本号验证通过: ${newVersion}`, "success");
       return newVersion;
     } catch (error) {
       log(`GUI输入失败，回退到命令行模式: ${error.message}`, "warning");
-      return this.askForSingleVersionCLI(
-        currentVersion,
-        suggestedVersion,
-        packageName,
-      );
+      return this.askForSingleVersionCLI(currentVersion, suggestedVersion, packageName);
     }
   }
 
@@ -289,8 +243,7 @@ class Interactive {
     return new Promise((resolve, reject) => {
       try {
         // 生成唯一的请求ID
-        const requestId =
-          Date.now().toString(36) + Math.random().toString(36).substr(2);
+        const requestId = Date.now().toString(36) + Math.random().toString(36).substr(2);
 
         // 创建请求对象
         const request = {
@@ -303,10 +256,7 @@ class Interactive {
         const responseHandler = (data) => {
           try {
             const response = JSON.parse(data.toString());
-            if (
-              response.id === requestId &&
-              response.type === "user-input-response"
-            ) {
+            if (response.id === requestId && response.type === "user-input-response") {
               process.stdin.removeListener("data", responseHandler);
               resolve(response.data);
             }
@@ -325,11 +275,7 @@ class Interactive {
         process.stdin.on("data", responseHandler);
 
         // 发送请求到标准输出（主进程会捕获）
-        process.stdout.write(
-          "\n__VAKAO_GUI_REQUEST__" +
-            JSON.stringify(request) +
-            "__VAKAO_GUI_REQUEST_END__\n",
-        );
+        process.stdout.write("\n__VAKAO_GUI_REQUEST__" + JSON.stringify(request) + "__VAKAO_GUI_REQUEST_END__\n");
 
         // 清理超时
         const originalResolve = resolve;
@@ -352,38 +298,27 @@ class Interactive {
    */
   askForSingleVersionCLI(currentVersion, suggestedVersion, packageName) {
     return new Promise((resolve) => {
-      this.rl.question(
-        `请输入 ${packageName} 的新版本号 (建议: ${suggestedVersion}, 留空使用建议版本): `,
-        (version) => {
-          const newVersion = version || suggestedVersion;
+      this.rl.question(`请输入 ${packageName} 的新版本号 (建议: ${suggestedVersion}, 留空使用建议版本): `, (version) => {
+        const newVersion = version || suggestedVersion;
 
-          // 验证版本号格式
-          const semverRegex = /^\d+\.\d+\.\d+$/;
-          if (!semverRegex.test(newVersion)) {
-            log("版本号格式不正确！请使用 x.y.z 格式（如: 1.0.0）", "error");
-            this.askForSingleVersionCLI(
-              currentVersion,
-              suggestedVersion,
-              packageName,
-            ).then(resolve);
-            return;
-          }
+        // 验证版本号格式
+        const semverRegex = /^\d+\.\d+\.\d+$/;
+        if (!semverRegex.test(newVersion)) {
+          log("版本号格式不正确！请使用 x.y.z 格式（如: 1.0.0）", "error");
+          this.askForSingleVersionCLI(currentVersion, suggestedVersion, packageName).then(resolve);
+          return;
+        }
 
-          // 检查版本号是否比当前版本新
-          if (this.compareVersions(newVersion, currentVersion) <= 0) {
-            log("新版本号必须大于当前版本！", "error");
-            this.askForSingleVersionCLI(
-              currentVersion,
-              suggestedVersion,
-              packageName,
-            ).then(resolve);
-            return;
-          }
+        // 检查版本号是否比当前版本新
+        if (this.compareVersions(newVersion, currentVersion) <= 0) {
+          log("新版本号必须大于当前版本！", "error");
+          this.askForSingleVersionCLI(currentVersion, suggestedVersion, packageName).then(resolve);
+          return;
+        }
 
-          log(`${packageName} 版本号验证通过: ${newVersion}`, "success");
-          resolve(newVersion);
-        },
-      );
+        log(`${packageName} 版本号验证通过: ${newVersion}`, "success");
+        resolve(newVersion);
+      });
     });
   }
 
@@ -395,9 +330,7 @@ class Interactive {
   getSupportedDeployStrategies(packageKeys) {
     // 如果选择了文档包，只返回文档相关的部署策略
     if (packageKeys.includes("docs")) {
-      return (
-        this.packages.docs.supportedDeployStrategies || ["docs", "github-pages"]
-      );
+      return this.packages.docs.supportedDeployStrategies || ["docs", "github-pages"];
     }
 
     // 如果选择了主包，支持所有部署策略
@@ -416,8 +349,7 @@ class Interactive {
    */
   askForDeployment(packageKeys = []) {
     return new Promise((resolve) => {
-      const supportedStrategies =
-        this.getSupportedDeployStrategies(packageKeys);
+      const supportedStrategies = this.getSupportedDeployStrategies(packageKeys);
       const isDocsOnly = packageKeys.length === 1 && packageKeys[0] === "docs";
 
       log("\n部署选项:", "info");
@@ -542,9 +474,7 @@ class Interactive {
               break;
             case 5:
               // 智能选择部署策略
-              const defaultStrategy = supportedStrategies.includes("docs")
-                ? "docs"
-                : supportedStrategies[0];
+              const defaultStrategy = supportedStrategies.includes("docs") ? "docs" : supportedStrategies[0];
               resolve({
                 deploy: false,
                 deployOnly: true,
@@ -586,10 +516,7 @@ class Interactive {
   showPublishPlan(packageKeys, versions) {
     log("发布计划:", "info");
     packageKeys.forEach((key) => {
-      log(
-        `  ${this.packages[key].icon} ${this.packages[key].displayName}: v${versions[key]}`,
-        "info",
-      );
+      log(`  ${this.packages[key].icon} ${this.packages[key].displayName}: v${versions[key]}`, "info");
     });
   }
 
@@ -606,15 +533,9 @@ class Interactive {
     results.forEach((result) => {
       const pkg = this.packages[result.package];
       if (result.success) {
-        log(
-          `  ✅ ${pkg.icon} ${pkg.displayName} v${result.version} - 成功`,
-          "success",
-        );
+        log(`  ✅ ${pkg.icon} ${pkg.displayName} v${result.version} - 成功`, "success");
       } else {
-        log(
-          `  ❌ ${pkg.icon} ${pkg.displayName} - 失败: ${result.error}`,
-          "error",
-        );
+        log(`  ❌ ${pkg.icon} ${pkg.displayName} - 失败: ${result.error}`, "error");
       }
     });
 

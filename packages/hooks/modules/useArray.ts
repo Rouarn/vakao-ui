@@ -7,20 +7,14 @@ export type ArrayPushFunction<T> = (...items: T[]) => void;
 export type ArrayPopFunction<T> = () => T | undefined;
 export type ArrayShiftFunction<T> = () => T | undefined;
 export type ArrayUnshiftFunction<T> = (...items: T[]) => void;
-export type ArraySpliceFunction<T> = (
-  start: number,
-  deleteCount?: number,
-  ...items: T[]
-) => T[];
+export type ArraySpliceFunction<T> = (start: number, deleteCount?: number, ...items: T[]) => T[];
 export type ArrayRemoveFunction<T> = (item: T) => boolean;
 export type ArrayRemoveAtFunction<T> = (index: number) => T | undefined;
 export type ArrayInsertAtFunction<T> = (index: number, item: T) => void;
 export type ArrayUpdateAtFunction<T> = (index: number, item: T) => boolean;
 export type ArrayClearFunction = () => void;
 export type ArrayReplaceFunction<T> = (newArray: T[]) => void;
-export type ArrayFilterFunction<T> = (
-  predicate: (item: T, index: number) => boolean,
-) => void;
+export type ArrayFilterFunction<T> = (predicate: (item: T, index: number) => boolean) => void;
 export type ArraySortFunction<T> = (compareFn?: (a: T, b: T) => number) => void;
 export type ArrayReverseFunction = () => void;
 
@@ -61,12 +55,7 @@ export interface ArrayActions<T> {
 /**
  * useArray 返回值类型
  */
-export type UseArrayReturn<T> = [
-  ComputedRef<readonly T[]>,
-  ArrayActions<T>,
-  ComputedRef<number>,
-  ComputedRef<boolean>,
-];
+export type UseArrayReturn<T> = [ComputedRef<readonly T[]>, ArrayActions<T>, ComputedRef<number>, ComputedRef<boolean>];
 
 /**
  * 数组状态管理 Hook

@@ -88,14 +88,12 @@ class DeploymentEngine {
    * @returns {Array} 策略列表
    */
   getAvailableStrategies() {
-    return Array.from(this.deploymentStrategies.entries()).map(
-      ([key, strategy]) => ({
-        key,
-        name: strategy.name,
-        description: strategy.description,
-        icon: strategy.icon,
-      }),
-    );
+    return Array.from(this.deploymentStrategies.entries()).map(([key, strategy]) => ({
+      key,
+      name: strategy.name,
+      description: strategy.description,
+      icon: strategy.icon,
+    }));
   }
 
   /**
@@ -179,10 +177,7 @@ class DeploymentEngine {
       const status = this.execCommand("git status --porcelain", {
         silent: true,
       });
-      const currentBranch = this.execCommand(
-        "git rev-parse --abbrev-ref HEAD",
-        { silent: true },
-      ).trim();
+      const currentBranch = this.execCommand("git rev-parse --abbrev-ref HEAD", { silent: true }).trim();
 
       return {
         isClean: !status.trim(),
@@ -231,12 +226,7 @@ class DeploymentEngine {
    * @param {Object} options - 部署选项
    */
   async deployToGitHubPages(options = {}) {
-    const {
-      buildDir = "docs/.vitepress/dist",
-      message,
-      branch = "gh-pages",
-      isDryRun = false,
-    } = options;
+    const { buildDir = "docs/.vitepress/dist", message, branch = "gh-pages", isDryRun = false } = options;
 
     log("开始部署到 GitHub Pages", "deploy");
 
@@ -259,8 +249,7 @@ class DeploymentEngine {
 
     // 构建部署命令
     const gitStatus = this.checkGitStatus();
-    const deployMessage =
-      message || `docs: deploy from ${gitStatus.currentBranch} branch`;
+    const deployMessage = message || `docs: deploy from ${gitStatus.currentBranch} branch`;
     const deployCommand = `npx gh-pages -d "${distDir}" -b ${branch} -m "${deployMessage}"`;
 
     if (isDryRun) {

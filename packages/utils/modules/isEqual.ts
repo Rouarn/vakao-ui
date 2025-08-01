@@ -104,12 +104,7 @@ export const isEqual = (a: unknown, b: unknown): boolean => {
     if (!Object.prototype.hasOwnProperty.call(b, key)) {
       return false;
     }
-    if (
-      !isEqual(
-        (a as Record<string, unknown>)[key],
-        (b as Record<string, unknown>)[key],
-      )
-    ) {
+    if (!isEqual((a as Record<string, unknown>)[key], (b as Record<string, unknown>)[key])) {
       return false;
     }
   }
@@ -129,7 +124,7 @@ export const isEqualWithCircular = (
   a: unknown,
   b: unknown,
   visitedA: WeakMap<object, object> = new WeakMap(),
-  visitedB: WeakMap<object, object> = new WeakMap(),
+  visitedB: WeakMap<object, object> = new WeakMap()
 ): boolean => {
   // 严格相等检查（包括 NaN）
   if (Object.is(a, b)) {
@@ -180,10 +175,7 @@ export const isEqualWithCircular = (
         return false;
       }
       for (const [key, value] of a) {
-        if (
-          !b.has(key) ||
-          !isEqualWithCircular(value, b.get(key), visitedA, visitedB)
-        ) {
+        if (!b.has(key) || !isEqualWithCircular(value, b.get(key), visitedA, visitedB)) {
           return false;
         }
       }
@@ -245,14 +237,7 @@ export const isEqualWithCircular = (
       if (!Object.prototype.hasOwnProperty.call(b, key)) {
         return false;
       }
-      if (
-        !isEqualWithCircular(
-          (a as Record<string, unknown>)[key],
-          (b as Record<string, unknown>)[key],
-          visitedA,
-          visitedB,
-        )
-      ) {
+      if (!isEqualWithCircular((a as Record<string, unknown>)[key], (b as Record<string, unknown>)[key], visitedA, visitedB)) {
         return false;
       }
     }
@@ -279,12 +264,7 @@ export const shallowEqual = (a: unknown, b: unknown): boolean => {
   }
 
   // 类型不同或不是对象
-  if (
-    typeof a !== "object" ||
-    typeof b !== "object" ||
-    a === null ||
-    b === null
-  ) {
+  if (typeof a !== "object" || typeof b !== "object" || a === null || b === null) {
     return false;
   }
 
@@ -300,10 +280,7 @@ export const shallowEqual = (a: unknown, b: unknown): boolean => {
   for (const key of keysA) {
     if (
       !Object.prototype.hasOwnProperty.call(b, key) ||
-      !Object.is(
-        (a as Record<string, unknown>)[key],
-        (b as Record<string, unknown>)[key],
-      )
+      !Object.is((a as Record<string, unknown>)[key], (b as Record<string, unknown>)[key])
     ) {
       return false;
     }

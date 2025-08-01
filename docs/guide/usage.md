@@ -85,9 +85,7 @@ Vakao UI 使用 TypeScript 编写，提供完整的类型定义。所有组件�
 ```vue
 <template>
   <!-- 完整的类型支持和智能提示 -->
-  <vk-button type="primary" size="large" :disabled="false" @click="handleClick">
-    按钮
-  </vk-button>
+  <vk-button type="primary" size="large" :disabled="false" @click="handleClick"> 按钮 </vk-button>
 </template>
 
 <script setup lang="ts">
@@ -104,13 +102,7 @@ const handleClick = () => {
 ```vue
 <template>
   <!-- 支持 class 和 style 属性 -->
-  <vk-button
-    class="my-custom-class"
-    style="margin: 10px;"
-    data-testid="my-button"
-  >
-    自定义样式按钮
-  </vk-button>
+  <vk-button class="my-custom-class" style="margin: 10px;" data-testid="my-button"> 自定义样式按钮 </vk-button>
 </template>
 ```
 

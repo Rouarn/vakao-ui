@@ -1,21 +1,14 @@
 import type { App } from "vue";
 import { createApp } from "vue";
 import MessageBoxComponent from "./index.vue";
-import type {
-  MessageBoxOptions,
-  MessageBoxAction,
-  MessageBoxInstance,
-  MessageBoxResult,
-} from "./types";
+import type { MessageBoxOptions, MessageBoxAction, MessageBoxInstance, MessageBoxResult } from "./types";
 
 // MessageBox 实例管理
 let messageBoxInstance: App | null = null;
 let currentContainer: HTMLElement | null = null;
 
 // 创建 MessageBox 实例
-function createMessageBox(
-  options: MessageBoxOptions,
-): Promise<MessageBoxResult> {
+function createMessageBox(options: MessageBoxOptions): Promise<MessageBoxResult> {
   return new Promise((resolve, reject) => {
     // 清理之前的实例
     if (messageBoxInstance && currentContainer) {
@@ -77,11 +70,7 @@ export const VkMessageBox = {
   /**
    * 显示确认对话框
    */
-  confirm(
-    message: string,
-    title?: string | MessageBoxOptions,
-    options?: MessageBoxOptions,
-  ): Promise<MessageBoxResult> {
+  confirm(message: string, title?: string | MessageBoxOptions, options?: MessageBoxOptions): Promise<MessageBoxResult> {
     let mergedOptions: MessageBoxOptions;
 
     if (typeof title === "string") {
@@ -106,11 +95,7 @@ export const VkMessageBox = {
   /**
    * 显示警告对话框
    */
-  alert(
-    message: string,
-    title?: string | MessageBoxOptions,
-    options?: MessageBoxOptions,
-  ): Promise<MessageBoxResult> {
+  alert(message: string, title?: string | MessageBoxOptions, options?: MessageBoxOptions): Promise<MessageBoxResult> {
     let mergedOptions: MessageBoxOptions;
 
     if (typeof title === "string") {
@@ -135,11 +120,7 @@ export const VkMessageBox = {
   /**
    * 显示提示对话框
    */
-  prompt(
-    message: string,
-    title?: string | MessageBoxOptions,
-    options?: MessageBoxOptions,
-  ): Promise<MessageBoxResult> {
+  prompt(message: string, title?: string | MessageBoxOptions, options?: MessageBoxOptions): Promise<MessageBoxResult> {
     let mergedOptions: MessageBoxOptions;
 
     if (typeof title === "string") {

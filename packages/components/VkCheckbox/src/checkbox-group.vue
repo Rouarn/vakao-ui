@@ -1,21 +1,12 @@
 <template>
-  <div
-    :class="mergedClass"
-    :style="mergedStyle"
-    role="group"
-    aria-label="checkbox group"
-  >
+  <div :class="mergedClass" :style="mergedStyle" role="group" aria-label="checkbox group">
     <slot />
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed, provide, watch } from "vue";
-import {
-  checkboxGroupProps,
-  checkboxGroupEmits,
-  type CheckboxValue,
-} from "./types";
+import { checkboxGroupProps, checkboxGroupEmits, type CheckboxValue } from "./types";
 import { useNamespace } from "@vakao-ui/utils";
 
 defineOptions({
@@ -31,12 +22,7 @@ const modelValue = defineModel<CheckboxValue[]>({ default: () => [] });
 
 // 样式类名
 const mergedClass = computed(() => {
-  return [
-    ns.block(),
-    `${ns.block()}--size-${props.size}`,
-    ns.is("disabled", props.disabled),
-    props.customClass,
-  ];
+  return [ns.block(), `${ns.block()}--size-${props.size}`, ns.is("disabled", props.disabled), props.customClass];
 });
 
 // 合并样式
@@ -71,6 +57,6 @@ watch(
       console.warn(`[VkCheckboxGroup] 选择数量不能超过 ${props.max} 个`);
     }
   },
-  { immediate: true },
+  { immediate: true }
 );
 </script>

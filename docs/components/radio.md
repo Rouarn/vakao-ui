@@ -91,32 +91,12 @@ const radio = ref("option1");
 ```vue
 <template>
   <!-- 使用 @change 事件 -->
-  <vk-radio
-    :model-value="radio1"
-    @change="setRadio1"
-    value="option1"
-    label="选项1"
-  />
-  <vk-radio
-    :model-value="radio1"
-    @change="setRadio1"
-    value="option2"
-    label="选项2"
-  />
+  <vk-radio :model-value="radio1" @change="setRadio1" value="option1" label="选项1" />
+  <vk-radio :model-value="radio1" @change="setRadio1" value="option2" label="选项2" />
 
   <!-- 使用 @update:modelValue 事件 -->
-  <vk-radio
-    :model-value="radio2"
-    @update:modelValue="setRadio2"
-    value="option1"
-    label="选项1"
-  />
-  <vk-radio
-    :model-value="radio2"
-    @update:modelValue="setRadio2"
-    value="option2"
-    label="选项2"
-  />
+  <vk-radio :model-value="radio2" @update:modelValue="setRadio2" value="option1" label="选项1" />
+  <vk-radio :model-value="radio2" @update:modelValue="setRadio2" value="option2" label="选项2" />
 </template>
 
 <script setup>

@@ -38,18 +38,11 @@
   <div>
     <input type="file" @change="handleFileSelect" accept=".txt,.json" />
     <div v-if="selectedFile">
-      选中文件: {{ selectedFile.name }} ({{
-        (selectedFile.size / 1024).toFixed(2)
-      }}
+      选中文件: {{ selectedFile.name }} ({{ (selectedFile.size / 1024).toFixed(2) }}
       KB)
     </div>
 
-    <vk-button
-      @click="uploadFile"
-      :loading="uploading"
-      :disabled="!selectedFile"
-      type="primary"
-    >
+    <vk-button @click="uploadFile" :loading="uploading" :disabled="!selectedFile" type="primary">
       {{ uploading ? "上传中..." : "开始上传" }}
     </vk-button>
     <vk-button @click="resetUpload" :disabled="uploading">重置</vk-button>
@@ -73,33 +66,32 @@ interface UploadResult {
 
 const selectedFile = ref<File | null>(null);
 
-const [uploadData, uploading, uploadError, uploadFile, resetUpload, status] =
-  useAsync(
-    async (file: File): Promise<UploadResult> => {
-      // 模拟文件上传
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+const [uploadData, uploading, uploadError, uploadFile, resetUpload, status] = useAsync(
+  async (file: File): Promise<UploadResult> => {
+    // 模拟文件上传
+    await new Promise((resolve) => setTimeout(resolve, 2000));
 
-      // 模拟上传失败（10% 概率）
-      if (Math.random() < 0.1) {
-        throw new Error("网络连接失败");
-      }
+    // 模拟上传失败（10% 概率）
+    if (Math.random() < 0.1) {
+      throw new Error("网络连接失败");
+    }
 
-      return {
-        id: Math.random().toString(36).substr(2, 9),
-        filename: file.name,
-        size: file.size,
-        uploadTime: new Date().toLocaleString(),
-      };
+    return {
+      id: Math.random().toString(36).substr(2, 9),
+      filename: file.name,
+      size: file.size,
+      uploadTime: new Date().toLocaleString(),
+    };
+  },
+  {
+    onSuccess: (result) => {
+      console.log("上传成功:", result);
     },
-    {
-      onSuccess: (result) => {
-        console.log("上传成功:", result);
-      },
-      onError: (error) => {
-        console.error("上传失败:", error);
-      },
+    onError: (error) => {
+      console.error("上传失败:", error);
     },
-  );
+  }
+);
 
 const handleFileSelect = (event: Event) => {
   const target = event.target as HTMLInputElement;
@@ -180,24 +172,23 @@ interface StatsData {
   growth: StatItem;
 }
 
-const [statsData, statsLoading, statsError, refreshStats, resetStats] =
-  useAsync(
-    async (): Promise<StatsData> => {
-      // 模拟 API 请求
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+const [statsData, statsLoading, statsError, refreshStats, resetStats] = useAsync(
+  async (): Promise<StatsData> => {
+    // 模拟 API 请求
+    await new Promise((resolve) => setTimeout(resolve, 1500));
 
-      return {
-        users: { value: Math.floor(Math.random() * 10000), label: "总用户数" },
-        orders: { value: Math.floor(Math.random() * 5000), label: "订单总数" },
-        revenue: {
-          value: Math.floor(Math.random() * 100000),
-          label: "总收入 (¥)",
-        },
-        growth: { value: Math.floor(Math.random() * 100), label: "增长率 (%)" },
-      };
-    },
-    { immediate: true }, // 立即执行
-  );
+    return {
+      users: { value: Math.floor(Math.random() * 10000), label: "总用户数" },
+      orders: { value: Math.floor(Math.random() * 5000), label: "订单总数" },
+      revenue: {
+        value: Math.floor(Math.random() * 100000),
+        label: "总收入 (¥)",
+      },
+      growth: { value: Math.floor(Math.random() * 100), label: "增长率 (%)" },
+    };
+  },
+  { immediate: true } // 立即执行
+);
 </script>
 ```
 
@@ -228,10 +219,7 @@ const [statsData, statsLoading, statsError, refreshStats, resetStats] =
 `useAsync` 返回一个数组，包含以下元素：
 
 ```typescript
-const [data, loading, error, execute, reset, status] = useAsync(
-  asyncFn,
-  options,
-);
+const [data, loading, error, execute, reset, status] = useAsync(asyncFn, options);
 ```
 
 | 索引 | 名称    | 类型                         | 说明               |

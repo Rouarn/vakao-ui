@@ -214,37 +214,11 @@
       <h4>基础分页</h4>
       <div class="pagination-controls">
         <div class="pagination-buttons">
-          <button
-            @click="basicActions.first()"
-            :disabled="!basicPagination.hasPrev"
-            class="btn"
-          >
-            首页
-          </button>
-          <button
-            @click="basicActions.prev()"
-            :disabled="!basicPagination.hasPrev"
-            class="btn"
-          >
-            上一页
-          </button>
-          <span class="current-page">
-            {{ basicPagination.current }} / {{ basicPagination.totalPages }}
-          </span>
-          <button
-            @click="basicActions.next()"
-            :disabled="!basicPagination.hasNext"
-            class="btn"
-          >
-            下一页
-          </button>
-          <button
-            @click="basicActions.last()"
-            :disabled="!basicPagination.hasNext"
-            class="btn"
-          >
-            末页
-          </button>
+          <button @click="basicActions.first()" :disabled="!basicPagination.hasPrev" class="btn">首页</button>
+          <button @click="basicActions.prev()" :disabled="!basicPagination.hasPrev" class="btn">上一页</button>
+          <span class="current-page"> {{ basicPagination.current }} / {{ basicPagination.totalPages }} </span>
+          <button @click="basicActions.next()" :disabled="!basicPagination.hasNext" class="btn">下一页</button>
+          <button @click="basicActions.last()" :disabled="!basicPagination.hasNext" class="btn">末页</button>
         </div>
         <div class="jump-controls">
           <span>跳转到:</span>
@@ -256,12 +230,7 @@
             :max="basicPagination.totalPages"
             class="jump-input"
           />
-          <button
-            @click="basicActions.goToPage(jumpPage)"
-            class="btn btn-primary"
-          >
-            跳转
-          </button>
+          <button @click="basicActions.goToPage(jumpPage)" class="btn btn-primary">跳转</button>
         </div>
       </div>
       <div class="pagination-info">
@@ -282,11 +251,7 @@
       <div class="size-controls">
         <div class="size-selector">
           <span>每页显示:</span>
-          <select
-            :value="sizePagination.pageSize"
-            @change="sizeActions.setPageSize(Number($event.target.value))"
-            class="size-select"
-          >
+          <select :value="sizePagination.pageSize" @change="sizeActions.setPageSize(Number($event.target.value))" class="size-select">
             <option value="5">5 条/页</option>
             <option value="10">10 条/页</option>
             <option value="20">20 条/页</option>
@@ -295,13 +260,7 @@
           <span>总共 {{ sizePagination.total }} 条数据</span>
         </div>
         <div class="page-navigation">
-          <button
-            @click="sizeActions.prev()"
-            :disabled="!sizePagination.hasPrev"
-            class="btn btn-sm"
-          >
-            ‹
-          </button>
+          <button @click="sizeActions.prev()" :disabled="!sizePagination.hasPrev" class="btn btn-sm">‹</button>
           <template v-for="page in getPageNumbers(sizePagination)" :key="page">
             <button
               v-if="page !== '...'"
@@ -313,13 +272,7 @@
             </button>
             <span v-else class="ellipsis">...</span>
           </template>
-          <button
-            @click="sizeActions.next()"
-            :disabled="!sizePagination.hasNext"
-            class="btn btn-sm"
-          >
-            ›
-          </button>
+          <button @click="sizeActions.next()" :disabled="!sizePagination.hasNext" class="btn btn-sm">›</button>
         </div>
       </div>
       <div class="pagination-info">
@@ -364,32 +317,14 @@
             条，共 {{ tablePagination.total }} 条
           </div>
           <div class="table-controls">
-            <select
-              :value="tablePagination.pageSize"
-              @change="tableActions.setPageSize(Number($event.target.value))"
-              class="size-select"
-            >
+            <select :value="tablePagination.pageSize" @change="tableActions.setPageSize(Number($event.target.value))" class="size-select">
               <option value="3">3 条/页</option>
               <option value="5">5 条/页</option>
               <option value="10">10 条/页</option>
             </select>
-            <button
-              @click="tableActions.prev()"
-              :disabled="!tablePagination.hasPrev"
-              class="btn btn-sm"
-            >
-              上一页
-            </button>
-            <span class="page-info">
-              {{ tablePagination.current }} / {{ tablePagination.totalPages }}
-            </span>
-            <button
-              @click="tableActions.next()"
-              :disabled="!tablePagination.hasNext"
-              class="btn btn-sm"
-            >
-              下一页
-            </button>
+            <button @click="tableActions.prev()" :disabled="!tablePagination.hasPrev" class="btn btn-sm">上一页</button>
+            <span class="page-info"> {{ tablePagination.current }} / {{ tablePagination.totalPages }} </span>
+            <button @click="tableActions.next()" :disabled="!tablePagination.hasNext" class="btn btn-sm">下一页</button>
           </div>
         </div>
       </div>
@@ -479,10 +414,7 @@ const [tablePagination, tableActions] = usePagination({
 
 const currentPageData = computed(() => {
   const { startIndex, endIndex } = tablePagination.value;
-  return tableData.value.slice(
-    startIndex,
-    Math.min(endIndex + 1, tableData.value.length),
-  );
+  return tableData.value.slice(startIndex, Math.min(endIndex + 1, tableData.value.length));
 });
 </script>
 
@@ -830,38 +762,18 @@ const currentPageData = computed(() => {
       <div class="advanced-controls">
         <div class="data-controls">
           <span>模拟数据量:</span>
-          <button @click="setReactiveTotal(50)" class="btn btn-outline">
-            50 条
-          </button>
-          <button @click="setReactiveTotal(100)" class="btn btn-outline">
-            100 条
-          </button>
-          <button @click="setReactiveTotal(200)" class="btn btn-outline">
-            200 条
-          </button>
-          <button @click="setReactiveTotal(500)" class="btn btn-outline">
-            500 条
-          </button>
+          <button @click="setReactiveTotal(50)" class="btn btn-outline">50 条</button>
+          <button @click="setReactiveTotal(100)" class="btn btn-outline">100 条</button>
+          <button @click="setReactiveTotal(200)" class="btn btn-outline">200 条</button>
+          <button @click="setReactiveTotal(500)" class="btn btn-outline">500 条</button>
         </div>
         <div class="navigation-controls">
           <span class="current-page blue">
             {{ reactivePagination.current }} /
             {{ reactivePagination.totalPages }}
           </span>
-          <button
-            @click="reactiveActions.prev()"
-            :disabled="!reactivePagination.hasPrev"
-            class="btn btn-sm"
-          >
-            ‹
-          </button>
-          <button
-            @click="reactiveActions.next()"
-            :disabled="!reactivePagination.hasNext"
-            class="btn btn-sm"
-          >
-            ›
-          </button>
+          <button @click="reactiveActions.prev()" :disabled="!reactivePagination.hasPrev" class="btn btn-sm">‹</button>
+          <button @click="reactiveActions.next()" :disabled="!reactivePagination.hasNext" class="btn btn-sm">›</button>
         </div>
       </div>
       <div class="pagination-info">
@@ -876,24 +788,12 @@ const currentPageData = computed(() => {
       <h4>带回调的分页</h4>
       <div class="callback-controls">
         <div class="callback-navigation">
-          <button
-            @click="callbackActions.prev()"
-            :disabled="!callbackPagination.hasPrev"
-            class="btn"
-          >
-            上一页
-          </button>
+          <button @click="callbackActions.prev()" :disabled="!callbackPagination.hasPrev" class="btn">上一页</button>
           <span class="current-page green">
             {{ callbackPagination.current }} /
             {{ callbackPagination.totalPages }}
           </span>
-          <button
-            @click="callbackActions.next()"
-            :disabled="!callbackPagination.hasNext"
-            class="btn"
-          >
-            下一页
-          </button>
+          <button @click="callbackActions.next()" :disabled="!callbackPagination.hasNext" class="btn">下一页</button>
           <select
             :value="callbackPagination.pageSize"
             @change="callbackActions.setPageSize(Number($event.target.value))"
@@ -903,19 +803,13 @@ const currentPageData = computed(() => {
             <option value="10">10 条/页</option>
             <option value="15">15 条/页</option>
           </select>
-          <button @click="callbackActions.reset()" class="btn btn-danger">
-            重置
-          </button>
+          <button @click="callbackActions.reset()" class="btn btn-danger">重置</button>
         </div>
       </div>
       <div class="callback-logs">
         <div class="logs-header">回调日志:</div>
         <div class="logs-content">
-          <div
-            v-for="(log, index) in callbackLogs"
-            :key="index"
-            class="log-item"
-          >
+          <div v-for="(log, index) in callbackLogs" :key="index" class="log-item">
             {{ log }}
           </div>
         </div>
@@ -929,28 +823,15 @@ const currentPageData = computed(() => {
         <div class="infinite-info">
           <span>已加载:</span>
           <span class="current-page purple">
-            {{ infinitePagination.current }} 页 /
-            {{ infinitePagination.pageSize * infinitePagination.current }} 条
+            {{ infinitePagination.current }} 页 / {{ infinitePagination.pageSize * infinitePagination.current }} 条
           </span>
-          <button
-            @click="loadMore"
-            :disabled="!infinitePagination.hasNext || isLoading"
-            class="btn btn-outline purple"
-          >
-            {{
-              isLoading
-                ? "加载中..."
-                : infinitePagination.hasNext
-                  ? "加载更多"
-                  : "已全部加载"
-            }}
+          <button @click="loadMore" :disabled="!infinitePagination.hasNext || isLoading" class="btn btn-outline purple">
+            {{ isLoading ? "加载中..." : infinitePagination.hasNext ? "加载更多" : "已全部加载" }}
           </button>
           <button @click="resetInfinite" class="btn btn-danger">重置</button>
         </div>
         <div class="infinite-list">
-          <div v-for="item in loadedItems" :key="item" class="list-item">
-            📄 数据项 #{{ item }}
-          </div>
+          <div v-for="item in loadedItems" :key="item" class="list-item">📄 数据项 #{{ item }}</div>
         </div>
       </div>
       <div class="pagination-info">
@@ -958,9 +839,7 @@ const currentPageData = computed(() => {
         <div>已加载: {{ loadedItems.length }} 条</div>
         <div>
           加载进度:
-          {{
-            Math.round((loadedItems.length / infinitePagination.total) * 100)
-          }}%
+          {{ Math.round((loadedItems.length / infinitePagination.total) * 100) }}%
         </div>
       </div>
     </div>
@@ -1029,13 +908,8 @@ const loadMore = async () => {
   await new Promise((resolve) => setTimeout(resolve, 500));
 
   infiniteActions.next();
-  const startIndex =
-    (infinitePagination.value.current - 1) * infinitePagination.value.pageSize +
-    1;
-  const endIndex = Math.min(
-    infinitePagination.value.current * infinitePagination.value.pageSize,
-    infinitePagination.value.total,
-  );
+  const startIndex = (infinitePagination.value.current - 1) * infinitePagination.value.pageSize + 1;
+  const endIndex = Math.min(infinitePagination.value.current * infinitePagination.value.pageSize, infinitePagination.value.total);
 
   for (let i = startIndex; i <= endIndex; i++) {
     loadedItems.value.push(i);
@@ -1310,14 +1184,9 @@ export interface PaginationActions {
   reset: () => void;
 }
 
-export type UsePaginationReturn = [
-  ComputedRef<PaginationInfo>,
-  PaginationActions,
-];
+export type UsePaginationReturn = [ComputedRef<PaginationInfo>, PaginationActions];
 
-export function usePagination(
-  options?: UsePaginationOptions,
-): UsePaginationReturn;
+export function usePagination(options?: UsePaginationOptions): UsePaginationReturn;
 ```
 
 ## 使用场景
@@ -1384,9 +1253,7 @@ const currentPageData = computed(() => {
 ```typescript
 const searchKeyword = ref("");
 const filteredData = computed(() => {
-  return allData.value.filter((item) =>
-    item.name.includes(searchKeyword.value),
-  );
+  return allData.value.filter((item) => item.name.includes(searchKeyword.value));
 });
 
 const [pagination, actions] = usePagination({
@@ -1424,7 +1291,7 @@ watch(
     if (isBottom) {
       loadMore();
     }
-  },
+  }
 );
 ```
 

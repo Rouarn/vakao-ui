@@ -32,11 +32,7 @@ class MyExtension {
 
   async initialize(extensionManager) {
     // 注册钩子
-    extensionManager.registerHook(
-      "beforeDeploy",
-      this.beforeDeploy.bind(this),
-      this.name,
-    );
+    extensionManager.registerHook("beforeDeploy", this.beforeDeploy.bind(this), this.name);
   }
 
   async beforeDeploy(context) {
@@ -173,11 +169,7 @@ class MyCustomExtension {
    */
   async initialize(extensionManager) {
     // 注册钩子
-    extensionManager.registerHook(
-      "afterDeploy",
-      this.onDeploySuccess.bind(this),
-      this.name,
-    );
+    extensionManager.registerHook("afterDeploy", this.onDeploySuccess.bind(this), this.name);
 
     console.log(`${this.name} 扩展已初始化`);
   }
@@ -358,7 +350,7 @@ async onDeploySuccess(context) {
        } else {
          console.log("通知发送成功:", response);
        }
-     },
+     }
    );
    ```
 
