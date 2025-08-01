@@ -45,6 +45,9 @@ export type UseFullscreenReturn = [
  * 获取全屏元素
  */
 function getFullscreenElement(): Element | null {
+  if (typeof document === "undefined") {
+    return null;
+  }
   return (
     document.fullscreenElement ||
     (document as any).webkitFullscreenElement ||
@@ -74,6 +77,9 @@ function requestFullscreen(element: HTMLElement): Promise<void> {
  * 退出全屏
  */
 function exitFullscreen(): Promise<void> {
+  if (typeof document === "undefined") {
+    return Promise.reject(new Error("document 对象不可用"));
+  }
   if (document.exitFullscreen) {
     return document.exitFullscreen();
   } else if ((document as any).webkitExitFullscreen) {
@@ -90,6 +96,9 @@ function exitFullscreen(): Promise<void> {
  * 检查是否支持全屏 API
  */
 function isFullscreenSupported(): boolean {
+  if (typeof document === "undefined") {
+    return false;
+  }
   return !!(
     document.fullscreenEnabled ||
     (document as any).webkitFullscreenEnabled ||

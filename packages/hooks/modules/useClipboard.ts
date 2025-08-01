@@ -154,7 +154,7 @@ export function useClipboard(
   const isSupported = computed(() => {
     return (
       isClipboardApiSupported() ||
-      (legacy && document.queryCommandSupported?.("copy"))
+      (legacy && typeof document !== "undefined" && document.queryCommandSupported?.("copy"))
     );
   });
 

@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "pnpm run -C ../ build:deps && vitepress dev",
     "build": "pnpm run -C ../ build:deps && vitepress build",
-    "serve": "vitepress serve"
+    "docs:preview": "vitepress serve"
   },
   "keywords": [
     "vue3",
