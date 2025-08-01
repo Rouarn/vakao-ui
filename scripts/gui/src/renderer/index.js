@@ -435,25 +435,25 @@ function bindSettingsEvents() {
  */
 function bindIPCEvents() {
   // 监听日志输出
-  window.electronAPI.onLogOutput(data => {
+  window.electronAPI.onLogOutput((data) => {
     // 根据输出类型设置日志类型
     const logType = data.type === "stderr" ? "error" : "info";
     addLog(logType, data.data);
   });
 
   // 监听进程状态变化
-  window.electronAPI.onProcessStatus(status => {
+  window.electronAPI.onProcessStatus((status) => {
     handleProcessStatus(status);
   });
 
   // 监听错误
-  window.electronAPI.onError(error => {
+  window.electronAPI.onError((error) => {
     showError(error.message);
     updateStatus("error", "错误: " + error.message);
   });
 
   // 监听用户输入请求
-  window.electronAPI.onUserInputRequest(request => {
+  window.electronAPI.onUserInputRequest((request) => {
     showUserInputModal(request);
   });
 }
@@ -910,7 +910,7 @@ function updatePackageGrid(packages) {
             刷新
           </button>
         </div>
-      `
+      `,
         )
         .fadeIn(300);
       return;
@@ -1080,7 +1080,7 @@ function togglePackageSelection(packageId, $card) {
  * @returns {string} 包名称
  */
 function getPackageName(packageId) {
-  const pkg = AppState.packages.find(p => p.id === packageId);
+  const pkg = AppState.packages.find((p) => p.id === packageId);
   return pkg ? pkg.displayName || pkg.name : packageId;
 }
 
@@ -1095,10 +1095,10 @@ function updateSelectionCounter() {
     if ($counter.length === 0) {
       // 创建计数器
       $(
-        '<div class="selection-counter" style="margin-bottom: 12px; padding: 8px 12px; background: var(--primary-color); color: white; border-radius: var(--radius-md); text-align: center; font-size: var(--font-size-sm);">'
+        '<div class="selection-counter" style="margin-bottom: 12px; padding: 8px 12px; background: var(--primary-color); color: white; border-radius: var(--radius-md); text-align: center; font-size: var(--font-size-sm);">',
       )
         .html(
-          `<i class="fas fa-check-circle"></i> 已选择 <span class="count">${count}</span> 个包`
+          `<i class="fas fa-check-circle"></i> 已选择 <span class="count">${count}</span> 个包`,
         )
         .prependTo($elements.packageGrid.parent())
         .hide()
@@ -1185,7 +1185,7 @@ function updatePackagesOverview(packages) {
 
   $elements.packagesOverview.empty();
 
-  packages.forEach(pkg => {
+  packages.forEach((pkg) => {
     const card = createPackageOverviewCard(pkg);
     $elements.packagesOverview.append(card);
   });
@@ -1247,13 +1247,13 @@ function updatePublishOptions() {
   if ($elements.syncVersionCheckbox && $elements.syncVersionCheckbox.length) {
     $elements.syncVersionCheckbox.prop(
       "checked",
-      AppState.publishOptions.syncVersion
+      AppState.publishOptions.syncVersion,
     );
   }
   if ($elements.skipDeployCheckbox && $elements.skipDeployCheckbox.length) {
     $elements.skipDeployCheckbox.prop(
       "checked",
-      AppState.publishOptions.skipDeploy
+      AppState.publishOptions.skipDeploy,
     );
   }
   if ($elements.deployStrategySelect && $elements.deployStrategySelect.length) {
@@ -1277,7 +1277,7 @@ function updateSettingsUI() {
   ) {
     $elements.notificationsCheckbox.prop(
       "checked",
-      AppState.settings.notifications
+      AppState.settings.notifications,
     );
   }
   if ($elements.autoSaveCheckbox && $elements.autoSaveCheckbox.length) {
@@ -1289,7 +1289,7 @@ function updateSettingsUI() {
   ) {
     $elements.defaultDryRunCheckbox.prop(
       "checked",
-      AppState.settings.defaultDryRun
+      AppState.settings.defaultDryRun,
     );
   }
 }
@@ -1371,7 +1371,7 @@ async function openPackageDirectory(packagePath) {
  */
 async function buildPackage(packageId) {
   try {
-    const pkg = AppState.packages.find(p => p.id === packageId);
+    const pkg = AppState.packages.find((p) => p.id === packageId);
     if (!pkg || !pkg.buildCommand) {
       showError("包不存在或没有构建命令");
       return;
@@ -1497,7 +1497,7 @@ function updateLogDisplay() {
           <h3>暂无日志</h3>
           <p>执行命令后日志将显示在这里</p>
         </div>
-      `
+      `,
         )
         .fadeIn(300);
       return;
@@ -1578,14 +1578,14 @@ function clearLogs() {
         <h3>日志已清空</h3>
         <p>执行命令后日志将显示在这里</p>
       </div>
-    `
+    `,
         )
         .hide()
         .fadeIn(300);
 
       showToast("日志已清空", "success");
     },
-    $logContainer.children(".log-entry").length * 20 + 200
+    $logContainer.children(".log-entry").length * 20 + 200,
   );
 }
 
@@ -1593,7 +1593,7 @@ function clearLogs() {
  * 异步清空日志，返回 Promise
  */
 function clearLogsAsync() {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     const $logContainer = $elements.logContainer;
     if (!$logContainer || !$logContainer.length) {
       resolve();
@@ -1627,7 +1627,7 @@ function clearLogsAsync() {
 
         resolve();
       },
-      $entries.length * 20 + 200
+      $entries.length * 20 + 200,
     );
   });
 }
@@ -1653,7 +1653,8 @@ async function exportLogs() {
 
     const content = AppState.logs
       .map(
-        log => `[${log.timestamp}] [${log.type.toUpperCase()}] ${log.message}`
+        (log) =>
+          `[${log.timestamp}] [${log.type.toUpperCase()}] ${log.message}`,
       )
       .join("\n");
 
@@ -1728,7 +1729,7 @@ function showCommandModal(title, command) {
       {
         scale: 1,
       },
-      200
+      200,
     );
 
   // 聚焦到取消按钮
@@ -1762,7 +1763,7 @@ function hideCommandModal() {
       {
         scale: 0.8,
       },
-      200
+      200,
     )
     .end()
     .fadeOut(300, function () {
@@ -1861,7 +1862,7 @@ function showCommandPreviewModal(title, command, showExecuteButton = true) {
       {
         scale: 1,
       },
-      200
+      200,
     );
 
   // 添加键盘事件监听
@@ -1887,7 +1888,7 @@ function hideCommandPreviewModal() {
       {
         scale: 0.8,
       },
-      200
+      200,
     )
     .end()
     .fadeOut(300, function () {
@@ -1918,7 +1919,7 @@ function copyCommandFromPreview() {
     .then(() => {
       showToast("命令已复制到剪贴板", "success");
     })
-    .catch(err => {
+    .catch((err) => {
       console.error("复制失败:", err);
       showError("复制命令失败");
     });
@@ -2002,7 +2003,7 @@ function handleProcessStatus(status) {
       updateStatus("error", `执行失败 (退出码: ${status.code ?? 1})`);
       addLog(
         "error",
-        status.message || `进程执行失败，退出码: ${status.code ?? 1}`
+        status.message || `进程执行失败，退出码: ${status.code ?? 1}`,
       );
       showToast(status.message || "命令执行失败", "error");
       if (AppState.settings.notifications) {
@@ -2239,7 +2240,7 @@ function scrollToBottom(element) {
         scrollTop: $target[0].scrollHeight,
       },
       300,
-      "swing"
+      "swing",
     );
   }
 }
@@ -2285,7 +2286,7 @@ function showSuccess(message) {
 function showNotification(title, message, type = "info") {
   if ("Notification" in window && Notification.permission === "granted") {
     // 创建简单的 SVG 图标作为 data URL，避免文件路径问题
-    const getIconDataUrl = notificationType => {
+    const getIconDataUrl = (notificationType) => {
       const iconMap = {
         success:
           "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTAiIGZpbGw9IiMyOGE3NDUiLz4KPHBhdGggZD0ibTkgMTIgMiAyIDQtNCIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPC9zdmc+",
@@ -2413,7 +2414,7 @@ function copyToClipboard(text) {
       .then(() => {
         console.log("文本已复制到剪贴板");
       })
-      .catch(err => {
+      .catch((err) => {
         console.error("复制失败:", err);
         fallbackCopyTextToClipboard(text);
       });
@@ -2621,7 +2622,7 @@ function initializeBatchOperations() {
         $btn.prop("disabled", false).html(originalText);
         showToast("包信息已刷新", "success");
       })
-      .catch(error => {
+      .catch((error) => {
         $btn.prop("disabled", false).html(originalText);
         showError("刷新失败: " + error.message);
       });
@@ -2634,7 +2635,7 @@ function initializeBatchOperations() {
  * 等待 electronAPI 准备就绪
  */
 function waitForElectronAPI() {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     if (window.electronAPI) {
       resolve();
     } else {
@@ -2793,7 +2794,7 @@ function generateInputControl(request) {
 
     case "select":
       const selectOptions = options
-        .map(option => {
+        .map((option) => {
           const value = typeof option === "string" ? option : option.value;
           const label = typeof option === "string" ? option : option.label;
           const selected = value === defaultValue ? "selected" : "";
@@ -2902,14 +2903,14 @@ function getUserInputValue(type) {
 async function handleUserInputConfirm(request) {
   console.log("handleUserInputConfirm 开始执行");
   console.log("request: ", request);
-  
+
   const value = getUserInputValue(request.type);
   console.log("获取到的用户输入值:", value);
 
   // 客户端验证
   const validationResult = validateUserInput(value, request);
   console.log("验证结果:", validationResult);
-  
+
   if (!validationResult.valid) {
     console.log("验证失败，显示错误信息:", validationResult.errors);
     showValidationErrors(validationResult.errors);
@@ -3044,7 +3045,7 @@ function showValidationErrors(errors) {
 
   if (errors && errors.length > 0) {
     const errorHtml = errors
-      .map(error => `<div class="error-item">${error}</div>`)
+      .map((error) => `<div class="error-item">${error}</div>`)
       .join("");
     $validationInfo.html(errorHtml).show();
 

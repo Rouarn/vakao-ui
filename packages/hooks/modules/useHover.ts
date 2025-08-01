@@ -316,7 +316,7 @@ export function useHover(options: UseHoverOptions = {}): UseHoverReturn {
     {
       immediate,
       passive: true,
-    }
+    },
   );
 
   /**
@@ -331,7 +331,7 @@ export function useHover(options: UseHoverOptions = {}): UseHoverReturn {
     {
       immediate,
       passive: true,
-    }
+    },
   );
 
   // ==================== 操作函数 ====================

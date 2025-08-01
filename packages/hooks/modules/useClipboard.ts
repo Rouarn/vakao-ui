@@ -142,7 +142,7 @@ function legacyCopy(text: string): boolean {
  * @author Vakao UI Team
  */
 export function useClipboard(
-  options: UseClipboardOptions = {}
+  options: UseClipboardOptions = {},
 ): UseClipboardReturn {
   const { legacy = true, onCopy, onError, onRead, onReadError } = options;
 

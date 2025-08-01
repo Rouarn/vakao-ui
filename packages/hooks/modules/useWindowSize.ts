@@ -156,7 +156,7 @@ export interface UseWindowSizeOptions {
  * @author Vakao UI Team
  */
 export function useWindowSize(
-  options: UseWindowSizeOptions = {}
+  options: UseWindowSizeOptions = {},
 ): UseWindowSizeReturn {
   // ==================== 配置选项 ====================
 
@@ -320,7 +320,7 @@ export function useWindowSize(
     {
       immediate: listen,
       passive: true, // 使用被动监听器优化性能
-    }
+    },
   );
 
   /**

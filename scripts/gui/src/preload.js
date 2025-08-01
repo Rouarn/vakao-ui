@@ -182,14 +182,17 @@ const electronAPI = {
    * @param {Object} [inputRequest.validation] - 验证规则
    * @returns {Promise<{success: boolean, value: any, cancelled: boolean}>} 用户输入结果
    */
-  requestUserInput: (inputRequest) => ipcRenderer.invoke("request-user-input", inputRequest),
+  requestUserInput: (inputRequest) =>
+    ipcRenderer.invoke("request-user-input", inputRequest),
 
   /**
    * 监听用户输入请求事件
    * @param {Function} callback - 回调函数
    */
   onUserInputRequest: (callback) => {
-    ipcRenderer.on("user-input-request", (event, inputRequest) => callback(inputRequest));
+    ipcRenderer.on("user-input-request", (event, inputRequest) =>
+      callback(inputRequest),
+    );
   },
 
   /**
@@ -209,7 +212,8 @@ const electronAPI = {
    * @param {boolean} response.cancelled - 是否取消
    * @returns {Promise<void>}
    */
-  respondUserInput: (requestId, response) => ipcRenderer.invoke("respond-user-input", requestId, response),
+  respondUserInput: (requestId, response) =>
+    ipcRenderer.invoke("respond-user-input", requestId, response),
 
   // ==================== 通知 ====================
 

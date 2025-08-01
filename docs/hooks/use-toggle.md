@@ -168,7 +168,7 @@ const fetchData = async () => {
 
   try {
     // 模拟 API 请求
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    await new Promise((resolve) => setTimeout(resolve, 2000));
     data.value = { message: "数据加载成功!", timestamp: Date.now() };
   } finally {
     stopLoading();

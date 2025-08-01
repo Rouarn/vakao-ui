@@ -91,14 +91,14 @@ const copyMessage = ref("");
 const copySuccess = ref(false);
 
 const [text, copy, read, isSupported, isSecureContext] = useClipboard({
-  onCopy: copiedText => {
+  onCopy: (copiedText) => {
     copyMessage.value = `✅ 复制成功: ${copiedText}`;
     copySuccess.value = true;
     setTimeout(() => {
       copyMessage.value = "";
     }, 3000);
   },
-  onError: error => {
+  onError: (error) => {
     copyMessage.value = `❌ 复制失败: ${error.message}`;
     copySuccess.value = false;
     setTimeout(() => {

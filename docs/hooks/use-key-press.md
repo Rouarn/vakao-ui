@@ -237,18 +237,18 @@ const arrowKeys = reactive({
 const getCurrentPressedKeys = () => {
   const pressed = [];
 
-  singleKeys.forEach(key => {
+  singleKeys.forEach((key) => {
     if (key.isPressed) pressed.push(key.name);
   });
 
-  comboKeys.forEach(combo => {
+  comboKeys.forEach((combo) => {
     if (combo.isPressed) pressed.push(combo.name);
   });
 
   Object.entries(arrowKeys).forEach(([direction, isPressed]) => {
     if (isPressed)
       pressed.push(
-        `Arrow${direction.charAt(0).toUpperCase() + direction.slice(1)}`
+        `Arrow${direction.charAt(0).toUpperCase() + direction.slice(1)}`,
       );
   });
 
@@ -599,7 +599,7 @@ startGameLoop();
 
 // 文本编辑器快捷键
 const editorContent = ref(
-  "这是一个支持快捷键的文本编辑器。\n试试使用 Ctrl+A 全选文本，或者 Ctrl+Z 撤销操作。"
+  "这是一个支持快捷键的文本编辑器。\n试试使用 Ctrl+A 全选文本，或者 Ctrl+Z 撤销操作。",
 );
 const editorRef = ref<HTMLTextAreaElement>();
 
@@ -849,7 +849,7 @@ export interface UseKeyPressOptions {
 
 export function useKeyPress(
   keyFilter: KeyFilter,
-  options?: UseKeyPressOptions
+  options?: UseKeyPressOptions,
 ): Ref<boolean>;
 ```
 
@@ -956,15 +956,15 @@ const exactCtrlS = useKeyPress(["ctrl", "s"], {
 6. 移动设备上的虚拟键盘行为可能不同
 
 <script setup>
-import { ref, reactive, watch } from 'vue';
+import { ref, reactive, watch, onMounted, onBeforeUnmount } from 'vue';
 import { useKeyPress } from '@vakao-ui/hooks';
 
 // 基础用法
 const singleKeys = reactive([
-  { name: 'Space', icon: '⎵', isPressed: useKeyPress(' ') },
-  { name: 'Enter', icon: '⏎', isPressed: useKeyPress('Enter') },
-  { name: 'Escape', icon: '⎋', isPressed: useKeyPress('Escape') },
-  { name: 'Tab', icon: '⇥', isPressed: useKeyPress('Tab') }
+  { name: 'Space', icon: '⎵', isPressed: ref(false) },
+  { name: 'Enter', icon: '⏎', isPressed: ref(false) },
+  { name: 'Escape', icon: '⎋', isPressed: ref(false) },
+  { name: 'Tab', icon: '⇥', isPressed: ref(false) }
 ]);
 
 const comboKeys = reactive([
@@ -972,106 +972,58 @@ const comboKeys = reactive([
     name: 'Ctrl+S', 
     icon: '💾', 
     description: '保存', 
-    isPressed: useKeyPress(['ctrl', 's']) 
+    isPressed: ref(false)
   },
   { 
     name: 'Ctrl+C', 
     icon: '📋', 
     description: '复制', 
-    isPressed: useKeyPress(['ctrl', 'c']) 
+    isPressed: ref(false)
   },
   { 
     name: 'Ctrl+Z', 
     icon: '↶', 
     description: '撤销', 
-    isPressed: useKeyPress(['ctrl', 'z']) 
+    isPressed: ref(false)
   },
   { 
     name: 'Alt+Tab', 
     icon: '🔄', 
     description: '切换', 
-    isPressed: useKeyPress(['alt', 'tab']) 
+    isPressed: ref(false)
   }
 ]);
 
 const arrowKeys = reactive({
-  up: useKeyPress('ArrowUp'),
-  down: useKeyPress('ArrowDown'),
-  left: useKeyPress('ArrowLeft'),
-  right: useKeyPress('ArrowRight')
+  up: ref(false),
+  down: ref(false),
+  left: ref(false),
+  right: ref(false)
 });
 
+const pressedKeys = reactive(new Set());
+
 const getCurrentPressedKeys = () => {
-  const pressed = [];
-  
-  singleKeys.forEach(key => {
-    if (key.isPressed) pressed.push(key.name);
-  });
-  
-  comboKeys.forEach(combo => {
-    if (combo.isPressed) pressed.push(combo.name);
-  });
-  
-  Object.entries(arrowKeys).forEach(([direction, isPressed]) => {
-    if (isPressed) pressed.push(`Arrow${direction.charAt(0).toUpperCase() + direction.slice(1)}`);
-  });
-  
-  return pressed.length > 0 ? pressed.join(', ') : '无';
+  return pressedKeys.size > 0 ? Array.from(pressedKeys).join(', ') : '无';
 };
 
 // 高级用法 - 游戏控制
 const playerPosition = reactive({ x: 100, y: 85 });
 const gameSpeed = ref(1);
 
-const moveUp = useKeyPress(['w', 'ArrowUp']);
-const moveDown = useKeyPress(['s', 'ArrowDown']);
-const moveLeft = useKeyPress(['a', 'ArrowLeft']);
-const moveRight = useKeyPress(['d', 'ArrowRight']);
-const speedBoost = useKeyPress('shift');
-
-let gameLoop;
-const startGameLoop = () => {
-  gameLoop = setInterval(() => {
-    const speed = speedBoost.value ? 3 : 1;
-    gameSpeed.value = speedBoost.value ? 2 : 1;
-    
-    if (moveUp.value && playerPosition.y > 0) {
-      playerPosition.y -= speed;
-    }
-    if (moveDown.value && playerPosition.y < 170) {
-      playerPosition.y += speed;
-    }
-    if (moveLeft.value && playerPosition.x > 0) {
-      playerPosition.x -= speed;
-    }
-    if (moveRight.value && playerPosition.x < 270) {
-      playerPosition.x += speed;
-    }
-  }, 16);
-};
-
-startGameLoop();
-
 // 文本编辑器
 const editorContent = ref('这是一个支持快捷键的文本编辑器。\n试试使用 Ctrl+A 全选文本，或者 Ctrl+Z 撤销操作。');
 const editorRef = ref();
 
 const editorShortcuts = reactive([
-  { name: 'Ctrl+A', description: '全选', isPressed: useKeyPress(['ctrl', 'a']) },
-  { name: 'Ctrl+Z', description: '撤销', isPressed: useKeyPress(['ctrl', 'z']) },
-  { name: 'Ctrl+Y', description: '重做', isPressed: useKeyPress(['ctrl', 'y']) },
-  { name: 'Ctrl+X', description: '剪切', isPressed: useKeyPress(['ctrl', 'x']) }
+  { name: 'Ctrl+A', description: '全选', isPressed: ref(false) },
+  { name: 'Ctrl+Z', description: '撤销', isPressed: ref(false) },
+  { name: 'Ctrl+Y', description: '重做', isPressed: ref(false) },
+  { name: 'Ctrl+X', description: '剪切', isPressed: ref(false) }
 ]);
 
 // 帮助面板
 const helpVisible = ref(false);
-const helpToggle = useKeyPress('F1');
-
-watch(helpToggle, (pressed, wasPrevPressed) => {
-  if (pressed && !wasPrevPressed) {
-    helpVisible.value = !helpVisible.value;
-  }
-});
 
 const helpItems = [
   { key: 'F1', description: '显示/隐藏帮助' },
@@ -1083,4 +1035,211 @@ const helpItems = [
   { key: 'Ctrl+Z', description: '撤销' },
   { key: 'Ctrl+Y', description: '重做' }
 ];
+
+// 使用 useKeyPress 钩子函数
+const setupKeyListeners = () => {
+  // 单键检测
+  const [spacePressed] = useKeyPress(' ', { preventDefault: true });
+  const [enterPressed] = useKeyPress('Enter');
+  const [escapePressed] = useKeyPress('Escape');
+  const [tabPressed] = useKeyPress('Tab', { preventDefault: true });
+
+  watch(spacePressed, (value) => {
+    singleKeys[0].isPressed.value = value;
+    if (value) pressedKeys.add('Space');
+    else pressedKeys.delete('Space');
+  });
+
+  watch(enterPressed, (value) => {
+    singleKeys[1].isPressed.value = value;
+    if (value) pressedKeys.add('Enter');
+    else pressedKeys.delete('Enter');
+  });
+
+  watch(escapePressed, (value) => {
+    singleKeys[2].isPressed.value = value;
+    if (value) pressedKeys.add('Escape');
+    else pressedKeys.delete('Escape');
+  });
+
+  watch(tabPressed, (value) => {
+    singleKeys[3].isPressed.value = value;
+    if (value) pressedKeys.add('Tab');
+    else pressedKeys.delete('Tab');
+  });
+
+  // 组合键检测
+  const [ctrlSPressed] = useKeyPress(['ctrl', 's'], { preventDefault: true });
+  const [ctrlCPressed] = useKeyPress(['ctrl', 'c']);
+  const [ctrlZPressed] = useKeyPress(['ctrl', 'z']);
+  const [altTabPressed] = useKeyPress(['alt', 'tab'], { preventDefault: true });
+
+  watch(ctrlSPressed, (value) => {
+    comboKeys[0].isPressed.value = value;
+    if (value) pressedKeys.add('Ctrl+S');
+    else pressedKeys.delete('Ctrl+S');
+  });
+
+  watch(ctrlCPressed, (value) => {
+    comboKeys[1].isPressed.value = value;
+    if (value) pressedKeys.add('Ctrl+C');
+    else pressedKeys.delete('Ctrl+C');
+  });
+
+  watch(ctrlZPressed, (value) => {
+    comboKeys[2].isPressed.value = value;
+    if (value) pressedKeys.add('Ctrl+Z');
+    else pressedKeys.delete('Ctrl+Z');
+  });
+
+  watch(altTabPressed, (value) => {
+    comboKeys[3].isPressed.value = value;
+    if (value) pressedKeys.add('Alt+Tab');
+    else pressedKeys.delete('Alt+Tab');
+  });
+
+  // 方向键检测
+  const [upPressed] = useKeyPress('ArrowUp');
+  const [downPressed] = useKeyPress('ArrowDown');
+  const [leftPressed] = useKeyPress('ArrowLeft');
+  const [rightPressed] = useKeyPress('ArrowRight');
+
+  watch(upPressed, (value) => {
+    arrowKeys.up.value = value;
+    if (value) {
+      pressedKeys.add('ArrowUp');
+      moveUp();
+    } else {
+      pressedKeys.delete('ArrowUp');
+    }
+  });
+
+  watch(downPressed, (value) => {
+    arrowKeys.down.value = value;
+    if (value) {
+      pressedKeys.add('ArrowDown');
+      moveDown();
+    } else {
+      pressedKeys.delete('ArrowDown');
+    }
+  });
+
+  watch(leftPressed, (value) => {
+    arrowKeys.left.value = value;
+    if (value) {
+      pressedKeys.add('ArrowLeft');
+      moveLeft();
+    } else {
+      pressedKeys.delete('ArrowLeft');
+    }
+  });
+
+  watch(rightPressed, (value) => {
+    arrowKeys.right.value = value;
+    if (value) {
+      pressedKeys.add('ArrowRight');
+      moveRight();
+    } else {
+      pressedKeys.delete('ArrowRight');
+    }
+  });
+
+  // WASD 键检测
+  const [wPressed] = useKeyPress('w');
+  const [aPressed] = useKeyPress('a');
+  const [sPressed] = useKeyPress('s');
+  const [dPressed] = useKeyPress('d');
+
+  watch(wPressed, (value) => {
+    if (value) moveUp();
+  });
+
+  watch(sPressed, (value) => {
+    if (value) moveDown();
+  });
+
+  watch(aPressed, (value) => {
+    if (value) moveLeft();
+  });
+
+  watch(dPressed, (value) => {
+    if (value) moveRight();
+  });
+
+  // Shift 键检测
+  const [shiftPressed] = useKeyPress('shift');
+  
+  watch(shiftPressed, (value) => {
+    gameSpeed.value = value ? 2 : 1;
+  });
+
+  // 编辑器快捷键
+  const [ctrlAPressed] = useKeyPress(['ctrl', 'a']);
+  const [ctrlYPressed] = useKeyPress(['ctrl', 'y']);
+  const [ctrlXPressed] = useKeyPress(['ctrl', 'x']);
+
+  watch(ctrlAPressed, (value) => {
+    editorShortcuts[0].isPressed.value = value;
+  });
+
+  watch(ctrlZPressed, (value) => {
+    editorShortcuts[1].isPressed.value = value;
+  });
+
+  watch(ctrlYPressed, (value) => {
+    editorShortcuts[2].isPressed.value = value;
+  });
+
+  watch(ctrlXPressed, (value) => {
+    editorShortcuts[3].isPressed.value = value;
+  });
+
+  // 帮助面板切换
+  const [f1Pressed] = useKeyPress('F1', { preventDefault: true });
+  
+  watch(f1Pressed, (value, oldValue) => {
+    if (value && !oldValue) {
+      helpVisible.value = !helpVisible.value;
+    }
+  });
+};
+
+// 游戏循环
+let gameLoop;
+const moveUp = () => {
+  if (playerPosition.y > 0) {
+    playerPosition.y -= gameSpeed.value;
+  }
+};
+const moveDown = () => {
+  if (playerPosition.y < 170) {
+    playerPosition.y += gameSpeed.value;
+  }
+};
+const moveLeft = () => {
+  if (playerPosition.x > 0) {
+    playerPosition.x -= gameSpeed.value;
+  }
+};
+const moveRight = () => {
+  if (playerPosition.x < 270) {
+    playerPosition.x += gameSpeed.value;
+  }
+};
+
+onMounted(() => {
+  // 设置按键监听
+  setupKeyListeners();
+  
+  // 启动游戏循环
+  gameLoop = setInterval(() => {
+    // 游戏循环逻辑已移至按键处理函数中
+  }, 16);
+});
+
+onBeforeUnmount(() => {
+  if (gameLoop) {
+    clearInterval(gameLoop);
+  }
+});
 </script>

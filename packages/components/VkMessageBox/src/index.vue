@@ -6,7 +6,10 @@
         class="vk-message-box-wrapper"
         @click="handleWrapperClick"
       >
-        <div class="vk-message-box" :class="messageBoxClass">
+        <div
+          class="vk-message-box"
+          :class="messageBoxClass"
+        >
           <!-- 头部 -->
           <div class="vk-message-box__header">
             <div class="vk-message-box__title">
@@ -33,7 +36,10 @@
               {{ message }}
             </div>
             <!-- 输入框 (用于 prompt 类型) -->
-            <div v-if="showInput" class="vk-message-box__input">
+            <div
+              v-if="showInput"
+              class="vk-message-box__input"
+            >
               <VkInput
                 ref="inputRef"
                 v-model="inputValue"

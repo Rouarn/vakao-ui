@@ -62,9 +62,9 @@ const [windowSize] = useWindowSize();
   <div>
     <p>当前设备类型: {{ deviceType }}</p>
     <ul>
-      <li>移动端: {{ isMobile ? '是' : '否' }}</li>
-      <li>平板: {{ isTablet ? '是' : '否' }}</li>
-      <li>桌面端: {{ isDesktop ? '是' : '否' }}</li>
+      <li>移动端: {{ isMobile ? "是" : "否" }}</li>
+      <li>平板: {{ isTablet ? "是" : "否" }}</li>
+      <li>桌面端: {{ isDesktop ? "是" : "否" }}</li>
     </ul>
   </div>
 </template>
@@ -76,13 +76,15 @@ import { useWindowSize } from "vakao-ui";
 const [size] = useWindowSize();
 
 const isMobile = computed(() => size.value.width < 768);
-const isTablet = computed(() => size.value.width >= 768 && size.value.width < 1024);
+const isTablet = computed(
+  () => size.value.width >= 768 && size.value.width < 1024,
+);
 const isDesktop = computed(() => size.value.width >= 1024);
 
 const deviceType = computed(() => {
-  if (isMobile.value) return '移动端';
-  if (isTablet.value) return '平板';
-  return '桌面端';
+  if (isMobile.value) return "移动端";
+  if (isTablet.value) return "平板";
+  return "桌面端";
 });
 </script>
 ```
@@ -121,7 +123,7 @@ const deviceType = computed(() => {
       <p>宽度: {{ normalSize.width }}px</p>
       <p>更新次数: {{ normalUpdateCount }}</p>
     </div>
-    
+
     <div>
       <h4>300ms 防抖</h4>
       <p>宽度: {{ debouncedSize.width }}px</p>
@@ -140,18 +142,26 @@ const normalUpdateCount = ref(0);
 
 // 300ms 防抖
 const [debouncedSize] = useWindowSize({
-  debounce: 300
+  debounce: 300,
 });
 const debouncedUpdateCount = ref(0);
 
 // 监听更新次数
-watch(normalSize, () => {
-  normalUpdateCount.value++;
-}, { deep: true });
+watch(
+  normalSize,
+  () => {
+    normalUpdateCount.value++;
+  },
+  { deep: true },
+);
 
-watch(debouncedSize, () => {
-  debouncedUpdateCount.value++;
-}, { deep: true });
+watch(
+  debouncedSize,
+  () => {
+    debouncedUpdateCount.value++;
+  },
+  { deep: true },
+);
 </script>
 ```
 
@@ -186,12 +196,12 @@ watch(debouncedSize, () => {
 <template>
   <div>
     <p>窗口尺寸: {{ size.width }} x {{ size.height }}</p>
-    <p>监听状态: {{ isListening ? '已启用' : '已禁用' }}</p>
-    
+    <p>监听状态: {{ isListening ? "已启用" : "已禁用" }}</p>
+
     <div>
       <vk-button @click="updateSize">手动更新</vk-button>
       <vk-button @click="toggleListening">
-        {{ isListening ? '禁用监听' : '启用监听' }}
+        {{ isListening ? "禁用监听" : "启用监听" }}
       </vk-button>
     </div>
   </div>
@@ -202,7 +212,7 @@ import { ref } from "vue";
 import { useWindowSize } from "vakao-ui";
 
 const [size, updateSize, setEnabled] = useWindowSize({
-  listen: false // 初始不监听
+  listen: false, // 初始不监听
 });
 
 const isListening = ref(false);
@@ -244,7 +254,7 @@ import { useWindowSize } from "vakao-ui";
 // 为 SSR 设置初始尺寸
 const [size] = useWindowSize({
   initialWidth: 1920,
-  initialHeight: 1080
+  initialHeight: 1080,
 });
 </script>
 ```
@@ -256,29 +266,29 @@ const [size] = useWindowSize({
 
 ### 参数
 
-| 参数    | 类型                    | 默认值 | 说明     |
-| ------- | ----------------------- | ------ | -------- |
-| options | `UseWindowSizeOptions`  | `{}`   | 配置选项 |
+| 参数    | 类型                   | 默认值 | 说明     |
+| ------- | ---------------------- | ------ | -------- |
+| options | `UseWindowSizeOptions` | `{}`   | 配置选项 |
 
 ### UseWindowSizeOptions
 
-| 属性          | 类型      | 默认值  | 说明                                    |
-| ------------- | --------- | ------- | --------------------------------------- |
-| immediate     | `boolean` | `true`  | 是否立即获取窗口尺寸                    |
-| listen        | `boolean` | `true`  | 是否监听窗口尺寸变化                    |
-| debounce      | `number`  | `0`     | 防抖延迟时间（毫秒），0 表示不防抖      |
-| initialWidth  | `number`  | `1024`  | 初始宽度，在服务端渲染时使用            |
-| initialHeight | `number`  | `768`   | 初始高度，在服务端渲染时使用            |
+| 属性          | 类型      | 默认值 | 说明                               |
+| ------------- | --------- | ------ | ---------------------------------- |
+| immediate     | `boolean` | `true` | 是否立即获取窗口尺寸               |
+| listen        | `boolean` | `true` | 是否监听窗口尺寸变化               |
+| debounce      | `number`  | `0`    | 防抖延迟时间（毫秒），0 表示不防抖 |
+| initialWidth  | `number`  | `1024` | 初始宽度，在服务端渲染时使用       |
+| initialHeight | `number`  | `768`  | 初始高度，在服务端渲染时使用       |
 
 ### 返回值
 
 返回一个数组 `[windowSize, updateSize, setEnabled]`：
 
-| 索引 | 名称       | 类型                        | 说明                     |
-| ---- | ---------- | --------------------------- | ------------------------ |
-| 0    | windowSize | `ComputedRef<WindowSize>`   | 窗口尺寸信息的只读响应式引用 |
-| 1    | updateSize | `() => void`                | 手动更新窗口尺寸的函数   |
-| 2    | setEnabled | `(enabled: boolean) => void` | 启用/禁用监听的函数      |
+| 索引 | 名称       | 类型                         | 说明                         |
+| ---- | ---------- | ---------------------------- | ---------------------------- |
+| 0    | windowSize | `ComputedRef<WindowSize>`    | 窗口尺寸信息的只读响应式引用 |
+| 1    | updateSize | `() => void`                 | 手动更新窗口尺寸的函数       |
+| 2    | setEnabled | `(enabled: boolean) => void` | 启用/禁用监听的函数          |
 
 ### 类型定义
 

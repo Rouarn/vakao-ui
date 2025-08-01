@@ -119,7 +119,7 @@ export interface UseClickOutsideOptions {
  */
 export function useClickOutside(
   callback: ClickOutsideCallback,
-  options: UseClickOutsideOptions = {}
+  options: UseClickOutsideOptions = {},
 ): UseClickOutsideReturn {
   // ==================== 配置选项 ====================
 
@@ -160,7 +160,7 @@ export function useClickOutside(
    * @returns 是否应该忽略此元素
    */
   const shouldIgnore = (element: Element): boolean => {
-    return ignore.some(item => {
+    return ignore.some((item) => {
       if (typeof item === "string") {
         // CSS 选择器方式
         return element.closest(item) !== null;

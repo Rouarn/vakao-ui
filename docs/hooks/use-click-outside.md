@@ -203,11 +203,11 @@ const [modalRef, setModalEnabled] = useClickOutside(
   () => {
     closeModal();
   },
-  { immediate: false }
+  { immediate: false },
 );
 
 // 当模态框打开时启用点击外部检测
-watch(isModalOpen, open => {
+watch(isModalOpen, (open) => {
   setModalEnabled(open);
 });
 
@@ -339,7 +339,7 @@ const [targetRef] = useClickOutside(
   },
   {
     exclude: [triggerRef], // 排除触发元素
-  }
+  },
 );
 ```
 
@@ -350,11 +350,11 @@ const [targetRef, setEnabled] = useClickOutside(
   () => {
     // 回调函数
   },
-  { immediate: false }
+  { immediate: false },
 );
 
 // 根据条件启用/禁用
-watch(isVisible, visible => {
+watch(isVisible, (visible) => {
   setEnabled(visible);
 });
 ```
@@ -368,7 +368,7 @@ const [targetRef] = useClickOutside(
   },
   {
     events: ["click", "contextmenu"], // 监听点击和右键菜单
-  }
+  },
 );
 ```
 

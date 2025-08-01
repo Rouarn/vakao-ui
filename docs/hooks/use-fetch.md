@@ -648,7 +648,7 @@ const [data, loading, error, { refresh }] = useFetch(
 ```ts
 function useFetch<T = any>(
   url: string | (() => string),
-  options?: UseFetchOptions<T>
+  options?: UseFetchOptions<T>,
 ): UseFetchReturn<T>;
 ```
 
@@ -754,7 +754,7 @@ type UseFetchReturn<T> = [
  */
 function useFetch<T = any>(
   url: string | (() => string),
-  options?: UseFetchOptions<T>
+  options?: UseFetchOptions<T>,
 ): UseFetchReturn<T>;
 
 /**

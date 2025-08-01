@@ -305,7 +305,7 @@ ipcMain.handle("get-project-info", async () => {
     // 读取包配置
     const configPath = path.join(
       PROJECT_ROOT,
-      "scripts/core/package-configs.js"
+      "scripts/core/package-configs.js",
     );
     delete require.cache[require.resolve(configPath)];
     const { CONFIG } = require(configPath);
@@ -342,7 +342,7 @@ function checkPackageStatus(packageKey, packageConfig) {
     const packagePath = path.join(
       PROJECT_ROOT,
       packageConfig.path,
-      "package.json"
+      "package.json",
     );
     const distPath = path.join(PROJECT_ROOT, packageConfig.path, "dist");
     const libPath = path.join(PROJECT_ROOT, packageConfig.path, "lib");
@@ -379,7 +379,7 @@ ipcMain.handle("get-packages", async () => {
   try {
     const configPath = path.join(
       PROJECT_ROOT,
-      "scripts/core/package-configs.js"
+      "scripts/core/package-configs.js",
     );
     delete require.cache[require.resolve(configPath)];
     const { CONFIG } = require(configPath);
@@ -431,7 +431,7 @@ ipcMain.handle("get-package-versions", async () => {
   try {
     const configPath = path.join(
       PROJECT_ROOT,
-      "scripts/core/package-configs.js"
+      "scripts/core/package-configs.js",
     );
     delete require.cache[require.resolve(configPath)];
     const { CONFIG } = require(configPath);
@@ -469,7 +469,7 @@ ipcMain.handle("get-package-versions", async () => {
  * 执行发布命令
  */
 ipcMain.handle("execute-publish", async (event, options) => {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     try {
       // 构建命令参数
       const args = ["scripts/publish.js"];
@@ -520,19 +520,24 @@ ipcMain.handle("execute-publish", async (event, options) => {
       let errorOutput = "";
 
       // 处理标准输出
-      publishProcess.stdout.on("data", data => {
+      publishProcess.stdout.on("data", (data) => {
         const text = data.toString("utf8");
         output += text;
 
         // 检查是否包含GUI输入请求
-        const guiRequestMatch = text.match(/__VAKAO_GUI_REQUEST__(.+?)__VAKAO_GUI_REQUEST_END__/s);
+        const guiRequestMatch = text.match(
+          /__VAKAO_GUI_REQUEST__(.+?)__VAKAO_GUI_REQUEST_END__/s,
+        );
         if (guiRequestMatch) {
           try {
             const request = JSON.parse(guiRequestMatch[1]);
             handleGUIInputRequest(request, publishProcess);
-            
+
             // 移除GUI请求标记，只发送普通输出
-            const cleanText = text.replace(/__VAKAO_GUI_REQUEST__.+?__VAKAO_GUI_REQUEST_END__/gs, '');
+            const cleanText = text.replace(
+              /__VAKAO_GUI_REQUEST__.+?__VAKAO_GUI_REQUEST_END__/gs,
+              "",
+            );
             if (cleanText.trim() && mainWindow) {
               mainWindow.webContents.send("log-output", {
                 type: "stdout",
@@ -540,7 +545,7 @@ ipcMain.handle("execute-publish", async (event, options) => {
               });
             }
           } catch (error) {
-            console.error('解析GUI输入请求失败:', error);
+            console.error("解析GUI输入请求失败:", error);
             // 如果解析失败，发送原始输出
             if (mainWindow) {
               mainWindow.webContents.send("log-output", {
@@ -561,7 +566,7 @@ ipcMain.handle("execute-publish", async (event, options) => {
       });
 
       // 处理错误输出
-      publishProcess.stderr.on("data", data => {
+      publishProcess.stderr.on("data", (data) => {
         const text = data.toString("utf8");
         errorOutput += text;
 
@@ -583,7 +588,7 @@ ipcMain.handle("execute-publish", async (event, options) => {
       }
 
       // 处理进程结束
-      publishProcess.on("close", code => {
+      publishProcess.on("close", (code) => {
         publishProcess = null;
 
         const success = code === 0;
@@ -615,7 +620,7 @@ ipcMain.handle("execute-publish", async (event, options) => {
       });
 
       // 处理进程错误
-      publishProcess.on("error", error => {
+      publishProcess.on("error", (error) => {
         publishProcess = null;
 
         // 发送错误事件
@@ -664,10 +669,10 @@ ipcMain.handle("kill-publish-process", async () => {
  */
 async function handleGUIInputRequest(request, process) {
   try {
-    console.log('主进程: 开始处理GUI输入请求', request.id);
-    
+    console.log("主进程: 开始处理GUI输入请求", request.id);
+
     if (!request || !request.id || !request.data) {
-      console.error('无效的GUI输入请求:', request);
+      console.error("无效的GUI输入请求:", request);
       return;
     }
 
@@ -676,18 +681,18 @@ async function handleGUIInputRequest(request, process) {
       id: request.id,
       title: request.data.title,
       message: request.data.message,
-      description: request.data.description || '',
+      description: request.data.description || "",
       type: request.data.type,
-      defaultValue: request.data.defaultValue || '',
+      defaultValue: request.data.defaultValue || "",
       options: request.data.options || [],
       required: request.data.required || false,
       validation: request.data.validation || {},
-      helpText: request.data.helpText || '',
-      timestamp: Date.now()
+      helpText: request.data.helpText || "",
+      timestamp: Date.now(),
     };
 
     // 存储请求数据到pendingInputRequests
-    console.log('主进程: 存储请求数据到pendingInputRequests');
+    console.log("主进程: 存储请求数据到pendingInputRequests");
     pendingInputRequests.set(request.id, {
       request: requestObject,
       resolve: null,
@@ -696,47 +701,46 @@ async function handleGUIInputRequest(request, process) {
 
     // 向渲染进程发送用户输入请求
     if (mainWindow) {
-      console.log('主进程: 向渲染进程发送用户输入请求');
+      console.log("主进程: 向渲染进程发送用户输入请求");
       mainWindow.webContents.send("user-input-request", requestObject);
     }
 
-    console.log('主进程: 等待用户响应...');
+    console.log("主进程: 等待用户响应...");
     // 等待用户响应
     const userResponse = await waitForUserResponse(request.id);
-    console.log('主进程: 收到用户响应:', userResponse);
+    console.log("主进程: 收到用户响应:", userResponse);
 
     // 将响应发送回发布进程
     const response = {
       id: request.id,
-      type: 'user-input-response',
-      data: userResponse
+      type: "user-input-response",
+      data: userResponse,
     };
 
-    console.log('主进程: 准备将响应发送回发布进程:', response);
+    console.log("主进程: 准备将响应发送回发布进程:", response);
     if (process && process.stdin && process.stdin.writable) {
-      process.stdin.write(JSON.stringify(response) + '\n');
-      console.log('主进程: 响应已发送到发布进程');
+      process.stdin.write(JSON.stringify(response) + "\n");
+      console.log("主进程: 响应已发送到发布进程");
     } else {
-      console.error('主进程: 发布进程的stdin不可写或不存在');
+      console.error("主进程: 发布进程的stdin不可写或不存在");
     }
-
   } catch (error) {
-    console.error('处理GUI输入请求失败:', error);
-    
+    console.error("处理GUI输入请求失败:", error);
+
     // 发送错误响应
     const errorResponse = {
       id: request.id,
-      type: 'user-input-response',
+      type: "user-input-response",
       data: {
         success: false,
         cancelled: true,
-        error: error.message
-      }
+        error: error.message,
+      },
     };
 
-    console.log('主进程: 发送错误响应到发布进程:', errorResponse);
+    console.log("主进程: 发送错误响应到发布进程:", errorResponse);
     if (process && process.stdin && process.stdin.writable) {
-      process.stdin.write(JSON.stringify(errorResponse) + '\n');
+      process.stdin.write(JSON.stringify(errorResponse) + "\n");
     }
   }
 }
@@ -755,9 +759,15 @@ function waitForUserResponse(requestId) {
       requestData.reject = reject;
     } else {
       // 如果没有找到请求，说明数据结构有问题
-      console.error('waitForUserResponse: 找不到请求数据，requestId:', requestId);
-      console.error('当前 pendingInputRequests:', Array.from(pendingInputRequests.entries()));
-      reject(new Error('找不到对应的输入请求'));
+      console.error(
+        "waitForUserResponse: 找不到请求数据，requestId:",
+        requestId,
+      );
+      console.error(
+        "当前 pendingInputRequests:",
+        Array.from(pendingInputRequests.entries()),
+      );
+      reject(new Error("找不到对应的输入请求"));
       return;
     }
 
@@ -765,7 +775,7 @@ function waitForUserResponse(requestId) {
     setTimeout(() => {
       if (pendingInputRequests.has(requestId)) {
         pendingInputRequests.delete(requestId);
-        reject(new Error('用户输入超时'));
+        reject(new Error("用户输入超时"));
       }
     }, 30000);
   });
@@ -791,7 +801,7 @@ function cleanAnsiCodes(text) {
  * 执行通用命令
  */
 ipcMain.handle("execute-command", async (event, command) => {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     try {
       // 解析命令
       const args = command.split(" ");
@@ -815,19 +825,24 @@ ipcMain.handle("execute-command", async (event, command) => {
       let errorOutput = "";
 
       // 处理标准输出
-      commandProcess.stdout.on("data", data => {
+      commandProcess.stdout.on("data", (data) => {
         const text = data.toString("utf8");
         output += text;
 
         // 检查是否包含GUI输入请求
-        const guiRequestMatch = text.match(/__VAKAO_GUI_REQUEST__(.+?)__VAKAO_GUI_REQUEST_END__/s);
+        const guiRequestMatch = text.match(
+          /__VAKAO_GUI_REQUEST__(.+?)__VAKAO_GUI_REQUEST_END__/s,
+        );
         if (guiRequestMatch) {
           try {
             const request = JSON.parse(guiRequestMatch[1]);
             handleGUIInputRequest(request, commandProcess);
-            
+
             // 移除GUI请求标记，只发送普通输出
-            const cleanText = text.replace(/__VAKAO_GUI_REQUEST__.+?__VAKAO_GUI_REQUEST_END__/gs, '');
+            const cleanText = text.replace(
+              /__VAKAO_GUI_REQUEST__.+?__VAKAO_GUI_REQUEST_END__/gs,
+              "",
+            );
             if (cleanText.trim() && mainWindow) {
               mainWindow.webContents.send("log-output", {
                 type: "stdout",
@@ -835,7 +850,7 @@ ipcMain.handle("execute-command", async (event, command) => {
               });
             }
           } catch (error) {
-            console.error('解析GUI输入请求失败:', error);
+            console.error("解析GUI输入请求失败:", error);
             // 如果解析失败，发送原始输出
             if (mainWindow && text.trim()) {
               mainWindow.webContents.send("log-output", {
@@ -857,7 +872,7 @@ ipcMain.handle("execute-command", async (event, command) => {
       });
 
       // 处理错误输出
-      commandProcess.stderr.on("data", data => {
+      commandProcess.stderr.on("data", (data) => {
         const rawText = data.toString("utf8");
         const cleanText = cleanAnsiCodes(rawText);
         errorOutput += cleanText;
@@ -880,7 +895,7 @@ ipcMain.handle("execute-command", async (event, command) => {
       }
 
       // 处理进程结束
-      commandProcess.on("close", code => {
+      commandProcess.on("close", (code) => {
         const success = code === 0;
         const result = {
           success,
@@ -902,7 +917,7 @@ ipcMain.handle("execute-command", async (event, command) => {
       });
 
       // 处理进程错误
-      commandProcess.on("error", error => {
+      commandProcess.on("error", (error) => {
         // 发送错误事件
         if (mainWindow) {
           mainWindow.webContents.send("error", {
@@ -1191,9 +1206,14 @@ function validateInput(value, validation, type) {
 ipcMain.handle("request-user-input", async (event, inputRequest) => {
   try {
     const requestId = generateRequestId();
-    
+
     // 验证输入请求参数
-    if (!inputRequest || !inputRequest.title || !inputRequest.message || !inputRequest.type) {
+    if (
+      !inputRequest ||
+      !inputRequest.title ||
+      !inputRequest.message ||
+      !inputRequest.type
+    ) {
       return {
         success: false,
         error: "输入请求参数不完整",
@@ -1201,7 +1221,15 @@ ipcMain.handle("request-user-input", async (event, inputRequest) => {
     }
 
     // 支持的输入类型
-    const supportedTypes = ["text", "password", "number", "select", "checkbox", "radio", "textarea"];
+    const supportedTypes = [
+      "text",
+      "password",
+      "number",
+      "select",
+      "checkbox",
+      "radio",
+      "textarea",
+    ];
     if (!supportedTypes.includes(inputRequest.type)) {
       return {
         success: false,
@@ -1211,7 +1239,11 @@ ipcMain.handle("request-user-input", async (event, inputRequest) => {
 
     // 为选择类型验证选项
     if (["select", "checkbox", "radio"].includes(inputRequest.type)) {
-      if (!inputRequest.options || !Array.isArray(inputRequest.options) || inputRequest.options.length === 0) {
+      if (
+        !inputRequest.options ||
+        !Array.isArray(inputRequest.options) ||
+        inputRequest.options.length === 0
+      ) {
         return {
           success: false,
           error: `${inputRequest.type} 类型需要提供选项列表`,
@@ -1249,7 +1281,7 @@ ipcMain.handle("request-user-input", async (event, inputRequest) => {
       if (requestData) {
         requestData.resolve = resolve;
         requestData.reject = reject;
-        
+
         // 设置超时（30秒）
         setTimeout(() => {
           if (pendingInputRequests.has(requestId)) {
@@ -1278,51 +1310,55 @@ ipcMain.handle("request-user-input", async (event, inputRequest) => {
  */
 ipcMain.handle("respond-user-input", async (event, requestId, response) => {
   try {
-    console.log('主进程: 收到渲染进程的用户输入响应', { requestId, response });
-    
+    console.log("主进程: 收到渲染进程的用户输入响应", { requestId, response });
+
     const requestData = pendingInputRequests.get(requestId);
     if (!requestData) {
-      console.error('主进程: 找不到对应的输入请求', requestId);
+      console.error("主进程: 找不到对应的输入请求", requestId);
       return {
         success: false,
         error: "找不到对应的输入请求",
       };
     }
 
-    console.log('主进程: 找到对应的请求数据:', requestData);
-    console.log('主进程: requestData.request:', requestData.request);
-    console.log('主进程: requestData.resolve:', typeof requestData.resolve);
-    
+    console.log("主进程: 找到对应的请求数据:", requestData);
+    console.log("主进程: requestData.request:", requestData.request);
+    console.log("主进程: requestData.resolve:", typeof requestData.resolve);
+
     const { request, resolve } = requestData;
-    console.log('主进程: 解构后的request:', request);
-    console.log('主进程: 解构后的resolve:', typeof resolve);
+    console.log("主进程: 解构后的request:", request);
+    console.log("主进程: 解构后的resolve:", typeof resolve);
 
     // 移除请求
     pendingInputRequests.delete(requestId);
-    console.log('主进程: 已从待处理请求中移除请求', requestId);
+    console.log("主进程: 已从待处理请求中移除请求", requestId);
 
     // 如果用户取消了输入
     if (response.cancelled) {
-      console.log('主进程: 用户取消了输入');
+      console.log("主进程: 用户取消了输入");
       const result = {
         success: false,
         cancelled: true,
         error: "用户取消了输入",
       };
-      
+
       if (resolve) {
-        console.log('主进程: 调用resolve函数返回取消结果');
+        console.log("主进程: 调用resolve函数返回取消结果");
         resolve(result);
       }
       return { success: true };
     }
 
     // 验证输入值
-    const validationResult = validateInput(response.value, request.validation, request.type);
-    console.log('主进程: 输入验证结果:', validationResult);
-    
+    const validationResult = validateInput(
+      response.value,
+      request.validation,
+      request.type,
+    );
+    console.log("主进程: 输入验证结果:", validationResult);
+
     if (!validationResult.valid) {
-      console.log('主进程: 验证失败，重新发送请求');
+      console.log("主进程: 验证失败，重新发送请求");
       // 验证失败，重新发送请求
       const newRequestId = generateRequestId();
       const newRequest = {
@@ -1347,18 +1383,18 @@ ipcMain.handle("respond-user-input", async (event, requestId, response) => {
       value: response.value,
       cancelled: false,
     };
-    
-    console.log('主进程: 验证成功，准备调用resolve函数:', result);
+
+    console.log("主进程: 验证成功，准备调用resolve函数:", result);
     if (resolve) {
-      console.log('主进程: 调用resolve函数返回成功结果');
+      console.log("主进程: 调用resolve函数返回成功结果");
       resolve(result);
     } else {
-      console.error('主进程: resolve函数不存在!');
+      console.error("主进程: resolve函数不存在!");
     }
 
     return { success: true };
   } catch (error) {
-    console.error('主进程: 处理用户输入响应时发生错误:', error);
+    console.error("主进程: 处理用户输入响应时发生错误:", error);
     return {
       success: false,
       error: error.message,
@@ -1372,15 +1408,15 @@ ipcMain.handle("respond-user-input", async (event, requestId, response) => {
 setInterval(() => {
   const now = Date.now();
   const expiredRequests = [];
-  
+
   for (const [requestId, requestData] of pendingInputRequests.entries()) {
     // 清理超过5分钟的请求
     if (now - requestData.request.timestamp > 5 * 60 * 1000) {
       expiredRequests.push(requestId);
     }
   }
-  
-  expiredRequests.forEach(requestId => {
+
+  expiredRequests.forEach((requestId) => {
     const requestData = pendingInputRequests.get(requestId);
     if (requestData && requestData.resolve) {
       requestData.resolve({
@@ -1398,7 +1434,7 @@ setInterval(() => {
 /**
  * 处理未捕获的异常
  */
-process.on("uncaughtException", error => {
+process.on("uncaughtException", (error) => {
   console.error("未捕获的异常:", error);
 
   // 显示错误对话框
@@ -1415,7 +1451,7 @@ process.on("unhandledRejection", (reason, promise) => {
 });
 
 // 使用 Buffer 确保中文字符正确输出
-const logMessage = message => {
+const logMessage = (message) => {
   if (process.platform === "win32") {
     // Windows 平台使用 UTF-8 编码输出
     process.stdout.write(Buffer.from(message + "\n", "utf8"));

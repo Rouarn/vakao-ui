@@ -129,7 +129,7 @@ export type UseAsyncReturn<T, P extends any[] = any[]> = [
  */
 export function useAsync<T, P extends any[] = any[]>(
   asyncFn: AsyncFunction<T, P>,
-  options: UseAsyncOptions = {}
+  options: UseAsyncOptions = {},
 ): UseAsyncReturn<T, P> {
   const {
     immediate = false,

@@ -48,7 +48,7 @@ function readPackageJson(packagePath) {
     const packageJsonPath = path.join(
       PROJECT_ROOT,
       packagePath,
-      "package.json"
+      "package.json",
     );
     if (fs.existsSync(packageJsonPath)) {
       const content = fs.readFileSync(packageJsonPath, "utf8");

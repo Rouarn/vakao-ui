@@ -158,7 +158,7 @@ useEventListener(keyboardTargetRef, "keydown", (event: KeyboardEvent) => {
 const windowSize = reactive({ width: 0, height: 0 });
 
 const updateWindowSize = () => {
-  if (typeof window !== 'undefined') {
+  if (typeof window !== "undefined") {
     windowSize.width = window.innerWidth;
     windowSize.height = window.innerHeight;
   }
@@ -168,7 +168,11 @@ const updateWindowSize = () => {
 updateWindowSize();
 
 // 监听窗口大小变化
-useEventListener(() => typeof window !== 'undefined' ? window : null, "resize", updateWindowSize);
+useEventListener(
+  () => (typeof window !== "undefined" ? window : null),
+  "resize",
+  updateWindowSize,
+);
 </script>
 
 <style scoped>
@@ -402,7 +406,7 @@ useEventListener(
   () => {
     optionsClickCount.value++;
   },
-  eventOptions
+  eventOptions,
 );
 
 // 条件监听
@@ -420,7 +424,7 @@ useEventListener(
   () => {
     conditionalClickCount.value++;
   },
-  { enabled: isListening }
+  { enabled: isListening },
 );
 
 // 多事件监听
@@ -516,7 +520,7 @@ export function useEventListener(
   target: EventTarget | Ref<EventTarget | null>,
   event: string,
   handler: EventListener,
-  options?: UseEventListenerOptions
+  options?: UseEventListenerOptions,
 ): UseEventListenerReturn;
 ```
 

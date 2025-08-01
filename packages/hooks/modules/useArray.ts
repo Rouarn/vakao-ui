@@ -19,7 +19,7 @@ export type ArrayUpdateAtFunction<T> = (index: number, item: T) => boolean;
 export type ArrayClearFunction = () => void;
 export type ArrayReplaceFunction<T> = (newArray: T[]) => void;
 export type ArrayFilterFunction<T> = (
-  predicate: (item: T, index: number) => boolean
+  predicate: (item: T, index: number) => boolean,
 ) => void;
 export type ArraySortFunction<T> = (compareFn?: (a: T, b: T) => number) => void;
 export type ArrayReverseFunction = () => void;

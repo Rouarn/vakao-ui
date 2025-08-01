@@ -69,12 +69,12 @@ function normalizeKey(key: string, exactMatch: boolean = false): string {
 function isKeyMatch(
   event: KeyboardEvent,
   targetKeys: string[],
-  exactMatch: boolean = false
+  exactMatch: boolean = false,
 ): boolean {
   const eventKey = normalizeKey(event.key, exactMatch);
   const eventCode = normalizeKey(event.code, exactMatch);
 
-  return targetKeys.some(key => {
+  return targetKeys.some((key) => {
     const normalizedKey = normalizeKey(key, exactMatch);
     return eventKey === normalizedKey || eventCode === normalizedKey;
   });
@@ -138,7 +138,7 @@ function isKeyMatch(
  */
 export function useKeyPress(
   keys: KeyType,
-  options: UseKeyPressOptions = {}
+  options: UseKeyPressOptions = {},
 ): UseKeyPressReturn {
   const {
     target = window,

@@ -1,5 +1,9 @@
 <template>
-  <div :class="mergedClass" :style="mergedStyle" role="radiogroup">
+  <div
+    :class="mergedClass"
+    :style="mergedStyle"
+    role="radiogroup"
+  >
     <slot />
   </div>
 </template>

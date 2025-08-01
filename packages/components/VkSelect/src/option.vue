@@ -1,5 +1,9 @@
 <template>
-  <li v-show="isVisible" :class="mergedClass" @click.stop="handleClick">
+  <li
+    v-show="isVisible"
+    :class="mergedClass"
+    @click.stop="handleClick"
+  >
     <slot>
       {{ label }}
     </slot>

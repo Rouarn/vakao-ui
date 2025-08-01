@@ -112,7 +112,7 @@ function validateEnvironment() {
     'src/main.js',
     'src/index.html',
     'src/preload.js',
-    'src/renderer/renderer.js',
+    'src/renderer/index.js',
     'package.json'
   ];
   

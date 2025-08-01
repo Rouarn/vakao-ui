@@ -996,7 +996,7 @@ export interface UseMediaQueryOptions {
 
 export function useMediaQuery(
   query: string,
-  options?: UseMediaQueryOptions
+  options?: UseMediaQueryOptions,
 ): Ref<boolean>;
 ```
 
@@ -1075,10 +1075,10 @@ const isScreen = useMediaQuery("screen");
 
 ```typescript
 const isMobilePortrait = useMediaQuery(
-  "(max-width: 768px) and (orientation: portrait)"
+  "(max-width: 768px) and (orientation: portrait)",
 );
 const isTabletLandscape = useMediaQuery(
-  "(min-width: 769px) and (max-width: 1024px) and (orientation: landscape)"
+  "(min-width: 769px) and (max-width: 1024px) and (orientation: landscape)",
 );
 ```
 
@@ -1099,7 +1099,7 @@ const createBreakpoint = (size: string) => {
     up: useMediaQuery(`(min-width: ${size})`),
     down: useMediaQuery(`(max-width: ${size})`),
     only: useMediaQuery(
-      `(min-width: ${size}) and (max-width: ${getNextSize(size)})`
+      `(min-width: ${size}) and (max-width: ${getNextSize(size)})`,
     ),
   };
 };
@@ -1115,10 +1115,10 @@ const xl = createBreakpoint("1200px");
 ```typescript
 // 根据屏幕尺寸渲染不同组件
 const MobileComponent = defineAsyncComponent(
-  () => import("./MobileComponent.vue")
+  () => import("./MobileComponent.vue"),
 );
 const DesktopComponent = defineAsyncComponent(
-  () => import("./DesktopComponent.vue")
+  () => import("./DesktopComponent.vue"),
 );
 
 const isMobile = useMediaQuery("(max-width: 768px)");

@@ -579,7 +579,7 @@ const closeImageViewer = () => {
 ```typescript
 const [isFullscreen, toggle, enter, exit, isSupported] = useFullscreen(
   target,
-  options
+  options,
 );
 ```
 
@@ -610,7 +610,7 @@ export type UseFullscreenReturn = [
 
 export function useFullscreen(
   target?: Ref<HTMLElement | null>,
-  options?: UseFullscreenOptions
+  options?: UseFullscreenOptions,
 ): UseFullscreenReturn;
 ```
 
@@ -636,7 +636,7 @@ const [isFullscreen, toggle] = useFullscreen(elementRef, {
     console.log("退出全屏模式");
     // 恢复 UI 元素
   },
-  onError: error => {
+  onError: (error) => {
     console.error("全屏操作失败:", error);
   },
 });

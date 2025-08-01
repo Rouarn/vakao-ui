@@ -111,7 +111,7 @@ function applyGrid(value: number, gridSize: number): number {
 function applyBoundary(
   position: DragPosition,
   boundary?: UseDragOptions["boundary"],
-  _element?: HTMLElement
+  _element?: HTMLElement,
 ): DragPosition {
   let { x, y } = position;
 
@@ -138,7 +138,7 @@ function applyBoundary(
  */
 function applyParentConstraint(
   position: DragPosition,
-  element: HTMLElement
+  element: HTMLElement,
 ): DragPosition {
   const parent = element.parentElement;
   if (!parent) return position;
@@ -387,7 +387,7 @@ export function useDrag(options: UseDragOptions = {}): UseDragReturn {
    * 设置位置
    */
   const setPosition: SetPositionFunction = (
-    newPosition: Partial<DragPosition>
+    newPosition: Partial<DragPosition>,
   ) => {
     position.value = {
       x: newPosition.x ?? position.value.x,
@@ -404,7 +404,7 @@ export function useDrag(options: UseDragOptions = {}): UseDragReturn {
   const [, ,] = useEventListener(
     () => getDragHandle() || elementRef.value,
     "mousedown",
-    startDrag
+    startDrag,
   );
 
   const [, ,] = useEventListener(() => document, "mousemove", handleDrag);

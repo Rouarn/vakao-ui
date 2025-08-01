@@ -77,7 +77,7 @@ const [uploadData, uploading, uploadError, uploadFile, resetUpload, status] =
   useAsync(
     async (file: File): Promise<UploadResult> => {
       // 模拟文件上传
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      await new Promise((resolve) => setTimeout(resolve, 2000));
 
       // 模拟上传失败（10% 概率）
       if (Math.random() < 0.1) {
@@ -92,13 +92,13 @@ const [uploadData, uploading, uploadError, uploadFile, resetUpload, status] =
       };
     },
     {
-      onSuccess: result => {
+      onSuccess: (result) => {
         console.log("上传成功:", result);
       },
-      onError: error => {
+      onError: (error) => {
         console.error("上传失败:", error);
       },
-    }
+    },
   );
 
 const handleFileSelect = (event: Event) => {
@@ -184,7 +184,7 @@ const [statsData, statsLoading, statsError, refreshStats, resetStats] =
   useAsync(
     async (): Promise<StatsData> => {
       // 模拟 API 请求
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      await new Promise((resolve) => setTimeout(resolve, 1500));
 
       return {
         users: { value: Math.floor(Math.random() * 10000), label: "总用户数" },
@@ -196,7 +196,7 @@ const [statsData, statsLoading, statsError, refreshStats, resetStats] =
         growth: { value: Math.floor(Math.random() * 100), label: "增长率 (%)" },
       };
     },
-    { immediate: true } // 立即执行
+    { immediate: true }, // 立即执行
   );
 </script>
 ```
@@ -230,7 +230,7 @@ const [statsData, statsLoading, statsError, refreshStats, resetStats] =
 ```typescript
 const [data, loading, error, execute, reset, status] = useAsync(
   asyncFn,
-  options
+  options,
 );
 ```
 

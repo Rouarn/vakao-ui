@@ -214,15 +214,15 @@
       <h4>基础分页</h4>
       <div class="pagination-controls">
         <div class="pagination-buttons">
-          <button 
-            @click="basicActions.first()" 
+          <button
+            @click="basicActions.first()"
             :disabled="!basicPagination.hasPrev"
             class="btn"
           >
             首页
           </button>
-          <button 
-            @click="basicActions.prev()" 
+          <button
+            @click="basicActions.prev()"
             :disabled="!basicPagination.hasPrev"
             class="btn"
           >
@@ -231,15 +231,15 @@
           <span class="current-page">
             {{ basicPagination.current }} / {{ basicPagination.totalPages }}
           </span>
-          <button 
-            @click="basicActions.next()" 
+          <button
+            @click="basicActions.next()"
             :disabled="!basicPagination.hasNext"
             class="btn"
           >
             下一页
           </button>
-          <button 
-            @click="basicActions.last()" 
+          <button
+            @click="basicActions.last()"
             :disabled="!basicPagination.hasNext"
             class="btn"
           >
@@ -248,15 +248,15 @@
         </div>
         <div class="jump-controls">
           <span>跳转到:</span>
-          <input 
-            v-model.number="jumpPage" 
+          <input
+            v-model.number="jumpPage"
             @keyup.enter="basicActions.goToPage(jumpPage)"
-            type="number" 
-            :min="1" 
+            type="number"
+            :min="1"
             :max="basicPagination.totalPages"
             class="jump-input"
-          >
-          <button 
+          />
+          <button
             @click="basicActions.goToPage(jumpPage)"
             class="btn btn-primary"
           >
@@ -269,18 +269,21 @@
         <div>每页大小: {{ basicPagination.pageSize }}</div>
         <div>总数据量: {{ basicPagination.total }}</div>
         <div>总页数: {{ basicPagination.totalPages }}</div>
-        <div>数据范围: {{ basicPagination.startIndex + 1 }} - {{ basicPagination.endIndex + 1 }}</div>
+        <div>
+          数据范围: {{ basicPagination.startIndex + 1 }} -
+          {{ basicPagination.endIndex + 1 }}
+        </div>
       </div>
     </div>
-    
+
     <!-- 每页大小调整 -->
     <div>
       <h4>每页大小调整</h4>
       <div class="size-controls">
         <div class="size-selector">
           <span>每页显示:</span>
-          <select 
-            :value="sizePagination.pageSize" 
+          <select
+            :value="sizePagination.pageSize"
             @change="sizeActions.setPageSize(Number($event.target.value))"
             class="size-select"
           >
@@ -292,15 +295,15 @@
           <span>总共 {{ sizePagination.total }} 条数据</span>
         </div>
         <div class="page-navigation">
-          <button 
-            @click="sizeActions.prev()" 
+          <button
+            @click="sizeActions.prev()"
             :disabled="!sizePagination.hasPrev"
             class="btn btn-sm"
           >
             ‹
           </button>
           <template v-for="page in getPageNumbers(sizePagination)" :key="page">
-            <button 
+            <button
               v-if="page !== '...'"
               @click="sizeActions.goToPage(page)"
               :class="{ active: page === sizePagination.current }"
@@ -310,8 +313,8 @@
             </button>
             <span v-else class="ellipsis">...</span>
           </template>
-          <button 
-            @click="sizeActions.next()" 
+          <button
+            @click="sizeActions.next()"
             :disabled="!sizePagination.hasNext"
             class="btn btn-sm"
           >
@@ -320,10 +323,14 @@
         </div>
       </div>
       <div class="pagination-info">
-        <div>当前显示: 第 {{ sizePagination.startIndex + 1 }} - {{ Math.min(sizePagination.endIndex + 1, sizePagination.total) }} 条，共 {{ sizePagination.total }} 条</div>
+        <div>
+          当前显示: 第 {{ sizePagination.startIndex + 1 }} -
+          {{ Math.min(sizePagination.endIndex + 1, sizePagination.total) }}
+          条，共 {{ sizePagination.total }} 条
+        </div>
       </div>
     </div>
-    
+
     <!-- 数据表格示例 -->
     <div>
       <h4>数据表格示例</h4>
@@ -343,11 +350,8 @@
               <td>{{ item.name }}</td>
               <td>{{ item.email }}</td>
               <td>
-                <span 
-                  class="status-badge"
-                  :class="item.status"
-                >
-                  {{ item.status === 'active' ? '活跃' : '待激活' }}
+                <span class="status-badge" :class="item.status">
+                  {{ item.status === "active" ? "活跃" : "待激活" }}
                 </span>
               </td>
             </tr>
@@ -355,11 +359,13 @@
         </table>
         <div class="table-footer">
           <div class="table-info">
-            显示第 {{ tablePagination.startIndex + 1 }} - {{ Math.min(tablePagination.endIndex + 1, tablePagination.total) }} 条，共 {{ tablePagination.total }} 条
+            显示第 {{ tablePagination.startIndex + 1 }} -
+            {{ Math.min(tablePagination.endIndex + 1, tablePagination.total) }}
+            条，共 {{ tablePagination.total }} 条
           </div>
           <div class="table-controls">
-            <select 
-              :value="tablePagination.pageSize" 
+            <select
+              :value="tablePagination.pageSize"
               @change="tableActions.setPageSize(Number($event.target.value))"
               class="size-select"
             >
@@ -367,8 +373,8 @@
               <option value="5">5 条/页</option>
               <option value="10">10 条/页</option>
             </select>
-            <button 
-              @click="tableActions.prev()" 
+            <button
+              @click="tableActions.prev()"
               :disabled="!tablePagination.hasPrev"
               class="btn btn-sm"
             >
@@ -377,8 +383,8 @@
             <span class="page-info">
               {{ tablePagination.current }} / {{ tablePagination.totalPages }}
             </span>
-            <button 
-              @click="tableActions.next()" 
+            <button
+              @click="tableActions.next()"
               :disabled="!tablePagination.hasNext"
               class="btn btn-sm"
             >
@@ -392,28 +398,28 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
-import { usePagination } from '@vakao-ui/hooks';
+import { ref, computed } from "vue";
+import { usePagination } from "@vakao-ui/hooks";
 
 // 基础用法
 const jumpPage = ref(1);
 const [basicPagination, basicActions] = usePagination({
   initialPage: 1,
   initialPageSize: 10,
-  total: 95
+  total: 95,
 });
 
 const [sizePagination, sizeActions] = usePagination({
   initialPage: 1,
   initialPageSize: 10,
-  total: 127
+  total: 127,
 });
 
 // 生成页码数组
 const getPageNumbers = (pagination) => {
   const { current, totalPages } = pagination;
   const pages = [];
-  
+
   if (totalPages <= 7) {
     for (let i = 1; i <= totalPages; i++) {
       pages.push(i);
@@ -423,52 +429,60 @@ const getPageNumbers = (pagination) => {
       for (let i = 1; i <= 5; i++) {
         pages.push(i);
       }
-      pages.push('...');
+      pages.push("...");
       pages.push(totalPages);
     } else if (current >= totalPages - 3) {
       pages.push(1);
-      pages.push('...');
+      pages.push("...");
       for (let i = totalPages - 4; i <= totalPages; i++) {
         pages.push(i);
       }
     } else {
       pages.push(1);
-      pages.push('...');
+      pages.push("...");
       for (let i = current - 1; i <= current + 1; i++) {
         pages.push(i);
       }
-      pages.push('...');
+      pages.push("...");
       pages.push(totalPages);
     }
   }
-  
+
   return pages;
 };
 
 // 表格数据
 const tableData = ref([
-  { id: 1, name: '张三', email: 'zhangsan@example.com', status: 'active' },
-  { id: 2, name: '李四', email: 'lisi@example.com', status: 'inactive' },
-  { id: 3, name: '王五', email: 'wangwu@example.com', status: 'active' },
-  { id: 4, name: '赵六', email: 'zhaoliu@example.com', status: 'active' },
-  { id: 5, name: '钱七', email: 'qianqi@example.com', status: 'inactive' },
-  { id: 6, name: '孙八', email: 'sunba@example.com', status: 'active' },
-  { id: 7, name: '周九', email: 'zhoujiu@example.com', status: 'inactive' },
-  { id: 8, name: '吴十', email: 'wushi@example.com', status: 'active' },
-  { id: 9, name: '郑十一', email: 'zhengshiyi@example.com', status: 'active' },
-  { id: 10, name: '王十二', email: 'wangshier@example.com', status: 'inactive' },
-  { id: 11, name: '李十三', email: 'lishisan@example.com', status: 'active' },
-  { id: 12, name: '张十四', email: 'zhangshisi@example.com', status: 'active' }
+  { id: 1, name: "张三", email: "zhangsan@example.com", status: "active" },
+  { id: 2, name: "李四", email: "lisi@example.com", status: "inactive" },
+  { id: 3, name: "王五", email: "wangwu@example.com", status: "active" },
+  { id: 4, name: "赵六", email: "zhaoliu@example.com", status: "active" },
+  { id: 5, name: "钱七", email: "qianqi@example.com", status: "inactive" },
+  { id: 6, name: "孙八", email: "sunba@example.com", status: "active" },
+  { id: 7, name: "周九", email: "zhoujiu@example.com", status: "inactive" },
+  { id: 8, name: "吴十", email: "wushi@example.com", status: "active" },
+  { id: 9, name: "郑十一", email: "zhengshiyi@example.com", status: "active" },
+  {
+    id: 10,
+    name: "王十二",
+    email: "wangshier@example.com",
+    status: "inactive",
+  },
+  { id: 11, name: "李十三", email: "lishisan@example.com", status: "active" },
+  { id: 12, name: "张十四", email: "zhangshisi@example.com", status: "active" },
 ]);
 
 const [tablePagination, tableActions] = usePagination({
   initialPageSize: 5,
-  total: computed(() => tableData.value.length)
+  total: computed(() => tableData.value.length),
 });
 
 const currentPageData = computed(() => {
   const { startIndex, endIndex } = tablePagination.value;
-  return tableData.value.slice(startIndex, Math.min(endIndex + 1, tableData.value.length));
+  return tableData.value.slice(
+    startIndex,
+    Math.min(endIndex + 1, tableData.value.length),
+  );
 });
 </script>
 
@@ -816,44 +830,33 @@ const currentPageData = computed(() => {
       <div class="advanced-controls">
         <div class="data-controls">
           <span>模拟数据量:</span>
-          <button 
-            @click="setReactiveTotal(50)"
-            class="btn btn-outline"
-          >
+          <button @click="setReactiveTotal(50)" class="btn btn-outline">
             50 条
           </button>
-          <button 
-            @click="setReactiveTotal(100)"
-            class="btn btn-outline"
-          >
+          <button @click="setReactiveTotal(100)" class="btn btn-outline">
             100 条
           </button>
-          <button 
-            @click="setReactiveTotal(200)"
-            class="btn btn-outline"
-          >
+          <button @click="setReactiveTotal(200)" class="btn btn-outline">
             200 条
           </button>
-          <button 
-            @click="setReactiveTotal(500)"
-            class="btn btn-outline"
-          >
+          <button @click="setReactiveTotal(500)" class="btn btn-outline">
             500 条
           </button>
         </div>
         <div class="navigation-controls">
           <span class="current-page blue">
-            {{ reactivePagination.current }} / {{ reactivePagination.totalPages }}
+            {{ reactivePagination.current }} /
+            {{ reactivePagination.totalPages }}
           </span>
-          <button 
-            @click="reactiveActions.prev()" 
+          <button
+            @click="reactiveActions.prev()"
             :disabled="!reactivePagination.hasPrev"
             class="btn btn-sm"
           >
             ‹
           </button>
-          <button 
-            @click="reactiveActions.next()" 
+          <button
+            @click="reactiveActions.next()"
             :disabled="!reactivePagination.hasNext"
             class="btn btn-sm"
           >
@@ -867,7 +870,7 @@ const currentPageData = computed(() => {
         <div>总页数: {{ reactivePagination.totalPages }}</div>
       </div>
     </div>
-    
+
     <!-- 带回调的分页 -->
     <div>
       <h4>带回调的分页</h4>
@@ -881,7 +884,8 @@ const currentPageData = computed(() => {
             上一页
           </button>
           <span class="current-page green">
-            {{ callbackPagination.current }} / {{ callbackPagination.totalPages }}
+            {{ callbackPagination.current }} /
+            {{ callbackPagination.totalPages }}
           </span>
           <button
             @click="callbackActions.next()"
@@ -899,10 +903,7 @@ const currentPageData = computed(() => {
             <option value="10">10 条/页</option>
             <option value="15">15 条/页</option>
           </select>
-          <button
-            @click="callbackActions.reset()"
-            class="btn btn-danger"
-          >
+          <button @click="callbackActions.reset()" class="btn btn-danger">
             重置
           </button>
         </div>
@@ -910,13 +911,17 @@ const currentPageData = computed(() => {
       <div class="callback-logs">
         <div class="logs-header">回调日志:</div>
         <div class="logs-content">
-          <div v-for="(log, index) in callbackLogs" :key="index" class="log-item">
+          <div
+            v-for="(log, index) in callbackLogs"
+            :key="index"
+            class="log-item"
+          >
             {{ log }}
           </div>
         </div>
       </div>
     </div>
-    
+
     <!-- 无限滚动模拟 -->
     <div>
       <h4>无限滚动模拟</h4>
@@ -924,21 +929,23 @@ const currentPageData = computed(() => {
         <div class="infinite-info">
           <span>已加载:</span>
           <span class="current-page purple">
-            {{ infinitePagination.current }} 页 / {{ infinitePagination.pageSize * infinitePagination.current }} 条
+            {{ infinitePagination.current }} 页 /
+            {{ infinitePagination.pageSize * infinitePagination.current }} 条
           </span>
           <button
             @click="loadMore"
             :disabled="!infinitePagination.hasNext || isLoading"
             class="btn btn-outline purple"
           >
-            {{ isLoading ? '加载中...' : infinitePagination.hasNext ? '加载更多' : '已全部加载' }}
+            {{
+              isLoading
+                ? "加载中..."
+                : infinitePagination.hasNext
+                  ? "加载更多"
+                  : "已全部加载"
+            }}
           </button>
-          <button
-            @click="resetInfinite"
-            class="btn btn-danger"
-          >
-            重置
-          </button>
+          <button @click="resetInfinite" class="btn btn-danger">重置</button>
         </div>
         <div class="infinite-list">
           <div v-for="item in loadedItems" :key="item" class="list-item">
@@ -949,21 +956,26 @@ const currentPageData = computed(() => {
       <div class="pagination-info">
         <div>总数据: {{ infinitePagination.total }} 条</div>
         <div>已加载: {{ loadedItems.length }} 条</div>
-        <div>加载进度: {{ Math.round((loadedItems.length / infinitePagination.total) * 100) }}%</div>
+        <div>
+          加载进度:
+          {{
+            Math.round((loadedItems.length / infinitePagination.total) * 100)
+          }}%
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
-import { usePagination } from '@vakao-ui/hooks';
+import { ref, computed } from "vue";
+import { usePagination } from "@vakao-ui/hooks";
 
 // 响应式数据源
 const reactiveTotal = ref(150);
 const [reactivePagination, reactiveActions] = usePagination({
   initialPageSize: 15,
-  total: reactiveTotal
+  total: reactiveTotal,
 });
 
 const setReactiveTotal = (total) => {
@@ -992,7 +1004,7 @@ const [callbackPagination, callbackActions] = usePagination({
   },
   onChange: (page, pageSize) => {
     addLog(`分页信息变化: 第${page}页，${pageSize}条/页`);
-  }
+  },
 });
 
 // 无限滚动模拟
@@ -1000,7 +1012,7 @@ const loadedItems = ref([]);
 const isLoading = ref(false);
 const [infinitePagination, infiniteActions] = usePagination({
   initialPageSize: 10,
-  total: 100
+  total: 100,
 });
 
 // 初始化加载第一页
@@ -1010,20 +1022,25 @@ for (let i = 1; i <= 10; i++) {
 
 const loadMore = async () => {
   if (isLoading.value || !infinitePagination.value.hasNext) return;
-  
+
   isLoading.value = true;
-  
+
   // 模拟网络延迟
-  await new Promise(resolve => setTimeout(resolve, 500));
-  
+  await new Promise((resolve) => setTimeout(resolve, 500));
+
   infiniteActions.next();
-  const startIndex = (infinitePagination.value.current - 1) * infinitePagination.value.pageSize + 1;
-  const endIndex = Math.min(infinitePagination.value.current * infinitePagination.value.pageSize, infinitePagination.value.total);
-  
+  const startIndex =
+    (infinitePagination.value.current - 1) * infinitePagination.value.pageSize +
+    1;
+  const endIndex = Math.min(
+    infinitePagination.value.current * infinitePagination.value.pageSize,
+    infinitePagination.value.total,
+  );
+
   for (let i = startIndex; i <= endIndex; i++) {
     loadedItems.value.push(i);
   }
-  
+
   isLoading.value = false;
 };
 
@@ -1299,7 +1316,7 @@ export type UsePaginationReturn = [
 ];
 
 export function usePagination(
-  options?: UsePaginationOptions
+  options?: UsePaginationOptions,
 ): UsePaginationReturn;
 ```
 
@@ -1324,10 +1341,10 @@ const data = ref([]);
 const [pagination, actions] = usePagination({
   initialPageSize: 20,
   total,
-  onPageChange: async page => {
+  onPageChange: async (page) => {
     await loadData(page, pagination.value.pageSize);
   },
-  onPageSizeChange: async pageSize => {
+  onPageSizeChange: async (pageSize) => {
     await loadData(1, pageSize);
   },
 });
@@ -1367,7 +1384,9 @@ const currentPageData = computed(() => {
 ```typescript
 const searchKeyword = ref("");
 const filteredData = computed(() => {
-  return allData.value.filter(item => item.name.includes(searchKeyword.value));
+  return allData.value.filter((item) =>
+    item.name.includes(searchKeyword.value),
+  );
 });
 
 const [pagination, actions] = usePagination({
@@ -1401,11 +1420,11 @@ const loadMore = async () => {
 const { arrivedState } = useScroll(scrollContainer);
 watch(
   () => arrivedState.bottom,
-  isBottom => {
+  (isBottom) => {
     if (isBottom) {
       loadMore();
     }
-  }
+  },
 );
 ```
 

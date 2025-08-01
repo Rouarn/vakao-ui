@@ -174,7 +174,7 @@ function isFullscreenSupported(): boolean {
  */
 export function useFullscreen(
   target?: Ref<HTMLElement | null> | HTMLElement,
-  options: UseFullscreenOptions = {}
+  options: UseFullscreenOptions = {},
 ): UseFullscreenReturn {
   const { onEnter, onExit, onChange, onError } = options;
 
@@ -218,26 +218,26 @@ export function useFullscreen(
   const [, ,] = useEventListener(
     () => document,
     "fullscreenchange",
-    updateFullscreenState
+    updateFullscreenState,
   );
 
   // 兼容性事件监听
   const [, ,] = useEventListener(
     () => document,
     "webkitfullscreenchange",
-    updateFullscreenState
+    updateFullscreenState,
   );
 
   const [, ,] = useEventListener(
     () => document,
     "mozfullscreenchange",
-    updateFullscreenState
+    updateFullscreenState,
   );
 
   const [, ,] = useEventListener(
     () => document,
     "MSFullscreenChange",
-    updateFullscreenState
+    updateFullscreenState,
   );
 
   /**

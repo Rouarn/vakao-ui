@@ -185,7 +185,7 @@ export type UsePaginationReturn = [
  * @author Vakao UI Team
  */
 export function usePagination(
-  options: UsePaginationOptions = {}
+  options: UsePaginationOptions = {},
 ): UsePaginationReturn {
   const {
     initialPage = 1,
@@ -200,14 +200,14 @@ export function usePagination(
   const currentPage = ref(initialPage);
   const pageSize = ref(initialPageSize);
   const total = ref(
-    typeof totalOption === "number" ? totalOption : totalOption.value
+    typeof totalOption === "number" ? totalOption : totalOption.value,
   );
 
   // 监听响应式 total
   if (typeof totalOption !== "number") {
     watch(
       totalOption,
-      newTotal => {
+      (newTotal) => {
         total.value = newTotal;
         // 如果当前页超出范围，调整到最后一页
         const maxPage = Math.max(1, Math.ceil(newTotal / pageSize.value));
@@ -215,7 +215,7 @@ export function usePagination(
           currentPage.value = maxPage;
         }
       },
-      { immediate: true }
+      { immediate: true },
     );
   }
 
@@ -246,7 +246,7 @@ export function usePagination(
     goToPage: (page: number) => {
       const targetPage = Math.max(
         1,
-        Math.min(page, paginationInfo.value.totalPages)
+        Math.min(page, paginationInfo.value.totalPages),
       );
       if (targetPage !== currentPage.value) {
         currentPage.value = targetPage;
@@ -299,7 +299,7 @@ export function usePagination(
         const currentStartIndex = (currentPage.value - 1) * oldPageSize;
         const newPage = Math.max(
           1,
-          Math.ceil((currentStartIndex + 1) / newPageSize)
+          Math.ceil((currentStartIndex + 1) / newPageSize),
         );
 
         currentPage.value = newPage;

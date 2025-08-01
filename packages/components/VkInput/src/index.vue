@@ -1,7 +1,13 @@
 <template>
-  <div :class="mergedClass" :style="mergedStyle">
+  <div
+    :class="mergedClass"
+    :style="mergedStyle"
+  >
     <!-- 前缀插槽 -->
-    <div v-if="$slots.prefix || prefixIcon" class="vk-input__prefix">
+    <div
+      v-if="$slots.prefix || prefixIcon"
+      class="vk-input__prefix"
+    >
       <slot name="prefix">
         <VkIcon
           v-if="prefixIcon"
@@ -30,11 +36,14 @@
         @focus="handleFocus"
         @blur="handleBlur"
         @keydown.enter="handleEnter"
-      />
+      >
     </div>
 
     <!-- 后缀插槽 -->
-    <div v-if="showSuffix" class="vk-input__suffix">
+    <div
+      v-if="showSuffix"
+      class="vk-input__suffix"
+    >
       <!-- 清除按钮 -->
       <VkIcon
         v-if="showClear"

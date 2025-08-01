@@ -45,53 +45,75 @@
 <template>
   <div>
     <div style="margin-bottom: 16px; display: flex; gap: 8px;">
-      <vk-input 
+      <vk-input
         v-model="newItem"
         placeholder="输入新的待办事项"
         @keyup.enter="addItem"
         style="flex: 1;"
       />
-      <vk-button @click="addItem" type="primary" :disabled="!newItem.trim()">添加</vk-button>
+      <vk-button @click="addItem" type="primary" :disabled="!newItem.trim()"
+        >添加</vk-button
+      >
     </div>
-    
+
     <div style="margin-bottom: 16px; display: flex; gap: 8px; flex-wrap: wrap;">
-      <vk-button @click="() => actions.unshift('紧急任务')" size="small">添加到开头</vk-button>
-      <vk-button @click="() => actions.pop()" size="small" :disabled="isEmpty">移除最后一个</vk-button>
-      <vk-button @click="() => actions.shift()" size="small" :disabled="isEmpty">移除第一个</vk-button>
-      <vk-button @click="() => actions.reverse()" size="small" :disabled="isEmpty">反转顺序</vk-button>
-      <vk-button @click="() => actions.clear()" size="small" type="danger" :disabled="isEmpty">清空</vk-button>
+      <vk-button @click="() => actions.unshift('紧急任务')" size="small"
+        >添加到开头</vk-button
+      >
+      <vk-button @click="() => actions.pop()" size="small" :disabled="isEmpty"
+        >移除最后一个</vk-button
+      >
+      <vk-button @click="() => actions.shift()" size="small" :disabled="isEmpty"
+        >移除第一个</vk-button
+      >
+      <vk-button
+        @click="() => actions.reverse()"
+        size="small"
+        :disabled="isEmpty"
+        >反转顺序</vk-button
+      >
+      <vk-button
+        @click="() => actions.clear()"
+        size="small"
+        type="danger"
+        :disabled="isEmpty"
+        >清空</vk-button
+      >
     </div>
-    
-    <div v-if="isEmpty">
-      📝 暂无待办事项，添加一个开始吧！
-    </div>
+
+    <div v-if="isEmpty">📝 暂无待办事项，添加一个开始吧！</div>
     <div v-else>
       <div>共 {{ length }} 项待办事项</div>
       <div v-for="(item, index) in list" :key="index">
         {{ index + 1 }}. {{ item }}
         <vk-button @click="() => editItem(index)" size="small">编辑</vk-button>
-        <vk-button @click="() => actions.removeAt(index)" size="small" type="danger">删除</vk-button>
+        <vk-button
+          @click="() => actions.removeAt(index)"
+          size="small"
+          type="danger"
+          >删除</vk-button
+        >
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { useArray } from '@vakao-ui/hooks';
-import { ref } from 'vue';
+import { useArray } from "@vakao-ui/hooks";
+import { ref } from "vue";
 
-const [list, actions, length, isEmpty] = useArray<string>([]);
-const newItem = ref('');
+const [list, actions, length, isEmpty] = useArray < string > [];
+const newItem = ref("");
 
 const addItem = () => {
   if (newItem.value.trim()) {
     actions.push(newItem.value.trim());
-    newItem.value = '';
+    newItem.value = "";
   }
 };
 
 const editItem = (index) => {
-  const newValue = prompt('编辑待办事项:', list.value[index]);
+  const newValue = prompt("编辑待办事项:", list.value[index]);
   if (newValue !== null && newValue.trim()) {
     actions.updateAt(index, newValue.trim());
   }
@@ -136,16 +158,35 @@ const editItem = (index) => {
 <template>
   <div>
     <div style="margin-bottom: 16px; display: flex; gap: 8px; flex-wrap: wrap;">
-      <vk-button @click="() => numberActions.push(Math.floor(Math.random() * 100))" type="primary">添加随机数</vk-button>
-      <vk-button @click="() => numberActions.sort((a, b) => a - b)" :disabled="numberList.length === 0">升序排序</vk-button>
-      <vk-button @click="() => numberActions.sort((a, b) => b - a)" :disabled="numberList.length === 0">降序排序</vk-button>
-      <vk-button @click="() => numberActions.filter(n => n % 2 === 0)" :disabled="numberList.length === 0">只保留偶数</vk-button>
-      <vk-button @click="() => numberActions.clear()" type="danger" :disabled="numberList.length === 0">清空</vk-button>
+      <vk-button
+        @click="() => numberActions.push(Math.floor(Math.random() * 100))"
+        type="primary"
+        >添加随机数</vk-button
+      >
+      <vk-button
+        @click="() => numberActions.sort((a, b) => a - b)"
+        :disabled="numberList.length === 0"
+        >升序排序</vk-button
+      >
+      <vk-button
+        @click="() => numberActions.sort((a, b) => b - a)"
+        :disabled="numberList.length === 0"
+        >降序排序</vk-button
+      >
+      <vk-button
+        @click="() => numberActions.filter((n) => n % 2 === 0)"
+        :disabled="numberList.length === 0"
+        >只保留偶数</vk-button
+      >
+      <vk-button
+        @click="() => numberActions.clear()"
+        type="danger"
+        :disabled="numberList.length === 0"
+        >清空</vk-button
+      >
     </div>
-    
-    <div v-if="numberList.length === 0">
-      🔢 点击"添加随机数"开始操作
-    </div>
+
+    <div v-if="numberList.length === 0">🔢 点击"添加随机数"开始操作</div>
     <div v-else>
       <div>数组长度: {{ numberLength }}，总和: {{ sum }}</div>
       <div style="display: flex; flex-wrap: wrap; gap: 8px;">
@@ -158,8 +199,8 @@ const editItem = (index) => {
 </template>
 
 <script setup lang="ts">
-import { useArray } from '@vakao-ui/hooks';
-import { computed } from 'vue';
+import { useArray } from "@vakao-ui/hooks";
+import { computed } from "vue";
 
 const [numberList, numberActions, numberLength] = useArray<number>([]);
 
@@ -176,9 +217,9 @@ const sum = computed(() => {
 
 ### 参数
 
-| 参数 | 类型 | 默认值 | 说明 |
-|------|------|--------|------|
-| initialValue | `T[]` | `[]` | 数组的初始值 |
+| 参数         | 类型  | 默认值 | 说明         |
+| ------------ | ----- | ------ | ------------ |
+| initialValue | `T[]` | `[]`   | 数组的初始值 |
 
 ### 返回值
 
@@ -188,31 +229,31 @@ const sum = computed(() => {
 const [list, actions, length, isEmpty] = useArray<T>(initialValue);
 ```
 
-| 索引 | 名称 | 类型 | 说明 |
-|------|------|------|------|
-| 0 | list | `ComputedRef<readonly T[]>` | 只读的响应式数组 |
-| 1 | actions | `ArrayActions<T>` | 数组操作方法对象 |
-| 2 | length | `ComputedRef<number>` | 数组长度的计算属性 |
-| 3 | isEmpty | `ComputedRef<boolean>` | 数组是否为空的计算属性 |
+| 索引 | 名称    | 类型                        | 说明                   |
+| ---- | ------- | --------------------------- | ---------------------- |
+| 0    | list    | `ComputedRef<readonly T[]>` | 只读的响应式数组       |
+| 1    | actions | `ArrayActions<T>`           | 数组操作方法对象       |
+| 2    | length  | `ComputedRef<number>`       | 数组长度的计算属性     |
+| 3    | isEmpty | `ComputedRef<boolean>`      | 数组是否为空的计算属性 |
 
 ### ArrayActions 方法
 
-| 方法 | 类型 | 说明 |
-|------|------|------|
-| push | `(...items: T[]) => void` | 添加元素到数组末尾 |
-| pop | `() => T \| undefined` | 移除并返回最后一个元素 |
-| shift | `() => T \| undefined` | 移除并返回第一个元素 |
-| unshift | `(...items: T[]) => void` | 添加元素到数组开头 |
-| splice | `(start: number, deleteCount?: number, ...items: T[]) => T[]` | 删除/插入元素 |
-| remove | `(item: T) => boolean` | 移除指定元素（第一个匹配项） |
-| removeAt | `(index: number) => T \| undefined` | 移除指定索引的元素 |
-| insertAt | `(index: number, item: T) => void` | 在指定索引插入元素 |
-| updateAt | `(index: number, item: T) => boolean` | 更新指定索引的元素 |
-| clear | `() => void` | 清空数组 |
-| replace | `(newArray: T[]) => void` | 替换整个数组 |
-| filter | `(predicate: (item: T, index: number) => boolean) => void` | 过滤数组元素 |
-| sort | `(compareFn?: (a: T, b: T) => number) => void` | 排序数组 |
-| reverse | `() => void` | 反转数组 |
+| 方法     | 类型                                                          | 说明                         |
+| -------- | ------------------------------------------------------------- | ---------------------------- |
+| push     | `(...items: T[]) => void`                                     | 添加元素到数组末尾           |
+| pop      | `() => T \| undefined`                                        | 移除并返回最后一个元素       |
+| shift    | `() => T \| undefined`                                        | 移除并返回第一个元素         |
+| unshift  | `(...items: T[]) => void`                                     | 添加元素到数组开头           |
+| splice   | `(start: number, deleteCount?: number, ...items: T[]) => T[]` | 删除/插入元素                |
+| remove   | `(item: T) => boolean`                                        | 移除指定元素（第一个匹配项） |
+| removeAt | `(index: number) => T \| undefined`                           | 移除指定索引的元素           |
+| insertAt | `(index: number, item: T) => void`                            | 在指定索引插入元素           |
+| updateAt | `(index: number, item: T) => boolean`                         | 更新指定索引的元素           |
+| clear    | `() => void`                                                  | 清空数组                     |
+| replace  | `(newArray: T[]) => void`                                     | 替换整个数组                 |
+| filter   | `(predicate: (item: T, index: number) => boolean) => void`    | 过滤数组元素                 |
+| sort     | `(compareFn?: (a: T, b: T) => number) => void`                | 排序数组                     |
+| reverse  | `() => void`                                                  | 反转数组                     |
 
 ## 类型定义
 
@@ -221,7 +262,7 @@ export type UseArrayReturn<T> = [
   ComputedRef<readonly T[]>,
   ArrayActions<T>,
   ComputedRef<number>,
-  ComputedRef<boolean>
+  ComputedRef<boolean>,
 ];
 
 export interface ArrayActions<T> {

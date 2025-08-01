@@ -656,7 +656,7 @@ WEBHOOK_URL=https://discord.com/api/webhooks/YOUR/DISCORD/WEBHOOK
        extensionManager.registerHook(
          "afterDeploy",
          this.onSuccess.bind(this),
-         this.name
+         this.name,
        );
      }
 

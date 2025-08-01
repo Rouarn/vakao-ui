@@ -310,20 +310,34 @@ export function useMouse(options: UseMouseOptions = {}): UseMouseReturn {
   // ==================== 事件监听器 ====================
 
   // 鼠标事件监听
-  useEventListener(() => window, "mousemove", handleMouseMove, { passive: true });
-  useEventListener(() => window, "mousedown", handleMouseDown, { passive: true });
+  useEventListener(() => window, "mousemove", handleMouseMove, {
+    passive: true,
+  });
+  useEventListener(() => window, "mousedown", handleMouseDown, {
+    passive: true,
+  });
   useEventListener(() => window, "mouseup", handleMouseUp, { passive: true });
 
   // 触摸事件监听
   if (touch) {
-    useEventListener(() => window, "touchstart", handleTouchStart, { passive: true });
-    useEventListener(() => window, "touchmove", handleTouchMove, { passive: true });
-    useEventListener(() => window, "touchend", handleTouchEnd, { passive: true });
+    useEventListener(() => window, "touchstart", handleTouchStart, {
+      passive: true,
+    });
+    useEventListener(() => window, "touchmove", handleTouchMove, {
+      passive: true,
+    });
+    useEventListener(() => window, "touchend", handleTouchEnd, {
+      passive: true,
+    });
   }
 
   // 窗口大小变化时更新元素信息
-  useEventListener(() => window, "resize", updateElementInfo, { passive: true });
-  useEventListener(() => window, "scroll", updateElementInfo, { passive: true });
+  useEventListener(() => window, "resize", updateElementInfo, {
+    passive: true,
+  });
+  useEventListener(() => window, "scroll", updateElementInfo, {
+    passive: true,
+  });
 
   // ==================== 返回值 ====================
 

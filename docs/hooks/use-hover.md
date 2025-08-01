@@ -92,17 +92,21 @@
         <div
           v-for="(card, index) in cards"
           :key="index"
-          :ref="el => (cardRefs[index] = el)"
+          :ref="(el) => (cardRefs[index] = el)"
           class="card"
           :class="{ hovered: cardHoverStates[index]?.value }"
           :style="{
-            background: cardHoverStates[index]?.value ? card.hoverColor : card.color,
+            background: cardHoverStates[index]?.value
+              ? card.hoverColor
+              : card.color,
           }"
         >
           <div class="card-icon">{{ card.icon }}</div>
           <h5 class="card-title">{{ card.title }}</h5>
           <p class="card-description">{{ card.description }}</p>
-          <div v-if="cardHoverStates[index]?.value" class="card-indicator">✨</div>
+          <div v-if="cardHoverStates[index]?.value" class="card-indicator">
+            ✨
+          </div>
         </div>
       </div>
     </div>
@@ -114,11 +118,13 @@
         <button
           v-for="(btn, index) in buttons"
           :key="index"
-          :ref="el => (buttonRefs[index] = el)"
+          :ref="(el) => (buttonRefs[index] = el)"
           class="interactive-button"
           :class="{ hovered: buttonHoverStates[index]?.value }"
           :style="{
-            background: buttonHoverStates[index]?.value ? btn.hoverColor : btn.color,
+            background: buttonHoverStates[index]?.value
+              ? btn.hoverColor
+              : btn.color,
           }"
         >
           {{ btn.text }}
@@ -129,7 +135,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive } from "vue";
+import { ref, reactive, onMounted } from "vue";
 import { useHover } from "@vakao-ui/hooks";
 
 // 基础悬停
@@ -160,13 +166,13 @@ const cards = [
   },
 ];
 
-// 卡片悬停状态
+// 卡片悬停状态管理
 const cardRefs = ref<HTMLElement[]>([]);
 const cardHoverStates = ref<any[]>([]);
 
-cards.forEach((_, index) => {
-  const [cardRef, isHovered] = useHover();
-  cardRefs.value[index] = cardRef;
+// 创建卡片悬停实例
+const cardHoverInstances = cards.map(() => useHover());
+cardHoverInstances.forEach(([_, isHovered], index) => {
   cardHoverStates.value[index] = isHovered;
 });
 
@@ -178,14 +184,31 @@ const buttons = [
   { text: "危险按钮", color: "#ff4d4f", hoverColor: "#cf1322" },
 ];
 
-// 按钮悬停状态
+// 按钮悬停状态管理
 const buttonRefs = ref<HTMLElement[]>([]);
 const buttonHoverStates = ref<any[]>([]);
 
-buttons.forEach((_, index) => {
-  const [buttonRef, isHovered] = useHover();
-  buttonRefs.value[index] = buttonRef;
+// 创建按钮悬停实例
+const buttonHoverInstances = buttons.map(() => useHover());
+buttonHoverInstances.forEach(([_, isHovered], index) => {
   buttonHoverStates.value[index] = isHovered;
+});
+
+// 组件挂载后绑定 ref
+onMounted(() => {
+  // 绑定卡片 ref
+  cardHoverInstances.forEach(([hoverRef], index) => {
+    if (cardRefs.value[index]) {
+      hoverRef.value = cardRefs.value[index];
+    }
+  });
+
+  // 绑定按钮 ref
+  buttonHoverInstances.forEach(([hoverRef], index) => {
+    if (buttonRefs.value[index]) {
+      hoverRef.value = buttonRefs.value[index];
+    }
+  });
 });
 </script>
 
@@ -363,12 +386,12 @@ buttons.forEach((_, index) => {
              style="position: relative; display: inline-block;">
           <button style="padding: 8px 16px; border: 1px solid #d9d9d9; border-radius: 6px; background: white; cursor: pointer; transition: all 0.2s;"
                   :style="{ 
-                    borderColor: tooltipHoverStates[index] ? '#1890ff' : '#d9d9d9',
-                    color: tooltipHoverStates[index] ? '#1890ff' : '#666'
+                    borderColor: tooltipHoverStates[index]?.value ? '#1890ff' : '#d9d9d9',
+                    color: tooltipHoverStates[index]?.value ? '#1890ff' : '#666'
                   }">
             {{ tooltip.text }}
           </button>
-          <div v-if="tooltipHoverStates[index]" 
+          <div v-if="tooltipHoverStates[index]?.value" 
                style="position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); margin-bottom: 8px; padding: 8px 12px; background: #333; color: white; border-radius: 4px; font-size: 12px; white-space: nowrap; z-index: 10;">
             {{ tooltip.tip }}
             <div style="position: absolute; top: 100%; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 4px solid transparent; border-right: 4px solid transparent; border-top: 4px solid #333;"></div>
@@ -448,7 +471,7 @@ buttons.forEach((_, index) => {
         <div
           v-for="(tooltip, index) in tooltips"
           :key="index"
-          :ref="el => (tooltipRefs[index] = el)"
+          :ref="(el) => (tooltipRefs[index] = el)"
           class="tooltip-container"
         >
           <button
@@ -478,13 +501,18 @@ const [delayHoverRef, delayIsHovered] = useHover({
 });
 
 // 条件悬停
-const [conditionalHoverRef, conditionalIsHovered, setConditionalEnabled] = useHover();
+const [conditionalHoverRef, conditionalIsHovered, setConditionalEnabled] =
+  useHover();
 const hoverEnabled = ref(true);
 
 // 监听启用状态变化
-watch(hoverEnabled, (enabled) => {
-  setConditionalEnabled(enabled);
-}, { immediate: true });
+watch(
+  hoverEnabled,
+  (enabled) => {
+    setConditionalEnabled(enabled);
+  },
+  { immediate: true },
+);
 
 // 悬停计数器
 const [counterHoverRef, counterIsHovered] = useHover();
@@ -677,19 +705,19 @@ tooltips.forEach((_, index) => {
 
 ### 参数
 
-| 参数    | 类型              | 默认值 | 说明     |
-| ------- | ----------------- | ------ | -------- |
-| options | `UseHoverOptions` | `{}`   | 配置选项 |
+| 参数    | 类型              | 默认值 | 说明                                             |
+| ------- | ----------------- | ------ | ------------------------------------------------ |
+| options | `UseHoverOptions` | `{}`   | 悬停检测配置选项，包含延迟、回调和启用控制等参数 |
 
 ### UseHoverOptions
 
-| 属性       | 类型                                | 默认值 | 说明                     |
-| ---------- | ----------------------------------- | ------ | ------------------------ |
-| immediate  | `boolean`                           | `true` | 是否立即启用检测         |
-| onEnter    | `(event: MouseEvent) => void`       | -      | 鼠标进入时的回调函数     |
-| onLeave    | `(event: MouseEvent) => void`       | -      | 鼠标离开时的回调函数     |
-| enterDelay | `number`                            | `0`    | 进入延迟时间（毫秒）     |
-| leaveDelay | `number`                            | `0`    | 离开延迟时间（毫秒）     |
+| 属性       | 类型                          | 默认值 | 说明                                                       |
+| ---------- | ----------------------------- | ------ | ---------------------------------------------------------- |
+| immediate  | `boolean`                     | `true` | 是否立即启用检测，设为 false 可以手动控制何时开始监听      |
+| onEnter    | `(event: MouseEvent) => void` | -      | 鼠标进入时的回调函数，可用于执行额外的逻辑                 |
+| onLeave    | `(event: MouseEvent) => void` | -      | 鼠标离开时的回调函数，可用于执行额外的逻辑                 |
+| enterDelay | `number`                      | `0`    | 进入延迟时间（毫秒），可避免快速移动时的误触发             |
+| leaveDelay | `number`                      | `0`    | 离开延迟时间（毫秒），可避免鼠标在元素边缘移动时的状态抖动 |
 
 ### 返回值
 
@@ -699,11 +727,11 @@ tooltips.forEach((_, index) => {
 const [targetRef, isHovered, setEnabled] = useHover(options);
 ```
 
-| 索引 | 类型                              | 说明                     |
-| ---- | --------------------------------- | ------------------------ |
-| 0    | `Ref<HTMLElement \| null>`        | 目标元素的响应式引用     |
-| 1    | `ComputedRef<boolean>`            | 悬停状态的只读响应式引用 |
-| 2    | `(enabled: boolean) => void`      | 启用/禁用悬停检测的函数  |
+| 索引 | 类型                         | 说明                                                 |
+| ---- | ---------------------------- | ---------------------------------------------------- |
+| 0    | `Ref<HTMLElement \| null>`   | 目标元素的响应式引用，需绑定到要检测悬停状态的元素   |
+| 1    | `ComputedRef<boolean>`       | 悬停状态的只读响应式引用，表示当前元素是否处于悬停中 |
+| 2    | `(enabled: boolean) => void` | 启用/禁用悬停检测的函数，可动态控制检测功能          |
 
 ### 类型定义
 
@@ -730,89 +758,166 @@ export function useHover(options?: UseHoverOptions): UseHoverReturn;
 
 ## 使用场景
 
-1. **交互反馈** - 按钮、卡片的悬停效果
-2. **工具提示** - 显示帮助信息
-3. **预览功能** - 悬停预览内容
-4. **导航菜单** - 下拉菜单的显示控制
-5. **数据可视化** - 图表元素的高亮显示
+1. **交互反馈** - 按钮、卡片、列表项等元素的悬停效果，提供视觉反馈
+2. **工具提示** - 实现悬停时显示的提示信息，增强用户体验
+3. **预览功能** - 悬停预览内容，如图片缩略图、文章摘要等
+4. **导航菜单** - 下拉菜单、级联菜单的显示控制，实现悬停展开
+5. **数据可视化** - 图表元素的高亮显示，突出显示数据点
+6. **图片画廊** - 悬停时显示图片控制按钮或额外信息
+7. **表格交互** - 悬停时高亮行或单元格，显示额外操作按钮
+8. **表单元素** - 为输入框、选择器等提供悬停状态样式
 
 ## 高级用法
 
 ### 延迟控制
 
+通过设置延迟时间，避免用户快速移动鼠标时的频繁状态切换，提升用户体验：
+
 ```typescript
 // 进入延迟 300ms，离开延迟 100ms
-const isHovered = useHover(elementRef, {
-  enterDelay: 300,
-  leaveDelay: 100,
+const [elementRef, isHovered] = useHover({
+  enterDelay: 300, // 鼠标进入后等待 300ms 才触发悬停状态
+  leaveDelay: 100, // 鼠标离开后等待 100ms 才取消悬停状态
 });
 ```
 
 ### 条件启用
 
+根据特定条件动态启用或禁用悬停检测，适用于特定交互场景：
+
 ```typescript
+// 初始不启用悬停检测
+const [elementRef, isHovered, setEnabled] = useHover({
+  immediate: false,
+});
+
+// 动态控制启用状态
 const isEnabled = ref(true);
-const isHovered = useHover(elementRef, {
-  enabled: isEnabled,
+watch(isEnabled, (enabled) => {
+  setEnabled(enabled);
+});
+
+// 或者根据其他条件控制
+watch(isEditing, (editing) => {
+  // 编辑模式下禁用悬停效果
+  setEnabled(!editing);
 });
 ```
 
-### 回调函数
+### 自定义回调函数
+
+利用回调函数执行额外的逻辑，实现更复杂的交互效果：
 
 ```typescript
 const [elementRef, isHovered] = useHover({
   onEnter: (event) => {
     console.log("鼠标进入", event);
+    // 执行额外操作，如加载数据、播放动画等
+    loadPreviewData(elementId);
+    animateElement(event.target);
   },
   onLeave: (event) => {
     console.log("鼠标离开", event);
+    // 执行清理操作
+    cancelPreviewLoading();
+    resetAnimation(event.target);
   },
 });
 ```
 
-### 延迟触发
+### 嵌套悬停检测
+
+组合多个悬停检测实例，实现复杂的嵌套交互效果：
 
 ```typescript
-const [elementRef, isHovered] = useHover({
-  enterDelay: 300,
-  leaveDelay: 100,
+// 父元素悬停
+const [parentRef, isParentHovered] = useHover();
+// 子元素悬停
+const [childRef, isChildHovered] = useHover();
+
+// 组合悬停状态
+const shouldShowDetails = computed(() => {
+  return isParentHovered.value || isChildHovered.value;
+});
+
+// 使用组合状态控制UI显示
+watch(shouldShowDetails, (show) => {
+  if (show) {
+    showDetailPanel();
+  } else {
+    hideDetailPanel();
+  }
 });
 ```
 
-### 条件控制
+### 悬停统计与分析
+
+结合其他逻辑，实现悬停行为的统计和分析：
 
 ```typescript
-const [elementRef, isHovered, setEnabled] = useHover();
+// 悬停计数器
+const hoverCount = ref(0);
+const [counterRef, isHovered] = useHover({
+  onEnter: () => {
+    hoverCount.value++;
+    // 可以发送统计数据到分析系统
+    trackUserInteraction("hover", elementId);
+  },
+});
 
-// 动态控制启用状态
-setEnabled(false); // 禁用悬停检测
-setEnabled(true);  // 启用悬停检测
+// 悬停时长统计
+const hoverStartTime = ref<number | null>(null);
+const totalHoverTime = ref(0);
+
+const [timerRef] = useHover({
+  onEnter: () => {
+    hoverStartTime.value = Date.now();
+  },
+  onLeave: () => {
+    if (hoverStartTime.value) {
+      const duration = Date.now() - hoverStartTime.value;
+      totalHoverTime.value += duration;
+      // 记录用户关注时长
+      trackEngagementTime(elementId, duration);
+      hoverStartTime.value = null;
+    }
+  },
+});
 ```
 
-### 多元素悬停
+### 动态样式与动画
+
+结合计算属性，实现基于悬停状态的动态样式和动画效果：
 
 ```typescript
-const elements = ref<HTMLElement[]>([]);
-const hoverStates = reactive<boolean[]>([]);
+const [imageRef, isImageHovered] = useHover();
 
-elements.value.forEach((_, index) => {
-  const [elementRef, isHovered] = useHover();
-  elements.value[index] = elementRef;
-  hoverStates[index] = isHovered;
-});
+// 动态样式对象
+const imageStyle = computed(() => ({
+  transform: isImageHovered.value ? "scale(1.1)" : "scale(1)",
+  filter: isImageHovered.value ? "brightness(1.2)" : "brightness(1)",
+  boxShadow: isImageHovered.value
+    ? "0 10px 20px rgba(0,0,0,0.2)"
+    : "0 2px 5px rgba(0,0,0,0.1)",
+  transition: "all 0.3s ease",
+}));
 ```
 
 ## 注意事项
 
-1. 组件卸载时会自动清理事件监听器
-2. 支持响应式的启用/禁用控制
-3. 延迟时间可以避免频繁的状态切换
-4. 回调函数在状态变化时触发
-5. 支持动态目标元素
-6. 在移动设备上可能需要特殊处理
+1. **自动清理** - 组件卸载时会自动清理事件监听器和定时器，避免内存泄漏
+2. **响应式控制** - 支持动态启用/禁用悬停检测，可根据应用状态灵活控制
+3. **延迟机制** - 使用延迟可以避免频繁的状态切换，提升用户体验
+4. **性能考虑** - 对于大量元素，考虑使用虚拟滚动或按需创建悬停实例
+5. **移动设备** - 在触摸设备上，悬停事件的行为不同，可能需要额外的触摸事件处理
+6. **嵌套元素** - 处理嵌套元素的悬停状态时，注意事件冒泡和捕获的影响
+7. **引用绑定** - 确保正确绑定元素引用，特别是在动态创建的元素上
+8. **类型安全** - 利用 TypeScript 类型定义，确保类型安全和代码提示
+9. **组合使用** - 可与其他 Hooks（如 `useFocus`、`useClickOutside`）组合使用，实现更复杂的交互
+10. **SSR 兼容** - 在服务器端渲染环境中，确保只在客户端执行 DOM 操作
 
 <script setup lang="ts">
-import { ref, reactive, watch } from 'vue';
+import { ref, reactive, watch, onMounted } from 'vue';
 import { useHover } from '@vakao-ui/hooks';
 
 // 基础用法
@@ -843,13 +948,26 @@ const cards = [
   }
 ];
 
+// 为每个卡片创建独立的悬停实例
 const cardRefs = ref<HTMLElement[]>([]);
 const cardHoverStates = ref<any[]>([]);
 
-cards.forEach((_, index) => {
-  const [cardRef, isHovered] = useHover();
-  cardRefs.value[index] = cardRef;
+// 创建卡片悬停实例
+const cardHoverInstances = cards.map(() => useHover());
+cardHoverInstances.forEach(([_, isHovered], index) => {
   cardHoverStates.value[index] = isHovered;
+});
+
+// 在组件挂载后绑定元素引用
+onMounted(() => {
+  // 确保cardRefs.value已初始化
+  if (cardRefs.value) {
+    cardHoverInstances.forEach(([cardRef], index) => {
+      if (cardRefs.value[index]) {
+        cardRef.value = cardRefs.value[index];
+      }
+    });
+  }
 });
 
 // 按钮数据和状态
@@ -860,13 +978,23 @@ const buttons = [
   { text: '危险按钮', color: '#ff4d4f', hoverColor: '#cf1322' }
 ];
 
+// 为每个按钮创建独立的悬停实例
 const buttonRefs = ref<HTMLElement[]>([]);
 const buttonHoverStates = ref<any[]>([]);
 
-buttons.forEach((_, index) => {
-  const [buttonRef, isHovered] = useHover();
-  buttonRefs.value[index] = buttonRef;
+// 创建按钮悬停实例
+const buttonHoverInstances = buttons.map(() => useHover());
+buttonHoverInstances.forEach(([_, isHovered], index) => {
   buttonHoverStates.value[index] = isHovered;
+});
+
+// 在组件挂载后绑定元素引用
+onMounted(() => {
+  buttonHoverInstances.forEach(([buttonRef], index) => {
+    if (buttonRefs.value[index]) {
+      buttonRef.value = buttonRefs.value[index];
+    }
+  });
 });
 
 // 高级用法
@@ -899,12 +1027,22 @@ const tooltips = [
   { text: '删除', tip: '删除选中项目' }
 ];
 
+// 为每个工具提示创建独立的悬停实例
 const tooltipRefs = ref<HTMLElement[]>([]);
-const tooltipHoverStates = reactive<boolean[]>([]);
+const tooltipHoverStates = ref<any[]>([]);
 
-tooltips.forEach((_, index) => {
-  const [tooltipRef, isHovered] = useHover();
-  tooltipRefs.value[index] = tooltipRef;
-  tooltipHoverStates[index] = isHovered;
+// 创建工具提示悬停实例
+const tooltipHoverInstances = tooltips.map(() => useHover());
+tooltipHoverInstances.forEach(([_, isHovered], index) => {
+  tooltipHoverStates.value[index] = isHovered;
+});
+
+// 在组件挂载后绑定元素引用
+onMounted(() => {
+  tooltipHoverInstances.forEach(([tooltipRef], index) => {
+    if (tooltipRefs.value[index]) {
+      tooltipRef.value = tooltipRefs.value[index];
+    }
+  });
 });
 </script>

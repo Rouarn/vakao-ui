@@ -251,31 +251,31 @@
 
 ### Props
 
-| 名称         | 类型                                                                                  | 默认值      | 说明                                                                               |
-| ------------ | ------------------------------------------------------------------------------------- | ----------- | ---------------------------------------------------------------------------------- |
+| 名称         | 类型                                                                                   | 默认值      | 说明                                                                               |
+| ------------ | -------------------------------------------------------------------------------------- | ----------- | ---------------------------------------------------------------------------------- |
 | type         | `'default' \| 'tertiary' \| 'primary' \| 'success' \| 'info' \| 'warning' \| 'danger'` | `'default'` | 按钮类型                                                                           |
-| size         | `'tiny' \| 'small' \| 'medium' \| 'large'`                                            | `'medium'`  | 按钮大小                                                                           |
-| disabled     | `boolean`                                                                             | `false`     | 是否禁用                                                                           |
-| loading      | `boolean`                                                                             | `false`     | 是否加载中                                                                         |
-| color        | `string`                                                                              | —           | 按钮颜色                                                                           |
-| textColor    | `string`                                                                              | —           | 按钮文字颜色                                                                       |
-| customClass  | `string`                                                                              | —           | 自定义类名                                                                         |
-| customStyle  | `string \| object`                                                                    | —           | 自定义样式                                                                         |
-| tag          | `string`                                                                              | `'button'`  | 按钮标签                                                                           |
-| ghost        | `boolean`                                                                             | `false`     | 是否为幽灵按钮                                                                     |
-| round        | `boolean`                                                                             | `false`     | 是否为圆角按钮                                                                     |
-| circle       | `boolean`                                                                             | `false`     | 是否为圆形按钮                                                                     |
-| strong       | `boolean`                                                                             | `false`     | 是否加粗                                                                           |
-| secondary    | `boolean`                                                                             | `false`     | 是否为次要按钮                                                                     |
-| tertiary     | `boolean`                                                                             | `false`     | 是否为第三级按钮                                                                   |
-| quaternary   | `boolean`                                                                             | `false`     | 是否为第四级按钮                                                                   |
-| focusable    | `boolean`                                                                             | `true`      | 是否可聚焦                                                                         |
-| keyboard     | `boolean`                                                                             | `true`      | 是否支持键盘操作                                                                   |
-| dashed       | `boolean`                                                                             | `false`     | 是否为虚线边框                                                                     |
-| icon         | `string \| VNode`                                                                     | —           | 图标名称或组件，支持 Iconify 图标名称（如 `mdi:magnify`）、图片 URL 或本地图片路径 |
-| iconPosition | `'left' \| 'right'`                                                                   | `'left'`    | 图标位置                                                                           |
-| wave         | `boolean`                                                                             | `true`      | 是否有波纹效果                                                                     |
-| bordered     | `boolean`                                                                             | `true`      | 是否有边框                                                                         |
+| size         | `'tiny' \| 'small' \| 'medium' \| 'large'`                                             | `'medium'`  | 按钮大小                                                                           |
+| disabled     | `boolean`                                                                              | `false`     | 是否禁用                                                                           |
+| loading      | `boolean`                                                                              | `false`     | 是否加载中                                                                         |
+| color        | `string`                                                                               | —           | 按钮颜色                                                                           |
+| textColor    | `string`                                                                               | —           | 按钮文字颜色                                                                       |
+| customClass  | `string`                                                                               | —           | 自定义类名                                                                         |
+| customStyle  | `string \| object`                                                                     | —           | 自定义样式                                                                         |
+| tag          | `string`                                                                               | `'button'`  | 按钮标签                                                                           |
+| ghost        | `boolean`                                                                              | `false`     | 是否为幽灵按钮                                                                     |
+| round        | `boolean`                                                                              | `false`     | 是否为圆角按钮                                                                     |
+| circle       | `boolean`                                                                              | `false`     | 是否为圆形按钮                                                                     |
+| strong       | `boolean`                                                                              | `false`     | 是否加粗                                                                           |
+| secondary    | `boolean`                                                                              | `false`     | 是否为次要按钮                                                                     |
+| tertiary     | `boolean`                                                                              | `false`     | 是否为第三级按钮                                                                   |
+| quaternary   | `boolean`                                                                              | `false`     | 是否为第四级按钮                                                                   |
+| focusable    | `boolean`                                                                              | `true`      | 是否可聚焦                                                                         |
+| keyboard     | `boolean`                                                                              | `true`      | 是否支持键盘操作                                                                   |
+| dashed       | `boolean`                                                                              | `false`     | 是否为虚线边框                                                                     |
+| icon         | `string \| VNode`                                                                      | —           | 图标名称或组件，支持 Iconify 图标名称（如 `mdi:magnify`）、图片 URL 或本地图片路径 |
+| iconPosition | `'left' \| 'right'`                                                                    | `'left'`    | 图标位置                                                                           |
+| wave         | `boolean`                                                                              | `true`      | 是否有波纹效果                                                                     |
+| bordered     | `boolean`                                                                              | `true`      | 是否有边框                                                                         |
 
 ### Events
 
