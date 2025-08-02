@@ -33,13 +33,18 @@
  * @author Vakao UI Team
  */
 
-const path = require("path");
-const { CONFIG } = require("./core/package-configs");
-const PublishEngine = require("./core/publish-engine");
-const DeploymentEngine = require("./core/deployment-engine");
-const Interactive = require("./core/interactive");
-const ExtensionManager = require("./core/extension-manager");
-const { log, separator, showBanner, showSuccess, handleError } = require("./utils");
+import path from "path";
+import { fileURLToPath } from "url";
+import { PROJECT_CONFIG, PACKAGES, PACKAGE_DEPENDENCIES, CONFIG } from "./core/package-configs.js";
+import PublishEngine from "./core/publish-engine.js";
+import DeploymentEngine from "./core/deployment-engine.js";
+import Interactive from "./core/interactive.js";
+import ExtensionManager from "./core/extension-manager.js";
+import { log, separator, showBanner, showSuccess, handleError } from "./utils/index.js";
+
+// ES模块中获取__dirname
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // ==================== 配置常量 ====================
 

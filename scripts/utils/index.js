@@ -53,19 +53,19 @@
 // ==================== 模块导入 ====================
 
 /** 颜色和样式配置 */
-const { colors, typeColors } = require("./colors");
+import { colors, typeColors } from "./colors.js";
 
 /** 图标配置 */
-const { icons } = require("./icons");
+import { icons } from "./icons.js";
 
 /** 横幅显示功能 */
-const { asciiArt, createBanner, showBanner } = require("./banner");
+import { asciiArt, createBanner, showBanner } from "./banner.js";
 
 /** 日志记录功能 */
-const { log } = require("./logger");
+import { log } from "./logger.js";
 
 /** 通用工具函数 */
-const { separator, showSuccess, handleError } = require("./utils");
+import { separator, showSuccess, handleError } from "./utils.js";
 
 // ==================== 统一导出 ====================
 
@@ -75,74 +75,67 @@ const { separator, showSuccess, handleError } = require("./utils");
  * 保持与原有 API 的完全兼容性，确保现有代码无需修改。
  * 同时提供了更好的模块化结构，便于后续维护和扩展。
  */
-module.exports = {
-  // ==================== 颜色和样式 ====================
+// ==================== 颜色和样式 ====================
+/**
+ * ANSI 颜色代码配置
+ * @type {Object}
+ */
+export { colors };
 
-  /**
-   * ANSI 颜色代码配置
-   * @type {Object}
-   */
-  colors,
+/**
+ * 日志类型颜色映射
+ * @type {Object}
+ */
+export { typeColors };
 
-  /**
-   * 日志类型颜色映射
-   * @type {Object}
-   */
-  typeColors,
+// ==================== 图标配置 ====================
+/**
+ * Emoji 图标配置
+ * @type {Object}
+ */
+export { icons };
 
-  // ==================== 图标配置 ====================
+// ==================== 横幅功能 ====================
+/**
+ * ASCII 艺术字
+ * @type {string}
+ */
+export { asciiArt };
 
-  /**
-   * Emoji 图标配置
-   * @type {Object}
-   */
-  icons,
+/**
+ * 创建带标题的横幅
+ * @type {Function}
+ */
+export { createBanner };
 
-  // ==================== 横幅功能 ====================
+/**
+ * 显示横幅
+ * @type {Function}
+ */
+export { showBanner };
 
-  /**
-   * ASCII 艺术字
-   * @type {string}
-   */
-  asciiArt,
+// ==================== 日志功能 ====================
+/**
+ * 美化日志输出
+ * @type {Function}
+ */
+export { log };
 
-  /**
-   * 创建带标题的横幅
-   * @type {Function}
-   */
-  createBanner,
+// ==================== 工具函数 ====================
+/**
+ * 显示分隔线
+ * @type {Function}
+ */
+export { separator };
 
-  /**
-   * 显示横幅
-   * @type {Function}
-   */
-  showBanner,
+/**
+ * 显示成功消息
+ * @type {Function}
+ */
+export { showSuccess };
 
-  // ==================== 日志功能 ====================
-
-  /**
-   * 美化日志输出
-   * @type {Function}
-   */
-  log,
-
-  // ==================== 工具函数 ====================
-
-  /**
-   * 显示分隔线
-   * @type {Function}
-   */
-  separator,
-
-  /**
-   * 显示成功消息
-   * @type {Function}
-   */
-  showSuccess,
-
-  /**
-   * 错误处理
-   * @type {Function}
-   */
-  handleError,
-};
+/**
+ * 错误处理
+ * @type {Function}
+ */
+export { handleError };

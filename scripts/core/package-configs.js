@@ -7,10 +7,13 @@
  * @author 我与夏季
  */
 
-const fs = require("fs");
-const path = require("path");
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
 
 // 项目根目录路径
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const PROJECT_ROOT = path.resolve(__dirname, "../..");
 
 /**
@@ -441,7 +444,7 @@ const CONFIG = {
   buildRoot: undefined, // 将在运行时设置
 };
 
-module.exports = {
+export {
   PROJECT_CONFIG,
   PACKAGES,
   PACKAGE_DEPENDENCIES,

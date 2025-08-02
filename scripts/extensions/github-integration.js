@@ -3,7 +3,7 @@
  * 提供 GitHub 相关的自动化功能
  */
 
-const { log } = require("../utils");
+import { log } from "../utils/index.js";
 
 class GitHubIntegrationExtension {
   constructor(config) {
@@ -27,9 +27,9 @@ class GitHubIntegrationExtension {
 
   /**
    * 部署前钩子
-   * @param {Object} context - 上下文
+   * @param {Object} _context - 上下文
    */
-  async beforeDeploy(context) {
+  async beforeDeploy(_context) {
     log("🔗 GitHub 集成: 部署前检查", "check");
 
     // 检查是否有未推送的提交
@@ -104,4 +104,4 @@ class GitHubIntegrationExtension {
   }
 }
 
-module.exports = GitHubIntegrationExtension;
+export default GitHubIntegrationExtension;

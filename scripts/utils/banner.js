@@ -26,7 +26,7 @@
  * @author Vakao UI Team
  */
 
-const { colors } = require("./colors");
+import { colors } from "./colors.js";
 
 /**
  * VAKAO UI ASCII 艺术字
@@ -95,8 +95,4 @@ function showBanner(title) {
   console.log(createBanner(title));
 }
 
-module.exports = {
-  asciiArt,
-  createBanner,
-  showBanner,
-};
+export { asciiArt, createBanner, showBanner };

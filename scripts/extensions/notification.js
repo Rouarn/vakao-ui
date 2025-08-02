@@ -3,7 +3,7 @@
  * 提供多种通知方式（邮件、Webhook、桌面通知等）
  */
 
-const { log } = require("../utils");
+import { log } from "../utils/index.js";
 
 class NotificationExtension {
   constructor(config) {
@@ -281,4 +281,4 @@ class NotificationExtension {
   }
 }
 
-module.exports = NotificationExtension;
+export default NotificationExtension;

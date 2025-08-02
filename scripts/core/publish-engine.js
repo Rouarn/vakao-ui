@@ -15,11 +15,16 @@
  * @author Vakao UI Team
  */
 
-const { execSync } = require("child_process");
-const { readFileSync, writeFileSync, existsSync, mkdirSync, copyFileSync, rmSync } = require("fs");
-const path = require("path");
-const readline = require("readline");
-const { log } = require("../utils/");
+import { execSync } from "child_process";
+import { readFileSync, writeFileSync, existsSync, mkdirSync, copyFileSync, rmSync } from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
+import readline from "readline";
+import { log } from "../utils/index.js";
+
+// ES模块中获取__dirname
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 /**
  * 发布引擎类
@@ -408,4 +413,4 @@ class PublishEngine {
   }
 }
 
-module.exports = PublishEngine;
+export default PublishEngine;

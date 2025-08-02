@@ -65,6 +65,4 @@ const icons = {
   clean: "🧹",
 };
 
-module.exports = {
-  icons,
-};
+export { icons };

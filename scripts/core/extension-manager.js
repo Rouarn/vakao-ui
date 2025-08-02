@@ -12,9 +12,9 @@
  * @author 我与夏季
  */
 
-const fs = require("fs");
-const path = require("path");
-const { log } = require("../utils/");
+import fs from "fs";
+import path from "path";
+import { log } from "../utils/index.js";
 
 /**
  * 扩展管理器类
@@ -143,11 +143,10 @@ class ExtensionManager {
    */
   async loadExtensionFromFile(extensionPath, config = {}) {
     try {
-      // 清除模块缓存以支持热重载
-      delete require.cache[require.resolve(extensionPath)];
-
-      const extensionModule = require(extensionPath);
-      const extension = typeof extensionModule === "function" ? new extensionModule(this.config) : extensionModule;
+      // 使用动态 import 加载 ES 模块
+      const extensionModule = await import(`file://${extensionPath}?t=${Date.now()}`);
+      const ExtensionClass = extensionModule.default;
+      const extension = typeof ExtensionClass === "function" ? new ExtensionClass(this.config) : ExtensionClass;
 
       // 验证扩展结构
       if (!this.validateExtension(extension)) {
@@ -445,4 +444,4 @@ module.exports = ${name.charAt(0).toUpperCase() + name.slice(1)}Extension;
   }
 }
 
-module.exports = ExtensionManager;
+export default ExtensionManager;

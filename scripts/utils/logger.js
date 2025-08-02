@@ -31,8 +31,8 @@
  * @author Vakao UI Team
  */
 
-const { colors, typeColors } = require("./colors");
-const { icons } = require("./icons");
+import { colors, typeColors } from "./colors.js";
+import { icons } from "./icons.js";
 
 /**
  * 美化日志输出
@@ -96,6 +96,4 @@ function log(message, type = "info") {
   }
 }
 
-module.exports = {
-  log,
-};
+export { log };

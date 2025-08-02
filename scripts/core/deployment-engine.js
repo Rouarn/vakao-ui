@@ -12,10 +12,10 @@
  * @author 我与夏季
  */
 
-const { execSync } = require("child_process");
-const fs = require("fs");
-const path = require("path");
-const { log, separator } = require("../utils/");
+import { execSync } from "child_process";
+import fs from "fs";
+import path from "path";
+import { log, separator } from "../utils/index.js";
 
 /**
  * 部署引擎类
@@ -399,4 +399,4 @@ class DeploymentEngine {
   }
 }
 
-module.exports = DeploymentEngine;
+export default DeploymentEngine;

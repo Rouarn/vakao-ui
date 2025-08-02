@@ -10,9 +10,9 @@
  * @author Vakao UI Team
  */
 
-const readline = require("readline");
-const { CONFIG } = require("./package-configs");
-const { log } = require("../utils");
+import readline from "readline";
+import { CONFIG } from "./package-configs.js";
+import { log } from "../utils/index.js";
 // inquirer will be imported dynamically when needed
 
 /**
@@ -550,4 +550,4 @@ class Interactive {
   }
 }
 
-module.exports = Interactive;
+export default Interactive;

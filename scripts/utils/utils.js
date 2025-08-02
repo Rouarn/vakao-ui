@@ -33,8 +33,8 @@
  * @author Vakao UI Team
  */
 
-const { colors } = require("./colors");
-const { log } = require("./logger");
+import { colors } from "./colors.js";
+import { log } from "./logger.js";
 
 /**
  * 显示分隔线
@@ -146,8 +146,4 @@ function handleError(message, error) {
   process.exit(1);
 }
 
-module.exports = {
-  separator,
-  showSuccess,
-  handleError,
-};
+export { separator, showSuccess, handleError };

@@ -103,7 +103,4 @@ const typeColors = {
   clean: colors.magenta,
 };
 
-module.exports = {
-  colors,
-  typeColors,
-};
+export { colors, typeColors };
