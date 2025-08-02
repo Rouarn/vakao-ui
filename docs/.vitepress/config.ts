@@ -141,22 +141,43 @@ export default defineConfig({
         },
         {
           text: "组件工具",
-          items: [{ text: "withInstall", link: "/utils/withInstall" }],
+          items: [
+            { text: "withInstall 组件安装", link: "/utils/withInstall" },
+            { text: "useNamespace 命名空间", link: "/utils/namespace" },
+            { text: "useControlled 受控组件", link: "/utils/controlled" },
+          ],
         },
         {
           text: "类型工具",
-          items: [{ text: "类型工具", link: "/utils/types" }],
+          items: [
+            { text: "typeTool 类型工具", link: "/utils/typeTool" },
+            { text: "typeGuards 类型守卫", link: "/utils/typeGuards" },
+          ],
         },
         {
           text: "数据处理",
           items: [
-            { text: "deepClone", link: "/utils/deepClone" },
-            { text: "isEqual", link: "/utils/isEqual" },
+            { text: "deepClone 深拷贝", link: "/utils/deepClone" },
+            { text: "isEqual 相等判断", link: "/utils/isEqual" },
+            { text: "array 数组工具", link: "/utils/array" },
+            { text: "object 对象工具", link: "/utils/object" },
+            { text: "string 字符串工具", link: "/utils/string" },
+            { text: "math 数学工具", link: "/utils/math" },
+            { text: "function 函数工具", link: "/utils/function" },
+            { text: "misc 其他工具", link: "/utils/misc" },
           ],
         },
         {
           text: "日期处理",
-          items: [{ text: "formatDate", link: "/utils/formatDate" }],
+          items: [{ text: "formatDate 日期格式化", link: "/utils/formatDate" }],
+        },
+        {
+          text: "URL 处理",
+          items: [{ text: "isUrl URL 验证", link: "/utils/url" }],
+        },
+        {
+          text: "DOM 操作",
+          items: [{ text: "dom DOM 工具", link: "/utils/dom" }],
         },
       ],
     },

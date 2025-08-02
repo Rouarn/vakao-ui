@@ -37,3 +37,27 @@ export * from "./modules/isEqual";
 
 // 日期处理工具
 export * from "./modules/formatDate";
+
+// 类型判断工具
+export * from "./modules/typeTool";
+
+// DOM 操作工具
+export * from "./modules/dom";
+
+// 字符串操作工具
+export * from "./modules/string";
+
+// 数组操作工具
+export * from "./modules/array";
+
+// 对象操作工具
+export * from "./modules/object";
+
+// 函数工具
+export * from "./modules/function";
+
+// 数学与随机数工具
+export * from "./modules/math";
+
+// 其他工具
+export * from "./modules/misc";

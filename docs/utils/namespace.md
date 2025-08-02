@@ -1,4 +1,4 @@
-# useNamespace
+# useNamespace (命名空间工具)
 
 `useNamespace` 是一个用于创建组件 CSS 命名空间的工具函数，基于 BEM (Block Element Modifier) 命名规范，用于生成一致的 CSS 类名。
 

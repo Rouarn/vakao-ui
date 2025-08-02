@@ -1,4 +1,4 @@
-# isUrl
+# isUrl (URL 验证工具)
 
 `isUrl` 是一个用于判断字符串是否为有效的 URL 格式的工具函数，支持检测多种 URL 类型：HTTP/HTTPS、Data URL、相对路径、绝对路径。
 

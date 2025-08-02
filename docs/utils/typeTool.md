@@ -1,4 +1,4 @@
-# 类型工具
+# 类型工具 (TypeTool)
 
 Vakao UI 提供了一系列 TypeScript 类型工具，帮助您更好地进行类型定义和推导。
 

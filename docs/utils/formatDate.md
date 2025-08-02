@@ -1,4 +1,4 @@
-# formatDate
+# formatDate (日期格式化)
 
 `formatDate` 是一个用于格式化日期的工具函数，支持多种日期格式、相对时间显示以及日期判断功能。
 

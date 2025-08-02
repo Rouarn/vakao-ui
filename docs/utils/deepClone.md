@@ -1,4 +1,4 @@
-# deepClone
+# deepClone (深拷贝)
 
 `deepClone` 是一个用于深度克隆对象的工具函数，支持对象、数组、Date、RegExp、Map、Set 等类型的深度拷贝。
 

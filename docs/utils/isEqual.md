@@ -1,4 +1,4 @@
-# isEqual
+# isEqual (相等判断)
 
 `isEqual` 是一个用于深度比较两个值是否相等的工具函数，支持对象、数组、Date、RegExp、Map、Set 等类型的深度比较。
 
