@@ -9,11 +9,3 @@ export const _VkOptionGroup = withInstall(VkOptionGroup);
 export { _VkSelect as VkSelect, _VkOption as VkOption, _VkOptionGroup as VkOptionGroup };
 export default _VkSelect;
 export * from "./src/types";
-
-declare module "vue" {
-  export interface GlobalComponents {
-    VkSelect: typeof VkSelect;
-    VkOption: typeof VkOption;
-    VkOptionGroup: typeof VkOptionGroup;
-  }
-}

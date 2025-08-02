@@ -7,10 +7,3 @@ export const _VkButtonGroup = withInstall(VkButtonGroup);
 export { _VkButton as VkButton, _VkButtonGroup as VkButtonGroup };
 export default _VkButton;
 export * from "./src/types.ts";
-
-declare module "vue" {
-  export interface GlobalComponents {
-    VkButton: typeof VkButton;
-    VkButtonGroup: typeof VkButtonGroup;
-  }
-}

@@ -1,0 +1,199 @@
+@use "../mixins.scss" as *;
+@use "../variables.scss" as *;
+
+// VkTag 标签淡入淡出动画
+.vk-tag-fade-enter-active,
+.vk-tag-fade-leave-active {
+  transition:
+    opacity 0.3s,
+    transform 0.3s;
+}
+
+.vk-tag-fade-enter-from,
+.vk-tag-fade-leave-to {
+  opacity: 0;
+  transform: scale(0.8);
+}
+
+// VkTag 组件样式
+.vk-tag {
+  /* 基础样式定义 */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--vk-tag-padding, 4px 8px);
+  font-size: var(--vk-tag-font-size, 12px);
+  line-height: 1;
+  border-radius: var(--vk-tag-border-radius, 4px);
+  border: 1px solid transparent;
+  box-sizing: border-box;
+  white-space: nowrap;
+  transition: all 0.3s;
+  cursor: default;
+
+  /* 尺寸变体 */
+  &--small {
+    padding: var(--vk-tag-small-padding, 2px 6px);
+    font-size: var(--vk-tag-small-font-size, 10px);
+    border-radius: var(--vk-tag-small-border-radius, 3px);
+  }
+
+  &--medium {
+    padding: var(--vk-tag-medium-padding, 4px 8px);
+    font-size: var(--vk-tag-medium-font-size, 12px);
+    border-radius: var(--vk-tag-medium-border-radius, 4px);
+  }
+
+  &--large {
+    padding: var(--vk-tag-large-padding, 6px 12px);
+    font-size: var(--vk-tag-large-font-size, 14px);
+    border-radius: var(--vk-tag-large-border-radius, 6px);
+  }
+
+  /* 类型变体 - 默认效果 */
+  &--default {
+    background-color: var(--vk-tag-default-bg, #f4f4f5);
+    color: var(--vk-tag-default-color, #909399);
+    border-color: var(--vk-tag-default-border, #e9e9eb);
+  }
+
+  &--primary {
+    background-color: var(--vk-tag-primary-bg, #ecf5ff);
+    color: var(--vk-tag-primary-color, #409eff);
+    border-color: var(--vk-tag-primary-border, #b3d8ff);
+  }
+
+  &--success {
+    background-color: var(--vk-tag-success-bg, #f0f9ff);
+    color: var(--vk-tag-success-color, #67c23a);
+    border-color: var(--vk-tag-success-border, #c2e7b0);
+  }
+
+  &--warning {
+    background-color: var(--vk-tag-warning-bg, #fdf6ec);
+    color: var(--vk-tag-warning-color, #e6a23c);
+    border-color: var(--vk-tag-warning-border, #f5dab1);
+  }
+
+  &--danger {
+    background-color: var(--vk-tag-danger-bg, #fef0f0);
+    color: var(--vk-tag-danger-color, #f56c6c);
+    border-color: var(--vk-tag-danger-border, #fbc4c4);
+  }
+
+  &--info {
+    background-color: var(--vk-tag-info-bg, #f4f4f5);
+    color: var(--vk-tag-info-color, #909399);
+    border-color: var(--vk-tag-info-border, #d3d4d6);
+  }
+
+  /* 效果变体 - 深色效果 */
+  &--dark {
+    &.vk-tag--default {
+      background-color: var(--vk-tag-default-color, #909399);
+      color: var(--vk-color-white, #ffffff);
+      border-color: var(--vk-tag-default-color, #909399);
+    }
+
+    &.vk-tag--primary {
+      background-color: var(--vk-color-primary, #409eff);
+      color: var(--vk-color-white, #ffffff);
+      border-color: var(--vk-color-primary, #409eff);
+    }
+
+    &.vk-tag--success {
+      background-color: var(--vk-color-success, #67c23a);
+      color: var(--vk-color-white, #ffffff);
+      border-color: var(--vk-color-success, #67c23a);
+    }
+
+    &.vk-tag--warning {
+      background-color: var(--vk-color-warning, #e6a23c);
+      color: var(--vk-color-white, #ffffff);
+      border-color: var(--vk-color-warning, #e6a23c);
+    }
+
+    &.vk-tag--danger {
+      background-color: var(--vk-color-danger, #f56c6c);
+      color: var(--vk-color-white, #ffffff);
+      border-color: var(--vk-color-danger, #f56c6c);
+    }
+
+    &.vk-tag--info {
+      background-color: var(--vk-color-info, #909399);
+      color: var(--vk-color-white, #ffffff);
+      border-color: var(--vk-color-info, #909399);
+    }
+  }
+
+  /* 效果变体 - 简约效果 */
+  &--plain {
+    background-color: var(--vk-color-white, #ffffff);
+
+    &.vk-tag--default {
+      color: var(--vk-tag-default-color, #909399);
+      border-color: var(--vk-tag-default-border, #e9e9eb);
+    }
+
+    &.vk-tag--primary {
+      color: var(--vk-color-primary, #409eff);
+      border-color: var(--vk-tag-primary-border, #b3d8ff);
+    }
+
+    &.vk-tag--success {
+      color: var(--vk-color-success, #67c23a);
+      border-color: var(--vk-tag-success-border, #c2e7b0);
+    }
+
+    &.vk-tag--warning {
+      color: var(--vk-color-warning, #e6a23c);
+      border-color: var(--vk-tag-warning-border, #f5dab1);
+    }
+
+    &.vk-tag--danger {
+      color: var(--vk-color-danger, #f56c6c);
+      border-color: var(--vk-tag-danger-border, #fbc4c4);
+    }
+
+    &.vk-tag--info {
+      color: var(--vk-color-info, #909399);
+      border-color: var(--vk-tag-info-border, #d3d4d6);
+    }
+  }
+
+  /* 状态样式 */
+  &.is-round {
+    border-radius: var(--vk-tag-round-border-radius, 9999px);
+  }
+
+  &.is-bordered {
+    border-width: 1px;
+    border-style: solid;
+  }
+
+  &.is-clickable {
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.8;
+    }
+
+    &:active {
+      opacity: 0.6;
+    }
+  }
+
+  /* 关闭按钮样式 */
+  &__close {
+    margin-left: var(--vk-tag-close-margin, 4px);
+    cursor: pointer;
+    font-size: var(--vk-tag-close-size, 10px);
+    transition: color 0.3s;
+
+    &:hover {
+      color: var(--vk-color-white, #ffffff);
+      background-color: currentColor;
+      border-radius: 50%;
+    }
+  }
+}

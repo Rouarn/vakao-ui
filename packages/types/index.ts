@@ -145,3 +145,13 @@ export type ComponentSize = "small" | "medium" | "large";
  * ```
  */
 export type ComponentType = "default" | "primary" | "success" | "warning" | "info" | "danger";
+
+// ==================== 全局类型声明 ====================
+
+/**
+ * 导入全局 Vue 模块声明
+ *
+ * 确保所有组件的 GlobalComponents 接口声明被正确加载，
+ * 提供完整的模板类型检查和智能提示支持。
+ */
+import "./global";

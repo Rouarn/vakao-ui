@@ -50,6 +50,11 @@ export * from "./VkSelect";
 
 /** 通用组件 */
 export * from "./VkIcon";
+export * from "./VkAvatar";
+export * from "./VkBadge";
+export * from "./VkCard";
+export * from "./VkDivider";
+export * from "./VkTag";
 
 /** 反馈组件 */
 export * from "./VkMessageBox";
@@ -65,6 +70,11 @@ import { VkCheckbox, VkCheckboxGroup } from "./VkCheckbox";
 import { VkRadio, VkRadioGroup } from "./VkRadio";
 import { VkSwitch } from "./VkSwitch";
 import { VkIcon } from "./VkIcon";
+import { VkAvatar } from "./VkAvatar";
+import { VkBadge } from "./VkBadge";
+import { VkCard } from "./VkCard";
+import { VkDivider } from "./VkDivider";
+import { VkTag } from "./VkTag";
 import { VkMessageBox } from "./VkMessageBox";
 import { VkSelect, VkOption, VkOptionGroup } from "./VkSelect";
 import { installAll } from "@vakao-ui/utils";
@@ -95,6 +105,11 @@ const components = {
 
   // 通用组件
   VkIcon,
+  VkAvatar,
+  VkBadge,
+  VkCard,
+  VkDivider,
+  VkTag,
 
   // 反馈组件
   VkMessageBox,

@@ -5,9 +5,3 @@ export const _VkIcon = withInstall(VkIcon);
 export { _VkIcon as VkIcon };
 export default _VkIcon;
 export * from "./src/types";
-
-declare module "vue" {
-  export interface GlobalComponents {
-    VkIcon: typeof VkIcon;
-  }
-}

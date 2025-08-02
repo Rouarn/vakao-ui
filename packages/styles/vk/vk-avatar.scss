@@ -1,0 +1,85 @@
+@use "../mixins.scss" as *;
+@use "../variables.scss" as *;
+
+// VkAvatar 组件样式
+.vk-avatar {
+  /* 基础样式定义 */
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  overflow: hidden;
+  background-color: var(--vk-avatar-bg-color, #c0c4cc);
+  color: var(--vk-avatar-text-color, #ffffff);
+
+  /* 预设尺寸 */
+  width: var(--vk-avatar-size-default, 40px);
+  height: var(--vk-avatar-size-default, 40px);
+  font-size: var(--vk-avatar-font-size-default, 16px);
+  line-height: var(--vk-avatar-size-default, 40px);
+
+  /* 尺寸变体 */
+  &--large {
+    width: var(--vk-avatar-size-large, 56px);
+    height: var(--vk-avatar-size-large, 56px);
+    font-size: var(--vk-avatar-font-size-large, 24px);
+    line-height: var(--vk-avatar-size-large, 56px);
+  }
+
+  &--default {
+    width: var(--vk-avatar-size-default, 40px);
+    height: var(--vk-avatar-size-default, 40px);
+    font-size: var(--vk-avatar-font-size-default, 16px);
+    line-height: var(--vk-avatar-size-default, 40px);
+  }
+
+  &--small {
+    width: var(--vk-avatar-size-small, 32px);
+    height: var(--vk-avatar-size-small, 32px);
+    font-size: var(--vk-avatar-font-size-small, 12px);
+    line-height: var(--vk-avatar-size-small, 32px);
+  }
+
+  /* 形状变体 */
+  &--circle {
+    border-radius: 50%;
+  }
+
+  &--square {
+    border-radius: var(--vk-avatar-border-radius, 4px);
+  }
+
+  /* 状态样式 */
+  &.is-clickable {
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.8;
+    }
+
+    &:active {
+      opacity: 0.6;
+    }
+  }
+
+  /* 图片样式 */
+  &__img {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  /* 图标样式 */
+  &__icon {
+    font-size: inherit;
+  }
+
+  /* 文本样式 */
+  &__text {
+    white-space: nowrap;
+    text-align: center;
+    transform: scale(0.5);
+    font-weight: 500;
+  }
+}

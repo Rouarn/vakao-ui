@@ -75,6 +75,19 @@ export default defineConfig({
           ],
         },
         {
+          text: "数据展示",
+          items: [
+            { text: "Avatar 头像", link: "/components/avatar" },
+            { text: "Badge 徽章", link: "/components/badge" },
+            { text: "Card 卡片", link: "/components/card" },
+            { text: "Tag 标签", link: "/components/tag" },
+          ],
+        },
+        {
+          text: "布局组件",
+          items: [{ text: "Divider 分割线", link: "/components/divider" }],
+        },
+        {
           text: "反馈组件",
           items: [{ text: "MessageBox 消息弹框", link: "/components/message-box" }],
         },

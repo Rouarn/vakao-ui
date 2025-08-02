@@ -1,0 +1,82 @@
+@use "../mixins.scss" as *;
+@use "../variables.scss" as *;
+
+// VkBadge 徽章淡入淡出动画
+.vk-badge-fade-enter-active,
+.vk-badge-fade-leave-active {
+  transition:
+    opacity 0.3s,
+    transform 0.3s;
+}
+
+.vk-badge-fade-enter-from,
+.vk-badge-fade-leave-to {
+  opacity: 0;
+  transform: scale(0.5);
+}
+
+// VkBadge 组件样式
+.vk-badge {
+  /* 基础样式定义 */
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+
+  /* 徽章内容 */
+  &__content {
+    position: absolute;
+    top: 0;
+    right: calc(100% - 10px);
+    transform: translateY(-50%) translateX(100%);
+    background-color: var(--vk-color-danger, #f56c6c);
+    border-radius: var(--vk-badge-border-radius, 10px);
+    color: var(--vk-color-white, #ffffff);
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 var(--vk-badge-padding, 6px);
+    font-size: var(--vk-badge-font-size, 12px);
+    height: var(--vk-badge-height, 18px);
+    min-width: var(--vk-badge-height, 18px);
+    line-height: 1;
+    white-space: nowrap;
+    border: var(--vk-badge-border, 1px solid #ffffff);
+    box-sizing: border-box;
+    z-index: 10;
+
+    /* 固定位置样式 */
+    &.is-fixed {
+      position: absolute;
+    }
+
+    /* 小圆点样式 */
+    &.is-dot {
+      height: var(--vk-badge-dot-size, 8px);
+      width: var(--vk-badge-dot-size, 8px);
+      padding: 0;
+      right: 5px;
+      border-radius: 50%;
+    }
+
+    /* 类型变体 */
+    &--primary {
+      background-color: var(--vk-color-primary, #409eff);
+    }
+
+    &--success {
+      background-color: var(--vk-color-success, #67c23a);
+    }
+
+    &--warning {
+      background-color: var(--vk-color-warning, #e6a23c);
+    }
+
+    &--danger {
+      background-color: var(--vk-color-danger, #f56c6c);
+    }
+
+    &--info {
+      background-color: var(--vk-color-info, #909399);
+    }
+  }
+}

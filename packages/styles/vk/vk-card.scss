@@ -1,0 +1,77 @@
+@use "../mixins.scss" as *;
+@use "../variables.scss" as *;
+
+// VkCard 组件样式
+.vk-card {
+  /* 基础样式定义 */
+  position: relative;
+  background-color: var(--vk-card-bg-color, #fff);
+  border-radius: var(--vk-card-border-radius, 4px);
+  overflow: hidden;
+  transition:
+    box-shadow 0.3s,
+    border-color 0.3s;
+  color: var(--vk-card-text-color, #303133);
+
+  /* 阴影变体 */
+  &--always {
+    box-shadow: var(--vk-card-shadow, 0 2px 12px 0 rgba(0, 0, 0, 0.1));
+  }
+
+  &--hover {
+    &:hover {
+      box-shadow: var(--vk-card-shadow, 0 2px 12px 0 rgba(0, 0, 0, 0.1));
+    }
+  }
+
+  /* 边框样式 */
+  &.is-bordered {
+    border: 1px solid var(--vk-card-border-color, #ebeef5);
+  }
+
+  /* 自定义圆角 */
+  &.is-radius {
+    overflow: hidden;
+  }
+
+  /* 头部样式 */
+  &__header {
+    padding: var(--vk-card-padding, 16px);
+    border-bottom: 1px solid var(--vk-card-border-color, #ebeef5);
+  }
+
+  /* 标题组样式 */
+  &__title-group {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* 标题样式 */
+  &__title {
+    font-size: var(--vk-card-title-font-size, 16px);
+    font-weight: 500;
+    color: var(--vk-card-title-color, #303133);
+    line-height: 1.5;
+  }
+
+  /* 副标题样式 */
+  &__subtitle {
+    font-size: var(--vk-card-subtitle-font-size, 14px);
+    color: var(--vk-card-subtitle-color, #909399);
+    margin-top: 4px;
+    line-height: 1.5;
+  }
+
+  /* 内容区域样式 */
+  &__body {
+    &.is-padding {
+      padding: var(--vk-card-padding, 16px);
+    }
+  }
+
+  /* 底部样式 */
+  &__footer {
+    padding: var(--vk-card-padding, 16px);
+    border-top: 1px solid var(--vk-card-border-color, #ebeef5);
+  }
+}

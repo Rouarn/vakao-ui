@@ -31,6 +31,11 @@ Vakao UI 组件推荐使用直接的图标属性来设置图标，而不是通�
 
 - [Button 按钮](/components/button) - 用于触发操作的基础按钮组件
 - [Icon 图标](/components/icon) - 用于显示图标的组件，支持 Iconify 图标库
+- [Avatar 头像](/components/avatar) - 用于展示用户或事物的头像，支持图片、图标和文字
+- [Badge 徽章](/components/badge) - 用于显示数字或状态的小标记
+- [Card 卡片](/components/card) - 承载信息的容器，支持丰富的内容和操作
+- [Divider 分割线](/components/divider) - 用于分隔内容的分割线组件
+- [Tag 标签](/components/tag) - 用于标记和分类的标签组件
 
 ### 表单组件
 
@@ -44,7 +49,13 @@ Vakao UI 组件推荐使用直接的图标属性来设置图标，而不是通�
 
 ### 数据展示
 
-_即将推出数据展示组件..._
+数据展示组件用于以清晰、美观的方式展示各种类型的数据和信息。
+
+- [Avatar 头像](/components/avatar) - 用于展示用户或事物的头像，支持图片、图标和文字
+- [Badge 徽章](/components/badge) - 用于显示数字或状态的小标记
+- [Card 卡片](/components/card) - 承载信息的容器，支持丰富的内容和操作
+- [Divider 分割线](/components/divider) - 用于分隔内容的分割线组件
+- [Tag 标签](/components/tag) - 用于标记和分类的标签组件
 
 ### 导航组件
 
