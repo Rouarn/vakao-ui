@@ -1,37 +1,23 @@
 <template>
-  <!-- 
+  <!--
     卡片组件模板结构
     
     主要元素：
-    - 根容器：包含整个卡片内容
-    - 头部区域：显示标题和副标题
-    - 内容区域：显示主要内容
-    - 底部区域：显示操作按钮等
+    - 根容器：包含卡片的所有内容
+    - 头部：可选的标题区域
+    - 主体：卡片的主要内容区域
+    - 底部：可选的操作区域
   -->
-  <div
-    :class="[
-      ns.block(),
-      ns.modifier(props.shadow),
-      {
-        [ns.is('bordered')]: props.bordered,
-        [ns.is('radius')]: props.radius,
-      },
-    ]"
-    :style="cardStyle"
-    @click="handleClick"
-  >
+  <div :class="mergedClass" :style="mergedStyle" @click="handleClick">
     <!-- 卡片头部 -->
-    <div v-if="hasHeader" :class="ns.element('header')">
+    <div v-if="$slots.header || header" :class="ns.element('header')">
       <slot name="header">
-        <div v-if="props.title || props.subtitle" :class="ns.element('title-group')">
-          <div v-if="props.title" :class="ns.element('title')">{{ props.title }}</div>
-          <div v-if="props.subtitle" :class="ns.element('subtitle')">{{ props.subtitle }}</div>
-        </div>
+        {{ header }}
       </slot>
     </div>
 
-    <!-- 卡片内容 -->
-    <div :class="[ns.element('body'), { [ns.is('padding')]: props.bodyPadding }]">
+    <!-- 卡片主体 -->
+    <div :class="ns.element('body')" :style="bodyStyle">
       <slot></slot>
     </div>
 
@@ -46,27 +32,44 @@
 /**
  * VkCard 卡片组件
  *
- * 卡片组件用于信息的分组展示，支持标题、内容和底部操作区域。
- * 可以设置不同的阴影效果、边框样式和圆角大小。
+ * 卡片组件是一个通用的容器组件，用于承载信息和操作。
+ * 支持头部、主体、底部三个区域，可以灵活组合使用。
  *
  * 主要特性：
- * - 灵活的内容布局：支持头部、主体和底部三个区域
- * - 可定制的样式：支持自定义阴影、边框和圆角
- * - 响应式设计：适配不同屏幕尺寸
- * - 丰富的插槽：支持自定义头部和底部内容
+ * - 支持多种尺寸和阴影效果
+ * - 灵活的插槽系统
+ * - 可自定义内边距和样式
+ * - 支持悬停交互效果
+ * - 完整的无障碍支持
  *
  * 使用示例：
  * ```vue
  * <template>
- *   <VkCard
- *     title="卡片标题"
- *     subtitle="卡片副标题"
- *     shadow="hover"
- *   >
- *     卡片内容
- *     <template #footer>
- *       <VkButton>操作按钮</VkButton>
+ *   <!-- 基础卡片 -->
+ *   <VkCard header="卡片标题">
+ *     <p>这是卡片的内容</p>
+ *   </VkCard>
+ *
+ *   <!-- 带操作的卡片 -->
+ *   <VkCard shadow="hover" hoverable>
+ *     <template #header>
+ *       <h3>自定义标题</h3>
  *     </template>
+ *     <p>卡片内容</p>
+ *     <template #footer>
+ *       <VkButton type="primary">确认</VkButton>
+ *       <VkButton>取消</VkButton>
+ *     </template>
+ *   </VkCard>
+ *
+ *   <!-- 自定义样式 -->
+ *   <VkCard
+ *     :body-padding="24"
+ *     size="large"
+ *     shadow="never"
+ *     :border="false"
+ *   >
+ *     <p>无边框无阴影的卡片</p>
  *   </VkCard>
  * </template>
  * ```
@@ -78,72 +81,101 @@
 // ==================== 模块导入 ====================
 
 /** Vue 3 核心 API */
-import { computed, useSlots } from "vue";
-/** 组件属性和事件定义 */
+import { computed, useAttrs } from "vue";
+import type { CSSProperties } from "vue";
+
+/** 组件类型定义 */
 import { cardProps, cardEmits } from "./types";
-/** CSS 命名空间工具 */
-import { useNamespace } from "../../../utils/modules/namespace";
 
-// ==================== 组件配置 ====================
+/** 工具函数 */
+import { useNamespace } from "@vakao-ui/utils";
 
-/** 组件选项配置 */
+// ==================== 组件定义 ====================
+
+/** 组件名称 */
 defineOptions({
   name: "VkCard",
   inheritAttrs: false,
 });
 
-/** 组件属性定义 */
+/** 组件属性 */
 const props = defineProps(cardProps);
 
-/** 组件事件定义 */
+/** 组件事件 */
 const emit = defineEmits(cardEmits);
 
-/** 组件插槽 */
-const slots = useSlots();
+// ==================== 组合式 API ====================
 
-// ==================== 计算属性 ====================
-
-/**
- * CSS 命名空间
- *
- * 生成组件的 CSS 类名前缀，确保样式隔离。
- */
+/** 获取组件属性和命名空间工具 */
+const attrs = useAttrs();
 const ns = useNamespace("card");
-
-/**
- * 判断是否有头部内容
- *
- * 当存在标题、副标题或自定义头部插槽时，显示头部区域
- */
-const hasHeader = computed(() => {
-  return props.title || props.subtitle || slots.header;
-});
-
-/**
- * 卡片样式对象
- *
- * 根据属性动态生成卡片的样式
- */
-const cardStyle = computed(() => {
-  const style: Record<string, string> = {};
-
-  if (props.radius) {
-    style.borderRadius = props.radius;
-  }
-
-  return style;
-});
 
 // ==================== 事件处理 ====================
 
 /**
  * 处理卡片点击事件
  *
- * 当卡片被点击时触发click事件
+ * 当卡片被点击时触发，传递原生的鼠标事件对象。
+ * 可以用于实现卡片的选择、跳转等交互功能。
  *
- * @param event - 鼠标点击事件对象
+ * @param e - 鼠标点击事件对象
  */
-const handleClick = (event: MouseEvent) => {
-  emit("click", event);
+const handleClick = (e: MouseEvent) => {
+  emit("click", e);
 };
+
+// ==================== 样式计算 ====================
+
+/**
+ * 合并样式
+ *
+ * 将组件的 customStyle 属性和父组件传递的 style 属性合并，
+ * 支持字符串和对象两种格式，确保类型安全。
+ */
+const mergedStyle = computed(() => {
+  const styles: (string | CSSProperties | undefined)[] = [];
+  if (props.customStyle) {
+    styles.push(props.customStyle);
+  }
+  if (attrs.style) {
+    styles.push(attrs.style as string | CSSProperties);
+  }
+  return styles.filter(Boolean);
+});
+
+/**
+ * 合并类名
+ *
+ * 根据组件的各种属性和状态生成完整的 CSS 类名列表，
+ * 使用 BEM 命名规范，确保样式的模块化和可维护性。
+ */
+const mergedClass = computed(() => {
+  return [
+    ns.block(), // 基础块类名：vk-card
+    ns.modifier("size", props.size), // 尺寸修饰符：vk-card--large
+    ns.modifier("shadow", props.shadow), // 阴影修饰符：vk-card--shadow-hover
+    ns.is("bordered", props.border), // 边框状态：is-bordered
+    ns.is("hoverable", props.hoverable), // 悬停状态：is-hoverable
+    props.customClass, // 自定义类名
+    attrs.class, // 父组件传递的类名
+  ];
+});
+
+/**
+ * 卡片主体样式
+ *
+ * 根据 bodyPadding 属性计算主体区域的内边距样式。
+ * 支持数字（转换为 px）和字符串两种格式。
+ */
+const bodyStyle = computed(() => {
+  if (props.bodyPadding === undefined) {
+    return undefined;
+  }
+
+  const padding = typeof props.bodyPadding === "number" ? `${props.bodyPadding}px` : props.bodyPadding;
+
+  return {
+    padding,
+  };
+});
 </script>

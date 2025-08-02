@@ -1,229 +1,242 @@
 @use "../mixins.scss" as *;
 @use "../base.scss" as *;
 
-// VkTag 标签淡入淡出动画
-.vk-tag-fade-enter-active,
-.vk-tag-fade-leave-active {
-  transition:
-    opacity 0.3s,
-    transform 0.3s;
-}
-
-.vk-tag-fade-enter-from,
-.vk-tag-fade-leave-to {
-  opacity: 0;
-  transform: scale(0.8);
-}
-
 // VkTag 组件样式
 .vk-tag {
-  /* 基础样式定义 */
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: var(--vk-spacing-1) var(--vk-spacing-2);
-  font-size: var(--vk-font-size-sm);
-  font-weight: 500;
-  line-height: 1;
-  border-radius: var(--vk-border-radius-base);
+  vertical-align: middle;
+  border-radius: var(--vk-border-radius-sm);
   border: 1px solid transparent;
-  box-sizing: border-box;
+  font-size: var(--vk-font-size-sm);
+  line-height: 1;
   white-space: nowrap;
-  transition: all var(--vk-transition-duration-base);
   cursor: default;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease-in-out;
+  box-sizing: border-box;
+  user-select: none;
 
-  /* 尺寸变体 */
+  // 标签内容
+  &__content {
+    display: inline-flex;
+    align-items: center;
+    flex: 1;
+  }
+
+  // 关闭按钮
+  &__close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: var(--vk-spacing-1);
+    cursor: pointer;
+    border-radius: 50%;
+    transition: all 0.2s ease-in-out;
+    opacity: 0.7;
+
+    &:hover {
+      opacity: 1;
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+  }
+
+  // 尺寸变体
   &--tiny {
-    padding: calc(var(--vk-spacing-1) * 0.5) var(--vk-spacing-1);
-    font-size: calc(var(--vk-font-size-xs) * 0.9);
-    border-radius: var(--vk-border-radius-sm);
+    padding: 2px var(--vk-spacing-1);
+    font-size: var(--vk-font-size-xs);
+    height: 20px;
+
+    .vk-tag__close {
+      margin-left: 2px;
+    }
   }
 
   &--small {
-    padding: var(--vk-spacing-1) var(--vk-spacing-2);
-    font-size: var(--vk-font-size-xs);
-    border-radius: var(--vk-border-radius-sm);
+    padding: 4px var(--vk-spacing-2);
+    font-size: var(--vk-font-size-sm);
+    height: 24px;
+
+    .vk-tag__close {
+      margin-left: var(--vk-spacing-1);
+    }
   }
 
   &--medium {
-    padding: var(--vk-spacing-1) var(--vk-spacing-2);
+    padding: 6px var(--vk-spacing-3);
     font-size: var(--vk-font-size-sm);
-    border-radius: var(--vk-border-radius-base);
+    height: 28px;
+
+    .vk-tag__close {
+      margin-left: var(--vk-spacing-1);
+    }
   }
 
   &--large {
-    padding: var(--vk-spacing-2) var(--vk-spacing-3);
+    padding: 8px var(--vk-spacing-4);
     font-size: var(--vk-font-size-base);
-    border-radius: var(--vk-border-radius-md);
+    height: 32px;
+
+    .vk-tag__close {
+      margin-left: var(--vk-spacing-2);
+    }
   }
 
-  /* 效果变体 - 浅色效果（默认） */
+  // 主题变体 - 浅色主题（默认）
   &--light {
-    /* 默认类型 */
-    background-color: var(--vk-fill-color-light);
-    color: var(--vk-text-color-secondary);
-    border-color: var(--vk-border-color-light);
-  }
+    &.vk-tag--default {
+      background-color: var(--vk-color-fill-light, #f5f7fa);
+      border-color: var(--vk-color-border-light, #e4e7ed);
+      color: var(--vk-color-text-regular, #606266);
+    }
 
-  /* 当没有指定类型时的默认样式 */
-  &:not([class*="--primary"]):not([class*="--success"]):not([class*="--warning"]):not([class*="--danger"]):not([class*="--info"]) {
-    background-color: var(--vk-fill-color-light);
-    color: var(--vk-text-color-secondary);
-    border-color: var(--vk-border-color-light);
-  }
-
-  /* 类型变体 - 浅色效果下的颜色 */
-
-  &--primary {
-    background-color: var(--vk-color-primary-light-8);
-    color: var(--vk-color-primary-dark-2);
-    border-color: var(--vk-color-primary-light-6);
-  }
-
-  &--success {
-    background-color: var(--vk-color-success-light-8);
-    color: var(--vk-color-success-dark-2);
-    border-color: var(--vk-color-success-light-6);
-  }
-
-  &--warning {
-    background-color: var(--vk-color-warning-light-8);
-    color: var(--vk-color-warning-dark-2);
-    border-color: var(--vk-color-warning-light-6);
-  }
-
-  &--danger {
-    background-color: var(--vk-color-danger-light-8);
-    color: var(--vk-color-danger-dark-2);
-    border-color: var(--vk-color-danger-light-6);
-  }
-
-  &--info {
-    background-color: var(--vk-color-info-light-8);
-    color: var(--vk-color-info-dark-2);
-    border-color: var(--vk-color-info-light-6);
-  }
-
-  /* 效果变体 - 深色效果 */
-  &--dark {
-    /* 默认深色样式 */
-    background-color: #606266;
-    color: var(--vk-color-white);
-    border-color: #606266;
-
-    /* 深色主题下的类型变体 */
     &.vk-tag--primary {
-      background-color: var(--vk-color-primary) !important;
-      color: var(--vk-color-white) !important;
-      border-color: var(--vk-color-primary) !important;
+      background-color: rgba(64, 158, 255, 0.1);
+      border-color: rgba(64, 158, 255, 0.2);
+      color: var(--vk-color-primary, #409eff);
     }
 
     &.vk-tag--success {
-      background-color: var(--vk-color-success) !important;
-      color: var(--vk-color-white) !important;
-      border-color: var(--vk-color-success) !important;
+      background-color: rgba(103, 194, 58, 0.1);
+      border-color: rgba(103, 194, 58, 0.2);
+      color: var(--vk-color-success, #67c23a);
     }
 
     &.vk-tag--warning {
-      background-color: var(--vk-color-warning) !important;
-      color: var(--vk-color-white) !important;
-      border-color: var(--vk-color-warning) !important;
+      background-color: rgba(230, 162, 60, 0.1);
+      border-color: rgba(230, 162, 60, 0.2);
+      color: var(--vk-color-warning, #e6a23c);
     }
 
     &.vk-tag--danger {
-      background-color: var(--vk-color-danger) !important;
-      color: var(--vk-color-white) !important;
-      border-color: var(--vk-color-danger) !important;
+      background-color: rgba(245, 108, 108, 0.1);
+      border-color: rgba(245, 108, 108, 0.2);
+      color: var(--vk-color-danger, #f56c6c);
     }
 
     &.vk-tag--info {
-      background-color: var(--vk-color-info) !important;
-      color: var(--vk-color-white) !important;
-      border-color: var(--vk-color-info) !important;
+      background-color: rgba(144, 147, 153, 0.1);
+      border-color: rgba(144, 147, 153, 0.2);
+      color: var(--vk-color-info, #909399);
     }
   }
 
-  /* 效果变体 - 简约效果 */
-  &--plain {
-    background-color: var(--vk-color-white, #ffffff);
+  // 主题变体 - 深色主题
+  &--dark {
+    color: var(--vk-color-white, #ffffff);
 
     &.vk-tag--default {
-      color: var(--vk-tag-default-color, #909399);
-      border-color: var(--vk-tag-default-border, #e9e9eb);
+      background-color: var(--vk-color-info, #909399);
+      border-color: var(--vk-color-info, #909399);
     }
 
     &.vk-tag--primary {
-      color: var(--vk-color-primary, #409eff);
-      border-color: var(--vk-tag-primary-border, #b3d8ff);
+      background-color: var(--vk-color-primary, #409eff);
+      border-color: var(--vk-color-primary, #409eff);
     }
 
     &.vk-tag--success {
-      color: var(--vk-color-success, #67c23a);
-      border-color: var(--vk-tag-success-border, #c2e7b0);
+      background-color: var(--vk-color-success, #67c23a);
+      border-color: var(--vk-color-success, #67c23a);
     }
 
     &.vk-tag--warning {
-      color: var(--vk-color-warning, #e6a23c);
-      border-color: var(--vk-tag-warning-border, #f5dab1);
+      background-color: var(--vk-color-warning, #e6a23c);
+      border-color: var(--vk-color-warning, #e6a23c);
     }
 
     &.vk-tag--danger {
-      color: var(--vk-color-danger, #f56c6c);
-      border-color: var(--vk-tag-danger-border, #fbc4c4);
+      background-color: var(--vk-color-danger, #f56c6c);
+      border-color: var(--vk-color-danger, #f56c6c);
     }
 
     &.vk-tag--info {
-      color: var(--vk-color-info, #909399);
-      border-color: var(--vk-tag-info-border, #d3d4d6);
+      background-color: var(--vk-color-info, #909399);
+      border-color: var(--vk-color-info, #909399);
     }
   }
 
-  /* 状态样式 */
+  // 主题变体 - 朴素主题
+  &--plain {
+    background-color: transparent;
+
+    &.vk-tag--default {
+      border-color: var(--vk-color-border, #dcdfe6);
+      color: var(--vk-color-text-regular, #606266);
+    }
+
+    &.vk-tag--primary {
+      border-color: var(--vk-color-primary, #409eff);
+      color: var(--vk-color-primary, #409eff);
+    }
+
+    &.vk-tag--success {
+      border-color: var(--vk-color-success, #67c23a);
+      color: var(--vk-color-success, #67c23a);
+    }
+
+    &.vk-tag--warning {
+      border-color: var(--vk-color-warning, #e6a23c);
+      color: var(--vk-color-warning, #e6a23c);
+    }
+
+    &.vk-tag--danger {
+      border-color: var(--vk-color-danger, #f56c6c);
+      color: var(--vk-color-danger, #f56c6c);
+    }
+
+    &.vk-tag--info {
+      border-color: var(--vk-color-info, #909399);
+      color: var(--vk-color-info, #909399);
+    }
+  }
+
+  // 状态修饰符
+  &.is-disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+
+    .vk-tag__close {
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+  }
+
+  &.is-closable {
+    padding-right: calc(var(--vk-spacing-1) / 2);
+  }
+
   &.is-round {
-    border-radius: var(--vk-border-radius-full);
+    border-radius: var(--vk-border-radius-xl);
   }
 
   &.is-bordered {
     border-width: 1px;
-    border-style: solid;
   }
 
-  &.is-clickable {
-    cursor: pointer;
-
-    &:hover {
-      opacity: 0.8;
+  // 悬停效果（仅在非禁用状态下）
+  &:not(.is-disabled) {
+    &.vk-tag--light {
+      &:hover {
+        opacity: 0.8;
+      }
     }
 
-    &:active {
-      opacity: 0.6;
+    &.vk-tag--dark {
+      &:hover {
+        opacity: 0.9;
+      }
+    }
+
+    &.vk-tag--plain {
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+      }
     }
   }
+}
 
-  /* 内容包装样式 */
-  &__content {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--vk-spacing-1);
-  }
-
-  /* 关闭按钮样式 */
-  &__close {
-    margin-left: var(--vk-spacing-1);
-    cursor: pointer;
-    font-size: var(--vk-font-size-xs);
-    transition: color var(--vk-transition-duration-base);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 1em;
-    height: 1em;
-    border-radius: 50%;
-
-    &:hover {
-      color: var(--vk-color-black) !important;
-      background-color: rgba(0, 0, 0, 0.1);
-    }
-  }
+// 标签组合样式
+.vk-tag + .vk-tag {
+  margin-left: var(--vk-spacing-2);
 }

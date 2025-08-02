@@ -1,112 +1,150 @@
-import type { ExtractPropTypes, PropType } from "vue";
+/**
+ * VkCard 卡片组件类型定义
+ *
+ * 定义了卡片组件的所有属性、事件和类型，提供完整的 TypeScript 支持。
+ * 卡片组件用于承载信息的容器，支持丰富的内容和操作。
+ */
+
+import type { PropType, CSSProperties } from "vue";
+import type { ExtractPublicPropTypes, ComponentSize } from "../../../types";
 
 /**
- * 卡片阴影显示时机
+ * 卡片尺寸
  *
- * @description 定义卡片阴影的显示时机
+ * 继承全局组件尺寸，支持四种大小：
+ * - tiny: 超小尺寸
+ * - small: 小尺寸
+ * - medium: 中等尺寸（默认）
+ * - large: 大尺寸
+ */
+export type CardSize = ComponentSize;
+
+/**
+ * 卡片阴影类型
+ *
+ * 定义卡片的阴影效果：
+ * - always: 总是显示阴影
+ * - hover: 悬停时显示阴影
+ * - never: 从不显示阴影
  */
 export type CardShadow = "always" | "hover" | "never";
 
 /**
- * 卡片组件属性
+ * 卡片组件属性定义
  *
- * @description 定义卡片组件的所有可配置属性
+ * 定义了卡片组件的所有可配置属性，包括样式、状态、行为等。
+ * 所有属性都提供了合理的默认值和完整的类型约束。
+ *
+ * @example
+ * ```vue
+ * <VkCard
+ *   header="卡片标题"
+ *   shadow="hover"
+ *   size="large"
+ *   :body-padding="20"
+ * >
+ *   <p>卡片内容</p>
+ *   <template #footer>
+ *     <VkButton type="primary">确认</VkButton>
+ *   </template>
+ * </VkCard>
+ * ```
  */
 export const cardProps = {
   /**
    * 卡片标题
-   *
-   * 显示在卡片头部的主要标题文本
-   *
-   * @default ''
    */
-  title: {
+  header: {
     type: String,
     default: "",
   },
-
   /**
-   * 卡片副标题
-   *
-   * 显示在主标题下方的辅助说明文本
-   *
-   * @default ''
+   * 卡片尺寸，影响内边距和字体大小
+   * @default 'medium'
    */
-  subtitle: {
-    type: String,
-    default: "",
+  size: {
+    type: String as PropType<CardSize>,
+    default: "medium",
   },
-
   /**
    * 卡片阴影显示时机
-   *
-   * 控制卡片阴影的显示时机：总是显示、悬停时显示或从不显示
-   *
    * @default 'always'
    */
   shadow: {
     type: String as PropType<CardShadow>,
     default: "always",
-    validator: (val: string): boolean => {
-      return ["always", "hover", "never"].includes(val);
-    },
   },
-
   /**
-   * 是否显示边框
-   *
-   * 控制卡片是否显示边框
-   *
-   * @default true
-   */
-  bordered: {
-    type: Boolean,
-    default: true,
-  },
-
-  /**
-   * 卡片内容区域的填充
-   *
-   * 控制卡片内容区域的内边距
-   *
-   * @default true
+   * 卡片主体内边距，可以是数字（px）或字符串
    */
   bodyPadding: {
+    type: [Number, String] as PropType<number | string>,
+    default: undefined,
+  },
+  /**
+   * 是否显示边框
+   * @default true
+   */
+  border: {
     type: Boolean,
     default: true,
   },
-
   /**
-   * 卡片圆角大小
-   *
-   * 控制卡片的圆角大小，可以是CSS支持的任何圆角值
-   *
-   * @default ''
+   * 是否可悬停，悬停时会有交互效果
+   * @default false
    */
-  radius: {
-    type: String,
-    default: "",
+  hoverable: {
+    type: Boolean,
+    default: false,
+  },
+  /**
+   * 自定义 CSS 类名，会与组件默认类名合并
+   */
+  customClass: String,
+  /**
+   * 自定义样式，支持字符串或对象格式
+   */
+  customStyle: {
+    type: [String, Object] as PropType<string | CSSProperties>,
+    default: undefined,
   },
 } as const;
 
 /**
  * 卡片组件属性类型
+ *
+ * 从 cardProps 中提取的公共属性类型，用于组件的 TypeScript 类型检查。
+ * 包含所有可配置的卡片属性及其类型约束。
  */
-export type CardProps = ExtractPropTypes<typeof cardProps>;
+export type CardProps = ExtractPublicPropTypes<typeof cardProps>;
 
 /**
- * 卡片组件事件
+ * 卡片组件事件定义
+ *
+ * 定义了卡片组件支持的所有事件及其参数类型。
+ * 支持的事件：
+ * - click: 卡片点击事件，传递原生 MouseEvent 对象
+ *
+ * @example
+ * ```vue
+ * <VkCard
+ *   @click="handleClick"
+ * >
+ *   点击卡片
+ * </VkCard>
+ * ```
  */
 export const cardEmits = {
   /**
-   * 点击卡片时触发
-   *
-   * @param event 鼠标事件对象
+   * 点击事件
+   * @param e - 鼠标点击事件对象
    */
-  click: (event: MouseEvent) => event instanceof MouseEvent,
+  click: (e: MouseEvent) => e instanceof MouseEvent,
 };
 
 /**
  * 卡片组件事件类型
+ *
+ * 从 cardEmits 中提取的事件类型，用于组件的事件类型检查。
  */
 export type CardEmits = typeof cardEmits;

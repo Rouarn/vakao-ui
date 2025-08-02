@@ -1,63 +1,279 @@
-@use "../mixins.scss" as *;
 @use "../base.scss" as *;
+@use "../mixins.scss" as *;
 
-// VkCard 组件样式
 .vk-card {
-  background: var(--vk-bg-color);
-  border-radius: var(--vk-border-radius-lg);
-  color: var(--vk-text-color-primary);
-  transition: var(--vk-transition-duration-base) var(--vk-transition-timing-function);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--vk-bg-color);
+  border-radius: var(--vk-border-radius-base);
   overflow: hidden;
-  box-shadow: var(--vk-box-shadow-base);
-  border: 1px solid var(--vk-border-color-light);
+  color: var(--vk-text-color-primary);
+  transition: all var(--vk-transition-duration-base);
+  box-sizing: border-box;
 
-  &.is-always-shadow {
-    box-shadow: var(--vk-box-shadow-md);
+  // 边框样式
+  &.is-bordered {
+    border: 1px solid var(--vk-border-color-light);
   }
 
-  &.is-hover-shadow {
+  // 悬停效果
+  &.is-hoverable {
+    cursor: pointer;
+
     &:hover {
-      box-shadow: var(--vk-box-shadow-md);
+      transform: translateY(-2px);
     }
   }
 
-  &.is-never-shadow {
+  // 阴影效果
+  &--shadow-always {
+    box-shadow: var(--vk-box-shadow-base);
+  }
+
+  &--shadow-hover {
+    &:hover {
+      box-shadow: var(--vk-box-shadow-base);
+    }
+  }
+
+  &--shadow-never {
     box-shadow: none;
+  }
+
+  // 尺寸变体
+  &--size-tiny {
+    .vk-card__header {
+      padding: var(--vk-spacing-2) var(--vk-spacing-3);
+      font-size: var(--vk-font-size-sm);
+    }
+
+    .vk-card__body {
+      padding: var(--vk-spacing-2) var(--vk-spacing-3);
+      font-size: var(--vk-font-size-sm);
+    }
+
+    .vk-card__footer {
+      padding: var(--vk-spacing-2) var(--vk-spacing-3);
+    }
+  }
+
+  &--size-small {
+    .vk-card__header {
+      padding: var(--vk-spacing-3) var(--vk-spacing-4);
+      font-size: var(--vk-font-size-base);
+    }
+
+    .vk-card__body {
+      padding: var(--vk-spacing-3) var(--vk-spacing-4);
+      font-size: var(--vk-font-size-base);
+    }
+
+    .vk-card__footer {
+      padding: var(--vk-spacing-3) var(--vk-spacing-4);
+    }
+  }
+
+  &--size-medium {
+    .vk-card__header {
+      padding: var(--vk-spacing-4) var(--vk-spacing-5);
+      font-size: var(--vk-font-size-lg);
+    }
+
+    .vk-card__body {
+      padding: var(--vk-spacing-4) var(--vk-spacing-5);
+      font-size: var(--vk-font-size-base);
+    }
+
+    .vk-card__footer {
+      padding: var(--vk-spacing-4) var(--vk-spacing-5);
+    }
+  }
+
+  &--size-large {
+    .vk-card__header {
+      padding: var(--vk-spacing-5) var(--vk-spacing-6);
+      font-size: var(--vk-font-size-xl);
+    }
+
+    .vk-card__body {
+      padding: var(--vk-spacing-5) var(--vk-spacing-6);
+      font-size: var(--vk-font-size-lg);
+    }
+
+    .vk-card__footer {
+      padding: var(--vk-spacing-5) var(--vk-spacing-6);
+    }
   }
 
   // 卡片头部
   &__header {
-    padding: var(--vk-spacing-5);
-    border-bottom: 1px solid var(--vk-border-color-light);
-    background-color: var(--vk-fill-color-lighter);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--vk-bg-color);
+    border-bottom: 1px solid var(--vk-border-color-lighter);
+    font-weight: 600;
+    color: var(--vk-text-color-primary);
+    line-height: 1.5;
     box-sizing: border-box;
+
+    // 当没有内容时隐藏边框
+    &:empty {
+      display: none;
+    }
   }
 
   // 卡片主体
   &__body {
-    padding: var(--vk-spacing-5);
+    flex: 1;
+    background-color: var(--vk-bg-color);
+    color: var(--vk-text-color-primary);
+    line-height: 1.6;
+    box-sizing: border-box;
+
+    // 确保内容不会溢出
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+
+    // 处理长文本
+    p {
+      margin: 0 0 var(--vk-spacing-3) 0;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    // 处理列表
+    ul, ol {
+      margin: 0 0 var(--vk-spacing-3) 0;
+      padding-left: var(--vk-spacing-5);
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    // 处理标题
+    h1, h2, h3, h4, h5, h6 {
+      margin: 0 0 var(--vk-spacing-3) 0;
+      color: var(--vk-text-color-primary);
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
   }
 
   // 卡片底部
   &__footer {
-    padding: var(--vk-spacing-5);
-    border-top: 1px solid var(--vk-border-color-light);
-    background-color: var(--vk-fill-color-lighter);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--vk-spacing-3);
+    background-color: var(--vk-bg-color);
+    border-top: 1px solid var(--vk-border-color-lighter);
     box-sizing: border-box;
+
+    // 当没有内容时隐藏
+    &:empty {
+      display: none;
+    }
+
+    // 按钮组样式
+    .vk-button + .vk-button {
+      margin-left: var(--vk-spacing-3);
+    }
   }
 
-  // 卡片标题
-  &__title {
-    font-size: var(--vk-font-size-xl);
-    color: var(--vk-text-color-primary);
-    font-weight: 600;
-    margin: 0;
+  // 响应式设计
+  @media (max-width: 768px) {
+    &--size-large {
+      .vk-card__header,
+      .vk-card__body,
+      .vk-card__footer {
+        padding: var(--vk-spacing-4) var(--vk-spacing-4);
+      }
+    }
+
+    &--size-medium {
+      .vk-card__header,
+      .vk-card__body,
+      .vk-card__footer {
+        padding: var(--vk-spacing-3) var(--vk-spacing-3);
+      }
+    }
+
+    &__footer {
+      flex-direction: column;
+      align-items: stretch;
+
+      .vk-button {
+        width: 100%;
+        margin-left: 0;
+        margin-bottom: var(--vk-spacing-2);
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
   }
 
-  // 卡片副标题
-  &__subtitle {
-    font-size: var(--vk-font-size-base);
-    color: var(--vk-text-color-secondary);
-    margin: var(--vk-spacing-1) 0 0 0;
+  // 暗色主题支持
+  @media (prefers-color-scheme: dark) {
+    &.is-bordered {
+      border-color: var(--vk-border-color-dark);
+    }
+
+    &__header {
+      border-bottom-color: var(--vk-border-color-dark);
+    }
+
+    &__footer {
+      border-top-color: var(--vk-border-color-dark);
+    }
+  }
+
+  // 高对比度模式支持
+  @media (prefers-contrast: high) {
+    &.is-bordered {
+      border-width: 2px;
+    }
+
+    &__header {
+      border-bottom-width: 2px;
+    }
+
+    &__footer {
+      border-top-width: 2px;
+    }
+  }
+
+  // 减少动画模式支持
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+
+    &.is-hoverable:hover {
+      transform: none;
+    }
+  }
+}
+
+// 卡片组合样式
+.vk-card + .vk-card {
+  margin-top: var(--vk-spacing-4);
+}
+
+// 卡片网格布局
+.vk-card-grid {
+  display: grid;
+  gap: var(--vk-spacing-4);
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: var(--vk-spacing-3);
   }
 }
