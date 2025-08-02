@@ -8,7 +8,11 @@
     - 图标：当提供icon且没有图片或图片加载失败时显示
     - 文本：当没有图片和图标，或图片加载失败时显示
   -->
-  <div :class="[ns.block(), ns.modifier(shape), ns.is('clickable', clickable)]" :style="avatarStyle" @click="handleClick">
+  <div
+    :class="[ns.block(), ns.modifier(String(shape)), ns.modifier(String(size)), ns.is('clickable', clickable)]"
+    :style="avatarStyle"
+    @click="handleClick"
+  >
     <!-- 图片 -->
     <img
       v-if="src"
@@ -25,7 +29,7 @@
     <VkIcon v-else-if="icon" :icon="icon" :class="ns.element('icon')" :color="iconColor" :size="computedIconSize" />
 
     <!-- 文本 -->
-    <span v-else-if="hasContent" :class="ns.element('text')" :style="{ color }">
+    <span v-else-if="(hasContent || isImageLoadError) && displayText" :class="ns.element('text')" :style="{ color }">
       {{ displayText }}
     </span>
 
@@ -195,9 +199,9 @@ const hasContent = computed(() => {
  * 确定要显示的文本内容
  */
 const displayText = computed(() => {
-  // 如果图片加载失败且有回退内容，则显示回退内容
+  // 如果图片加载失败且有回退内容，则显示回退内容的第一个字符
   if (isImageLoadError.value && props.fallback) {
-    return props.fallback;
+    return props.fallback.charAt(0);
   }
 
   // 如果有默认插槽，获取插槽内容的第一个字符

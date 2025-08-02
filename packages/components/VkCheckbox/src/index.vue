@@ -1,18 +1,18 @@
 <template>
   <label :class="mergedClass" :style="mergedStyle" @click="handleClick">
-    <span class="vk-checkbox__input">
+    <span :class="ns.element('input')">
       <input
         ref="inputRef"
         type="checkbox"
-        class="vk-checkbox__original"
+        :class="ns.element('original')"
         :disabled="isDisabled"
         :checked="isChecked"
         :value="value"
         @change="handleChange"
       />
       <span
-        class="vk-checkbox__inner"
         :class="[
+          ns.element('inner'),
           {
             'is-indeterminate': indeterminate,
             'is-checked': isChecked,
@@ -20,11 +20,11 @@
           },
         ]"
       >
-        <VkIcon v-if="isChecked && !indeterminate" class="vk-checkbox__icon" size="12px" color="#ffffff" icon="mdi:check" />
-        <VkIcon v-if="indeterminate" class="vk-checkbox__icon" size="12px" color="#ffffff" icon="mdi:minus" />
+        <VkIcon v-if="isChecked && !indeterminate" :class="ns.element('icon')" size="12px" color="#ffffff" icon="mdi:check" />
+        <VkIcon v-if="indeterminate" :class="ns.element('icon')" size="12px" color="#ffffff" icon="mdi:minus" />
       </span>
     </span>
-    <span v-if="$slots.default || label" class="vk-checkbox__label">
+    <span v-if="$slots.default || label" :class="ns.element('label')">
       <slot>{{ label }}</slot>
     </span>
   </label>

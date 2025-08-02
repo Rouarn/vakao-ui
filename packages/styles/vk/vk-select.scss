@@ -1,43 +1,124 @@
 @use "../mixins.scss" as *;
-@use "../variables.scss" as *;
+@use "../base.scss" as *;
 
 // VkSelect 组件样式
 .vk-select {
-  display: inline-flex;
   position: relative;
+  display: inline-block;
   width: 100%;
-  font-size: var(--vk-font-size-base);
-  line-height: var(--vk-line-height-base);
-  cursor: pointer;
-  outline: none;
 
-  &:hover:not(.is-disabled) {
-    .vk-select__input {
+  &__input {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-height: var(--vk-size-lg);
+    padding: var(--vk-spacing-1) var(--vk-spacing-2);
+    border: 1px solid var(--vk-border-color);
+    border-radius: var(--vk-border-radius-base);
+    background-color: var(--vk-bg-color);
+    cursor: pointer;
+    transition: border-color var(--vk-transition-duration-base);
+
+    &:hover {
       border-color: var(--vk-border-color-hover);
     }
   }
 
-  &.is-focused {
-    .vk-select__input {
-      border-color: var(--vk-color-primary);
-      box-shadow: 0 0 0 2px var(--vk-color-primary-light-8);
+  &.is-focused &__input {
+    border-color: var(--vk-color-primary);
+  }
+
+  &.is-disabled &__input {
+    background-color: var(--vk-fill-color-light);
+    border-color: var(--vk-border-color-light);
+    color: var(--vk-text-color-disabled);
+    cursor: not-allowed;
+  }
+
+  &__inner {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: inherit;
+  }
+
+  &__suffix {
+    display: flex;
+    align-items: center;
+    margin-left: var(--vk-spacing-2);
+  }
+
+  &__arrow {
+    transition: transform var(--vk-transition-duration-base);
+
+    &.is-reverse {
+      transform: rotate(180deg);
     }
   }
 
-  &.is-disabled {
-    cursor: not-allowed;
+  &__clear {
+    cursor: pointer;
 
-    .vk-select__input {
-      background-color: var(--vk-fill-color-lighter);
-      border-color: var(--vk-border-color-lighter);
-      color: var(--vk-text-color-disabled);
-      cursor: not-allowed;
+    &:hover {
+      color: var(--vk-text-color-secondary);
     }
+  }
 
-    .vk-select__inner {
-      cursor: not-allowed;
-      color: var(--vk-text-color-disabled);
+  &__tag {
+    display: inline-flex;
+    align-items: center;
+    margin: var(--vk-spacing-1) var(--vk-spacing-1) var(--vk-spacing-1) 0;
+    padding: 0 var(--vk-spacing-2);
+    height: var(--vk-size-md);
+    background-color: var(--vk-fill-color-light);
+    border-radius: var(--vk-border-radius-base);
+    font-size: var(--vk-font-size-xs);
+
+    &-close {
+      margin-left: var(--vk-spacing-1);
+      cursor: pointer;
+
+      &:hover {
+        color: var(--vk-text-color-secondary);
+      }
     }
+  }
+
+  &__dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: var(--vk-z-index-dropdown);
+    margin-top: var(--vk-spacing-1);
+    background: var(--vk-bg-color);
+    border: 1px solid var(--vk-border-color-light);
+    border-radius: var(--vk-border-radius-base);
+    box-shadow: var(--vk-box-shadow-base);
+    max-height: 200px;
+    overflow-y: auto;
+  }
+
+  &__options {
+    margin: 0;
+    padding: var(--vk-spacing-1) 0;
+    list-style: none;
+  }
+
+  &__loading,
+  &__empty {
+    padding: var(--vk-spacing-3);
+    text-align: center;
+    color: var(--vk-text-color-secondary);
+    font-size: var(--vk-font-size-base);
+  }
+
+  &__loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--vk-spacing-2);
   }
 
   // 尺寸变体
@@ -272,57 +353,39 @@
 
 // 选项样式
 .vk-select-option {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 12px;
-  color: var(--vk-text-color-regular);
+  padding: var(--vk-spacing-2) var(--vk-spacing-3);
+  cursor: pointer;
+  color: var(--vk-text-color-primary);
   font-size: var(--vk-font-size-base);
   line-height: 1.5;
-  cursor: pointer;
-  transition: background-color 0.2s;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  background-color: var(--vk-fill-color-blank);
+  transition: background-color var(--vk-transition-duration-base);
 
-  &:hover,
-  &.is-hover {
+  &:hover {
     background-color: var(--vk-fill-color-light);
   }
 
   &.is-selected {
-    background-color: var(--vk-color-primary-light-9);
     color: var(--vk-color-primary);
-    font-weight: 500;
+    background-color: var(--vk-color-primary-light-9);
   }
 
   &.is-disabled {
     color: var(--vk-text-color-disabled);
     cursor: not-allowed;
-    background-color: var(--vk-fill-color-blank);
+    background-color: transparent;
 
     &:hover {
-      background-color: var(--vk-fill-color-blank);
+      background-color: transparent;
     }
   }
 
-  // 创建新选项样式
-  &.is-created {
-    color: var(--vk-color-success);
-    font-style: italic;
-    background-color: var(--vk-fill-color-blank);
-
-    &::before {
-      content: "创建: ";
-      font-weight: 500;
-    }
+  &__check {
+    color: var(--vk-color-primary);
   }
-}
-
-.vk-select-option__check {
-  color: var(--vk-color-primary);
-  margin-left: 8px;
 }
 
 // 选项组样式
@@ -397,14 +460,27 @@
 .vk-select-dropdown-enter-active,
 .vk-select-dropdown-leave-active {
   transition:
-    opacity 0.2s ease,
-    transform 0.2s ease;
+    opacity var(--vk-transition-duration-base),
+    transform var(--vk-transition-duration-base);
 }
 
 .vk-select-dropdown-enter-from,
 .vk-select-dropdown-leave-to {
   opacity: 0;
   transform: translateY(-8px);
+}
+
+.rotating {
+  animation: rotate 1s linear infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 // 加载动画

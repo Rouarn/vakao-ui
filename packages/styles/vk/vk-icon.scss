@@ -1,5 +1,5 @@
 @use "../mixins.scss" as *;
-@use "../variables.scss" as *;
+@use "../base.scss" as *;
 
 // VkIcon 组件样式
 .vk-icon {
@@ -33,14 +33,14 @@
 
   // 尺寸变体
   &--size-small {
-    font-size: 14px;
+    font-size: var(--vk-font-size-sm);
   }
 
   &--size-medium {
-    font-size: 16px;
+    font-size: var(--vk-font-size-base);
   }
 
   &--size-large {
-    font-size: 20px;
+    font-size: var(--vk-font-size-xl);
   }
 }

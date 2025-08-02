@@ -62,7 +62,7 @@
 
 <script setup>
 const handleClose = () => {
-  console.log('标签被关闭');
+  console.log("标签被关闭");
 };
 </script>
 ```
@@ -270,7 +270,7 @@ const handleClose = () => {
 
 <script setup>
 const handleTagClick = () => {
-  console.log('标签被点击');
+  console.log("标签被点击");
 };
 </script>
 ```
@@ -302,7 +302,7 @@ const handleTagClick = () => {
 
 <script setup>
 const handleClose = () => {
-  console.log('标签被关闭');
+  console.log("标签被关闭");
 };
 </script>
 ```
@@ -334,11 +334,11 @@ const handleClose = () => {
 
 <script setup>
 const handleClose = () => {
-  console.log('标签被关闭');
+  console.log("标签被关闭");
 };
 
 const handleTagClick = () => {
-  console.log('标签被点击');
+  console.log("标签被点击");
 };
 </script>
 ```
@@ -350,17 +350,17 @@ const handleTagClick = () => {
 
 ### Tag Props
 
-| 名称               | 类型                                                    | 默认值     | 说明                                           |
-| ------------------ | ------------------------------------------------------- | ---------- | ---------------------------------------------- |
-| type               | `'default' \| 'primary' \| 'success' \| 'warning' \| 'danger' \| 'info'` | `'default'`| 标签类型                                       |
-| size               | `'small' \| 'medium' \| 'large'`                       | `'medium'` | 标签尺寸                                       |
-| effect             | `'light' \| 'dark'`                                     | `'light'`  | 标签主题                                       |
-| closable           | `boolean`                                               | `false`    | 是否可关闭                                     |
-| round              | `boolean`                                               | `false`    | 是否为圆角                                     |
-| bordered           | `boolean`                                               | `false`    | 是否显示边框                                   |
-| clickable          | `boolean`                                               | `false`    | 是否可点击                                     |
-| color              | `string`                                                | —          | 自定义颜色                                     |
-| disableTransitions | `boolean`                                               | `false`    | 是否禁用渐变动画                               |
+| 名称               | 类型                                                                     | 默认值      | 说明             |
+| ------------------ | ------------------------------------------------------------------------ | ----------- | ---------------- |
+| type               | `'default' \| 'primary' \| 'success' \| 'warning' \| 'danger' \| 'info'` | `'default'` | 标签类型         |
+| size               | `'small' \| 'medium' \| 'large'`                                         | `'medium'`  | 标签尺寸         |
+| effect             | `'light' \| 'dark'`                                                      | `'light'`   | 标签主题         |
+| closable           | `boolean`                                                                | `false`     | 是否可关闭       |
+| round              | `boolean`                                                                | `false`     | 是否为圆角       |
+| bordered           | `boolean`                                                                | `false`     | 是否显示边框     |
+| clickable          | `boolean`                                                                | `false`     | 是否可点击       |
+| color              | `string`                                                                 | —           | 自定义颜色       |
+| disableTransitions | `boolean`                                                                | `false`     | 是否禁用渐变动画 |
 
 ### Tag Events
 

@@ -1,5 +1,5 @@
 @use "../mixins.scss" as *;
-@use "../variables.scss" as *;
+@use "../base.scss" as *;
 
 // VkAvatar 组件样式
 .vk-avatar {
@@ -10,35 +10,38 @@
   justify-content: center;
   box-sizing: border-box;
   overflow: hidden;
-  background-color: var(--vk-avatar-bg-color, #c0c4cc);
-  color: var(--vk-avatar-text-color, #ffffff);
+  background-color: var(--vk-border-color-light);
+  color: var(--vk-color-white);
+  font-weight: 500;
+  user-select: none;
+  vertical-align: middle;
 
   /* 预设尺寸 */
-  width: var(--vk-avatar-size-default, 40px);
-  height: var(--vk-avatar-size-default, 40px);
-  font-size: var(--vk-avatar-font-size-default, 16px);
-  line-height: var(--vk-avatar-size-default, 40px);
+  width: var(--vk-size-xl);
+  height: var(--vk-size-xl);
+  font-size: var(--vk-font-size-lg);
+  line-height: var(--vk-size-xl);
 
   /* 尺寸变体 */
   &--large {
-    width: var(--vk-avatar-size-large, 56px);
-    height: var(--vk-avatar-size-large, 56px);
-    font-size: var(--vk-avatar-font-size-large, 24px);
-    line-height: var(--vk-avatar-size-large, 56px);
+    width: var(--vk-size-3xl);
+    height: var(--vk-size-3xl);
+    font-size: var(--vk-font-size-3xl);
+    line-height: var(--vk-size-3xl);
   }
 
   &--default {
-    width: var(--vk-avatar-size-default, 40px);
-    height: var(--vk-avatar-size-default, 40px);
-    font-size: var(--vk-avatar-font-size-default, 16px);
-    line-height: var(--vk-avatar-size-default, 40px);
+    width: var(--vk-size-xl);
+    height: var(--vk-size-xl);
+    font-size: var(--vk-font-size-lg);
+    line-height: var(--vk-size-xl);
   }
 
   &--small {
-    width: var(--vk-avatar-size-small, 32px);
-    height: var(--vk-avatar-size-small, 32px);
-    font-size: var(--vk-avatar-font-size-small, 12px);
-    line-height: var(--vk-avatar-size-small, 32px);
+    width: var(--vk-size-md);
+    height: var(--vk-size-md);
+    font-size: var(--vk-font-size-sm);
+    line-height: var(--vk-size-md);
   }
 
   /* 形状变体 */
@@ -47,7 +50,7 @@
   }
 
   &--square {
-    border-radius: var(--vk-avatar-border-radius, 4px);
+    border-radius: var(--vk-border-radius-base);
   }
 
   /* 状态样式 */
@@ -79,7 +82,6 @@
   &__text {
     white-space: nowrap;
     text-align: center;
-    transform: scale(0.5);
     font-weight: 500;
   }
 }

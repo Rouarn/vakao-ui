@@ -8,10 +8,10 @@
     :type="nativeType"
     @click="handleClick"
   >
-    <span v-if="loading" class="vk-button__loading">
-      <span class="vk-button__loading-indicator" />
+    <span v-if="loading" :class="ns.element('loading')">
+      <span :class="ns.element('loading-indicator')" />
     </span>
-    <span v-if="icon && iconPosition === 'left'" class="vk-button__icon vk-button__icon--left">
+    <span v-if="icon && iconPosition === 'left'" :class="ns.element('icon')">
       <component :is="icon" v-if="typeof icon === 'object'" />
       <VkIcon
         v-else-if="typeof icon === 'string'"
@@ -20,10 +20,10 @@
         :icon="!isUrl(icon) ? icon : undefined"
       />
     </span>
-    <span class="vk-button__content">
+    <span :class="ns.element('content')">
       <slot />
     </span>
-    <span v-if="icon && iconPosition === 'right'" class="vk-button__icon vk-button__icon--right">
+    <span v-if="icon && iconPosition === 'right'" :class="ns.element('icon--right')">
       <component :is="icon" v-if="typeof icon === 'object'" />
       <VkIcon
         v-else-if="typeof icon === 'string'"
@@ -160,6 +160,7 @@ export default defineComponent({
     });
 
     return {
+      ns,
       handleClick,
       filteredAttrs,
       mergedStyle,

@@ -26,14 +26,14 @@ const ns = useNamespace("button-group");
 }
 
 .vk-button-group :deep(.vk-button:first-child) {
-  border-top-left-radius: var(--border-radius-base);
-  border-bottom-left-radius: var(--border-radius-base);
+  border-top-left-radius: var(--vk-border-radius-base);
+  border-bottom-left-radius: var(--vk-border-radius-base);
   margin-left: 0;
 }
 
 .vk-button-group :deep(.vk-button:last-child) {
-  border-top-right-radius: var(--border-radius-base);
-  border-bottom-right-radius: var(--border-radius-base);
+  border-top-right-radius: var(--vk-border-radius-base);
+  border-bottom-right-radius: var(--vk-border-radius-base);
 }
 
 .vk-button-group :deep(.vk-button:hover) {

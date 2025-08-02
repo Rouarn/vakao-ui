@@ -1,26 +1,26 @@
 <template>
   <Teleport to="body">
     <Transition name="vk-message-box-fade">
-      <div v-if="visible" class="vk-message-box-wrapper" @click="handleWrapperClick">
-        <div class="vk-message-box" :class="messageBoxClass">
+      <div v-if="visible" :class="ns.element('wrapper')" @click="handleWrapperClick">
+        <div :class="[ns.block(), messageBoxClass]">
           <!-- 头部 -->
-          <div class="vk-message-box__header">
-            <div class="vk-message-box__title">
+          <div :class="ns.element('header')">
+            <div :class="ns.element('title')">
               <VkIcon v-if="iconName" :class="iconClass" :icon="iconName" :color="iconColor" />
               {{ title }}
             </div>
-            <button v-if="showClose" class="vk-message-box__close" @click="handleClose">
+            <button v-if="showClose" :class="ns.element('close')" @click="handleClose">
               <Icon icon="mdi:close" />
             </button>
           </div>
 
           <!-- 内容 -->
-          <div class="vk-message-box__content">
-            <div class="vk-message-box__message">
+          <div :class="ns.element('content')">
+            <div :class="ns.element('message')">
               {{ message }}
             </div>
             <!-- 输入框 (用于 prompt 类型) -->
-            <div v-if="showInput" class="vk-message-box__input">
+            <div v-if="showInput" :class="ns.element('input')">
               <VkInput
                 ref="inputRef"
                 v-model="inputValue"
@@ -30,14 +30,14 @@
                 @keydown.enter="handleConfirm"
                 @blur="handleInputBlur"
               />
-              <div v-if="inputErrorMessage" class="vk-message-box__error-message">
+              <div v-if="inputErrorMessage" :class="ns.element('error-message')">
                 {{ inputErrorMessage }}
               </div>
             </div>
           </div>
 
           <!-- 底部按钮 -->
-          <div class="vk-message-box__footer">
+          <div :class="ns.element('footer')">
             <VkButton v-if="showCancelButton" :class="cancelButtonClass" @click="handleCancel">
               {{ cancelText }}
             </VkButton>
@@ -52,13 +52,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed, onMounted, onUnmounted, type PropType } from "vue";
-import { messageBoxProps, messageBoxEmits, type MessageBoxAction, type MessageBoxInstance } from "./types";
+import { defineComponent, ref, computed, onMounted, onUnmounted } from "vue";
+import { messageBoxProps, messageBoxEmits } from "./types";
 import type { ComponentType } from "../../../types";
 import VkButton from "../../VkButton";
 import VkIcon from "../../VkIcon";
 import VkInput from "../../VkInput";
 import { Icon } from "@iconify/vue";
+import { useNamespace } from "@vakao-ui/utils";
 
 export default defineComponent({
   name: "VkMessageBox",
@@ -68,12 +69,7 @@ export default defineComponent({
     VkInput,
     Icon,
   },
-  props: {
-    ...messageBoxProps,
-    onAction: {
-      type: Function as PropType<(_action: MessageBoxAction, _instance: MessageBoxInstance) => void>,
-    },
-  },
+  props: messageBoxProps,
   emits: messageBoxEmits,
   setup(props, { emit }) {
     const visible = ref(false);
@@ -81,6 +77,7 @@ export default defineComponent({
     const inputValue = ref(props.inputValue || "");
     const inputErrorMessage = ref("");
     const hasInputBlurred = ref(false); // 追踪输入框是否已经失焦过
+    const ns = useNamespace("button");
 
     // 计算属性
     const messageBoxClass = computed(() => [`vk-message-box--${props.type}`]);
@@ -231,6 +228,7 @@ export default defineComponent({
 
     // 返回所有需要在模板中使用的变量和方法
     return {
+      ns,
       visible,
       inputRef,
       inputValue,
@@ -257,167 +255,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style>
-.vk-message-box-wrapper {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 2000;
-  padding: 20px;
-}
-
-.vk-message-box {
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-  min-width: 420px;
-  max-width: 500px;
-  overflow: hidden;
-}
-
-.vk-message-box__header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 24px 24px 0;
-}
-
-.vk-message-box__title {
-  display: flex;
-  align-items: center;
-  font-size: 18px;
-  font-weight: 600;
-  color: #1f2937;
-}
-
-.vk-message-box__icon {
-  margin-right: 12px;
-  font-size: 20px;
-  width: 20px;
-  height: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.vk-message-box__icon--success {
-  color: #10b981;
-}
-
-.vk-message-box__icon--warning {
-  color: #f59e0b;
-}
-
-.vk-message-box__icon--error {
-  color: #ef4444;
-}
-
-.vk-message-box__icon--info {
-  color: #3b82f6;
-}
-
-.vk-message-box__close {
-  background: none;
-  border: none;
-  font-size: 20px;
-  color: #6b7280;
-  cursor: pointer;
-  padding: 4px;
-  width: 28px;
-  height: 28px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 6px;
-  transition: all 0.2s ease;
-}
-
-.vk-message-box__close:hover {
-  background: #f3f4f6;
-  color: #374151;
-}
-
-.vk-message-box__content {
-  padding: 16px 24px;
-}
-
-.vk-message-box__message {
-  font-size: 15px;
-  color: #4b5563;
-  line-height: 1.5;
-  margin: 0;
-}
-
-.vk-message-box__input {
-  margin: 16px 0 0;
-}
-
-.vk-message-box__error-message {
-  color: #ef4444;
-  font-size: 13px;
-  margin-top: 6px;
-}
-
-.vk-message-box__footer {
-  padding: 16px 24px 24px;
-  display: flex;
-  justify-content: flex-end;
-  gap: 12px;
-}
-
-/* 动画 */
-.vk-message-box-fade-enter-active {
-  transition: all 0.3s ease;
-}
-
-.vk-message-box-fade-leave-active {
-  transition: all 0.2s ease;
-}
-
-.vk-message-box-fade-enter-active .vk-message-box {
-  transition: all 0.3s ease;
-}
-
-.vk-message-box-fade-leave-active .vk-message-box {
-  transition: all 0.2s ease;
-}
-
-.vk-message-box-fade-enter-from,
-.vk-message-box-fade-leave-to {
-  opacity: 0;
-}
-
-.vk-message-box-fade-enter-from .vk-message-box {
-  transform: scale(0.95);
-  opacity: 0;
-}
-
-.vk-message-box-fade-leave-to .vk-message-box {
-  transform: scale(0.98);
-  opacity: 0;
-}
-
-/* 响应式设计 */
-@media (max-width: 480px) {
-  .vk-message-box {
-    min-width: auto;
-    width: 100%;
-    max-width: 90vw;
-    margin: 0 20px;
-  }
-
-  .vk-message-box__header,
-  .vk-message-box__content,
-  .vk-message-box__footer {
-    padding-left: 20px;
-    padding-right: 20px;
-  }
-}
-</style>

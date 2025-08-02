@@ -1,5 +1,5 @@
 @use "../mixins.scss" as *;
-@use "../variables.scss" as *;
+@use "../base.scss" as *;
 
 // VkBadge 徽章淡入淡出动画
 .vk-badge-fade-enter-active,
@@ -17,45 +17,38 @@
 
 // VkBadge 组件样式
 .vk-badge {
-  /* 基础样式定义 */
   position: relative;
   display: inline-block;
   vertical-align: middle;
 
-  /* 徽章内容 */
+  // 徽章内容
   &__content {
     position: absolute;
     top: 0;
-    right: calc(100% - 10px);
-    transform: translateY(-50%) translateX(100%);
-    background-color: var(--vk-color-danger, #f56c6c);
-    border-radius: var(--vk-badge-border-radius, 10px);
-    color: var(--vk-color-white, #ffffff);
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0 var(--vk-badge-padding, 6px);
-    font-size: var(--vk-badge-font-size, 12px);
-    height: var(--vk-badge-height, 18px);
-    min-width: var(--vk-badge-height, 18px);
-    line-height: 1;
+    right: 0;
+    transform: translate(50%, -50%);
+    background-color: var(--vk-color-danger);
+    color: var(--vk-color-white);
+    border: 1px solid var(--vk-color-white);
+    border-radius: var(--vk-border-radius-xl);
+    padding: 0 var(--vk-spacing-2);
+    font-size: var(--vk-font-size-xs);
+    line-height: 18px;
+    min-width: 18px;
+    text-align: center;
     white-space: nowrap;
-    border: var(--vk-badge-border, 1px solid #ffffff);
-    box-sizing: border-box;
-    z-index: 10;
+    z-index: 1;
 
-    /* 固定位置样式 */
     &.is-fixed {
-      position: absolute;
+      position: fixed;
     }
 
-    /* 小圆点样式 */
     &.is-dot {
-      height: var(--vk-badge-dot-size, 8px);
-      width: var(--vk-badge-dot-size, 8px);
+      width: var(--vk-spacing-2);
+      height: var(--vk-spacing-2);
       padding: 0;
-      right: 5px;
       border-radius: 50%;
+      min-width: auto;
     }
 
     /* 类型变体 */

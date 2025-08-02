@@ -1,5 +1,5 @@
 @use "../mixins.scss" as *;
-@use "../variables.scss" as *;
+@use "../base.scss" as *;
 
 // VkCheckbox 组件样式
 .vk-checkbox {
@@ -11,17 +11,15 @@
   line-height: var(--vk-line-height-base);
   user-select: none;
 
-
-
   // 状态变体
   &.is-disabled {
     cursor: not-allowed;
-    
+
     .vk-checkbox__inner {
       background-color: var(--vk-fill-color-light);
       border-color: var(--vk-border-color-light);
     }
-    
+
     .vk-checkbox__label {
       color: var(--vk-text-color-disabled);
     }
@@ -46,7 +44,7 @@
     position: relative;
     display: inline-flex;
     align-items: center;
-    margin-right: 8px;
+    margin-right: var(--vk-spacing-2);
   }
 
   // 原生输入框（隐藏）
@@ -66,12 +64,12 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 16px;
-    height: 16px;
+    width: var(--vk-size-sm);
+    height: var(--vk-size-sm);
     border: 1px solid var(--vk-border-color);
-    border-radius: var(--vk-border-radius-small);
+    border-radius: var(--vk-border-radius-sm);
     background-color: var(--vk-fill-color-blank);
-    transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+    transition: all var(--vk-transition-duration-base) cubic-bezier(0.645, 0.045, 0.355, 1);
 
     &:hover {
       border-color: var(--vk-color-primary);
@@ -79,7 +77,7 @@
 
     &.is-disabled {
       cursor: not-allowed;
-      
+
       &:hover {
         border-color: var(--vk-border-color-light);
       }
@@ -88,7 +86,7 @@
 
   // 选中图标
   &__icon {
-    color: white;
+    color: var(--vk-color-white);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -103,27 +101,27 @@
   // 尺寸变体
 
   &.vk-checkbox--size-small {
-    font-size: var(--vk-font-size-small);
-    
+    font-size: var(--vk-font-size-sm);
+
     .vk-checkbox__inner {
-      width: 14px !important;
-      height: 14px !important;
+      width: var(--vk-size-xs) !important;
+      height: var(--vk-size-xs) !important;
     }
   }
 
   &.vk-checkbox--size-medium {
     .vk-checkbox__inner {
-      width: 16px !important;
-      height: 16px !important;
+      width: var(--vk-size-sm) !important;
+      height: var(--vk-size-sm) !important;
     }
   }
 
   &.vk-checkbox--size-large {
-    font-size: var(--vk-font-size-large);
-    
+    font-size: var(--vk-font-size-lg);
+
     .vk-checkbox__inner {
-      width: 18px !important;
-      height: 18px !important;
+      width: var(--vk-size-md) !important;
+      height: var(--vk-size-md) !important;
     }
   }
 }
@@ -132,43 +130,43 @@
 .vk-checkbox-group {
   display: inline-flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: var(--vk-spacing-3);
 
   // 尺寸变体
 
   &--size-small {
-    gap: 8px;
-    
+    gap: var(--vk-spacing-2);
+
     .vk-checkbox {
-      font-size: var(--vk-font-size-small);
-      
+      font-size: var(--vk-font-size-sm);
+
       .vk-checkbox__inner {
-        width: 14px !important;
-        height: 14px !important;
+        width: var(--vk-size-xs) !important;
+        height: var(--vk-size-xs) !important;
       }
     }
   }
 
   &--size-medium {
-    gap: 12px;
-    
+    gap: var(--vk-spacing-3);
+
     .vk-checkbox {
       .vk-checkbox__inner {
-        width: 16px !important;
-        height: 16px !important;
+        width: var(--vk-size-sm) !important;
+        height: var(--vk-size-sm) !important;
       }
     }
   }
 
   &--size-large {
-    gap: 16px;
-    
+    gap: var(--vk-spacing-4);
+
     .vk-checkbox {
-      font-size: var(--vk-font-size-large);
-      
+      font-size: var(--vk-font-size-lg);
+
       .vk-checkbox__inner {
-        width: 18px !important;
-        height: 18px !important;
+        width: var(--vk-size-md) !important;
+        height: var(--vk-size-md) !important;
       }
     }
   }

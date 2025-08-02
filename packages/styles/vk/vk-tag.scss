@@ -1,5 +1,5 @@
 @use "../mixins.scss" as *;
-@use "../variables.scss" as *;
+@use "../base.scss" as *;
 
 // VkTag 标签淡入淡出动画
 .vk-tag-fade-enter-active,
@@ -21,70 +21,78 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: var(--vk-tag-padding, 4px 8px);
-  font-size: var(--vk-tag-font-size, 12px);
+  padding: var(--vk-spacing-1) var(--vk-spacing-2);
+  font-size: var(--vk-font-size-sm);
   line-height: 1;
-  border-radius: var(--vk-tag-border-radius, 4px);
+  border-radius: var(--vk-border-radius-base);
   border: 1px solid transparent;
   box-sizing: border-box;
   white-space: nowrap;
-  transition: all 0.3s;
+  transition: all var(--vk-transition-duration-base);
   cursor: default;
 
   /* 尺寸变体 */
   &--small {
-    padding: var(--vk-tag-small-padding, 2px 6px);
-    font-size: var(--vk-tag-small-font-size, 10px);
-    border-radius: var(--vk-tag-small-border-radius, 3px);
+    padding: var(--vk-spacing-1) var(--vk-spacing-2);
+    font-size: var(--vk-font-size-xs);
+    border-radius: var(--vk-border-radius-sm);
   }
 
   &--medium {
-    padding: var(--vk-tag-medium-padding, 4px 8px);
-    font-size: var(--vk-tag-medium-font-size, 12px);
-    border-radius: var(--vk-tag-medium-border-radius, 4px);
+    padding: var(--vk-spacing-1) var(--vk-spacing-2);
+    font-size: var(--vk-font-size-sm);
+    border-radius: var(--vk-border-radius-base);
   }
 
   &--large {
-    padding: var(--vk-tag-large-padding, 6px 12px);
-    font-size: var(--vk-tag-large-font-size, 14px);
-    border-radius: var(--vk-tag-large-border-radius, 6px);
+    padding: var(--vk-spacing-2) var(--vk-spacing-3);
+    font-size: var(--vk-font-size-base);
+    border-radius: var(--vk-border-radius-md);
   }
 
-  /* 类型变体 - 默认效果 */
-  &--default {
-    background-color: var(--vk-tag-default-bg, #f4f4f5);
-    color: var(--vk-tag-default-color, #909399);
-    border-color: var(--vk-tag-default-border, #e9e9eb);
+  /* 类型变体 - 浅色效果（默认） */
+  &--light {
+    /* 默认类型 */
+    background-color: var(--vk-fill-color-light);
+    color: var(--vk-text-color-secondary);
+    border-color: var(--vk-border-color-light);
+  }
+
+  /* 当没有指定类型时的默认样式 */
+  &:not([class*="--primary"]):not([class*="--success"]):not([class*="--warning"]):not([class*="--danger"]):not([class*="--info"]) {
+    background-color: var(--vk-fill-color-light);
+    color: var(--vk-text-color-secondary);
+    border-color: var(--vk-border-color-light);
   }
 
   &--primary {
-    background-color: var(--vk-tag-primary-bg, #ecf5ff);
-    color: var(--vk-tag-primary-color, #409eff);
-    border-color: var(--vk-tag-primary-border, #b3d8ff);
+    background-color: var(--vk-color-primary-light-9);
+    color: var(--vk-color-primary);
+    border-color: var(--vk-color-primary-light-7);
   }
 
   &--success {
-    background-color: var(--vk-tag-success-bg, #f0f9ff);
-    color: var(--vk-tag-success-color, #67c23a);
-    border-color: var(--vk-tag-success-border, #c2e7b0);
+    background-color: var(--vk-color-success-light-9);
+    color: var(--vk-color-success);
+    border-color: var(--vk-color-success-light-7);
   }
 
   &--warning {
-    background-color: var(--vk-tag-warning-bg, #fdf6ec);
-    color: var(--vk-tag-warning-color, #e6a23c);
-    border-color: var(--vk-tag-warning-border, #f5dab1);
+    background-color: var(--vk-color-warning-light-9);
+    color: var(--vk-color-warning);
+    border-color: var(--vk-color-warning-light-7);
   }
 
   &--danger {
-    background-color: var(--vk-tag-danger-bg, #fef0f0);
-    color: var(--vk-tag-danger-color, #f56c6c);
-    border-color: var(--vk-tag-danger-border, #fbc4c4);
+    background-color: var(--vk-color-danger-light-9);
+    color: var(--vk-color-danger);
+    border-color: var(--vk-color-danger-light-7);
   }
 
   &--info {
-    background-color: var(--vk-tag-info-bg, #f4f4f5);
-    color: var(--vk-tag-info-color, #909399);
-    border-color: var(--vk-tag-info-border, #d3d4d6);
+    background-color: var(--vk-color-info-light-9);
+    color: var(--vk-color-info);
+    border-color: var(--vk-color-info-light-7);
   }
 
   /* 效果变体 - 深色效果 */
@@ -163,7 +171,7 @@
 
   /* 状态样式 */
   &.is-round {
-    border-radius: var(--vk-tag-round-border-radius, 9999px);
+    border-radius: var(--vk-border-radius-full);
   }
 
   &.is-bordered {
@@ -185,13 +193,13 @@
 
   /* 关闭按钮样式 */
   &__close {
-    margin-left: var(--vk-tag-close-margin, 4px);
+    margin-left: var(--vk-spacing-1);
     cursor: pointer;
-    font-size: var(--vk-tag-close-size, 10px);
-    transition: color 0.3s;
+    font-size: var(--vk-font-size-xs);
+    transition: color var(--vk-transition-duration-base);
 
     &:hover {
-      color: var(--vk-color-white, #ffffff);
+      color: var(--vk-color-white);
       background-color: currentColor;
       border-radius: 50%;
     }

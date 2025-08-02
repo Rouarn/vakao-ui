@@ -3,7 +3,7 @@
     <slot>
       {{ label }}
     </slot>
-    <VkIcon v-if="isSelected" class="vk-select-option__check" icon="mdi:check" size="14px" />
+    <VkIcon v-if="isSelected" :class="ns.element('check')" icon="mdi:check" size="14px" />
   </li>
 </template>
 
@@ -91,6 +91,7 @@ export default defineComponent({
     });
 
     return {
+      ns,
       mergedClass,
       isSelected,
       isDisabled,
@@ -100,41 +101,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style lang="scss">
-.vk-select-option {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 8px 12px;
-  cursor: pointer;
-  color: #606266;
-  font-size: 14px;
-  line-height: 1.5;
-  transition: background-color 0.2s;
-
-  &:hover {
-    background-color: #f5f7fa;
-  }
-
-  &.is-selected {
-    color: #409eff;
-    background-color: #f0f9ff;
-  }
-
-  &.is-disabled {
-    color: #c0c4cc;
-    cursor: not-allowed;
-    background-color: transparent;
-
-    &:hover {
-      background-color: transparent;
-    }
-  }
-
-  &__check {
-    color: #409eff;
-  }
-}
-</style>

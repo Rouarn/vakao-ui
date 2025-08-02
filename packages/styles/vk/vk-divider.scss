@@ -1,56 +1,89 @@
 @use "../mixins.scss" as *;
-@use "../variables.scss" as *;
+@use "../base.scss" as *;
 
 // VkDivider 组件样式
 .vk-divider {
-  /* 基础样式定义 */
+  margin: var(--vk-spacing-4) 0;
+  border: none;
+  border-top: 1px solid var(--vk-border-color-light);
   position: relative;
-  display: block;
-  height: 1px;
-  width: 100%;
-  margin: var(--vk-divider-margin, 24px 0);
-  border-top: 1px var(--vk-divider-border-style, solid) var(--vk-divider-border-color, #dcdfe6);
 
-  /* 垂直方向样式 */
+  // 垂直分割线
   &--vertical {
     display: inline-block;
     width: 1px;
-    height: 1em;
-    margin: 0 8px;
+    height: var(--vk-size-md);
+    margin: 0 var(--vk-spacing-2);
+    border-top: none;
+    border-left: 1px solid var(--vk-border-color-light);
     vertical-align: middle;
-    position: relative;
-    border-top: 0;
-    border-left: 1px var(--vk-divider-border-style, solid) var(--vk-divider-border-color, #dcdfe6);
   }
 
-  /* 带文本的分割线样式 */
-  &__text {
-    position: absolute;
-    background-color: var(--vk-divider-text-bg-color, #fff);
-    padding: 0 var(--vk-divider-text-padding, 20px);
-    font-weight: 500;
-    color: var(--vk-divider-text-color, #303133);
-    font-size: var(--vk-divider-font-size, 14px);
-    transform: translateY(-50%);
-  }
+  // 带文字的分割线
+  &--with-text {
+    display: flex;
+    align-items: center;
+    margin: var(--vk-spacing-5) 0;
+    border: none;
+    color: var(--vk-text-color-secondary);
+    font-size: var(--vk-font-size-sm);
 
-  /* 内容位置样式 */
-  &.is-left {
-    .vk-divider__text {
-      left: var(--vk-divider-text-left-indent, 20px);
+    &::before,
+    &::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background-color: var(--vk-border-color-light);
+    }
+
+    &::before {
+      margin-right: var(--vk-spacing-3);
+    }
+
+    &::after {
+      margin-left: var(--vk-spacing-3);
     }
   }
 
-  &.is-center {
-    .vk-divider__text {
-      left: 50%;
-      transform: translate(-50%, -50%);
+  // 文字位置变体
+  &--text-left {
+    &::before {
+      flex: 0.2;
+    }
+    &::after {
+      flex: 1;
     }
   }
 
-  &.is-right {
-    .vk-divider__text {
-      right: var(--vk-divider-text-right-indent, 20px);
+  &--text-right {
+    &::before {
+      flex: 1;
+    }
+    &::after {
+      flex: 0.2;
+    }
+  }
+
+  // 虚线样式
+  &--dashed {
+    border-top-style: dashed;
+
+    &.vk-divider--vertical {
+      border-left-style: dashed;
+    }
+
+    &.vk-divider--with-text {
+      &::before,
+      &::after {
+        background-image: repeating-linear-gradient(
+          to right,
+          var(--vk-border-color-light) 0,
+          var(--vk-border-color-light) 4px,
+          transparent 4px,
+          transparent 8px
+        );
+        background-color: transparent;
+      }
     }
   }
 }

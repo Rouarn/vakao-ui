@@ -81,7 +81,7 @@ export interface VkIconProps {
    * <VkIcon color="#409eff" />     <!-- 十六进制 -->
    * <VkIcon color="red" />        <!-- 颜色名称 -->
    * <VkIcon color="rgb(64, 158, 255)" /> <!-- RGB -->
-   * <VkIcon color="var(--primary-color)" /> <!-- CSS 变量 -->
+   * <VkIcon color="var(--vk-color-primary)" /> <!-- CSS 变量 -->
    * ```
    */
   color?: string;

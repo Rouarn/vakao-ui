@@ -1,77 +1,63 @@
 @use "../mixins.scss" as *;
-@use "../variables.scss" as *;
+@use "../base.scss" as *;
 
 // VkCard 组件样式
 .vk-card {
-  /* 基础样式定义 */
-  position: relative;
-  background-color: var(--vk-card-bg-color, #fff);
-  border-radius: var(--vk-card-border-radius, 4px);
+  background: var(--vk-bg-color);
+  border-radius: var(--vk-border-radius-lg);
+  color: var(--vk-text-color-primary);
+  transition: var(--vk-transition-duration-base) var(--vk-transition-timing-function);
   overflow: hidden;
-  transition:
-    box-shadow 0.3s,
-    border-color 0.3s;
-  color: var(--vk-card-text-color, #303133);
+  box-shadow: var(--vk-box-shadow-base);
+  border: 1px solid var(--vk-border-color-light);
 
-  /* 阴影变体 */
-  &--always {
-    box-shadow: var(--vk-card-shadow, 0 2px 12px 0 rgba(0, 0, 0, 0.1));
+  &.is-always-shadow {
+    box-shadow: var(--vk-box-shadow-md);
   }
 
-  &--hover {
+  &.is-hover-shadow {
     &:hover {
-      box-shadow: var(--vk-card-shadow, 0 2px 12px 0 rgba(0, 0, 0, 0.1));
+      box-shadow: var(--vk-box-shadow-md);
     }
   }
 
-  /* 边框样式 */
-  &.is-bordered {
-    border: 1px solid var(--vk-card-border-color, #ebeef5);
+  &.is-never-shadow {
+    box-shadow: none;
   }
 
-  /* 自定义圆角 */
-  &.is-radius {
-    overflow: hidden;
-  }
-
-  /* 头部样式 */
+  // 卡片头部
   &__header {
-    padding: var(--vk-card-padding, 16px);
-    border-bottom: 1px solid var(--vk-card-border-color, #ebeef5);
+    padding: var(--vk-spacing-5);
+    border-bottom: 1px solid var(--vk-border-color-light);
+    background-color: var(--vk-fill-color-lighter);
+    box-sizing: border-box;
   }
 
-  /* 标题组样式 */
-  &__title-group {
-    display: flex;
-    flex-direction: column;
-  }
-
-  /* 标题样式 */
-  &__title {
-    font-size: var(--vk-card-title-font-size, 16px);
-    font-weight: 500;
-    color: var(--vk-card-title-color, #303133);
-    line-height: 1.5;
-  }
-
-  /* 副标题样式 */
-  &__subtitle {
-    font-size: var(--vk-card-subtitle-font-size, 14px);
-    color: var(--vk-card-subtitle-color, #909399);
-    margin-top: 4px;
-    line-height: 1.5;
-  }
-
-  /* 内容区域样式 */
+  // 卡片主体
   &__body {
-    &.is-padding {
-      padding: var(--vk-card-padding, 16px);
-    }
+    padding: var(--vk-spacing-5);
   }
 
-  /* 底部样式 */
+  // 卡片底部
   &__footer {
-    padding: var(--vk-card-padding, 16px);
-    border-top: 1px solid var(--vk-card-border-color, #ebeef5);
+    padding: var(--vk-spacing-5);
+    border-top: 1px solid var(--vk-border-color-light);
+    background-color: var(--vk-fill-color-lighter);
+    box-sizing: border-box;
+  }
+
+  // 卡片标题
+  &__title {
+    font-size: var(--vk-font-size-xl);
+    color: var(--vk-text-color-primary);
+    font-weight: 600;
+    margin: 0;
+  }
+
+  // 卡片副标题
+  &__subtitle {
+    font-size: var(--vk-font-size-base);
+    color: var(--vk-text-color-secondary);
+    margin: var(--vk-spacing-1) 0 0 0;
   }
 }

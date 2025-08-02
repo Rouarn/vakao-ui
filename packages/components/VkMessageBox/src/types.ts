@@ -97,6 +97,16 @@ export const messageBoxProps = {
     type: String,
     default: "",
   },
+  /** 点击确认按钮回调 */
+  onAction: {
+    type: Function as PropType<(_action: MessageBoxAction, _instance: MessageBoxInstance) => void>,
+    default: undefined,
+  },
+  /** 点击关闭按钮回调 */
+  onClose: {
+    type: Function as PropType<(_action: MessageBoxAction, _instance: MessageBoxInstance) => void>,
+    default: undefined,
+  },
 } as const;
 
 // MessageBox 属性类型

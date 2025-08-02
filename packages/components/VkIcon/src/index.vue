@@ -1,9 +1,9 @@
 <template>
   <span :class="mergedClass" :style="mergedStyle" v-bind="$attrs">
     <!-- 自定义图片 -->
-    <img v-if="props.src" :src="props.src" alt="icon" class="vk-icon__image" />
+    <img v-if="props.src" :src="props.src" alt="icon" :class="ns.element('image')" />
     <!-- Iconify 图标 -->
-    <Icon v-else-if="props.icon" :icon="props.icon || ''" class="vk-icon__icon" />
+    <Icon v-else-if="props.icon" :icon="props.icon || ''" :class="ns.element('icon')" />
     <!-- 默认插槽内容 -->
     <slot v-else />
   </span>

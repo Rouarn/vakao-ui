@@ -1,56 +1,79 @@
 @use "../mixins.scss" as *;
-@use "../variables.scss" as *;
+@use "../base.scss" as *;
 
 // VkInput 组件样式
 .vk-input {
-  display: inline-flex;
-  align-items: center;
+  position: relative;
+  display: inline-block;
   width: 100%;
   font-size: var(--vk-font-size-base);
   line-height: var(--vk-line-height-base);
-  border: 1px solid var(--vk-border-color);
-  border-radius: var(--vk-border-radius-base);
-  background-color: var(--vk-fill-color-blank);
-  transition: border-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
 
-  &:hover:not(.is-disabled):not(.is-focused) {
-    border-color: var(--vk-border-color-hover);
-  }
+  // 输入框容器
+  &__wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    width: 100%;
+    min-height: var(--vk-size-lg);
+    background-color: var(--vk-bg-color);
+    border: 1px solid var(--vk-border-color-base);
+    border-radius: var(--vk-border-radius-base);
+    transition: border-color var(--vk-transition-duration-base) var(--vk-transition-timing-function);
+    box-sizing: border-box;
 
-  &.is-focused {
-    border-color: var(--vk-color-primary);
-    box-shadow: 0 0 0 2px var(--vk-color-primary-light-8);
-  }
-
-  &.is-disabled {
-    background-color: var(--vk-fill-color-lighter);
-    border-color: var(--vk-border-color-lighter);
-    color: var(--vk-text-color-disabled);
-    cursor: not-allowed;
-
-    .vk-input__prefix,
-    .vk-input__suffix {
-      background-color: var(--vk-fill-color-lighter);
-      color: var(--vk-text-color-disabled);
+    &:hover {
+      border-color: var(--vk-border-color-hover);
     }
 
-    input {
-      cursor: not-allowed;
-      color: var(--vk-text-color-disabled);
+    &.is-focus {
+      border-color: var(--vk-color-primary);
+      outline: 0;
+      box-shadow: 0 0 0 2px var(--vk-color-primary-light-8);
+    }
 
-      &::placeholder {
-        color: var(--vk-text-color-disabled);
-      }
+    &.is-disabled {
+      background-color: var(--vk-fill-color-lighter);
+      border-color: var(--vk-border-color-lighter);
+      cursor: not-allowed;
+    }
+  }
+
+  // 输入框元素
+  &__inner {
+    flex: 1;
+    width: 100%;
+    padding: var(--vk-spacing-2) var(--vk-spacing-3);
+    font-size: inherit;
+    line-height: inherit;
+    color: var(--vk-text-color-primary);
+    background: transparent;
+    border: none;
+    outline: none;
+    box-sizing: border-box;
+
+    &::placeholder {
+      color: var(--vk-text-color-placeholder);
+    }
+
+    &:disabled {
+      color: var(--vk-text-color-disabled);
+      cursor: not-allowed;
     }
   }
 
   // 尺寸变体
   &--size-small {
-    font-size: var(--vk-font-size-small);
+    font-size: var(--vk-font-size-sm);
+    line-height: var(--vk-line-height-sm);
+
+    .vk-input__wrapper {
+      min-height: var(--vk-size-md);
+      border-radius: var(--vk-border-radius-sm);
+    }
 
     .vk-input__inner {
-      height: var(--vk-component-size-small);
-      padding: 0 8px;
+      padding: var(--vk-spacing-1) var(--vk-spacing-2);
     }
   }
 
@@ -99,116 +122,56 @@
     }
   }
 
-  &--size-medium {
-    .vk-input__inner {
-      height: var(--vk-component-size-medium);
-      padding: 0 12px;
-    }
-  }
-
   &--size-large {
-    font-size: var(--vk-font-size-large);
+    font-size: var(--vk-font-size-lg);
+    line-height: var(--vk-line-height-lg);
+
+    .vk-input__wrapper {
+      min-height: var(--vk-size-xl);
+      border-radius: var(--vk-border-radius-md);
+    }
 
     .vk-input__inner {
-      height: var(--vk-component-size-large);
-      padding: 0 16px;
+      padding: var(--vk-spacing-3) var(--vk-spacing-4);
     }
   }
 
-  // 状态变体
-  &.is-disabled {
-    cursor: not-allowed;
-
-    .vk-input__inner {
-      background-color: var(--vk-fill-color-light);
-      border-color: var(--vk-border-color-light);
-      color: var(--vk-text-color-disabled);
-      cursor: not-allowed;
-    }
-  }
-
-  &.is-readonly {
-    .vk-input__inner {
-      background-color: var(--vk-fill-color-lighter);
-      cursor: default;
-    }
-  }
-
-  // 前缀后缀变体
-  // 前缀
-  &__prefix {
-    display: flex;
-    align-items: center;
-    align-self: stretch;
-    padding: 0 8px;
-    color: var(--vk-text-color-regular);
-    background-color: var(--vk-fill-color-lighter);
-    border-right: 1px solid var(--vk-border-color);
-    font-size: 14px;
-
-    i {
-      font-size: 14px;
-      line-height: 1;
-    }
-  }
-
-  // 输入框容器
-  &__wrapper {
-    flex: 1;
-    display: flex;
-    align-items: center;
-
-    input {
-      width: 100%;
-      border: none;
-      outline: none;
-      background: transparent;
-      color: var(--vk-text-color-regular);
-      font-size: inherit;
-      line-height: inherit;
-      padding: 8px 12px;
-
-      &::placeholder {
-        color: var(--vk-text-color-placeholder);
-      }
-    }
-  }
-
-  // 后缀
+  // 前缀和后缀
+  &__prefix,
   &__suffix {
     display: flex;
     align-items: center;
-    align-self: stretch;
-    padding: 0 8px;
-    gap: 4px;
-    color: var(--vk-text-color-regular);
-    background-color: var(--vk-fill-color-lighter);
-    border-left: 1px solid var(--vk-border-color);
-    font-size: 14px;
+    color: var(--vk-text-color-secondary);
+    padding: 0 var(--vk-spacing-2);
+  }
 
-    i {
-      font-size: 14px;
-      line-height: 1;
-      cursor: pointer;
-    }
+  &__prefix {
+    padding-right: var(--vk-spacing-2);
+  }
+
+  &__suffix {
+    padding-left: var(--vk-spacing-2);
   }
 
   // 清除按钮
   &__clear {
     cursor: pointer;
-    color: var(--vk-text-color-placeholder);
-    transition: color 0.2s;
-    font-size: 14px;
-    width: 16px;
-    height: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
+    color: var(--vk-text-color-secondary);
+    transition: color var(--vk-transition-duration-base) var(--vk-transition-timing-function);
 
     &:hover {
-      color: var(--vk-text-color-regular);
-      background-color: var(--vk-fill-color-light);
+      color: var(--vk-text-color-primary);
+    }
+  }
+
+  // 密码显示切换
+  &__password {
+    cursor: pointer;
+    color: var(--vk-text-color-secondary);
+    transition: color var(--vk-transition-duration-base) var(--vk-transition-timing-function);
+
+    &:hover {
+      color: var(--vk-text-color-primary);
     }
   }
 }

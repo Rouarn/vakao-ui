@@ -91,7 +91,7 @@
       <vk-button>通知</vk-button>
     </vk-badge>
     <vk-badge is-dot type="success">
-      <vk-icon icon="bell" size="20" />
+      <vk-icon icon="i-material-symbols:circle-notifications" size="20" />
     </vk-badge>
   </div>
   
@@ -278,16 +278,16 @@
 
 ### Badge Props
 
-| 名称            | 类型                                                    | 默认值      | 说明                                           |
-| --------------- | ------------------------------------------------------- | ----------- | ---------------------------------------------- |
-| value           | `string \| number`                                      | —           | 显示值                                         |
-| max             | `number`                                                | —           | 最大值，超过最大值会显示 '{max}+'              |
-| isDot           | `boolean`                                               | `false`     | 小圆点                                         |
-| hidden          | `boolean`                                               | `false`     | 隐藏徽章                                       |
-| type            | `'primary' \| 'success' \| 'warning' \| 'danger' \| 'info'` | `'danger'`  | 徽章类型                                       |
-| backgroundColor| `string`                                                | —           | 自定义背景色                                   |
-| textColor       | `string`                                                | —           | 自定义文字颜色                                 |
-| offset          | `[number, number]`                                      | `[0, 0]`    | 设置徽章的偏移量，格式为 [x, y]                |
+| 名称            | 类型                                                        | 默认值     | 说明                              |
+| --------------- | ----------------------------------------------------------- | ---------- | --------------------------------- |
+| value           | `string \| number`                                          | —          | 显示值                            |
+| max             | `number`                                                    | —          | 最大值，超过最大值会显示 '{max}+' |
+| isDot           | `boolean`                                                   | `false`    | 小圆点                            |
+| hidden          | `boolean`                                                   | `false`    | 隐藏徽章                          |
+| type            | `'primary' \| 'success' \| 'warning' \| 'danger' \| 'info'` | `'danger'` | 徽章类型                          |
+| backgroundColor | `string`                                                    | —          | 自定义背景色                      |
+| textColor       | `string`                                                    | —          | 自定义文字颜色                    |
+| offset          | `[number, number]`                                          | `[0, 0]`   | 设置徽章的偏移量，格式为 [x, y]   |
 
 ### Badge Slots
 

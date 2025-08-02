@@ -1,28 +1,28 @@
 <template>
   <label :class="mergedClass" :style="mergedStyle" @click="handleClick">
-    <span class="vk-radio__input">
+    <span :class="ns.element('input')">
       <input
         ref="inputRef"
         type="radio"
-        class="vk-radio__original"
+        :class="ns.element('original')"
         :disabled="isDisabled"
         :checked="isChecked"
         :value="value"
         @change="handleChange"
       />
       <span
-        class="vk-radio__inner"
         :class="[
+          ns.element('inner'),
           {
             'is-checked': isChecked,
             'is-disabled': isDisabled,
           },
         ]"
       >
-        <span v-if="isChecked" class="vk-radio__dot" />
+        <span v-if="isChecked" :class="ns.element('dot')" />
       </span>
     </span>
-    <span v-if="$slots.default || label" class="vk-radio__label">
+    <span v-if="$slots.default || label" :class="ns.element('label')">
       <slot>{{ label }}</slot>
     </span>
   </label>

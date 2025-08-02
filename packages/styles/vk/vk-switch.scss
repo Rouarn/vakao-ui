@@ -1,83 +1,138 @@
 @use "../mixins.scss" as *;
-@use "../variables.scss" as *;
+@use "../base.scss" as *;
 
 // VkSwitch 组件样式
 .vk-switch {
-  position: relative;
+  // 基础样式
   display: inline-flex;
   align-items: center;
-  cursor: pointer;
+  position: relative;
   font-size: var(--vk-font-size-base);
   line-height: var(--vk-line-height-base);
+  vertical-align: middle;
+  cursor: pointer;
   user-select: none;
 
-  // 尺寸变体
-  &--size-small {
-    font-size: var(--vk-font-size-small);
-    
-    .vk-switch__core {
-      width: 32px;
-      height: 18px;
-      
-      .vk-switch__action {
-        width: 14px;
-        height: 14px;
-      }
-    }
-    
-    &.is-checked .vk-switch__action {
-      transform: translateY(-50%) translateX(14px);
+  // 开关核心
+  &__core {
+    margin: 0;
+    display: inline-block;
+    position: relative;
+    width: 40px;
+    height: 20px;
+    border: 1px solid var(--vk-border-color-base);
+    outline: none;
+    border-radius: var(--vk-border-radius-full);
+    box-sizing: border-box;
+    background: var(--vk-fill-color-light);
+    cursor: pointer;
+    transition:
+      border-color var(--vk-transition-duration-base) var(--vk-transition-timing-function),
+      background-color var(--vk-transition-duration-base) var(--vk-transition-timing-function);
+    vertical-align: middle;
+
+    .vk-switch__button {
+      position: absolute;
+      top: 1px;
+      left: 1px;
+      border-radius: var(--vk-border-radius-full);
+      transition: all var(--vk-transition-duration-base) var(--vk-transition-timing-function);
+      width: 16px;
+      height: 16px;
+      background-color: var(--vk-color-white);
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   }
 
-  &--size-medium {
-    .vk-switch__core {
-      width: 40px;
-      height: 22px;
-      
-      .vk-switch__action {
-        width: 18px;
-        height: 18px;
-      }
+  // 开关文本
+  &__label {
+    transition: color var(--vk-transition-duration-base) var(--vk-transition-timing-function);
+    height: 20px;
+    display: inline-block;
+    font-size: var(--vk-font-size-base);
+    font-weight: 500;
+    cursor: pointer;
+    vertical-align: middle;
+    color: var(--vk-text-color-primary);
+
+    &.is-active {
+      color: var(--vk-color-primary);
     }
-    
-    &.is-checked .vk-switch__action {
-      transform: translateY(-50%) translateX(18px);
+
+    &--left {
+      margin-right: var(--vk-spacing-2);
+    }
+
+    &--right {
+      margin-left: var(--vk-spacing-2);
     }
   }
 
-  &--size-large {
-    font-size: var(--vk-font-size-large);
-    
+  // 选中状态
+  &.is-checked {
     .vk-switch__core {
-      width: 48px;
-      height: 26px;
-      
-      .vk-switch__action {
-        width: 22px;
-        height: 22px;
+      border-color: var(--vk-color-primary);
+      background-color: var(--vk-color-primary);
+
+      .vk-switch__button {
+        transform: translateX(20px);
       }
-    }
-    
-    &.is-checked .vk-switch__action {
-      transform: translateY(-50%) translateX(22px);
     }
   }
 
-  // 状态变体
+  // 禁用状态
   &.is-disabled {
-    cursor: not-allowed;
     opacity: 0.6;
-    
-    .vk-switch__core {
+    cursor: not-allowed;
+
+    .vk-switch__core,
+    .vk-switch__label {
       cursor: not-allowed;
     }
   }
 
-  &.is-checked {
+  // 尺寸变体
+  &--large {
     .vk-switch__core {
-      background-color: var(--vk-switch-on-color, var(--vk-color-primary));
-      border-color: var(--vk-switch-on-color, var(--vk-color-primary));
+      width: 50px;
+      height: 24px;
+      border-radius: var(--vk-border-radius-full);
+
+      .vk-switch__button {
+        width: 20px;
+        height: 20px;
+      }
+    }
+
+    &.is-checked {
+      .vk-switch__core {
+        .vk-switch__button {
+          transform: translateX(26px);
+        }
+      }
+    }
+  }
+
+  &--small {
+    .vk-switch__core {
+      width: 30px;
+      height: 16px;
+      border-radius: var(--vk-border-radius-full);
+
+      .vk-switch__button {
+        width: 12px;
+        height: 12px;
+      }
+    }
+
+    &.is-checked {
+      .vk-switch__core {
+        .vk-switch__button {
+          transform: translateX(14px);
+        }
+      }
     }
   }
 
@@ -87,65 +142,29 @@
     }
   }
 
-  // 标签文字
-  &__label {
-    color: var(--vk-text-color-regular);
-    
-    &--left {
-      margin-right: 8px;
-    }
-    
-    &--right {
-      margin-left: 8px;
-    }
-  }
-
-  // 开关主体
-  &__core {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    width: 40px;
-    height: 22px;
-    border: 1px solid var(--vk-border-color);
-    border-radius: 11px;
-    background-color: var(--vk-switch-off-color, var(--vk-fill-color-darker));
-    transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
-    
-    &:hover {
-      border-color: var(--vk-color-primary);
-    }
-    
-    // 内联提示样式
-    &--inline {
-      justify-content: space-between;
-      padding: 0 4px;
-    }
-  }
-
   // 内联内容
   &__inner {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    color: white;
-    font-size: 12px;
+    color: var(--vk-color-white);
+    font-size: var(--vk-font-size-small);
     z-index: 1;
     display: flex;
     align-items: center;
     justify-content: center;
-    
+
     i {
-      font-size: 12px;
+      font-size: var(--vk-font-size-small);
       line-height: 1;
     }
-    
+
     .vk-switch.is-checked & {
-      left: 4px;
+      left: var(--vk-spacing-1);
     }
-    
+
     .vk-switch:not(.is-checked) & {
-      right: 4px;
+      right: var(--vk-spacing-1);
     }
   }
 
@@ -156,10 +175,10 @@
     left: 2px;
     width: 18px;
     height: 18px;
-    border-radius: 50%;
-    background-color: white;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
-    transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+    border-radius: var(--vk-border-radius-full);
+    background-color: var(--vk-color-white);
+    box-shadow: var(--vk-box-shadow-light);
+    transition: all var(--vk-transition-duration-base) var(--vk-transition-timing-function);
     transform: translateY(-50%);
     z-index: 2;
   }
@@ -171,11 +190,11 @@
     left: 50%;
     transform: translate(-50%, -50%);
     display: none;
-    color: white;
+    color: var(--vk-color-white);
     z-index: 3;
-    
+
     .vk-icon-loading {
-      animation: vk-loading-rotate 2s linear infinite;
+      animation: vk-loading-rotate var(--vk-transition-duration-slow) linear infinite;
     }
   }
 }
@@ -198,26 +217,26 @@
     font-weight: normal;
     line-height: 1;
     text-align: center;
-    
+
     &.vk-icon-check::before {
-      content: '✓';
+      content: "✓";
     }
-    
+
     &.vk-icon-close::before {
-      content: '✕';
+      content: "✕";
     }
-    
+
     &.vk-icon-sun::before {
-      content: '☀️';
+      content: "☀️";
     }
-    
+
     &.vk-icon-moon::before {
-      content: '🌙';
+      content: "🌙";
     }
-    
+
     &.vk-icon-loading::before {
-      content: '⟳';
-      animation: vk-loading-rotate 2s linear infinite;
+      content: "⟳";
+      animation: vk-loading-rotate var(--vk-transition-duration-slow) linear infinite;
     }
   }
 }

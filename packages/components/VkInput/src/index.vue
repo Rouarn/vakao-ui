@@ -1,7 +1,7 @@
 <template>
   <div :class="mergedClass" :style="mergedStyle">
     <!-- 前缀插槽 -->
-    <div v-if="$slots.prefix || prefixIcon" class="vk-input__prefix">
+    <div v-if="$slots.prefix || prefixIcon" :class="ns.element('prefix')">
       <slot name="prefix">
         <VkIcon
           v-if="prefixIcon"
@@ -13,7 +13,7 @@
     </div>
 
     <!-- 输入框容器 -->
-    <div class="vk-input__wrapper">
+    <div :class="ns.element('wrapper')">
       <input
         ref="inputRef"
         v-bind="filteredAttrs"
@@ -34,14 +34,14 @@
     </div>
 
     <!-- 后缀插槽 -->
-    <div v-if="showSuffix" class="vk-input__suffix">
+    <div v-if="showSuffix" :class="ns.element('suffix')">
       <!-- 清除按钮 -->
-      <VkIcon v-if="showClear" size="16px" class="vk-input__clear" @click="handleClear">
+      <VkIcon v-if="showClear" size="16px" :class="ns.element('clear')" @click="handleClear">
         <Icon icon="mdi:close-circle" />
       </VkIcon>
 
       <!-- 密码切换按钮 -->
-      <VkIcon v-if="showPassword" size="16px" class="vk-input__password-toggle" @click="togglePasswordVisible">
+      <VkIcon v-if="showPassword" size="16px" :class="ns.element('password-toggle')" @click="togglePasswordVisible">
         <Icon :icon="showPasswordVisible ? 'mdi:eye-off' : 'mdi:eye'" />
       </VkIcon>
 
