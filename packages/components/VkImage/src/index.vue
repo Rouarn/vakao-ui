@@ -322,6 +322,8 @@ const wrapperStyle = computed(() => {
 
   if (props.round) {
     style.borderRadius = "50%";
+  } else if (props.radius) {
+    style.borderRadius = typeof props.radius === "number" ? `${props.radius}px` : props.radius;
   }
 
   return style;

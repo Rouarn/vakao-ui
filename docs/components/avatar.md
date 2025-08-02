@@ -185,6 +185,80 @@ const handleClick = () => {
   </template>
 </Demo>
 
+## 预览功能
+
+启用 `preview` 属性可以点击头像预览大图。
+
+<Demo>
+  <div style="display: flex; gap: 16px; align-items: center;">
+    <vk-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" preview />
+    <vk-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" preview shape="square" />
+  </div>
+  
+  <template #code>
+
+```vue
+<template>
+  <div style="display: flex; gap: 16px; align-items: center;">
+    <vk-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" preview />
+    <vk-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" preview shape="square" />
+  </div>
+</template>
+```
+
+  </template>
+</Demo>
+
+## 懒加载
+
+启用 `lazy` 属性可以实现图片懒加载。
+
+<Demo>
+  <div style="display: flex; gap: 16px; align-items: center;">
+    <vk-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" lazy />
+    <vk-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" lazy placeholder="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBmaWxsPSIjRjVGNUY1Ii8+CjxwYXRoIGQ9Ik0yMCAyNUMxNy4yNSAyNSAxNSAyMi43NSAxNSAyMEMxNSAxNy4yNSAxNy4yNSAxNSAyMCAxNUMyMi43NSAxNSAyNSAxNy4yNSAyNSAyMEMyNSAyMi43NSAyMi43NSAyNSAyMCAyNVoiIGZpbGw9IiNDQ0NDQ0MiLz4KPC9zdmc+" />
+  </div>
+  
+  <template #code>
+
+```vue
+<template>
+  <div style="display: flex; gap: 16px; align-items: center;">
+    <vk-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" lazy />
+    <vk-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" lazy placeholder="data:image/svg+xml;base64,..." />
+  </div>
+</template>
+```
+
+  </template>
+</Demo>
+
+## 圆角半径
+
+当形状为方形时，可以设置圆角半径。
+
+<Demo>
+  <div style="display: flex; gap: 16px; align-items: center;">
+    <vk-avatar shape="square" icon="material-symbols:account-circle" />
+    <vk-avatar shape="square" icon="material-symbols:account-circle" radius="8px" />
+    <vk-avatar shape="square" icon="material-symbols:account-circle" :radius="16" />
+  </div>
+  
+  <template #code>
+
+```vue
+<template>
+  <div style="display: flex; gap: 16px; align-items: center;">
+    <vk-avatar shape="square" icon="material-symbols:account-circle" />
+    <vk-avatar shape="square" icon="material-symbols:account-circle" radius="8px" />
+    <vk-avatar shape="square" icon="material-symbols:account-circle" :radius="16" />
+  </div>
+</template>
+```
+
+  </template>
+</Demo>
+
 ## API
 
 ### Avatar Props
@@ -198,12 +272,15 @@ const handleClick = () => {
 | icon            | `string`                                                   | —           | 图标名称                 |
 | fit             | `'fill' \| 'contain' \| 'cover' \| 'none' \| 'scale-down'` | `'cover'`   | 图片适应方式             |
 | lazy            | `boolean`                                                  | `false`     | 是否懒加载图片           |
+| preview         | `boolean`                                                  | `false`     | 是否启用图片预览功能     |
+| placeholder     | `string`                                                   | —           | 图片加载时显示的占位符   |
 | clickable       | `boolean`                                                  | `false`     | 是否可点击               |
 | backgroundColor | `string`                                                   | —           | 背景颜色                 |
 | color           | `string`                                                   | —           | 文字颜色                 |
 | iconColor       | `string`                                                   | —           | 图标颜色                 |
 | iconSize        | `number`                                                   | —           | 图标大小                 |
 | border          | `string`                                                   | —           | 边框样式                 |
+| radius          | `string \| number`                                         | —           | 圆角半径（方形时有效）   |
 | fallback        | `string`                                                   | —           | 图片加载失败时的回退文本 |
 
 ### Avatar Events

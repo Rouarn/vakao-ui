@@ -5,13 +5,22 @@
     @click="handleClick"
   >
     <!-- 图片 -->
-    <img
+    <VkImage
       v-if="src && !isImageLoadError"
       :src="src"
       :alt="alt"
       :class="ns.element('img')"
-      :loading="lazy ? 'lazy' : 'eager'"
+      :lazy="lazy"
+      :fit="fit"
       :style="imgStyle"
+      :width="typeof size === 'number' ? size : undefined"
+      :height="typeof size === 'number' ? size : undefined"
+      :round="shape === 'circle'"
+      :radius="shape === 'square' ? radius : undefined"
+      :preview="preview"
+      :placeholder="placeholder"
+      :fallback="fallback"
+      :loading="true"
       @error="handleError"
       @load="handleLoad"
     />
@@ -81,6 +90,8 @@ import { avatarProps, avatarEmits } from "./types";
 import { useNamespace } from "../../../utils/modules/namespace";
 /** 图标组件 */
 import { VkIcon } from "../../VkIcon";
+/** 图片组件 */
+import { VkImage } from "../../VkImage";
 
 // ==================== 组件配置 ====================
 
@@ -135,6 +146,11 @@ const avatarStyle = computed(() => {
 
   if (props.border) {
     style.border = props.border;
+  }
+
+  // 添加圆角样式
+  if (props.shape === "square" && props.radius) {
+    style.borderRadius = typeof props.radius === "number" ? `${props.radius}px` : props.radius;
   }
 
   return style;

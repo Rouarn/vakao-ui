@@ -151,15 +151,37 @@ export const avatarProps = {
   },
 
   /**
-   * 是否懒加载
+   * 懒加载
    *
-   * 设置图片是否懒加载
+   * 是否启用图片懒加载
    *
    * @default false
    */
   lazy: {
     type: Boolean,
     default: false,
+  },
+
+  /**
+   * 预览功能
+   *
+   * 是否启用图片预览功能
+   *
+   * @default false
+   */
+  preview: {
+    type: Boolean,
+    default: false,
+  },
+
+  /**
+   * 占位符
+   *
+   * 图片加载时显示的占位符
+   */
+  placeholder: {
+    type: String,
+    default: "",
   },
 
   /**
@@ -177,11 +199,21 @@ export const avatarProps = {
   /**
    * 边框
    *
-   * 设置头像的边框样式
+   * 头像的边框样式
    */
   border: {
     type: String,
     default: "",
+  },
+
+  /**
+   * 圆角半径
+   *
+   * 当形状为方形时的圆角半径
+   */
+  radius: {
+    type: [String, Number] as PropType<string | number>,
+    default: undefined,
   },
 } as const;
 
