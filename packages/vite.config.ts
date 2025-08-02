@@ -15,7 +15,7 @@ export default defineConfig({
         "hooks/**/*.ts",
         "types/**/*.ts",
         "index.ts",
-        "resolver.ts",
+        "../resolver.ts",
       ],
       outDir: "../dist/types",
       entryRoot: __dirname,

@@ -92,7 +92,7 @@ export * from "./components";
  * - Webpack 插件按需导入
  * - 自动样式导入
  */
-export * from "./resolver";
+export * from "../resolver";
 
 // ==================== 服务 API 导出 ====================
 
