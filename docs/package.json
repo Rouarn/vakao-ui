@@ -1,6 +1,6 @@
 {
   "name": "@vakao-ui/docs",
-  "version": "0.0.2",
+  "version": "0.0.0",
   "description": "Vakao UI 组件库文档站点",
   "type": "module",
   "scripts": {
