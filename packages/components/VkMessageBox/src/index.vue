@@ -77,7 +77,7 @@ export default defineComponent({
     const inputValue = ref(props.inputValue || "");
     const inputErrorMessage = ref("");
     const hasInputBlurred = ref(false); // 追踪输入框是否已经失焦过
-    const ns = useNamespace("button");
+    const ns = useNamespace("message-box");
 
     // 计算属性
     const messageBoxClass = computed(() => [`vk-message-box--${props.type}`]);
