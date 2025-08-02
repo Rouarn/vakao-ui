@@ -91,7 +91,7 @@
       <vk-button>通知</vk-button>
     </vk-badge>
     <vk-badge is-dot type="success">
-      <vk-icon icon="i-material-symbols:circle-notifications" size="20" />
+      <vk-icon icon="material-symbols:circle-notifications" size="20" />
     </vk-badge>
   </div>
   

@@ -15,9 +15,7 @@
 
 ```vue
 <template>
-  <vk-card title="卡片标题">
-    这是卡片的内容区域，可以放置任何内容。
-  </vk-card>
+  <vk-card title="卡片标题"> 这是卡片的内容区域，可以放置任何内容。 </vk-card>
 </template>
 ```
 
@@ -37,9 +35,7 @@
 
 ```vue
 <template>
-  <vk-card title="主标题" subtitle="这是副标题">
-    卡片内容区域，支持标题和副标题的组合显示。
-  </vk-card>
+  <vk-card title="主标题" subtitle="这是副标题"> 卡片内容区域，支持标题和副标题的组合显示。 </vk-card>
 </template>
 ```
 
@@ -68,15 +64,9 @@
 ```vue
 <template>
   <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
-    <vk-card title="始终显示" shadow="always">
-      始终显示阴影效果
-    </vk-card>
-    <vk-card title="悬停显示" shadow="hover">
-      悬停时显示阴影效果
-    </vk-card>
-    <vk-card title="从不显示" shadow="never">
-      从不显示阴影效果
-    </vk-card>
+    <vk-card title="始终显示" shadow="always"> 始终显示阴影效果 </vk-card>
+    <vk-card title="悬停显示" shadow="hover"> 悬停时显示阴影效果 </vk-card>
+    <vk-card title="从不显示" shadow="never"> 从不显示阴影效果 </vk-card>
   </div>
 </template>
 ```
@@ -103,12 +93,8 @@
 ```vue
 <template>
   <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
-    <vk-card title="有边框" :bordered="true">
-      显示边框的卡片
-    </vk-card>
-    <vk-card title="无边框" :bordered="false">
-      不显示边框的卡片
-    </vk-card>
+    <vk-card title="有边框" :bordered="true"> 显示边框的卡片 </vk-card>
+    <vk-card title="无边框" :bordered="false"> 不显示边框的卡片 </vk-card>
   </div>
 </template>
 ```
@@ -138,15 +124,9 @@
 ```vue
 <template>
   <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
-    <vk-card title="默认圆角">
-      默认圆角大小
-    </vk-card>
-    <vk-card title="大圆角" radius="12px">
-      自定义大圆角
-    </vk-card>
-    <vk-card title="无圆角" radius="0">
-      无圆角效果
-    </vk-card>
+    <vk-card title="默认圆角"> 默认圆角大小 </vk-card>
+    <vk-card title="大圆角" radius="12px"> 自定义大圆角 </vk-card>
+    <vk-card title="无圆角" radius="0"> 无圆角效果 </vk-card>
   </div>
 </template>
 ```
@@ -214,7 +194,7 @@
     <p>用户名：张三</p>
     <p>邮箱：zhangsan@example.com</p>
     <p>角色：管理员</p>
-    
+
     <template #footer>
       <div style="display: flex; gap: 8px; justify-content: flex-end;">
         <vk-button size="small">编辑</vk-button>
@@ -247,12 +227,8 @@
 ```vue
 <template>
   <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
-    <vk-card title="有填充" :body-padding="true">
-      内容区域有内边距
-    </vk-card>
-    <vk-card title="无填充" :body-padding="false">
-      内容区域无内边距
-    </vk-card>
+    <vk-card title="有填充" :body-padding="true"> 内容区域有内边距 </vk-card>
+    <vk-card title="无填充" :body-padding="false"> 内容区域无内边距 </vk-card>
   </div>
 </template>
 ```
@@ -273,14 +249,12 @@
 
 ```vue
 <template>
-  <vk-card title="可点击卡片" @click="handleCardClick">
-    点击这个卡片试试看！
-  </vk-card>
+  <vk-card title="可点击卡片" @click="handleCardClick"> 点击这个卡片试试看！ </vk-card>
 </template>
 
 <script setup>
 const handleCardClick = () => {
-  console.log('卡片被点击了！');
+  console.log("卡片被点击了！");
 };
 </script>
 ```
@@ -292,14 +266,14 @@ const handleCardClick = () => {
 
 ### Card Props
 
-| 名称        | 类型                                    | 默认值    | 说明                                           |
-| ----------- | --------------------------------------- | --------- | ---------------------------------------------- |
-| title       | `string`                                | —         | 卡片标题                                       |
-| subtitle    | `string`                                | —         | 卡片副标题                                     |
-| shadow      | `'always' \| 'hover' \| 'never'`        | `'always'`| 阴影显示时机                                   |
-| bordered    | `boolean`                               | `true`    | 是否显示边框                                   |
-| radius      | `string`                                | —         | 自定义圆角大小                                 |
-| bodyPadding | `boolean`                               | `true`    | 内容区域是否有内边距                           |
+| 名称        | 类型                             | 默认值     | 说明                 |
+| ----------- | -------------------------------- | ---------- | -------------------- |
+| title       | `string`                         | —          | 卡片标题             |
+| subtitle    | `string`                         | —          | 卡片副标题           |
+| shadow      | `'always' \| 'hover' \| 'never'` | `'always'` | 阴影显示时机         |
+| bordered    | `boolean`                        | `true`     | 是否显示边框         |
+| radius      | `string`                         | —          | 自定义圆角大小       |
+| bodyPadding | `boolean`                        | `true`     | 内容区域是否有内边距 |
 
 ### Card Events
 

@@ -15,7 +15,7 @@
   >
     <!-- 图片 -->
     <img
-      v-if="src"
+      v-if="src && !isImageLoadError"
       :src="src"
       :alt="alt"
       :class="ns.element('img')"
@@ -34,7 +34,7 @@
     </span>
 
     <!-- 默认插槽 -->
-    <slot></slot>
+    <slot v-else></slot>
   </div>
 </template>
 
@@ -199,22 +199,22 @@ const hasContent = computed(() => {
  * 确定要显示的文本内容
  */
 const displayText = computed(() => {
-  // 如果图片加载失败且有回退内容，则显示回退内容的第一个字符
+  // 如果图片加载失败且有回退内容，则显示回退内容
   if (isImageLoadError.value && props.fallback) {
-    return props.fallback.charAt(0);
+    return props.fallback;
   }
 
-  // 如果有默认插槽，获取插槽内容的第一个字符
+  // 如果有默认插槽，获取插槽内容
   if (slots.default) {
     const slotContent = slots.default()[0]?.children;
     if (typeof slotContent === "string") {
-      return slotContent.charAt(0);
+      return slotContent;
     }
   }
 
-  // 如果有替代文本，显示第一个字符
+  // 如果有替代文本，显示替代文本
   if (props.alt) {
-    return props.alt.charAt(0);
+    return props.alt;
   }
 
   return "";

@@ -1,11 +1,12 @@
 import type { ExtractPropTypes, PropType } from "vue";
+import type { ComponentSize } from "../../../types";
 
 /**
  * 头像尺寸
  *
  * @description 定义头像的尺寸大小
  */
-export type AvatarSize = "large" | "default" | "small";
+export type AvatarSize = ComponentSize;
 
 /**
  * 头像形状
@@ -36,7 +37,7 @@ export const avatarProps = {
    */
   size: {
     type: [String, Number] as PropType<AvatarSize | number>,
-    default: "default",
+    default: "medium",
   },
 
   /**

@@ -152,6 +152,7 @@ export default defineComponent({
      */
     const iconSize = computed(() => {
       const sizeMap = {
+        tiny: "12px",
         small: "14px",
         medium: "16px",
         large: "18px",

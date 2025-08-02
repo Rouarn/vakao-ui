@@ -15,17 +15,122 @@
 :root {
   /* 主题色 */
   --vk-color-primary: #{$color-primary};
-  --vk-color-primary-light-3: #{$color-primary-light-3};
-  --vk-color-primary-light-5: #{$color-primary-light-5};
-  --vk-color-primary-light-7: #{$color-primary-light-7};
-  --vk-color-primary-light-8: #{$color-primary-light-8};
-  --vk-color-primary-light-9: #{$color-primary-light-9};
   --vk-color-success: #{$color-success};
   --vk-color-warning: #{$color-warning};
   --vk-color-danger: #{$color-danger};
   --vk-color-info: #{$color-info};
   --vk-color-white: #{$color-white};
   --vk-color-black: #{$color-black};
+
+  /* 透明度变量 - Primary */
+  --vk-color-primary-light-0: #{$color-primary-light-0};
+  --vk-color-primary-light-1: #{$color-primary-light-1};
+  --vk-color-primary-light-2: #{$color-primary-light-2};
+  --vk-color-primary-light-3: #{$color-primary-light-3};
+  --vk-color-primary-light-4: #{$color-primary-light-4};
+  --vk-color-primary-light-5: #{$color-primary-light-5};
+  --vk-color-primary-light-6: #{$color-primary-light-6};
+  --vk-color-primary-light-7: #{$color-primary-light-7};
+  --vk-color-primary-light-8: #{$color-primary-light-8};
+  --vk-color-primary-light-9: #{$color-primary-light-9};
+  /* 深色变量 - Primary */
+  --vk-color-primary-dark-1: #{$color-primary-dark-1};
+  --vk-color-primary-dark-2: #{$color-primary-dark-2};
+  --vk-color-primary-dark-3: #{$color-primary-dark-3};
+  --vk-color-primary-dark-4: #{$color-primary-dark-4};
+  --vk-color-primary-dark-5: #{$color-primary-dark-5};
+  --vk-color-primary-dark-6: #{$color-primary-dark-6};
+  --vk-color-primary-dark-7: #{$color-primary-dark-7};
+  --vk-color-primary-dark-8: #{$color-primary-dark-8};
+  --vk-color-primary-dark-9: #{$color-primary-dark-9};
+
+  /* 透明度变量 - Success */
+  --vk-color-success-light-0: #{$color-success-light-0};
+  --vk-color-success-light-1: #{$color-success-light-1};
+  --vk-color-success-light-2: #{$color-success-light-2};
+  --vk-color-success-light-3: #{$color-success-light-3};
+  --vk-color-success-light-4: #{$color-success-light-4};
+  --vk-color-success-light-5: #{$color-success-light-5};
+  --vk-color-success-light-6: #{$color-success-light-6};
+  --vk-color-success-light-7: #{$color-success-light-7};
+  --vk-color-success-light-8: #{$color-success-light-8};
+  --vk-color-success-light-9: #{$color-success-light-9};
+  /* 深色变量 - Success */
+  --vk-color-success-dark-1: #{$color-success-dark-1};
+  --vk-color-success-dark-2: #{$color-success-dark-2};
+  --vk-color-success-dark-3: #{$color-success-dark-3};
+  --vk-color-success-dark-4: #{$color-success-dark-4};
+  --vk-color-success-dark-5: #{$color-success-dark-5};
+  --vk-color-success-dark-6: #{$color-success-dark-6};
+  --vk-color-success-dark-7: #{$color-success-dark-7};
+  --vk-color-success-dark-8: #{$color-success-dark-8};
+  --vk-color-success-dark-9: #{$color-success-dark-9};
+
+  /* 透明度变量 - Warning */
+  --vk-color-warning-light-0: #{$color-warning-light-0};
+  --vk-color-warning-light-1: #{$color-warning-light-1};
+  --vk-color-warning-light-2: #{$color-warning-light-2};
+  --vk-color-warning-light-3: #{$color-warning-light-3};
+  --vk-color-warning-light-4: #{$color-warning-light-4};
+  --vk-color-warning-light-5: #{$color-warning-light-5};
+  --vk-color-warning-light-6: #{$color-warning-light-6};
+  --vk-color-warning-light-7: #{$color-warning-light-7};
+  --vk-color-warning-light-8: #{$color-warning-light-8};
+  --vk-color-warning-light-9: #{$color-warning-light-9};
+  /* 深色变量 - Warning */
+  --vk-color-warning-dark-1: #{$color-warning-dark-1};
+  --vk-color-warning-dark-2: #{$color-warning-dark-2};
+  --vk-color-warning-dark-3: #{$color-warning-dark-3};
+  --vk-color-warning-dark-4: #{$color-warning-dark-4};
+  --vk-color-warning-dark-5: #{$color-warning-dark-5};
+  --vk-color-warning-dark-6: #{$color-warning-dark-6};
+  --vk-color-warning-dark-7: #{$color-warning-dark-7};
+  --vk-color-warning-dark-8: #{$color-warning-dark-8};
+  --vk-color-warning-dark-9: #{$color-warning-dark-9};
+
+  /* 透明度变量 - Danger */
+  --vk-color-danger-light-0: #{$color-danger-light-0};
+  --vk-color-danger-light-1: #{$color-danger-light-1};
+  --vk-color-danger-light-2: #{$color-danger-light-2};
+  --vk-color-danger-light-3: #{$color-danger-light-3};
+  --vk-color-danger-light-4: #{$color-danger-light-4};
+  --vk-color-danger-light-5: #{$color-danger-light-5};
+  --vk-color-danger-light-6: #{$color-danger-light-6};
+  --vk-color-danger-light-7: #{$color-danger-light-7};
+  --vk-color-danger-light-8: #{$color-danger-light-8};
+  --vk-color-danger-light-9: #{$color-danger-light-9};
+  /* 深色变量 - Danger */
+  --vk-color-danger-dark-1: #{$color-danger-dark-1};
+  --vk-color-danger-dark-2: #{$color-danger-dark-2};
+  --vk-color-danger-dark-3: #{$color-danger-dark-3};
+  --vk-color-danger-dark-4: #{$color-danger-dark-4};
+  --vk-color-danger-dark-5: #{$color-danger-dark-5};
+  --vk-color-danger-dark-6: #{$color-danger-dark-6};
+  --vk-color-danger-dark-7: #{$color-danger-dark-7};
+  --vk-color-danger-dark-8: #{$color-danger-dark-8};
+  --vk-color-danger-dark-9: #{$color-danger-dark-9};
+
+  /* 透明度变量 - Info */
+  --vk-color-info-light-0: #{$color-info-light-0};
+  --vk-color-info-light-1: #{$color-info-light-1};
+  --vk-color-info-light-2: #{$color-info-light-2};
+  --vk-color-info-light-3: #{$color-info-light-3};
+  --vk-color-info-light-4: #{$color-info-light-4};
+  --vk-color-info-light-5: #{$color-info-light-5};
+  --vk-color-info-light-6: #{$color-info-light-6};
+  --vk-color-info-light-7: #{$color-info-light-7};
+  --vk-color-info-light-8: #{$color-info-light-8};
+  --vk-color-info-light-9: #{$color-info-light-9};
+  /* 深色变量 - Info */
+  --vk-color-info-dark-1: #{$color-info-dark-1};
+  --vk-color-info-dark-2: #{$color-info-dark-2};
+  --vk-color-info-dark-3: #{$color-info-dark-3};
+  --vk-color-info-dark-4: #{$color-info-dark-4};
+  --vk-color-info-dark-5: #{$color-info-dark-5};
+  --vk-color-info-dark-6: #{$color-info-dark-6};
+  --vk-color-info-dark-7: #{$color-info-dark-7};
+  --vk-color-info-dark-8: #{$color-info-dark-8};
+  --vk-color-info-dark-9: #{$color-info-dark-9};
 
   /* 文本颜色 */
   --vk-text-color-primary: #{$text-color-primary};
@@ -36,10 +141,12 @@
 
   /* 边框颜色 */
   --vk-border-color: #{$border-color};
+  --vk-border-color-base: #{$border-color-base};
   --vk-border-color-light: #{$border-color-light};
   --vk-border-color-lighter: #{$border-color-lighter};
   --vk-border-color-disabled: #{$border-color-disabled};
   --vk-border-color-hover: #{$border-color-hover};
+  --vk-border-color-darker: #{$border-color-darker};
 
   /* 背景颜色 */
   --vk-bg-color: #{$bg-color};
@@ -55,7 +162,7 @@
   --vk-fill-color-darker: #{$fill-color-darker};
   --vk-fill-color-blank: #{$fill-color-blank};
 
-  /* 字体 */
+  /* 字体相关 */
   --vk-font-family: #{$font-family};
   --vk-font-size-xs: #{$font-size-xs};
   --vk-font-size-sm: #{$font-size-sm};
@@ -64,24 +171,19 @@
   --vk-font-size-xl: #{$font-size-xl};
   --vk-font-size-2xl: #{$font-size-2xl};
   --vk-font-size-3xl: #{$font-size-3xl};
+  --vk-font-size-extra-large: #{$font-size-extra-large};
+  --vk-font-size-large: #{$font-size-large};
+  --vk-font-size-medium: #{$font-size-medium};
+  --vk-font-size-small: #{$font-size-small};
+  --vk-font-size-extra-small: #{$font-size-extra-small};
 
   /* 行高 */
+  --vk-line-height-base: #{$line-height-base};
+  --vk-line-height-sm: #{$line-height-sm};
   --vk-line-height-tight: #{$line-height-tight};
   --vk-line-height-normal: #{$line-height-normal};
-  --vk-line-height-base: #{$line-height-base};
   --vk-line-height-relaxed: #{$line-height-relaxed};
   --vk-line-height-loose: #{$line-height-loose};
-
-  /* 边框圆角 */
-  --vk-border-radius-none: #{$border-radius-none};
-  --vk-border-radius-sm: #{$border-radius-sm};
-  --vk-border-radius-base: #{$border-radius-base};
-  --vk-border-radius-md: #{$border-radius-md};
-  --vk-border-radius-lg: #{$border-radius-lg};
-  --vk-border-radius-xl: #{$border-radius-xl};
-  --vk-border-radius-2xl: #{$border-radius-2xl};
-  --vk-border-radius-full: #{$border-radius-full};
-  --vk-border-radius-circle: #{$border-radius-circle};
 
   /* 间距 */
   --vk-spacing-0: #{$spacing-0};
@@ -97,6 +199,7 @@
   --vk-spacing-16: #{$spacing-16};
 
   /* 组件尺寸 */
+  --vk-size-xxs: #{$size-xxs};
   --vk-size-xs: #{$size-xs};
   --vk-size-sm: #{$size-sm};
   --vk-size-base: #{$size-base};
@@ -106,25 +209,60 @@
   --vk-size-2xl: #{$size-2xl};
   --vk-size-3xl: #{$size-3xl};
   --vk-size-4xl: #{$size-4xl};
+  --vk-component-size-small: #{$component-size-small};
+  --vk-component-size-base: #{$component-size-base};
+  --vk-component-size-large: #{$component-size-large};
+
+  /* 边框圆角 */
+  --vk-border-radius-none: #{$border-radius-none};
+  --vk-border-radius-sm: #{$border-radius-sm};
+  --vk-border-radius-base: #{$border-radius-base};
+  --vk-border-radius-md: #{$border-radius-md};
+  --vk-border-radius-lg: #{$border-radius-lg};
+  --vk-border-radius-xl: #{$border-radius-xl};
+  --vk-border-radius-2xl: #{$border-radius-2xl};
+  --vk-border-radius-full: #{$border-radius-full};
+  --vk-border-radius-circle: #{$border-radius-circle};
+  --vk-border-radius-small: #{$border-radius-small};
+  --vk-border-radius-large: #{$border-radius-large};
+  --vk-border-radius-round: #{$border-radius-round};
 
   /* 阴影 */
-  --vk-box-shadow-sm: #{$box-shadow-sm};
+  --vk-box-shadow-light: #{$box-shadow-light};
   --vk-box-shadow-base: #{$box-shadow-base};
+  --vk-box-shadow-dark: #{$box-shadow-dark};
+  --vk-box-shadow-sm: #{$box-shadow-sm};
   --vk-box-shadow-md: #{$box-shadow-md};
   --vk-box-shadow-lg: #{$box-shadow-lg};
   --vk-box-shadow-xl: #{$box-shadow-xl};
   --vk-box-shadow-inner: #{$box-shadow-inner};
 
   /* 过渡 */
+  --vk-transition-duration: #{$transition-duration};
   --vk-transition-duration-fast: #{$transition-duration-fast};
   --vk-transition-duration-base: #{$transition-duration-base};
   --vk-transition-duration-slow: #{$transition-duration-slow};
+  --vk-transition-function-ease-in-out-bezier: #{$transition-function-ease-in-out-bezier};
+  --vk-transition-function-ease-in-bezier: #{$transition-function-ease-in-bezier};
+  --vk-transition-function-ease-out-bezier: #{$transition-function-ease-out-bezier};
+  --vk-transition-function-ease-in-out: #{$transition-function-ease-in-out};
+  --vk-transition-function-fast-bezier: #{$transition-function-fast-bezier};
+  --vk-transition-function-linear: #{$transition-function-linear};
   --vk-transition-timing-function: #{$transition-timing-function};
   --vk-transition-timing-function-ease-in: #{$transition-timing-function-ease-in};
   --vk-transition-timing-function-ease-out: #{$transition-timing-function-ease-out};
   --vk-transition-timing-function-ease-in-out: #{$transition-timing-function-ease-in-out};
 
+  /* 断点 */
+  --vk-breakpoint-sm: #{$sm};
+  --vk-breakpoint-md: #{$md};
+  --vk-breakpoint-lg: #{$lg};
+  --vk-breakpoint-xl: #{$xl};
+
   /* Z-index层级 */
+  --vk-z-index-normal: #{$z-index-normal};
+  --vk-z-index-top: #{$z-index-top};
+  --vk-z-index-popper: #{$z-index-popper};
   --vk-z-index-dropdown: #{$z-index-dropdown};
   --vk-z-index-sticky: #{$z-index-sticky};
   --vk-z-index-fixed: #{$z-index-fixed};
@@ -134,12 +272,24 @@
   --vk-z-index-tooltip: #{$z-index-tooltip};
 
   /* 遮罩颜色 */
-  --vk-mask-color: rgba(0, 0, 0, 0.5);
+  --vk-mask-color: #{$mask-color};
 
-
+  /* Tag组件相关颜色 */
+  --vk-tag-default-color: #{$tag-default-color};
+  --vk-tag-default-border: #{$tag-default-border};
+  --vk-tag-primary-border: #{$tag-primary-border};
+  --vk-tag-success-border: #{$tag-success-border};
+  --vk-tag-warning-border: #{$tag-warning-border};
+  --vk-tag-danger-border: #{$tag-danger-border};
+  --vk-tag-info-border: #{$tag-info-border};
 }
 
-/* 全局样式 - 仅在组件库容器内生效 */
+/* 全局样式 */
+html {
+  font-size: var(--vk-font-size-base);
+  line-height: var(--vk-line-height-base);
+}
+
 .vk-app {
   font-family: var(--vk-font-family);
   font-size: var(--vk-font-size-base);
@@ -152,8 +302,7 @@
 /* 通用过渡效果 */
 .vk-fade-enter-active,
 .vk-fade-leave-active {
-  transition: opacity var(--vk-transition-duration)
-    var(--vk-transition-timing-function);
+  transition: opacity var(--vk-transition-duration) var(--vk-transition-timing-function);
 }
 
 .vk-fade-enter-from,

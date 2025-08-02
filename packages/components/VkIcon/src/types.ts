@@ -116,10 +116,12 @@ export interface VkIconProps {
   customStyle?: string | Record<string, CSSStyleValue>;
 }
 
+import type { ComponentSize } from "../../../types";
+
 /**
  * 图标尺寸预设类型
  *
  * 定义了常用的图标尺寸选项，可以配合主题系统使用。
  * 注意：当前组件实现中主要使用 size 属性的具体值，此类型用于未来扩展。
  */
-export type VkIconSize = "small" | "medium" | "large";
+export type VkIconSize = ComponentSize;

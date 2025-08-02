@@ -4,45 +4,85 @@
 // VkInput 组件样式
 .vk-input {
   position: relative;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
   width: 100%;
   font-size: var(--vk-font-size-base);
   line-height: var(--vk-line-height-base);
+  min-height: var(--vk-size-lg);
+  background-color: var(--vk-bg-color);
+  border: 1px solid var(--vk-border-color-base);
+  border-radius: var(--vk-border-radius-base);
+  transition: border-color var(--vk-transition-duration-base) var(--vk-transition-timing-function);
+  box-sizing: border-box;
 
   // 输入框容器
   &__wrapper {
     position: relative;
-    display: inline-flex;
+    display: flex;
     align-items: center;
-    width: 100%;
-    min-height: var(--vk-size-lg);
-    background-color: var(--vk-bg-color);
-    border: 1px solid var(--vk-border-color-base);
-    border-radius: var(--vk-border-radius-base);
-    transition: border-color var(--vk-transition-duration-base) var(--vk-transition-timing-function);
+    flex: 1;
+    min-height: inherit;
+    background: transparent;
+    border: none;
+    border-radius: inherit;
     box-sizing: border-box;
 
-    &:hover {
-      border-color: var(--vk-border-color-hover);
-    }
+    input {
+      width: 100%;
+      border: none;
+      outline: none;
+      background: transparent;
+      color: var(--vk-text-color-regular);
+      font-size: inherit;
+      line-height: inherit;
+      padding: 8px 12px;
 
-    &.is-focus {
+      &::placeholder {
+        color: var(--vk-text-color-placeholder);
+      }
+    }
+  }
+
+  // 悬浮状态
+  &:hover {
+    border-color: var(--vk-color-primary);
+
+    .vk-input__prefix,
+    .vk-input__suffix {
       border-color: var(--vk-color-primary);
-      outline: 0;
-      box-shadow: 0 0 0 2px var(--vk-color-primary-light-8);
+      background-color: var(--vk-fill-color-light);
     }
+  }
 
-    &.is-disabled {
+  &.is-focus {
+    border-color: var(--vk-color-primary);
+    outline: 0;
+    box-shadow: 0 0 0 2px var(--vk-color-primary-light-8);
+
+    .vk-input__prefix,
+    .vk-input__suffix {
+      border-color: var(--vk-color-primary);
+      background-color: var(--vk-fill-color-light);
+    }
+  }
+
+  &.is-disabled {
+    background-color: var(--vk-fill-color-lighter);
+    border-color: var(--vk-border-color-lighter);
+    cursor: not-allowed;
+
+    .vk-input__prefix,
+    .vk-input__suffix {
       background-color: var(--vk-fill-color-lighter);
       border-color: var(--vk-border-color-lighter);
-      cursor: not-allowed;
+      color: var(--vk-text-color-disabled);
     }
   }
 
   // 输入框元素
   &__inner {
     flex: 1;
-    width: 100%;
     padding: var(--vk-spacing-2) var(--vk-spacing-3);
     font-size: inherit;
     line-height: inherit;
@@ -66,70 +106,19 @@
   &--size-small {
     font-size: var(--vk-font-size-sm);
     line-height: var(--vk-line-height-sm);
-
-    .vk-input__wrapper {
-      min-height: var(--vk-size-md);
-      border-radius: var(--vk-border-radius-sm);
-    }
+    min-height: var(--vk-size-md);
+    border-radius: var(--vk-border-radius-sm);
 
     .vk-input__inner {
       padding: var(--vk-spacing-1) var(--vk-spacing-2);
     }
   }
 
-  // 基本图标样式
-  i[class*="vk-icon-"] {
-    display: inline-block;
-    font-style: normal;
-    font-weight: normal;
-    line-height: 1;
-    text-align: center;
-
-    &.vk-icon-search::before {
-      content: "🔍";
-    }
-
-    &.vk-icon-user::before {
-      content: "👤";
-    }
-
-    &.vk-icon-lock::before {
-      content: "🔒";
-    }
-
-    &.vk-icon-mail::before {
-      content: "✉️";
-    }
-
-    &.vk-icon-phone::before {
-      content: "📞";
-    }
-
-    &.vk-icon-calendar::before {
-      content: "📅";
-    }
-
-    &.vk-icon-location::before {
-      content: "📍";
-    }
-
-    &.vk-icon-eye::before {
-      content: "👁️";
-    }
-
-    &.vk-icon-eye-close::before {
-      content: "🙈";
-    }
-  }
-
   &--size-large {
     font-size: var(--vk-font-size-lg);
     line-height: var(--vk-line-height-lg);
-
-    .vk-input__wrapper {
-      min-height: var(--vk-size-xl);
-      border-radius: var(--vk-border-radius-md);
-    }
+    min-height: var(--vk-size-xl);
+    border-radius: var(--vk-border-radius-md);
 
     .vk-input__inner {
       padding: var(--vk-spacing-3) var(--vk-spacing-4);
@@ -142,15 +131,62 @@
     display: flex;
     align-items: center;
     color: var(--vk-text-color-secondary);
-    padding: 0 var(--vk-spacing-2);
+    padding: 0;
+    flex-shrink: 0;
+    background-color: var(--vk-fill-color-lighter);
+    border: 1px solid var(--vk-border-color-lighter);
+    transition: all var(--vk-transition-duration-base) var(--vk-transition-timing-function);
+    align-self: stretch;
+    box-sizing: border-box;
   }
 
   &__prefix {
+    padding-left: var(--vk-spacing-2);
     padding-right: var(--vk-spacing-2);
+    border-right: none;
+    border-top-left-radius: inherit;
+    border-bottom-left-radius: inherit;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
   }
 
   &__suffix {
     padding-left: var(--vk-spacing-2);
+    padding-right: var(--vk-spacing-2);
+    border-left: none;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: inherit;
+    border-bottom-right-radius: inherit;
+  }
+
+  // 当有前缀时，调整输入框的左内边距和边框
+  &.has-prefix {
+    border-left: none;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+
+    .vk-input__inner {
+      padding-left: 0;
+    }
+  }
+
+  // 当有后缀时，调整输入框的右内边距和边框
+  &.has-suffix {
+    border-right: none;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+
+    .vk-input__inner {
+      padding-right: 0;
+    }
+  }
+
+  // 当同时有前缀和后缀时
+  &.has-prefix.has-suffix {
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
   }
 
   // 清除按钮

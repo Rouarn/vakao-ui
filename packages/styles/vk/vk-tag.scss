@@ -23,6 +23,7 @@
   justify-content: center;
   padding: var(--vk-spacing-1) var(--vk-spacing-2);
   font-size: var(--vk-font-size-sm);
+  font-weight: 500;
   line-height: 1;
   border-radius: var(--vk-border-radius-base);
   border: 1px solid transparent;
@@ -30,8 +31,15 @@
   white-space: nowrap;
   transition: all var(--vk-transition-duration-base);
   cursor: default;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 
   /* 尺寸变体 */
+  &--tiny {
+    padding: calc(var(--vk-spacing-1) * 0.5) var(--vk-spacing-1);
+    font-size: calc(var(--vk-font-size-xs) * 0.9);
+    border-radius: var(--vk-border-radius-sm);
+  }
+
   &--small {
     padding: var(--vk-spacing-1) var(--vk-spacing-2);
     font-size: var(--vk-font-size-xs);
@@ -50,7 +58,7 @@
     border-radius: var(--vk-border-radius-md);
   }
 
-  /* 类型变体 - 浅色效果（默认） */
+  /* 效果变体 - 浅色效果（默认） */
   &--light {
     /* 默认类型 */
     background-color: var(--vk-fill-color-light);
@@ -65,72 +73,74 @@
     border-color: var(--vk-border-color-light);
   }
 
+  /* 类型变体 - 浅色效果下的颜色 */
+
   &--primary {
-    background-color: var(--vk-color-primary-light-9);
-    color: var(--vk-color-primary);
-    border-color: var(--vk-color-primary-light-7);
+    background-color: var(--vk-color-primary-light-8);
+    color: var(--vk-color-primary-dark-2);
+    border-color: var(--vk-color-primary-light-6);
   }
 
   &--success {
-    background-color: var(--vk-color-success-light-9);
-    color: var(--vk-color-success);
-    border-color: var(--vk-color-success-light-7);
+    background-color: var(--vk-color-success-light-8);
+    color: var(--vk-color-success-dark-2);
+    border-color: var(--vk-color-success-light-6);
   }
 
   &--warning {
-    background-color: var(--vk-color-warning-light-9);
-    color: var(--vk-color-warning);
-    border-color: var(--vk-color-warning-light-7);
+    background-color: var(--vk-color-warning-light-8);
+    color: var(--vk-color-warning-dark-2);
+    border-color: var(--vk-color-warning-light-6);
   }
 
   &--danger {
-    background-color: var(--vk-color-danger-light-9);
-    color: var(--vk-color-danger);
-    border-color: var(--vk-color-danger-light-7);
+    background-color: var(--vk-color-danger-light-8);
+    color: var(--vk-color-danger-dark-2);
+    border-color: var(--vk-color-danger-light-6);
   }
 
   &--info {
-    background-color: var(--vk-color-info-light-9);
-    color: var(--vk-color-info);
-    border-color: var(--vk-color-info-light-7);
+    background-color: var(--vk-color-info-light-8);
+    color: var(--vk-color-info-dark-2);
+    border-color: var(--vk-color-info-light-6);
   }
 
   /* 效果变体 - 深色效果 */
   &--dark {
-    &.vk-tag--default {
-      background-color: var(--vk-tag-default-color, #909399);
-      color: var(--vk-color-white, #ffffff);
-      border-color: var(--vk-tag-default-color, #909399);
-    }
+    /* 默认深色样式 */
+    background-color: #606266;
+    color: var(--vk-color-white);
+    border-color: #606266;
 
+    /* 深色主题下的类型变体 */
     &.vk-tag--primary {
-      background-color: var(--vk-color-primary, #409eff);
-      color: var(--vk-color-white, #ffffff);
-      border-color: var(--vk-color-primary, #409eff);
+      background-color: var(--vk-color-primary) !important;
+      color: var(--vk-color-white) !important;
+      border-color: var(--vk-color-primary) !important;
     }
 
     &.vk-tag--success {
-      background-color: var(--vk-color-success, #67c23a);
-      color: var(--vk-color-white, #ffffff);
-      border-color: var(--vk-color-success, #67c23a);
+      background-color: var(--vk-color-success) !important;
+      color: var(--vk-color-white) !important;
+      border-color: var(--vk-color-success) !important;
     }
 
     &.vk-tag--warning {
-      background-color: var(--vk-color-warning, #e6a23c);
-      color: var(--vk-color-white, #ffffff);
-      border-color: var(--vk-color-warning, #e6a23c);
+      background-color: var(--vk-color-warning) !important;
+      color: var(--vk-color-white) !important;
+      border-color: var(--vk-color-warning) !important;
     }
 
     &.vk-tag--danger {
-      background-color: var(--vk-color-danger, #f56c6c);
-      color: var(--vk-color-white, #ffffff);
-      border-color: var(--vk-color-danger, #f56c6c);
+      background-color: var(--vk-color-danger) !important;
+      color: var(--vk-color-white) !important;
+      border-color: var(--vk-color-danger) !important;
     }
 
     &.vk-tag--info {
-      background-color: var(--vk-color-info, #909399);
-      color: var(--vk-color-white, #ffffff);
-      border-color: var(--vk-color-info, #909399);
+      background-color: var(--vk-color-info) !important;
+      color: var(--vk-color-white) !important;
+      border-color: var(--vk-color-info) !important;
     }
   }
 
@@ -191,17 +201,29 @@
     }
   }
 
+  /* 内容包装样式 */
+  &__content {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--vk-spacing-1);
+  }
+
   /* 关闭按钮样式 */
   &__close {
     margin-left: var(--vk-spacing-1);
     cursor: pointer;
     font-size: var(--vk-font-size-xs);
     transition: color var(--vk-transition-duration-base);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
 
     &:hover {
-      color: var(--vk-color-white);
-      background-color: currentColor;
-      border-radius: 50%;
+      color: var(--vk-color-black) !important;
+      background-color: rgba(0, 0, 0, 0.1);
     }
   }
 }

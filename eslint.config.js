@@ -27,7 +27,7 @@ export default [
       // 依赖目录
       "node_modules/**/*",
       "**/node_modules/**/*",
-      
+
       // 构建输出目录
       "dist/**/*",
       "build/**/*",
@@ -37,53 +37,53 @@ export default [
       "**/build/**/*",
       "**/lib/**/*",
       "**/es/**/*",
-      
+
       // 缓存目录
       ".cache/**/*",
       ".temp/**/*",
       ".tmp/**/*",
       ".eslintcache",
-      
+
       // VitePress 相关
       ".vitepress/cache/**/*",
       ".vitepress/dist/**/*",
-      
+
       // 日志文件
       "**/*.log",
       "**/npm-debug.log*",
       "**/yarn-debug.log*",
       "**/yarn-error.log*",
       "**/pnpm-debug.log*",
-      
+
       // 环境配置文件
       ".env",
       ".env.local",
       ".env.development.local",
       ".env.test.local",
       ".env.production.local",
-      
+
       // IDE 配置文件
       ".vscode/**/*",
       ".idea/**/*",
       "**/*.swp",
       "**/*.swo",
       "**/*~",
-      
+
       // 系统文件
       "**/.DS_Store",
       "**/Thumbs.db",
-      
+
       // 包管理器文件
       "package-lock.json",
       "yarn.lock",
       "pnpm-lock.yaml",
-      
+
       // 文档和说明文件
       "**/*.md",
       "CHANGELOG.md",
       "README.md",
       "LICENSE",
-      
+
       // 配置文件
       "**/*.config.js",
       "**/*.config.ts",
@@ -92,25 +92,25 @@ export default [
       "**/webpack.config.*",
       "**/jest.config.*",
       "**/vitest.config.*",
-      
+
       // JSON 文件
       "**/*.json",
       "**/*.jsonc",
       "tsconfig.json",
       "package.json",
-      
+
       // 类型声明文件
       "**/*.d.ts",
       "!src/**/*.d.ts",
-      
+
       // 测试覆盖率报告
       "coverage/**/*",
       ".nyc_output/**/*",
-      
+
       // 特定项目文件
       ".trae/**/*",
       "DEPLOY.md",
-      
+
       // 脚本目录
       "scripts/**/*",
     ],

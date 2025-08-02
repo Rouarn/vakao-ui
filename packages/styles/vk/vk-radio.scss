@@ -56,8 +56,8 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: var(--vk-size-sm);
-    height: var(--vk-size-sm);
+    width: var(--vk-size-xxs);
+    height: var(--vk-size-xxs);
     border: 1px solid var(--vk-border-color);
     border-radius: 50%;
     background-color: var(--vk-fill-color-blank);
@@ -98,8 +98,8 @@
     font-size: var(--vk-font-size-sm);
 
     .vk-radio__inner {
-      width: var(--vk-size-xs) !important;
-      height: var(--vk-size-xs) !important;
+      width: var(--vk-size-xxs) !important;
+      height: var(--vk-size-xxs) !important;
     }
 
     .vk-radio__dot {
@@ -110,8 +110,8 @@
 
   &.vk-radio--size-medium {
     .vk-radio__inner {
-      width: var(--vk-size-sm) !important;
-      height: var(--vk-size-sm) !important;
+      width: var(--vk-size-xxs) !important;
+      height: var(--vk-size-xxs) !important;
     }
 
     .vk-radio__dot {
@@ -149,8 +149,8 @@
       font-size: var(--vk-font-size-sm);
 
       .vk-radio__inner {
-        width: var(--vk-size-xs) !important;
-        height: var(--vk-size-xs) !important;
+        width: var(--vk-size-xxs) !important;
+        height: var(--vk-size-xxs) !important;
       }
 
       .vk-radio__dot {
@@ -165,8 +165,8 @@
 
     .vk-radio {
       .vk-radio__inner {
-        width: var(--vk-size-sm) !important;
-        height: var(--vk-size-sm) !important;
+        width: var(--vk-size-xxs) !important;
+        height: var(--vk-size-xxs) !important;
       }
 
       .vk-radio__dot {

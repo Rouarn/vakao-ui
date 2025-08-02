@@ -444,9 +444,4 @@ const CONFIG = {
   buildRoot: undefined, // 将在运行时设置
 };
 
-export {
-  PROJECT_CONFIG,
-  PACKAGES,
-  PACKAGE_DEPENDENCIES,
-  CONFIG,
-};
+export { PROJECT_CONFIG, PACKAGES, PACKAGE_DEPENDENCIES, CONFIG };

@@ -80,7 +80,7 @@ export default defineComponent({
     const ns = useNamespace("message-box");
 
     // 计算属性
-    const messageBoxClass = computed(() => [`vk-message-box--${props.type}`]);
+    const messageBoxClass = computed(() => [ns.modifier(props.type)]);
 
     const iconName = computed(() => {
       const iconMap = {
@@ -102,7 +102,7 @@ export default defineComponent({
       return colorMap[props.type];
     });
 
-    const iconClass = computed(() => ["vk-message-box__icon", `vk-message-box__icon--${props.type}`]);
+    const iconClass = computed(() => [ns.element("icon"), `${ns.element("icon")}--${props.type}`]);
 
     const confirmButtonType = computed((): ComponentType => {
       const typeMap: Record<string, ComponentType> = {
@@ -114,9 +114,9 @@ export default defineComponent({
       return typeMap[props.type] || "primary";
     });
 
-    const confirmButtonClass = computed(() => ["vk-message-box__confirm"]);
+    const confirmButtonClass = computed(() => []);
 
-    const cancelButtonClass = computed(() => ["vk-message-box__cancel"]);
+    const cancelButtonClass = computed(() => []);
 
     // 输入验证方法
     const validateInput = (showError = true) => {

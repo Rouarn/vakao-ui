@@ -45,7 +45,7 @@ VkSelect 组件支持两种使用模式：非受控模式（使用 v-model）和
 使用 `v-model` 进行双向数据绑定，组件内部管理状态。
 
 <Demo>
-  <div>
+  <div style="width: 100%;">
     <vk-select v-model="uncontrolledValue" placeholder="非受控模式">
       <vk-option label="选项一" value="option1" />
       <vk-option label="选项二" value="option2" />

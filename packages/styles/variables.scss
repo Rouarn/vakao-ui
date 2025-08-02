@@ -1,40 +1,150 @@
-/* 全局设计规范变量 */
+// 自动生成的颜色变量文件
+// 请勿手动修改，运行 pnpm run generate:colors 重新生成
 
-/* 主题色 */
+@use 'sass:color';
+@use 'sass:map';
+
+// 基础颜色
+$color-white: #ffffff;
+$color-black: #000000;
+
+// 主题色
 $color-primary: #18a058;
-$color-primary-light-3: rgba(24, 160, 88, 0.7);
-$color-primary-light-5: rgba(24, 160, 88, 0.5);
-$color-primary-light-7: rgba(24, 160, 88, 0.3);
-$color-primary-light-8: rgba(24, 160, 88, 0.2);
-$color-primary-light-9: rgba(24, 160, 88, 0.1);
 $color-success: #18a058;
 $color-warning: #f0a020;
 $color-danger: #d03050;
 $color-info: #2080f0;
-$color-white: #ffffff;
-$color-black: #000000;
 
-/* 文本颜色 */
+// 透明度变量
+$color-primary-light-0: color.change(#18a058, $alpha: 0);
+$color-primary-light-1: color.change(#18a058, $alpha: 0.1);
+$color-primary-light-2: color.change(#18a058, $alpha: 0.2);
+$color-primary-light-3: color.change(#18a058, $alpha: 0.3);
+$color-primary-light-4: color.change(#18a058, $alpha: 0.4);
+$color-primary-light-5: color.change(#18a058, $alpha: 0.5);
+$color-primary-light-6: color.change(#18a058, $alpha: 0.6);
+$color-primary-light-7: color.change(#18a058, $alpha: 0.7);
+$color-primary-light-8: color.change(#18a058, $alpha: 0.8);
+$color-primary-light-9: color.change(#18a058, $alpha: 0.9);
+
+$color-success-light-0: color.change(#18a058, $alpha: 0);
+$color-success-light-1: color.change(#18a058, $alpha: 0.1);
+$color-success-light-2: color.change(#18a058, $alpha: 0.2);
+$color-success-light-3: color.change(#18a058, $alpha: 0.3);
+$color-success-light-4: color.change(#18a058, $alpha: 0.4);
+$color-success-light-5: color.change(#18a058, $alpha: 0.5);
+$color-success-light-6: color.change(#18a058, $alpha: 0.6);
+$color-success-light-7: color.change(#18a058, $alpha: 0.7);
+$color-success-light-8: color.change(#18a058, $alpha: 0.8);
+$color-success-light-9: color.change(#18a058, $alpha: 0.9);
+
+$color-warning-light-0: color.change(#f0a020, $alpha: 0);
+$color-warning-light-1: color.change(#f0a020, $alpha: 0.1);
+$color-warning-light-2: color.change(#f0a020, $alpha: 0.2);
+$color-warning-light-3: color.change(#f0a020, $alpha: 0.3);
+$color-warning-light-4: color.change(#f0a020, $alpha: 0.4);
+$color-warning-light-5: color.change(#f0a020, $alpha: 0.5);
+$color-warning-light-6: color.change(#f0a020, $alpha: 0.6);
+$color-warning-light-7: color.change(#f0a020, $alpha: 0.7);
+$color-warning-light-8: color.change(#f0a020, $alpha: 0.8);
+$color-warning-light-9: color.change(#f0a020, $alpha: 0.9);
+
+$color-danger-light-0: color.change(#d03050, $alpha: 0);
+$color-danger-light-1: color.change(#d03050, $alpha: 0.1);
+$color-danger-light-2: color.change(#d03050, $alpha: 0.2);
+$color-danger-light-3: color.change(#d03050, $alpha: 0.3);
+$color-danger-light-4: color.change(#d03050, $alpha: 0.4);
+$color-danger-light-5: color.change(#d03050, $alpha: 0.5);
+$color-danger-light-6: color.change(#d03050, $alpha: 0.6);
+$color-danger-light-7: color.change(#d03050, $alpha: 0.7);
+$color-danger-light-8: color.change(#d03050, $alpha: 0.8);
+$color-danger-light-9: color.change(#d03050, $alpha: 0.9);
+
+$color-info-light-0: color.change(#2080f0, $alpha: 0);
+$color-info-light-1: color.change(#2080f0, $alpha: 0.1);
+$color-info-light-2: color.change(#2080f0, $alpha: 0.2);
+$color-info-light-3: color.change(#2080f0, $alpha: 0.3);
+$color-info-light-4: color.change(#2080f0, $alpha: 0.4);
+$color-info-light-5: color.change(#2080f0, $alpha: 0.5);
+$color-info-light-6: color.change(#2080f0, $alpha: 0.6);
+$color-info-light-7: color.change(#2080f0, $alpha: 0.7);
+$color-info-light-8: color.change(#2080f0, $alpha: 0.8);
+$color-info-light-9: color.change(#2080f0, $alpha: 0.9);
+
+// 深色变量
+$color-primary-dark-1: color.adjust(#18a058, $lightness: -10%);
+$color-primary-dark-2: color.adjust(#18a058, $lightness: -20%);
+$color-primary-dark-3: color.adjust(#18a058, $lightness: -30%);
+$color-primary-dark-4: color.adjust(#18a058, $lightness: -40%);
+$color-primary-dark-5: color.adjust(#18a058, $lightness: -50%);
+$color-primary-dark-6: color.adjust(#18a058, $lightness: -60%);
+$color-primary-dark-7: color.adjust(#18a058, $lightness: -70%);
+$color-primary-dark-8: color.adjust(#18a058, $lightness: -80%);
+$color-primary-dark-9: color.adjust(#18a058, $lightness: -90%);
+
+$color-success-dark-1: color.adjust(#18a058, $lightness: -10%);
+$color-success-dark-2: color.adjust(#18a058, $lightness: -20%);
+$color-success-dark-3: color.adjust(#18a058, $lightness: -30%);
+$color-success-dark-4: color.adjust(#18a058, $lightness: -40%);
+$color-success-dark-5: color.adjust(#18a058, $lightness: -50%);
+$color-success-dark-6: color.adjust(#18a058, $lightness: -60%);
+$color-success-dark-7: color.adjust(#18a058, $lightness: -70%);
+$color-success-dark-8: color.adjust(#18a058, $lightness: -80%);
+$color-success-dark-9: color.adjust(#18a058, $lightness: -90%);
+
+$color-warning-dark-1: color.adjust(#f0a020, $lightness: -10%);
+$color-warning-dark-2: color.adjust(#f0a020, $lightness: -20%);
+$color-warning-dark-3: color.adjust(#f0a020, $lightness: -30%);
+$color-warning-dark-4: color.adjust(#f0a020, $lightness: -40%);
+$color-warning-dark-5: color.adjust(#f0a020, $lightness: -50%);
+$color-warning-dark-6: color.adjust(#f0a020, $lightness: -60%);
+$color-warning-dark-7: color.adjust(#f0a020, $lightness: -70%);
+$color-warning-dark-8: color.adjust(#f0a020, $lightness: -80%);
+$color-warning-dark-9: color.adjust(#f0a020, $lightness: -90%);
+
+$color-danger-dark-1: color.adjust(#d03050, $lightness: -10%);
+$color-danger-dark-2: color.adjust(#d03050, $lightness: -20%);
+$color-danger-dark-3: color.adjust(#d03050, $lightness: -30%);
+$color-danger-dark-4: color.adjust(#d03050, $lightness: -40%);
+$color-danger-dark-5: color.adjust(#d03050, $lightness: -50%);
+$color-danger-dark-6: color.adjust(#d03050, $lightness: -60%);
+$color-danger-dark-7: color.adjust(#d03050, $lightness: -70%);
+$color-danger-dark-8: color.adjust(#d03050, $lightness: -80%);
+$color-danger-dark-9: color.adjust(#d03050, $lightness: -90%);
+
+$color-info-dark-1: color.adjust(#2080f0, $lightness: -10%);
+$color-info-dark-2: color.adjust(#2080f0, $lightness: -20%);
+$color-info-dark-3: color.adjust(#2080f0, $lightness: -30%);
+$color-info-dark-4: color.adjust(#2080f0, $lightness: -40%);
+$color-info-dark-5: color.adjust(#2080f0, $lightness: -50%);
+$color-info-dark-6: color.adjust(#2080f0, $lightness: -60%);
+$color-info-dark-7: color.adjust(#2080f0, $lightness: -70%);
+$color-info-dark-8: color.adjust(#2080f0, $lightness: -80%);
+$color-info-dark-9: color.adjust(#2080f0, $lightness: -90%);
+
+// 文本颜色
 $text-color-primary: #000000d9;
 $text-color-regular: #000000e0;
 $text-color-secondary: #00000099;
 $text-color-placeholder: #00000059;
 $text-color-disabled: #00000040;
 
-/* 边框颜色 */
+// 边框颜色
 $border-color: #d9d9d9;
+$border-color-base: #dcdfe6;
 $border-color-light: #e5e5e5;
 $border-color-lighter: #ebeef5;
 $border-color-disabled: #e4e7ed;
 $border-color-hover: #c0c4cc;
+$border-color-darker: #a8abb2;
 
-/* 背景颜色 */
+// 背景颜色
 $bg-color: #ffffff;
 $bg-color-page: #f5f5f5;
 $bg-color-disabled: #f5f7fa;
 $bg-color-overlay: rgba(0, 0, 0, 0.05);
 
-/* 填充颜色 */
+// 填充颜色
 $fill-color-light: #f5f5f5;
 $fill-color-lighter: #fafafa;
 $fill-color-extra-light: #fafcff;
@@ -42,38 +152,32 @@ $fill-color-dark: #ebeef5;
 $fill-color-darker: #e4e7ed;
 $fill-color-blank: #ffffff;
 
-/* 字体 */
-$font-family:
-  -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
-  Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
-  "Segoe UI Symbol", "Noto Color Emoji";
-$font-size-xs: 10px;
-$font-size-sm: 12px;
+// 字体相关
+$font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+$font-size-xs: 12px;
+$font-size-sm: 13px;
 $font-size-base: 14px;
 $font-size-lg: 16px;
 $font-size-xl: 18px;
 $font-size-2xl: 20px;
 $font-size-3xl: 24px;
+$font-size-extra-large: 20px;
+$font-size-large: 18px;
+$font-size-medium: 16px;
+$font-size-small: 12px;
+$font-size-extra-small: 12px;
 
-/* 行高 */
-$line-height-tight: 1.25;
-$line-height-normal: 1.4;
+// 行高
 $line-height-base: 1.5;
-$line-height-relaxed: 1.6;
-$line-height-loose: 1.8;
+$line-height-sm: 1.25;
+$line-height-tight: 1.25;
+$line-height-normal: 1.5;
+$line-height-relaxed: 1.75;
+$line-height-loose: 2;
+$line-height-small: 1.4;
+$line-height-large: 1.6;
 
-/* 边框圆角 */
-$border-radius-none: 0;
-$border-radius-sm: 2px;
-$border-radius-base: 4px;
-$border-radius-md: 6px;
-$border-radius-lg: 8px;
-$border-radius-xl: 12px;
-$border-radius-2xl: 16px;
-$border-radius-full: 9999px;
-$border-radius-circle: 50%;
-
-/* 间距 */
+// 间距相关变量
 $spacing-0: 0;
 $spacing-1: 4px;
 $spacing-2: 8px;
@@ -85,36 +189,78 @@ $spacing-8: 32px;
 $spacing-10: 40px;
 $spacing-12: 48px;
 $spacing-16: 64px;
+$spacing-mini: 4px;
+$spacing-small: 8px;
+$spacing-base: 12px;
+$spacing-large: 16px;
 
-/* 组件尺寸 */
-$size-xs: 20px;
-$size-sm: 24px;
-$size-base: 28px;
-$size-md: 32px;
-$size-lg: 36px;
-$size-xl: 40px;
-$size-2xl: 48px;
-$size-3xl: 56px;
-$size-4xl: 64px;
+// 组件尺寸相关变量
+$size-xxs: 20px;
+$size-xs: 24px;
+$size-sm: 28px;
+$size-base: 32px;
+$size-md: 36px;
+$size-lg: 40px;
+$size-xl: 48px;
+$size-2xl: 56px;
+$size-3xl: 64px;
+$size-4xl: 72px;
+$component-size-small: 28px;
+$component-size-base: 32px;
+$component-size-large: 40px;
 
-/* 阴影 */
+// 圆角
+$border-radius-none: 0;
+$border-radius-sm: 2px;
+$border-radius-base: 4px;
+$border-radius-md: 6px;
+$border-radius-lg: 8px;
+$border-radius-xl: 12px;
+$border-radius-2xl: 16px;
+$border-radius-full: 9999px;
+$border-radius-circle: 50%;
+$border-radius-small: 2px;
+$border-radius-large: 8px;
+
+$border-radius-round: 20px;
+
+// 阴影
+$box-shadow-light: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+$box-shadow-base: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
+$box-shadow-dark: 0 2px 16px 0 rgba(0, 0, 0, 0.18);
 $box-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-$box-shadow-base: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
 $box-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 $box-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 $box-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 $box-shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
 
-/* 过渡 */
-$transition-duration-fast: 0.15s;
-$transition-duration-base: 0.3s;
-$transition-duration-slow: 0.5s;
+
+// 过渡动画
+$transition-duration: 0.3s;
+$transition-duration-fast: 150ms;
+$transition-duration-base: 250ms;
+$transition-duration-slow: 350ms;
+$transition-function-ease-in-out-bezier: cubic-bezier(0.645, 0.045, 0.355, 1);
+$transition-function-ease-in-bezier: cubic-bezier(0.55, 0, 1, 0.45);
+$transition-function-ease-out-bezier: cubic-bezier(0, 0.55, 0.45, 1);
+$transition-function-ease-in-out: ease-in-out;
+$transition-function-fast-bezier: cubic-bezier(0.23, 1, 0.32, 1);
+$transition-function-linear: linear;
 $transition-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1);
 $transition-timing-function-ease-in: cubic-bezier(0.4, 0, 1, 1);
 $transition-timing-function-ease-out: cubic-bezier(0, 0, 0.2, 1);
 $transition-timing-function-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
 
-/* Z-index层级 */
+// 断点
+$sm: 768px;
+$md: 992px;
+$lg: 1200px;
+$xl: 1920px;
+
+// z-index
+$z-index-normal: 1;
+$z-index-top: 1000;
+$z-index-popper: 2000;
 $z-index-dropdown: 1000;
 $z-index-sticky: 1020;
 $z-index-fixed: 1030;
@@ -122,3 +268,15 @@ $z-index-modal-backdrop: 1040;
 $z-index-modal: 1050;
 $z-index-popover: 1060;
 $z-index-tooltip: 1070;
+
+// mask color
+$mask-color: rgba(0, 0, 0, 0.5);
+
+// Tag组件相关颜色
+$tag-default-color: #909399;
+$tag-default-border: #e9e9eb;
+$tag-primary-border: #b3d8ff;
+$tag-success-border: #c2e7b0;
+$tag-warning-border: #f5dab1;
+$tag-danger-border: #fbc4c4;
+$tag-info-border: #d3d4d6;

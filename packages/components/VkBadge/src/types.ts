@@ -1,11 +1,12 @@
 import type { ExtractPropTypes, PropType } from "vue";
+import type { ComponentType } from "../../../types";
 
 /**
  * 徽章类型
  *
  * @description 定义徽章的类型，影响外观样式
  */
-export type BadgeType = "primary" | "success" | "warning" | "danger" | "info";
+export type BadgeType = ComponentType;
 
 /**
  * 徽章组件属性
@@ -68,7 +69,7 @@ export const badgeProps = {
     type: String as PropType<BadgeType>,
     default: "danger",
     validator: (val: string): boolean => {
-      return ["primary", "success", "warning", "danger", "info"].includes(val);
+      return ["default", "primary", "success", "warning", "info", "danger"].includes(val);
     },
   },
 

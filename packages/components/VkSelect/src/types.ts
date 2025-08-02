@@ -1,7 +1,8 @@
 import type { ExtractPropTypes, PropType, CSSProperties } from "vue";
+import type { ComponentSize } from "../../../types";
 
 // 选择器尺寸
-export type SelectSize = "small" | "medium" | "large";
+export type SelectSize = ComponentSize;
 
 // 选择器值类型
 export type SelectValue = string | number;

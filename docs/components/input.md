@@ -35,7 +35,7 @@ VkInput 组件支持两种使用模式：非受控模式（使用 v-model）和�
 使用 `v-model` 进行双向数据绑定，组件内部管理状态。
 
 <Demo>
-  <div>
+  <div style="width:100%;">
     <vk-input v-model="uncontrolledValue" placeholder="非受控模式 - v-model" />
     <p>当前值: {{ uncontrolledValue }}</p>
     <vk-button-group>
@@ -197,7 +197,7 @@ const value = ref("");
   <vk-input v-model="value6" suffix-icon="https://api.iconify.design/simple-icons/github.svg" placeholder="图片 URL" />
   <vk-input
     v-model="value7"
-    :prefix-icon="'../../public/logo.svg'"
+    :prefix-icon="'../public/logo.svg'"
     placeholder="本地图片"
   />
   
@@ -212,7 +212,7 @@ const value = ref("");
   <vk-input v-model="value2" suffix-icon="https://api.iconify.design/simple-icons/github.svg" placeholder="图片 URL" />
 
   <!-- 本地图片路径 -->
-  <vk-input v-model="value3" prefix-icon="/public/logo.svg" placeholder="本地图片" />
+  <vk-input v-model="value3" :prefix-icon="'../public/logo.svg'" placeholder="本地图片" />
 </template>
 
 <script setup>

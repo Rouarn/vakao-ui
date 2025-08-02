@@ -2,7 +2,7 @@
 @use "../base.scss" as *;
 
 // VkMessageBox 组件样式
-.vk-message-box-wrapper {
+.vk-message-box__wrapper {
   position: fixed;
   top: 0;
   left: 0;
@@ -18,6 +18,7 @@
 
 .vk-message-box {
   background: var(--vk-bg-color);
+  border: 1px solid var(--vk-border-color-light);
   border-radius: var(--vk-border-radius-lg);
   box-shadow: var(--vk-box-shadow-lg);
   min-width: 420px;

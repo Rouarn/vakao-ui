@@ -106,11 +106,20 @@
       }
     }
 
+    .vk-switch__action {
+      width: 22px;
+      height: 22px;
+    }
+
     &.is-checked {
       .vk-switch__core {
         .vk-switch__button {
           transform: translateX(26px);
         }
+      }
+
+      .vk-switch__action {
+        transform: translateY(-50%) translateX(26px);
       }
     }
   }
@@ -127,11 +136,20 @@
       }
     }
 
+    .vk-switch__action {
+      width: 14px;
+      height: 14px;
+    }
+
     &.is-checked {
       .vk-switch__core {
         .vk-switch__button {
           transform: translateX(14px);
         }
+      }
+
+      .vk-switch__action {
+        transform: translateY(-50%) translateX(14px);
       }
     }
   }
@@ -181,6 +199,13 @@
     transition: all var(--vk-transition-duration-base) var(--vk-transition-timing-function);
     transform: translateY(-50%);
     z-index: 2;
+  }
+
+  // 选中状态下的开关按钮位置
+  &.is-checked {
+    .vk-switch__action {
+      transform: translateY(-50%) translateX(20px);
+    }
   }
 
   // 加载状态

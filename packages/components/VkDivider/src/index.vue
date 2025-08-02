@@ -6,7 +6,18 @@
     - 根容器：包含分割线和可选的内容
     - 内容区域：显示可选的文本或自定义内容
   -->
-  <div :class="[ns.block(), ns.modifier(props.direction), ns.is(contentPositionClass)]" :style="dividerStyle">
+  <div
+    :class="[
+      ns.block(),
+      ns.modifier(props.direction),
+      ns.is(contentPositionClass),
+      {
+        [ns.modifier('with-text')]: $slots.default && props.direction === 'horizontal',
+        [ns.modifier(props.borderStyle)]: props.borderStyle !== 'solid',
+      },
+    ]"
+    :style="dividerStyle"
+  >
     <!-- 内容区域，仅在水平方向且有内容时显示 -->
     <div v-if="$slots.default && props.direction === 'horizontal'" :class="ns.element('text')">
       <slot></slot>

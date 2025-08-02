@@ -109,7 +109,7 @@ export interface VakaoUIInstance {
  * };
  * ```
  */
-export type ComponentSize = "small" | "medium" | "large";
+export type ComponentSize = "tiny" | "small" | "medium" | "large";
 
 /**
  * 组件类型（主题色彩）

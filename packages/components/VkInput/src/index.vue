@@ -96,6 +96,16 @@ export default defineComponent({
       return rest;
     });
 
+    // 是否有前缀
+    const hasPrefix = computed(() => {
+      return !!(slots.prefix || props.prefixIcon);
+    });
+
+    // 是否显示后缀
+    const showSuffix = computed(() => {
+      return showClear.value || props.showPassword || props.suffixIcon || slots.suffix;
+    });
+
     // 样式类名
     const mergedClass = computed(() => {
       return [
@@ -104,6 +114,10 @@ export default defineComponent({
         ns.is("disabled", props.disabled),
         ns.is("readonly", props.readonly),
         ns.is("focused", isFocused.value),
+        {
+          "has-prefix": hasPrefix.value,
+          "has-suffix": showSuffix.value,
+        },
         props.customClass,
         attrs.class,
       ];
@@ -129,11 +143,6 @@ export default defineComponent({
     // 是否显示清除按钮
     const showClear = computed(() => {
       return props.clearable && !props.disabled && !props.readonly && !!currentValue.value;
-    });
-
-    // 是否显示后缀
-    const showSuffix = computed(() => {
-      return showClear.value || props.showPassword || props.suffixIcon || slots.suffix;
     });
 
     // 事件处理

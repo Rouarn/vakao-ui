@@ -27,7 +27,6 @@
     top: 0;
     right: 0;
     transform: translate(50%, -50%);
-    background-color: var(--vk-color-danger);
     color: var(--vk-color-white);
     border: 1px solid var(--vk-color-white);
     border-radius: var(--vk-border-radius-xl);
@@ -40,7 +39,7 @@
     z-index: 1;
 
     &.is-fixed {
-      position: fixed;
+      position: absolute;
     }
 
     &.is-dot {
@@ -50,26 +49,30 @@
       border-radius: 50%;
       min-width: auto;
     }
+  }
 
-    /* 类型变体 */
-    &--primary {
-      background-color: var(--vk-color-primary, #409eff);
-    }
+  /* 类型变体 */
+  &--default {
+    background-color: var(--vk-color-danger, #f56c6c);
+  }
 
-    &--success {
-      background-color: var(--vk-color-success, #67c23a);
-    }
+  &--primary {
+    background-color: var(--vk-color-primary, #409eff);
+  }
 
-    &--warning {
-      background-color: var(--vk-color-warning, #e6a23c);
-    }
+  &--success {
+    background-color: var(--vk-color-success, #67c23a);
+  }
 
-    &--danger {
-      background-color: var(--vk-color-danger, #f56c6c);
-    }
+  &--warning {
+    background-color: var(--vk-color-warning, #e6a23c);
+  }
 
-    &--info {
-      background-color: var(--vk-color-info, #909399);
-    }
+  &--danger {
+    background-color: var(--vk-color-danger, #f56c6c);
+  }
+
+  &--info {
+    background-color: var(--vk-color-info, #909399);
   }
 }

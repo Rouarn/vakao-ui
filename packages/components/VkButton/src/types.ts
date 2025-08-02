@@ -24,7 +24,8 @@ export type ButtonType = ComponentType;
 /**
  * 按钮尺寸
  *
- * 继承全局组件尺寸，支持三种大小：
+ * 继承全局组件尺寸，支持四种大小：
+ * - tiny: 超小尺寸 (24px 高度)
  * - small: 小尺寸 (28px 高度)
  * - medium: 中等尺寸 (32px 高度，默认)
  * - large: 大尺寸 (36px 高度)
