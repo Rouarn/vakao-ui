@@ -1,13 +1,4 @@
 <template>
-  <!--
-    卡片组件模板结构
-    
-    主要元素：
-    - 根容器：包含卡片的所有内容
-    - 头部：可选的标题区域
-    - 主体：卡片的主要内容区域
-    - 底部：可选的操作区域
-  -->
   <div :class="mergedClass" :style="mergedStyle" @click="handleClick">
     <!-- 卡片头部 -->
     <div v-if="$slots.header || header" :class="ns.element('header')">

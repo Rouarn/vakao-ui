@@ -1,13 +1,4 @@
 <template>
-  <!-- 
-    头像组件模板结构
-    
-    主要元素：
-    - 根容器：包含头像内容
-    - 图片：当提供src时显示
-    - 图标：当提供icon且没有图片或图片加载失败时显示
-    - 文本：当没有图片和图标，或图片加载失败时显示
-  -->
   <div
     :class="[ns.block(), ns.modifier(String(shape)), ns.modifier(String(size)), ns.is('clickable', clickable)]"
     :style="avatarStyle"

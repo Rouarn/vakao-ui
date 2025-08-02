@@ -1,12 +1,4 @@
 <template>
-  <!-- 
-    标签组件模板结构
-    
-    主要元素：
-    - 根容器：包含标签内容和关闭按钮
-    - 标签内容：通过默认插槽提供
-    - 关闭按钮：可选的关闭图标
-  -->
   <span v-if="!closed" :class="mergedClass" :style="mergedStyle" @click="handleClick">
     <!-- 标签内容 -->
     <span :class="ns.element('content')">
@@ -119,17 +111,6 @@ const closeIconSize = computed(() => {
 });
 
 /**
- * 过滤属性
- *
- * 从 attrs 中过滤掉 class 和 style 属性，避免与组件内部的
- * 样式合并逻辑冲突，其他属性正常传递给根元素。
- */
-const filteredAttrs = computed(() => {
-  const { class: _, style: __, ...rest } = attrs;
-  return rest;
-});
-
-/**
  * 合并的 CSS 类名
  *
  * 将组件的基础类名、修饰符类名、状态类名和用户自定义类名合并。
@@ -190,10 +171,10 @@ const mergedStyle = computed((): CSSProperties => {
       // 处理字符串样式 - 解析为对象
       const styleElement = document.createElement("div");
       styleElement.style.cssText = customStyle;
-      const parsedStyle: CSSProperties = {};
+      const parsedStyle: Record<string, string> = {};
       for (let i = 0; i < styleElement.style.length; i++) {
         const property = styleElement.style[i];
-        parsedStyle[property as keyof CSSProperties] = styleElement.style.getPropertyValue(property) as any;
+        parsedStyle[property] = styleElement.style.getPropertyValue(property);
       }
       Object.assign(styles, parsedStyle);
     } else {
@@ -208,10 +189,10 @@ const mergedStyle = computed((): CSSProperties => {
       // 处理字符串样式 - 解析为对象
       const styleElement = document.createElement("div");
       styleElement.style.cssText = attrs.style;
-      const parsedStyle: CSSProperties = {};
+      const parsedStyle: Record<string, string> = {};
       for (let i = 0; i < styleElement.style.length; i++) {
         const property = styleElement.style[i];
-        parsedStyle[property as keyof CSSProperties] = styleElement.style.getPropertyValue(property) as any;
+        parsedStyle[property] = styleElement.style.getPropertyValue(property);
       }
       Object.assign(styles, parsedStyle);
     } else {

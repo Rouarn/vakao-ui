@@ -119,10 +119,10 @@ export default defineComponent({
         try {
           const result = await props.beforeChange();
           if (result === false) {
-            return; // 阻止切换
+            return false; // 阻止切换
           }
         } catch (error) {
-          return; // Promise reject 时阻止切换
+          return error; // Promise reject 时阻止切换
         }
       }
 
