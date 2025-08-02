@@ -1,271 +1,256 @@
 # formatDate
 
-日期格式化函数，支持多种格式和相对时间。
+`formatDate` 是一个用于格式化日期的工具函数，支持多种日期格式、相对时间显示以及日期判断功能。
 
-## 基础用法
+## 基本用法
 
 ```ts
 import { formatDate, DATE_FORMATS } from "vakao-ui/utils";
 
-const date = new Date("2023-12-25 15:30:45");
-
 // 使用预定义格式
-formatDate(date, DATE_FORMATS.DATE); // "2023-12-25"
-formatDate(date, DATE_FORMATS.DATETIME); // "2023-12-25 15:30:45"
-formatDate(date, DATE_FORMATS.TIME); // "15:30:45"
+const now = new Date();
+console.log(formatDate(now, DATE_FORMATS.DATE)); // "2023-05-20"
+console.log(formatDate(now, DATE_FORMATS.DATETIME)); // "2023-05-20 14:30:45"
+console.log(formatDate(now, DATE_FORMATS.TIME)); // "14:30:45"
 
-// 自定义格式
-formatDate(date, "YYYY年MM月DD日"); // "2023年12月25日"
-formatDate(date, "MM/DD/YYYY HH:mm"); // "12/25/2023 15:30"
+// 使用自定义格式
+console.log(formatDate(now, "YYYY年MM月DD日 HH时mm分")); // "2023年05月20日 14时30分"
 ```
+
+## API
+
+### formatDate
+
+```ts
+function formatDate(date: Date | number | string, format: string = DATE_FORMATS.DATETIME, options?: FormatDateOptions): string;
+```
+
+#### 参数
+
+| 参数    | 类型                     | 默认值                | 说明                                                 |
+| ------- | ------------------------ | --------------------- | ---------------------------------------------------- |
+| date    | Date \| number \| string | -                     | 要格式化的日期，可以是 Date 对象、时间戳或日期字符串 |
+| format  | string                   | DATE_FORMATS.DATETIME | 格式化模板                                           |
+| options | FormatDateOptions        | -                     | 格式化选项                                           |
+
+#### 返回值
+
+格式化后的日期字符串。
+
+#### 格式化占位符
+
+| 占位符 | 说明                | 示例 |
+| ------ | ------------------- | ---- |
+| YYYY   | 四位年份            | 2023 |
+| YY     | 两位年份            | 23   |
+| MM     | 两位月份（01-12）   | 05   |
+| M      | 月份（1-12）        | 5    |
+| DD     | 两位日期（01-31）   | 09   |
+| D      | 日期（1-31）        | 9    |
+| HH     | 两位小时（00-23）   | 14   |
+| H      | 小时（0-23）        | 14   |
+| hh     | 两位小时（01-12）   | 02   |
+| h      | 小时（1-12）        | 2    |
+| mm     | 两位分钟（00-59）   | 08   |
+| m      | 分钟（0-59）        | 8    |
+| ss     | 两位秒数（00-59）   | 09   |
+| s      | 秒数（0-59）        | 9    |
+| SSS    | 三位毫秒（000-999） | 078  |
+| A      | AM/PM               | PM   |
+| a      | am/pm               | pm   |
+
+### formatRelativeTime
+
+```ts
+function formatRelativeTime(
+  date: Date | number | string,
+  baseDate: Date | number | string = new Date(),
+  options?: FormatDateOptions,
+): string;
+```
+
+#### 参数
+
+| 参数     | 类型                     | 默认值     | 说明                     |
+| -------- | ------------------------ | ---------- | ------------------------ |
+| date     | Date \| number \| string | -          | 要格式化的日期           |
+| baseDate | Date \| number \| string | new Date() | 基准日期，默认为当前时间 |
+| options  | FormatDateOptions        | -          | 格式化选项               |
+
+#### 返回值
+
+相对时间字符串，如 "2小时前"、"3天后"。
+
+### isToday
+
+```ts
+function isToday(date: Date | number | string): boolean;
+```
+
+#### 参数
+
+| 参数 | 类型                     | 说明         |
+| ---- | ------------------------ | ------------ |
+| date | Date \| number \| string | 要检查的日期 |
+
+#### 返回值
+
+如果日期是今天返回 `true`，否则返回 `false`。
+
+### isYesterday
+
+```ts
+function isYesterday(date: Date | number | string): boolean;
+```
+
+#### 参数
+
+| 参数 | 类型                     | 说明         |
+| ---- | ------------------------ | ------------ |
+| date | Date \| number \| string | 要检查的日期 |
+
+#### 返回值
+
+如果日期是昨天返回 `true`，否则返回 `false`。
+
+### isTomorrow
+
+```ts
+function isTomorrow(date: Date | number | string): boolean;
+```
+
+#### 参数
+
+| 参数 | 类型                     | 说明         |
+| ---- | ------------------------ | ------------ |
+| date | Date \| number \| string | 要检查的日期 |
+
+#### 返回值
+
+如果日期是明天返回 `true`，否则返回 `false`。
 
 ## 预定义格式
 
+`DATE_FORMATS` 提供了多种常用的日期格式：
+
 ```ts
 const DATE_FORMATS = {
-  DATE: "YYYY-MM-DD", // 2023-12-25
-  DATETIME: "YYYY-MM-DD HH:mm:ss", // 2023-12-25 15:30:45
-  DATETIME_SHORT: "YYYY-MM-DD HH:mm", // 2023-12-25 15:30
-  TIME: "HH:mm:ss", // 15:30:45
-  TIME_SHORT: "HH:mm", // 15:30
-  DATE_CN: "YYYY年MM月DD日", // 2023年12月25日
-  DATETIME_CN: "YYYY年MM月DD日 HH:mm:ss", // 2023年12月25日 15:30:45
-  DATE_US: "MM/DD/YYYY", // 12/25/2023
-  DATETIME_US: "MM/DD/YYYY HH:mm:ss", // 12/25/2023 15:30:45
+  /** YYYY-MM-DD */
+  DATE: "YYYY-MM-DD",
+  /** YYYY-MM-DD HH:mm:ss */
+  DATETIME: "YYYY-MM-DD HH:mm:ss",
+  /** YYYY-MM-DD HH:mm */
+  DATETIME_SHORT: "YYYY-MM-DD HH:mm",
+  /** HH:mm:ss */
+  TIME: "HH:mm:ss",
+  /** HH:mm */
+  TIME_SHORT: "HH:mm",
+  /** YYYY年MM月DD日 */
+  DATE_CN: "YYYY年MM月DD日",
+  /** YYYY年MM月DD日 HH:mm:ss */
+  DATETIME_CN: "YYYY年MM月DD日 HH:mm:ss",
+  /** MM/DD/YYYY */
+  DATE_US: "MM/DD/YYYY",
+  /** MM/DD/YYYY HH:mm:ss */
+  DATETIME_US: "MM/DD/YYYY HH:mm:ss",
 };
-```
-
-## 格式化占位符
-
-| 占位符 | 说明                 | 示例    |
-| ------ | -------------------- | ------- |
-| YYYY   | 四位年份             | 2023    |
-| YY     | 两位年份             | 23      |
-| MM     | 两位月份             | 01-12   |
-| M      | 月份                 | 1-12    |
-| DD     | 两位日期             | 01-31   |
-| D      | 日期                 | 1-31    |
-| HH     | 两位小时（24小时制） | 00-23   |
-| H      | 小时（24小时制）     | 0-23    |
-| hh     | 两位小时（12小时制） | 01-12   |
-| h      | 小时（12小时制）     | 1-12    |
-| mm     | 两位分钟             | 00-59   |
-| m      | 分钟                 | 0-59    |
-| ss     | 两位秒数             | 00-59   |
-| s      | 秒数                 | 0-59    |
-| SSS    | 三位毫秒             | 000-999 |
-| A      | AM/PM                | AM/PM   |
-| a      | am/pm                | am/pm   |
-
-## 自定义格式示例
-
-```ts
-const date = new Date("2023-12-25 15:30:45.123");
-
-// 基础格式
-formatDate(date, "YYYY-MM-DD"); // "2023-12-25"
-formatDate(date, "YY/M/D"); // "23/12/25"
-
-// 时间格式
-formatDate(date, "HH:mm:ss"); // "15:30:45"
-formatDate(date, "H:m:s"); // "15:30:45"
-formatDate(date, "hh:mm A"); // "03:30 PM"
-
-// 包含毫秒
-formatDate(date, "HH:mm:ss.SSS"); // "15:30:45.123"
-
-// 中文格式
-formatDate(date, "YYYY年M月D日 H时m分"); // "2023年12月25日 15时30分"
-
-// 自定义分隔符
-formatDate(date, "YYYY.MM.DD HH-mm-ss"); // "2023.12.25 15-30-45"
-```
-
-## 相对时间格式化
-
-```ts
-import { formatRelativeTime } from "vakao-ui/utils";
-
-const now = new Date();
-const oneHourAgo = new Date(now.getTime() - 60 * 60 * 1000);
-const tomorrow = new Date(now.getTime() + 24 * 60 * 60 * 1000);
-
-// 中文环境（默认）
-formatRelativeTime(oneHourAgo); // "1小时前"
-formatRelativeTime(tomorrow); // "1天后"
-
-// 英文环境
-formatRelativeTime(oneHourAgo, now, { locale: "en-US" }); // "1 hour ago"
-formatRelativeTime(tomorrow, now, { locale: "en-US" }); // "in 1 day"
-```
-
-### 相对时间示例
-
-```ts
-const now = new Date();
-
-// 过去时间
-const fiveMinutesAgo = new Date(now.getTime() - 5 * 60 * 1000);
-const twoHoursAgo = new Date(now.getTime() - 2 * 60 * 60 * 1000);
-const threeDaysAgo = new Date(now.getTime() - 3 * 24 * 60 * 60 * 1000);
-
-formatRelativeTime(fiveMinutesAgo); // "5分钟前"
-formatRelativeTime(twoHoursAgo); // "2小时前"
-formatRelativeTime(threeDaysAgo); // "3天前"
-
-// 未来时间
-const inTenMinutes = new Date(now.getTime() + 10 * 60 * 1000);
-const inFourHours = new Date(now.getTime() + 4 * 60 * 60 * 1000);
-const inOneWeek = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
-
-formatRelativeTime(inTenMinutes); // "10分钟后"
-formatRelativeTime(inFourHours); // "4小时后"
-formatRelativeTime(inOneWeek); // "7天后"
-```
-
-## 日期判断函数
-
-```ts
-import { isToday, isYesterday, isTomorrow } from "vakao-ui/utils";
-
-const today = new Date();
-const yesterday = new Date(today.getTime() - 24 * 60 * 60 * 1000);
-const tomorrow = new Date(today.getTime() + 24 * 60 * 60 * 1000);
-
-// 判断是否为今天
-isToday(today); // true
-isToday(yesterday); // false
-
-// 判断是否为昨天
-isYesterday(yesterday); // true
-isYesterday(today); // false
-
-// 判断是否为明天
-isTomorrow(tomorrow); // true
-isTomorrow(today); // false
-
-// 支持字符串和时间戳
-isToday("2023-12-25"); // 取决于当前日期
-isToday(Date.now()); // true
 ```
 
 ## 格式化选项
 
 ```ts
 interface FormatDateOptions {
-  locale?: string; // 语言环境
-  timeZone?: string; // 时区
-  hour12?: boolean; // 是否使用12小时制
-}
-
-// 使用选项
-const date = new Date("2023-12-25 15:30:45");
-
-// 指定时区
-formatDate(date, "YYYY-MM-DD HH:mm", { timeZone: "UTC" });
-
-// 指定语言环境
-formatRelativeTime(date, new Date(), { locale: "en-US" });
-
-// 使用12小时制
-formatDate(date, "hh:mm A", { hour12: true });
-```
-
-## 实际应用场景
-
-### 列表显示
-
-```ts
-// 文章列表
-const articles = [
-  { title: "文章1", createdAt: new Date("2023-12-25 10:30:00") },
-  { title: "文章2", createdAt: new Date("2023-12-24 15:20:00") },
-];
-
-articles.forEach((article) => {
-  console.log(`${article.title} - ${formatDate(article.createdAt, DATE_FORMATS.DATETIME_SHORT)}`);
-});
-```
-
-### 聊天消息
-
-```ts
-// 消息时间显示
-function formatMessageTime(timestamp: number) {
-  const date = new Date(timestamp);
-
-  if (isToday(date)) {
-    return formatDate(date, "HH:mm");
-  } else if (isYesterday(date)) {
-    return `昨天 ${formatDate(date, "HH:mm")}`;
-  } else {
-    return formatDate(date, "MM-DD HH:mm");
-  }
-}
-```
-
-### 动态时间更新
-
-```ts
-// 实时更新相对时间
-function updateRelativeTime(element: HTMLElement, timestamp: number) {
-  const update = () => {
-    element.textContent = formatRelativeTime(timestamp);
-  };
-
-  update(); // 立即更新
-  setInterval(update, 60000); // 每分钟更新
-}
-```
-
-## 类型定义
-
-```ts
-interface FormatDateOptions {
+  /** 语言环境，默认为 'zh-CN' */
   locale?: string;
+  /** 时区，默认为本地时区 */
   timeZone?: string;
+  /** 是否使用12小时制，默认为 false */
   hour12?: boolean;
 }
+```
 
-/**
- * 格式化日期
- * @param date 日期对象、时间戳或日期字符串
- * @param format 格式化模板
- * @param options 格式化选项
- * @returns 格式化后的日期字符串
- */
-function formatDate(date: Date | number | string, format?: string, options?: FormatDateOptions): string;
+## 示例
 
-/**
- * 格式化相对时间
- * @param date 目标日期
- * @param baseDate 基准日期（默认为当前时间）
- * @param options 格式化选项
- * @returns 相对时间字符串
- */
-function formatRelativeTime(date: Date | number | string, baseDate?: Date | number | string, options?: FormatDateOptions): string;
+### 基本日期格式化
 
-/**
- * 判断是否为今天
- */
-function isToday(date: Date | number | string): boolean;
+```ts
+import { formatDate, DATE_FORMATS } from "vakao-ui/utils";
 
-/**
- * 判断是否为昨天
- */
-function isYesterday(date: Date | number | string): boolean;
+const date = new Date(2023, 4, 20, 14, 30, 45);
 
-/**
- * 判断是否为明天
- */
-function isTomorrow(date: Date | number | string): boolean;
+// 使用预定义格式
+console.log(formatDate(date, DATE_FORMATS.DATE)); // "2023-05-20"
+console.log(formatDate(date, DATE_FORMATS.DATETIME)); // "2023-05-20 14:30:45"
+console.log(formatDate(date, DATE_FORMATS.TIME)); // "14:30:45"
+console.log(formatDate(date, DATE_FORMATS.DATE_CN)); // "2023年05月20日"
+
+// 使用自定义格式
+console.log(formatDate(date, "YYYY/MM/DD")); // "2023/05/20"
+console.log(formatDate(date, "HH:mm")); // "14:30"
+console.log(formatDate(date, "M月D日 HH时mm分")); // "5月20日 14时30分"
+console.log(formatDate(date, "YY年M月D日 h:mm a")); // "23年5月20日 2:30 pm"
+```
+
+### 相对时间格式化
+
+```ts
+import { formatRelativeTime } from "vakao-ui/utils";
+
+const now = new Date();
+const pastDate = new Date(now.getTime() - 2 * 60 * 60 * 1000); // 2小时前
+const futureDate = new Date(now.getTime() + 3 * 24 * 60 * 60 * 1000); // 3天后
+
+// 中文环境（默认）
+console.log(formatRelativeTime(pastDate)); // "2小时前"
+console.log(formatRelativeTime(futureDate)); // "3天后"
+
+// 英文环境
+console.log(formatRelativeTime(pastDate, now, { locale: "en-US" })); // "2 hours ago"
+console.log(formatRelativeTime(futureDate, now, { locale: "en-US" })); // "3 days later"
+```
+
+### 日期判断
+
+```ts
+import { isToday, isYesterday, isTomorrow } from "vakao-ui/utils";
+
+const now = new Date();
+
+// 今天
+console.log(isToday(now)); // true
+
+// 昨天
+const yesterday = new Date();
+yesterday.setDate(yesterday.getDate() - 1);
+console.log(isYesterday(yesterday)); // true
+
+// 明天
+const tomorrow = new Date();
+tomorrow.setDate(tomorrow.getDate() + 1);
+console.log(isTomorrow(tomorrow)); // true
+```
+
+### 处理不同类型的输入
+
+```ts
+import { formatDate, DATE_FORMATS } from "vakao-ui/utils";
+
+// Date 对象
+const dateObj = new Date(2023, 4, 20);
+console.log(formatDate(dateObj, DATE_FORMATS.DATE)); // "2023-05-20"
+
+// 时间戳（毫秒）
+const timestamp = dateObj.getTime();
+console.log(formatDate(timestamp, DATE_FORMATS.DATE)); // "2023-05-20"
+
+// 日期字符串
+const dateStr = "2023-05-20T14:30:45";
+console.log(formatDate(dateStr, DATE_FORMATS.DATETIME)); // "2023-05-20 14:30:45"
 ```
 
 ## 注意事项
 
-1. **时区处理**：默认使用本地时区，可通过 `timeZone` 选项指定
-2. **语言环境**：相对时间格式化支持多语言，默认为中文
-3. **性能考虑**：频繁格式化时建议缓存格式化结果
-4. **输入验证**：函数会自动处理无效日期，返回 "Invalid Date"
-5. **浏览器兼容性**：基于原生 Date 对象，兼容性良好
-6. **日期判断**：基于本地时区进行比较，不考虑具体时间
+1. 传入无效的日期会抛出 "Invalid date" 错误
+2. 相对时间格式化支持中文和英文两种语言环境，默认为中文
+3. 日期判断函数只比较年、月、日，不考虑时间部分
+4. 格式化函数支持多种输入类型，包括 Date 对象、时间戳和日期字符串

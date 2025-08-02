@@ -14,11 +14,8 @@ Vakao UI 提供了一系列实用的工具函数，帮助您更高效地开发�
 ### 组件工具
 
 - [withInstall](./withInstall.md) - 为组件添加全局安装方法
-- `createNamespace` - 创建组件命名空间
-
-### 类型工具
-
-- [类型工具](./types.md) - ExtractPublicPropTypes、SFCWithInstall 等类型工具
+- [useNamespace](./namespace.md) - 创建组件 CSS 命名空间
+- [useControlled](./controlled.md) - 处理受控和非受控组件状态
 
 ### 数据处理
 
@@ -28,6 +25,10 @@ Vakao UI 提供了一系列实用的工具函数，帮助您更高效地开发�
 ### 日期处理
 
 - [formatDate](./formatDate.md) - 日期格式化、相对时间、日期判断等
+
+### URL 处理
+
+- [isUrl](./url.md) - 判断字符串是否为有效的 URL 格式
 
 ## 使用方式
 
@@ -59,6 +60,11 @@ import { withInstall } from "vakao-ui/utils";
 import MyComponent from "./MyComponent.vue";
 
 const VkMyComponent = withInstall(MyComponent);
+
+// 命名空间
+import { useNamespace } from "vakao-ui/utils";
+const ns = useNamespace('button');
+// 'vk-button', 'vk-button__icon', 'vk-button--primary'
 
 // 数据处理
 import { deepClone, isEqual } from "vakao-ui/utils";
