@@ -70,6 +70,7 @@ import { VkCheckbox, VkCheckboxGroup } from "./VkCheckbox";
 import { VkRadio, VkRadioGroup } from "./VkRadio";
 import { VkSwitch } from "./VkSwitch";
 import { VkIcon } from "./VkIcon";
+import { VkImage } from "./VkImage";
 import { VkAvatar } from "./VkAvatar";
 import { VkBadge } from "./VkBadge";
 import { VkCard } from "./VkCard";
@@ -105,6 +106,7 @@ const components = {
 
   // 通用组件
   VkIcon,
+  VkImage,
   VkAvatar,
   VkBadge,
   VkCard,

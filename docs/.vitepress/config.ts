@@ -81,6 +81,7 @@ export default defineConfig({
             { text: "Badge 徽章", link: "/components/badge" },
             { text: "Card 卡片", link: "/components/card" },
             { text: "Tag 标签", link: "/components/tag" },
+            { text: "Image 图片", link: "/components/image" },
           ],
         },
         {

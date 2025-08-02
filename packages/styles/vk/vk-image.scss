@@ -1,0 +1,409 @@
+/**
+ * VkImage 图片组件样式
+ *
+ * 提供完整的图片组件样式，包括基础样式、状态样式、预览功能样式等。
+ * 支持多种尺寸、适应模式、加载状态和预览交互。
+ */
+
+// 使用全局变量和混合
+@use "../variables.scss" as *;
+@use "../mixins.scss" as *;
+
+// VkImage 组件样式
+.vk-image {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  background-color: var(--vk-bg-color-page);
+  border-radius: var(--vk-border-radius-base);
+  transition: all var(--vk-transition-duration) var(--vk-transition-timing-function);
+
+  // 基础尺寸
+  &--size-tiny {
+    width: 64px;
+    height: 64px;
+  }
+
+  &--size-small {
+    width: 96px;
+    height: 96px;
+  }
+
+  &--size-medium {
+    width: 128px;
+    height: 128px;
+  }
+
+  &--size-large {
+    width: 200px;
+    height: 200px;
+  }
+
+  // 圆形图片
+  &.is-round {
+    border-radius: 50%;
+
+    .vk-image__wrapper {
+      border-radius: 50%;
+    }
+  }
+
+  // 禁用状态
+  &.is-disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+
+    .vk-image__wrapper {
+      pointer-events: none;
+    }
+  }
+
+  // 可预览状态
+  &.is-preview {
+    cursor: pointer;
+
+    &:hover .vk-image__preview-mask {
+      opacity: 1;
+    }
+  }
+
+  // 图片包装器
+  &__wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: inherit;
+  }
+
+  // 实际图片
+  &__inner {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform var(--vk-transition-duration) var(--vk-transition-timing-function);
+
+    &:hover {
+      transform: scale(1.02);
+    }
+  }
+
+  // 加载状态
+  &__loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--vk-bg-color);
+    color: var(--vk-text-color-regular);
+    font-size: var(--vk-font-size-small);
+  }
+
+  &__loading-icon {
+    margin-bottom: var(--vk-spacing-2);
+    color: var(--vk-color-primary);
+  }
+
+  &__loading-spinner {
+    animation: vk-image-loading 1s linear infinite;
+  }
+
+  &__loading-text {
+    font-size: var(--vk-font-size-small);
+    color: var(--vk-text-color-regular);
+  }
+
+  // 错误状态
+  &__error {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--vk-bg-color);
+    color: var(--vk-text-color-regular);
+    font-size: var(--vk-font-size-small);
+  }
+
+  &__error-icon {
+    margin-bottom: var(--vk-spacing-2);
+    color: var(--vk-color-danger);
+    font-size: var(--vk-font-size-large);
+  }
+
+  &__error-text {
+    font-size: var(--vk-font-size-small);
+    color: var(--vk-text-color-regular);
+  }
+
+  // 预览遮罩
+  &__preview-mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity var(--vk-transition-duration) var(--vk-transition-timing-function);
+    cursor: pointer;
+  }
+
+  &__preview-icon {
+    color: var(--vk-color-white);
+    font-size: var(--vk-font-size-extra-large);
+  }
+
+  // 预览组件
+  &__preview {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: var(--vk-z-index-modal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+  }
+
+  &__preview-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  // 预览工具栏
+  &__preview-toolbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), transparent);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 var(--vk-spacing-4);
+    z-index: 1;
+  }
+
+  &__preview-actions {
+    display: flex;
+    gap: var(--vk-spacing-3);
+  }
+
+  &__preview-action,
+  &__preview-close {
+    width: 40px;
+    height: 40px;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--vk-color-white);
+    border-radius: var(--vk-border-radius-base);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color var(--vk-transition-duration) var(--vk-transition-timing-function);
+    font-size: var(--vk-font-size-large);
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    &:active {
+      background-color: rgba(255, 255, 255, 0.3);
+    }
+  }
+
+  // 预览画布
+  &__preview-canvas {
+    flex: 1;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  &__preview-image {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+    cursor: grab;
+    user-select: none;
+    transition: transform 0.3s ease;
+
+    &:active {
+      cursor: grabbing;
+    }
+  }
+
+  // 预览箭头
+  &__preview-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50px;
+    height: 50px;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--vk-color-white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all var(--vk-transition-duration) var(--vk-transition-timing-function);
+    font-size: var(--vk-font-size-extra-large);
+    z-index: 1;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    &:active {
+      background-color: rgba(255, 255, 255, 0.3);
+    }
+
+    &--left {
+      left: var(--vk-spacing-6);
+    }
+
+    &--right {
+      right: var(--vk-spacing-6);
+    }
+  }
+
+  // 预览信息
+  &__preview-info {
+    position: absolute;
+    bottom: var(--vk-spacing-4);
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.6);
+    color: var(--vk-color-white);
+    padding: var(--vk-spacing-2) var(--vk-spacing-3);
+    border-radius: var(--vk-border-radius-base);
+    font-size: var(--vk-font-size-small);
+    backdrop-filter: blur(4px);
+  }
+
+  // 动画
+  @keyframes vk-image-loading {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  // 响应式设计
+  @media (max-width: 768px) {
+    &__preview-toolbar {
+      padding: 0 var(--vk-spacing-3);
+    }
+
+    &__preview-action,
+    &__preview-close {
+      width: 36px;
+      height: 36px;
+      font-size: var(--vk-font-size-base);
+    }
+
+    &__preview-arrow {
+      width: 44px;
+      height: 44px;
+      font-size: var(--vk-font-size-large);
+
+      &--left {
+        left: var(--vk-spacing-4);
+      }
+
+      &--right {
+        right: var(--vk-spacing-4);
+      }
+    }
+
+    &__preview-image {
+      max-width: 95%;
+      max-height: 95%;
+    }
+  }
+
+  // 暗色主题支持
+  @media (prefers-color-scheme: dark) {
+    &__loading,
+    &__error {
+      background-color: var(--vk-bg-color-overlay);
+    }
+
+    &__preview {
+      background-color: rgba(0, 0, 0, 0.9);
+    }
+  }
+
+  // 高对比度支持
+  @media (prefers-contrast: high) {
+    &__preview-mask {
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+
+    &__preview-action,
+    &__preview-close,
+    &__preview-arrow {
+      background-color: rgba(255, 255, 255, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+    }
+  }
+
+  // 减少动画支持
+  @media (prefers-reduced-motion: reduce) {
+    &__inner,
+    &__preview-mask,
+    &__preview-action,
+    &__preview-close,
+    &__preview-arrow {
+      transition: none;
+    }
+
+    &__loading-spinner {
+      animation: none;
+    }
+
+    &__preview-image {
+      transition: none;
+    }
+  }
+}
+
+// 预览进入/离开动画
+.vk-image-preview-enter-active,
+.vk-image-preview-leave-active {
+  transition: opacity var(--vk-transition-duration) var(--vk-transition-timing-function);
+}
+
+.vk-image-preview-enter-from,
+.vk-image-preview-leave-to {
+  opacity: 0;
+}

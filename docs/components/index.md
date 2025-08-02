@@ -56,6 +56,7 @@ Vakao UI 组件推荐使用直接的图标属性来设置图标，而不是通�
 - [Card 卡片](/components/card) - 承载信息的容器，支持丰富的内容和操作
 - [Divider 分割线](/components/divider) - 用于分隔内容的分割线组件
 - [Tag 标签](/components/tag) - 用于标记和分类的标签组件
+- [Image 图片](/components/image) - 图片容器，支持懒加载、预览、错误处理等功能
 
 ### 导航组件
 

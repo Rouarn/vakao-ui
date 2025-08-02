@@ -23,6 +23,7 @@ import type VkCheckbox from "../components/VkCheckbox/src/index.vue";
 import type VkCheckboxGroup from "../components/VkCheckbox/src/checkbox-group.vue";
 import type VkDivider from "../components/VkDivider/src/index.vue";
 import type VkIcon from "../components/VkIcon/src/index.vue";
+import type VkImage from "../components/VkImage/src/index.vue";
 import type VkInput from "../components/VkInput/src/index.vue";
 import type VkMessageBox from "../components/VkMessageBox/src/index.vue";
 import type VkRadio from "../components/VkRadio/src/index.vue";
@@ -61,6 +62,7 @@ declare module "vue" {
     VkCard: typeof VkCard;
     VkDivider: typeof VkDivider;
     VkIcon: typeof VkIcon;
+    VkImage: typeof VkImage;
     VkInput: typeof VkInput;
     VkTag: typeof VkTag;
 
