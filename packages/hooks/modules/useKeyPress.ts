@@ -135,7 +135,7 @@ function isKeyMatch(event: KeyboardEvent, targetKeys: string[], exactMatch: bool
  */
 export function useKeyPress(keys: KeyType, options: UseKeyPressOptions = {}): UseKeyPressReturn {
   const {
-    target = window,
+    target = typeof window !== "undefined" ? window : undefined,
     preventDefault = false,
     stopPropagation = false,
     exactMatch = false,

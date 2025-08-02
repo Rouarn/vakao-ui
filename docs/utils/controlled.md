@@ -33,55 +33,55 @@ const handleChange = (newValue: string) => {
 ### useControlled
 
 ```ts
-function useControlled<T>(
-  props: Record<string, unknown>,
+function useControlled&lt;T&gt;(
+  props: Record&lt;string, unknown&gt;,
   propName: string,
   modelValuePropName: string,
-  emit: (event: string, ...args: unknown[]) => void,
+  emit: (event: string, ...args: unknown[]) =&gt; void,
   defaultValue: T,
-): UseControlledReturn<T>;
+): UseControlledReturn&lt;T&gt;;
 ```
 
 #### 参数
 
-| 参数               | 类型                                        | 说明                                    |
-| ------------------ | ------------------------------------------- | --------------------------------------- |
-| props              | Record<string, unknown>                     | 组件的 props 对象                       |
-| propName           | string                                      | 受控模式的 prop 名称（如 'value'）      |
-| modelValuePropName | string                                      | v-model 的 prop 名称（如 'modelValue'） |
-| emit               | (event: string, ...args: unknown[]) => void | 组件的 emit 函数                        |
-| defaultValue       | T                                           | 默认值                                  |
+| 参数               | 类型                                           | 说明                                    |
+| ------------------ | ---------------------------------------------- | --------------------------------------- |
+| props              | Record&lt;string, unknown&gt;                  | 组件的 props 对象                       |
+| propName           | string                                         | 受控模式的 prop 名称（如 'value'）      |
+| modelValuePropName | string                                         | v-model 的 prop 名称（如 'modelValue'） |
+| emit               | (event: string, ...args: unknown[]) =&gt; void | 组件的 emit 函数                        |
+| defaultValue       | T                                              | 默认值                                  |
 
 #### 返回值
 
 返回一个包含以下属性和方法的对象：
 
-| 属性/方法     | 类型                  | 说明                   |
-| ------------- | --------------------- | ---------------------- |
-| isControlled  | ComputedRef<boolean>  | 是否为受控模式         |
-| internalValue | Ref<T>                | 内部值引用             |
-| currentValue  | ComputedRef<T>        | 当前值（受控或非受控） |
-| updateValue   | (newValue: T) => void | 更新值的方法           |
+| 属性/方法     | 类型                       | 说明                   |
+| ------------- | -------------------------- | ---------------------- |
+| isControlled  | ComputedRef&lt;boolean&gt; | 是否为受控模式         |
+| internalValue | Ref&lt;T&gt;               | 内部值引用             |
+| currentValue  | ComputedRef&lt;T&gt;       | 当前值（受控或非受控） |
+| updateValue   | (newValue: T) =&gt; void   | 更新值的方法           |
 
 ### useStandardControlled
 
 `useStandardControlled` 是 `useControlled` 的简化版本，适用于大多数表单组件的标准用法。
 
 ```ts
-function useStandardControlled<T>(
-  props: Record<string, unknown>,
+function useStandardControlled&lt;T&gt;(
+  props: Record&lt;string, unknown&gt;,
   emit: (event: string, ...args: unknown[]) => void,
   defaultValue: T,
-): UseControlledReturn<T>;
+): UseControlledReturn&lt;T&gt;;
 ```
 
 #### 参数
 
-| 参数         | 类型                                        | 说明              |
-| ------------ | ------------------------------------------- | ----------------- |
-| props        | Record<string, unknown>                     | 组件的 props 对象 |
-| emit         | (event: string, ...args: unknown[]) => void | 组件的 emit 函数  |
-| defaultValue | T                                           | 默认值            |
+| 参数         | 类型                                           | 说明              |
+| ------------ | ---------------------------------------------- | ----------------- |
+| props        | Record&lt;string, unknown&gt;                  | 组件的 props 对象 |
+| emit         | (event: string, ...args: unknown[]) =&gt; void | 组件的 emit 函数  |
+| defaultValue | T                                              | 默认值            |
 
 #### 返回值
 
@@ -93,15 +93,15 @@ function useStandardControlled<T>(
 
 ```js
 // 受控/非受控模式的返回类型
-interface UseControlledReturn<T> {
+interface UseControlledReturn&lt;T&gt; {
   // 是否为受控模式
-  isControlled: ComputedRef<boolean>
+  isControlled: ComputedRef&lt;boolean&gt;
   // 内部值引用
-  internalValue: Ref<T>
+  internalValue: Ref&lt;T&gt;
   // 当前值（受控或非受控）
-  currentValue: ComputedRef<T>
+  currentValue: ComputedRef&lt;T&gt;
   // 更新值的方法
-  updateValue: (newValue: T) => void
+  updateValue: (newValue: T) =&gt; void
 }
 ```
 
