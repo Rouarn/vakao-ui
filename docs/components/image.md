@@ -10,27 +10,27 @@
   <div style="display: flex; gap: 16px; flex-wrap: wrap;">
     <vk-image
       style="width: 100px; height: 100px"
-      src="https://picsum.photos/100/100"
+      src="http://oa.shixian.xyz/api/file/Image/userAvatar/001.png"
       fit="fill"
     />
     <vk-image
       style="width: 100px; height: 100px"
-      src="https://picsum.photos/100/100"
+      src="http://oa.shixian.xyz/api/file/Image/userAvatar/101.jpg"
       fit="contain"
     />
     <vk-image
       style="width: 100px; height: 100px"
-      src="https://picsum.photos/100/100"
+      src="http://oa.shixian.xyz/api/file/Image/userAvatar/102.jpg"
       fit="cover"
     />
     <vk-image
       style="width: 100px; height: 100px"
-      src="https://picsum.photos/100/100"
+      src="http://oa.shixian.xyz/api/file/Image/userAvatar/103.jpg"
       fit="none"
     />
     <vk-image
       style="width: 100px; height: 100px"
-      src="https://picsum.photos/100/100"
+      src="http://oa.shixian.xyz/api/file/Image/userAvatar/104.jpg"
       fit="scale-down"
     />
   </div>
@@ -40,11 +40,11 @@
 ```vue
 <template>
   <div style="display: flex; gap: 16px; flex-wrap: wrap;">
-    <vk-image style="width: 100px; height: 100px" src="https://picsum.photos/100/100" fit="fill" />
-    <vk-image style="width: 100px; height: 100px" src="https://picsum.photos/100/100" fit="contain" />
-    <vk-image style="width: 100px; height: 100px" src="https://picsum.photos/100/100" fit="cover" />
-    <vk-image style="width: 100px; height: 100px" src="https://picsum.photos/100/100" fit="none" />
-    <vk-image style="width: 100px; height: 100px" src="https://picsum.photos/100/100" fit="scale-down" />
+    <vk-image style="width: 100px; height: 100px" src="http://oa.shixian.xyz/api/file/Image/userAvatar/105.jpg" fit="fill" />
+    <vk-image style="width: 100px; height: 100px" src="http://oa.shixian.xyz/api/file/Image/userAvatar/201.jpg" fit="contain" />
+    <vk-image style="width: 100px; height: 100px" src="http://oa.shixian.xyz/api/file/Image/userAvatar/202.jpg" fit="cover" />
+    <vk-image style="width: 100px; height: 100px" src="http://oa.shixian.xyz/api/file/Image/userAvatar/203.jpg" fit="none" />
+    <vk-image style="width: 100px; height: 100px" src="http://oa.shixian.xyz/api/file/Image/userAvatar/204.jpg" fit="scale-down" />
   </div>
 </template>
 ```
@@ -60,7 +60,7 @@
   <div style="display: flex; gap: 16px; align-items: flex-start;">
     <vk-image
       style="width: 100px; height: 100px"
-      src="https://picsum.photos/100/100"
+      src="http://oa.shixian.xyz/api/file/Image/userAvatar/205.jpg"
     >
       <template #loading>
         <div style="display: flex; align-items: center; justify-content: center; height: 100%; background: #f5f7fa; color: #909399;">
@@ -85,7 +85,7 @@
 ```vue
 <template>
   <div style="display: flex; gap: 16px; align-items: flex-start;">
-    <vk-image style="width: 100px; height: 100px" src="https://picsum.photos/100/100">
+    <vk-image style="width: 100px; height: 100px" src="http://oa.shixian.xyz/api/file/Image/userAvatar/206.jpg">
       <template #loading>
         <div style="display: flex; align-items: center; justify-content: center; height: 100%; background: #f5f7fa; color: #909399;">
           加载中...
@@ -109,17 +109,17 @@
 
 ## 懒加载
 
-可通过`lazy`开启懒加载功能，当图片滚动到可视范围内才会加载。
+通过 `lazy` 属性开启懒加载功能，图片将在进入视口时才开始加载。组件会自动检测浏览器是否支持原生懒加载，优先使用原生功能，否则使用 IntersectionObserver 实现。
 
 <Demo>
-  <div style="height: 200px; overflow-y: auto; border: 1px solid #dcdfe6; padding: 16px; width: 100%;">
+  <div style="height: 400px; overflow-y: auto; border: 1px solid #ddd; padding: 16px; width: 100%;">
+    <div style="margin-bottom: 16px;">向下滚动查看懒加载效果</div>
     <div v-for="i in 10" :key="i" style="margin-bottom: 16px;">
       <vk-image
-        style="width: 100px; height: 100px"
-        :src="`https://picsum.photos/100/100`"
+        style="width: 200px; height: 150px"
+        :src="`http://oa.shixian.xyz/api/file/Image/userAvatar/${['207.jpg', '208.jpg', '209.jpg', '210.jpg', '211.jpg', '212.jpg', '213.jpg', '214.jpg', '215.jpg', '216.jpg'][i-1]}`"
         lazy
       />
-      <span style="margin-left: 16px;">图片 {{ i }}</span>
     </div>
   </div>
   
@@ -127,11 +127,47 @@
 
 ```vue
 <template>
-  <div style="height: 200px; overflow-y: auto; border: 1px solid #dcdfe6; padding: 16px; width: 100%;">
+  <div style="height: 400px; overflow-y: auto; border: 1px solid #ddd; padding: 16px;">
+    <div style="margin-bottom: 16px;">向下滚动查看懒加载效果</div>
     <div v-for="i in 10" :key="i" style="margin-bottom: 16px;">
-      <vk-image style="width: 100px; height: 100px" :src="`https://picsum.photos/100/100`" lazy />
-      <span style="margin-left: 16px;">图片 {{ i }}</span>
+      <vk-image style="width: 200px; height: 150px" :src="`http://oa.shixian.xyz/api/file/Image/userAvatar/${['207.jpg', '208.jpg', '209.jpg', '210.jpg', '211.jpg', '212.jpg', '213.jpg', '214.jpg', '215.jpg', '216.jpg'][i-1]}`" lazy />
     </div>
+  </div>
+</template>
+```
+
+  </template>
+</Demo>
+
+## 渐进式加载
+
+结合 `lazy` 和 `placeholder` 属性，可以实现渐进式图片加载效果，先显示低质量占位图，再加载高质量图片。
+
+<Demo>
+  <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+    <vk-image
+      v-for="i in 6"
+      :key="i"
+      style="width: 150px; height: 100px"
+      :src="`http://oa.shixian.xyz/api/file/Image/userAvatar/${['101.jpg', '102.jpg', '103.jpg', '104.jpg', '105.jpg', '201.jpg'][i-1]}`"
+      :placeholder="`http://oa.shixian.xyz/api/file/Image/userAvatar/001.png`"
+      lazy
+    />
+  </div>
+  
+  <template #code>
+
+```vue
+<template>
+  <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+    <vk-image
+      v-for="i in 6"
+      :key="i"
+      style="width: 150px; height: 100px"
+      :src="`http://oa.shixian.xyz/api/file/Image/userAvatar/${['101.jpg', '102.jpg', '103.jpg', '104.jpg', '105.jpg', '201.jpg'][i-1]}`"
+      :placeholder="`http://oa.shixian.xyz/api/file/Image/userAvatar/001.png`"
+      lazy
+    />
   </div>
 </template>
 ```
@@ -147,12 +183,12 @@
   <div style="display: flex; gap: 16px; width: 100%;">
     <vk-image
       style="width: 100px; height: 100px"
-      src="https://picsum.photos/100/100"
+      src="http://oa.shixian.xyz/api/file/Image/userAvatar/208.jpg"
       preview
     />
     <vk-image
       style="width: 100px; height: 100px"
-      src="https://picsum.photos/100/100"
+      src="http://oa.shixian.xyz/api/file/Image/userAvatar/209.jpg"
       preview
     />
   </div>
@@ -162,8 +198,8 @@
 ```vue
 <template>
   <div style="display: flex; gap: 16px;">
-    <vk-image style="width: 100px; height: 100px" src="https://picsum.photos/100/100" preview />
-    <vk-image style="width: 100px; height: 100px" src="https://picsum.photos/100/100" preview />
+    <vk-image style="width: 100px; height: 100px" src="http://oa.shixian.xyz/api/file/Image/userAvatar/210.jpg" preview />
+    <vk-image style="width: 100px; height: 100px" src="http://oa.shixian.xyz/api/file/Image/userAvatar/211.jpg" preview />
   </div>
 </template>
 ```
@@ -207,10 +243,10 @@
 
 <script setup>
 const imageList = [
-  "https://picsum.photos/100/100",
-  "https://picsum.photos/100/100",
-  "https://picsum.photos/100/100",
-  "https://picsum.photos/100/100",
+  "http://oa.shixian.xyz/api/file/Image/userAvatar/212.jpg",
+  "http://oa.shixian.xyz/api/file/Image/userAvatar/213.jpg",
+  "http://oa.shixian.xyz/api/file/Image/userAvatar/214.jpg",
+  "http://oa.shixian.xyz/api/file/Image/userAvatar/215.jpg",
 ];
 </script>
 ```
@@ -220,10 +256,10 @@ const imageList = [
 
 <script setup>
 const imageList = [
-  'https://picsum.photos/100/100',
-  'https://picsum.photos/100/100',
-  'https://picsum.photos/100/100',
-  'https://picsum.photos/100/100',
+  'http://oa.shixian.xyz/api/file/Image/userAvatar/216.jpg',
+  'http://oa.shixian.xyz/api/file/Image/userAvatar/217.jpg',
+  'http://oa.shixian.xyz/api/file/Image/userAvatar/218.jpg',
+  'http://oa.shixian.xyz/api/file/Image/userAvatar/219.jpg',
 ]
 </script>
 
@@ -236,28 +272,28 @@ Image 组件提供四种尺寸，可以在不同场景下选择合适的图片�
     <div style="text-align: center;">
       <vk-image
         size="tiny"
-        src="https://picsum.photos/100/100"
+        src="http://oa.shixian.xyz/api/file/Image/userAvatar/220.jpg"
       />
       <div style="margin-top: 8px; font-size: 12px; color: #909399;">tiny</div>
     </div>
     <div style="text-align: center;">
       <vk-image
         size="small"
-        src="https://picsum.photos/100/100"
+        src="http://oa.shixian.xyz/api/file/Image/userAvatar/221.jpg"
       />
       <div style="margin-top: 8px; font-size: 12px; color: #909399;">small</div>
     </div>
     <div style="text-align: center;">
       <vk-image
         size="medium"
-        src="https://picsum.photos/100/100"
+        src="http://oa.shixian.xyz/api/file/Image/userAvatar/68479bdbe4b0fa77d2806fc6.jpg"
       />
       <div style="margin-top: 8px; font-size: 12px; color: #909399;">medium</div>
     </div>
     <div style="text-align: center;">
       <vk-image
         size="large"
-        src="https://picsum.photos/100/100"
+        src="http://oa.shixian.xyz/api/file/Image/userAvatar/68479bdbe4b0fa77d2806fc6.jpg.min.jpg"
       />
       <div style="margin-top: 8px; font-size: 12px; color: #909399;">large</div>
     </div>
@@ -269,19 +305,19 @@ Image 组件提供四种尺寸，可以在不同场景下选择合适的图片�
 <template>
   <div style="display: flex; gap: 16px; align-items: flex-start;">
     <div style="text-align: center;">
-      <vk-image size="tiny" src="https://picsum.photos/100/100" />
+      <vk-image size="tiny" src="http://oa.shixian.xyz/api/file/Image/userAvatar/001.png" />
       <div style="margin-top: 8px; font-size: 12px; color: #909399;">tiny</div>
     </div>
     <div style="text-align: center;">
-      <vk-image size="small" src="https://picsum.photos/100/100" />
+      <vk-image size="small" src="http://oa.shixian.xyz/api/file/Image/userAvatar/101.jpg" />
       <div style="margin-top: 8px; font-size: 12px; color: #909399;">small</div>
     </div>
     <div style="text-align: center;">
-      <vk-image size="medium" src="https://picsum.photos/100/100" />
+      <vk-image size="medium" src="http://oa.shixian.xyz/api/file/Image/userAvatar/102.jpg" />
       <div style="margin-top: 8px; font-size: 12px; color: #909399;">medium</div>
     </div>
     <div style="text-align: center;">
-      <vk-image size="large" src="https://picsum.photos/100/100" />
+      <vk-image size="large" src="http://oa.shixian.xyz/api/file/Image/userAvatar/103.jpg" />
       <div style="margin-top: 8px; font-size: 12px; color: #909399;">large</div>
     </div>
   </div>
@@ -297,34 +333,26 @@ Image 组件提供四种尺寸，可以在不同场景下选择合适的图片�
 
 <Demo>
   <div style="display: flex; gap: 16px; align-items: center;">
-    <div style="width: 100px; height: 100px;">
       <vk-image
-        style="width: 100px; height: 100px"
-        src="https://picsum.photos/100/100"
+        size="tiny"
+        src="http://oa.shixian.xyz/api/file/Image/userAvatar/104.jpg"
         round
       />
-    </div>
-    <div style="width: 100px; height: 100px;">
       <vk-image
-        style="width: 100px; height: 100px"
-        src="https://picsum.photos/100/100"
+        size="small"
+        src="http://oa.shixian.xyz/api/file/Image/userAvatar/105.jpg"
         round
       />
-    </div>
-    <div style="width: 100px; height: 100px;">
       <vk-image
-        style="width: 100px; height: 100px"
-        src="https://picsum.photos/100/100"
+        size="medium"
+        src="http://oa.shixian.xyz/api/file/Image/userAvatar/201.jpg"
         round
       />
-    </div>
-    <div style="width: 100px; height: 100px;">
       <vk-image
         size="large"
-        src="https://picsum.photos/100/100"
+        src="http://oa.shixian.xyz/api/file/Image/userAvatar/202.jpg"
         round
       />
-    </div>
   </div>
   
   <template #code>
@@ -332,8 +360,8 @@ Image 组件提供四种尺寸，可以在不同场景下选择合适的图片�
 ```vue
 <template>
   <div style="display: flex; gap: 16px; align-items: center;">
-    <vk-image style="width: 100px; height: 100px" src="https://picsum.photos/100/100" round />
-    <vk-image size="large" src="https://picsum.photos/100/100" round />
+    <vk-image style="width: 100px; height: 100px" src="http://oa.shixian.xyz/api/file/Image/userAvatar/203.jpg" round />
+    <vk-image size="large" src="http://oa.shixian.xyz/api/file/Image/userAvatar/204.jpg" round />
   </div>
 </template>
 ```
@@ -349,17 +377,17 @@ Image 组件提供四种尺寸，可以在不同场景下选择合适的图片�
   <div style="display: flex; gap: 16px; align-items: center;">
     <vk-image
       style="width: 100px; height: 100px"
-      src="https://picsum.photos/100/100"
+      src="http://oa.shixian.xyz/api/file/Image/userAvatar/205.jpg"
       :radius="4"
     />
     <vk-image
       style="width: 100px; height: 100px"
-      src="https://picsum.photos/100/100"
+      src="http://oa.shixian.xyz/api/file/Image/userAvatar/206.jpg"
       :radius="12"
     />
     <vk-image
       style="width: 100px; height: 100px"
-      src="https://picsum.photos/100/100"
+      src="http://oa.shixian.xyz/api/file/Image/userAvatar/207.jpg"
       radius="20px"
     />
   </div>
@@ -369,9 +397,9 @@ Image 组件提供四种尺寸，可以在不同场景下选择合适的图片�
 ```vue
 <template>
   <div style="display: flex; gap: 16px; align-items: center;">
-    <vk-image style="width: 100px; height: 100px" src="https://picsum.photos/100/100" :radius="4" />
-    <vk-image style="width: 100px; height: 100px" src="https://picsum.photos/100/100" :radius="12" />
-    <vk-image style="width: 100px; height: 100px" src="https://picsum.photos/100/100" radius="20px" />
+    <vk-image style="width: 100px; height: 100px" src="http://oa.shixian.xyz/api/file/Image/userAvatar/208.jpg" :radius="4" />
+    <vk-image style="width: 100px; height: 100px" src="http://oa.shixian.xyz/api/file/Image/userAvatar/209.jpg" :radius="12" />
+    <vk-image style="width: 100px; height: 100px" src="http://oa.shixian.xyz/api/file/Image/userAvatar/210.jpg" radius="20px" />
   </div>
 </template>
 ```

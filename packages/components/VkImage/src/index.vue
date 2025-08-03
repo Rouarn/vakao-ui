@@ -2,8 +2,17 @@
   <div :class="mergedClass" :style="mergedStyle" @click="handleClick">
     <!-- 图片容器 -->
     <div :class="ns.element('wrapper')" :style="wrapperStyle">
+      <!-- 占位符图片 -->
+      <img
+        v-if="placeholder && loadStatus === 'loading'"
+        :src="placeholder"
+        :alt="alt"
+        :class="[ns.element('inner'), ns.element('placeholder')]"
+        :style="{ ...imageStyle, filter: 'blur(2px)', opacity: 0.8 }"
+      />
+
       <!-- 加载中状态 -->
-      <div v-if="loadStatus === 'loading' && loading" :class="ns.element('loading')">
+      <div v-if="loadStatus === 'loading' && loading && !placeholder" :class="ns.element('loading')">
         <slot name="loading">
           <div :class="ns.element('loading-icon')">
             <VkIcon icon="mdi:loading" :class="ns.element('loading-spinner')" />
@@ -28,20 +37,21 @@
 
       <!-- 实际图片 -->
       <img
-        v-show="loadStatus === 'loaded'"
+        v-show="currentSrc && (loadStatus === 'loaded' || (loadStatus === 'loading' && currentSrc))"
         ref="imageRef"
         :src="currentSrc"
         :alt="alt"
         :class="ns.element('inner')"
         :style="imageStyle"
+        :loading="lazy && supportsNativeLazyLoading ? 'lazy' : undefined"
         @load="handleLoad"
         @error="handleError"
         @click="handleImageClick"
       />
-      
+
       <!-- 懒加载占位元素 -->
       <div
-        v-if="lazy && loadStatus === 'loading'"
+        v-if="lazy && loadStatus === 'loading' && !supportsNativeLazyLoading && !currentSrc"
         ref="lazyRef"
         :class="ns.element('lazy-placeholder')"
         :style="{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }"
@@ -247,6 +257,12 @@ const dragState = ref({
 /** 懒加载观察器 */
 let intersectionObserver: IntersectionObserver | null = null;
 
+/** 重试计数器 */
+const retryCount = ref(0);
+
+/** 最大重试次数 */
+const MAX_RETRY_COUNT = 3;
+
 // ==================== 计算属性 ====================
 
 /**
@@ -273,7 +289,7 @@ const mergedClass = computed(() => {
   const { class: attrClass } = attrs;
   return [
     ns.block(),
-    ns.modifier(props.size),
+    ns.modifier("size", props.size),
     ns.is("round", props.round),
     ns.is("disabled", props.disabled),
     ns.is("preview", props.preview),
@@ -357,6 +373,13 @@ const previewImageStyle = computed(() => {
   };
 });
 
+/**
+ * 检测浏览器是否支持原生懒加载
+ */
+const supportsNativeLazyLoading = computed(() => {
+  return "loading" in HTMLImageElement.prototype;
+});
+
 // ==================== 事件处理 ====================
 
 /**
@@ -371,11 +394,33 @@ const handleLoad = (event: Event) => {
  * 处理图片加载失败
  */
 const handleError = (event: Event) => {
-  loadStatus.value = "error";
+  // 如果还有重试次数且不是fallback图片，则尝试重试
+  if (retryCount.value < MAX_RETRY_COUNT && currentSrc.value === props.src) {
+    retryCount.value++;
+    // 延迟重试，避免频繁请求
+    setTimeout(
+      () => {
+        loadStatus.value = "loading";
+        // 添加时间戳避免缓存
+        const separator = props.src.includes("?") ? "&" : "?";
+        currentSrc.value = `${props.src}${separator}_retry=${retryCount.value}&_t=${Date.now()}`;
+      },
+      Math.pow(2, retryCount.value) * 1000,
+    ); // 指数退避
+    return;
+  }
+
+  // 重试失败或达到最大重试次数，尝试使用fallback
   if (props.fallback && currentSrc.value !== props.fallback) {
     currentSrc.value = props.fallback;
     loadStatus.value = "loading";
+    retryCount.value = 0; // 重置重试计数
   } else {
+    loadStatus.value = "error";
+    // 如果是懒加载模式且加载失败，重新启动懒加载观察
+    if (props.lazy && !supportsNativeLazyLoading.value) {
+      restartLazyLoad();
+    }
     emit("error", event);
   }
 };
@@ -558,9 +603,17 @@ const handleMouseUp = () => {
  */
 const reload = () => {
   loadStatus.value = "loading";
-  currentSrc.value = props.src;
-  if (imageRef.value) {
-    imageRef.value.src = props.src;
+  retryCount.value = 0; // 重置重试计数器
+  
+  if (props.lazy && !supportsNativeLazyLoading.value) {
+    // 懒加载模式，重新启动观察
+    restartLazyLoad();
+  } else {
+    // 非懒加载模式，直接设置src
+    currentSrc.value = props.src;
+    if (imageRef.value) {
+      imageRef.value.src = props.src;
+    }
   }
 };
 
@@ -574,27 +627,53 @@ const getLoadStatus = (): ImageLoadStatus => {
 // ==================== 懒加载 ====================
 
 /**
- * 初始化懒加载
+ * 初始化懒加载（仅用于IntersectionObserver实现）
  */
 const initLazyLoad = () => {
-  if (!props.lazy || !lazyRef.value) return;
+  if (!props.lazy || !lazyRef.value || supportsNativeLazyLoading.value) return;
 
-  intersectionObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          loadStatus.value = "loading";
-          currentSrc.value = props.src;
-          intersectionObserver?.unobserve(entry.target);
+  // 使用 IntersectionObserver 实现懒加载
+  const options = {
+    root: props.scrollContainer
+      ? typeof props.scrollContainer === "string"
+        ? document.querySelector(props.scrollContainer)
+        : props.scrollContainer
+      : null,
+    rootMargin: "50px",
+    threshold: 0.01, // 当1%的元素可见时触发
+  };
+
+  intersectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting && loadStatus.value === "loading" && !currentSrc.value) {
+        // 开始加载图片
+        currentSrc.value = props.src;
+        loadStatus.value = "loading";
+        // 停止观察，避免重复触发
+        if (intersectionObserver && entry.target) {
+          intersectionObserver.unobserve(entry.target);
         }
-      });
-    },
-    {
-      rootMargin: "50px",
-    },
-  );
+      }
+    });
+  }, options);
 
   intersectionObserver.observe(lazyRef.value);
+};
+
+/**
+ * 重新启动懒加载观察
+ */
+const restartLazyLoad = () => {
+  if (!props.lazy || supportsNativeLazyLoading.value || !lazyRef.value) return;
+  
+  // 重置状态
+  currentSrc.value = "";
+  loadStatus.value = "loading";
+  
+  // 重新开始观察
+  if (intersectionObserver && lazyRef.value) {
+    intersectionObserver.observe(lazyRef.value);
+  }
 };
 
 /**
@@ -611,13 +690,22 @@ const cleanupLazyLoad = () => {
 
 onMounted(() => {
   if (props.lazy) {
-    currentSrc.value = props.placeholder || "";
-    loadStatus.value = "loading";
-    nextTick(() => {
-      initLazyLoad();
-    });
+    if (supportsNativeLazyLoading.value) {
+      // 浏览器支持原生懒加载，直接设置src
+      currentSrc.value = props.src;
+      loadStatus.value = "loading";
+    } else {
+      // 使用IntersectionObserver实现懒加载
+      currentSrc.value = "";
+      loadStatus.value = "loading";
+      nextTick(() => {
+        initLazyLoad();
+      });
+    }
   } else {
+    // 非懒加载模式，直接加载图片
     currentSrc.value = props.src;
+    loadStatus.value = "loading";
   }
 });
 
@@ -638,6 +726,7 @@ watch(
   () => props.src,
   (newSrc) => {
     if (newSrc !== currentSrc.value) {
+      retryCount.value = 0; // 重置重试计数器
       reload();
     }
   },
