@@ -130,7 +130,11 @@
   <div style="height: 400px; overflow-y: auto; border: 1px solid #ddd; padding: 16px;">
     <div style="margin-bottom: 16px;">向下滚动查看懒加载效果</div>
     <div v-for="i in 10" :key="i" style="margin-bottom: 16px;">
-      <vk-image style="width: 200px; height: 150px" :src="`http://oa.shixian.xyz/api/file/Image/userAvatar/${['207.jpg', '208.jpg', '209.jpg', '210.jpg', '211.jpg', '212.jpg', '213.jpg', '214.jpg', '215.jpg', '216.jpg'][i-1]}`" lazy />
+      <vk-image
+        style="width: 200px; height: 150px"
+        :src="`http://oa.shixian.xyz/api/file/Image/userAvatar/${['207.jpg', '208.jpg', '209.jpg', '210.jpg', '211.jpg', '212.jpg', '213.jpg', '214.jpg', '215.jpg', '216.jpg'][i - 1]}`"
+        lazy
+      />
     </div>
   </div>
 </template>
@@ -164,7 +168,7 @@
       v-for="i in 6"
       :key="i"
       style="width: 150px; height: 100px"
-      :src="`http://oa.shixian.xyz/api/file/Image/userAvatar/${['101.jpg', '102.jpg', '103.jpg', '104.jpg', '105.jpg', '201.jpg'][i-1]}`"
+      :src="`http://oa.shixian.xyz/api/file/Image/userAvatar/${['101.jpg', '102.jpg', '103.jpg', '104.jpg', '105.jpg', '201.jpg'][i - 1]}`"
       :placeholder="`http://oa.shixian.xyz/api/file/Image/userAvatar/001.png`"
       lazy
     />
@@ -180,7 +184,7 @@
 可通过 `preview` 开启预览功能。
 
 <Demo>
-  <div style="display: flex; gap: 16px; width: 100%;">
+  <div style="display: flex; gap: 16px; flex-wrap: wrap; width: 100%;">
     <vk-image
       style="width: 100px; height: 100px"
       src="http://oa.shixian.xyz/api/file/Image/userAvatar/208.jpg"
@@ -212,7 +216,7 @@
 可通过 `preview-src-list` 开启图片组预览功能。
 
 <Demo>
-  <div style="display: flex; gap: 16px;">
+  <div style="display: flex; gap: 16px; flex-wrap: wrap;">
     <vk-image
       v-for="(src, index) in imageList"
       :key="src"
@@ -268,7 +272,7 @@ const imageList = [
 Image 组件提供四种尺寸，可以在不同场景下选择合适的图片尺寸。
 
 <Demo>
-  <div style="display: flex; gap: 16px; align-items: flex-start;">
+  <div style="display: flex; gap: 16px; align-items: flex-start; flex-wrap: wrap;">
     <div style="text-align: center;">
       <vk-image
         size="tiny"
@@ -332,7 +336,7 @@ Image 组件提供四种尺寸，可以在不同场景下选择合适的图片�
 可通过 `round` 属性设置为圆形图片。
 
 <Demo>
-  <div style="display: flex; gap: 16px; align-items: center;">
+  <div style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap;">
       <vk-image
         size="tiny"
         src="http://oa.shixian.xyz/api/file/Image/userAvatar/104.jpg"
@@ -374,7 +378,7 @@ Image 组件提供四种尺寸，可以在不同场景下选择合适的图片�
 可通过 `radius` 属性自定义圆角大小。
 
 <Demo>
-  <div style="display: flex; gap: 16px; align-items: center;">
+  <div style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap;">
     <vk-image
       style="width: 100px; height: 100px"
       src="http://oa.shixian.xyz/api/file/Image/userAvatar/205.jpg"
