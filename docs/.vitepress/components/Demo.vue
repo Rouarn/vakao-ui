@@ -30,14 +30,14 @@ const toggleCode = () => {
 
 <style scoped>
 .demo-container {
-  border: 1px solid #ebedf0;
+  border: 1px solid var(--vp-c-divider);
   border-radius: 4px;
   margin: 16px 0;
   transition: all 0.2s;
 }
 
 .demo-container:hover {
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--vp-shadow-2);
 }
 
 .demo-content {
@@ -49,24 +49,24 @@ const toggleCode = () => {
 }
 
 .demo-code {
-  border-top: 1px solid #ebedf0;
+  border-top: 1px solid var(--vp-c-divider);
   padding: 16px;
-  background-color: #fafafa;
+  background-color: var(--vp-c-bg-soft);
 }
 
 .demo-footer {
-  border-top: 1px solid #ebedf0;
+  border-top: 1px solid var(--vp-c-divider);
   padding: 10px 16px;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #909399;
+  color: var(--vp-c-text-2);
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .demo-footer:hover {
-  color: #18a058;
+  color: var(--vp-c-brand-1);
 }
 
 .icon {
