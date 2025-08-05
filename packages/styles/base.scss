@@ -285,6 +285,284 @@
   --vk-tag-warning-border: #{$tag-warning-border};
   --vk-tag-danger-border: #{$tag-danger-border};
   --vk-tag-info-border: #{$tag-info-border};
+
+  /* 组件级别变量 */
+  /* 按钮组件变量 */
+  --vk-button-bg-default: var(--vk-fill-color-blank);
+  --vk-button-bg-hover: var(--vk-fill-color-light);
+  --vk-button-border-default: var(--vk-border-color);
+  --vk-button-border-hover: var(--vk-color-primary);
+  --vk-button-text-default: var(--vk-text-color-primary);
+  --vk-button-text-disabled: var(--vk-text-color-disabled);
+
+  /* 输入框组件变量 */
+  --vk-input-bg-default: var(--vk-bg-color);
+  --vk-input-bg-disabled: var(--vk-fill-color-light);
+  --vk-input-border-default: var(--vk-border-color);
+  --vk-input-border-hover: var(--vk-border-color-hover);
+  --vk-input-border-focus: var(--vk-color-primary);
+  --vk-input-text-default: var(--vk-text-color-regular);
+  --vk-input-text-placeholder: var(--vk-text-color-placeholder);
+  --vk-input-text-disabled: var(--vk-text-color-disabled);
+
+  /* 卡片组件变量 */
+  --vk-card-bg-default: var(--vk-bg-color);
+  --vk-card-border-default: var(--vk-border-color-light);
+  --vk-card-text-default: var(--vk-text-color-primary);
+  --vk-card-shadow-base: var(--vk-box-shadow-light);
+  --vk-card-shadow-hover: var(--vk-box-shadow-base);
+
+  /* 选择器组件变量 */
+  --vk-select-bg-default: var(--vk-bg-color);
+  --vk-select-bg-disabled: var(--vk-fill-color-light);
+  --vk-select-border-default: var(--vk-border-color);
+  --vk-select-border-hover: var(--vk-border-color-hover);
+  --vk-select-border-focus: var(--vk-color-primary);
+  --vk-select-text-default: var(--vk-text-color-regular);
+  --vk-select-text-disabled: var(--vk-text-color-disabled);
+  --vk-select-dropdown-bg: var(--vk-bg-color);
+  --vk-select-dropdown-border: var(--vk-border-color-light);
+  --vk-select-dropdown-shadow: var(--vk-box-shadow-light);
+
+  /* 复选框组件变量 */
+  --vk-checkbox-bg-default: var(--vk-fill-color-blank);
+  --vk-checkbox-bg-checked: var(--vk-color-primary);
+  --vk-checkbox-bg-disabled: var(--vk-fill-color-light);
+  --vk-checkbox-border-default: var(--vk-border-color);
+  --vk-checkbox-border-checked: var(--vk-color-primary);
+  --vk-checkbox-border-hover: var(--vk-color-primary);
+  --vk-checkbox-text-default: var(--vk-text-color-regular);
+  --vk-checkbox-text-disabled: var(--vk-text-color-disabled);
+
+  /* 单选框组件变量 */
+  --vk-radio-bg-default: var(--vk-fill-color-blank);
+  --vk-radio-bg-disabled: var(--vk-fill-color-light);
+  --vk-radio-border-default: var(--vk-border-color);
+  --vk-radio-border-checked: var(--vk-color-primary);
+  --vk-radio-border-hover: var(--vk-color-primary);
+  --vk-radio-dot-checked: var(--vk-color-primary);
+  --vk-radio-text-default: var(--vk-text-color-regular);
+  --vk-radio-text-disabled: var(--vk-text-color-disabled);
+
+  /* 开关组件变量 */
+  --vk-switch-bg-default: var(--vk-fill-color-light);
+  --vk-switch-bg-checked: var(--vk-color-primary);
+  --vk-switch-border-default: var(--vk-border-color-base);
+  --vk-switch-border-checked: var(--vk-color-primary);
+  --vk-switch-button-bg: var(--vk-color-white);
+  --vk-switch-text-default: var(--vk-text-color-primary);
+  --vk-switch-text-active: var(--vk-color-primary);
+
+  /* 消息框组件变量 */
+  --vk-message-box-bg: var(--vk-bg-color);
+  --vk-message-box-border: var(--vk-border-color-light);
+  --vk-message-box-shadow: var(--vk-box-shadow-base);
+  --vk-message-box-title-color: var(--vk-text-color-primary);
+  --vk-message-box-text-color: var(--vk-text-color-secondary);
+  --vk-message-box-close-bg-hover: var(--vk-fill-color-light);
+  --vk-message-box-close-text-hover: var(--vk-text-color-primary);
+
+  /* 图标组件变量 */
+  --vk-icon-color-default: var(--vk-text-color-regular);
+  --vk-icon-color-primary: var(--vk-color-primary);
+  --vk-icon-color-success: var(--vk-color-success);
+  --vk-icon-color-warning: var(--vk-color-warning);
+  --vk-icon-color-danger: var(--vk-color-danger);
+  --vk-icon-color-info: var(--vk-color-info);
+
+  /* 图片组件变量 */
+  --vk-image-bg-default: var(--vk-fill-color-light);
+  --vk-image-border-default: var(--vk-border-color-light);
+  --vk-image-placeholder-color: var(--vk-text-color-placeholder);
+  --vk-image-error-color: var(--vk-text-color-secondary);
+
+  /* 分割线组件变量 */
+  --vk-divider-color-default: var(--vk-border-color-light);
+  --vk-divider-text-color: var(--vk-text-color-secondary);
+
+  /* 徽章组件变量 */
+  --vk-badge-bg-primary: var(--vk-color-primary);
+  --vk-badge-bg-success: var(--vk-color-success);
+  --vk-badge-bg-warning: var(--vk-color-warning);
+  --vk-badge-bg-danger: var(--vk-color-danger);
+  --vk-badge-bg-info: var(--vk-color-info);
+  --vk-badge-text-color: var(--vk-color-white);
+
+  /* 头像组件变量 */
+  --vk-avatar-bg-default: var(--vk-fill-color-light);
+  --vk-avatar-border-default: var(--vk-border-color-light);
+  --vk-avatar-text-color: var(--vk-text-color-regular);
+  --vk-avatar-placeholder-color: var(--vk-text-color-placeholder);
+}
+
+/* 深色模式变量 */
+[data-theme="dark"] {
+  /* 主题色 - 深色模式调整 */
+  --vk-color-primary: #409eff;
+  --vk-color-success: #67c23a;
+  --vk-color-warning: #e6a23c;
+  --vk-color-danger: #f56c6c;
+  --vk-color-info: #909399;
+
+  /* 文本颜色 - 深色模式 */
+  --vk-text-color-primary: #e5eaf3;
+  --vk-text-color-regular: #cfd3dc;
+  --vk-text-color-secondary: #a3a6ad;
+  --vk-text-color-placeholder: #8d9095;
+  --vk-text-color-disabled: #6c6e72;
+
+  /* 边框颜色 - 深色模式 */
+  --vk-border-color: #4c4d4f;
+  --vk-border-color-base: #414243;
+  --vk-border-color-light: #363637;
+  --vk-border-color-lighter: #2d2d2f;
+  --vk-border-color-disabled: #3a3a3c;
+  --vk-border-color-hover: #58585b;
+  --vk-border-color-darker: #636466;
+
+  /* 背景颜色 - 深色模式 */
+  --vk-bg-color: #141414;
+  --vk-bg-color-page: #0a0a0a;
+  --vk-bg-color-disabled: #1d1e1f;
+  --vk-bg-color-overlay: rgba(255, 255, 255, 0.05);
+
+  /* 填充颜色 - 深色模式 */
+  --vk-fill-color-light: #1d1e1f;
+  --vk-fill-color-lighter: #262727;
+  --vk-fill-color-extra-light: #2b2b2d;
+  --vk-fill-color-dark: #18181a;
+  --vk-fill-color-darker: #141414;
+  --vk-fill-color-blank: #141414;
+
+  /* 阴影 - 深色模式调整 */
+  --vk-box-shadow-light: 0 2px 12px 0 rgba(0, 0, 0, 0.4);
+  --vk-box-shadow-base: 0 2px 4px rgba(0, 0, 0, 0.4), 0 0 6px rgba(0, 0, 0, 0.2);
+  --vk-box-shadow-dark: 0 2px 16px 0 rgba(0, 0, 0, 0.6);
+  --vk-box-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --vk-box-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+  --vk-box-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+  --vk-box-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+  --vk-box-shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+
+  /* 遮罩颜色 - 深色模式 */
+  --vk-mask-color: rgba(0, 0, 0, 0.8);
+
+  /* Tag组件相关颜色 - 深色模式 */
+  --vk-tag-default-color: #c0c4cc;
+  --vk-tag-default-border: #30313233;
+  --vk-tag-primary-border: #1d39c433;
+  --vk-tag-success-border: #0f7c0f33;
+  --vk-tag-warning-border: #a25f0033;
+  --vk-tag-danger-border: #ca242833;
+  --vk-tag-info-border: #64666a33;
+
+  /* 组件级别深色模式变量 */
+  /* 按钮组件深色模式变量 */
+  --vk-button-bg-default: var(--vk-fill-color-dark);
+  --vk-button-bg-hover: var(--vk-fill-color-darker);
+  --vk-button-border-default: var(--vk-border-color-darker);
+  --vk-button-border-hover: var(--vk-color-primary);
+  --vk-button-text-default: var(--vk-text-color-primary);
+  --vk-button-text-disabled: var(--vk-text-color-disabled);
+
+  /* 输入框组件深色模式变量 */
+  --vk-input-bg-default: var(--vk-bg-color);
+  --vk-input-bg-disabled: var(--vk-fill-color-dark);
+  --vk-input-border-default: var(--vk-border-color);
+  --vk-input-border-hover: var(--vk-border-color-hover);
+  --vk-input-border-focus: var(--vk-color-primary);
+  --vk-input-text-default: var(--vk-text-color-regular);
+  --vk-input-text-placeholder: var(--vk-text-color-placeholder);
+  --vk-input-text-disabled: var(--vk-text-color-disabled);
+
+  /* 卡片组件深色模式变量 */
+  --vk-card-bg-default: var(--vk-bg-color);
+  --vk-card-border-default: var(--vk-border-color-light);
+  --vk-card-text-default: var(--vk-text-color-primary);
+  --vk-card-shadow-base: 0 2px 12px 0 rgba(255, 255, 255, 0.1);
+  --vk-card-shadow-hover: 0 4px 20px 0 rgba(255, 255, 255, 0.15);
+
+  /* 选择器组件深色模式变量 */
+  --vk-select-bg-default: var(--vk-bg-color);
+  --vk-select-bg-disabled: var(--vk-fill-color-dark);
+  --vk-select-border-default: var(--vk-border-color);
+  --vk-select-border-hover: var(--vk-border-color-hover);
+  --vk-select-border-focus: var(--vk-color-primary);
+  --vk-select-text-default: var(--vk-text-color-regular);
+  --vk-select-text-disabled: var(--vk-text-color-disabled);
+  --vk-select-dropdown-bg: var(--vk-bg-color);
+  --vk-select-dropdown-border: var(--vk-border-color-light);
+  --vk-select-dropdown-shadow: 0 4px 12px 0 rgba(255, 255, 255, 0.1);
+
+  /* 复选框组件深色模式变量 */
+  --vk-checkbox-bg-default: var(--vk-fill-color-blank);
+  --vk-checkbox-bg-checked: var(--vk-color-primary);
+  --vk-checkbox-bg-disabled: var(--vk-fill-color-dark);
+  --vk-checkbox-border-default: var(--vk-border-color);
+  --vk-checkbox-border-checked: var(--vk-color-primary);
+  --vk-checkbox-border-hover: var(--vk-color-primary);
+  --vk-checkbox-text-default: var(--vk-text-color-regular);
+  --vk-checkbox-text-disabled: var(--vk-text-color-disabled);
+
+  /* 单选框组件深色模式变量 */
+  --vk-radio-bg-default: var(--vk-fill-color-blank);
+  --vk-radio-bg-disabled: var(--vk-fill-color-dark);
+  --vk-radio-border-default: var(--vk-border-color);
+  --vk-radio-border-checked: var(--vk-color-primary);
+  --vk-radio-border-hover: var(--vk-color-primary);
+  --vk-radio-dot-checked: var(--vk-color-primary);
+  --vk-radio-text-default: var(--vk-text-color-regular);
+  --vk-radio-text-disabled: var(--vk-text-color-disabled);
+
+  /* 开关组件深色模式变量 */
+  --vk-switch-bg-default: var(--vk-fill-color-dark);
+  --vk-switch-bg-checked: var(--vk-color-primary);
+  --vk-switch-border-default: var(--vk-border-color-base);
+  --vk-switch-border-checked: var(--vk-color-primary);
+  --vk-switch-button-bg: var(--vk-color-white);
+  --vk-switch-text-default: var(--vk-text-color-primary);
+  --vk-switch-text-active: var(--vk-color-primary);
+
+  /* 消息框组件深色模式变量 */
+  --vk-message-box-bg: var(--vk-bg-color);
+  --vk-message-box-border: var(--vk-border-color-light);
+  --vk-message-box-shadow: 0 8px 32px 0 rgba(255, 255, 255, 0.1);
+  --vk-message-box-title-color: var(--vk-text-color-primary);
+  --vk-message-box-text-color: var(--vk-text-color-secondary);
+  --vk-message-box-close-bg-hover: var(--vk-fill-color-dark);
+  --vk-message-box-close-text-hover: var(--vk-text-color-primary);
+
+  /* 图标组件深色模式变量 */
+  --vk-icon-color-default: var(--vk-text-color-regular);
+  --vk-icon-color-primary: var(--vk-color-primary);
+  --vk-icon-color-success: var(--vk-color-success);
+  --vk-icon-color-warning: var(--vk-color-warning);
+  --vk-icon-color-danger: var(--vk-color-danger);
+  --vk-icon-color-info: var(--vk-color-info);
+
+  /* 图片组件深色模式变量 */
+  --vk-image-bg-default: var(--vk-fill-color-dark);
+  --vk-image-border-default: var(--vk-border-color-light);
+  --vk-image-placeholder-color: var(--vk-text-color-placeholder);
+  --vk-image-error-color: var(--vk-text-color-secondary);
+
+  /* 分割线组件深色模式变量 */
+  --vk-divider-color-default: var(--vk-border-color-light);
+  --vk-divider-text-color: var(--vk-text-color-secondary);
+
+  /* 徽章组件深色模式变量 */
+  --vk-badge-bg-primary: var(--vk-color-primary);
+  --vk-badge-bg-success: var(--vk-color-success);
+  --vk-badge-bg-warning: var(--vk-color-warning);
+  --vk-badge-bg-danger: var(--vk-color-danger);
+  --vk-badge-bg-info: var(--vk-color-info);
+  --vk-badge-text-color: var(--vk-color-white);
+
+  /* 头像组件深色模式变量 */
+  --vk-avatar-bg-default: var(--vk-fill-color-dark);
+  --vk-avatar-border-default: var(--vk-border-color-light);
+  --vk-avatar-text-color: var(--vk-text-color-regular);
+  --vk-avatar-placeholder-color: var(--vk-text-color-placeholder);
 }
 
 /* 全局样式 */

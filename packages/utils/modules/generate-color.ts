@@ -205,7 +205,123 @@ function generateCSSVariables(): string {
   css += "  --vk-tag-success-border: #{$tag-success-border};\n";
   css += "  --vk-tag-warning-border: #{$tag-warning-border};\n";
   css += "  --vk-tag-danger-border: #{$tag-danger-border};\n";
-  css += "  --vk-tag-info-border: #{$tag-info-border};\n";
+  css += "  --vk-tag-info-border: #{$tag-info-border};\n\n";
+
+  // 组件级别变量
+  css += "  /* 组件级别变量 */\n";
+  css += "  /* 按钮组件变量 */\n";
+  css += "  --vk-button-bg-default: var(--vk-fill-color-blank);\n";
+  css += "  --vk-button-bg-hover: var(--vk-fill-color-light);\n";
+  css += "  --vk-button-border-default: var(--vk-border-color);\n";
+  css += "  --vk-button-border-hover: var(--vk-color-primary);\n";
+  css += "  --vk-button-text-default: var(--vk-text-color-primary);\n";
+  css += "  --vk-button-text-disabled: var(--vk-text-color-disabled);\n\n";
+
+  css += "  /* 输入框组件变量 */\n";
+  css += "  --vk-input-bg-default: var(--vk-bg-color);\n";
+  css += "  --vk-input-bg-disabled: var(--vk-fill-color-light);\n";
+  css += "  --vk-input-border-default: var(--vk-border-color);\n";
+  css += "  --vk-input-border-hover: var(--vk-border-color-hover);\n";
+  css += "  --vk-input-border-focus: var(--vk-color-primary);\n";
+  css += "  --vk-input-text-default: var(--vk-text-color-regular);\n";
+  css += "  --vk-input-text-placeholder: var(--vk-text-color-placeholder);\n";
+  css += "  --vk-input-text-disabled: var(--vk-text-color-disabled);\n\n";
+
+  css += "  /* 卡片组件变量 */\n";
+  css += "  --vk-card-bg-default: var(--vk-bg-color);\n";
+  css += "  --vk-card-border-default: var(--vk-border-color-light);\n";
+  css += "  --vk-card-text-default: var(--vk-text-color-primary);\n";
+  css += "  --vk-card-shadow-base: var(--vk-box-shadow-light);\n";
+  css += "  --vk-card-shadow-hover: var(--vk-box-shadow-base);\n\n";
+
+  css += "}\n\n";
+
+  // 深色模式变量
+  css += "/* 深色模式变量 */\n";
+  css += "[data-theme=\"dark\"] {\n";
+
+  // 深色模式基础变量
+  css += "  /* 主题色 - 深色模式 */\n";
+  css += "  --vk-color-primary: var(--vk-color-primary-dark-1);\n";
+  css += "  --vk-color-success: var(--vk-color-success-dark-1);\n";
+  css += "  --vk-color-warning: var(--vk-color-warning-dark-1);\n";
+  css += "  --vk-color-danger: var(--vk-color-danger-dark-1);\n";
+  css += "  --vk-color-info: var(--vk-color-info-dark-1);\n\n";
+
+  css += "  /* 文本颜色 - 深色模式 */\n";
+  css += "  --vk-text-color-primary: #ffffffd9;\n";
+  css += "  --vk-text-color-regular: #ffffffe0;\n";
+  css += "  --vk-text-color-secondary: #ffffff99;\n";
+  css += "  --vk-text-color-placeholder: #ffffff59;\n";
+  css += "  --vk-text-color-disabled: #ffffff40;\n\n";
+
+  css += "  /* 边框颜色 - 深色模式 */\n";
+  css += "  --vk-border-color: #434343;\n";
+  css += "  --vk-border-color-base: #434343;\n";
+  css += "  --vk-border-color-light: #303030;\n";
+  css += "  --vk-border-color-lighter: #262626;\n";
+  css += "  --vk-border-color-disabled: #2c2c2c;\n";
+  css += "  --vk-border-color-hover: #606060;\n";
+  css += "  --vk-border-color-darker: #1a1a1a;\n\n";
+
+  css += "  /* 背景颜色 - 深色模式 */\n";
+  css += "  --vk-bg-color: #1a1a1a;\n";
+  css += "  --vk-bg-color-page: #0f0f0f;\n";
+  css += "  --vk-bg-color-disabled: #262626;\n";
+  css += "  --vk-bg-color-overlay: rgba(255, 255, 255, 0.05);\n\n";
+
+  css += "  /* 填充颜色 - 深色模式 */\n";
+  css += "  --vk-fill-color-light: #262626;\n";
+  css += "  --vk-fill-color-lighter: #1a1a1a;\n";
+  css += "  --vk-fill-color-extra-light: #0f0f0f;\n";
+  css += "  --vk-fill-color-dark: #303030;\n";
+  css += "  --vk-fill-color-darker: #434343;\n";
+  css += "  --vk-fill-color-blank: #1a1a1a;\n\n";
+
+  css += "  /* 阴影 - 深色模式 */\n";
+  css += "  --vk-box-shadow-light: 0 2px 12px 0 rgba(255, 255, 255, 0.1);\n";
+  css += "  --vk-box-shadow-base: 0 2px 4px rgba(255, 255, 255, 0.12), 0 0 6px rgba(255, 255, 255, 0.04);\n";
+  css += "  --vk-box-shadow-dark: 0 4px 8px rgba(255, 255, 255, 0.12), 0 0 6px rgba(255, 255, 255, 0.04);\n\n";
+
+  css += "  /* 遮罩颜色 - 深色模式 */\n";
+  css += "  --vk-mask-color: rgba(0, 0, 0, 0.8);\n\n";
+
+  // Tag组件相关颜色 - 深色模式
+  css += "  /* Tag组件相关颜色 - 深色模式 */\n";
+  css += "  --vk-tag-default-color: #c0c4cc;\n";
+  css += "  --vk-tag-default-border: #30313233;\n";
+  css += "  --vk-tag-primary-border: #1d39c433;\n";
+  css += "  --vk-tag-success-border: #0f7c0f33;\n";
+  css += "  --vk-tag-warning-border: #a25f0033;\n";
+  css += "  --vk-tag-danger-border: #ca242833;\n";
+  css += "  --vk-tag-info-border: #64666a33;\n\n";
+
+  // 组件级别深色模式变量
+  css += "  /* 组件级别深色模式变量 */\n";
+  css += "  /* 按钮组件深色模式变量 */\n";
+  css += "  --vk-button-bg-default: var(--vk-fill-color-dark);\n";
+  css += "  --vk-button-bg-hover: var(--vk-fill-color-darker);\n";
+  css += "  --vk-button-border-default: var(--vk-border-color-darker);\n";
+  css += "  --vk-button-border-hover: var(--vk-color-primary);\n";
+  css += "  --vk-button-text-default: var(--vk-text-color-primary);\n";
+  css += "  --vk-button-text-disabled: var(--vk-text-color-disabled);\n\n";
+
+  css += "  /* 输入框组件深色模式变量 */\n";
+  css += "  --vk-input-bg-default: var(--vk-bg-color);\n";
+  css += "  --vk-input-bg-disabled: var(--vk-fill-color-dark);\n";
+  css += "  --vk-input-border-default: var(--vk-border-color);\n";
+  css += "  --vk-input-border-hover: var(--vk-border-color-hover);\n";
+  css += "  --vk-input-border-focus: var(--vk-color-primary);\n";
+  css += "  --vk-input-text-default: var(--vk-text-color-regular);\n";
+  css += "  --vk-input-text-placeholder: var(--vk-text-color-placeholder);\n";
+  css += "  --vk-input-text-disabled: var(--vk-text-color-disabled);\n\n";
+
+  css += "  /* 卡片组件深色模式变量 */\n";
+  css += "  --vk-card-bg-default: var(--vk-bg-color);\n";
+  css += "  --vk-card-border-default: var(--vk-border-color-light);\n";
+  css += "  --vk-card-text-default: var(--vk-text-color-primary);\n";
+  css += "  --vk-card-shadow-base: 0 2px 12px 0 rgba(255, 255, 255, 0.1);\n";
+  css += "  --vk-card-shadow-hover: 0 4px 20px 0 rgba(255, 255, 255, 0.15);\n\n";
 
   css += "}\n";
   return css;

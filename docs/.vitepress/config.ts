@@ -44,6 +44,7 @@ export default defineConfig({
           items: [
             { text: "使用指南", link: "/guide/usage" },
             { text: "主题定制", link: "/guide/theming" },
+            { text: "深色模式测试", link: "/guide/dark-mode-test" },
             { text: "使用示例", link: "/guide/examples" },
           ],
         },

@@ -1,12 +1,16 @@
 <template>
   <div class="demo-container">
+    <div class="demo-header">
+      <span class="demo-title">组件演示</span>
+      <ThemeToggle />
+    </div>
     <div class="demo-content">
       <slot></slot>
     </div>
     <div v-if="showCode" class="demo-code">
       <slot name="code"></slot>
     </div>
-    <div class="demo-footer" @click="toggleCode">
+    <div v-if="showCode" class="demo-footer" @click="toggleCode">
       <span>{{ showCode ? "隐藏代码" : "显示代码" }}</span>
       <svg :class="['icon', { 'icon-rotate': showCode }]" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="16" height="16">
         <path
@@ -38,6 +42,21 @@ const toggleCode = () => {
 
 .demo-container:hover {
   box-shadow: var(--vp-shadow-2);
+}
+
+.demo-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--vp-c-divider);
+  background-color: var(--vp-c-bg-soft);
+}
+
+.demo-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--vp-c-text-2);
 }
 
 .demo-content {

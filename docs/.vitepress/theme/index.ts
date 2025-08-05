@@ -8,6 +8,7 @@ import "../../../packages/styles/index.scss";
 
 // 导入演示组件
 import Demo from "../components/Demo.vue";
+import ThemeToggle from "../components/ThemeToggle.vue";
 
 export default {
   extends: DefaultTheme,
@@ -17,5 +18,6 @@ export default {
 
     // 注册演示组件
     app.component("Demo", Demo);
+    app.component("ThemeToggle", ThemeToggle);
   },
 } as Theme;
