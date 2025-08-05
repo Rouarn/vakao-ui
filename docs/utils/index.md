@@ -16,6 +16,7 @@ Vakao UI 提供了一系列实用的工具函数，帮助您更高效地开发�
 - [withInstall](./withInstall.md) - 为组件添加全局安装方法，支持单个组件和批量注册
 - [useNamespace](./namespace.md) - 创建组件 CSS 命名空间，基于 BEM 规范生成类名
 - [useControlled](./controlled.md) - 处理受控和非受控组件状态，统一组件状态管理
+- [generate-color](./generate-color.md) - 颜色生成工具，自动生成主题色系统和设计变量
 
 ### 类型工具
 

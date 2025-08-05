@@ -159,6 +159,7 @@ export default defineConfig({
             { text: "withInstall 组件安装", link: "/utils/withInstall" },
             { text: "useNamespace 命名空间", link: "/utils/namespace" },
             { text: "useControlled 受控组件", link: "/utils/controlled" },
+            { text: "generate color 颜色生成器", link: "/utils/generate-color" },
           ],
         },
         {

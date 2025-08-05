@@ -428,7 +428,8 @@ function generateColorVariables(): string {
 
 // 生成base.scss文件内容
 function generateBaseScss(): string {
-  let scss = '@use "./variables.scss" as *;\n\n';
+  let scss = "// 自动生成的颜色变量文件\n// 请勿手动修改，运行 pnpm run generate:colors 重新生成\n\n";
+  scss += '@use "./variables.scss" as *;\n\n';
   scss += "/* 基础样式 */\n\n";
   scss += "/* 重置样式 */\n";
   scss += "*,\n*::before,\n*::after {\n";
