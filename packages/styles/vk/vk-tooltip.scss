@@ -1,0 +1,121 @@
+@use "../base.scss" as *;
+@use "../mixins.scss" as *;
+
+.vk-tooltip {
+  display: inline-block;
+  position: relative;
+
+  &.is-inline {
+    display: inline;
+  }
+
+  &__popper {
+    position: fixed;
+    z-index: 2000;
+    padding: var(--vk-spacing-2) var(--vk-spacing-3);
+    border-radius: var(--vk-border-radius-base);
+    font-size: var(--vk-font-size-sm);
+    line-height: 1.4;
+    word-wrap: break-word;
+    max-width: 300px;
+    box-shadow: var(--vk-box-shadow-light);
+    pointer-events: auto;
+    white-space: nowrap;
+
+    // 暗色主题（默认）
+    &.dark {
+      background-color: var(--vk-color-info-dark-2);
+      color: var(--vk-color-white);
+      border: 1px solid var(--vk-color-info-dark-2);
+    }
+
+    // 亮色主题
+    &.light {
+      background-color: var(--vk-color-white);
+      color: var(--vk-text-color-primary);
+      border: 1px solid var(--vk-border-color-light);
+    }
+  }
+
+  &__content {
+    word-break: break-all;
+  }
+
+  &__arrow {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+
+    // 上方箭头
+    &.top {
+      bottom: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-top-color: var(--vk-color-info-dark-2);
+      border-bottom: none;
+    }
+
+    // 下方箭头
+    &.bottom {
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-bottom-color: var(--vk-color-info-dark-2);
+      border-top: none;
+    }
+
+    // 左侧箭头
+    &.left {
+      right: -12px;
+      top: 50%;
+      transform: translateY(-50%);
+      border-left-color: var(--vk-color-info-dark-2);
+      border-right: none;
+    }
+
+    // 右侧箭头
+    &.right {
+      left: -12px;
+      top: 50%;
+      transform: translateY(-50%);
+      border-right-color: var(--vk-color-info-dark-2);
+      border-left: none;
+    }
+  }
+
+  // 亮色主题箭头颜色
+  &__popper.light &__arrow {
+    &.top {
+      border-top-color: var(--vk-border-color-light);
+    }
+
+    &.bottom {
+      border-bottom-color: var(--vk-border-color-light);
+    }
+
+    &.left {
+      border-left-color: var(--vk-border-color-light);
+    }
+
+    &.right {
+      border-right-color: var(--vk-border-color-light);
+    }
+  }
+}
+
+// 淡入淡出动画
+.vk-fade-enter-active,
+.vk-fade-leave-active {
+  transition: opacity var(--vk-transition-duration-base) ease;
+}
+
+.vk-fade-enter-from,
+.vk-fade-leave-to {
+  opacity: 0;
+}
+
+.vk-fade-enter-to,
+.vk-fade-leave-from {
+  opacity: 1;
+}

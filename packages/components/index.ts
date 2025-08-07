@@ -58,6 +58,7 @@ export * from "./VkTag";
 
 /** 反馈组件 */
 export * from "./VkMessageBox";
+export * from "./VkTooltip";
 
 // 注意：新增组件时请在此处添加导出
 
@@ -78,6 +79,7 @@ import { VkDivider } from "./VkDivider";
 import { VkTag } from "./VkTag";
 import { VkMessageBox } from "./VkMessageBox";
 import { VkSelect, VkOption, VkOptionGroup } from "./VkSelect";
+import { VkTooltip } from "./VkTooltip";
 import { installAll } from "@vakao-ui/utils";
 
 /**
@@ -115,6 +117,7 @@ const components = {
 
   // 反馈组件
   VkMessageBox,
+  VkTooltip,
 };
 
 /**
