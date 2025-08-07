@@ -377,7 +377,8 @@ const previewImageStyle = computed(() => {
  * 检测浏览器是否支持原生懒加载
  */
 const supportsNativeLazyLoading = computed(() => {
-  return "loading" in HTMLImageElement.prototype;
+  // 检查是否在浏览器环境中，避免在SSR环境中报错
+  return typeof HTMLImageElement !== "undefined" && "loading" in HTMLImageElement.prototype;
 });
 
 // ==================== 事件处理 ====================
