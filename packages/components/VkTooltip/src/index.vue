@@ -288,6 +288,17 @@ const handleClick = (event: MouseEvent) => {
 };
 
 /**
+ * 处理滚动事件
+ *
+ * 当页面或容器滚动时更新提示框位置
+ */
+const handleScroll = () => {
+  if (visible.value) {
+    updatePosition();
+  }
+};
+
+/**
  * 添加事件监听器
  *
  * 根据触发方式添加相应的事件监听器
@@ -380,12 +391,15 @@ onMounted(() => {
 
   // 监听窗口大小变化，更新提示框位置
   window.addEventListener("resize", updatePosition);
+  // 监听滚动事件，确保tooltip跟随元素移动
+  window.addEventListener("scroll", handleScroll, true);
 });
 
 /** 组件销毁前移除事件监听器 */
 onBeforeUnmount(() => {
   removeEvents();
   window.removeEventListener("resize", updatePosition);
+  window.removeEventListener("scroll", handleScroll, true);
 
   // 清除定时器
   if (showTimer) {

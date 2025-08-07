@@ -90,7 +90,10 @@ export default defineConfig({
         },
         {
           text: "反馈组件",
-          items: [{ text: "MessageBox 消息弹框", link: "/components/message-box" }],
+          items: [
+            { text: "MessageBox 消息弹框", link: "/components/message-box" },
+            { text: "Tooltip 提示", link: "/components/tooltip" },
+          ],
         },
       ],
       "/hooks/": [

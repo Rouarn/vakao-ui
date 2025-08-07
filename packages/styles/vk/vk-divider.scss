@@ -1,6 +1,3 @@
-@use "../mixins.scss" as *;
-@use "../base.scss" as *;
-
 // VkDivider 组件样式
 .vk-divider {
   margin: var(--vk-spacing-4) 0;
@@ -30,7 +27,7 @@
 
     &::before,
     &::after {
-      content: '';
+      content: "";
       flex: 1;
       height: 1px;
       background-color: var(--vk-border-color-light);

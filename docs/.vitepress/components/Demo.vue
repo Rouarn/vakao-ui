@@ -6,7 +6,7 @@
     <div v-if="showCode" class="demo-code">
       <slot name="code"></slot>
     </div>
-    <div v-if="showCode" class="demo-footer" @click="toggleCode">
+    <div v-if="$slots.code" class="demo-footer" @click="toggleCode">
       <span>{{ showCode ? "隐藏代码" : "显示代码" }}</span>
       <svg :class="['icon', { 'icon-rotate': showCode }]" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="16" height="16">
         <path

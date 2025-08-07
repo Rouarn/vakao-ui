@@ -10,8 +10,8 @@
   }
 
   &__popper {
-    position: fixed;
-    z-index: 2000;
+    position: absolute;
+    z-index: var(--vk-z-index-tooltip);
     padding: var(--vk-spacing-2) var(--vk-spacing-3);
     border-radius: var(--vk-border-radius-base);
     font-size: var(--vk-font-size-sm);
@@ -24,9 +24,9 @@
 
     // 暗色主题（默认）
     &.dark {
-      background-color: var(--vk-color-info-dark-2);
+      background-color: #303133;
       color: var(--vk-color-white);
-      border: 1px solid var(--vk-color-info-dark-2);
+      border: 1px solid #303133;
     }
 
     // 亮色主题
