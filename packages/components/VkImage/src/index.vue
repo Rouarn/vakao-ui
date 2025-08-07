@@ -604,7 +604,7 @@ const handleMouseUp = () => {
 const reload = () => {
   loadStatus.value = "loading";
   retryCount.value = 0; // 重置重试计数器
-  
+
   if (props.lazy && !supportsNativeLazyLoading.value) {
     // 懒加载模式，重新启动观察
     restartLazyLoad();
@@ -665,11 +665,11 @@ const initLazyLoad = () => {
  */
 const restartLazyLoad = () => {
   if (!props.lazy || supportsNativeLazyLoading.value || !lazyRef.value) return;
-  
+
   // 重置状态
   currentSrc.value = "";
   loadStatus.value = "loading";
-  
+
   // 重新开始观察
   if (intersectionObserver && lazyRef.value) {
     intersectionObserver.observe(lazyRef.value);

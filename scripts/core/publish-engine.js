@@ -16,7 +16,7 @@
  */
 
 import { execSync } from "child_process";
-import { readFileSync, writeFileSync, existsSync, mkdirSync, copyFileSync, rmSync } from "fs";
+import { readFileSync, writeFileSync, existsSync, mkdirSync, copyFileSync, rmSync, readdirSync, statSync } from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import readline from "readline";
@@ -229,17 +229,78 @@ class PublishEngine {
       mkdirSync(buildDir, { recursive: true });
     }
 
-    // 执行构建命令
-    if (packageConfig.buildCommand) {
-      this.exec(packageConfig.buildCommand, packageRoot);
+    // 对于主包，需要特殊处理
+    if (packageKey === "main") {
+      // 主包需要先执行构建命令，然后复制构建产物
+      if (packageConfig.buildCommand) {
+        this.exec(packageConfig.buildCommand, packageRoot);
+      }
+
+      // 复制主包的构建产物到发布目录
+      const mainDistDir = path.join(this.projectRoot, "dist");
+      if (existsSync(mainDistDir)) {
+        // 复制所有构建产物，但排除子包目录
+        const items = readdirSync(mainDistDir);
+        items.forEach((item) => {
+          const itemPath = path.join(mainDistDir, item);
+          const targetPath = path.join(buildDir, item);
+          const stat = statSync(itemPath);
+
+          // 跳过子包目录（hooks, utils, main等）
+          if (stat.isDirectory() && ["hooks", "utils", "main", "docs"].includes(item)) {
+            return;
+          }
+
+          if (stat.isDirectory()) {
+            this.copyDirectory(itemPath, targetPath);
+          } else {
+            copyFileSync(itemPath, targetPath);
+          }
+        });
+      }
     } else {
-      // 默认 TypeScript 构建
-      const tsconfigPath = path.resolve(this.projectRoot, "tsconfig.json");
-      this.exec(`npx tsc --project ${tsconfigPath} --outDir ${buildDir} --declaration --emitDeclarationOnly false`, packageRoot);
+      // 子包的构建逻辑
+      if (packageConfig.buildCommand) {
+        this.exec(packageConfig.buildCommand, packageRoot);
+
+        // 子包直接使用各自package目录下的dist文件夹作为构建目录
+        const subPackageDistDir = path.join(packageRoot, "dist");
+        if (existsSync(subPackageDistDir)) {
+          return subPackageDistDir;
+        }
+      } else {
+        // 默认 TypeScript 构建
+        const tsconfigPath = path.resolve(this.projectRoot, "tsconfig.json");
+        this.exec(`npx tsc --project ${tsconfigPath} --outDir ${buildDir} --declaration --emitDeclarationOnly false`, packageRoot);
+      }
     }
 
     log(`${packageConfig.displayName} 构建完成`, "success");
     return buildDir;
+  }
+
+  /**
+   * 递归复制目录
+   * @param {string} src - 源目录
+   * @param {string} dest - 目标目录
+   */
+  copyDirectory(src, dest) {
+    if (!existsSync(dest)) {
+      mkdirSync(dest, { recursive: true });
+    }
+
+    const items = readdirSync(src);
+    items.forEach((item) => {
+      const srcPath = path.join(src, item);
+      const destPath = path.join(dest, item);
+      const stat = statSync(srcPath);
+
+      if (stat.isDirectory()) {
+        this.copyDirectory(srcPath, destPath);
+      } else {
+        copyFileSync(srcPath, destPath);
+      }
+    });
   }
 
   /**
@@ -255,32 +316,71 @@ class PublishEngine {
     log("准备发布文件...", "copy");
 
     // 创建发布用的 package.json
-    const publishPackageJson = {
-      name: packageConfig.name,
-      version,
-      description: packageConfig.description,
-      main: "index.js",
-      module: "index.js",
-      types: "index.d.ts",
-      exports: {
-        ".": {
-          import: "./index.js",
-          require: "./index.js",
-          types: "./index.d.ts",
+    let publishPackageJson;
+
+    if (packageKey === "main") {
+      // 主包使用特殊的配置
+      publishPackageJson = {
+        name: packageConfig.name,
+        version,
+        description: packageConfig.description,
+        main: "vakao-ui.umd.js",
+        module: "vakao-ui.es.js",
+        types: "types/index.d.ts",
+        exports: {
+          ".": {
+            types: "./types/index.d.ts",
+            import: "./vakao-ui.es.js",
+            require: "./vakao-ui.umd.js",
+          },
+          "./style.css": "./style.css",
+          "./resolver": {
+            types: "./types/resolver.d.ts",
+            import: "./vakao-ui.es.js",
+            require: "./vakao-ui.umd.js",
+          },
         },
-      },
-      files: ["*.js", "*.d.ts", "README.md"],
-      keywords: packageConfig.keywords || [],
-      author: this.config.author || "Vakao UI Team",
-      license: this.config.license || "私有",
-      repository: this.config.repository,
-      homepage: this.config.homepage,
-      peerDependencies: packageConfig.peerDependencies || {},
-      publishConfig: {
-        access: "public",
-        registry: this.privateRegistry,
-      },
-    };
+        files: ["vakao-ui.umd.js", "vakao-ui.es.js", "vakao-ui.umd.js.map", "vakao-ui.es.js.map", "style.css", "types", "README.md"],
+        keywords: packageConfig.keywords || [],
+        author: this.config.author || "Vakao UI Team",
+        license: this.config.license || "私有",
+        repository: this.config.repository,
+        homepage: this.config.homepage,
+        peerDependencies: packageConfig.peerDependencies || {},
+        publishConfig: {
+          access: "public",
+          registry: this.privateRegistry,
+        },
+      };
+    } else {
+      // 子包使用默认配置
+      publishPackageJson = {
+        name: packageConfig.name,
+        version,
+        description: packageConfig.description,
+        main: "index.js",
+        module: "index.js",
+        types: "index.d.ts",
+        exports: {
+          ".": {
+            types: "./index.d.ts",
+            import: "./index.js",
+            require: "./index.js",
+          },
+        },
+        files: ["*.js", "*.d.ts", "README.md"],
+        keywords: packageConfig.keywords || [],
+        author: this.config.author || "Vakao UI Team",
+        license: this.config.license || "私有",
+        repository: this.config.repository,
+        homepage: this.config.homepage,
+        peerDependencies: packageConfig.peerDependencies || {},
+        publishConfig: {
+          access: "public",
+          registry: this.privateRegistry,
+        },
+      };
+    }
 
     // 写入发布用的 package.json
     const publishPackageJsonPath = path.join(buildDir, "package.json");

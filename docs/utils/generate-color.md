@@ -15,11 +15,11 @@ Vakao UI 默认提供以下基础主题色：
 
 ```typescript
 const themeColors = {
-  primary: "#18a058",  // 主要
-  success: "#18a058",  // 成功
-  warning: "#f0a020",  // 警告
-  danger: "#d03050",   // 危险
-  info: "#2080f0",     // 信息
+  primary: "#18a058", // 主要
+  success: "#18a058", // 成功
+  warning: "#f0a020", // 警告
+  danger: "#d03050", // 危险
+  info: "#2080f0", // 信息
 };
 ```
 
@@ -77,8 +77,8 @@ pnpm run generate:colors
 // 自动生成的颜色变量文件
 // 请勿手动修改，运行 pnpm run generate:colors 重新生成
 
-@use 'sass:color';
-@use 'sass:map';
+@use "sass:color";
+@use "sass:map";
 
 // 基础颜色
 $color-white: #ffffff;

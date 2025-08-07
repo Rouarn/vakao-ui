@@ -7,15 +7,15 @@
   "types": "dist/types/index.d.ts",
   "exports": {
     ".": {
+      "types": "./dist/types/index.d.ts",
       "import": "./dist/vakao-ui.es.js",
-      "require": "./dist/vakao-ui.umd.js",
-      "types": "./dist/types/index.d.ts"
+      "require": "./dist/vakao-ui.umd.js"
     },
     "./style.css": "./dist/style.css",
     "./resolver": {
+      "types": "./dist/types/resolver.d.ts",
       "import": "./dist/vakao-ui.es.js",
-      "require": "./dist/vakao-ui.umd.js",
-      "types": "./dist/types/resolver.d.ts"
+      "require": "./dist/vakao-ui.umd.js"
     }
   },
   "files": [

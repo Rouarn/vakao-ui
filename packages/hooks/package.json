@@ -1,6 +1,6 @@
 {
   "name": "@vakao-ui/hooks",
-  "version": "0.0.2",
+  "version": "0.0.1",
   "description": "Vakao UI 组合式函数库 - Vue 3 可复用逻辑钩子",
   "main": "dist/vakao-ui-hooks.umd.js",
   "module": "dist/vakao-ui-hooks.es.js",

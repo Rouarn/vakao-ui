@@ -1,6 +1,6 @@
 {
   "name": "@vakao-ui/packages",
-  "version": "0.0.2",
+  "version": "0.0.0",
   "description": "Vakao UI 包管理配置",
   "private": true,
   "scripts": {

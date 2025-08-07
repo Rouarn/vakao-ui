@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@vakao-ui/utils": "workspace:*",
-    "@vakao-ui/hooks": "workspace:*"
+    "@vakao-ui/hooks": "workspace:*",
+    "@popperjs/core": "^2.11.8"
   }
 }

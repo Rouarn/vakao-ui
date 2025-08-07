@@ -2,109 +2,58 @@
   display: inline-block;
   position: relative;
 
-  &.is-inline {
-    display: inline;
-  }
-
   &__popper {
     position: absolute;
-    z-index: var(--vk-z-index-tooltip);
-    padding: var(--vk-spacing-2) var(--vk-spacing-3);
-    border-radius: var(--vk-border-radius-base);
-    font-size: var(--vk-font-size-sm);
+    z-index: 2000;
+    max-width: 300px;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 12px;
     line-height: 1.4;
     word-wrap: break-word;
-    max-width: 300px;
-    box-shadow: var(--vk-box-shadow-light);
-    pointer-events: auto;
-    white-space: nowrap;
+    word-break: break-all;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    transition: opacity 0.3s, visibility 0.3s;
 
-    // 暗色主题（默认）
-    &.dark {
+    &--dark {
       background-color: #303133;
-      color: var(--vk-color-white);
+      color: #fff;
       border: 1px solid #303133;
     }
 
-    // 亮色主题
-    &.light {
-      background-color: var(--vk-color-white);
-      color: var(--vk-text-color-primary);
-      border: 1px solid var(--vk-border-color-light);
+    &--light {
+      background-color: #fff;
+      color: #303133;
+      border: 1px solid #e4e7ed;
     }
-  }
-
-  &__content {
-    word-break: break-all;
   }
 
   &__arrow {
     position: absolute;
-    width: 0;
-    height: 0;
-    border: 6px solid transparent;
+    width: 8px;
+    height: 8px;
 
-    // 上方箭头
-    &.top {
-      bottom: -12px;
-      left: 50%;
-      transform: translateX(-50%);
-      border-top-color: var(--vk-color-info-dark-2);
-      border-bottom: none;
-    }
-
-    // 下方箭头
-    &.bottom {
-      top: -12px;
-      left: 50%;
-      transform: translateX(-50%);
-      border-bottom-color: var(--vk-color-info-dark-2);
-      border-top: none;
-    }
-
-    // 左侧箭头
-    &.left {
-      right: -12px;
-      top: 50%;
-      transform: translateY(-50%);
-      border-left-color: var(--vk-color-info-dark-2);
-      border-right: none;
-    }
-
-    // 右侧箭头
-    &.right {
-      left: -12px;
-      top: 50%;
-      transform: translateY(-50%);
-      border-right-color: var(--vk-color-info-dark-2);
-      border-left: none;
+    &::before {
+      content: "";
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: inherit;
+      border: inherit;
+      transform: rotate(45deg);
     }
   }
 
-  // 亮色主题箭头颜色
-  &__popper.light &__arrow {
-    &.top {
-      border-top-color: var(--vk-border-color-light);
-    }
-
-    &.bottom {
-      border-bottom-color: var(--vk-border-color-light);
-    }
-
-    &.left {
-      border-left-color: var(--vk-border-color-light);
-    }
-
-    &.right {
-      border-right-color: var(--vk-border-color-light);
-    }
+  &__content {
+    position: relative;
+    z-index: 1;
   }
 }
 
-// 淡入淡出动画
+/* Transition animations */
 .vk-fade-enter-active,
 .vk-fade-leave-active {
-  transition: opacity var(--vk-transition-duration-base) ease;
+  transition: opacity 0.3s ease;
 }
 
 .vk-fade-enter-from,
@@ -112,7 +61,24 @@
   opacity: 0;
 }
 
-.vk-fade-enter-to,
-.vk-fade-leave-from {
-  opacity: 1;
+.vk-zoom-enter-active,
+.vk-zoom-leave-active {
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.vk-zoom-enter-from,
+.vk-zoom-leave-to {
+  opacity: 0;
+  transform: scale(0.8);
+}
+
+.vk-slide-enter-active,
+.vk-slide-leave-active {
+  transition: all 0.3s ease;
+}
+
+.vk-slide-enter-from,
+.vk-slide-leave-to {
+  opacity: 0;
+  transform: translateY(-10px);
 }
