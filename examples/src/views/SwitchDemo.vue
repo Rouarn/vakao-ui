@@ -114,7 +114,7 @@
             <h4>通知设置</h4>
             <div class="setting-item" v-for="setting in notificationSettings" :key="setting.key">
               <div class="setting-info">
-                <VkIcon :name="setting.icon" size="20" :color="setting.color" />
+                <VkIcon :icon="'material-symbols:' + setting.icon" size="20" :color="setting.color" />
                 <div class="setting-text">
                   <div class="setting-title">{{ setting.title }}</div>
                   <div class="setting-desc">{{ setting.description }}</div>
@@ -208,7 +208,7 @@
           <div class="monitor-grid">
             <div class="monitor-item" v-for="service in services" :key="service.id">
               <div class="monitor-header">
-                <VkIcon :name="service.icon" size="24" :color="service.status === 'running' ? '#67c23a' : '#f56c6c'" />
+                <VkIcon :icon="'material-symbols:' + service.icon" size="24" :color="service.status === 'running' ? '#67c23a' : '#f56c6c'" />
                 <div class="monitor-info">
                   <div class="service-name">{{ service.name }}</div>
                   <div class="service-desc">{{ service.description }}</div>

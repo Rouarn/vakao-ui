@@ -10,14 +10,14 @@
       <h2>基础用法</h2>
       <p>使用 <code>name</code> 属性来指定图标。</p>
       <div class="demo-block">
-        <VkIcon name="home" />
-        <VkIcon name="user" />
-        <VkIcon name="setting" />
-        <VkIcon name="search" />
-        <VkIcon name="edit" />
-        <VkIcon name="delete" />
-        <VkIcon name="check" />
-        <VkIcon name="close" />
+        <VkIcon icon="material-symbols:home" />
+        <VkIcon icon="material-symbols:person" />
+        <VkIcon icon="material-symbols:settings" />
+        <VkIcon icon="material-symbols:search" />
+        <VkIcon icon="material-symbols:edit" />
+        <VkIcon icon="material-symbols:delete" />
+        <VkIcon icon="material-symbols:check" />
+        <VkIcon icon="material-symbols:close" />
       </div>
     </div>
 
@@ -26,12 +26,12 @@
       <h2>不同尺寸</h2>
       <p>使用 <code>size</code> 属性来设置图标大小。</p>
       <div class="demo-block">
-        <VkIcon name="star" size="12" />
-        <VkIcon name="star" size="16" />
-        <VkIcon name="star" size="20" />
-        <VkIcon name="star" size="24" />
-        <VkIcon name="star" size="32" />
-        <VkIcon name="star" size="48" />
+        <VkIcon icon="material-symbols:star" size="12" />
+        <VkIcon icon="material-symbols:star" size="16" />
+        <VkIcon icon="material-symbols:star" size="20" />
+        <VkIcon icon="material-symbols:star" size="24" />
+        <VkIcon icon="material-symbols:star" size="32" />
+        <VkIcon icon="material-symbols:star" size="48" />
       </div>
     </div>
 
@@ -40,12 +40,12 @@
       <h2>不同颜色</h2>
       <p>使用 <code>color</code> 属性来设置图标颜色。</p>
       <div class="demo-block">
-        <VkIcon name="heart" color="#f56c6c" size="24" />
-        <VkIcon name="heart" color="#67c23a" size="24" />
-        <VkIcon name="heart" color="#409eff" size="24" />
-        <VkIcon name="heart" color="#e6a23c" size="24" />
-        <VkIcon name="heart" color="#909399" size="24" />
-        <VkIcon name="heart" color="#c71585" size="24" />
+        <VkIcon icon="material-symbols:favorite" color="#f56c6c" size="24" />
+        <VkIcon icon="material-symbols:favorite" color="#67c23a" size="24" />
+        <VkIcon icon="material-symbols:favorite" color="#409eff" size="24" />
+        <VkIcon icon="material-symbols:favorite" color="#e6a23c" size="24" />
+        <VkIcon icon="material-symbols:favorite" color="#909399" size="24" />
+        <VkIcon icon="material-symbols:favorite" color="#c71585" size="24" />
       </div>
     </div>
 
@@ -55,7 +55,7 @@
       <p>展示常用的图标集合。</p>
       <div class="demo-block icon-grid">
         <div v-for="icon in commonIcons" :key="icon.name" class="icon-item" @click="copyIconName(icon.name)">
-          <VkIcon :name="icon.name" size="24" />
+          <VkIcon :icon="`material-symbols:${iconNameToMaterialSymbols(icon.name)}`" size="24" />
           <span class="icon-name">{{ icon.name }}</span>
         </div>
       </div>
@@ -67,7 +67,7 @@
       <p>各种方向指示图标。</p>
       <div class="demo-block icon-grid">
         <div v-for="icon in directionIcons" :key="icon.name" class="icon-item" @click="copyIconName(icon.name)">
-          <VkIcon :name="icon.name" size="24" />
+          <VkIcon :icon="`material-symbols:${iconNameToMaterialSymbols(icon.name)}`" size="24" />
           <span class="icon-name">{{ icon.name }}</span>
         </div>
       </div>
@@ -79,7 +79,7 @@
       <p>常用的操作类图标。</p>
       <div class="demo-block icon-grid">
         <div v-for="icon in actionIcons" :key="icon.name" class="icon-item" @click="copyIconName(icon.name)">
-          <VkIcon :name="icon.name" size="24" />
+          <VkIcon :icon="`material-symbols:${iconNameToMaterialSymbols(icon.name)}`" size="24" />
           <span class="icon-name">{{ icon.name }}</span>
         </div>
       </div>
@@ -91,7 +91,7 @@
       <p>表示不同状态的图标。</p>
       <div class="demo-block icon-grid">
         <div v-for="icon in statusIcons" :key="icon.name" class="icon-item" @click="copyIconName(icon.name)">
-          <VkIcon :name="icon.name" size="24" :color="icon.color" />
+          <VkIcon :icon="`material-symbols:${iconNameToMaterialSymbols(icon.name)}`" size="24" :color="icon.color" />
           <span class="icon-name">{{ icon.name }}</span>
         </div>
       </div>
@@ -104,19 +104,19 @@
       <div class="demo-block">
         <div class="text-icon-group">
           <div class="text-icon-item">
-            <VkIcon name="home" size="16" />
+            <VkIcon icon="material-symbols:home" size="16" />
             <span>首页</span>
           </div>
           <div class="text-icon-item">
-            <VkIcon name="user" size="16" />
+            <VkIcon icon="material-symbols:person" size="16" />
             <span>用户中心</span>
           </div>
           <div class="text-icon-item">
-            <VkIcon name="setting" size="16" />
+            <VkIcon icon="material-symbols:settings" size="16" />
             <span>设置</span>
           </div>
           <div class="text-icon-item">
-            <VkIcon name="message" size="16" />
+            <VkIcon icon="material-symbols:message" size="16" />
             <span>消息</span>
           </div>
         </div>
@@ -132,7 +132,7 @@
           <VkIcon
             v-for="icon in clickableIcons"
             :key="icon.name"
-            :name="icon.name"
+            :icon="`material-symbols:${iconNameToMaterialSymbols(icon.name)}`"
             size="32"
             class="clickable-icon"
             @click="handleIconClick(icon)"
@@ -154,10 +154,10 @@
       <h2>图标动画</h2>
       <p>带有动画效果的图标。</p>
       <div class="demo-block">
-        <VkIcon name="loading" size="24" class="rotating" />
-        <VkIcon name="heart" size="24" class="beating" color="#f56c6c" />
-        <VkIcon name="star" size="24" class="twinkling" color="#e6a23c" />
-        <VkIcon name="bell" size="24" class="shaking" />
+        <VkIcon icon="material-symbols:refresh" size="24" class="rotating" />
+        <VkIcon icon="material-symbols:favorite" size="24" class="beating" color="#f56c6c" />
+        <VkIcon icon="material-symbols:star" size="24" class="twinkling" color="#e6a23c" />
+        <VkIcon icon="material-symbols:notifications" size="24" class="shaking" />
       </div>
     </div>
 
@@ -170,6 +170,69 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
+
+// 图标名称映射函数，将原来的图标名称映射到 Material Symbols 图标名称
+const iconNameToMaterialSymbols = (name: string) => {
+  const iconMap: Record<string, string> = {
+    // 基础图标
+    'home': 'home',
+    'user': 'person',
+    'setting': 'settings',
+    'search': 'search',
+    'edit': 'edit',
+    'delete': 'delete',
+    'check': 'check',
+    'close': 'close',
+    
+    // 常用图标
+    'message': 'message',
+    'bell': 'notifications',
+    'star': 'star',
+    'heart': 'favorite',
+    'bookmark': 'bookmark',
+    'calendar': 'calendar-month',
+    'clock': 'schedule',
+    'location': 'location-on',
+    
+    // 方向图标
+    'arrow-up': 'arrow-upward',
+    'arrow-down': 'arrow-downward',
+    'arrow-left': 'arrow-back',
+    'arrow-right': 'arrow-forward',
+    'chevron-up': 'expand-less',
+    'chevron-down': 'expand-more',
+    'chevron-left': 'chevron-left',
+    'chevron-right': 'chevron-right',
+    
+    // 操作图标
+    'copy': 'content-copy',
+    'share': 'share',
+    'download': 'download',
+    'upload': 'upload',
+    'refresh': 'refresh',
+    'print': 'print',
+    'save': 'save',
+    'undo': 'undo',
+    'redo': 'redo',
+    'zoom-in': 'zoom-in',
+    'zoom-out': 'zoom-out',
+    'fullscreen': 'fullscreen',
+    
+    // 状态图标
+    'warning': 'warning',
+    'info': 'info',
+    'loading': 'refresh',
+    'success': 'check-circle',
+    'error': 'error',
+    'question': 'help',
+    
+    // 可点击图标
+    'like': 'thumb-up',
+    'comment': 'comment',
+  };
+  
+  return iconMap[name] || name;
+};
 
 // 常用图标
 const commonIcons = ref([

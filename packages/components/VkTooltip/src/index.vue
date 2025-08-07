@@ -46,31 +46,6 @@
   </div>
 </template>
 
-<script lang="ts">
-/**
- * VkTooltip 工具提示组件
- *
- * 一个功能丰富的工具提示组件，基于 element-plus tooltip 设计。
- * 支持多种触发方式、位置配置、主题定制等功能。
- *
- * 主要特性：
- * - 12 个方向的位置配置
- * - 多种触发方式（hover、click、focus、manual）
- * - 深色和浅色主题
- * - 自定义过渡动画
- * - 虚拟触发支持
- * - 完整的无障碍支持
- * - TypeScript 支持
- *
- * @author Vakao UI Team
- * @since 1.0.0
- */
-export default {
-  name: "VkTooltip",
-  inheritAttrs: false,
-};
-</script>
-
 <script setup lang="ts">
 import { ref, computed, watch, nextTick, onMounted, onUnmounted } from "vue";
 import { createPopper } from "@popperjs/core";
@@ -80,6 +55,14 @@ import { useNamespace } from "@vakao-ui/utils";
 import { isString } from "@vakao-ui/utils";
 import { tooltipProps, tooltipEmits } from "./types";
 import type { TooltipInstance } from "./types";
+
+// ==================== 组件配置 ====================
+
+/** 组件选项配置 */
+defineOptions({
+  name: "VkTooltip",
+  inheritAttrs: false,
+});
 
 // 组件属性和事件
 const props = defineProps(tooltipProps);

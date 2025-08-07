@@ -191,7 +191,7 @@
           </VkTooltip>
 
           <VkTooltip content="这是一个图标提示">
-            <VkIcon name="info" style="font-size: 20px; color: #409eff; cursor: pointer"></VkIcon>
+            <VkIcon icon="material-symbols:info" style="font-size: 20px; color: #409eff; cursor: pointer"></VkIcon>
           </VkTooltip>
 
           <VkTooltip content="这是一个输入框提示">
@@ -213,7 +213,7 @@
 &lt;/VkTooltip&gt;
 
 &lt;VkTooltip content="图标提示"&gt;
-  &lt;VkIcon name="info"&gt;&lt;/VkIcon&gt;
+  &lt;VkIcon icon="material-symbols:info"&gt;&lt;/VkIcon&gt;
 &lt;/VkTooltip&gt;</code></pre>
       </div>
     </section>
@@ -255,17 +255,17 @@
                   <td>
                     <VkTooltip content="编辑用户信息">
                       <VkButton type="primary" size="small" @click="editUser(user)">
-                        <VkIcon name="edit"></VkIcon>
+                        <VkIcon icon="material-symbols:edit"></VkIcon>
                       </VkButton>
                     </VkTooltip>
                     <VkTooltip content="删除用户">
                       <VkButton type="danger" size="small" @click="deleteUser(user)">
-                        <VkIcon name="delete"></VkIcon>
+                        <VkIcon icon="material-symbols:delete"></VkIcon>
                       </VkButton>
                     </VkTooltip>
                     <VkTooltip :content="user.status === 'active' ? '禁用用户' : '启用用户'">
                       <VkButton :type="user.status === 'active' ? 'warning' : 'success'" size="small" @click="toggleUserStatus(user)">
-                        <VkIcon :name="user.status === 'active' ? 'lock' : 'unlock'"></VkIcon>
+                        <VkIcon :icon="user.status === 'active' ? 'material-symbols:lock' : 'material-symbols:lock-open'"></VkIcon>
                       </VkButton>
                     </VkTooltip>
                   </td>
@@ -285,7 +285,7 @@
               <label
                 >用户名
                 <VkTooltip content="用户名长度应在3-20个字符之间，只能包含字母、数字和下划线" placement="right">
-                  <VkIcon name="question" class="help-icon"></VkIcon>
+                  <VkIcon icon="material-symbols:help" class="help-icon"></VkIcon>
                 </VkTooltip>
               </label>
               <VkInput v-model="formData.username" placeholder="请输入用户名"></VkInput>
@@ -300,7 +300,7 @@
                     <div>• 包含大小写字母</div>
                     <div>• 包含数字和特殊字符</div>
                   </template>
-                  <VkIcon name="question" class="help-icon"></VkIcon>
+                  <VkIcon icon="material-symbols:help" class="help-icon"></VkIcon>
                 </VkTooltip>
               </label>
               <VkInput v-model="formData.password" type="password" placeholder="请输入密码"></VkInput>
@@ -309,7 +309,7 @@
               <label
                 >邮箱验证
                 <VkTooltip content="我们将向此邮箱发送验证码，请确保邮箱地址正确" placement="right">
-                  <VkIcon name="question" class="help-icon"></VkIcon>
+                  <VkIcon icon="material-symbols:help" class="help-icon"></VkIcon>
                 </VkTooltip>
               </label>
               <VkInput v-model="formData.email" placeholder="请输入邮箱地址"></VkInput>
@@ -326,32 +326,32 @@
             <div class="toolbar">
               <VkTooltip content="新建文档 (Ctrl+N)" placement="bottom">
                 <VkButton type="primary" @click="createDocument">
-                  <VkIcon name="plus"></VkIcon>
+                  <VkIcon icon="material-symbols:add"></VkIcon>
                 </VkButton>
               </VkTooltip>
               <VkTooltip content="保存文档 (Ctrl+S)" placement="bottom">
                 <VkButton @click="saveDocument">
-                  <VkIcon name="save"></VkIcon>
+                  <VkIcon icon="material-symbols:save"></VkIcon>
                 </VkButton>
               </VkTooltip>
               <VkTooltip content="打印文档 (Ctrl+P)" placement="bottom">
                 <VkButton @click="printDocument">
-                  <VkIcon name="print"></VkIcon>
+                  <VkIcon icon="material-symbols:print"></VkIcon>
                 </VkButton>
               </VkTooltip>
               <VkTooltip content="撤销操作 (Ctrl+Z)" placement="bottom">
                 <VkButton :disabled="!canUndo" @click="undoAction">
-                  <VkIcon name="undo"></VkIcon>
+                  <VkIcon icon="material-symbols:undo"></VkIcon>
                 </VkButton>
               </VkTooltip>
               <VkTooltip content="重做操作 (Ctrl+Y)" placement="bottom">
                 <VkButton :disabled="!canRedo" @click="redoAction">
-                  <VkIcon name="redo"></VkIcon>
+                  <VkIcon icon="material-symbols:redo"></VkIcon>
                 </VkButton>
               </VkTooltip>
               <VkTooltip content="全屏模式 (F11)" placement="bottom">
                 <VkButton @click="toggleFullscreen">
-                  <VkIcon name="fullscreen"></VkIcon>
+                  <VkIcon icon="material-symbols:fullscreen"></VkIcon>
                 </VkButton>
               </VkTooltip>
             </div>

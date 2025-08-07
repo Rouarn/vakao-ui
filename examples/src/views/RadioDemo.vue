@@ -121,15 +121,15 @@
         <div class="gender-demo">
           <VkRadioGroup v-model="gender">
             <VkRadio label="male" border>
-              <VkIcon name="male" size="16" color="#409eff" />
+              <VkIcon icon="material-symbols:male" size="16" color="#409eff" />
               男
             </VkRadio>
             <VkRadio label="female" border>
-              <VkIcon name="female" size="16" color="#f56c6c" />
+              <VkIcon icon="material-symbols:female" size="16" color="#f56c6c" />
               女
             </VkRadio>
             <VkRadio label="other" border>
-              <VkIcon name="question" size="16" color="#909399" />
+              <VkIcon icon="material-symbols:question-mark" size="16" color="#909399" />
               其他
             </VkRadio>
           </VkRadioGroup>
@@ -145,7 +145,7 @@
             <div class="payment-option" v-for="method in paymentMethods" :key="method.value">
               <VkRadio :label="method.value" border>
                 <div class="payment-content">
-                  <VkIcon :name="method.icon" size="24" :color="method.color" />
+                  <VkIcon :icon="'material-symbols:' + method.icon" size="24" :color="method.color" />
                   <div class="payment-info">
                     <div class="payment-name">{{ method.name }}</div>
                     <div class="payment-desc">{{ method.description }}</div>
@@ -186,7 +186,7 @@
         <div class="theme-demo">
           <VkRadioGroup v-model="theme">
             <VkRadioButton v-for="themeOption in themes" :key="themeOption.value" :label="themeOption.value">
-              <VkIcon :name="themeOption.icon" size="16" />
+              <VkIcon :icon="'material-symbols:' + themeOption.icon" size="16" />
               {{ themeOption.name }}
             </VkRadioButton>
           </VkRadioGroup>
@@ -230,7 +230,7 @@
             <h4>{{ item.title }}</h4>
             <VkRadioGroup v-model="ratings[item.key]">
               <VkRadioButton v-for="score in 5" :key="score" :label="score.toString()">
-                <VkIcon name="star" size="16" :color="score <= parseInt(ratings[item.key] || '0') ? '#e6a23c' : '#ddd'" />
+                <VkIcon icon="material-symbols:star" size="16" :color="score <= parseInt(ratings[item.key] || '0') ? '#e6a23c' : '#ddd'" />
                 {{ score }}
               </VkRadioButton>
             </VkRadioGroup>
@@ -244,7 +244,7 @@
                   <VkIcon
                     v-for="star in 5"
                     :key="star"
-                    name="star"
+                    icon="material-symbols:star"
                     size="14"
                     :color="star <= parseInt(ratings[item.key] || '0') ? '#e6a23c' : '#ddd'"
                   />
@@ -255,6 +255,192 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+    
+    <!-- API 文档 -->
+    <div class="demo-section">
+      <h2>API 文档</h2>
+      
+      <div class="api-container">
+        <h3>Radio 属性</h3>
+        <table class="api-table">
+          <thead>
+            <tr>
+              <th>参数</th>
+              <th>说明</th>
+              <th>类型</th>
+              <th>可选值</th>
+              <th>默认值</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>v-model / modelValue</td>
+              <td>绑定值</td>
+              <td>string / number / boolean</td>
+              <td>—</td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td>label</td>
+              <td>Radio 的值</td>
+              <td>string / number / boolean</td>
+              <td>—</td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td>disabled</td>
+              <td>是否禁用</td>
+              <td>boolean</td>
+              <td>—</td>
+              <td>false</td>
+            </tr>
+            <tr>
+              <td>border</td>
+              <td>是否显示边框</td>
+              <td>boolean</td>
+              <td>—</td>
+              <td>false</td>
+            </tr>
+            <tr>
+              <td>size</td>
+              <td>Radio 的尺寸，仅在 border 为真时有效</td>
+              <td>string</td>
+              <td>large / default / small / mini</td>
+              <td>default</td>
+            </tr>
+            <tr>
+              <td>name</td>
+              <td>原生 name 属性</td>
+              <td>string</td>
+              <td>—</td>
+              <td>—</td>
+            </tr>
+          </tbody>
+        </table>
+        
+        <h3>Radio 事件</h3>
+        <table class="api-table">
+          <thead>
+            <tr>
+              <th>事件名称</th>
+              <th>说明</th>
+              <th>回调参数</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>change</td>
+              <td>绑定值变化时触发的事件</td>
+              <td>选中的 Radio label 值</td>
+            </tr>
+          </tbody>
+        </table>
+        
+        <h3>RadioGroup 属性</h3>
+        <table class="api-table">
+          <thead>
+            <tr>
+              <th>参数</th>
+              <th>说明</th>
+              <th>类型</th>
+              <th>可选值</th>
+              <th>默认值</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>v-model / modelValue</td>
+              <td>绑定值</td>
+              <td>string / number / boolean</td>
+              <td>—</td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td>size</td>
+              <td>单选框组尺寸</td>
+              <td>string</td>
+              <td>large / default / small / mini</td>
+              <td>default</td>
+            </tr>
+            <tr>
+              <td>disabled</td>
+              <td>是否禁用</td>
+              <td>boolean</td>
+              <td>—</td>
+              <td>false</td>
+            </tr>
+            <tr>
+              <td>text-color</td>
+              <td>按钮形式的 Radio 激活时的文本颜色</td>
+              <td>string</td>
+              <td>—</td>
+              <td>#ffffff</td>
+            </tr>
+            <tr>
+              <td>fill</td>
+              <td>按钮形式的 Radio 激活时的填充色和边框色</td>
+              <td>string</td>
+              <td>—</td>
+              <td>#409EFF</td>
+            </tr>
+          </tbody>
+        </table>
+        
+        <h3>RadioGroup 事件</h3>
+        <table class="api-table">
+          <thead>
+            <tr>
+              <th>事件名称</th>
+              <th>说明</th>
+              <th>回调参数</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>change</td>
+              <td>绑定值变化时触发的事件</td>
+              <td>选中的 Radio label 值</td>
+            </tr>
+          </tbody>
+        </table>
+        
+        <h3>RadioButton 属性</h3>
+        <table class="api-table">
+          <thead>
+            <tr>
+              <th>参数</th>
+              <th>说明</th>
+              <th>类型</th>
+              <th>可选值</th>
+              <th>默认值</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>label</td>
+              <td>Radio 的值</td>
+              <td>string / number / boolean</td>
+              <td>—</td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td>disabled</td>
+              <td>是否禁用</td>
+              <td>boolean</td>
+              <td>—</td>
+              <td>false</td>
+            </tr>
+            <tr>
+              <td>name</td>
+              <td>原生 name 属性</td>
+              <td>string</td>
+              <td>—</td>
+              <td>—</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
@@ -749,6 +935,35 @@ const averageScore = computed(() => {
   color: #2c3e50;
 }
 
+/* API 文档样式 */
+.api-container {
+  margin-top: 20px;
+}
+
+.api-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 30px;
+  font-size: 14px;
+}
+
+.api-table th,
+.api-table td {
+  text-align: left;
+  padding: 12px 16px;
+  border-bottom: 1px solid #ebeef5;
+}
+
+.api-table th {
+  font-weight: 600;
+  background-color: #f8f9fa;
+  color: #2c3e50;
+}
+
+.api-table tr:hover td {
+  background-color: #f5f7fa;
+}
+
 @media (max-width: 768px) {
   .demo-block {
     padding: 16px;
@@ -781,6 +996,15 @@ const averageScore = computed(() => {
 
   .demo-section h2 {
     font-size: 20px;
+  }
+  
+  .api-table {
+    font-size: 12px;
+  }
+  
+  .api-table th,
+  .api-table td {
+    padding: 8px 10px;
   }
 }
 </style>

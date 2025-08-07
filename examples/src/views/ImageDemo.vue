@@ -47,7 +47,7 @@
           <VkImage style="width: 100px; height: 100px" :src="slowImageUrl">
             <template #placeholder>
               <div class="image-placeholder">
-                <VkIcon name="picture" size="30" />
+                <VkIcon icon="material-symbols:image" size="30" />
                 <span>加载中...</span>
               </div>
             </template>
@@ -69,7 +69,7 @@
         <pre><code>&lt;VkImage :src="imageUrl"&gt;
   &lt;template #placeholder&gt;
     &lt;div class="image-placeholder"&gt;
-      &lt;VkIcon name="picture" /&gt;
+      &lt;Icon icon="material-symbols:image" /&gt;
       &lt;span&gt;加载中...&lt;/span&gt;
     &lt;/div&gt;
   &lt;/template&gt;
@@ -86,7 +86,7 @@
           <VkImage style="width: 100px; height: 100px" src="https://invalid-url.jpg">
             <template #error>
               <div class="image-error">
-                <VkIcon name="picture" size="30" />
+                <VkIcon icon="material-symbols:image" size="30" />
                 <span>加载失败</span>
               </div>
             </template>
@@ -97,7 +97,7 @@
           <VkImage style="width: 100px; height: 100px" src="https://invalid-url.jpg">
             <template #error>
               <div class="error-placeholder">
-                <VkIcon name="close" size="24" color="#f56c6c" />
+                <VkIcon icon="material-symbols:close" size="24" color="#f56c6c" />
                 <span>图片无法显示</span>
               </div>
             </template>
@@ -109,7 +109,7 @@
         <pre><code>&lt;VkImage src="invalid-url.jpg"&gt;
   &lt;template #error&gt;
     &lt;div class="image-error"&gt;
-      &lt;VkIcon name="picture" /&gt;
+      &lt;Icon icon="material-symbols:image" /&gt;
       &lt;span&gt;加载失败&lt;/span&gt;
     &lt;/div&gt;
   &lt;/template&gt;
@@ -127,7 +127,7 @@
             <VkImage style="width: 200px; height: 150px" :src="url" lazy fit="cover">
               <template #placeholder>
                 <div class="lazy-placeholder">
-                  <VkIcon name="picture" size="40" />
+                  <VkIcon icon="material-symbols:image" size="40" />
                   <span>图片 {{ index + 1 }}</span>
                 </div>
               </template>
@@ -143,7 +143,7 @@
 &gt;
   &lt;template #placeholder&gt;
     &lt;div class="lazy-placeholder"&gt;
-      &lt;VkIcon name="picture" /&gt;
+      &lt;Icon icon="material-symbols:image" /&gt;
     &lt;/div&gt;
   &lt;/template&gt;
 &lt;/VkImage&gt;</code></pre>
@@ -244,12 +244,12 @@
               <VkImage class="product-image" :src="product.image" fit="cover" :preview-src-list="[product.image]">
                 <template #placeholder>
                   <div class="product-placeholder">
-                    <VkIcon name="picture" size="30" />
+                    <VkIcon icon="material-symbols:image" size="30" />
                   </div>
                 </template>
                 <template #error>
                   <div class="product-error">
-                    <VkIcon name="picture" size="30" />
+                    <VkIcon icon="material-symbols:image" size="30" />
                     <span>图片加载失败</span>
                   </div>
                 </template>
@@ -324,7 +324,7 @@
           >
             <template #placeholder>
               <div class="event-placeholder">
-                <VkIcon name="picture" size="40" />
+                <VkIcon icon="material-symbols:image" size="40" />
                 <span>点击刷新</span>
               </div>
             </template>

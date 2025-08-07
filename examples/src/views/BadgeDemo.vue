@@ -90,10 +90,10 @@
           <VkButton>消息中心</VkButton>
         </VkBadge>
         <VkBadge is-dot>
-          <VkIcon name="bell" size="24" />
+          <Icon icon="material-symbols:notifications" size="24" />
         </VkBadge>
         <VkBadge is-dot>
-          <VkIcon name="message" size="24" />
+          <Icon icon="material-symbols:message" size="24" />
         </VkBadge>
       </div>
       <div class="demo-code">
@@ -184,27 +184,27 @@
         <div class="demo-block navigation-demo">
           <div class="nav-item">
             <VkBadge :value="unreadMessages" :max="99">
-              <VkIcon name="message" size="20" />
+              <Icon icon="material-symbols:message" size="20" />
               <span>消息</span>
             </VkBadge>
           </div>
           <div class="nav-item">
             <VkBadge :value="notifications" :max="9">
-              <VkIcon name="bell" size="20" />
+              <Icon icon="material-symbols:notifications" size="20" />
               <span>通知</span>
             </VkBadge>
           </div>
           <div class="nav-item">
             <VkBadge is-dot v-if="hasUpdate">
-              <VkIcon name="settings" size="20" />
+              <Icon icon="material-symbols:settings" size="20" />
               <span>设置</span>
             </VkBadge>
             <div v-else class="nav-content">
-              <VkIcon name="settings" size="20" />
+              <Icon icon="material-symbols:settings" size="20" />
               <span>设置</span>
             </div>
           </div>
-        </div>
+        </div> 
       </div>
 
       <!-- 购物车 -->
@@ -213,7 +213,7 @@
         <div class="demo-block cart-demo">
           <VkBadge :value="cartItems" :max="99">
             <VkButton type="primary">
-              <VkIcon name="shopping-cart" />
+              <Icon icon="material-symbols:shopping-cart" />
               购物车
             </VkButton>
           </VkBadge>
