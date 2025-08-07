@@ -168,33 +168,41 @@ import "vakao-ui/style.css";
 
 ## 组合式 API (Hooks)
 
-Vakao UI 提供了一系列实用的组合式 API：
+Vakao UI 提供了一系列实用的组合式 API，可以单独安装使用：
 
-### useToggle
+```bash
+# npm
+npm install @vakao-ui/hooks
 
-布尔值切换钩子，用于管理开关状态：
+# yarn
+yarn add @vakao-ui/hooks
 
-```vue
-<template>
-  <div>
-    <vk-button @click="toggle">切换状态: {{ state ? "开" : "关" }}</vk-button>
-  </div>
-</template>
-
-<script setup lang="ts">
-import { useToggle } from "vakao-ui";
-
-const { state, toggle } = useToggle(false);
-</script>
+# pnpm
+pnpm add @vakao-ui/hooks
 ```
+
+包含多种实用钩子函数，如 `useToggle`、`useCounter`、`useFetch` 等。
+
+详细文档请参考 [@vakao-ui/hooks 文档](./packages/hooks/README.md)
 
 ## 工具函数
 
-Vakao UI 还提供了一系列工具函数：
+Vakao UI 还提供了一系列工具函数，可以单独安装使用：
 
-- **install** - 组件安装工具
-- **namespace** - 命名空间工具
-- **url** - URL 处理工具
+```bash
+# npm
+npm install @vakao-ui/utils
+
+# yarn
+yarn add @vakao-ui/utils
+
+# pnpm
+pnpm add @vakao-ui/utils
+```
+
+包含组件安装工具、CSS命名空间工具、数据处理工具等多种实用函数。
+
+详细文档请参考 [@vakao-ui/utils 文档](./packages/utils/README.md)
 
 ## 开发
 

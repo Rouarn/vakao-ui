@@ -5,12 +5,14 @@
   "main": "dist/vakao-ui-utils.umd.js",
   "module": "dist/vakao-ui-utils.es.js",
   "types": "dist/types/index.d.ts",
+  "sideEffects": false,
   "exports": {
     ".": {
       "import": "./dist/vakao-ui-utils.es.js",
       "require": "./dist/vakao-ui-utils.umd.js",
       "types": "./dist/types/index.d.ts"
-    }
+    },
+    "./package.json": "./package.json"
   },
   "files": [
     "dist",
