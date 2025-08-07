@@ -22,19 +22,20 @@
   font-weight: 500;
   padding: 0 var(--vk-spacing-2);
   font-size: var(--vk-font-size-base);
-  height: var(--vk-size-md);
+  height: var(--vk-size-base);
   border-radius: var(--vk-border-radius-base);
 
   &:hover,
-  &:focus {
-    color: var(--vk-color-primary-dark-2);
+  &:focus-visible {
+    color: var(--vk-color-primary);
     border-color: var(--vk-color-primary-light-3);
-    background-color: var(--vk-color-primary-light-9);
+    background-color: var(--vk-color-primary-light-2);
   }
 
   &:active {
-    color: var(--vk-color-primary-dark-2);
-    border-color: var(--vk-color-primary-dark-2);
+    color: var(--vk-text-color-primary);
+    border-color: var(--vk-border-color-darker);
+    background-color: var(--vk-fill-color-dark);
     outline: none;
   }
 
@@ -95,130 +96,130 @@
 
   // 类型变体
   &.vk-button--type-primary {
-    color: #fff;
+    color: var(--vk-color-white);
     background-color: var(--vk-color-primary);
     border-color: var(--vk-color-primary);
 
     &:hover,
-    &:focus {
-      background-color: var(--vk-color-primary-light-3);
-      border-color: var(--vk-color-primary-light-3);
-      color: #fff;
+    &:focus-visible {
+      background-color: var(--vk-color-primary-dark-1);
+      border-color: var(--vk-color-primary-dark-1);
+      color: var(--vk-color-white);
     }
 
     &:active {
       background-color: var(--vk-color-primary-dark-2);
       border-color: var(--vk-color-primary-dark-2);
-      color: #fff;
+      color: var(--vk-color-white);
     }
 
     &.is-disabled,
     &:disabled {
-      color: #fff;
+      color: var(--vk-color-white);
       background-color: var(--vk-color-primary-light-5);
       border-color: var(--vk-color-primary-light-5);
     }
   }
 
   &.vk-button--type-success {
-    color: #fff;
+    color: var(--vk-color-white);
     background-color: var(--vk-color-success);
     border-color: var(--vk-color-success);
 
     &:hover,
-    &:focus {
-      background-color: var(--vk-color-success-light-3);
-      border-color: var(--vk-color-success-light-3);
-      color: #fff;
+    &:focus-visible {
+      background-color: var(--vk-color-success-dark-1);
+      border-color: var(--vk-color-success-dark-1);
+      color: var(--vk-color-white);
     }
 
     &:active {
       background-color: var(--vk-color-success-dark-2);
       border-color: var(--vk-color-success-dark-2);
-      color: #fff;
+      color: var(--vk-color-white);
     }
 
     &.is-disabled,
     &:disabled {
-      color: #fff;
+      color: var(--vk-color-white);
       background-color: var(--vk-color-success-light-5);
       border-color: var(--vk-color-success-light-5);
     }
   }
 
   &.vk-button--type-warning {
-    color: #fff;
+    color: var(--vk-color-white);
     background-color: var(--vk-color-warning);
     border-color: var(--vk-color-warning);
 
     &:hover,
-    &:focus {
-      background-color: var(--vk-color-warning-light-3);
-      border-color: var(--vk-color-warning-light-3);
-      color: #fff;
+    &:focus-visible {
+      background-color: var(--vk-color-warning-dark-1);
+      border-color: var(--vk-color-warning-dark-1);
+      color: var(--vk-color-white);
     }
 
     &:active {
       background-color: var(--vk-color-warning-dark-2);
       border-color: var(--vk-color-warning-dark-2);
-      color: #fff;
+      color: var(--vk-color-white);
     }
 
     &.is-disabled,
     &:disabled {
-      color: #fff;
+      color: var(--vk-color-white);
       background-color: var(--vk-color-warning-light-5);
       border-color: var(--vk-color-warning-light-5);
     }
   }
 
   &.vk-button--type-danger {
-    color: #fff;
+    color: var(--vk-color-white);
     background-color: var(--vk-color-danger);
     border-color: var(--vk-color-danger);
 
     &:hover,
-    &:focus {
-      background-color: var(--vk-color-danger-light-3);
-      border-color: var(--vk-color-danger-light-3);
-      color: #fff;
+    &:focus-visible {
+      background-color: var(--vk-color-danger-dark-1);
+      border-color: var(--vk-color-danger-dark-1);
+      color: var(--vk-color-white);
     }
 
     &:active {
       background-color: var(--vk-color-danger-dark-2);
       border-color: var(--vk-color-danger-dark-2);
-      color: #fff;
+      color: var(--vk-color-white);
     }
 
     &.is-disabled,
     &:disabled {
-      color: #fff;
+      color: var(--vk-color-white);
       background-color: var(--vk-color-danger-light-5);
       border-color: var(--vk-color-danger-light-5);
     }
   }
 
   &.vk-button--type-info {
-    color: #fff;
+    color: var(--vk-color-white);
     background-color: var(--vk-color-info);
     border-color: var(--vk-color-info);
 
     &:hover,
-    &:focus {
-      background-color: var(--vk-color-info-light-3);
-      border-color: var(--vk-color-info-light-3);
-      color: #fff;
+    &:focus-visible {
+      background-color: var(--vk-color-info-dark-1);
+      border-color: var(--vk-color-info-dark-1);
+      color: var(--vk-color-white);
     }
 
     &:active {
       background-color: var(--vk-color-info-dark-2);
       border-color: var(--vk-color-info-dark-2);
-      color: #fff;
+      color: var(--vk-color-white);
     }
 
     &.is-disabled,
     &:disabled {
-      color: #fff;
+      color: var(--vk-color-white);
       background-color: var(--vk-color-info-light-5);
       border-color: var(--vk-color-info-light-5);
     }
@@ -233,8 +234,8 @@
     padding-right: 0;
 
     &:hover,
-    &:focus {
-      color: var(--vk-color-primary-light-3);
+    &:focus-visible {
+      color: var(--vk-color-primary-dark-1);
       border-color: transparent;
       background-color: transparent;
     }
@@ -252,6 +253,133 @@
       background-image: none;
       background-color: transparent;
       border-color: transparent;
+    }
+  }
+
+  // Plain按钮样式
+  &.is-plain {
+    background: transparent;
+
+    // 默认plain样式
+    &:not([class*="--type-"]) {
+      color: var(--vk-color-primary);
+      border-color: var(--vk-color-primary-light-3);
+
+      &:hover,
+      &:focus-visible {
+        background-color: var(--vk-color-primary-light-1);
+        border-color: var(--vk-color-primary);
+        color: var(--vk-color-primary);
+      }
+
+      &:active {
+        background-color: var(--vk-color-primary-light-2);
+        border-color: var(--vk-color-primary);
+        color: var(--vk-color-primary);
+      }
+    }
+
+    // Primary plain
+    &.vk-button--type-primary {
+      color: var(--vk-color-primary);
+      border-color: var(--vk-color-primary-light-3);
+
+      &:hover,
+      &:focus-visible {
+        background-color: var(--vk-color-primary-light-1);
+        border-color: var(--vk-color-primary);
+        color: var(--vk-color-primary);
+      }
+
+      &:active {
+        background-color: var(--vk-color-primary-light-2);
+        border-color: var(--vk-color-primary);
+        color: var(--vk-color-primary);
+      }
+    }
+
+    // Success plain
+    &.vk-button--type-success {
+      color: var(--vk-color-success);
+      border-color: var(--vk-color-success-light-3);
+
+      &:hover,
+      &:focus-visible {
+        background-color: var(--vk-color-success-light-1);
+        border-color: var(--vk-color-success);
+        color: var(--vk-color-success);
+      }
+
+      &:active {
+        background-color: var(--vk-color-success-light-2);
+        border-color: var(--vk-color-success);
+        color: var(--vk-color-success);
+      }
+    }
+
+    // Warning plain
+    &.vk-button--type-warning {
+      color: var(--vk-color-warning);
+      border-color: var(--vk-color-warning-light-3);
+
+      &:hover,
+      &:focus-visible {
+        background-color: var(--vk-color-warning-light-1);
+        border-color: var(--vk-color-warning);
+        color: var(--vk-color-warning);
+      }
+
+      &:active {
+        background-color: var(--vk-color-warning-light-2);
+        border-color: var(--vk-color-warning);
+        color: var(--vk-color-warning);
+      }
+    }
+
+    // Danger plain
+    &.vk-button--type-danger {
+      color: var(--vk-color-danger);
+      border-color: var(--vk-color-danger-light-3);
+
+      &:hover,
+      &:focus-visible {
+        background-color: var(--vk-color-danger-light-1);
+        border-color: var(--vk-color-danger);
+        color: var(--vk-color-danger);
+      }
+
+      &:active {
+        background-color: var(--vk-color-danger-light-2);
+        border-color: var(--vk-color-danger);
+        color: var(--vk-color-danger);
+      }
+    }
+
+    // Info plain
+    &.vk-button--type-info {
+      color: var(--vk-color-info);
+      border-color: var(--vk-color-info-light-3);
+
+      &:hover,
+      &:focus-visible {
+        background-color: var(--vk-color-info-light-1);
+        border-color: var(--vk-color-info);
+        color: var(--vk-color-info);
+      }
+
+      &:active {
+        background-color: var(--vk-color-info-light-2);
+        border-color: var(--vk-color-info);
+        color: var(--vk-color-info);
+      }
+    }
+
+    // 禁用状态
+    &.is-disabled,
+    &:disabled {
+      color: var(--vk-text-color-disabled);
+      background-color: transparent;
+      border-color: var(--vk-border-color-disabled);
     }
   }
 
@@ -360,7 +488,7 @@
       z-index: 1;
     }
 
-    &:focus {
+    &:focus-visible {
       z-index: 2;
     }
 

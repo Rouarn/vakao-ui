@@ -8,10 +8,10 @@ const __dirname = dirname(__filename);
 // 基础主题色定义
 const themeColors = {
   primary: "#18a058",
-  success: "#18a058",
+  success: "#2080f0",
   warning: "#f0a020",
   danger: "#d03050",
-  info: "#2080f0",
+  info: "#909399",
 };
 
 // 生成CSS变量映射
@@ -251,12 +251,13 @@ function generateColorVariables(): string {
   });
 
   // 文本颜色
+  // 文本颜色
   scss += "// 文本颜色\n";
-  scss += "$text-color-primary: #000000d9;\n";
-  scss += "$text-color-regular: #000000e0;\n";
-  scss += "$text-color-secondary: #00000099;\n";
-  scss += "$text-color-placeholder: #00000059;\n";
-  scss += "$text-color-disabled: #00000040;\n\n";
+  scss += "$text-color-primary: #303133;\n";
+  scss += "$text-color-regular: #000000;\n";
+  scss += "$text-color-secondary: #909399;\n";
+  scss += "$text-color-placeholder: #a8abb2;\n";
+  scss += "$text-color-disabled: #c0c4cc;\n\n";
 
   // 边框颜色
   scss += "// 边框颜色\n";

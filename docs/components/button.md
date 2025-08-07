@@ -30,6 +30,34 @@
   </template>
 </Demo>
 
+## 朴素按钮
+
+使用 `plain` 属性创建朴素按钮，朴素按钮具有透明背景和彩色边框。
+
+<Demo>
+  <vk-button plain>朴素按钮</vk-button>
+  <vk-button type="primary" plain>主要按钮</vk-button>
+  <vk-button type="success" plain>成功按钮</vk-button>
+  <vk-button type="info" plain>信息按钮</vk-button>
+  <vk-button type="warning" plain>警告按钮</vk-button>
+  <vk-button type="danger" plain>错误按钮</vk-button>
+  
+  <template #code>
+
+```vue
+<template>
+  <vk-button plain>朴素按钮</vk-button>
+  <vk-button type="primary" plain>主要按钮</vk-button>
+  <vk-button type="success" plain>成功按钮</vk-button>
+  <vk-button type="info" plain>信息按钮</vk-button>
+  <vk-button type="warning" plain>警告按钮</vk-button>
+  <vk-button type="danger" plain>错误按钮</vk-button>
+</template>
+```
+
+  </template>
+</Demo>
+
 ## 按钮尺寸
 
 使用 `size` 属性设置按钮大小，可选值为 `tiny`、`small`、`medium`、`large`，默认为 `medium`。
@@ -262,6 +290,7 @@
 | iconPosition | `'left' \| 'right'`                                                                    | `'left'`    | 图标位置                                                                           |
 | wave         | `boolean`                                                                              | `true`      | 是否有波纹效果                                                                     |
 | bordered     | `boolean`                                                                              | `true`      | 是否有边框                                                                         |
+| plain        | `boolean`                                                                              | `false`     | 是否为朴素按钮（透明背景，有边框）                                                 |
 
 ### Events
 

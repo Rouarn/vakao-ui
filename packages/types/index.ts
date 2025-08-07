@@ -144,7 +144,7 @@ export type ComponentSize = "tiny" | "small" | "medium" | "large";
  * ]);
  * ```
  */
-export type ComponentType = "default" | "primary" | "success" | "warning" | "info" | "danger";
+export type ComponentType = "default" | "primary" | "success" | "warning" | "info" | "danger" | "plain";
 
 // ==================== 全局类型声明 ====================
 

@@ -1,8 +1,8 @@
 // 自动生成的颜色变量文件
 // 请勿手动修改，运行 pnpm run generate:colors 重新生成
 
-@use 'sass:color';
-@use 'sass:map';
+@use "sass:color";
+@use "sass:map";
 
 // 基础颜色
 $color-white: #ffffff;
@@ -10,10 +10,10 @@ $color-black: #000000;
 
 // 主题色
 $color-primary: #18a058;
-$color-success: #18a058;
+$color-success: #2080f0;
 $color-warning: #f0a020;
 $color-danger: #d03050;
-$color-info: #2080f0;
+$color-info: #909399;
 
 // 透明度变量
 $color-primary-light-0: color.change(#18a058, $alpha: 0);
@@ -27,16 +27,16 @@ $color-primary-light-7: color.change(#18a058, $alpha: 0.7);
 $color-primary-light-8: color.change(#18a058, $alpha: 0.8);
 $color-primary-light-9: color.change(#18a058, $alpha: 0.9);
 
-$color-success-light-0: color.change(#18a058, $alpha: 0);
-$color-success-light-1: color.change(#18a058, $alpha: 0.1);
-$color-success-light-2: color.change(#18a058, $alpha: 0.2);
-$color-success-light-3: color.change(#18a058, $alpha: 0.3);
-$color-success-light-4: color.change(#18a058, $alpha: 0.4);
-$color-success-light-5: color.change(#18a058, $alpha: 0.5);
-$color-success-light-6: color.change(#18a058, $alpha: 0.6);
-$color-success-light-7: color.change(#18a058, $alpha: 0.7);
-$color-success-light-8: color.change(#18a058, $alpha: 0.8);
-$color-success-light-9: color.change(#18a058, $alpha: 0.9);
+$color-success-light-0: color.change(#2080f0, $alpha: 0);
+$color-success-light-1: color.change(#2080f0, $alpha: 0.1);
+$color-success-light-2: color.change(#2080f0, $alpha: 0.2);
+$color-success-light-3: color.change(#2080f0, $alpha: 0.3);
+$color-success-light-4: color.change(#2080f0, $alpha: 0.4);
+$color-success-light-5: color.change(#2080f0, $alpha: 0.5);
+$color-success-light-6: color.change(#2080f0, $alpha: 0.6);
+$color-success-light-7: color.change(#2080f0, $alpha: 0.7);
+$color-success-light-8: color.change(#2080f0, $alpha: 0.8);
+$color-success-light-9: color.change(#2080f0, $alpha: 0.9);
 
 $color-warning-light-0: color.change(#f0a020, $alpha: 0);
 $color-warning-light-1: color.change(#f0a020, $alpha: 0.1);
@@ -60,16 +60,16 @@ $color-danger-light-7: color.change(#d03050, $alpha: 0.7);
 $color-danger-light-8: color.change(#d03050, $alpha: 0.8);
 $color-danger-light-9: color.change(#d03050, $alpha: 0.9);
 
-$color-info-light-0: color.change(#2080f0, $alpha: 0);
-$color-info-light-1: color.change(#2080f0, $alpha: 0.1);
-$color-info-light-2: color.change(#2080f0, $alpha: 0.2);
-$color-info-light-3: color.change(#2080f0, $alpha: 0.3);
-$color-info-light-4: color.change(#2080f0, $alpha: 0.4);
-$color-info-light-5: color.change(#2080f0, $alpha: 0.5);
-$color-info-light-6: color.change(#2080f0, $alpha: 0.6);
-$color-info-light-7: color.change(#2080f0, $alpha: 0.7);
-$color-info-light-8: color.change(#2080f0, $alpha: 0.8);
-$color-info-light-9: color.change(#2080f0, $alpha: 0.9);
+$color-info-light-0: color.change(#909399, $alpha: 0);
+$color-info-light-1: color.change(#909399, $alpha: 0.1);
+$color-info-light-2: color.change(#909399, $alpha: 0.2);
+$color-info-light-3: color.change(#909399, $alpha: 0.3);
+$color-info-light-4: color.change(#909399, $alpha: 0.4);
+$color-info-light-5: color.change(#909399, $alpha: 0.5);
+$color-info-light-6: color.change(#909399, $alpha: 0.6);
+$color-info-light-7: color.change(#909399, $alpha: 0.7);
+$color-info-light-8: color.change(#909399, $alpha: 0.8);
+$color-info-light-9: color.change(#909399, $alpha: 0.9);
 
 // 深色变量
 $color-primary-dark-1: color.adjust(#18a058, $lightness: -10%);
@@ -82,15 +82,15 @@ $color-primary-dark-7: color.adjust(#18a058, $lightness: -70%);
 $color-primary-dark-8: color.adjust(#18a058, $lightness: -80%);
 $color-primary-dark-9: color.adjust(#18a058, $lightness: -90%);
 
-$color-success-dark-1: color.adjust(#18a058, $lightness: -10%);
-$color-success-dark-2: color.adjust(#18a058, $lightness: -20%);
-$color-success-dark-3: color.adjust(#18a058, $lightness: -30%);
-$color-success-dark-4: color.adjust(#18a058, $lightness: -40%);
-$color-success-dark-5: color.adjust(#18a058, $lightness: -50%);
-$color-success-dark-6: color.adjust(#18a058, $lightness: -60%);
-$color-success-dark-7: color.adjust(#18a058, $lightness: -70%);
-$color-success-dark-8: color.adjust(#18a058, $lightness: -80%);
-$color-success-dark-9: color.adjust(#18a058, $lightness: -90%);
+$color-success-dark-1: color.adjust(#2080f0, $lightness: -10%);
+$color-success-dark-2: color.adjust(#2080f0, $lightness: -20%);
+$color-success-dark-3: color.adjust(#2080f0, $lightness: -30%);
+$color-success-dark-4: color.adjust(#2080f0, $lightness: -40%);
+$color-success-dark-5: color.adjust(#2080f0, $lightness: -50%);
+$color-success-dark-6: color.adjust(#2080f0, $lightness: -60%);
+$color-success-dark-7: color.adjust(#2080f0, $lightness: -70%);
+$color-success-dark-8: color.adjust(#2080f0, $lightness: -80%);
+$color-success-dark-9: color.adjust(#2080f0, $lightness: -90%);
 
 $color-warning-dark-1: color.adjust(#f0a020, $lightness: -10%);
 $color-warning-dark-2: color.adjust(#f0a020, $lightness: -20%);
@@ -112,22 +112,22 @@ $color-danger-dark-7: color.adjust(#d03050, $lightness: -70%);
 $color-danger-dark-8: color.adjust(#d03050, $lightness: -80%);
 $color-danger-dark-9: color.adjust(#d03050, $lightness: -90%);
 
-$color-info-dark-1: color.adjust(#2080f0, $lightness: -10%);
-$color-info-dark-2: color.adjust(#2080f0, $lightness: -20%);
-$color-info-dark-3: color.adjust(#2080f0, $lightness: -30%);
-$color-info-dark-4: color.adjust(#2080f0, $lightness: -40%);
-$color-info-dark-5: color.adjust(#2080f0, $lightness: -50%);
-$color-info-dark-6: color.adjust(#2080f0, $lightness: -60%);
-$color-info-dark-7: color.adjust(#2080f0, $lightness: -70%);
-$color-info-dark-8: color.adjust(#2080f0, $lightness: -80%);
-$color-info-dark-9: color.adjust(#2080f0, $lightness: -90%);
+$color-info-dark-1: color.adjust(#909399, $lightness: -10%);
+$color-info-dark-2: color.adjust(#909399, $lightness: -20%);
+$color-info-dark-3: color.adjust(#909399, $lightness: -30%);
+$color-info-dark-4: color.adjust(#909399, $lightness: -40%);
+$color-info-dark-5: color.adjust(#909399, $lightness: -50%);
+$color-info-dark-6: color.adjust(#909399, $lightness: -60%);
+$color-info-dark-7: color.adjust(#909399, $lightness: -70%);
+$color-info-dark-8: color.adjust(#909399, $lightness: -80%);
+$color-info-dark-9: color.adjust(#909399, $lightness: -90%);
 
 // 文本颜色
-$text-color-primary: #000000d9;
-$text-color-regular: #000000e0;
-$text-color-secondary: #00000099;
-$text-color-placeholder: #00000059;
-$text-color-disabled: #00000040;
+$text-color-primary: #303133;
+$text-color-regular: #000000;
+$text-color-secondary: #909399;
+$text-color-placeholder: #a8abb2;
+$text-color-disabled: #c0c4cc;
 
 // 边框颜色
 $border-color: #d9d9d9;
@@ -153,7 +153,9 @@ $fill-color-darker: #e4e7ed;
 $fill-color-blank: #ffffff;
 
 // 字体相关
-$font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+$font-family:
+  -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
+  "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 $font-size-xs: 12px;
 $font-size-sm: 13px;
 $font-size-base: 14px;
@@ -226,14 +228,21 @@ $border-radius-round: 20px;
 
 // 阴影
 $box-shadow-light: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
-$box-shadow-base: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
+$box-shadow-base:
+  0 2px 4px rgba(0, 0, 0, 0.12),
+  0 0 6px rgba(0, 0, 0, 0.04);
 $box-shadow-dark: 0 2px 16px 0 rgba(0, 0, 0, 0.18);
 $box-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-$box-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-$box-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-$box-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+$box-shadow-md:
+  0 4px 6px -1px rgba(0, 0, 0, 0.1),
+  0 2px 4px -1px rgba(0, 0, 0, 0.06);
+$box-shadow-lg:
+  0 10px 15px -3px rgba(0, 0, 0, 0.1),
+  0 4px 6px -2px rgba(0, 0, 0, 0.05);
+$box-shadow-xl:
+  0 20px 25px -5px rgba(0, 0, 0, 0.1),
+  0 10px 10px -5px rgba(0, 0, 0, 0.04);
 $box-shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
-
 
 // 过渡动画
 $transition-duration: 0.3s;

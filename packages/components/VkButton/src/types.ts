@@ -18,6 +18,7 @@ import type { ExtractPublicPropTypes, ComponentType, ComponentSize } from "../..
  * - warning: 警告按钮
  * - danger: 危险按钮
  * - info: 信息按钮
+ * - plain: 朴素按钮（透明背景，有边框）
  */
 export type ButtonType = ComponentType;
 
