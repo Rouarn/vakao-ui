@@ -5,10 +5,6 @@
  * 支持多种尺寸、适应模式、加载状态和预览交互。
  */
 
-// 使用全局变量和混合
-@use "../variables.scss" as *;
-@use "../mixins.scss" as *;
-
 // VkImage 组件样式
 .vk-image {
   position: relative;

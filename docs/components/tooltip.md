@@ -108,46 +108,6 @@
     </div>
   </div>
 </template>
-
-<style>
-.tooltip-demo {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr;
-  gap: 10px;
-  width: 400px;
-  margin: 20px auto;
-}
-
-.top {
-  grid-column: 1 / 4;
-  display: flex;
-  justify-content: space-around;
-}
-
-.left {
-  grid-column: 1;
-  grid-row: 2;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.right {
-  grid-column: 3;
-  grid-row: 2;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.bottom {
-  grid-column: 1 / 4;
-  grid-row: 3;
-  display: flex;
-  justify-content: space-around;
-}
-</style>
 ```
 
   </template>
@@ -456,3 +416,48 @@ import { ref } from 'vue'
 
 const manualVisible = ref(false)
 </script>
+
+<style>
+.tooltip-demo {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 10px;
+  width:70%;
+  margin: 20px auto;
+}
+
+.top {
+  grid-column: 1 / 4;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+}
+
+.left {
+  grid-column: 1;
+  grid-row: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.right {
+  grid-column: 3;
+  grid-row: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.bottom {
+  grid-column: 1 / 4;
+  grid-row: 3;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+}
+</style>

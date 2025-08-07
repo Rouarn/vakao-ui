@@ -19,19 +19,18 @@
   transition:
     opacity 0.3s,
     visibility 0.3s;
-}
 
-/* 主题样式 */
-.vk-tooltip__popper.vk-tooltip--dark {
-  background-color: #303133;
-  color: #fff;
-  border: 1px solid #303133;
-}
+  &.vk-tooltip--dark {
+    background-color: #303133;
+    color: #fff;
+    border: 1px solid #303133;
+  }
 
-.vk-tooltip__popper.vk-tooltip--light {
-  background-color: #fff;
-  color: #303133;
-  border: 1px solid #e4e7ed;
+  &.vk-tooltip--light {
+    background-color: #fff;
+    color: #303133;
+    border: 1px solid #e4e7ed;
+  }
 }
 
 /* 箭头样式 - 使用三角形 */
@@ -61,187 +60,243 @@
 
 /* 位置样式 - 调整三角形方向 */
 /* 顶部位置 */
-.vk-tooltip--top .vk-tooltip__arrow {
-  bottom: -6px;
-  left: 50%;
-  margin-left: -6px;
-  border-top-color: #303133;
-  border-bottom-width: 0;
-}
+.vk-tooltip {
+  &--top {
+    .vk-tooltip__arrow {
+      bottom: -6px;
+      left: 50%;
+      margin-left: -6px;
+      border-top-color: #303133;
+      border-bottom-width: 0;
+    }
 
-.vk-tooltip--light.vk-tooltip--top .vk-tooltip__arrow {
-  border-top-color: #e4e7ed;
-}
+    &.vk-tooltip--light {
+      .vk-tooltip__arrow {
+        border-top-color: #e4e7ed;
+      }
+    }
+  }
 
-/* 顶部起始位置 */
-.vk-tooltip--top-start .vk-tooltip__arrow {
-  bottom: -6px;
-  left: 12px;
-  border-top-color: #303133;
-  border-bottom-width: 0;
-}
+  /* 顶部起始位置 */
+  &--top-start {
+    .vk-tooltip__arrow {
+      bottom: -6px;
+      left: 12px;
+      border-top-color: #303133;
+      border-bottom-width: 0;
+    }
 
-.vk-tooltip--light.vk-tooltip--top-start .vk-tooltip__arrow {
-  border-top-color: #e4e7ed;
-}
+    &.vk-tooltip--light {
+      .vk-tooltip__arrow {
+        border-top-color: #e4e7ed;
+      }
+    }
+  }
 
-/* 顶部结束位置 */
-.vk-tooltip--top-end .vk-tooltip__arrow {
-  bottom: -6px;
-  right: 12px;
-  border-top-color: #303133;
-  border-bottom-width: 0;
-}
+  /* 顶部结束位置 */
+  &--top-end {
+    .vk-tooltip__arrow {
+      bottom: -6px;
+      right: 12px;
+      border-top-color: #303133;
+      border-bottom-width: 0;
+    }
 
-.vk-tooltip--light.vk-tooltip--top-end .vk-tooltip__arrow {
-  border-top-color: #e4e7ed;
-}
+    &.vk-tooltip--light {
+      .vk-tooltip__arrow {
+        border-top-color: #e4e7ed;
+      }
+    }
+  }
 
-/* 底部位置 */
-.vk-tooltip--bottom .vk-tooltip__arrow {
-  top: -6px;
-  left: 50%;
-  margin-left: -6px;
-  border-bottom-color: #303133;
-  border-top-width: 0;
-}
+  /* 底部位置 */
+  &--bottom {
+    .vk-tooltip__arrow {
+      top: -6px;
+      left: 50%;
+      margin-left: -6px;
+      border-bottom-color: #303133;
+      border-top-width: 0;
+    }
 
-.vk-tooltip--light.vk-tooltip--bottom .vk-tooltip__arrow {
-  border-bottom-color: #e4e7ed;
-}
+    &.vk-tooltip--light {
+      .vk-tooltip__arrow {
+        border-bottom-color: #e4e7ed;
+      }
+    }
+  }
 
-/* 底部起始位置 */
-.vk-tooltip--bottom-start .vk-tooltip__arrow {
-  top: -6px;
-  left: 12px;
-  border-bottom-color: #303133;
-  border-top-width: 0;
-}
+  /* 底部起始位置 */
+  &--bottom-start {
+    .vk-tooltip__arrow {
+      top: -6px;
+      left: 12px;
+      border-bottom-color: #303133;
+      border-top-width: 0;
+    }
 
-.vk-tooltip--light.vk-tooltip--bottom-start .vk-tooltip__arrow {
-  border-bottom-color: #e4e7ed;
-}
+    &.vk-tooltip--light {
+      .vk-tooltip__arrow {
+        border-bottom-color: #e4e7ed;
+      }
+    }
+  }
 
-/* 底部结束位置 */
-.vk-tooltip--bottom-end .vk-tooltip__arrow {
-  top: -6px;
-  right: 12px;
-  border-bottom-color: #303133;
-  border-top-width: 0;
-}
+  /* 底部结束位置 */
+  &--bottom-end {
+    .vk-tooltip__arrow {
+      top: -6px;
+      right: 12px;
+      border-bottom-color: #303133;
+      border-top-width: 0;
+    }
 
-.vk-tooltip--light.vk-tooltip--bottom-end .vk-tooltip__arrow {
-  border-bottom-color: #e4e7ed;
-}
+    &.vk-tooltip--light {
+      .vk-tooltip__arrow {
+        border-bottom-color: #e4e7ed;
+      }
+    }
+  }
 
-/* 左侧位置 */
-.vk-tooltip--left .vk-tooltip__arrow {
-  right: -6px;
-  top: 50%;
-  margin-top: -6px;
-  border-left-color: #303133;
-  border-right-width: 0;
-}
+  /* 左侧位置 */
+  &--left {
+    .vk-tooltip__arrow {
+      right: -6px;
+      top: 50%;
+      margin-top: -6px;
+      border-left-color: #303133;
+      border-right-width: 0;
+    }
 
-.vk-tooltip--light.vk-tooltip--left .vk-tooltip__arrow {
-  border-left-color: #e4e7ed;
-}
+    &.vk-tooltip--light {
+      .vk-tooltip__arrow {
+        border-left-color: #e4e7ed;
+      }
+    }
+  }
 
-/* 左侧起始位置 */
-.vk-tooltip--left-start .vk-tooltip__arrow {
-  right: -6px;
-  top: 12px;
-  border-left-color: #303133;
-  border-right-width: 0;
-}
+  /* 左侧起始位置 */
+  &--left-start {
+    .vk-tooltip__arrow {
+      right: -6px;
+      top: 12px;
+      border-left-color: #303133;
+      border-right-width: 0;
+    }
 
-.vk-tooltip--light.vk-tooltip--left-start .vk-tooltip__arrow {
-  border-left-color: #e4e7ed;
-}
+    &.vk-tooltip--light {
+      .vk-tooltip__arrow {
+        border-left-color: #e4e7ed;
+      }
+    }
+  }
 
-/* 左侧结束位置 */
-.vk-tooltip--left-end .vk-tooltip__arrow {
-  right: -6px;
-  bottom: 12px;
-  border-left-color: #303133;
-  border-right-width: 0;
-}
+  /* 左侧结束位置 */
+  &--left-end {
+    .vk-tooltip__arrow {
+      right: -6px;
+      bottom: 12px;
+      border-left-color: #303133;
+      border-right-width: 0;
+    }
 
-.vk-tooltip--light.vk-tooltip--left-end .vk-tooltip__arrow {
-  border-left-color: #e4e7ed;
-}
+    &.vk-tooltip--light {
+      .vk-tooltip__arrow {
+        border-left-color: #e4e7ed;
+      }
+    }
+  }
 
-/* 右侧位置 */
-.vk-tooltip--right .vk-tooltip__arrow {
-  left: -6px;
-  top: 50%;
-  margin-top: -6px;
-  border-right-color: #303133;
-  border-left-width: 0;
-}
+  /* 右侧位置 */
+  &--right {
+    .vk-tooltip__arrow {
+      left: -6px;
+      top: 50%;
+      margin-top: -6px;
+      border-right-color: #303133;
+      border-left-width: 0;
+    }
 
-.vk-tooltip--light.vk-tooltip--right .vk-tooltip__arrow {
-  border-right-color: #e4e7ed;
-}
+    &.vk-tooltip--light {
+      .vk-tooltip__arrow {
+        border-right-color: #e4e7ed;
+      }
+    }
+  }
 
-/* 右侧起始位置 */
-.vk-tooltip--right-start .vk-tooltip__arrow {
-  left: -6px;
-  top: 12px;
-  border-right-color: #303133;
-  border-left-width: 0;
-}
+  /* 右侧起始位置 */
+  &--right-start {
+    .vk-tooltip__arrow {
+      left: -6px;
+      top: 12px;
+      border-right-color: #303133;
+      border-left-width: 0;
+    }
 
-.vk-tooltip--light.vk-tooltip--right-start .vk-tooltip__arrow {
-  border-right-color: #e4e7ed;
-}
+    &.vk-tooltip--light {
+      .vk-tooltip__arrow {
+        border-right-color: #e4e7ed;
+      }
+    }
+  }
 
-/* 右侧结束位置 */
-.vk-tooltip--right-end .vk-tooltip__arrow {
-  left: -6px;
-  bottom: 12px;
-  border-right-color: #303133;
-  border-left-width: 0;
-}
+  /* 右侧结束位置 */
+  &--right-end {
+    .vk-tooltip__arrow {
+      left: -6px;
+      bottom: 12px;
+      border-right-color: #303133;
+      border-left-width: 0;
+    }
 
-.vk-tooltip--light.vk-tooltip--right-end .vk-tooltip__arrow {
-  border-right-color: #e4e7ed;
+    &.vk-tooltip--light {
+      .vk-tooltip__arrow {
+        border-right-color: #e4e7ed;
+      }
+    }
+  }
 }
 
 /* 过渡动画 */
 /* 淡入淡出动画 */
-.vk-fade-enter-active,
-.vk-fade-leave-active {
-  transition: opacity 0.3s ease;
-}
+.vk-fade {
+  &-enter-active,
+  &-leave-active {
+    transition: opacity 0.3s ease;
+  }
 
-.vk-fade-enter-from,
-.vk-fade-leave-to {
-  opacity: 0;
+  &-enter-from,
+  &-leave-to {
+    opacity: 0;
+  }
 }
 
 /* 缩放动画 */
-.vk-zoom-enter-active,
-.vk-zoom-leave-active {
-  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-}
+.vk-zoom {
+  &-enter-active,
+  &-leave-active {
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+  }
 
-.vk-zoom-enter-from,
-.vk-zoom-leave-to {
-  opacity: 0;
-  transform: scale(0.8);
+  &-enter-from,
+  &-leave-to {
+    opacity: 0;
+    transform: scale(0.8);
+  }
 }
 
 /* 滑动动画 */
-.vk-slide-enter-active,
-.vk-slide-leave-active {
-  transition: all 0.3s ease;
-}
+.vk-slide {
+  &-enter-active,
+  &-leave-active {
+    transition: all 0.3s ease;
+  }
 
-.vk-slide-enter-from,
-.vk-slide-leave-to {
-  opacity: 0;
-  transform: translateY(-10px);
+  &-enter-from,
+  &-leave-to {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
 }
 
 /* 禁用状态 */
