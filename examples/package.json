@@ -14,8 +14,9 @@
     "type-check": "vue-tsc --build"
   },
   "dependencies": {
+    "@iconify/vue": "^5.0.0",
     "pinia": "^3.0.3",
-    "vakao-ui": "0.0.2",
+    "vakao-ui": "0.0.1",
     "vue": "^3.5.18",
     "vue-router": "^4.5.1"
   },

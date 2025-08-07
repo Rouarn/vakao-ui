@@ -24,6 +24,7 @@
   ],
   "scripts": {
     "dev": "pnpm -C docs dev",
+    "dev:examples": "pnpm -C examples dev",
     "build": "pnpm -C packages build",
     "build:utils": "pnpm -C packages/utils build",
     "build:hooks": "pnpm -C packages/hooks build",

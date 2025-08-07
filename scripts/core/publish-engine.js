@@ -231,32 +231,15 @@ class PublishEngine {
 
     // 对于主包，需要特殊处理
     if (packageKey === "main") {
-      // 主包需要先执行构建命令，然后复制构建产物
+      // 主包需要先执行构建命令
       if (packageConfig.buildCommand) {
         this.exec(packageConfig.buildCommand, packageRoot);
       }
 
-      // 复制主包的构建产物到发布目录
+      // 主包直接使用根目录的dist文件夹作为构建目录
       const mainDistDir = path.join(this.projectRoot, "dist");
       if (existsSync(mainDistDir)) {
-        // 复制所有构建产物，但排除子包目录
-        const items = readdirSync(mainDistDir);
-        items.forEach((item) => {
-          const itemPath = path.join(mainDistDir, item);
-          const targetPath = path.join(buildDir, item);
-          const stat = statSync(itemPath);
-
-          // 跳过子包目录（hooks, utils, main等）
-          if (stat.isDirectory() && ["hooks", "utils", "main", "docs"].includes(item)) {
-            return;
-          }
-
-          if (stat.isDirectory()) {
-            this.copyDirectory(itemPath, targetPath);
-          } else {
-            copyFileSync(itemPath, targetPath);
-          }
-        });
+        return mainDistDir;
       }
     } else {
       // 子包的构建逻辑

@@ -82,12 +82,15 @@ importers:
 
   examples:
     dependencies:
+      '@iconify/vue':
+        specifier: ^5.0.0
+        version: 5.0.0(vue@3.5.18(typescript@5.8.3))
       pinia:
         specifier: ^3.0.3
         version: 3.0.3(typescript@5.8.3)(vue@3.5.18(typescript@5.8.3))
       vakao-ui:
-        specifier: 0.0.2
-        version: 0.0.2(vue@3.5.18(typescript@5.8.3))
+        specifier: 0.0.1
+        version: 0.0.1(vue@3.5.18(typescript@5.8.3))
       vue:
         specifier: ^3.5.18
         version: 3.5.18(typescript@5.8.3)
@@ -2975,9 +2978,8 @@ packages:
     resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
     hasBin: true
 
-  vakao-ui@0.0.2:
-    resolution: {integrity: sha512-8v1sv1Jf8fy+D6Oq3Pak8ioVKIdShU2eqhbtLx32lCvsdzYM0P9JGFE14BBbwKeJ9ZustS7EPElep3tWtHp+Mw==}
-    engines: {node: '>=16.0.0', npm: '>=8.0.0', pnpm: '>=7.0.0'}
+  vakao-ui@0.0.1:
+    resolution: {integrity: sha512-o0gfpyK3lsStQZ1LfxRqNyhH/JckklrpZn+JjmR6OLRtMlvj3Ax0alFlcuonOhTn1hYHn4dectINGBKZRDxqqA==}
     peerDependencies:
       vue: ^3.3.0
 
@@ -5981,9 +5983,8 @@ snapshots:
 
   uuid@8.3.2: {}
 
-  vakao-ui@0.0.2(vue@3.5.18(typescript@5.8.3)):
+  vakao-ui@0.0.1(vue@3.5.18(typescript@5.8.3)):
     dependencies:
-      '@iconify/vue': 5.0.0(vue@3.5.18(typescript@5.8.3))
       vue: 3.5.18(typescript@5.8.3)
 
   validator@13.15.15: {}

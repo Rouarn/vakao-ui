@@ -229,7 +229,7 @@
         <div class="card-demo">
           <div class="user-card">
             <div class="user-header">
-              <VkAvatar src="https://avatars.githubusercontent.com/u/1?v=4" size="60" />
+              <VkAvatar src="https://avatars.githubusercontent.com/u/1?v=4" :size="60" />
               <div class="user-info">
                 <h4>张三</h4>
                 <p>前端开发工程师</p>
