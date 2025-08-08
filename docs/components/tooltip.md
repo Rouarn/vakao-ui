@@ -563,7 +563,7 @@ import { ref } from 'vue'
 const manualVisible = ref(false)
 </script>
 
-<style>
+<style scoped>
 .tooltip-demo {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
