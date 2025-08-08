@@ -1,268 +1,88 @@
-/* 基础样式 */
+// VkTooltip 组件样式
 .vk-tooltip {
   display: inline-block;
   position: relative;
 }
 
-/* 弹出层样式 */
+// 弹出层样式
 .vk-tooltip__popper {
   position: absolute;
-  z-index: 2000;
+  z-index: var(--vk-z-index-tooltip);
   max-width: 300px;
-  padding: 8px 12px;
-  border-radius: 4px;
-  font-size: 12px;
-  line-height: 1.4;
+  padding: var(--vk-spacing-2) var(--vk-spacing-3);
+  border-radius: var(--vk-border-radius-base);
+  font-size: var(--vk-font-size-extra-small);
+  line-height: var(--vk-line-height-small);
   word-wrap: break-word;
   word-break: break-all;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--vk-box-shadow-light);
   transition:
-    opacity 0.3s,
-    visibility 0.3s;
+    opacity var(--vk-transition-duration-base) var(--vk-transition-timing-function),
+    visibility var(--vk-transition-duration-base) var(--vk-transition-timing-function);
 
   &.vk-tooltip--dark {
-    background-color: #303133;
-    color: #fff;
-    border: 1px solid #303133;
+    background-color: var(--vk-text-color-primary);
+    color: var(--vk-color-white);
+    border: 1px solid var(--vk-text-color-primary);
   }
 
   &.vk-tooltip--light {
-    background-color: #fff;
-    color: #303133;
-    border: 1px solid #e4e7ed;
+    background-color: var(--vk-bg-color);
+    color: var(--vk-text-color-primary);
+    border: 1px solid var(--vk-border-color-disabled);
   }
 }
 
-/* 箭头样式 - 使用三角形 */
-.vk-tooltip__arrow {
+// 箭头样式 - Popper.js 会自动定位箭头
+.vk-tooltip__arrow,
+.vk-tooltip__arrow::before {
   position: absolute;
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 6px;
+  width: 8px;
+  height: 8px;
+  background: inherit;
 }
 
-/* 深色主题箭头 */
-.vk-tooltip--dark .vk-tooltip__arrow {
-  border-color: transparent;
+.vk-tooltip__arrow {
+  visibility: hidden;
 }
 
-/* 浅色主题箭头 */
-.vk-tooltip--light .vk-tooltip__arrow {
-  border-color: transparent;
+.vk-tooltip__arrow::before {
+  visibility: visible;
+  content: '';
+  transform: rotate(45deg);
 }
 
-/* 内容样式 */
+// 内容样式
 .vk-tooltip__content {
   position: relative;
   z-index: 1;
 }
 
-/* 位置样式 - 调整三角形方向 */
-/* 顶部位置 */
-.vk-tooltip {
-  &--top {
-    .vk-tooltip__arrow {
-      bottom: -6px;
-      left: 50%;
-      margin-left: -6px;
-      border-top-color: #303133;
-      border-bottom-width: 0;
-    }
-
-    &.vk-tooltip--light {
-      .vk-tooltip__arrow {
-        border-top-color: #e4e7ed;
-      }
-    }
+// 基于 Popper.js 的 data-popper-placement 属性调整箭头位置
+.vk-tooltip__popper {
+  &[data-popper-placement^='top'] > .vk-tooltip__arrow {
+    bottom: -4px;
   }
 
-  /* 顶部起始位置 */
-  &--top-start {
-    .vk-tooltip__arrow {
-      bottom: -6px;
-      left: 12px;
-      border-top-color: #303133;
-      border-bottom-width: 0;
-    }
-
-    &.vk-tooltip--light {
-      .vk-tooltip__arrow {
-        border-top-color: #e4e7ed;
-      }
-    }
+  &[data-popper-placement^='bottom'] > .vk-tooltip__arrow {
+    top: -4px;
   }
 
-  /* 顶部结束位置 */
-  &--top-end {
-    .vk-tooltip__arrow {
-      bottom: -6px;
-      right: 12px;
-      border-top-color: #303133;
-      border-bottom-width: 0;
-    }
-
-    &.vk-tooltip--light {
-      .vk-tooltip__arrow {
-        border-top-color: #e4e7ed;
-      }
-    }
+  &[data-popper-placement^='left'] > .vk-tooltip__arrow {
+    right: -4px;
   }
 
-  /* 底部位置 */
-  &--bottom {
-    .vk-tooltip__arrow {
-      top: -6px;
-      left: 50%;
-      margin-left: -6px;
-      border-bottom-color: #303133;
-      border-top-width: 0;
-    }
-
-    &.vk-tooltip--light {
-      .vk-tooltip__arrow {
-        border-bottom-color: #e4e7ed;
-      }
-    }
-  }
-
-  /* 底部起始位置 */
-  &--bottom-start {
-    .vk-tooltip__arrow {
-      top: -6px;
-      left: 12px;
-      border-bottom-color: #303133;
-      border-top-width: 0;
-    }
-
-    &.vk-tooltip--light {
-      .vk-tooltip__arrow {
-        border-bottom-color: #e4e7ed;
-      }
-    }
-  }
-
-  /* 底部结束位置 */
-  &--bottom-end {
-    .vk-tooltip__arrow {
-      top: -6px;
-      right: 12px;
-      border-bottom-color: #303133;
-      border-top-width: 0;
-    }
-
-    &.vk-tooltip--light {
-      .vk-tooltip__arrow {
-        border-bottom-color: #e4e7ed;
-      }
-    }
-  }
-
-  /* 左侧位置 */
-  &--left {
-    .vk-tooltip__arrow {
-      right: -6px;
-      top: 50%;
-      margin-top: -6px;
-      border-left-color: #303133;
-      border-right-width: 0;
-    }
-
-    &.vk-tooltip--light {
-      .vk-tooltip__arrow {
-        border-left-color: #e4e7ed;
-      }
-    }
-  }
-
-  /* 左侧起始位置 */
-  &--left-start {
-    .vk-tooltip__arrow {
-      right: -6px;
-      top: 12px;
-      border-left-color: #303133;
-      border-right-width: 0;
-    }
-
-    &.vk-tooltip--light {
-      .vk-tooltip__arrow {
-        border-left-color: #e4e7ed;
-      }
-    }
-  }
-
-  /* 左侧结束位置 */
-  &--left-end {
-    .vk-tooltip__arrow {
-      right: -6px;
-      bottom: 12px;
-      border-left-color: #303133;
-      border-right-width: 0;
-    }
-
-    &.vk-tooltip--light {
-      .vk-tooltip__arrow {
-        border-left-color: #e4e7ed;
-      }
-    }
-  }
-
-  /* 右侧位置 */
-  &--right {
-    .vk-tooltip__arrow {
-      left: -6px;
-      top: 50%;
-      margin-top: -6px;
-      border-right-color: #303133;
-      border-left-width: 0;
-    }
-
-    &.vk-tooltip--light {
-      .vk-tooltip__arrow {
-        border-right-color: #e4e7ed;
-      }
-    }
-  }
-
-  /* 右侧起始位置 */
-  &--right-start {
-    .vk-tooltip__arrow {
-      left: -6px;
-      top: 12px;
-      border-right-color: #303133;
-      border-left-width: 0;
-    }
-
-    &.vk-tooltip--light {
-      .vk-tooltip__arrow {
-        border-right-color: #e4e7ed;
-      }
-    }
-  }
-
-  /* 右侧结束位置 */
-  &--right-end {
-    .vk-tooltip__arrow {
-      left: -6px;
-      bottom: 12px;
-      border-right-color: #303133;
-      border-left-width: 0;
-    }
-
-    &.vk-tooltip--light {
-      .vk-tooltip__arrow {
-        border-right-color: #e4e7ed;
-      }
-    }
+  &[data-popper-placement^='right'] > .vk-tooltip__arrow {
+    left: -4px;
   }
 }
 
-/* 过渡动画 */
-/* 淡入淡出动画 */
+// 过渡动画
+// 淡入淡出动画
 .vk-fade {
   &-enter-active,
   &-leave-active {
-    transition: opacity 0.3s ease;
+    transition: opacity var(--vk-transition-duration-base) ease;
   }
 
   &-enter-from,
@@ -271,11 +91,11 @@
   }
 }
 
-/* 缩放动画 */
+// 缩放动画
 .vk-zoom {
   &-enter-active,
   &-leave-active {
-    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    transition: all var(--vk-transition-duration-base) var(--vk-transition-function-fast-bezier);
   }
 
   &-enter-from,
@@ -285,11 +105,11 @@
   }
 }
 
-/* 滑动动画 */
+// 滑动动画
 .vk-slide {
   &-enter-active,
   &-leave-active {
-    transition: all 0.3s ease;
+    transition: all var(--vk-transition-duration-base) ease;
   }
 
   &-enter-from,
@@ -299,7 +119,7 @@
   }
 }
 
-/* 禁用状态 */
+// 禁用状态
 .is-disabled {
   cursor: not-allowed;
   opacity: 0.7;

@@ -6,7 +6,7 @@
   width: 100%;
   font-size: var(--vk-font-size-base);
   line-height: var(--vk-line-height-base);
-  min-height: var(--vk-size-lg);
+  min-height: var(--vk-size-large);
   background-color: var(--vk-bg-color);
   border: 1px solid var(--vk-border-color-base);
   border-radius: var(--vk-border-radius-base);
@@ -101,10 +101,10 @@
 
   // 尺寸变体
   &--size-small {
-    font-size: var(--vk-font-size-sm);
-    line-height: var(--vk-line-height-sm);
-    min-height: var(--vk-size-md);
-    border-radius: var(--vk-border-radius-sm);
+    font-size: var(--vk-font-size-small);
+    line-height: var(--vk-line-height-small);
+    min-height: var(--vk-size-medium);
+    border-radius: var(--vk-border-radius-small);
 
     .vk-input__inner {
       padding: var(--vk-spacing-1) var(--vk-spacing-2);
@@ -112,10 +112,10 @@
   }
 
   &--size-large {
-    font-size: var(--vk-font-size-lg);
-    line-height: var(--vk-line-height-lg);
-    min-height: var(--vk-size-xl);
-    border-radius: var(--vk-border-radius-md);
+    font-size: var(--vk-font-size-large);
+    line-height: var(--vk-line-height-large);
+    min-height: var(--vk-size-extra-large);
+    border-radius: var(--vk-border-radius-medium);
 
     .vk-input__inner {
       padding: var(--vk-spacing-3) var(--vk-spacing-4);

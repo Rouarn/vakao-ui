@@ -285,8 +285,8 @@ const cloned = deepCloneWithCircular(original);
 
 ## 贡献指南
 
-欢迎为 Vakao UI Utils 贡献代码！请参阅我们的[贡献指南](https://github.com/Rouarn/vakao-ui/blob/main/CONTRIBUTING.md)了解更多信息。
+欢迎为 Vakao UI Utils 贡献代码！请参阅我们的[贡献指南](../../CONTRIBUTING.md)了解更多信息。
 
 ## 许可证
 
-[MIT](https://github.com/Rouarn/vakao-ui/blob/main/LICENSE)
+[MIT](../../LICENSE)

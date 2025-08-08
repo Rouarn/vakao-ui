@@ -93,19 +93,19 @@
   // 尺寸变体
   &--large {
     .vk-switch__core {
-      width: 50px;
-      height: 24px;
+      width: var(--vk-size-extra-large);
+      height: var(--vk-size-large);
       border-radius: var(--vk-border-radius-full);
 
       .vk-switch__button {
-        width: 20px;
-        height: 20px;
+        width: var(--vk-size-large);
+        height: var(--vk-size-large);
       }
     }
 
     .vk-switch__action {
-      width: 22px;
-      height: 22px;
+      width: var(--vk-size-large);
+      height: var(--vk-size-large);
     }
 
     &.is-checked {
@@ -123,19 +123,19 @@
 
   &--small {
     .vk-switch__core {
-      width: 30px;
-      height: 16px;
+      width: var(--vk-size-large);
+      height: var(--vk-size-medium);
       border-radius: var(--vk-border-radius-full);
 
       .vk-switch__button {
-        width: 12px;
-        height: 12px;
+        width: var(--vk-size-small);
+        height: var(--vk-size-small);
       }
     }
 
     .vk-switch__action {
-      width: 14px;
-      height: 14px;
+      width: var(--vk-size-small);
+      height: var(--vk-size-small);
     }
 
     &.is-checked {

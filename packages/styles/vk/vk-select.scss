@@ -8,7 +8,7 @@
     position: relative;
     display: flex;
     align-items: center;
-    min-height: var(--vk-size-lg);
+    min-height: var(--vk-size-large);
     padding: var(--vk-spacing-1) var(--vk-spacing-2);
     border: 1px solid var(--vk-border-color);
     border-radius: var(--vk-border-radius-base);
@@ -67,10 +67,10 @@
     align-items: center;
     margin: var(--vk-spacing-1) var(--vk-spacing-1) var(--vk-spacing-1) 0;
     padding: 0 var(--vk-spacing-2);
-    height: var(--vk-size-md);
+    height: var(--vk-size-medium);
     background-color: var(--vk-fill-color-light);
     border-radius: var(--vk-border-radius-base);
-    font-size: var(--vk-font-size-xs);
+    font-size: var(--vk-font-size-extra-small);
 
     &-close {
       margin-left: var(--vk-spacing-1);

@@ -53,8 +53,8 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: var(--vk-size-xxs);
-    height: var(--vk-size-xxs);
+    width: var(--vk-size-extra-extra-small);
+    height: var(--vk-size-extra-extra-small);
     border: 1px solid var(--vk-border-color);
     border-radius: 50%;
     background-color: var(--vk-fill-color-blank);
@@ -92,11 +92,11 @@
 
   // 尺寸变体
   &.vk-radio--size-small {
-    font-size: var(--vk-font-size-sm);
+    font-size: var(--vk-font-size-small);
 
     .vk-radio__inner {
-      width: var(--vk-size-xxs) !important;
-      height: var(--vk-size-xxs) !important;
+      width: var(--vk-size-extra-extra-small) !important;
+      height: var(--vk-size-extra-extra-small) !important;
     }
 
     .vk-radio__dot {
@@ -107,8 +107,8 @@
 
   &.vk-radio--size-medium {
     .vk-radio__inner {
-      width: var(--vk-size-xxs) !important;
-      height: var(--vk-size-xxs) !important;
+      width: var(--vk-size-extra-extra-small) !important;
+      height: var(--vk-size-extra-extra-small) !important;
     }
 
     .vk-radio__dot {
@@ -118,11 +118,11 @@
   }
 
   &.vk-radio--size-large {
-    font-size: var(--vk-font-size-lg);
+    font-size: var(--vk-font-size-large);
 
     .vk-radio__inner {
-      width: var(--vk-size-md) !important;
-      height: var(--vk-size-md) !important;
+      width: var(--vk-size-medium) !important;
+      height: var(--vk-size-medium) !important;
     }
 
     .vk-radio__dot {
@@ -143,11 +143,11 @@
     gap: var(--vk-spacing-2);
 
     .vk-radio {
-      font-size: var(--vk-font-size-sm);
+      font-size: var(--vk-font-size-small);
 
       .vk-radio__inner {
-        width: var(--vk-size-xxs) !important;
-        height: var(--vk-size-xxs) !important;
+        width: var(--vk-size-extra-extra-small) !important;
+        height: var(--vk-size-extra-extra-small) !important;
       }
 
       .vk-radio__dot {
@@ -162,8 +162,8 @@
 
     .vk-radio {
       .vk-radio__inner {
-        width: var(--vk-size-xxs) !important;
-        height: var(--vk-size-xxs) !important;
+        width: var(--vk-size-extra-extra-small) !important;
+        height: var(--vk-size-extra-extra-small) !important;
       }
 
       .vk-radio__dot {
@@ -177,11 +177,11 @@
     gap: var(--vk-spacing-4);
 
     .vk-radio {
-      font-size: var(--vk-font-size-lg);
+      font-size: var(--vk-font-size-large);
 
       .vk-radio__inner {
-        width: var(--vk-size-md) !important;
-        height: var(--vk-size-md) !important;
+        width: var(--vk-size-medium) !important;
+        height: var(--vk-size-medium) !important;
       }
 
       .vk-radio__dot {

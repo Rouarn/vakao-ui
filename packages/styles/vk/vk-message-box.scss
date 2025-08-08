@@ -16,8 +16,8 @@
 .vk-message-box {
   background: var(--vk-bg-color);
   border: 1px solid var(--vk-border-color-light);
-  border-radius: var(--vk-border-radius-lg);
-  box-shadow: var(--vk-box-shadow-lg);
+  border-radius: var(--vk-border-radius-large);
+  box-shadow: var(--vk-box-shadow-large);
   min-width: 420px;
   max-width: 500px;
   overflow: hidden;
@@ -33,16 +33,16 @@
 .vk-message-box__title {
   display: flex;
   align-items: center;
-  font-size: var(--vk-font-size-lg);
+  font-size: var(--vk-font-size-large);
   font-weight: 600;
   color: var(--vk-text-color-primary);
 }
 
 .vk-message-box__icon {
   margin-right: var(--vk-spacing-3);
-  font-size: var(--vk-font-size-xl);
-  width: var(--vk-size-sm);
-  height: var(--vk-size-sm);
+  font-size: var(--vk-font-size-extra-large);
+  width: var(--vk-size-small);
+  height: var(--vk-size-small);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -67,16 +67,16 @@
 .vk-message-box__close {
   background: none;
   border: none;
-  font-size: var(--vk-font-size-xl);
+  font-size: var(--vk-font-size-extra-large);
   color: var(--vk-text-color-secondary);
   cursor: pointer;
   padding: var(--vk-spacing-1);
-  width: var(--vk-size-md);
-  height: var(--vk-size-md);
+  width: var(--vk-size-medium);
+  height: var(--vk-size-medium);
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: var(--vk-border-radius-sm);
+  border-radius: var(--vk-border-radius-small);
   transition: all var(--vk-transition-duration-base);
 
   &:hover {
@@ -102,7 +102,7 @@
 
 .vk-message-box__error-message {
   color: var(--vk-color-danger);
-  font-size: var(--vk-font-size-sm);
+  font-size: var(--vk-font-size-small);
   margin-top: var(--vk-spacing-2);
 }
 

@@ -4,9 +4,9 @@
   align-items: center;
   justify-content: center;
   vertical-align: middle;
-  border-radius: var(--vk-border-radius-sm);
+  border-radius: var(--vk-border-radius-small);
   border: 1px solid transparent;
-  font-size: var(--vk-font-size-sm);
+  font-size: var(--vk-font-size-small);
   line-height: 1;
   white-space: nowrap;
   cursor: default;
@@ -41,7 +41,7 @@
   // 尺寸变体
   &--tiny {
     padding: 2px var(--vk-spacing-1);
-    font-size: var(--vk-font-size-xs);
+    font-size: var(--vk-font-size-extra-small);
     height: 20px;
 
     .vk-tag__close {
@@ -51,7 +51,7 @@
 
   &--small {
     padding: 4px var(--vk-spacing-2);
-    font-size: var(--vk-font-size-sm);
+    font-size: var(--vk-font-size-small);
     height: 24px;
 
     .vk-tag__close {
@@ -61,7 +61,7 @@
 
   &--medium {
     padding: 6px var(--vk-spacing-3);
-    font-size: var(--vk-font-size-sm);
+    font-size: var(--vk-font-size-small);
     height: 28px;
 
     .vk-tag__close {
@@ -204,7 +204,7 @@
   }
 
   &.is-round {
-    border-radius: var(--vk-border-radius-xl);
+    border-radius: var(--vk-border-radius-extra-large);
   }
 
   &.is-bordered {

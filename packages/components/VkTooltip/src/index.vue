@@ -31,7 +31,7 @@
           @mouseleave="handlePopperMouseLeave"
         >
           <!-- 箭头 -->
-          <div v-if="showArrow" :class="ns.element('arrow')" :data-popper-arrow="''" />
+          <div v-if="showArrow" ref="arrowRef" :class="ns.element('arrow')" :data-popper-arrow="''" />
 
           <!-- 内容 -->
           <div :class="ns.element('content')">
@@ -74,6 +74,7 @@ const ns = useNamespace("tooltip");
 // 模板引用
 const triggerRef = ref<HTMLElement | null>(null);
 const popperRef = ref<HTMLElement>();
+const arrowRef = ref<HTMLElement>();
 
 // 状态管理
 const isVisible = ref(false);
@@ -182,7 +183,7 @@ const createPopperInstance = async () => {
       {
         name: "arrow",
         options: {
-          element: "[data-popper-arrow]",
+          element: arrowRef.value,
         },
       },
       {

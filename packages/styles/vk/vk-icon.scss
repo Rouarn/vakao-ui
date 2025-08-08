@@ -30,7 +30,7 @@
 
   // 尺寸变体
   &--size-small {
-    font-size: var(--vk-font-size-sm);
+    font-size: var(--vk-font-size-small);
   }
 
   &--size-medium {
@@ -38,6 +38,6 @@
   }
 
   &--size-large {
-    font-size: var(--vk-font-size-xl);
+    font-size: var(--vk-font-size-extra-large);
   }
 }

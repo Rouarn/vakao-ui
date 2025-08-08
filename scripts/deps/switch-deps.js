@@ -1,5 +1,5 @@
 /**
- * 依赖切换脚本 - ESM版本
+ * 依赖切换脚本
  * 用于在开发模式和部署模式之间切换 vakao-ui 依赖
  *
  * 开发模式: "vakao-ui": "0.0.1" (从私有npm仓库)
@@ -9,6 +9,7 @@
 import { readFileSync, writeFileSync } from "fs";
 import { resolve, dirname } from "path";
 import { fileURLToPath } from "url";
+import { log } from "../utils/logger.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -25,7 +26,7 @@ function readPackageJson() {
     const content = readFileSync(examplesPackageJsonPath, "utf-8");
     return JSON.parse(content);
   } catch (error) {
-    console.error("❌ 读取 examples/package.json 失败:", error.message);
+    log(`读取 examples/package.json 失败: ${error.message}`, "error");
     process.exit(1);
   }
 }
@@ -38,7 +39,7 @@ function writePackageJson(packageData) {
     const content = JSON.stringify(packageData, null, 2) + "\n";
     writeFileSync(examplesPackageJsonPath, content, "utf-8");
   } catch (error) {
-    console.error("❌ 写入 examples/package.json 失败:", error.message);
+    log(`写入 examples/package.json 失败: ${error.message}`, "error");
     process.exit(1);
   }
 }
@@ -52,9 +53,9 @@ function switchToDev() {
   if (packageData.dependencies && packageData.dependencies["vakao-ui"]) {
     packageData.dependencies["vakao-ui"] = "0.0.1";
     writePackageJson(packageData);
-    console.log("✅ 已切换到开发模式: vakao-ui@0.0.1 (私有npm仓库)");
+    log("已切换到开发模式: vakao-ui@0.0.1 (私有npm仓库)", "success");
   } else {
-    console.log("⚠️  未找到 vakao-ui 依赖");
+    log("未找到 vakao-ui 依赖", "warning");
   }
 }
 
@@ -67,9 +68,9 @@ function switchToDeploy() {
   if (packageData.dependencies && packageData.dependencies["vakao-ui"]) {
     packageData.dependencies["vakao-ui"] = "workspace:*";
     writePackageJson(packageData);
-    console.log("✅ 已切换到部署模式: vakao-ui@workspace:* (本地workspace)");
+    log("已切换到部署模式: vakao-ui@workspace:* (本地workspace)", "success");
   } else {
-    console.log("⚠️  未找到 vakao-ui 依赖");
+    log("未找到 vakao-ui 依赖", "warning");
   }
 }
 
@@ -80,15 +81,15 @@ function showStatus() {
   const packageData = readPackageJson();
   const currentVersion = packageData.dependencies?.["vakao-ui"] || "未找到";
 
-  console.log("📋 当前 vakao-ui 依赖状态:");
-  console.log(`   版本: ${currentVersion}`);
+  log("当前 vakao-ui 依赖状态:", "info");
+  log(`   版本: ${currentVersion}`, "info");
 
   if (currentVersion === "0.0.1") {
-    console.log("   模式: 🔧 开发模式 (私有npm仓库)");
+    log("   模式: 🔧 开发模式 (私有npm仓库)", "info");
   } else if (currentVersion === "workspace:*") {
-    console.log("   模式: 🚀 部署模式 (本地workspace)");
+    log("   模式: 🚀 部署模式 (本地workspace)", "info");
   } else {
-    console.log("   模式: ❓ 未知模式");
+    log("   模式: ❓ 未知模式", "info");
   }
 }
 
@@ -96,20 +97,20 @@ function showStatus() {
  * 显示帮助信息
  */
 function showHelp() {
-  console.log("📖 依赖切换脚本使用说明:");
-  console.log("");
-  console.log("用法:");
-  console.log("  node scripts/deps/switch-deps.js [命令]");
-  console.log("");
-  console.log("命令:");
-  console.log("  dev     切换到开发模式 (vakao-ui@0.0.1)");
-  console.log("  deploy  切换到部署模式 (vakao-ui@workspace:*)");
-  console.log("  status  显示当前依赖状态");
-  console.log("  help    显示此帮助信息");
-  console.log("");
-  console.log("示例:");
-  console.log("  node scripts/deps/switch-deps.js dev");
-  console.log("  node scripts/deps/switch-deps.js deploy");
+  log("\n依赖切换脚本使用说明:", "info");
+  log("", "info");
+  log("用法:", "info");
+  log("  node scripts/deps/switch-deps.js [命令]", "info");
+  log("", "info");
+  log("命令:", "info");
+  log("  dev     切换到开发模式 (vakao-ui@0.0.1)", "info");
+  log("  deploy  切换到部署模式 (vakao-ui@workspace:*)", "info");
+  log("  status  显示当前依赖状态", "info");
+  log("  help    显示此帮助信息", "info");
+  log("", "info");
+  log("示例:", "info");
+  log("  node scripts/deps/switch-deps.js dev", "info");
+  log("  node scripts/deps/switch-deps.js deploy", "info");
 }
 
 // 主函数
@@ -135,8 +136,8 @@ function main() {
       if (!command) {
         showStatus();
       } else {
-        console.error(`❌ 未知命令: ${command}`);
-        console.log("");
+        log(`未知命令: ${command}`, "error");
+        log("", "info");
         showHelp();
         process.exit(1);
       }

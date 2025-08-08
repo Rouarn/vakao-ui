@@ -14,31 +14,31 @@
   vertical-align: middle;
 
   /* 预设尺寸 */
-  width: var(--vk-size-xl);
-  height: var(--vk-size-xl);
-  font-size: var(--vk-font-size-lg);
-  line-height: var(--vk-size-xl);
+  width: var(--vk-size-extra-large);
+  height: var(--vk-size-extra-large);
+  font-size: var(--vk-font-size-large);
+  line-height: var(--vk-size-extra-large);
 
   /* 尺寸变体 */
   &--large {
-    width: var(--vk-size-3xl);
-    height: var(--vk-size-3xl);
-    font-size: var(--vk-font-size-3xl);
-    line-height: var(--vk-size-3xl);
+    width: var(--vk-size-extra-extra-large);
+    height: var(--vk-size-extra-extra-large);
+    font-size: var(--vk-font-size-extra-large);
+    line-height: var(--vk-size-extra-extra-large);
   }
 
   &--default {
-    width: var(--vk-size-xl);
-    height: var(--vk-size-xl);
-    font-size: var(--vk-font-size-lg);
-    line-height: var(--vk-size-xl);
+    width: var(--vk-size-extra-large);
+    height: var(--vk-size-extra-large);
+    font-size: var(--vk-font-size-large);
+    line-height: var(--vk-size-extra-large);
   }
 
   &--small {
-    width: var(--vk-size-md);
-    height: var(--vk-size-md);
-    font-size: var(--vk-font-size-sm);
-    line-height: var(--vk-size-md);
+    width: var(--vk-size-medium);
+    height: var(--vk-size-medium);
+    font-size: var(--vk-font-size-small);
+    line-height: var(--vk-size-medium);
   }
 
   /* 形状变体 */

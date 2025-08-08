@@ -9,7 +9,7 @@
   &--vertical {
     display: inline-block;
     width: 1px;
-    height: var(--vk-size-md);
+    height: var(--vk-size-medium);
     margin: 0 var(--vk-spacing-2);
     border-top: none;
     border-left: 1px solid var(--vk-border-color-light);
@@ -23,7 +23,7 @@
     margin: var(--vk-spacing-5) 0;
     border: none;
     color: var(--vk-text-color-secondary);
-    font-size: var(--vk-font-size-sm);
+    font-size: var(--vk-font-size-small);
 
     &::before,
     &::after {
