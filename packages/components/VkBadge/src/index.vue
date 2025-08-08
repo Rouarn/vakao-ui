@@ -4,7 +4,7 @@
     <slot></slot>
 
     <!-- 徽章 -->
-    <transition name="vk-badge-fade">
+    <Transition name="vk-zoom-out">
       <sup
         v-if="!hidden && (content || isDot)"
         :class="[ns.element('content'), ns.modifier(type), ns.is('fixed'), ns.is('dot', isDot)]"
@@ -12,7 +12,7 @@
       >
         {{ content }}
       </sup>
-    </transition>
+    </Transition>
   </div>
 </template>
 

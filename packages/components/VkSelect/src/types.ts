@@ -1,5 +1,5 @@
 import type { ExtractPropTypes, PropType, CSSProperties } from "vue";
-import type { ComponentSize } from "../../../types";
+import type { ComponentSize } from "@/types";
 
 // 选择器尺寸
 export type SelectSize = ComponentSize;

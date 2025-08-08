@@ -78,27 +78,23 @@ function generateCSSVariables(): string {
   // 字体相关
   css += "  /* 字体相关 */\n";
   css += "  --vk-font-family: #{$font-family};\n";
-  css += "  --vk-font-size-xs: #{$font-size-xs};\n";
-  css += "  --vk-font-size-sm: #{$font-size-sm};\n";
-  css += "  --vk-font-size-base: #{$font-size-base};\n";
-  css += "  --vk-font-size-lg: #{$font-size-lg};\n";
-  css += "  --vk-font-size-xl: #{$font-size-xl};\n";
-  css += "  --vk-font-size-2xl: #{$font-size-2xl};\n";
-  css += "  --vk-font-size-3xl: #{$font-size-3xl};\n";
-  css += "  --vk-font-size-extra-large: #{$font-size-extra-large};\n";
-  css += "  --vk-font-size-large: #{$font-size-large};\n";
-  css += "  --vk-font-size-medium: #{$font-size-medium};\n";
+  css += "  --vk-font-size-extra-small: #{$font-size-extra-small};\n";
   css += "  --vk-font-size-small: #{$font-size-small};\n";
-  css += "  --vk-font-size-extra-small: #{$font-size-extra-small};\n\n";
+  css += "  --vk-font-size-base: #{$font-size-base};\n";
+  css += "  --vk-font-size-medium: #{$font-size-medium};\n";
+  css += "  --vk-font-size-large: #{$font-size-large};\n";
+  css += "  --vk-font-size-extra-large: #{$font-size-extra-large};\n";
+  css += "  --vk-font-size-huge: #{$font-size-huge};\n\n";
 
   // 行高
   css += "  /* 行高 */\n";
   css += "  --vk-line-height-base: #{$line-height-base};\n";
-  css += "  --vk-line-height-sm: #{$line-height-sm};\n";
+  css += "  --vk-line-height-small: #{$line-height-small};\n";
   css += "  --vk-line-height-tight: #{$line-height-tight};\n";
   css += "  --vk-line-height-normal: #{$line-height-normal};\n";
   css += "  --vk-line-height-relaxed: #{$line-height-relaxed};\n";
-  css += "  --vk-line-height-loose: #{$line-height-loose};\n\n";
+  css += "  --vk-line-height-loose: #{$line-height-loose};\n";
+  css += "  --vk-line-height-large: #{$line-height-large};\n\n";
 
   // 间距
   css += "  /* 间距 */\n";
@@ -116,33 +112,28 @@ function generateCSSVariables(): string {
 
   // 组件尺寸
   css += "  /* 组件尺寸 */\n";
-  css += "  --vk-size-xxs: #{$size-xxs};\n";
-  css += "  --vk-size-xs: #{$size-xs};\n";
-  css += "  --vk-size-sm: #{$size-sm};\n";
+  css += "  --vk-size-extra-extra-small: #{$size-extra-extra-small};\n";
+  css += "  --vk-size-extra-small: #{$size-extra-small};\n";
+  css += "  --vk-size-small: #{$size-small};\n";
   css += "  --vk-size-base: #{$size-base};\n";
-  css += "  --vk-size-md: #{$size-md};\n";
-  css += "  --vk-size-lg: #{$size-lg};\n";
-  css += "  --vk-size-xl: #{$size-xl};\n";
-  css += "  --vk-size-2xl: #{$size-2xl};\n";
-  css += "  --vk-size-3xl: #{$size-3xl};\n";
-  css += "  --vk-size-4xl: #{$size-4xl};\n";
-  css += "  --vk-component-size-small: #{$component-size-small};\n";
-  css += "  --vk-component-size-base: #{$component-size-base};\n";
-  css += "  --vk-component-size-large: #{$component-size-large};\n\n";
+  css += "  --vk-size-medium: #{$size-medium};\n";
+  css += "  --vk-size-large: #{$size-large};\n";
+  css += "  --vk-size-extra-large: #{$size-extra-large};\n";
+  css += "  --vk-size-extra-extra-large: #{$size-extra-extra-large};\n";
+  css += "  --vk-size-huge: #{$size-huge};\n";
+  css += "  --vk-size-extra-huge: #{$size-extra-huge};\n";
 
   // 边框圆角
   css += "  /* 边框圆角 */\n";
   css += "  --vk-border-radius-none: #{$border-radius-none};\n";
-  css += "  --vk-border-radius-sm: #{$border-radius-sm};\n";
+  css += "  --vk-border-radius-small: #{$border-radius-small};\n";
   css += "  --vk-border-radius-base: #{$border-radius-base};\n";
-  css += "  --vk-border-radius-md: #{$border-radius-md};\n";
-  css += "  --vk-border-radius-lg: #{$border-radius-lg};\n";
-  css += "  --vk-border-radius-xl: #{$border-radius-xl};\n";
-  css += "  --vk-border-radius-2xl: #{$border-radius-2xl};\n";
+  css += "  --vk-border-radius-medium: #{$border-radius-medium};\n";
+  css += "  --vk-border-radius-large: #{$border-radius-large};\n";
+  css += "  --vk-border-radius-extra-large: #{$border-radius-extra-large};\n";
+  css += "  --vk-border-radius-extra-extra-large: #{$border-radius-extra-extra-large};\n";
   css += "  --vk-border-radius-full: #{$border-radius-full};\n";
   css += "  --vk-border-radius-circle: #{$border-radius-circle};\n";
-  css += "  --vk-border-radius-small: #{$border-radius-small};\n";
-  css += "  --vk-border-radius-large: #{$border-radius-large};\n";
   css += "  --vk-border-radius-round: #{$border-radius-round};\n\n";
 
   // 阴影
@@ -150,10 +141,10 @@ function generateCSSVariables(): string {
   css += "  --vk-box-shadow-light: #{$box-shadow-light};\n";
   css += "  --vk-box-shadow-base: #{$box-shadow-base};\n";
   css += "  --vk-box-shadow-dark: #{$box-shadow-dark};\n";
-  css += "  --vk-box-shadow-sm: #{$box-shadow-sm};\n";
-  css += "  --vk-box-shadow-md: #{$box-shadow-md};\n";
-  css += "  --vk-box-shadow-lg: #{$box-shadow-lg};\n";
-  css += "  --vk-box-shadow-xl: #{$box-shadow-xl};\n";
+  css += "  --vk-box-shadow-small: #{$box-shadow-small};\n";
+  css += "  --vk-box-shadow-medium: #{$box-shadow-medium};\n";
+  css += "  --vk-box-shadow-large: #{$box-shadow-large};\n";
+  css += "  --vk-box-shadow-extra-large: #{$box-shadow-extra-large};\n";
   css += "  --vk-box-shadow-inner: #{$box-shadow-inner};\n\n";
 
   // 过渡
@@ -175,10 +166,10 @@ function generateCSSVariables(): string {
 
   // 断点
   css += "  /* 断点 */\n";
-  css += "  --vk-breakpoint-sm: #{$sm};\n";
-  css += "  --vk-breakpoint-md: #{$md};\n";
-  css += "  --vk-breakpoint-lg: #{$lg};\n";
-  css += "  --vk-breakpoint-xl: #{$xl};\n\n";
+  css += "  --vk-breakpoint-small: #{$small};\n";
+  css += "  --vk-breakpoint-medium: #{$medium};\n";
+  css += "  --vk-breakpoint-large: #{$large};\n";
+  css += "  --vk-breakpoint-extra-large: #{$extra-large};\n\n";
 
   // Z-index
   css += "  /* Z-index层级 */\n";
@@ -196,16 +187,6 @@ function generateCSSVariables(): string {
   // 遮罩颜色
   css += "  /* 遮罩颜色 */\n";
   css += "  --vk-mask-color: #{$mask-color};\n\n";
-
-  // Tag组件相关颜色
-  css += "  /* Tag组件相关颜色 */\n";
-  css += "  --vk-tag-default-color: #{$tag-default-color};\n";
-  css += "  --vk-tag-default-border: #{$tag-default-border};\n";
-  css += "  --vk-tag-primary-border: #{$tag-primary-border};\n";
-  css += "  --vk-tag-success-border: #{$tag-success-border};\n";
-  css += "  --vk-tag-warning-border: #{$tag-warning-border};\n";
-  css += "  --vk-tag-danger-border: #{$tag-danger-border};\n";
-  css += "  --vk-tag-info-border: #{$tag-info-border};\n";
 
   css += "}\n";
   return css;
@@ -289,28 +270,22 @@ function generateColorVariables(): string {
   scss += "// 字体相关\n";
   scss +=
     "$font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';\n";
-  scss += "$font-size-xs: 12px;\n";
-  scss += "$font-size-sm: 13px;\n";
+  scss += "$font-size-extra-small: 12px;\n";
+  scss += "$font-size-small: 13px;\n";
   scss += "$font-size-base: 14px;\n";
-  scss += "$font-size-lg: 16px;\n";
-  scss += "$font-size-xl: 18px;\n";
-  scss += "$font-size-2xl: 20px;\n";
-  scss += "$font-size-3xl: 24px;\n";
-  scss += "$font-size-extra-large: 20px;\n";
-  scss += "$font-size-large: 18px;\n";
   scss += "$font-size-medium: 16px;\n";
-  scss += "$font-size-small: 12px;\n";
-  scss += "$font-size-extra-small: 12px;\n\n";
+  scss += "$font-size-large: 18px;\n";
+  scss += "$font-size-extra-large: 20px;\n";
+  scss += "$font-size-huge: 24px;\n\n";
 
   // 行高
   scss += "// 行高\n";
   scss += "$line-height-base: 1.5;\n";
-  scss += "$line-height-sm: 1.25;\n";
+  scss += "$line-height-small: 1.25;\n";
   scss += "$line-height-tight: 1.25;\n";
   scss += "$line-height-normal: 1.5;\n";
   scss += "$line-height-relaxed: 1.75;\n";
   scss += "$line-height-loose: 2;\n";
-  scss += "$line-height-small: 1.4;\n";
   scss += "$line-height-large: 1.6;\n\n";
 
   // 间距相关变量
@@ -333,33 +308,28 @@ function generateColorVariables(): string {
 
   // 组件尺寸相关变量
   scss += "// 组件尺寸相关变量\n";
-  scss += "$size-xxs: 20px;\n";
-  scss += "$size-xs: 24px;\n";
-  scss += "$size-sm: 28px;\n";
-  scss += "$size-base: 32px;\n";
-  scss += "$size-md: 36px;\n";
-  scss += "$size-lg: 40px;\n";
-  scss += "$size-xl: 48px;\n";
-  scss += "$size-2xl: 56px;\n";
-  scss += "$size-3xl: 64px;\n";
-  scss += "$size-4xl: 72px;\n";
-  scss += "$component-size-small: 28px;\n";
-  scss += "$component-size-base: 32px;\n";
-  scss += "$component-size-large: 40px;\n\n";
+  scss += "$size-extra-extra-small: 16px;\n";
+  scss += "$size-extra-small: 20px;\n";
+  scss += "$size-small: 24px;\n";
+  scss += "$size-base: 28px;\n";
+  scss += "$size-medium: 32px;\n";
+  scss += "$size-large: 36px;\n";
+  scss += "$size-extra-large: 40px;\n";
+  scss += "$size-extra-extra-large: 48px;\n";
+  scss += "$size-huge: 56px;\n";
+  scss += "$size-extra-huge: 64px;\n\n";
 
   // 圆角
   scss += "// 圆角\n";
   scss += "$border-radius-none: 0;\n";
-  scss += "$border-radius-sm: 2px;\n";
+  scss += "$border-radius-small: 2px;\n";
   scss += "$border-radius-base: 4px;\n";
-  scss += "$border-radius-md: 6px;\n";
-  scss += "$border-radius-lg: 8px;\n";
-  scss += "$border-radius-xl: 12px;\n";
-  scss += "$border-radius-2xl: 16px;\n";
+  scss += "$border-radius-medium: 6px;\n";
+  scss += "$border-radius-large: 8px;\n";
+  scss += "$border-radius-extra-large: 12px;\n";
+  scss += "$border-radius-extra-extra-large: 16px;\n";
   scss += "$border-radius-full: 9999px;\n";
   scss += "$border-radius-circle: 50%;\n";
-  scss += "$border-radius-small: 2px;\n";
-  scss += "$border-radius-large: 8px;\n\n";
   scss += "$border-radius-round: 20px;\n\n";
 
   // 阴影
@@ -367,10 +337,10 @@ function generateColorVariables(): string {
   scss += "$box-shadow-light: 0 2px 12px 0 rgba(0, 0, 0, 0.1);\n";
   scss += "$box-shadow-base: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);\n";
   scss += "$box-shadow-dark: 0 2px 16px 0 rgba(0, 0, 0, 0.18);\n";
-  scss += "$box-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);\n";
-  scss += "$box-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);\n";
-  scss += "$box-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);\n";
-  scss += "$box-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);\n";
+  scss += "$box-shadow-small: 0 1px 2px 0 rgba(0, 0, 0, 0.05);\n";
+  scss += "$box-shadow-medium: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);\n";
+  scss += "$box-shadow-large: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);\n";
+  scss += "$box-shadow-extra-large: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);\n";
   scss += "$box-shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);\n\n";
 
   // 过渡动画
@@ -392,10 +362,10 @@ function generateColorVariables(): string {
 
   // 断点
   scss += "// 断点\n";
-  scss += "$sm: 768px;\n";
-  scss += "$md: 992px;\n";
-  scss += "$lg: 1200px;\n";
-  scss += "$xl: 1920px;\n\n";
+  scss += "$small: 768px;\n";
+  scss += "$medium: 992px;\n";
+  scss += "$large: 1200px;\n";
+  scss += "$extra-large: 1920px;\n\n";
 
   // z-index
   scss += "// z-index\n";
@@ -413,16 +383,6 @@ function generateColorVariables(): string {
   // 遮罩颜色
   scss += "\n// mask color\n";
   scss += "$mask-color: rgba(0, 0, 0, 0.5);\n\n";
-
-  // Tag组件相关颜色
-  scss += "// Tag组件相关颜色\n";
-  scss += "$tag-default-color: #909399;\n";
-  scss += "$tag-default-border: #e9e9eb;\n";
-  scss += "$tag-primary-border: #b3d8ff;\n";
-  scss += "$tag-success-border: #c2e7b0;\n";
-  scss += "$tag-warning-border: #f5dab1;\n";
-  scss += "$tag-danger-border: #fbc4c4;\n";
-  scss += "$tag-info-border: #d3d4d6;\n";
 
   return scss;
 }

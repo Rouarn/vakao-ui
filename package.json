@@ -51,10 +51,6 @@
     "publish:all:dry-run": "node ./scripts/publish.js --packages main,hooks,utils --dry-run",
     "publish:sync": "node ./scripts/publish.js --sync-version",
     "publish:sync:dry-run": "node ./scripts/publish.js --sync-version --dry-run",
-    "deps:dev": "node ./scripts/deps/switch-deps.js dev && pnpm install",
-    "deps:deploy": "node ./scripts/deps/switch-deps.js deploy && pnpm install",
-    "deps:switch": "node ./scripts/deps/switch-deps.js",
-    "deps:status": "node ./scripts/deps/switch-deps.js status",
     "test:notification": "node -e \"const notifier = require('node-notifier'); notifier.notify({title: '测试通知', message: '桌面通知功能正常', sound: true});\""
   },
   "keywords": [

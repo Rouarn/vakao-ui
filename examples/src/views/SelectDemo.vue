@@ -8,10 +8,12 @@
       <h2>基础用法</h2>
       <p>适用广泛的基础单选。</p>
       <div class="demo-block">
-        <VkSelect v-model="basicValue" placeholder="请选择">
-          <VkOption v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
-        </VkSelect>
-        <p>选中值：{{ basicValue }}</p>
+        <VkSpace vertical>
+          <VkSelect v-model="basicValue" placeholder="请选择">
+            <VkOption v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
+          </VkSelect>
+          <p>选中值：{{ basicValue }}</p>
+        </VkSpace>
       </div>
       <div class="demo-code">
         <pre><code>&lt;VkSelect v-model="value" placeholder="请选择"&gt;
@@ -30,10 +32,12 @@
       <h2>有禁用选项</h2>
       <p>在 VkOption 中，设定 disabled 值为 true，即可禁用该选项。</p>
       <div class="demo-block">
-        <VkSelect v-model="disabledValue" placeholder="请选择">
-          <VkOption v-for="item in disabledOptions" :key="item.value" :label="item.label" :value="item.value" :disabled="item.disabled" />
-        </VkSelect>
-        <p>选中值：{{ disabledValue }}</p>
+        <VkSpace vertical>
+          <VkSelect v-model="disabledValue" placeholder="请选择">
+            <VkOption v-for="item in disabledOptions" :key="item.value" :label="item.label" :value="item.value" :disabled="item.disabled" />
+          </VkSelect>
+          <p>选中值：{{ disabledValue }}</p>
+        </VkSpace>
       </div>
       <div class="demo-code">
         <pre><code>&lt;VkOption
@@ -49,10 +53,12 @@
       <h2>禁用状态</h2>
       <p>选择器不可用状态。</p>
       <div class="demo-block">
-        <VkSelect v-model="disabledSelectValue" disabled placeholder="请选择">
-          <VkOption v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
-        </VkSelect>
-        <p>选中值：{{ disabledSelectValue }}</p>
+        <VkSpace vertical>
+          <VkSelect v-model="disabledSelectValue" disabled placeholder="请选择">
+            <VkOption v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
+          </VkSelect>
+          <p>选中值：{{ disabledSelectValue }}</p>
+        </VkSpace>
       </div>
       <div class="demo-code">
         <pre><code>&lt;VkSelect v-model="value" disabled placeholder="请选择"&gt;
@@ -66,10 +72,12 @@
       <h2>可清空单选</h2>
       <p>包含清空按钮，可将选择器清空为初始状态。</p>
       <div class="demo-block">
-        <VkSelect v-model="clearableValue" clearable placeholder="请选择">
-          <VkOption v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
-        </VkSelect>
-        <p>选中值：{{ clearableValue }}</p>
+        <VkSpace vertical>
+          <VkSelect v-model="clearableValue" clearable placeholder="请选择">
+            <VkOption v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
+          </VkSelect>
+          <p>选中值：{{ clearableValue }}</p>
+        </VkSpace>
       </div>
       <div class="demo-code">
         <pre><code>&lt;VkSelect v-model="value" clearable placeholder="请选择"&gt;
@@ -83,10 +91,12 @@
       <h2>基础多选</h2>
       <p>适用性较广的基础多选，用 Tag 展示已选项。</p>
       <div class="demo-block">
-        <VkSelect v-model="multipleValue" multiple placeholder="请选择">
-          <VkOption v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
-        </VkSelect>
-        <p>选中值：{{ multipleValue }}</p>
+        <VkSpace vertical>
+          <VkSelect v-model="multipleValue" multiple placeholder="请选择">
+            <VkOption v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
+          </VkSelect>
+          <p>选中值：{{ multipleValue }}</p>
+        </VkSpace>
       </div>
       <div class="demo-code">
         <pre><code>&lt;VkSelect v-model="value" multiple placeholder="请选择"&gt;
@@ -100,18 +110,20 @@
       <h2>自定义模板</h2>
       <p>可以自定义备选项的模板。</p>
       <div class="demo-block">
-        <VkSelect v-model="customValue" placeholder="请选择">
-          <VkOption v-for="item in cities" :key="item.value" :label="item.label" :value="item.value">
-            <span style="float: left">{{ item.label }}</span>
-            <span style="float: right; color: #8492a6; font-size: 13px">{{ item.desc }}</span>
-          </VkOption>
-        </VkSelect>
-        <p>选中值：{{ customValue }}</p>
+        <VkSpace vertical>
+          <VkSelect v-model="customValue" placeholder="请选择">
+            <VkOption v-for="item in cities" :key="item.value" :label="item.label" :value="item.value">
+              <span style="float: left">{{ item.label }}</span>
+              <span style="float: right; color: #8492a6; font-size: 13px">{{ item.desc }}</span>
+            </VkOption>
+          </VkSelect>
+          <p>选中值：{{ customValue }}</p>
+        </VkSpace>
       </div>
       <div class="demo-code">
         <pre><code>&lt;VkOption :value="item.value"&gt;
-  &lt;span style="float: left"&gt;{{ item.label }}&lt;/span&gt;
-  &lt;span style="float: right"&gt;{{ item.desc }}&lt;/span&gt;
+  &lt;span style="float: left"&gt;&#123;&#123; item.label &#125;&#125;&lt;/span&gt;
+  &lt;span style="float: right"&gt;&#123;&#123; item.desc &#125;&#125;&lt;/span&gt;
 &lt;/VkOption&gt;</code></pre>
       </div>
     </section>
@@ -121,12 +133,14 @@
       <h2>分组</h2>
       <p>备选项进行分组展示。</p>
       <div class="demo-block">
-        <VkSelect v-model="groupValue" placeholder="请选择">
-          <VkOptionGroup v-for="group in groupOptions" :key="group.label" :label="group.label">
-            <VkOption v-for="item in group.options" :key="item.value" :label="item.label" :value="item.value" />
-          </VkOptionGroup>
-        </VkSelect>
-        <p>选中值：{{ groupValue }}</p>
+        <VkSpace vertical>
+          <VkSelect v-model="groupValue" placeholder="请选择">
+            <VkOptionGroup v-for="group in groupOptions" :key="group.label" :label="group.label">
+              <VkOption v-for="item in group.options" :key="item.value" :label="item.label" :value="item.value" />
+            </VkOptionGroup>
+          </VkSelect>
+          <p>选中值：{{ groupValue }}</p>
+        </VkSpace>
       </div>
       <div class="demo-code">
         <pre><code>&lt;VkSelect v-model="value" placeholder="请选择"&gt;
@@ -143,10 +157,12 @@
       <h2>可搜索</h2>
       <p>可以利用搜索功能快速查找选项。</p>
       <div class="demo-block">
-        <VkSelect v-model="searchValue" filterable placeholder="请选择">
-          <VkOption v-for="item in searchOptions" :key="item.value" :label="item.label" :value="item.value" />
-        </VkSelect>
-        <p>选中值：{{ searchValue }}</p>
+        <VkSpace vertical>
+          <VkSelect v-model="searchValue" filterable placeholder="请选择">
+            <VkOption v-for="item in searchOptions" :key="item.value" :label="item.label" :value="item.value" />
+          </VkSelect>
+          <p>选中值：{{ searchValue }}</p>
+        </VkSpace>
       </div>
       <div class="demo-code">
         <pre><code>&lt;VkSelect v-model="value" filterable placeholder="请选择"&gt;
@@ -160,18 +176,20 @@
       <h2>远程搜索</h2>
       <p>从服务器搜索数据，输入关键字进行查找。</p>
       <div class="demo-block">
-        <VkSelect
-          v-model="remoteValue"
-          filterable
-          remote
-          reserve-keyword
-          placeholder="请输入关键词"
-          :remote-method="remoteMethod"
-          :loading="loading"
-        >
-          <VkOption v-for="item in remoteOptions" :key="item.value" :label="item.label" :value="item.value" />
-        </VkSelect>
-        <p>选中值：{{ remoteValue }}</p>
+        <VkSpace vertical>
+          <VkSelect
+            v-model="remoteValue"
+            filterable
+            remote
+            reserve-keyword
+            placeholder="请输入关键词"
+            :remote-method="remoteMethod"
+            :loading="loading"
+          >
+            <VkOption v-for="item in remoteOptions" :key="item.value" :label="item.label" :value="item.value" />
+          </VkSelect>
+          <p>选中值：{{ remoteValue }}</p>
+        </VkSpace>
       </div>
       <div class="demo-code">
         <pre><code>&lt;VkSelect
@@ -191,10 +209,12 @@
       <h2>创建条目</h2>
       <p>可以创建并选中选项中不存在的条目。</p>
       <div class="demo-block">
-        <VkSelect v-model="createValue" multiple filterable allow-create default-first-option placeholder="请选择文章标签">
-          <VkOption v-for="item in createOptions" :key="item.value" :label="item.label" :value="item.value" />
-        </VkSelect>
-        <p>选中值：{{ createValue }}</p>
+        <VkSpace vertical>
+          <VkSelect v-model="createValue" multiple filterable allow-create default-first-option placeholder="请选择文章标签">
+            <VkOption v-for="item in createOptions" :key="item.value" :label="item.label" :value="item.value" />
+          </VkSelect>
+          <p>选中值：{{ createValue }}</p>
+        </VkSpace>
       </div>
       <div class="demo-code">
         <pre><code>&lt;VkSelect
@@ -214,7 +234,7 @@
       <h2>不同尺寸</h2>
       <p>Select 组件提供除了默认值以外的三种尺寸，可以在不同场景下选择合适的尺寸。</p>
       <div class="demo-block">
-        <div class="size-demo">
+        <VkSpace vertical>
           <VkSelect v-model="sizeValue1" size="large" placeholder="大尺寸">
             <VkOption label="选项1" value="option1" />
             <VkOption label="选项2" value="option2" />
@@ -231,7 +251,7 @@
             <VkOption label="选项1" value="option1" />
             <VkOption label="选项2" value="option2" />
           </VkSelect>
-        </div>
+        </VkSpace>
       </div>
       <div class="demo-code">
         <pre><code>&lt;VkSelect size="large" placeholder="大尺寸"&gt;
@@ -292,7 +312,7 @@
               <VkSelect v-model="filterData.priceRange" placeholder="价格区间" clearable>
                 <VkOption v-for="range in priceRanges" :key="range.value" :label="range.label" :value="range.value" />
               </VkSelect>
-              <VkButton @click="resetFilters" type="danger">重置筛选</VkButton>
+              <VkButton type="danger" @click="resetFilters">重置筛选</VkButton>
             </div>
             <div class="filter-result">
               <h4>筛选条件：</h4>
@@ -320,14 +340,14 @@
           <VkSelect
             v-model="eventValue"
             placeholder="请选择"
+            multiple
+            clearable
             @change="handleChange"
             @visible-change="handleVisibleChange"
             @remove-tag="handleRemoveTag"
             @clear="handleClear"
             @blur="handleBlur"
             @focus="handleFocus"
-            multiple
-            clearable
           >
             <VkOption v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
           </VkSelect>
@@ -655,12 +675,6 @@ const addLog = (message) => {
   margin: 0 0 15px 0;
   font-size: 16px;
   color: #409eff;
-}
-
-.size-demo {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
 }
 
 .form-demo {

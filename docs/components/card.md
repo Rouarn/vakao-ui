@@ -221,7 +221,7 @@ Card 组件提供四种尺寸，可以在不同场景下选择合适的卡片尺
       <p>这是产品 A 的详细描述信息。</p>
       <p><strong>价格：</strong>¥299</p>
     </vk-card>
-    <vk-card header="产品 B" hoverable shadow="hover" @click="() => alert('点击了产品 B')">
+    <vk-card header="产品 B" hoverable shadow="hover" @click="() => alert('点击了产品 B')" style="margin-top:0;">
       <p>这是产品 B 的详细描述信息。</p>
       <p><strong>价格：</strong>¥399</p>
     </vk-card>

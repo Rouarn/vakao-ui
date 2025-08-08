@@ -1,3 +1,11 @@
+/**
+ * VkAvatar 头像组件样式
+ *
+ * 提供完整的头像组件样式，包括基础样式、尺寸变体、形状变体、状态样式等。
+ * 支持多种尺寸（tiny、small、medium、large）、多种形状（圆形、方形）、
+ * 图片头像、文字头像、图标头像、在线状态指示器等功能。
+ */
+
 // VkAvatar 组件样式
 .vk-avatar {
   /* 基础样式定义 */
@@ -14,31 +22,31 @@
   vertical-align: middle;
 
   /* 预设尺寸 */
-  width: var(--vk-size-xl);
-  height: var(--vk-size-xl);
-  font-size: var(--vk-font-size-lg);
-  line-height: var(--vk-size-xl);
+  width: var(--vk-size-extra-large);
+  height: var(--vk-size-extra-large);
+  font-size: var(--vk-font-size-large);
+  line-height: var(--vk-size-extra-large);
 
   /* 尺寸变体 */
   &--large {
-    width: var(--vk-size-3xl);
-    height: var(--vk-size-3xl);
-    font-size: var(--vk-font-size-3xl);
-    line-height: var(--vk-size-3xl);
+    width: var(--vk-size-extra-extra-large);
+    height: var(--vk-size-extra-extra-large);
+    font-size: var(--vk-font-size-extra-large);
+    line-height: var(--vk-size-extra-extra-large);
   }
 
   &--default {
-    width: var(--vk-size-xl);
-    height: var(--vk-size-xl);
-    font-size: var(--vk-font-size-lg);
-    line-height: var(--vk-size-xl);
+    width: var(--vk-size-extra-large);
+    height: var(--vk-size-extra-large);
+    font-size: var(--vk-font-size-large);
+    line-height: var(--vk-size-extra-large);
   }
 
   &--small {
-    width: var(--vk-size-md);
-    height: var(--vk-size-md);
-    font-size: var(--vk-font-size-sm);
-    line-height: var(--vk-size-md);
+    width: var(--vk-size-medium);
+    height: var(--vk-size-medium);
+    font-size: var(--vk-font-size-small);
+    line-height: var(--vk-size-medium);
   }
 
   /* 形状变体 */

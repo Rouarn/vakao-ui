@@ -153,12 +153,12 @@
           <h4>第一章：开始</h4>
           <p>这是第一章的内容，介绍了项目的基本概念和使用方法。在这一章中，我们将学习如何快速上手使用组件库。</p>
           <VkDivider content-position="center">
-            <Icon icon="material-symbols:star" size="16" color="#e6a23c" />
+            <VkIcon icon="material-symbols:star" size="16" color="#e6a23c" />
           </VkDivider>
           <h4>第二章：进阶</h4>
           <p>这是第二章的内容，深入探讨了组件的高级用法和最佳实践。我们将学习如何自定义组件样式和行为。</p>
           <VkDivider content-position="center">
-            <VkIcon name="star" size="16" color="#e6a23c" />
+            <VkIcon icon="material-symbols:star" size="16" color="#e6a23c" />
           </VkDivider>
           <h4>第三章：总结</h4>
           <p>这是第三章的内容，总结了前面学到的知识点，并提供了一些实用的开发技巧。</p>
@@ -272,7 +272,7 @@
 // 这个组件主要展示 Divider 的各种用法，不需要复杂的逻辑
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .divider-demo {
   max-width: 1000px;
 }

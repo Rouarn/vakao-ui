@@ -1,18 +1,24 @@
+/**
+ * VkDivider 分割线组件样式
+ *
+ * 提供完整的分割线组件样式，包括基础样式、方向变体、内容样式、位置变体等。
+ * 支持水平分割线、垂直分割线、带文字内容的分割线、
+ * 文字位置控制（左、中、右）、自定义样式等功能。
+ */
+
 // VkDivider 组件样式
 .vk-divider {
   margin: var(--vk-spacing-4) 0;
   border: none;
-  border-top: 1px solid var(--vk-border-color-light);
   position: relative;
 
   // 垂直分割线
   &--vertical {
     display: inline-block;
     width: 1px;
-    height: var(--vk-size-md);
+    height: var(--vk-size-medium);
     margin: 0 var(--vk-spacing-2);
     border-top: none;
-    border-left: 1px solid var(--vk-border-color-light);
     vertical-align: middle;
   }
 
@@ -23,14 +29,14 @@
     margin: var(--vk-spacing-5) 0;
     border: none;
     color: var(--vk-text-color-secondary);
-    font-size: var(--vk-font-size-sm);
+    font-size: var(--vk-font-size-small);
 
     &::before,
     &::after {
       content: "";
       flex: 1;
       height: 1px;
-      background-color: var(--vk-border-color-light);
+      background-color: var(--vk-divider-color, var(--vk-border-color-light));
     }
 
     &::before {
@@ -63,7 +69,10 @@
 
   // 虚线样式
   &--dashed {
-    border-top-style: dashed;
+    // 仅对非文字分割线设置虚线边框
+    &:not(.vk-divider--with-text) {
+      border-top-style: dashed;
+    }
 
     &.vk-divider--vertical {
       border-left-style: dashed;
@@ -74,8 +83,8 @@
       &::after {
         background-image: repeating-linear-gradient(
           to right,
-          var(--vk-border-color-light) 0,
-          var(--vk-border-color-light) 4px,
+          var(--vk-divider-color, var(--vk-border-color-light)) 0,
+          var(--vk-divider-color, var(--vk-border-color-light)) 4px,
           transparent 4px,
           transparent 8px
         );

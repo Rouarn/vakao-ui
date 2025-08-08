@@ -16,23 +16,23 @@
 
   // 基础尺寸
   &--size-tiny {
-    width: 64px;
-    height: 64px;
+    width: var(--vk-size-extra-huge);
+    height: var(--vk-size-extra-huge);
   }
 
   &--size-small {
-    width: 96px;
-    height: 96px;
+    width: calc(var(--vk-size-extra-huge) * 1.5);
+    height: calc(var(--vk-size-extra-huge) * 1.5);
   }
 
   &--size-medium {
-    width: 128px;
-    height: 128px;
+    width: calc(var(--vk-size-extra-huge) * 2);
+    height: calc(var(--vk-size-extra-huge) * 2);
   }
 
   &--size-large {
-    width: 200px;
-    height: 200px;
+    width: calc(var(--vk-size-extra-huge) * 3.125);
+    height: calc(var(--vk-size-extra-huge) * 3.125);
   }
 
   // 圆形图片
@@ -192,7 +192,7 @@
     top: 0;
     left: 0;
     right: 0;
-    height: 60px;
+    height: calc(var(--vk-size-extra-huge) - 4px);
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), transparent);
     display: flex;
     align-items: center;
@@ -208,8 +208,8 @@
 
   &__preview-action,
   &__preview-close {
-    width: 40px;
-    height: 40px;
+    width: var(--vk-size-extra-large);
+    height: var(--vk-size-extra-large);
     border: none;
     background-color: rgba(255, 255, 255, 0.1);
     color: var(--vk-color-white);
@@ -258,8 +258,8 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    width: 50px;
-    height: 50px;
+    width: calc(var(--vk-size-extra-extra-large) + 2px);
+    height: calc(var(--vk-size-extra-extra-large) + 2px);
     border: none;
     background-color: rgba(255, 255, 255, 0.1);
     color: var(--vk-color-white);
@@ -322,14 +322,14 @@
 
     &__preview-action,
     &__preview-close {
-      width: 36px;
-      height: 36px;
+      width: var(--vk-size-large);
+      height: var(--vk-size-large);
       font-size: var(--vk-font-size-base);
     }
 
     &__preview-arrow {
-      width: 44px;
-      height: 44px;
+      width: calc(var(--vk-size-extra-large) + 4px);
+      height: calc(var(--vk-size-extra-large) + 4px);
       font-size: var(--vk-font-size-large);
 
       &--left {

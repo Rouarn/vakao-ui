@@ -82,7 +82,7 @@
       <div class="demo-block">
         <VkSwitch v-model="switch12" loading />
         <VkSwitch v-model="switch13" loading />
-        <VkButton @click="toggleLoading" size="small" style="margin-left: 20px">
+        <VkButton size="small" style="margin-left: 20px" @click="toggleLoading">
           {{ isLoading ? "停止加载" : "开始加载" }}
         </VkButton>
         <VkSwitch v-model="switch14" :loading="isLoading" />
@@ -112,7 +112,7 @@
         <div class="settings-demo">
           <div class="setting-group">
             <h4>通知设置</h4>
-            <div class="setting-item" v-for="setting in notificationSettings" :key="setting.key">
+            <div v-for="setting in notificationSettings" :key="setting.key" class="setting-item">
               <div class="setting-info">
                 <VkIcon :icon="'material-symbols:' + setting.icon" size="20" :color="setting.color" />
                 <div class="setting-text">
@@ -126,9 +126,9 @@
 
           <div class="setting-group">
             <h4>隐私设置</h4>
-            <div class="setting-item" v-for="setting in privacySettings" :key="setting.key">
+            <div v-for="setting in privacySettings" :key="setting.key" class="setting-item">
               <div class="setting-info">
-                <VkIcon :name="setting.icon" size="20" :color="setting.color" />
+                <VkIcon :icon="'material-symbols:' + setting.icon" size="20" :color="setting.color" />
                 <div class="setting-text">
                   <div class="setting-title">{{ setting.title }}</div>
                   <div class="setting-desc">{{ setting.description }}</div>
@@ -144,7 +144,7 @@
       <div class="demo-block">
         <h3>功能开关</h3>
         <div class="feature-demo">
-          <div class="feature-item" v-for="feature in features" :key="feature.key">
+          <div v-for="feature in features" :key="feature.key" class="feature-item">
             <div class="feature-header">
               <div class="feature-info">
                 <h4>{{ feature.title }}</h4>
@@ -159,7 +159,7 @@
               />
             </div>
             <div v-if="feature.options && featureStates[feature.key]" class="feature-options">
-              <div class="option-item" v-for="option in feature.options" :key="option.key">
+              <div v-for="option in feature.options" :key="option.key" class="option-item">
                 <span>{{ option.label }}</span>
                 <VkSwitch v-model="featureOptions[option.key]" size="small" :active-color="option.color || '#409eff'" />
               </div>
@@ -172,7 +172,7 @@
       <div class="demo-block">
         <h3>权限控制</h3>
         <div class="permission-demo">
-          <div class="user-card" v-for="user in users" :key="user.id">
+          <div v-for="user in users" :key="user.id" class="user-card">
             <div class="user-header">
               <VkAvatar :src="user.avatar" size="40" />
               <div class="user-info">
@@ -185,7 +185,7 @@
               </div>
             </div>
             <div class="user-permissions">
-              <div class="permission-item" v-for="permission in user.permissions" :key="permission.key">
+              <div v-for="permission in user.permissions" :key="permission.key" class="permission-item">
                 <span class="permission-name">{{ permission.name }}</span>
                 <VkSwitch
                   v-model="permission.enabled"
@@ -206,7 +206,7 @@
         <h3>状态监控</h3>
         <div class="monitor-demo">
           <div class="monitor-grid">
-            <div class="monitor-item" v-for="service in services" :key="service.id">
+            <div v-for="service in services" :key="service.id" class="monitor-item">
               <div class="monitor-header">
                 <VkIcon
                   :icon="'material-symbols:' + service.icon"

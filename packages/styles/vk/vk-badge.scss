@@ -1,16 +1,10 @@
-// VkBadge 徽章淡入淡出动画
-.vk-badge-fade-enter-active,
-.vk-badge-fade-leave-active {
-  transition:
-    opacity 0.3s,
-    transform 0.3s;
-}
-
-.vk-badge-fade-enter-from,
-.vk-badge-fade-leave-to {
-  opacity: 0;
-  transform: scale(0.5);
-}
+/**
+ * VkBadge 徽章组件样式
+ *
+ * 提供完整的徽章组件样式，包括基础样式、类型变体、尺寸变体、位置变体等。
+ * 支持多种类型（primary、success、warning、danger、info）、
+ * 多种尺寸、数字徽章、点状徽章、自定义内容、最大值限制等功能。
+ */
 
 // VkBadge 组件样式
 .vk-badge {
@@ -26,11 +20,11 @@
     transform: translate(50%, -50%);
     color: var(--vk-color-white);
     border: 1px solid var(--vk-color-white);
-    border-radius: var(--vk-border-radius-xl);
+    border-radius: var(--vk-border-radius-extra-large);
     padding: 0 var(--vk-spacing-2);
-    font-size: var(--vk-font-size-xs);
-    line-height: 18px;
-    min-width: 18px;
+    font-size: var(--vk-font-size-extra-small);
+    line-height: var(--vk-size-extra-small);
+    min-width: var(--vk-size-extra-small);
     text-align: center;
     white-space: nowrap;
     z-index: 1;

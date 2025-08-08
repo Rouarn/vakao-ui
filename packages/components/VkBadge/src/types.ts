@@ -1,5 +1,5 @@
 import type { ExtractPropTypes, PropType } from "vue";
-import type { ComponentType } from "../../../types";
+import type { ComponentType } from "@/types";
 
 /**
  * 徽章类型

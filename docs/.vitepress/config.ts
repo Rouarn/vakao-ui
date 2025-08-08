@@ -86,7 +86,10 @@ export default defineConfig({
         },
         {
           text: "布局组件",
-          items: [{ text: "Divider 分割线", link: "/components/divider" }],
+          items: [
+            { text: "Space 间距", link: "/components/space" },
+            { text: "Divider 分割线", link: "/components/divider" },
+          ],
         },
         {
           text: "反馈组件",

@@ -10,7 +10,7 @@
       <h2>基础用法</h2>
       <p>卡片包含标题、内容和操作。</p>
       <div class="demo-block">
-        <div class="card-row">
+        <VkSpace>
           <VkCard class="demo-card">
             <template #header>
               <div class="card-header">
@@ -25,7 +25,7 @@
               列表内容 4
             </div>
           </VkCard>
-        </div>
+        </VkSpace>
       </div>
     </div>
 
@@ -34,7 +34,7 @@
       <h2>简单卡片</h2>
       <p>卡片可以只有内容区域。</p>
       <div class="demo-block">
-        <div class="card-row">
+        <VkSpace>
           <VkCard class="demo-card">
             <div class="simple-content">
               <h3>简单卡片</h3>
@@ -42,7 +42,7 @@
               <p>卡片内容可以是任意的 HTML 元素。</p>
             </div>
           </VkCard>
-        </div>
+        </VkSpace>
       </div>
     </div>
 
@@ -51,7 +51,7 @@
       <h2>带图片的卡片</h2>
       <p>可配置定义更丰富的内容。</p>
       <div class="demo-block">
-        <div class="card-row">
+        <VkSpace wrap>
           <VkCard class="demo-card image-card">
             <div class="image-container">
               <img src="https://picsum.photos/300/200?random=1" alt="示例图片" />
@@ -59,10 +59,10 @@
             <div class="card-content">
               <h3>图片标题</h3>
               <p>这里是图片的描述信息，可以包含更多的详细内容。</p>
-              <div class="card-actions">
+              <VkSpace>
                 <VkButton type="primary" size="small">查看详情</VkButton>
                 <VkButton size="small">分享</VkButton>
-              </div>
+              </VkSpace>
             </div>
           </VkCard>
 
@@ -73,13 +73,13 @@
             <div class="card-content">
               <h3>另一个标题</h3>
               <p>不同的图片和内容展示。</p>
-              <div class="card-actions">
+              <VkSpace>
                 <VkButton type="success" size="small">下载</VkButton>
                 <VkButton size="small">收藏</VkButton>
-              </div>
+              </VkSpace>
             </div>
           </VkCard>
-        </div>
+        </VkSpace>
       </div>
     </div>
 
@@ -88,7 +88,7 @@
       <h2>卡片阴影</h2>
       <p>可对阴影的显示进行配置。</p>
       <div class="demo-block">
-        <div class="card-row">
+        <VkSpace wrap>
           <VkCard shadow="always" class="demo-card">
             <div class="card-content">
               <h4>总是显示</h4>
@@ -109,7 +109,7 @@
               <p>shadow="never"</p>
             </div>
           </VkCard>
-        </div>
+        </VkSpace>
       </div>
     </div>
 
@@ -118,8 +118,8 @@
       <h2>用户信息卡片</h2>
       <p>展示用户信息的卡片示例。</p>
       <div class="demo-block">
-        <div class="card-row">
-          <VkCard class="demo-card user-card" v-for="user in users" :key="user.id">
+        <VkSpace wrap>
+          <VkCard v-for="user in users" :key="user.id" class="demo-card user-card">
             <div class="user-info">
               <VkAvatar :size="60" :src="user.avatar" />
               <div class="user-details">
@@ -131,12 +131,12 @@
                 </div>
               </div>
             </div>
-            <div class="user-actions">
+            <VkSpace>
               <VkButton type="primary" size="small">关注</VkButton>
               <VkButton size="small">消息</VkButton>
-            </div>
+            </VkSpace>
           </VkCard>
-        </div>
+        </VkSpace>
       </div>
     </div>
 
@@ -145,8 +145,8 @@
       <h2>产品卡片</h2>
       <p>展示产品信息的卡片示例。</p>
       <div class="demo-block">
-        <div class="card-row">
-          <VkCard class="demo-card product-card" v-for="product in products" :key="product.id">
+        <VkSpace wrap>
+          <VkCard v-for="product in products" :key="product.id" class="demo-card product-card">
             <div class="product-image">
               <img :src="product.image" :alt="product.name" />
               <VkBadge v-if="product.discount" :value="product.discount" class="discount-badge" />
@@ -163,12 +163,12 @@
                 <span class="rating-text">({{ product.rating }})</span>
               </div>
             </div>
-            <div class="product-actions">
+            <VkSpace>
               <VkButton type="primary" size="small" @click="addToCart(product)">加入购物车</VkButton>
               <VkButton size="small" @click="buyNow(product)">立即购买</VkButton>
-            </div>
+            </VkSpace>
           </VkCard>
-        </div>
+        </VkSpace>
       </div>
     </div>
 
@@ -177,8 +177,8 @@
       <h2>统计卡片</h2>
       <p>展示统计数据的卡片示例。</p>
       <div class="demo-block">
-        <div class="card-row">
-          <VkCard class="demo-card stat-card" v-for="stat in stats" :key="stat.title">
+        <VkSpace wrap>
+          <VkCard v-for="stat in stats" :key="stat.title" class="demo-card stat-card">
             <div class="stat-content">
               <div class="stat-icon" :style="{ color: stat.color }">
                 {{ stat.icon }}
@@ -192,7 +192,7 @@
               </div>
             </div>
           </VkCard>
-        </div>
+        </VkSpace>
       </div>
     </div>
 
@@ -201,8 +201,8 @@
       <h2>交互式卡片</h2>
       <p>支持点击、悬浮等交互效果的卡片。</p>
       <div class="demo-block">
-        <div class="card-row">
-          <VkCard class="demo-card interactive-card" v-for="item in interactiveItems" :key="item.id" @click="handleCardClick(item)">
+        <VkSpace wrap>
+          <VkCard v-for="item in interactiveItems" :key="item.id" class="demo-card interactive-card" @click="handleCardClick(item)">
             <div class="interactive-content">
               <div class="item-icon">{{ item.icon }}</div>
               <h3>{{ item.title }}</h3>
@@ -212,7 +212,7 @@
               </div>
             </div>
           </VkCard>
-        </div>
+        </VkSpace>
       </div>
     </div>
   </div>
@@ -361,7 +361,7 @@ const handleCardClick = (item: any) => {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .card-demo {
   max-width: 1200px;
 }
@@ -410,12 +410,6 @@ const handleCardClick = (item: any) => {
   margin-bottom: 16px;
 }
 
-.card-row {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px;
-}
-
 .demo-card {
   width: 100%;
 }
@@ -458,12 +452,6 @@ const handleCardClick = (item: any) => {
   object-fit: cover;
 }
 
-.card-actions {
-  margin-top: 16px;
-  display: flex;
-  gap: 8px;
-}
-
 .user-card {
   padding: 20px;
 }
@@ -496,11 +484,6 @@ const handleCardClick = (item: any) => {
   gap: 16px;
   font-size: 12px;
   color: #999;
-}
-
-.user-actions {
-  display: flex;
-  gap: 8px;
 }
 
 .product-card {
@@ -574,12 +557,6 @@ const handleCardClick = (item: any) => {
 .rating-text {
   color: #666;
   font-size: 12px;
-}
-
-.product-actions {
-  padding: 0 16px 16px;
-  display: flex;
-  gap: 8px;
 }
 
 .stat-card {
@@ -679,10 +656,6 @@ const handleCardClick = (item: any) => {
 }
 
 @media (max-width: 768px) {
-  .card-row {
-    grid-template-columns: 1fr;
-  }
-
   .demo-block {
     padding: 16px;
   }

@@ -94,6 +94,11 @@ const router = createRouter({
           name: "Tooltip",
           component: () => import("../views/TooltipDemo.vue"),
         },
+        {
+          path: "/space",
+          name: "Space",
+          component: () => import("../views/SpaceDemo.vue"),
+        },
       ],
     },
   ],

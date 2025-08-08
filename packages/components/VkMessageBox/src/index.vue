@@ -1,6 +1,6 @@
 <template>
   <Teleport to="body">
-    <Transition name="vk-message-box-fade">
+    <Transition name="vk-fade">
       <div v-if="visible" :class="ns.element('wrapper')" @click="handleWrapperClick">
         <div :class="[ns.block(), messageBoxClass]">
           <!-- 头部 -->
@@ -54,7 +54,7 @@
 <script lang="ts">
 import { defineComponent, ref, computed, onMounted, onUnmounted } from "vue";
 import { messageBoxProps, messageBoxEmits } from "./types";
-import type { ComponentType } from "../../../types";
+import type { ComponentType } from "@/types";
 import VkButton from "../../VkButton";
 import VkIcon from "../../VkIcon";
 import VkInput from "../../VkInput";
@@ -198,6 +198,7 @@ export default defineComponent({
         value: inputValue.value,
         close: () => {
           visible.value = false;
+          restoreBodyScroll();
         },
       };
     };
@@ -209,10 +210,27 @@ export default defineComponent({
       }
     };
 
+    // 禁止背景滚动
+    const preventBodyScroll = () => {
+      const body = document.body as HTMLElement;
+
+      const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth;
+      body.style.overflow = "hidden";
+      body.style.paddingRight = `${scrollBarWidth}px`;
+    };
+
+    // 恢复背景滚动
+    const restoreBodyScroll = () => {
+      const body = document.body as HTMLElement;
+      body.style.overflow = "";
+      body.style.paddingRight = "";
+    };
+
     // 生命周期
     onMounted(() => {
       visible.value = true;
       document.addEventListener("keydown", handleKeydown);
+      preventBodyScroll();
 
       // 如果显示输入框，自动聚焦
       if (props.showInput && inputRef.value) {
@@ -224,6 +242,7 @@ export default defineComponent({
 
     onUnmounted(() => {
       document.removeEventListener("keydown", handleKeydown);
+      restoreBodyScroll();
     });
 
     // 返回所有需要在模板中使用的变量和方法
@@ -250,6 +269,7 @@ export default defineComponent({
       // 暴露方法
       close: () => {
         visible.value = false;
+        restoreBodyScroll();
       },
     };
   },

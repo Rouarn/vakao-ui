@@ -1,3 +1,13 @@
+/**
+ * VkButton 按钮组件样式
+ *
+ * 提供完整的按钮组件样式，包括基础样式、类型变体、尺寸变体、状态样式等。
+ * 支持多种按钮类型（primary、success、warning、danger、info、text）、
+ * 多种尺寸（tiny、small、medium、large）、多种形状（默认、round、circle）、
+ * 以及 plain 样式、加载状态、禁用状态等功能。
+ */
+
+// VkButton 组件样式
 .vk-button {
   display: inline-flex;
   justify-content: center;
@@ -22,8 +32,8 @@
   font-weight: 500;
   padding: 0 var(--vk-spacing-2);
   font-size: var(--vk-font-size-base);
-  height: var(--vk-size-base);
-  border-radius: var(--vk-border-radius-base);
+  height: var(--vk-size-medium);
+  border-radius: var(--vk-border-radius-medium);
 
   &:hover,
   &:focus-visible {
@@ -68,30 +78,30 @@
       right: -1px;
       bottom: -1px;
       border-radius: inherit;
-      background-color: rgba(255, 255, 255, 0.35);
+      background-color: var(--vk-bg-color-overlay);
     }
   }
 
   // 尺寸变体
   &.vk-button--size-large {
     padding: 0 var(--vk-spacing-4);
-    font-size: var(--vk-font-size-lg);
-    height: var(--vk-size-xl);
-    border-radius: var(--vk-border-radius-lg);
+    font-size: var(--vk-font-size-large);
+    height: var(--vk-size-extra-large);
+    border-radius: var(--vk-border-radius-large);
   }
 
   &.vk-button--size-tiny {
     padding: 0 var(--vk-spacing-1);
-    font-size: var(--vk-font-size-xs);
-    height: var(--vk-size-xs);
-    border-radius: var(--vk-border-radius-sm);
+    font-size: var(--vk-font-size-extra-small);
+    height: var(--vk-size-extra-small);
+    border-radius: var(--vk-border-radius-small);
   }
 
   &.vk-button--size-small {
     padding: 0 var(--vk-spacing-2);
-    font-size: var(--vk-font-size-sm);
-    height: var(--vk-size-md);
-    border-radius: var(--vk-border-radius-sm);
+    font-size: var(--vk-font-size-small);
+    height: var(--vk-size-medium);
+    border-radius: var(--vk-border-radius-small);
   }
 
   // 类型变体
@@ -391,22 +401,22 @@
   &.is-circle {
     border-radius: 50%;
     padding: 0;
-    width: var(--vk-size-lg);
-    height: var(--vk-size-lg);
+    width: var(--vk-size-large);
+    height: var(--vk-size-large);
 
     &.vk-button--size-large {
-      width: var(--vk-size-xl);
-      height: var(--vk-size-xl);
+      width: var(--vk-size-extra-large);
+      height: var(--vk-size-extra-large);
     }
 
     &.vk-button--size-small {
-      width: var(--vk-size-md);
-      height: var(--vk-size-md);
+      width: var(--vk-size-medium);
+      height: var(--vk-size-medium);
     }
 
     &.vk-button--size-tiny {
-      width: var(--vk-size-xs);
-      height: var(--vk-size-xs);
+      width: var(--vk-size-extra-small);
+      height: var(--vk-size-extra-small);
     }
 
     // 圆形按钮中的图标始终居中，忽略位置属性
@@ -445,8 +455,8 @@
 
   .vk-button__loading-indicator {
     display: inline-block;
-    width: 14px;
-    height: 14px;
+    width: calc(var(--vk-size-extra-extra-small) - 2px); // 14px
+    height: calc(var(--vk-size-extra-extra-small) - 2px); // 14px
     border: 2px solid currentColor;
     border-radius: 50%;
     border-top-color: transparent;

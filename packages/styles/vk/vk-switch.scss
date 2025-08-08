@@ -1,3 +1,11 @@
+/** 
+ * VkSwitch 开关组件样式
+ *
+ * 提供完整的开关组件样式，包括基础样式、尺寸变体、状态样式、动画效果等。
+ * 支持多种尺寸（small、medium、large）、开启/关闭状态、禁用状态、
+ * 加载状态、自定义文字、自定义颜色、动画过渡等功能。
+ */
+
 // VkSwitch 组件样式
 .vk-switch {
   // 基础样式
@@ -15,8 +23,8 @@
     margin: 0;
     display: inline-block;
     position: relative;
-    width: 40px;
-    height: 20px;
+    width: calc(var(--vk-size-extra-large) * 1);
+    height: var(--vk-size-extra-small);
     border: 1px solid var(--vk-border-color-base);
     outline: none;
     border-radius: var(--vk-border-radius-full);
@@ -30,12 +38,12 @@
 
     .vk-switch__button {
       position: absolute;
-      top: 1px;
-      left: 1px;
+      top: var(--vk-spacing-0);
+      left: var(--vk-spacing-0);
       border-radius: var(--vk-border-radius-full);
       transition: all var(--vk-transition-duration-base) var(--vk-transition-timing-function);
-      width: 16px;
-      height: 16px;
+      width: var(--vk-size-extra-extra-small);
+      height: var(--vk-size-extra-extra-small);
       background-color: var(--vk-color-white);
       display: flex;
       justify-content: center;
@@ -46,7 +54,7 @@
   // 开关文本
   &__label {
     transition: color var(--vk-transition-duration-base) var(--vk-transition-timing-function);
-    height: 20px;
+    height: var(--vk-size-small);
     display: inline-block;
     font-size: var(--vk-font-size-base);
     font-weight: 500;
@@ -74,7 +82,7 @@
       background-color: var(--vk-color-primary);
 
       .vk-switch__button {
-        transform: translateX(20px);
+        transform: translateX(var(--vk-size-small));
       }
     }
   }
@@ -93,25 +101,25 @@
   // 尺寸变体
   &--large {
     .vk-switch__core {
-      width: 50px;
-      height: 24px;
+      width: var(--vk-size-extra-large);
+      height: var(--vk-size-large);
       border-radius: var(--vk-border-radius-full);
 
       .vk-switch__button {
-        width: 20px;
-        height: 20px;
+        width: var(--vk-size-large);
+        height: var(--vk-size-large);
       }
     }
 
     .vk-switch__action {
-      width: 22px;
-      height: 22px;
+      width: var(--vk-size-large);
+      height: var(--vk-size-large);
     }
 
     &.is-checked {
       .vk-switch__core {
         .vk-switch__button {
-          transform: translateX(26px);
+          transform: translateX(var(--vk-size-medium));
         }
       }
 
@@ -123,19 +131,19 @@
 
   &--small {
     .vk-switch__core {
-      width: 30px;
-      height: 16px;
+      width: var(--vk-size-large);
+      height: var(--vk-size-medium);
       border-radius: var(--vk-border-radius-full);
 
       .vk-switch__button {
-        width: 12px;
-        height: 12px;
+        width: var(--vk-size-small);
+        height: var(--vk-size-small);
       }
     }
 
     .vk-switch__action {
-      width: 14px;
-      height: 14px;
+      width: var(--vk-size-small);
+      height: var(--vk-size-small);
     }
 
     &.is-checked {
@@ -187,9 +195,9 @@
   &__action {
     position: absolute;
     top: 50%;
-    left: 2px;
-    width: 18px;
-    height: 18px;
+    left: -1px;
+    width: var(--vk-size-extra-small);
+    height: var(--vk-size-extra-small);
     border-radius: var(--vk-border-radius-full);
     background-color: var(--vk-color-white);
     box-shadow: var(--vk-box-shadow-light);
@@ -201,7 +209,7 @@
   // 选中状态下的开关按钮位置
   &.is-checked {
     .vk-switch__action {
-      transform: translateY(-50%) translateX(20px);
+      transform: translateY(-50%) translateX(21px);
     }
   }
 

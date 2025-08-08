@@ -1,5 +1,5 @@
 import type { PropType, CSSProperties } from "vue";
-import type { ExtractPublicPropTypes, ComponentSize } from "../../../types";
+import type { ExtractPublicPropTypes, ComponentSize } from "@/types";
 
 // 单选框尺寸
 export type RadioSize = ComponentSize;

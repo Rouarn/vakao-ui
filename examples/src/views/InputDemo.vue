@@ -10,8 +10,10 @@
       <h2>基础用法</h2>
       <p>基本的输入框用法。</p>
       <div class="demo-block">
-        <VkInput v-model="basicValue" placeholder="请输入内容" />
-        <div class="demo-value">输入值：{{ basicValue }}</div>
+        <VkSpace vertical>
+          <VkInput v-model="basicValue" placeholder="请输入内容" />
+          <div class="demo-value">输入值：{{ basicValue }}</div>
+        </VkSpace>
       </div>
     </div>
 
@@ -20,8 +22,10 @@
       <h2>禁用状态</h2>
       <p>使用 <code>disabled</code> 属性禁用输入框。</p>
       <div class="demo-block">
-        <VkInput v-model="disabledValue" placeholder="禁用状态" disabled />
-        <VkInput v-model="disabledValue2" placeholder="有值的禁用状态" disabled />
+        <VkSpace vertical>
+          <VkInput v-model="disabledValue" placeholder="禁用状态" disabled />
+          <VkInput v-model="disabledValue2" placeholder="有值的禁用状态" disabled />
+        </VkSpace>
       </div>
     </div>
 
@@ -30,8 +34,10 @@
       <h2>可清空</h2>
       <p>使用 <code>clearable</code> 属性可以得到一个可清空的输入框。</p>
       <div class="demo-block">
-        <VkInput v-model="clearableValue" placeholder="请输入内容" clearable />
-        <div class="demo-value">输入值：{{ clearableValue }}</div>
+        <VkSpace vertical>
+          <VkInput v-model="clearableValue" placeholder="请输入内容" clearable />
+          <div class="demo-value">输入值：{{ clearableValue }}</div>
+        </VkSpace>
       </div>
     </div>
 
@@ -40,8 +46,10 @@
       <h2>密码框</h2>
       <p>使用 <code>show-password</code> 属性可以得到一个可切换显示隐藏的密码框。</p>
       <div class="demo-block">
-        <VkInput v-model="passwordValue" type="password" placeholder="请输入密码" show-password />
-        <div class="demo-value">密码值：{{ passwordValue }}</div>
+        <VkSpace vertical>
+          <VkInput v-model="passwordValue" type="password" placeholder="请输入密码" show-password />
+          <div class="demo-value">密码值：{{ passwordValue }}</div>
+        </VkSpace>
       </div>
     </div>
 
@@ -50,9 +58,16 @@
       <h2>带图标的输入框</h2>
       <p>使用 <code>prefix-icon</code> 和 <code>suffix-icon</code> 属性在输入框首部和尾部增加显示图标。</p>
       <div class="demo-block">
-        <VkInput v-model="iconValue1" placeholder="请输入内容" prefix-icon="search" />
-        <VkInput v-model="iconValue2" placeholder="请输入内容" suffix-icon="calendar" />
-        <VkInput v-model="iconValue3" placeholder="请输入内容" prefix-icon="user" suffix-icon="setting" />
+        <VkSpace vertical>
+          <VkInput v-model="iconValue1" placeholder="请输入内容" prefix-icon="material-symbols:search" />
+          <VkInput v-model="iconValue2" placeholder="请输入内容" suffix-icon="material-symbols:calendar-month" />
+          <VkInput
+            v-model="iconValue3"
+            placeholder="请输入内容"
+            prefix-icon="material-symbols:person"
+            suffix-icon="material-symbols:settings"
+          />
+        </VkSpace>
       </div>
     </div>
 
@@ -61,10 +76,12 @@
       <h2>不同尺寸</h2>
       <p>使用 <code>size</code> 属性改变输入框大小。</p>
       <div class="demo-block">
-        <VkInput v-model="sizeValue" size="large" placeholder="大型输入框" />
-        <VkInput v-model="sizeValue" placeholder="默认输入框" />
-        <VkInput v-model="sizeValue" size="small" placeholder="小型输入框" />
-        <VkInput v-model="sizeValue" size="tiny" placeholder="超小输入框" />
+        <VkSpace vertical>
+          <VkInput v-model="sizeValue" size="large" placeholder="大型输入框" />
+          <VkInput v-model="sizeValue" placeholder="默认输入框" />
+          <VkInput v-model="sizeValue" size="small" placeholder="小型输入框" />
+          <VkInput v-model="sizeValue" size="tiny" placeholder="超小输入框" />
+        </VkSpace>
       </div>
     </div>
 
@@ -73,16 +90,18 @@
       <h2>复合型输入框</h2>
       <p>可以在输入框前置或后置一个元素，通常是标签或按钮。</p>
       <div class="demo-block">
-        <VkInput v-model="compoundValue1" placeholder="请输入内容">
-          <template #prepend>Http://</template>
-        </VkInput>
-        <VkInput v-model="compoundValue2" placeholder="请输入内容">
-          <template #append>.com</template>
-        </VkInput>
-        <VkInput v-model="compoundValue3" placeholder="请输入内容">
-          <template #prepend>Http://</template>
-          <template #append>.com</template>
-        </VkInput>
+        <VkSpace vertical>
+          <VkInput v-model="compoundValue1" placeholder="请输入内容">
+            <template #prepend>Http://</template>
+          </VkInput>
+          <VkInput v-model="compoundValue2" placeholder="请输入内容">
+            <template #append>.com</template>
+          </VkInput>
+          <VkInput v-model="compoundValue3" placeholder="请输入内容">
+            <template #prepend>Http://</template>
+            <template #append>.com</template>
+          </VkInput>
+        </VkSpace>
       </div>
     </div>
 
@@ -91,9 +110,11 @@
       <h2>文本域</h2>
       <p>使用 <code>type="textarea"</code> 来创建文本域。</p>
       <div class="demo-block">
-        <VkInput v-model="textareaValue1" type="textarea" placeholder="请输入内容" />
-        <VkInput v-model="textareaValue2" type="textarea" placeholder="请输入内容" :rows="4" resize="none" />
-        <div class="demo-value">文本域内容：{{ textareaValue1 }}</div>
+        <VkSpace vertical>
+          <VkInput v-model="textareaValue1" type="textarea" placeholder="请输入内容" />
+          <VkInput v-model="textareaValue2" type="textarea" placeholder="请输入内容" :rows="4" resize="none" />
+          <div class="demo-value">文本域内容：{{ textareaValue1 }}</div>
+        </VkSpace>
       </div>
     </div>
 
@@ -300,7 +321,7 @@ const submitForm = () => {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .input-demo {
   max-width: 1000px;
 }
@@ -356,14 +377,6 @@ const submitForm = () => {
   border: 1px solid #ebeef5;
   border-radius: 8px;
   margin-bottom: 16px;
-}
-
-.demo-block .vk-input {
-  margin-bottom: 16px;
-}
-
-.demo-block .vk-input:last-child {
-  margin-bottom: 0;
 }
 
 .demo-value {

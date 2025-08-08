@@ -11,7 +11,7 @@
       <p>支持三种类型：图片、图标和字符。</p>
       <div class="demo-block">
         <VkAvatar :size="50" src="https://picsum.photos/100/100?random=1" />
-        <VkAvatar :size="50" icon="user" />
+        <VkAvatar :size="50" icon="material-symbols:person" />
         <VkAvatar :size="50">用户</VkAvatar>
       </div>
     </div>
@@ -27,10 +27,10 @@
         <VkAvatar :size="30" src="https://picsum.photos/100/100?random=2" />
       </div>
       <div class="demo-block">
-        <VkAvatar :size="64" icon="user" />
-        <VkAvatar :size="50" icon="user" />
-        <VkAvatar :size="40" icon="user" />
-        <VkAvatar :size="30" icon="user" />
+        <VkAvatar :size="64" icon="material-symbols:person" />
+        <VkAvatar :size="50" icon="material-symbols:person" />
+        <VkAvatar :size="40" icon="material-symbols:person" />
+        <VkAvatar :size="30" icon="material-symbols:person" />
       </div>
       <div class="demo-block">
         <VkAvatar :size="64">大</VkAvatar>
@@ -49,8 +49,8 @@
         <VkAvatar shape="circle" :size="50" src="https://picsum.photos/100/100?random=3" />
       </div>
       <div class="demo-block">
-        <VkAvatar shape="square" :size="50" icon="user" />
-        <VkAvatar shape="circle" :size="50" icon="user" />
+        <VkAvatar shape="square" :size="50" icon="material-symbols:person" />
+        <VkAvatar shape="circle" :size="50" icon="material-symbols:person" />
       </div>
       <div class="demo-block">
         <VkAvatar shape="square" :size="50">方</VkAvatar>
@@ -65,11 +65,11 @@
       <div class="demo-block">
         <VkAvatar :size="50" src="invalid-url.jpg">
           <template #fallback>
-            <VkIcon name="user" />
+            <VkIcon icon="material-symbols:person" />
           </template>
         </VkAvatar>
         <VkAvatar :size="50" src="invalid-url.jpg">用户</VkAvatar>
-        <VkAvatar :size="50" src="invalid-url.jpg" icon="user" />
+        <VkAvatar :size="50" src="invalid-url.jpg" icon="material-symbols:person" />
       </div>
     </div>
 
@@ -97,7 +97,7 @@
       <h2>带状态的头像</h2>
       <p>在头像上显示在线状态或其他状态信息。</p>
       <div class="demo-block">
-        <div class="status-avatar" v-for="user in statusUsers" :key="user.id">
+        <div v-for="user in statusUsers" :key="user.id" class="status-avatar">
           <VkAvatar :size="50" :src="user.avatar">{{ user.name.charAt(0) }}</VkAvatar>
           <span class="status-dot" :class="user.status"></span>
         </div>
@@ -114,6 +114,7 @@
           :key="user.id"
           :size="50"
           :src="user.avatar"
+          clickable
           class="clickable-avatar"
           @click="handleAvatarClick(user)"
         >
@@ -170,7 +171,7 @@
           <VkAvatar :size="50" src="https://picsum.photos/100/100?random=11" />
         </VkBadge>
         <VkBadge :value="'99+'" :max="99" class="badge-avatar">
-          <VkAvatar :size="50" icon="user" />
+          <VkAvatar :size="50" icon="material-symbols:person" />
         </VkBadge>
       </div>
     </div>
@@ -239,7 +240,7 @@ const addClickLog = (message: string) => {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .avatar-demo {
   max-width: 1000px;
 }

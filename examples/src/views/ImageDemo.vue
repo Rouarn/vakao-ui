@@ -479,7 +479,7 @@ const addLog = (message) => {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .image-demo {
   padding: 20px;
   max-width: 1200px;

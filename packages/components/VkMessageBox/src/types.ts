@@ -1,5 +1,5 @@
 import type { PropType, CSSProperties } from "vue";
-import type { ExtractPublicPropTypes } from "../../../types";
+import type { ExtractPublicPropTypes } from "@/types";
 
 // MessageBox 类型
 export type MessageBoxType = "success" | "warning" | "error" | "info";

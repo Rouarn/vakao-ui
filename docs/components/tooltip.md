@@ -175,35 +175,131 @@ Tooltip 组件内置了两个主题：`dark` 和 `light`。
   </template>
 </Demo>
 
-## 高级扩展
+## 过渡动画
 
-除了这些基本设置外，还有一些属性可以让使用者更好的定制自己的效果。
+Tooltip 组件支持多种过渡动画效果，通过 `transition` 属性可以定制显隐的动画效果。
 
-`transition` 属性可以定制显隐的动画效果，默认为 `fade`。
+### 基础动画
 
 <Demo>
-  <vk-tooltip content="fade 动画" transition="fade">
+  <vk-tooltip content="基础淡入淡出" transition="fade">
     <vk-button>Fade</vk-button>
   </vk-tooltip>
-  <vk-tooltip content="zoom 动画" transition="zoom">
-    <vk-button>Zoom</vk-button>
+  <vk-tooltip content="淡入淡出 + 水平滑动" transition="fade-slide">
+    <vk-button>Fade Slide</vk-button>
   </vk-tooltip>
-  <vk-tooltip content="slide 动画" transition="slide">
-    <vk-button>Slide</vk-button>
+  <vk-tooltip content="淡入淡出 + 垂直滑动" transition="fade-bottom">
+    <vk-button>Fade Bottom</vk-button>
+  </vk-tooltip>
+  <vk-tooltip content="淡入淡出 + 缩放" transition="fade-scale">
+    <vk-button>Fade Scale</vk-button>
   </vk-tooltip>
   
   <template #code>
 
 ```vue
 <template>
-  <vk-tooltip content="fade 动画" transition="fade">
+  <vk-tooltip content="基础淡入淡出" transition="fade">
     <vk-button>Fade</vk-button>
   </vk-tooltip>
-  <vk-tooltip content="zoom 动画" transition="zoom">
-    <vk-button>Zoom</vk-button>
+  <vk-tooltip content="淡入淡出 + 水平滑动" transition="fade-slide">
+    <vk-button>Fade Slide</vk-button>
   </vk-tooltip>
-  <vk-tooltip content="slide 动画" transition="slide">
-    <vk-button>Slide</vk-button>
+  <vk-tooltip content="淡入淡出 + 垂直滑动" transition="fade-bottom">
+    <vk-button>Fade Bottom</vk-button>
+  </vk-tooltip>
+  <vk-tooltip content="淡入淡出 + 缩放" transition="fade-scale">
+    <vk-button>Fade Scale</vk-button>
+  </vk-tooltip>
+</template>
+```
+
+  </template>
+</Demo>
+
+### 缩放动画
+
+<Demo>
+  <vk-tooltip content="精细缩放淡入淡出" transition="zoom-fade">
+    <vk-button>Zoom Fade</vk-button>
+  </vk-tooltip>
+  <vk-tooltip content="缩放到零点" transition="zoom-out">
+    <vk-button>Zoom Out</vk-button>
+  </vk-tooltip>
+  
+  <template #code>
+
+```vue
+<template>
+  <vk-tooltip content="精细缩放淡入淡出" transition="zoom-fade">
+    <vk-button>Zoom Fade</vk-button>
+  </vk-tooltip>
+  <vk-tooltip content="缩放到零点" transition="zoom-out">
+    <vk-button>Zoom Out</vk-button>
+  </vk-tooltip>
+</template>
+```
+
+  </template>
+</Demo>
+
+### 滑动动画
+
+<Demo>
+  <vk-tooltip content="向上滑动" transition="slide-up">
+    <vk-button>Slide Up</vk-button>
+  </vk-tooltip>
+  <vk-tooltip content="向下滑动" transition="slide-down">
+    <vk-button>Slide Down</vk-button>
+  </vk-tooltip>
+  <vk-tooltip content="向左滑动" transition="slide-left">
+    <vk-button>Slide Left</vk-button>
+  </vk-tooltip>
+  <vk-tooltip content="向右滑动" transition="slide-right">
+    <vk-button>Slide Right</vk-button>
+  </vk-tooltip>
+  
+  <template #code>
+
+```vue
+<template>
+  <vk-tooltip content="向上滑动" transition="slide-up">
+    <vk-button>Slide Up</vk-button>
+  </vk-tooltip>
+  <vk-tooltip content="向下滑动" transition="slide-down">
+    <vk-button>Slide Down</vk-button>
+  </vk-tooltip>
+  <vk-tooltip content="向左滑动" transition="slide-left">
+    <vk-button>Slide Left</vk-button>
+  </vk-tooltip>
+  <vk-tooltip content="向右滑动" transition="slide-right">
+    <vk-button>Slide Right</vk-button>
+  </vk-tooltip>
+</template>
+```
+
+  </template>
+</Demo>
+
+### 特殊效果
+
+<Demo>
+  <vk-tooltip content="弹跳效果，适合重要提示" transition="bounce">
+    <vk-button>Bounce</vk-button>
+  </vk-tooltip>
+  <vk-tooltip content="弹性效果，愉悦的交互反馈" transition="elastic">
+    <vk-button>Elastic</vk-button>
+  </vk-tooltip>
+  
+  <template #code>
+
+```vue
+<template>
+  <vk-tooltip content="弹跳效果，适合重要提示" transition="bounce">
+    <vk-button>Bounce</vk-button>
+  </vk-tooltip>
+  <vk-tooltip content="弹性效果，愉悦的交互反馈" transition="elastic">
+    <vk-button>Elastic</vk-button>
   </vk-tooltip>
 </template>
 ```
@@ -354,7 +450,7 @@ const visible = ref(false);
 | hide-delay                | 隐藏延迟，单位毫秒                              | `number`                            | `200`    |
 | auto-close                | 自动关闭延迟，单位毫秒，设置为 0 表示不自动关闭 | `number`                            | `0`      |
 | offset                    | 出现位置的偏移量                                | `[number, number]`                  | `[0, 8]` |
-| transition                | 过渡动画                                        | `fade \| zoom \| slide`             | `fade`   |
+| transition                | 过渡动画                                        | `TooltipTransition`                 | `fade`   |
 | append-to                 | Tooltip 挂载的容器                              | `string \| HTMLElement`             | `body`   |
 | popper-class              | 为 Tooltip 的 popper 添加类名                   | `string`                            | —        |
 | popper-style              | 为 Tooltip 的 popper 添加样式                   | `string \| CSSProperties`           | —        |
@@ -395,6 +491,42 @@ const visible = ref(false);
 
 ### 类型定义
 
+#### TooltipPlacement 位置类型
+
+| 值             | 说明       | 位置示意 |
+| -------------- | ---------- | -------- |
+| `top`          | 顶部居中   | ⬆️       |
+| `top-start`    | 顶部左对齐 | ↖️       |
+| `top-end`      | 顶部右对齐 | ↗️       |
+| `bottom`       | 底部居中   | ⬇️       |
+| `bottom-start` | 底部左对齐 | ↙️       |
+| `bottom-end`   | 底部右对齐 | ↘️       |
+| `left`         | 左侧居中   | ⬅️       |
+| `left-start`   | 左侧上对齐 | ↖️       |
+| `left-end`     | 左侧下对齐 | ↙️       |
+| `right`        | 右侧居中   | ➡️       |
+| `right-start`  | 右侧上对齐 | ↗️       |
+| `right-end`    | 右侧下对齐 | ↘️       |
+
+#### TooltipTransition 动画类型
+
+| 值            | 说明                    | 动画效果               |
+| ------------- | ----------------------- | ---------------------- |
+| `fade`        | 基础淡入淡出效果        | 💫 透明度变化          |
+| `fade-slide`  | 淡入淡出 + 水平滑动效果 | 💫↔️ 透明度 + 水平移动 |
+| `fade-bottom` | 淡入淡出 + 垂直滑动效果 | 💫↕️ 透明度 + 垂直移动 |
+| `fade-scale`  | 淡入淡出 + 缩放效果     | 💫🔍 透明度 + 缩放     |
+| `zoom-fade`   | 精细缩放淡入淡出效果    | 🔍💫 精细缩放 + 透明度 |
+| `zoom-out`    | 缩放到零点效果          | 🔍➡️⚫ 缩放至消失      |
+| `slide-up`    | 向上滑动效果            | ⬆️ 向上移动            |
+| `slide-down`  | 向下滑动效果            | ⬇️ 向下移动            |
+| `slide-left`  | 向左滑动效果            | ⬅️ 向左移动            |
+| `slide-right` | 向右滑动效果            | ➡️ 向右移动            |
+| `bounce`      | 弹跳效果                | 🏀 弹性动画            |
+| `elastic`     | 弹性效果                | 🎯 弹性回弹            |
+
+#### TypeScript 类型定义
+
 ```typescript
 type TooltipPlacement =
   | "top"
@@ -409,6 +541,20 @@ type TooltipPlacement =
   | "right"
   | "right-start"
   | "right-end";
+
+type TooltipTransition =
+  | "fade"
+  | "fade-slide"
+  | "fade-bottom"
+  | "fade-scale"
+  | "zoom-fade"
+  | "zoom-out"
+  | "slide-up"
+  | "slide-down"
+  | "slide-left"
+  | "slide-right"
+  | "bounce"
+  | "elastic";
 ```
 
 <script setup>

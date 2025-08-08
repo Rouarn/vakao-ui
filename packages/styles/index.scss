@@ -1,9 +1,12 @@
 // 导入变量和混合器
-@use './variables.scss' as *;
-@use './mixins.scss' as *;
+@use "./variables.scss" as *;
+@use "./mixins.scss" as *;
 
 // 导入基础样式
-@use './base.scss';
+@use "./base.scss";
+
+// 导入过渡动画样式
+@use "./transition.scss";
 
 // 导入组件样式
-@use './components.scss';
+@use "./components.scss";

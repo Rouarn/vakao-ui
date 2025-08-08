@@ -116,7 +116,7 @@ export interface VkIconProps {
   customStyle?: string | Record<string, CSSStyleValue>;
 }
 
-import type { ComponentSize } from "../../../types";
+import type { ComponentSize } from "@/types";
 
 /**
  * 图标尺寸预设类型

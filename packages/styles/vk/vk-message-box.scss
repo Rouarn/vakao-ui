@@ -1,163 +1,235 @@
-// VkMessageBox 组件样式
-.vk-message-box__wrapper {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: var(--vk-mask-color);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: var(--vk-z-index-modal);
-  padding: var(--vk-spacing-5);
-}
+/**
+ * VkMessageBox 消息框组件样式
+ *
+ * 提供完整的消息框组件样式，包括基础样式、类型变体、状态样式、动画效果等。
+ * 支持多种类型（success、warning、error、info）、确认对话框、提示对话框、
+ * 输入对话框、自定义内容、可关闭功能、响应式设计、动画过渡等功能。
+ */
 
+// VkMessageBox 组件样式
 .vk-message-box {
-  background: var(--vk-bg-color);
+  // 主体容器
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--vk-bg-color);
   border: 1px solid var(--vk-border-color-light);
-  border-radius: var(--vk-border-radius-lg);
-  box-shadow: var(--vk-box-shadow-lg);
+  border-radius: var(--vk-border-radius-large);
+  box-shadow: var(--vk-box-shadow-large);
   min-width: 420px;
   max-width: 500px;
   overflow: hidden;
-}
-
-.vk-message-box__header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: var(--vk-spacing-6) var(--vk-spacing-6) 0;
-}
-
-.vk-message-box__title {
-  display: flex;
-  align-items: center;
-  font-size: var(--vk-font-size-lg);
-  font-weight: 600;
+  box-sizing: border-box;
   color: var(--vk-text-color-primary);
-}
-
-.vk-message-box__icon {
-  margin-right: var(--vk-spacing-3);
-  font-size: var(--vk-font-size-xl);
-  width: var(--vk-size-sm);
-  height: var(--vk-size-sm);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  &--success {
-    color: var(--vk-color-success);
-  }
-
-  &--warning {
-    color: var(--vk-color-warning);
-  }
-
-  &--error {
-    color: var(--vk-color-danger);
-  }
-
-  &--info {
-    color: var(--vk-color-info);
-  }
-}
-
-.vk-message-box__close {
-  background: none;
-  border: none;
-  font-size: var(--vk-font-size-xl);
-  color: var(--vk-text-color-secondary);
-  cursor: pointer;
-  padding: var(--vk-spacing-1);
-  width: var(--vk-size-md);
-  height: var(--vk-size-md);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: var(--vk-border-radius-sm);
   transition: all var(--vk-transition-duration-base);
 
-  &:hover {
-    background: var(--vk-fill-color-light);
+  // 遮罩层
+  &__wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--vk-mask-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: var(--vk-z-index-modal);
+    padding: var(--vk-spacing-5);
+    box-sizing: border-box;
+  }
+
+  // 头部
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--vk-spacing-6) var(--vk-spacing-6) 0;
+    box-sizing: border-box;
+  }
+
+  // 标题
+  &__title {
+    display: flex;
+    align-items: center;
+    font-size: var(--vk-font-size-large);
+    font-weight: 600;
     color: var(--vk-text-color-primary);
+    line-height: var(--vk-line-height-base);
+    margin: 0;
   }
-}
 
-.vk-message-box__content {
-  padding: var(--vk-spacing-4) var(--vk-spacing-6);
-}
+  // 图标
+  &__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: var(--vk-spacing-3);
+    font-size: var(--vk-font-size-extra-large);
+    width: var(--vk-size-small);
+    height: var(--vk-size-small);
+    flex-shrink: 0;
 
-.vk-message-box__message {
-  font-size: var(--vk-font-size-base);
-  color: var(--vk-text-color-secondary);
-  line-height: var(--vk-line-height-base);
-  margin: 0;
-}
+    // 类型变体
+    &--success {
+      color: var(--vk-color-success);
+    }
 
-.vk-message-box__input {
-  margin: var(--vk-spacing-4) 0 0;
-}
+    &--warning {
+      color: var(--vk-color-warning);
+    }
 
-.vk-message-box__error-message {
-  color: var(--vk-color-danger);
-  font-size: var(--vk-font-size-sm);
-  margin-top: var(--vk-spacing-2);
-}
+    &--error {
+      color: var(--vk-color-danger);
+    }
 
-.vk-message-box__footer {
-  padding: var(--vk-spacing-4) var(--vk-spacing-6) var(--vk-spacing-6);
-  display: flex;
-  justify-content: flex-end;
-  gap: var(--vk-spacing-3);
-}
+    &--info {
+      color: var(--vk-color-info);
+    }
+  }
 
-/* 动画 */
-.vk-message-box-fade-enter-active {
-  transition: all var(--vk-transition-duration-base);
-}
+  // 关闭按钮
+  &__close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    font-size: var(--vk-font-size-extra-large);
+    color: var(--vk-text-color-secondary);
+    cursor: pointer;
+    padding: var(--vk-spacing-1);
+    width: var(--vk-size-medium);
+    height: var(--vk-size-medium);
+    border-radius: var(--vk-border-radius-small);
+    transition: all var(--vk-transition-duration-base);
+    box-sizing: border-box;
+    flex-shrink: 0;
 
-.vk-message-box-fade-leave-active {
-  transition: all var(--vk-transition-duration-fast);
-}
+    &:hover {
+      background-color: var(--vk-fill-color-light);
+      color: var(--vk-text-color-primary);
+    }
 
-.vk-message-box-fade-enter-active .vk-message-box {
-  transition: all var(--vk-transition-duration-base);
-}
+    &:focus-visible {
+      outline: 2px solid var(--vk-color-primary);
+      outline-offset: 2px;
+    }
+  }
 
-.vk-message-box-fade-leave-active .vk-message-box {
-  transition: all var(--vk-transition-duration-fast);
-}
+  // 内容区域
+  &__content {
+    flex: 1;
+    padding: var(--vk-spacing-4) var(--vk-spacing-6);
+    box-sizing: border-box;
+  }
 
-.vk-message-box-fade-enter-from,
-.vk-message-box-fade-leave-to {
-  opacity: 0;
-}
+  // 消息文本
+  &__message {
+    font-size: var(--vk-font-size-base);
+    color: var(--vk-text-color-secondary);
+    line-height: var(--vk-line-height-base);
+    margin: 0;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 
-.vk-message-box-fade-enter-from .vk-message-box {
-  transform: scale(0.95);
-  opacity: 0;
-}
+    // 处理长文本
+    p {
+      margin: 0 0 var(--vk-spacing-3) 0;
 
-.vk-message-box-fade-leave-to .vk-message-box {
-  transform: scale(0.98);
-  opacity: 0;
-}
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
 
-/* 响应式设计 */
-@media (max-width: 480px) {
-  .vk-message-box {
+  // 输入框容器
+  &__input {
+    margin: var(--vk-spacing-4) 0 0;
+  }
+
+  // 错误消息
+  &__error-message {
+    color: var(--vk-color-danger);
+    font-size: var(--vk-font-size-small);
+    margin-top: var(--vk-spacing-2);
+    line-height: var(--vk-line-height-base);
+  }
+
+  // 底部操作区
+  &__footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--vk-spacing-3);
+    padding: var(--vk-spacing-4) var(--vk-spacing-6) var(--vk-spacing-6);
+    box-sizing: border-box;
+
+    // 按钮组样式
+    .vk-button + .vk-button {
+      margin-left: 0; // gap 已经处理间距
+    }
+  }
+
+  // 响应式设计
+  @media (max-width: 480px) {
     min-width: auto;
     width: 100%;
     max-width: 90vw;
     margin: 0 var(--vk-spacing-5);
+
+    &__header,
+    &__content,
+    &__footer {
+      padding-left: var(--vk-spacing-5);
+      padding-right: var(--vk-spacing-5);
+    }
+
+    &__footer {
+      flex-direction: column;
+      align-items: stretch;
+
+      .vk-button {
+        width: 100%;
+        margin-bottom: var(--vk-spacing-2);
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
   }
 
-  .vk-message-box__header,
-  .vk-message-box__content,
-  .vk-message-box__footer {
-    padding-left: var(--vk-spacing-5);
-    padding-right: var(--vk-spacing-5);
+  // 暗色主题支持
+  @media (prefers-color-scheme: dark) {
+    border-color: var(--vk-border-color-darker);
+  }
+
+  // 高对比度模式支持
+  @media (prefers-contrast: high) {
+    border-width: 2px;
+
+    &__close:focus-visible {
+      outline-width: 3px;
+    }
+  }
+
+  // 减少动画模式支持
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+
+    &-fade-enter-active,
+    &-fade-leave-active {
+      transition: none;
+
+      .vk-message-box {
+        transition: none;
+      }
+    }
+
+    &-fade-enter-from .vk-message-box,
+    &-fade-leave-to .vk-message-box {
+      transform: none;
+    }
   }
 }

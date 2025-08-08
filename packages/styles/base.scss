@@ -167,26 +167,22 @@
 
   /* 字体相关 */
   --vk-font-family: #{$font-family};
-  --vk-font-size-xs: #{$font-size-xs};
-  --vk-font-size-sm: #{$font-size-sm};
-  --vk-font-size-base: #{$font-size-base};
-  --vk-font-size-lg: #{$font-size-lg};
-  --vk-font-size-xl: #{$font-size-xl};
-  --vk-font-size-2xl: #{$font-size-2xl};
-  --vk-font-size-3xl: #{$font-size-3xl};
-  --vk-font-size-extra-large: #{$font-size-extra-large};
-  --vk-font-size-large: #{$font-size-large};
-  --vk-font-size-medium: #{$font-size-medium};
-  --vk-font-size-small: #{$font-size-small};
   --vk-font-size-extra-small: #{$font-size-extra-small};
+  --vk-font-size-small: #{$font-size-small};
+  --vk-font-size-base: #{$font-size-base};
+  --vk-font-size-medium: #{$font-size-medium};
+  --vk-font-size-large: #{$font-size-large};
+  --vk-font-size-extra-large: #{$font-size-extra-large};
+  --vk-font-size-huge: #{$font-size-huge};
 
   /* 行高 */
   --vk-line-height-base: #{$line-height-base};
-  --vk-line-height-sm: #{$line-height-sm};
+  --vk-line-height-small: #{$line-height-small};
   --vk-line-height-tight: #{$line-height-tight};
   --vk-line-height-normal: #{$line-height-normal};
   --vk-line-height-relaxed: #{$line-height-relaxed};
   --vk-line-height-loose: #{$line-height-loose};
+  --vk-line-height-large: #{$line-height-large};
 
   /* 间距 */
   --vk-spacing-0: #{$spacing-0};
@@ -202,42 +198,36 @@
   --vk-spacing-16: #{$spacing-16};
 
   /* 组件尺寸 */
-  --vk-size-xxs: #{$size-xxs};
-  --vk-size-xs: #{$size-xs};
-  --vk-size-sm: #{$size-sm};
+  --vk-size-extra-extra-small: #{$size-extra-extra-small};
+  --vk-size-extra-small: #{$size-extra-small};
+  --vk-size-small: #{$size-small};
   --vk-size-base: #{$size-base};
-  --vk-size-md: #{$size-md};
-  --vk-size-lg: #{$size-lg};
-  --vk-size-xl: #{$size-xl};
-  --vk-size-2xl: #{$size-2xl};
-  --vk-size-3xl: #{$size-3xl};
-  --vk-size-4xl: #{$size-4xl};
-  --vk-component-size-small: #{$component-size-small};
-  --vk-component-size-base: #{$component-size-base};
-  --vk-component-size-large: #{$component-size-large};
-
+  --vk-size-medium: #{$size-medium};
+  --vk-size-large: #{$size-large};
+  --vk-size-extra-large: #{$size-extra-large};
+  --vk-size-extra-extra-large: #{$size-extra-extra-large};
+  --vk-size-huge: #{$size-huge};
+  --vk-size-extra-huge: #{$size-extra-huge};
   /* 边框圆角 */
   --vk-border-radius-none: #{$border-radius-none};
-  --vk-border-radius-sm: #{$border-radius-sm};
+  --vk-border-radius-small: #{$border-radius-small};
   --vk-border-radius-base: #{$border-radius-base};
-  --vk-border-radius-md: #{$border-radius-md};
-  --vk-border-radius-lg: #{$border-radius-lg};
-  --vk-border-radius-xl: #{$border-radius-xl};
-  --vk-border-radius-2xl: #{$border-radius-2xl};
+  --vk-border-radius-medium: #{$border-radius-medium};
+  --vk-border-radius-large: #{$border-radius-large};
+  --vk-border-radius-extra-large: #{$border-radius-extra-large};
+  --vk-border-radius-extra-extra-large: #{$border-radius-extra-extra-large};
   --vk-border-radius-full: #{$border-radius-full};
   --vk-border-radius-circle: #{$border-radius-circle};
-  --vk-border-radius-small: #{$border-radius-small};
-  --vk-border-radius-large: #{$border-radius-large};
   --vk-border-radius-round: #{$border-radius-round};
 
   /* 阴影 */
   --vk-box-shadow-light: #{$box-shadow-light};
   --vk-box-shadow-base: #{$box-shadow-base};
   --vk-box-shadow-dark: #{$box-shadow-dark};
-  --vk-box-shadow-sm: #{$box-shadow-sm};
-  --vk-box-shadow-md: #{$box-shadow-md};
-  --vk-box-shadow-lg: #{$box-shadow-lg};
-  --vk-box-shadow-xl: #{$box-shadow-xl};
+  --vk-box-shadow-small: #{$box-shadow-small};
+  --vk-box-shadow-medium: #{$box-shadow-medium};
+  --vk-box-shadow-large: #{$box-shadow-large};
+  --vk-box-shadow-extra-large: #{$box-shadow-extra-large};
   --vk-box-shadow-inner: #{$box-shadow-inner};
 
   /* 过渡 */
@@ -257,10 +247,10 @@
   --vk-transition-timing-function-ease-in-out: #{$transition-timing-function-ease-in-out};
 
   /* 断点 */
-  --vk-breakpoint-sm: #{$sm};
-  --vk-breakpoint-md: #{$md};
-  --vk-breakpoint-lg: #{$lg};
-  --vk-breakpoint-xl: #{$xl};
+  --vk-breakpoint-small: #{$small};
+  --vk-breakpoint-medium: #{$medium};
+  --vk-breakpoint-large: #{$large};
+  --vk-breakpoint-extra-large: #{$extra-large};
 
   /* Z-index层级 */
   --vk-z-index-normal: #{$z-index-normal};
@@ -276,15 +266,6 @@
 
   /* 遮罩颜色 */
   --vk-mask-color: #{$mask-color};
-
-  /* Tag组件相关颜色 */
-  --vk-tag-default-color: #{$tag-default-color};
-  --vk-tag-default-border: #{$tag-default-border};
-  --vk-tag-primary-border: #{$tag-primary-border};
-  --vk-tag-success-border: #{$tag-success-border};
-  --vk-tag-warning-border: #{$tag-warning-border};
-  --vk-tag-danger-border: #{$tag-danger-border};
-  --vk-tag-info-border: #{$tag-info-border};
 }
 
 /* 全局样式 */
@@ -300,15 +281,4 @@ html {
   background-color: var(--vk-bg-color-page);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-/* 通用过渡效果 */
-.vk-fade-enter-active,
-.vk-fade-leave-active {
-  transition: opacity var(--vk-transition-duration) var(--vk-transition-timing-function);
-}
-
-.vk-fade-enter-from,
-.vk-fade-leave-to {
-  opacity: 0;
 }

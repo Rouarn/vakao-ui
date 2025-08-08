@@ -1,8 +1,8 @@
 // 自动生成的颜色变量文件
 // 请勿手动修改，运行 pnpm run generate:colors 重新生成
 
-@use "sass:color";
-@use "sass:map";
+@use 'sass:color';
+@use 'sass:map';
 
 // 基础颜色
 $color-white: #ffffff;
@@ -153,30 +153,22 @@ $fill-color-darker: #e4e7ed;
 $fill-color-blank: #ffffff;
 
 // 字体相关
-$font-family:
-  -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
-  "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-$font-size-xs: 12px;
-$font-size-sm: 13px;
-$font-size-base: 14px;
-$font-size-lg: 16px;
-$font-size-xl: 18px;
-$font-size-2xl: 20px;
-$font-size-3xl: 24px;
-$font-size-extra-large: 20px;
-$font-size-large: 18px;
-$font-size-medium: 16px;
-$font-size-small: 12px;
+$font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 $font-size-extra-small: 12px;
+$font-size-small: 13px;
+$font-size-base: 14px;
+$font-size-medium: 16px;
+$font-size-large: 18px;
+$font-size-extra-large: 20px;
+$font-size-huge: 24px;
 
 // 行高
 $line-height-base: 1.5;
-$line-height-sm: 1.25;
+$line-height-small: 1.25;
 $line-height-tight: 1.25;
 $line-height-normal: 1.5;
 $line-height-relaxed: 1.75;
 $line-height-loose: 2;
-$line-height-small: 1.4;
 $line-height-large: 1.6;
 
 // 间距相关变量
@@ -197,52 +189,39 @@ $spacing-base: 12px;
 $spacing-large: 16px;
 
 // 组件尺寸相关变量
-$size-xxs: 20px;
-$size-xs: 24px;
-$size-sm: 28px;
-$size-base: 32px;
-$size-md: 36px;
-$size-lg: 40px;
-$size-xl: 48px;
-$size-2xl: 56px;
-$size-3xl: 64px;
-$size-4xl: 72px;
-$component-size-small: 28px;
-$component-size-base: 32px;
-$component-size-large: 40px;
+$size-extra-extra-small: 16px;
+$size-extra-small: 20px;
+$size-small: 24px;
+$size-base: 28px;
+$size-medium: 32px;
+$size-large: 36px;
+$size-extra-large: 40px;
+$size-extra-extra-large: 48px;
+$size-huge: 56px;
+$size-extra-huge: 64px;
 
 // 圆角
 $border-radius-none: 0;
-$border-radius-sm: 2px;
+$border-radius-small: 2px;
 $border-radius-base: 4px;
-$border-radius-md: 6px;
-$border-radius-lg: 8px;
-$border-radius-xl: 12px;
-$border-radius-2xl: 16px;
+$border-radius-medium: 6px;
+$border-radius-large: 8px;
+$border-radius-extra-large: 12px;
+$border-radius-extra-extra-large: 16px;
 $border-radius-full: 9999px;
 $border-radius-circle: 50%;
-$border-radius-small: 2px;
-$border-radius-large: 8px;
-
 $border-radius-round: 20px;
 
 // 阴影
 $box-shadow-light: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
-$box-shadow-base:
-  0 2px 4px rgba(0, 0, 0, 0.12),
-  0 0 6px rgba(0, 0, 0, 0.04);
+$box-shadow-base: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
 $box-shadow-dark: 0 2px 16px 0 rgba(0, 0, 0, 0.18);
-$box-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-$box-shadow-md:
-  0 4px 6px -1px rgba(0, 0, 0, 0.1),
-  0 2px 4px -1px rgba(0, 0, 0, 0.06);
-$box-shadow-lg:
-  0 10px 15px -3px rgba(0, 0, 0, 0.1),
-  0 4px 6px -2px rgba(0, 0, 0, 0.05);
-$box-shadow-xl:
-  0 20px 25px -5px rgba(0, 0, 0, 0.1),
-  0 10px 10px -5px rgba(0, 0, 0, 0.04);
+$box-shadow-small: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+$box-shadow-medium: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+$box-shadow-large: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+$box-shadow-extra-large: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 $box-shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+
 
 // 过渡动画
 $transition-duration: 0.3s;
@@ -261,10 +240,10 @@ $transition-timing-function-ease-out: cubic-bezier(0, 0, 0.2, 1);
 $transition-timing-function-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
 
 // 断点
-$sm: 768px;
-$md: 992px;
-$lg: 1200px;
-$xl: 1920px;
+$small: 768px;
+$medium: 992px;
+$large: 1200px;
+$extra-large: 1920px;
 
 // z-index
 $z-index-normal: 1;
@@ -281,11 +260,3 @@ $z-index-tooltip: 1070;
 // mask color
 $mask-color: rgba(0, 0, 0, 0.5);
 
-// Tag组件相关颜色
-$tag-default-color: #909399;
-$tag-default-border: #e9e9eb;
-$tag-primary-border: #b3d8ff;
-$tag-success-border: #c2e7b0;
-$tag-warning-border: #f5dab1;
-$tag-danger-border: #fbc4c4;
-$tag-info-border: #d3d4d6;

@@ -1,12 +1,19 @@
-@use "../base.scss" as *;
-@use "../mixins.scss" as *;
+/**
+ * VkCard 卡片组件样式
+ *
+ * 提供完整的卡片组件样式，包括基础样式、尺寸变体、阴影效果、悬停效果等。
+ * 支持多种尺寸（tiny、small、medium、large）、多种阴影模式（always、hover、never）、
+ * 边框样式、悬停效果，以及响应式设计和无障碍性支持。
+ * 包含卡片头部、主体、底部的完整布局结构。
+ */
 
+// VkCard 组件样式
 .vk-card {
   position: relative;
   display: flex;
   flex-direction: column;
   background-color: var(--vk-bg-color);
-  border-radius: var(--vk-border-radius-base);
+  border-radius: var(--vk-border-radius-large);
   overflow: hidden;
   color: var(--vk-text-color-primary);
   transition: all var(--vk-transition-duration-base);
@@ -45,12 +52,12 @@
   &--size-tiny {
     .vk-card__header {
       padding: var(--vk-spacing-2) var(--vk-spacing-3);
-      font-size: var(--vk-font-size-sm);
+      font-size: var(--vk-font-size-small);
     }
 
     .vk-card__body {
       padding: var(--vk-spacing-2) var(--vk-spacing-3);
-      font-size: var(--vk-font-size-sm);
+      font-size: var(--vk-font-size-small);
     }
 
     .vk-card__footer {
@@ -77,7 +84,7 @@
   &--size-medium {
     .vk-card__header {
       padding: var(--vk-spacing-4) var(--vk-spacing-5);
-      font-size: var(--vk-font-size-lg);
+      font-size: var(--vk-font-size-large);
     }
 
     .vk-card__body {
@@ -93,12 +100,12 @@
   &--size-large {
     .vk-card__header {
       padding: var(--vk-spacing-5) var(--vk-spacing-6);
-      font-size: var(--vk-font-size-xl);
+      font-size: var(--vk-font-size-extra-large);
     }
 
     .vk-card__body {
       padding: var(--vk-spacing-5) var(--vk-spacing-6);
-      font-size: var(--vk-font-size-lg);
+      font-size: var(--vk-font-size-large);
     }
 
     .vk-card__footer {
@@ -146,7 +153,8 @@
     }
 
     // 处理列表
-    ul, ol {
+    ul,
+    ol {
       margin: 0 0 var(--vk-spacing-3) 0;
       padding-left: var(--vk-spacing-5);
 
@@ -156,7 +164,12 @@
     }
 
     // 处理标题
-    h1, h2, h3, h4, h5, h6 {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
       margin: 0 0 var(--vk-spacing-3) 0;
       color: var(--vk-text-color-primary);
 
@@ -188,7 +201,7 @@
   }
 
   // 响应式设计
-  @media (max-width: 768px) {
+  @media (max-width: #{--vk-breakpoint-small}) {
     &--size-large {
       .vk-card__header,
       .vk-card__body,
