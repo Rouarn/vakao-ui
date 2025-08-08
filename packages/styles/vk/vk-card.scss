@@ -191,7 +191,7 @@
   }
 
   // 响应式设计
-  @media (max-width: 768px) {
+  @media (max-width: #{--vk-breakpoint-small}) {
     &--size-large {
       .vk-card__header,
       .vk-card__body,

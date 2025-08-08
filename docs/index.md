@@ -5,6 +5,9 @@ hero:
   name: "Vakao UI"
   text: "现代化的 Vue 3 组件库"
   tagline: "基于 Vue 3 和 TypeScript 构建的高质量组件库，提供完整的类型支持和优秀的开发体验"
+  image:
+    src: /logo.svg
+    alt: Vakao UI Logo
   actions:
     - theme: brand
       text: 快速开始

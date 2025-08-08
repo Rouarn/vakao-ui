@@ -30,8 +30,8 @@
 
     .vk-switch__button {
       position: absolute;
-      top: 1px;
-      left: 1px;
+      top: var(--vk-spacing-0);
+      left: var(--vk-spacing-0);
       border-radius: var(--vk-border-radius-full);
       transition: all var(--vk-transition-duration-base) var(--vk-transition-timing-function);
       width: var(--vk-size-extra-extra-small);
@@ -46,7 +46,7 @@
   // 开关文本
   &__label {
     transition: color var(--vk-transition-duration-base) var(--vk-transition-timing-function);
-    height: 20px;
+    height: var(--vk-size-small);
     display: inline-block;
     font-size: var(--vk-font-size-base);
     font-weight: 500;
@@ -74,7 +74,7 @@
       background-color: var(--vk-color-primary);
 
       .vk-switch__button {
-        transform: translateX(20px);
+        transform: translateX(var(--vk-size-small));
       }
     }
   }
@@ -111,7 +111,7 @@
     &.is-checked {
       .vk-switch__core {
         .vk-switch__button {
-          transform: translateX(26px);
+          transform: translateX(var(--vk-size-medium));
         }
       }
 

@@ -408,6 +408,11 @@ Select 组件提供除了默认值以外的三种尺寸，可以在不同场景�
 
 <Demo>
   <div style="display: flex; flex-direction: column; gap: 16px; width: 100%;">
+  <vk-select v-model="value7" size="tiny" placeholder="小尺寸">
+    <vk-option label="选项一" value="option1" />
+    <vk-option label="选项二" value="option2" />
+    <vk-option label="选项三" value="option3" />
+  </vk-select>
     <vk-select v-model="value7" size="small" placeholder="小尺寸">
       <vk-option label="选项一" value="option1" />
       <vk-option label="选项二" value="option2" />

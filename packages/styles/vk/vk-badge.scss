@@ -2,8 +2,8 @@
 .vk-badge-fade-enter-active,
 .vk-badge-fade-leave-active {
   transition:
-    opacity 0.3s,
-    transform 0.3s;
+    opacity var(--vk-transition-duration),
+    transform var(--vk-transition-duration);
 }
 
 .vk-badge-fade-enter-from,

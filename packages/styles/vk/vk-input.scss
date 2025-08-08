@@ -33,7 +33,7 @@
       color: var(--vk-text-color-regular);
       font-size: inherit;
       line-height: inherit;
-      padding: 8px 12px;
+      padding: var(--vk-spacing-2) var(--vk-spacing-3);
 
       &::placeholder {
         color: var(--vk-text-color-placeholder);
