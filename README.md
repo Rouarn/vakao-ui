@@ -386,42 +386,42 @@ pnpm publish:sync:dry-run
 │   └── workflows        # GitHub Actions 工作流
 ├── .vscode              # VS Code 配置
 ├── docs                 # 文档目录
-│   ├── .vitepress      # VitePress 配置
-│   ├── components      # 组件文档
-│   ├── guide           # 指南文档
-│   ├── hooks           # Hooks 文档
-│   ├── utils           # 工具函数文档
-│   └── public          # 静态资源
+│   ├── .vitepress       # VitePress 配置
+│   ├── components       # 组件文档
+│   ├── guide            # 指南文档
+│   ├── hooks            # Hooks 文档
+│   ├── utils            # 工具函数文档
+│   └── public           # 静态资源
 ├── examples             # 示例项目
-│   ├── src             # 示例源码
-│   ├── public          # 示例静态资源
-│   └── package.json    # 示例项目配置
+│   ├── src              # 示例源码
+│   ├── public           # 示例静态资源
+│   └── package.json     # 示例项目配置
 ├── packages             # 组件库源码
-│   ├── components      # 组件目录
-│   ├── hooks           # 组合式 API
-│   ├── styles          # 样式文件
-│   ├── types           # 类型定义
-│   ├── utils           # 工具函数
-│   └── package.json    # 主包配置
+│   ├── components       # 组件目录
+│   ├── hooks            # 组合式 API
+│   ├── styles           # 样式文件
+│   ├── types            # 类型定义
+│   ├── utils            # 工具函数
+│   └── package.json     # 主包配置
 ├── public               # 公共静态资源
 ├── scripts              # 构建和发布脚本
-│   ├── core            # 核心发布引擎
-│   ├── deps            # 依赖管理脚本
-│   ├── docs            # 文档和说明
-│   ├── extensions      # 扩展功能
-│   ├── utils           # 工具函数
-│   └── publish.js      # 命令行发布脚本
+│   ├── core             # 核心发布引擎
+│   ├── deps             # 依赖管理脚本
+│   ├── docs             # 文档和说明
+│   ├── extensions       # 扩展功能
+│   ├── utils            # 工具函数
+│   └── publish.js       # 命令行发布脚本
 ├── .env.example         # 环境变量示例
-├── .gitignore          # Git 忽略文件
-├── .npmrc              # npm 配置
-├── .prettierrc         # Prettier 配置
-├── eslint.config.js    # ESLint 配置
-├── package.json        # 项目配置
-├── pnpm-lock.yaml      # 依赖锁定文件
-├── pnpm-workspace.yaml # pnpm 工作空间配置
-├── resolver.ts         # 组件解析器
-├── tsconfig.json       # TypeScript 配置
-└── LICENSE             # 许可证文件
+├── .gitignore           # Git 忽略文件
+├── .npmrc               # npm 配置
+├── .prettierrc          # Prettier 配置
+├── eslint.config.js     # ESLint 配置
+├── package.json         # 项目配置
+├── pnpm-lock.yaml       # 依赖锁定文件
+├── pnpm-workspace.yaml  # pnpm 工作空间配置
+├── resolver.ts          # 组件解析器
+├── tsconfig.json        # TypeScript 配置
+└── LICENSE              # 许可证文件
 ```
 
 ## 许可证
