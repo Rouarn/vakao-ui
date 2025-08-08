@@ -1,4 +1,4 @@
-/**
+/** 
  * VkSwitch 开关组件样式
  *
  * 提供完整的开关组件样式，包括基础样式、尺寸变体、状态样式、动画效果等。
@@ -195,7 +195,7 @@
   &__action {
     position: absolute;
     top: 50%;
-    left: 2px;
+    left: -1px;
     width: var(--vk-size-extra-small);
     height: var(--vk-size-extra-small);
     border-radius: var(--vk-border-radius-full);
@@ -209,7 +209,7 @@
   // 选中状态下的开关按钮位置
   &.is-checked {
     .vk-switch__action {
-      transform: translateY(-50%) translateX(20px);
+      transform: translateY(-50%) translateX(21px);
     }
   }
 

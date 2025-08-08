@@ -8,6 +8,21 @@
 
 // VkMessageBox 组件样式
 .vk-message-box {
+  // 主体容器
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--vk-bg-color);
+  border: 1px solid var(--vk-border-color-light);
+  border-radius: var(--vk-border-radius-large);
+  box-shadow: var(--vk-box-shadow-large);
+  min-width: 420px;
+  max-width: 500px;
+  overflow: hidden;
+  box-sizing: border-box;
+  color: var(--vk-text-color-primary);
+  transition: all var(--vk-transition-duration-base);
+
   // 遮罩层
   &__wrapper {
     position: fixed;
@@ -23,21 +38,6 @@
     padding: var(--vk-spacing-5);
     box-sizing: border-box;
   }
-
-  // 主体容器
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  background-color: var(--vk-bg-color);
-  border: 1px solid var(--vk-border-color-light);
-  border-radius: var(--vk-border-radius-large);
-  box-shadow: var(--vk-box-shadow-large);
-  min-width: 420px;
-  max-width: 500px;
-  overflow: hidden;
-  box-sizing: border-box;
-  color: var(--vk-text-color-primary);
-  transition: all var(--vk-transition-duration-base);
 
   // 头部
   &__header {
