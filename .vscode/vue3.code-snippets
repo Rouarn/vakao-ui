@@ -1,0 +1,68 @@
+{
+  "Print soy Vue3 SFC page": {
+    "scope": "vue",
+    "prefix": ["v3", "page", "view"],
+    "body": [
+      "<template>",
+      "  <div class=\"\">",
+      "    $1",
+      "  </div>",
+      "</template>\n",
+      
+      "<script lang=\"ts\">",
+      "import { defineComponent, computed, useAttrs } from \"vue\";",
+      "import type { CSSProperties } from \"vue\";",
+      
+      "export default defineComponent({",
+      "  name: \"组件名\",",
+      "  components: {},",
+      "  inheritAttrs: false,",
+      "  props: {},",
+      "  emits: {},",
+      "  setup(props, { emit }) {",
+      "    const attrs = useAttrs();",
+      "    ",
+      "    const handleEvent = (e: Event) => {",
+      "      emit('event', e);",
+      "    };",
+      "    ",
+      "    return {",
+      "      handleEvent,",
+      "      $2",
+      "    };",
+      "  },",
+      "});",
+      "</script>\n",
+    ],
+  },
+
+  "Print soy Vue3 SFC Component": {
+    "scope": "vue",
+    "prefix": ["component", "comp"],
+    "body": [
+      "<script lang=\"ts\" setup>",
+      "//$1",
+      "</script>\n",
+      "<template>",
+      "  <div class=\"\">",
+      "    $2",
+      "  </div>",
+      "</template>\n",
+    ],
+  },
+  "Print soy style": {
+    "scope": "vue",
+    "prefix": "st",
+    "body": ["<style scoped>", "//", "</style>\n"],
+  },
+  "Print soy script": {
+    "scope": "vue",
+    "prefix": "sc",
+    "body": ["<script lang=\"ts\" setup>", "//$3", "</script>\n"],
+  },
+  "Print soy template": {
+    "scope": "vue",
+    "prefix": "te",
+    "body": ["<template>", "  <div class=\"\">$1</div>", "</template>\n"],
+  },
+}
