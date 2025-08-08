@@ -1,3 +1,12 @@
+/**
+ * VkCard 卡片组件样式
+ *
+ * 提供完整的卡片组件样式，包括基础样式、尺寸变体、阴影效果、悬停效果等。
+ * 支持多种尺寸（tiny、small、medium、large）、多种阴影模式（always、hover、never）、
+ * 边框样式、悬停效果，以及响应式设计和无障碍性支持。
+ * 包含卡片头部、主体、底部的完整布局结构。
+ */
+
 // VkCard 组件样式
 .vk-card {
   position: relative;

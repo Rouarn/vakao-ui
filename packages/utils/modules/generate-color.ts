@@ -317,7 +317,7 @@ function generateColorVariables(): string {
   scss += "$size-extra-large: 40px;\n";
   scss += "$size-extra-extra-large: 48px;\n";
   scss += "$size-huge: 56px;\n";
-  scss += "$size-extra-huge: 64px;\n";
+  scss += "$size-extra-huge: 64px;\n\n";
 
   // 圆角
   scss += "// 圆角\n";

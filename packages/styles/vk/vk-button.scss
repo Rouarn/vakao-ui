@@ -1,3 +1,12 @@
+/**
+ * VkButton 按钮组件样式
+ *
+ * 提供完整的按钮组件样式，包括基础样式、类型变体、尺寸变体、状态样式等。
+ * 支持多种按钮类型（primary、success、warning、danger、info、text）、
+ * 多种尺寸（tiny、small、medium、large）、多种形状（默认、round、circle）、
+ * 以及 plain 样式、加载状态、禁用状态等功能。
+ */
+
 // VkButton 组件样式
 .vk-button {
   display: inline-flex;

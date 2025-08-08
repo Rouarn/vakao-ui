@@ -1,3 +1,12 @@
+/**
+ * VkTag 标签组件样式
+ *
+ * 提供完整的标签组件样式，包括基础样式、类型变体、尺寸变体、主题变体等。
+ * 支持多种类型（default、primary、success、warning、danger、info）、
+ * 多种尺寸（tiny、small、medium、large）、多种主题（light、dark、plain）、
+ * 以及可关闭功能、圆角样式、边框样式、禁用状态等功能。
+ */
+
 // VkTag 组件样式
 .vk-tag {
   display: inline-flex;
@@ -28,7 +37,7 @@
     justify-content: center;
     margin-left: var(--vk-spacing-1);
     cursor: pointer;
-    border-radius: 50%;
+    border-radius: var(--vk-border-radius-circle);
     transition: all 0.2s ease-in-out;
     opacity: 0.7;
 
