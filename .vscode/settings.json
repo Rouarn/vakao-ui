@@ -1,0 +1,30 @@
+{
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.patterns": {
+    "tsconfig.json": "tsconfig.*.json, env.d.ts",
+    "vite.config.*": "jsconfig*, vitest.config.*, cypress.config.*, playwright.config.*,uno.config.ts",
+    "package.json": "package-lock.json, pnpm*, .yarnrc*, yarn*, .eslint*, eslint*, .oxlint*, oxlint*, .prettier*, prettier*, .editorconfig,commitlint.config.cjs,lint-staged.config.json,commitlint.config.ts",
+    ".env": ".env,.env.production,.env.development",
+    ".gitignore" : ".gitignore,.gitkeep,.npmignore,.npmrc,.nvmrc"
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit"
+  },
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "eslint.validate": ["html", "css", "scss", "json", "jsonc"],
+  
+  // Vue 模板格式化相关配置
+  "[vue]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "prettier.singleAttributePerLine": false,
+  "eslint.rules.customizations": [
+    { "rule": "vue/max-attributes-per-line", "severity": "off" },
+    { "rule": "vue/html-self-closing", "severity": "off" },
+    { "rule": "vue/html-closing-bracket-newline", "severity": "off" },
+    { "rule": "vue/singleline-html-element-content-newline", "severity": "off" },
+    { "rule": "vue/multiline-html-element-content-newline", "severity": "off" }
+  ]
+}
+
