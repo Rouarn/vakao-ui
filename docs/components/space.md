@@ -379,33 +379,22 @@
 
 ### Props
 
-| 名称 | 类型 | 默认值 | 说明 |
-| --- | --- | --- | --- |
-| size | `ComponentSize \| number \| [number, number]` | `'small'` | 间距大小，可以是预设值或自定义数值 |
-| vertical | `boolean` | `false` | 是否为垂直布局 |
-| align | `SpaceAlign` | `'start'` | 对齐方式 |
-| justify | `SpaceJustify` | `'start'` | 主轴对齐方式 |
-| wrap | `boolean` | `false` | 是否自动换行 |
-| inline | `boolean` | `false` | 是否为行内元素 |
-| reverse | `boolean` | `false` | 是否反向排列 |
+| 名称     | 类型                                          | 默认值    | 说明                               |
+| -------- | --------------------------------------------- | --------- | ---------------------------------- |
+| size     | `ComponentSize \| number \| [number, number]` | `'small'` | 间距大小，可以是预设值或自定义数值 |
+| vertical | `boolean`                                     | `false`   | 是否为垂直布局                     |
+| align    | `SpaceAlign`                                  | `'start'` | 对齐方式                           |
+| justify  | `SpaceJustify`                                | `'start'` | 主轴对齐方式                       |
+| wrap     | `boolean`                                     | `false`   | 是否自动换行                       |
+| inline   | `boolean`                                     | `false`   | 是否为行内元素                     |
+| reverse  | `boolean`                                     | `false`   | 是否反向排列                       |
 
 ### 类型定义
 
 ```typescript
-type ComponentSize = 'tiny' | 'small' | 'medium' | 'large'
+type ComponentSize = "tiny" | "small" | "medium" | "large";
 
-type SpaceAlign = 
-  | 'start' 
-  | 'end' 
-  | 'center' 
-  | 'baseline' 
-  | 'stretch'
+type SpaceAlign = "start" | "end" | "center" | "baseline" | "stretch";
 
-type SpaceJustify = 
-  | 'start' 
-  | 'end' 
-  | 'center' 
-  | 'space-around' 
-  | 'space-between' 
-  | 'space-evenly'
+type SpaceJustify = "start" | "end" | "center" | "space-around" | "space-between" | "space-evenly";
 ```
