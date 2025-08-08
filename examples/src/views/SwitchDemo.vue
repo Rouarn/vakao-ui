@@ -208,7 +208,11 @@
           <div class="monitor-grid">
             <div class="monitor-item" v-for="service in services" :key="service.id">
               <div class="monitor-header">
-                <VkIcon :icon="'material-symbols:' + service.icon" size="24" :color="service.status === 'running' ? '#67c23a' : '#f56c6c'" />
+                <VkIcon
+                  :icon="'material-symbols:' + service.icon"
+                  size="24"
+                  :color="service.status === 'running' ? '#67c23a' : '#f56c6c'"
+                />
                 <div class="monitor-info">
                   <div class="service-name">{{ service.name }}</div>
                   <div class="service-desc">{{ service.description }}</div>

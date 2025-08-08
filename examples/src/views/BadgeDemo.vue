@@ -204,7 +204,7 @@
               <span>设置</span>
             </div>
           </div>
-        </div> 
+        </div>
       </div>
 
       <!-- 购物车 -->

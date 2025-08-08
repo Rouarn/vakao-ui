@@ -257,11 +257,11 @@
         </div>
       </div>
     </div>
-    
+
     <!-- API 文档 -->
     <div class="demo-section">
       <h2>API 文档</h2>
-      
+
       <div class="api-container">
         <h3>Radio 属性</h3>
         <table class="api-table">
@@ -319,7 +319,7 @@
             </tr>
           </tbody>
         </table>
-        
+
         <h3>Radio 事件</h3>
         <table class="api-table">
           <thead>
@@ -337,7 +337,7 @@
             </tr>
           </tbody>
         </table>
-        
+
         <h3>RadioGroup 属性</h3>
         <table class="api-table">
           <thead>
@@ -387,7 +387,7 @@
             </tr>
           </tbody>
         </table>
-        
+
         <h3>RadioGroup 事件</h3>
         <table class="api-table">
           <thead>
@@ -405,7 +405,7 @@
             </tr>
           </tbody>
         </table>
-        
+
         <h3>RadioButton 属性</h3>
         <table class="api-table">
           <thead>
@@ -997,11 +997,11 @@ const averageScore = computed(() => {
   .demo-section h2 {
     font-size: 20px;
   }
-  
+
   .api-table {
     font-size: 12px;
   }
-  
+
   .api-table th,
   .api-table td {
     padding: 8px 10px;
