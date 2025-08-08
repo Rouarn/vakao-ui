@@ -92,6 +92,7 @@ export interface VakaoUIInstance {
  * 确保所有组件的尺寸命名和视觉效果保持一致。
  *
  * 尺寸规范：
+ * - tiny: 超小尺寸，适用于非常紧凑的布局
  * - small: 小尺寸，适用于紧凑布局
  * - medium: 中等尺寸，默认推荐尺寸
  * - large: 大尺寸，适用于重要操作

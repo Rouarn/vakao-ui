@@ -29,8 +29,8 @@
     border-radius: var(--vk-border-radius-extra-large);
     padding: 0 var(--vk-spacing-2);
     font-size: var(--vk-font-size-extra-small);
-    line-height: 18px;
-    min-width: 18px;
+    line-height: var(--vk-size-extra-small);
+    min-width: var(--vk-size-extra-small);
     text-align: center;
     white-space: nowrap;
     z-index: 1;

@@ -15,8 +15,8 @@
     margin: 0;
     display: inline-block;
     position: relative;
-    width: 40px;
-    height: 20px;
+    width: calc(var(--vk-size-extra-large) * 1);
+    height: var(--vk-size-extra-small);
     border: 1px solid var(--vk-border-color-base);
     outline: none;
     border-radius: var(--vk-border-radius-full);
@@ -34,8 +34,8 @@
       left: 1px;
       border-radius: var(--vk-border-radius-full);
       transition: all var(--vk-transition-duration-base) var(--vk-transition-timing-function);
-      width: 16px;
-      height: 16px;
+      width: var(--vk-size-extra-extra-small);
+      height: var(--vk-size-extra-extra-small);
       background-color: var(--vk-color-white);
       display: flex;
       justify-content: center;
@@ -188,8 +188,8 @@
     position: absolute;
     top: 50%;
     left: 2px;
-    width: 18px;
-    height: 18px;
+    width: var(--vk-size-extra-small);
+    height: var(--vk-size-extra-small);
     border-radius: var(--vk-border-radius-full);
     background-color: var(--vk-color-white);
     box-shadow: var(--vk-box-shadow-light);

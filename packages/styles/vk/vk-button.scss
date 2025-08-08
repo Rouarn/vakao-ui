@@ -22,7 +22,7 @@
   font-weight: 500;
   padding: 0 var(--vk-spacing-2);
   font-size: var(--vk-font-size-base);
-  height: var(--vk-size-large);
+  height: var(--vk-size-medium);
   border-radius: var(--vk-border-radius-medium);
 
   &:hover,
@@ -396,17 +396,17 @@
 
     &.vk-button--size-large {
       width: var(--vk-size-extra-large);
-    height: var(--vk-size-extra-large);
+      height: var(--vk-size-extra-large);
     }
 
     &.vk-button--size-small {
       width: var(--vk-size-medium);
-    height: var(--vk-size-medium);
+      height: var(--vk-size-medium);
     }
 
     &.vk-button--size-tiny {
       width: var(--vk-size-extra-small);
-    height: var(--vk-size-extra-small);
+      height: var(--vk-size-extra-small);
     }
 
     // 圆形按钮中的图标始终居中，忽略位置属性
@@ -445,8 +445,8 @@
 
   .vk-button__loading-indicator {
     display: inline-block;
-    width: 14px;
-    height: 14px;
+    width: calc(var(--vk-size-extra-extra-small) - 2px); // 14px
+    height: calc(var(--vk-size-extra-extra-small) - 2px); // 14px
     border: 2px solid currentColor;
     border-radius: 50%;
     border-top-color: transparent;

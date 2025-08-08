@@ -132,9 +132,9 @@
     }
 
     .vk-select__tag {
-      height: 20px;
-      line-height: 18px;
-      font-size: 12px;
+      height: var(--vk-size-extra-small);
+      line-height: var(--vk-size-extra-small);
+      font-size: var(--vk-font-size-extra-small);
       margin: 2px 4px 2px 0;
     }
   }
@@ -152,9 +152,9 @@
     }
 
     .vk-select__tag {
-      height: 28px;
-      line-height: 26px;
-      font-size: 14px;
+      height: var(--vk-size-base);
+      line-height: calc(var(--vk-size-base) - 2px);
+      font-size: var(--vk-font-size-base);
       margin: 4px 6px 4px 0;
     }
   }
@@ -224,7 +224,7 @@
 .vk-select__tag {
   display: inline-flex;
   align-items: center;
-  height: 24px;
+  height: var(--vk-size-small);
   padding: 0 8px;
   margin: 2px 6px 2px 0;
   background-color: var(--vk-fill-color-light);

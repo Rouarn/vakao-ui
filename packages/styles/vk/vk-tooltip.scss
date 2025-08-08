@@ -37,8 +37,8 @@
 .vk-tooltip__arrow,
 .vk-tooltip__arrow::before {
   position: absolute;
-  width: 8px;
-  height: 8px;
+  width: var(--vk-spacing-2);
+  height: var(--vk-spacing-2);
   background: inherit;
 }
 
@@ -48,7 +48,7 @@
 
 .vk-tooltip__arrow::before {
   visibility: visible;
-  content: '';
+  content: "";
   transform: rotate(45deg);
 }
 
@@ -60,19 +60,19 @@
 
 // 基于 Popper.js 的 data-popper-placement 属性调整箭头位置
 .vk-tooltip__popper {
-  &[data-popper-placement^='top'] > .vk-tooltip__arrow {
+  &[data-popper-placement^="top"] > .vk-tooltip__arrow {
     bottom: -4px;
   }
 
-  &[data-popper-placement^='bottom'] > .vk-tooltip__arrow {
+  &[data-popper-placement^="bottom"] > .vk-tooltip__arrow {
     top: -4px;
   }
 
-  &[data-popper-placement^='left'] > .vk-tooltip__arrow {
+  &[data-popper-placement^="left"] > .vk-tooltip__arrow {
     right: -4px;
   }
 
-  &[data-popper-placement^='right'] > .vk-tooltip__arrow {
+  &[data-popper-placement^="right"] > .vk-tooltip__arrow {
     left: -4px;
   }
 }

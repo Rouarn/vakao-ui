@@ -42,7 +42,7 @@
   &--tiny {
     padding: 2px var(--vk-spacing-1);
     font-size: var(--vk-font-size-extra-small);
-    height: 20px;
+    height: var(--vk-size-extra-small);
 
     .vk-tag__close {
       margin-left: 2px;
@@ -52,7 +52,7 @@
   &--small {
     padding: 4px var(--vk-spacing-2);
     font-size: var(--vk-font-size-small);
-    height: 24px;
+    height: var(--vk-size-small);
 
     .vk-tag__close {
       margin-left: var(--vk-spacing-1);
@@ -62,7 +62,7 @@
   &--medium {
     padding: 6px var(--vk-spacing-3);
     font-size: var(--vk-font-size-small);
-    height: 28px;
+    height: var(--vk-size-base);
 
     .vk-tag__close {
       margin-left: var(--vk-spacing-1);
@@ -72,7 +72,7 @@
   &--large {
     padding: 8px var(--vk-spacing-4);
     font-size: var(--vk-font-size-base);
-    height: 32px;
+    height: var(--vk-size-medium);
 
     .vk-tag__close {
       margin-left: var(--vk-spacing-2);

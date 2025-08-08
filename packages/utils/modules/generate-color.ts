@@ -122,9 +122,6 @@ function generateCSSVariables(): string {
   css += "  --vk-size-extra-extra-large: #{$size-extra-extra-large};\n";
   css += "  --vk-size-huge: #{$size-huge};\n";
   css += "  --vk-size-extra-huge: #{$size-extra-huge};\n";
-  css += "  --vk-component-size-small: #{$component-size-small};\n";
-  css += "  --vk-component-size-base: #{$component-size-base};\n";
-  css += "  --vk-component-size-large: #{$component-size-large};\n\n";
 
   // 边框圆角
   css += "  /* 边框圆角 */\n";
@@ -321,19 +318,16 @@ function generateColorVariables(): string {
 
   // 组件尺寸相关变量
   scss += "// 组件尺寸相关变量\n";
-  scss += "$size-extra-extra-small: 20px;\n";
-  scss += "$size-extra-small: 24px;\n";
-  scss += "$size-small: 28px;\n";
-  scss += "$size-base: 32px;\n";
-  scss += "$size-medium: 36px;\n";
-  scss += "$size-large: 40px;\n";
-  scss += "$size-extra-large: 48px;\n";
-  scss += "$size-extra-extra-large: 56px;\n";
-  scss += "$size-huge: 64px;\n";
-  scss += "$size-extra-huge: 72px;\n";
-  scss += "$component-size-small: 28px;\n";
-  scss += "$component-size-base: 32px;\n";
-  scss += "$component-size-large: 40px;\n\n";
+  scss += "$size-extra-extra-small: 16px;\n";
+  scss += "$size-extra-small: 20px;\n";
+  scss += "$size-small: 24px;\n";
+  scss += "$size-base: 28px;\n";
+  scss += "$size-medium: 32px;\n";
+  scss += "$size-large: 36px;\n";
+  scss += "$size-extra-large: 40px;\n";
+  scss += "$size-extra-extra-large: 48px;\n";
+  scss += "$size-huge: 56px;\n";
+  scss += "$size-extra-huge: 64px;\n";
 
   // 圆角
   scss += "// 圆角\n";
