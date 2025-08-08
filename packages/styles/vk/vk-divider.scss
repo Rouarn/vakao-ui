@@ -2,7 +2,6 @@
 .vk-divider {
   margin: var(--vk-spacing-4) 0;
   border: none;
-  border-top: 1px solid var(--vk-border-color-light);
   position: relative;
 
   // 垂直分割线
@@ -12,7 +11,6 @@
     height: var(--vk-size-medium);
     margin: 0 var(--vk-spacing-2);
     border-top: none;
-    border-left: 1px solid var(--vk-border-color-light);
     vertical-align: middle;
   }
 
@@ -30,7 +28,7 @@
       content: "";
       flex: 1;
       height: 1px;
-      background-color: var(--vk-border-color-light);
+      background-color: var(--vk-divider-color, var(--vk-border-color-light));
     }
 
     &::before {
@@ -63,7 +61,10 @@
 
   // 虚线样式
   &--dashed {
-    border-top-style: dashed;
+    // 仅对非文字分割线设置虚线边框
+    &:not(.vk-divider--with-text) {
+      border-top-style: dashed;
+    }
 
     &.vk-divider--vertical {
       border-left-style: dashed;
@@ -74,8 +75,8 @@
       &::after {
         background-image: repeating-linear-gradient(
           to right,
-          var(--vk-border-color-light) 0,
-          var(--vk-border-color-light) 4px,
+          var(--vk-divider-color, var(--vk-border-color-light)) 0,
+          var(--vk-divider-color, var(--vk-border-color-light)) 4px,
           transparent 4px,
           transparent 8px
         );

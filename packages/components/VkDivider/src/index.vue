@@ -3,8 +3,8 @@
     :class="[
       ns.block(),
       ns.modifier(props.direction),
-      ns.is(contentPositionClass),
       {
+        [ns.modifier(contentPositionClass)]: contentPositionClass,
         [ns.modifier('with-text')]: $slots.default && props.direction === 'horizontal',
         [ns.modifier(props.borderStyle)]: props.borderStyle !== 'solid',
       },
@@ -52,7 +52,7 @@
 // ==================== 模块导入 ====================
 
 /** Vue 3 核心 API */
-import { computed } from "vue";
+import { computed, useSlots } from "vue";
 /** 组件属性定义 */
 import { dividerProps } from "./types";
 /** CSS 命名空间工具 */
@@ -69,6 +69,9 @@ defineOptions({
 /** 组件属性定义 */
 const props = defineProps(dividerProps);
 
+/** 插槽对象 */
+const slots = useSlots();
+
 // ==================== 计算属性 ====================
 
 /**
@@ -84,7 +87,10 @@ const ns = useNamespace("divider");
  * 根据内容位置属性生成对应的类名
  */
 const contentPositionClass = computed(() => {
-  return props.direction === "horizontal" ? props.contentPosition : "";
+  if (props.direction === "horizontal" && props.contentPosition !== "center") {
+    return `text-${props.contentPosition}`;
+  }
+  return "";
 });
 
 /**
@@ -95,19 +101,19 @@ const contentPositionClass = computed(() => {
 const dividerStyle = computed(() => {
   const style: Record<string, string> = {};
 
-  if (props.borderColor) {
-    if (props.direction === "horizontal") {
-      style.borderTopColor = props.borderColor;
-    } else {
-      style.borderLeftColor = props.borderColor;
-    }
-  }
+  // 检查是否有文本内容
+  const hasText = slots.default && props.direction === "horizontal";
 
-  if (props.borderStyle) {
-    if (props.direction === "horizontal") {
-      style.borderTopStyle = props.borderStyle;
-    } else {
-      style.borderLeftStyle = props.borderStyle;
+  if (props.direction === "horizontal" && !hasText) {
+    // 设置水平分割线的边框样式（仅在没有文本时）
+    style.borderTop = `1px ${props.borderStyle} ${props.borderColor || "var(--vk-border-color-light)"}`;
+  } else if (props.direction === "vertical") {
+    // 设置垂直分割线的边框样式
+    style.borderLeft = `1px ${props.borderStyle} ${props.borderColor || "var(--vk-border-color-light)"}`;
+  } else if (hasText) {
+    // 为带文字的分割线设置CSS变量，用于控制伪元素样式
+    if (props.borderColor) {
+      style["--vk-divider-color"] = props.borderColor;
     }
   }
 
