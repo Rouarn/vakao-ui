@@ -116,7 +116,7 @@
             <span>设置</span>
           </div>
           <div class="text-icon-item">
-            <VkIcon icon="material-symbols:message" size="16" />
+            <VkIcon icon="material-symbols:chat-bubble-outline" size="16" />
             <span>消息</span>
           </div>
         </div>
@@ -240,7 +240,7 @@ const commonIcons = ref([
   { name: "user" },
   { name: "setting" },
   { name: "search" },
-  { name: "message" },
+  { name: "chat-bubble-outline" },
   { name: "bell" },
   { name: "star" },
   { name: "heart" },
@@ -327,7 +327,7 @@ const handleIconClick = (icon: any) => {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .icon-demo {
   max-width: 1000px;
 }
@@ -387,6 +387,10 @@ const handleIconClick = (icon: any) => {
 
 .demo-block .vk-icon {
   margin: 0 12px 12px 0;
+}
+
+.text-icon-item .vk-icon {
+  margin: 0;
 }
 
 .icon-grid {

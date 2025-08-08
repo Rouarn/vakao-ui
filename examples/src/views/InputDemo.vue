@@ -321,7 +321,7 @@ const submitForm = () => {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .input-demo {
   max-width: 1000px;
 }

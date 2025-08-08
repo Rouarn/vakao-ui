@@ -84,9 +84,21 @@ export const spaceProps = {
   },
 
   /**
+   * 是否水平布局
+   *
+   * 默认为水平布局
+   *
+   * @default true
+   */
+  horizontal: {
+    type: Boolean,
+    default: true,
+  },
+
+  /**
    * 是否垂直布局
    *
-   * true 时子元素垂直排列，false 时水平排列。
+   * 为 true 时为垂直布局
    *
    * @default false
    */
@@ -148,6 +160,7 @@ export const spaceProps = {
    *
    * 为每个子元素添加包装容器，用于应用间距样式。
    * 在不支持 flex gap 的浏览器中必须为 true。
+   * 当 wrapItem 为 false 时，子元素的间距将通过 margin 实现。
    *
    * @default true
    */

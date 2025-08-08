@@ -472,7 +472,7 @@ const batchAction = (action: string) => {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .checkbox-demo {
   max-width: 1000px;
 }

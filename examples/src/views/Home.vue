@@ -113,7 +113,7 @@ app.mount('#app')</code></pre>
 // 首页组件，展示组件库概览
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .home {
   padding: 0;
 }

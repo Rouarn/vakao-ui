@@ -62,7 +62,7 @@
           <VkButton circle icon="material-symbols:search"></VkButton>
           <VkButton type="primary" circle icon="material-symbols:edit"></VkButton>
           <VkButton type="success" circle icon="material-symbols:check"></VkButton>
-          <VkButton type="info" circle icon="material-symbols:message"></VkButton>
+          <VkButton type="info" circle icon="ph:chat-centered-dots"></VkButton>
           <VkButton type="warning" circle icon="material-symbols:star"></VkButton>
           <VkButton type="danger" circle icon="material-symbols:delete"></VkButton>
         </VkSpace>
@@ -286,7 +286,7 @@ const addLog = (message: string) => {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .button-demo {
   max-width: 1000px;
 }

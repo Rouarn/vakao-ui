@@ -361,7 +361,7 @@ const handleCardClick = (item: any) => {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .card-demo {
   max-width: 1200px;
 }

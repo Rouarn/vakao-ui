@@ -114,6 +114,7 @@
           :key="user.id"
           :size="50"
           :src="user.avatar"
+          clickable
           class="clickable-avatar"
           @click="handleAvatarClick(user)"
         >
@@ -239,7 +240,7 @@ const addClickLog = (message: string) => {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .avatar-demo {
   max-width: 1000px;
 }

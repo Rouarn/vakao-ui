@@ -33,11 +33,10 @@
   // 垂直布局
   &--vertical {
     flex-direction: column;
-    align-items: stretch;
+    align-items: flex-start;
 
     .vk-space__item {
       display: block;
-      width: 100%;
     }
   }
 

@@ -272,7 +272,7 @@
 // 这个组件主要展示 Divider 的各种用法，不需要复杂的逻辑
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .divider-demo {
   max-width: 1000px;
 }
