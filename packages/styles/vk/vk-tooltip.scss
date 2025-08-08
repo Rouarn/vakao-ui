@@ -85,48 +85,6 @@
   }
 }
 
-// 过渡动画
-// 淡入淡出动画
-.vk-fade {
-  &-enter-active,
-  &-leave-active {
-    transition: opacity var(--vk-transition-duration-base) ease;
-  }
-
-  &-enter-from,
-  &-leave-to {
-    opacity: 0;
-  }
-}
-
-// 缩放动画
-.vk-zoom {
-  &-enter-active,
-  &-leave-active {
-    transition: all var(--vk-transition-duration-base) var(--vk-transition-function-fast-bezier);
-  }
-
-  &-enter-from,
-  &-leave-to {
-    opacity: 0;
-    transform: scale(0.8);
-  }
-}
-
-// 滑动动画
-.vk-slide {
-  &-enter-active,
-  &-leave-active {
-    transition: all var(--vk-transition-duration-base) ease;
-  }
-
-  &-enter-from,
-  &-leave-to {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-}
-
 // 禁用状态
 .is-disabled {
   cursor: not-allowed;

@@ -1,0 +1,368 @@
+/**
+ * Vakao UI 过渡动画样式
+ * 
+ * 提供了一套完整的过渡动画效果，用于组件的进入和离开动画。
+ * 所有动画类名都使用 vk- 前缀，确保样式隔离。
+ * 
+ * 动画类型：
+ * - vk-fade: 淡入淡出效果
+ * - vk-fade-slide: 淡入淡出 + 水平滑动效果
+ * - vk-fade-bottom: 淡入淡出 + 垂直滑动效果
+ * - vk-fade-scale: 淡入淡出 + 缩放效果
+ * - vk-zoom-fade: 缩放淡入淡出效果
+ * - vk-zoom-out: 缩放到零点效果
+ * - vk-slide-up: 向上滑动效果
+ * - vk-slide-down: 向下滑动效果
+ * - vk-slide-left: 向左滑动效果
+ * - vk-slide-right: 向右滑动效果
+ * - vk-bounce: 弹跳效果
+ * - vk-elastic: 弹性效果
+ * 
+ * @version 1.0.0
+ * @author Vakao UI Team
+ */
+
+/* ==================== 基础淡入淡出动画 ==================== */
+
+/**
+ * vk-fade - 基础淡入淡出效果
+ * 
+ * 适用场景：模态框、提示信息、内容切换等
+ * 动画时长：300ms
+ * 缓动函数：ease-in-out
+ */
+.vk-fade-enter-active,
+.vk-fade-leave-active {
+  transition: opacity 0.3s ease-in-out;
+}
+
+.vk-fade-enter-from,
+.vk-fade-leave-to {
+  opacity: 0;
+}
+
+/* ==================== 淡入淡出 + 滑动动画 ==================== */
+
+/**
+ * vk-fade-slide - 淡入淡出 + 水平滑动效果
+ * 
+ * 适用场景：侧边栏、抽屉组件、标签页切换等
+ * 动画时长：300ms
+ * 滑动距离：30px
+ */
+.vk-fade-slide-enter-active,
+.vk-fade-slide-leave-active {
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.vk-fade-slide-enter-from {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+
+.vk-fade-slide-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+/**
+ * vk-fade-bottom - 淡入淡出 + 垂直滑动效果
+ * 
+ * 适用场景：下拉菜单、工具提示、通知消息等
+ * 动画时长：opacity 250ms, transform 300ms
+ * 滑动距离：10%
+ */
+.vk-fade-bottom-enter-active,
+.vk-fade-bottom-leave-active {
+  transition:
+    opacity 0.25s ease-out,
+    transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.vk-fade-bottom-enter-from {
+  opacity: 0;
+  transform: translateY(-10%);
+}
+
+.vk-fade-bottom-leave-to {
+  opacity: 0;
+  transform: translateY(10%);
+}
+
+/* ==================== 缩放动画 ==================== */
+
+/**
+ * vk-fade-scale - 淡入淡出 + 缩放效果
+ * 
+ * 适用场景：弹出框、图片预览、卡片展开等
+ * 动画时长：280ms
+ * 缩放比例：进入 1.2 -> 1.0，离开 1.0 -> 0.8
+ */
+.vk-fade-scale-enter-active,
+.vk-fade-scale-leave-active {
+  transition: all 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.vk-fade-scale-enter-from {
+  opacity: 0;
+  transform: scale(1.2);
+}
+
+.vk-fade-scale-leave-to {
+  opacity: 0;
+  transform: scale(0.8);
+}
+
+/**
+ * vk-zoom-fade - 精细缩放淡入淡出效果
+ * 
+ * 适用场景：对话框、浮层、气泡提示等
+ * 动画时长：transform 200ms, opacity 300ms
+ * 缩放比例：进入 0.92 -> 1.0，离开 1.0 -> 1.06
+ */
+.vk-zoom-fade-enter-active,
+.vk-zoom-fade-leave-active {
+  transition:
+    transform 0.2s cubic-bezier(0.25, 0.8, 0.25, 1),
+    opacity 0.3s ease-out;
+}
+
+.vk-zoom-fade-enter-from {
+  opacity: 0;
+  transform: scale(0.92);
+}
+
+.vk-zoom-fade-leave-to {
+  opacity: 0;
+  transform: scale(1.06);
+}
+
+/**
+ * vk-zoom-out - 缩放到零点效果
+ * 
+ * 适用场景：快速显示/隐藏的小组件、图标按钮等
+ * 动画时长：opacity 100ms, transform 150ms
+ * 缩放比例：0 <-> 1
+ */
+.vk-zoom-out-enter-active,
+.vk-zoom-out-leave-active {
+  transition:
+    opacity 0.1s ease-in-out,
+    transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.vk-zoom-out-enter-from,
+.vk-zoom-out-leave-to {
+  opacity: 0;
+  transform: scale(0);
+}
+
+/* ==================== 滑动动画 ==================== */
+
+/**
+ * vk-slide-up - 向上滑动效果
+ * 
+ * 适用场景：底部弹出的面板、操作表等
+ * 动画时长：300ms
+ * 滑动距离：100%
+ */
+.vk-slide-up-enter-active,
+.vk-slide-up-leave-active {
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.vk-slide-up-enter-from {
+  transform: translateY(100%);
+}
+
+.vk-slide-up-leave-to {
+  transform: translateY(100%);
+}
+
+/**
+ * vk-slide-down - 向下滑动效果
+ * 
+ * 适用场景：顶部下拉的面板、通知栏等
+ * 动画时长：300ms
+ * 滑动距离：-100%
+ */
+.vk-slide-down-enter-active,
+.vk-slide-down-leave-active {
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.vk-slide-down-enter-from {
+  transform: translateY(-100%);
+}
+
+.vk-slide-down-leave-to {
+  transform: translateY(-100%);
+}
+
+/**
+ * vk-slide-left - 向左滑动效果
+ * 
+ * 适用场景：右侧滑出的侧边栏、面板等
+ * 动画时长：300ms
+ * 滑动距离：100%
+ */
+.vk-slide-left-enter-active,
+.vk-slide-left-leave-active {
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.vk-slide-left-enter-from {
+  transform: translateX(100%);
+}
+
+.vk-slide-left-leave-to {
+  transform: translateX(100%);
+}
+
+/**
+ * vk-slide-right - 向右滑动效果
+ * 
+ * 适用场景：左侧滑出的侧边栏、导航等
+ * 动画时长：300ms
+ * 滑动距离：-100%
+ */
+.vk-slide-right-enter-active,
+.vk-slide-right-leave-active {
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.vk-slide-right-enter-from {
+  transform: translateX(-100%);
+}
+
+.vk-slide-right-leave-to {
+  transform: translateX(-100%);
+}
+
+/* ==================== 特殊效果动画 ==================== */
+
+/**
+ * vk-bounce - 弹跳效果
+ * 
+ * 适用场景：成功提示、重要通知、吸引注意的元素等
+ * 动画时长：600ms
+ * 缓动函数：弹性效果
+ */
+.vk-bounce-enter-active {
+  animation: vk-bounce-in 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.vk-bounce-leave-active {
+  animation: vk-bounce-out 0.3s ease-in;
+}
+
+@keyframes vk-bounce-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes vk-bounce-out {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+}
+
+/**
+ * vk-elastic - 弹性效果
+ * 
+ * 适用场景：交互反馈、状态切换、动态内容等
+ * 动画时长：500ms
+ * 缓动函数：弹性回弹效果
+ */
+.vk-elastic-enter-active {
+  animation: vk-elastic-in 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.vk-elastic-leave-active {
+  animation: vk-elastic-out 0.3s ease-in-out;
+}
+
+@keyframes vk-elastic-in {
+  0% {
+    opacity: 0;
+    transform: scale(0) rotate(-360deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2) rotate(-180deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+@keyframes vk-elastic-out {
+  0% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0) rotate(180deg);
+  }
+}
+
+/* ==================== 工具类 ==================== */
+
+/**
+ * 过渡动画工具类
+ * 
+ * 提供一些通用的过渡效果工具类，可以直接应用到元素上
+ */
+
+/* 快速过渡 */
+.vk-transition-fast {
+  transition: all 0.15s ease-out;
+}
+
+/* 标准过渡 */
+.vk-transition-base {
+  transition: all 0.3s ease-in-out;
+}
+
+/* 慢速过渡 */
+.vk-transition-slow {
+  transition: all 0.5s ease-in-out;
+}
+
+/* 颜色过渡 */
+.vk-transition-colors {
+  transition:
+    color 0.2s ease-in-out,
+    background-color 0.2s ease-in-out,
+    border-color 0.2s ease-in-out;
+}
+
+/* 变换过渡 */
+.vk-transition-transform {
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* 阴影过渡 */
+.vk-transition-shadow {
+  transition: box-shadow 0.3s ease-in-out;
+}

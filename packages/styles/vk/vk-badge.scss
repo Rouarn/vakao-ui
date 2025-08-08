@@ -6,20 +6,6 @@
  * 多种尺寸、数字徽章、点状徽章、自定义内容、最大值限制等功能。
  */
 
-// VkBadge 徽章淡入淡出动画
-.vk-badge-fade-enter-active,
-.vk-badge-fade-leave-active {
-  transition:
-    opacity var(--vk-transition-duration),
-    transform var(--vk-transition-duration);
-}
-
-.vk-badge-fade-enter-from,
-.vk-badge-fade-leave-to {
-  opacity: 0;
-  transform: scale(0.5);
-}
-
 // VkBadge 组件样式
 .vk-badge {
   position: relative;

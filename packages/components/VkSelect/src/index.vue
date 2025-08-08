@@ -37,7 +37,7 @@
     </div>
 
     <!-- 下拉面板 -->
-    <Transition name="vk-select-dropdown">
+    <Transition name="vk-fade-bottom">
       <div v-show="dropdownVisible" ref="dropdownRef" :class="ns.element('dropdown')">
         <!-- 加载状态 -->
         <div v-if="loading" :class="ns.element('loading')">

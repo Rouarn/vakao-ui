@@ -1,6 +1,6 @@
 <template>
   <Teleport to="body">
-    <Transition name="vk-message-box-fade">
+    <Transition name="vk-fade-scale">
       <div v-if="visible" :class="ns.element('wrapper')" @click="handleWrapperClick">
         <div :class="[ns.block(), messageBoxClass]">
           <!-- 头部 -->

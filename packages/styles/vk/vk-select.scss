@@ -501,20 +501,6 @@
   }
 }
 
-// 下拉动画
-.vk-select-dropdown-enter-active,
-.vk-select-dropdown-leave-active {
-  transition:
-    opacity var(--vk-transition-duration-base),
-    transform var(--vk-transition-duration-base);
-}
-
-.vk-select-dropdown-enter-from,
-.vk-select-dropdown-leave-to {
-  opacity: 0;
-  transform: translateY(-8px);
-}
-
 .rotating {
   animation: rotate 1s linear infinite;
 }

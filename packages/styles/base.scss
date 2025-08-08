@@ -266,7 +266,6 @@
 
   /* 遮罩颜色 */
   --vk-mask-color: #{$mask-color};
-
 }
 
 /* 全局样式 */
@@ -282,15 +281,4 @@ html {
   background-color: var(--vk-bg-color-page);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-/* 通用过渡效果 */
-.vk-fade-enter-active,
-.vk-fade-leave-active {
-  transition: opacity var(--vk-transition-duration) var(--vk-transition-timing-function);
-}
-
-.vk-fade-enter-from,
-.vk-fade-leave-to {
-  opacity: 0;
 }

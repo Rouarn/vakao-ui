@@ -171,37 +171,6 @@
     }
   }
 
-  // 动画效果
-  &-fade-enter-active {
-    transition: all var(--vk-transition-duration-base);
-
-    .vk-message-box {
-      transition: all var(--vk-transition-duration-base);
-    }
-  }
-
-  &-fade-leave-active {
-    transition: all var(--vk-transition-duration-fast);
-
-    .vk-message-box {
-      transition: all var(--vk-transition-duration-fast);
-    }
-  }
-
-  &-fade-enter-from,
-  &-fade-leave-to {
-    opacity: 0;
-
-    .vk-message-box {
-      transform: scale(0.95);
-      opacity: 0;
-    }
-  }
-
-  &-fade-leave-to .vk-message-box {
-    transform: scale(0.98);
-  }
-
   // 响应式设计
   @media (max-width: 480px) {
     min-width: auto;

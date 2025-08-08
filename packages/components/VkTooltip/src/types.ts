@@ -60,11 +60,33 @@ export type TooltipTheme = "dark" | "light";
 /**
  * 工具提示过渡动画
  *
- * - fade: 淡入淡出（默认）
- * - zoom: 缩放
- * - slide: 滑动
+ * 支持 transition.scss 中定义的所有动画效果：
+ * - fade: 基础淡入淡出效果（默认）
+ * - fade-slide: 淡入淡出 + 水平滑动效果
+ * - fade-bottom: 淡入淡出 + 垂直滑动效果
+ * - fade-scale: 淡入淡出 + 缩放效果
+ * - zoom-fade: 精细缩放淡入淡出效果
+ * - zoom-out: 缩放到零点效果
+ * - slide-up: 向上滑动效果
+ * - slide-down: 向下滑动效果
+ * - slide-left: 向左滑动效果
+ * - slide-right: 向右滑动效果
+ * - bounce: 弹跳效果
+ * - elastic: 弹性效果
  */
-export type TooltipTransition = "fade" | "zoom" | "slide";
+export type TooltipTransition =
+  | "fade"
+  | "fade-slide"
+  | "fade-bottom"
+  | "fade-scale"
+  | "zoom-fade"
+  | "zoom-out"
+  | "slide-up"
+  | "slide-down"
+  | "slide-left"
+  | "slide-right"
+  | "bounce"
+  | "elastic";
 
 /**
  * 工具提示属性定义
