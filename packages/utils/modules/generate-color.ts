@@ -188,16 +188,6 @@ function generateCSSVariables(): string {
   css += "  /* 遮罩颜色 */\n";
   css += "  --vk-mask-color: #{$mask-color};\n\n";
 
-  // Tag组件相关颜色
-  css += "  /* Tag组件相关颜色 */\n";
-  css += "  --vk-tag-default-color: #{$tag-default-color};\n";
-  css += "  --vk-tag-default-border: #{$tag-default-border};\n";
-  css += "  --vk-tag-primary-border: #{$tag-primary-border};\n";
-  css += "  --vk-tag-success-border: #{$tag-success-border};\n";
-  css += "  --vk-tag-warning-border: #{$tag-warning-border};\n";
-  css += "  --vk-tag-danger-border: #{$tag-danger-border};\n";
-  css += "  --vk-tag-info-border: #{$tag-info-border};\n";
-
   css += "}\n";
   return css;
 }
@@ -393,16 +383,6 @@ function generateColorVariables(): string {
   // 遮罩颜色
   scss += "\n// mask color\n";
   scss += "$mask-color: rgba(0, 0, 0, 0.5);\n\n";
-
-  // Tag组件相关颜色
-  scss += "// Tag组件相关颜色\n";
-  scss += "$tag-default-color: #909399;\n";
-  scss += "$tag-default-border: #e9e9eb;\n";
-  scss += "$tag-primary-border: #b3d8ff;\n";
-  scss += "$tag-success-border: #c2e7b0;\n";
-  scss += "$tag-warning-border: #f5dab1;\n";
-  scss += "$tag-danger-border: #fbc4c4;\n";
-  scss += "$tag-info-border: #d3d4d6;\n";
 
   return scss;
 }

@@ -29,6 +29,10 @@
   }
 
   // 尺寸变体
+  &--size-tiny {
+    font-size: var(--vk-font-size-extra-small);
+  }
+
   &--size-small {
     font-size: var(--vk-font-size-small);
   }

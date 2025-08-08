@@ -267,14 +267,6 @@
   /* 遮罩颜色 */
   --vk-mask-color: #{$mask-color};
 
-  /* Tag组件相关颜色 */
-  --vk-tag-default-color: #{$tag-default-color};
-  --vk-tag-default-border: #{$tag-default-border};
-  --vk-tag-primary-border: #{$tag-primary-border};
-  --vk-tag-success-border: #{$tag-success-border};
-  --vk-tag-warning-border: #{$tag-warning-border};
-  --vk-tag-danger-border: #{$tag-danger-border};
-  --vk-tag-info-border: #{$tag-info-border};
 }
 
 /* 全局样式 */
