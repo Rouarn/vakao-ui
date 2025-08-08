@@ -34,7 +34,6 @@
     "deploy:docs": "node ./scripts/publish.js --deploy-only --deploy-strategy docs",
     "deploy:github-pages": "node ./scripts/publish.js --deploy-only --deploy-strategy github-pages",
     "deploy:preview": "pnpm run build:docs && pnpm -C docs serve",
-    "deploy:legacy": "node ./scripts/legacy/deploy.js",
     "lint": "eslint . --ext .vue,.js,.ts,.jsx,.tsx --fix",
     "format": "prettier --write \"**/*.{vue,js,ts,json,md}\"",
     "publish": "node ./scripts/publish.js",
@@ -52,6 +51,10 @@
     "publish:all:dry-run": "node ./scripts/publish.js --packages main,hooks,utils --dry-run",
     "publish:sync": "node ./scripts/publish.js --sync-version",
     "publish:sync:dry-run": "node ./scripts/publish.js --sync-version --dry-run",
+    "deps:dev": "node ./scripts/deps/switch-deps.js dev && pnpm install",
+    "deps:deploy": "node ./scripts/deps/switch-deps.js deploy && pnpm install",
+    "deps:switch": "node ./scripts/deps/switch-deps.js",
+    "deps:status": "node ./scripts/deps/switch-deps.js status",
     "test:notification": "node -e \"const notifier = require('node-notifier'); notifier.notify({title: '测试通知', message: '桌面通知功能正常', sound: true});\""
   },
   "keywords": [

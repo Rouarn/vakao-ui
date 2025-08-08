@@ -54,6 +54,11 @@ jobs:
           # 尝试使用 frozen-lockfile，如果失败则使用 no-frozen-lockfile
           pnpm install --frozen-lockfile || pnpm install --no-frozen-lockfile
 
+      - name: Switch to workspace dependencies
+        run: |
+          node scripts/deps/switch-deps.js deploy
+          echo "✅ 已切换到部署模式：使用 workspace:* 依赖"
+
       - name: Build with VitePress
         run: |
           pnpm run build:docs

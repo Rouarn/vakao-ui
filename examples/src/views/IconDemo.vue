@@ -175,62 +175,62 @@ import { ref } from "vue";
 const iconNameToMaterialSymbols = (name: string) => {
   const iconMap: Record<string, string> = {
     // 基础图标
-    'home': 'home',
-    'user': 'person',
-    'setting': 'settings',
-    'search': 'search',
-    'edit': 'edit',
-    'delete': 'delete',
-    'check': 'check',
-    'close': 'close',
-    
+    home: "home",
+    user: "person",
+    setting: "settings",
+    search: "search",
+    edit: "edit",
+    delete: "delete",
+    check: "check",
+    close: "close",
+
     // 常用图标
-    'message': 'message',
-    'bell': 'notifications',
-    'star': 'star',
-    'heart': 'favorite',
-    'bookmark': 'bookmark',
-    'calendar': 'calendar-month',
-    'clock': 'schedule',
-    'location': 'location-on',
-    
+    message: "message",
+    bell: "notifications",
+    star: "star",
+    heart: "favorite",
+    bookmark: "bookmark",
+    calendar: "calendar-month",
+    clock: "schedule",
+    location: "location-on",
+
     // 方向图标
-    'arrow-up': 'arrow-upward',
-    'arrow-down': 'arrow-downward',
-    'arrow-left': 'arrow-back',
-    'arrow-right': 'arrow-forward',
-    'chevron-up': 'expand-less',
-    'chevron-down': 'expand-more',
-    'chevron-left': 'chevron-left',
-    'chevron-right': 'chevron-right',
-    
+    "arrow-up": "arrow-upward",
+    "arrow-down": "arrow-downward",
+    "arrow-left": "arrow-back",
+    "arrow-right": "arrow-forward",
+    "chevron-up": "expand-less",
+    "chevron-down": "expand-more",
+    "chevron-left": "chevron-left",
+    "chevron-right": "chevron-right",
+
     // 操作图标
-    'copy': 'content-copy',
-    'share': 'share',
-    'download': 'download',
-    'upload': 'upload',
-    'refresh': 'refresh',
-    'print': 'print',
-    'save': 'save',
-    'undo': 'undo',
-    'redo': 'redo',
-    'zoom-in': 'zoom-in',
-    'zoom-out': 'zoom-out',
-    'fullscreen': 'fullscreen',
-    
+    copy: "content-copy",
+    share: "share",
+    download: "download",
+    upload: "upload",
+    refresh: "refresh",
+    print: "print",
+    save: "save",
+    undo: "undo",
+    redo: "redo",
+    "zoom-in": "zoom-in",
+    "zoom-out": "zoom-out",
+    fullscreen: "fullscreen",
+
     // 状态图标
-    'warning': 'warning',
-    'info': 'info',
-    'loading': 'refresh',
-    'success': 'check-circle',
-    'error': 'error',
-    'question': 'help',
-    
+    warning: "warning",
+    info: "info",
+    loading: "refresh",
+    success: "check-circle",
+    error: "error",
+    question: "help",
+
     // 可点击图标
-    'like': 'thumb-up',
-    'comment': 'comment',
+    like: "thumb-up",
+    comment: "comment",
   };
-  
+
   return iconMap[name] || name;
 };
 
