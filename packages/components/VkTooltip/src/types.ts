@@ -6,7 +6,7 @@
  */
 
 import type { PropType, CSSProperties } from "vue";
-import type { ExtractPublicPropTypes } from "../../../types";
+import type { ExtractPublicPropTypes } from "@/types";
 
 /**
  * 工具提示位置类型

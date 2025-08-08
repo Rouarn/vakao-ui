@@ -50,9 +50,9 @@
       <h2>带图标的输入框</h2>
       <p>使用 <code>prefix-icon</code> 和 <code>suffix-icon</code> 属性在输入框首部和尾部增加显示图标。</p>
       <div class="demo-block">
-        <VkInput v-model="iconValue1" placeholder="请输入内容" prefix-icon="search" />
-        <VkInput v-model="iconValue2" placeholder="请输入内容" suffix-icon="calendar" />
-        <VkInput v-model="iconValue3" placeholder="请输入内容" prefix-icon="user" suffix-icon="setting" />
+        <VkInput v-model="iconValue1" placeholder="请输入内容" prefix-icon="material-symbols:search" />
+        <VkInput v-model="iconValue2" placeholder="请输入内容" suffix-icon="material-symbols:calendar-month" />
+        <VkInput v-model="iconValue3" placeholder="请输入内容" prefix-icon="material-symbols:person" suffix-icon="material-symbols:settings" />
       </div>
     </div>
 

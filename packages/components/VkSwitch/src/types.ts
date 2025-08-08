@@ -1,5 +1,5 @@
 import type { PropType, CSSProperties } from "vue";
-import type { ExtractPublicPropTypes, ComponentSize } from "../../../types";
+import type { ExtractPublicPropTypes, ComponentSize } from "@/types";
 
 // 开关尺寸
 export type SwitchSize = ComponentSize;

@@ -6,7 +6,7 @@
  */
 
 import type { PropType, CSSProperties } from "vue";
-import type { ExtractPublicPropTypes, ComponentSize } from "../../../types";
+import type { ExtractPublicPropTypes, ComponentSize } from "@/types";
 
 /**
  * 卡片尺寸

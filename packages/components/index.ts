@@ -55,6 +55,7 @@ export * from "./VkBadge";
 export * from "./VkCard";
 export * from "./VkDivider";
 export * from "./VkTag";
+export * from "./VkSpace";
 
 /** 反馈组件 */
 export * from "./VkMessageBox";
@@ -80,6 +81,7 @@ import { VkTag } from "./VkTag";
 import { VkMessageBox } from "./VkMessageBox";
 import { VkSelect, VkOption, VkOptionGroup } from "./VkSelect";
 import { VkTooltip } from "./VkTooltip";
+import { VkSpace } from "./VkSpace";
 import { installAll } from "@vakao-ui/utils";
 
 /**
@@ -118,6 +120,9 @@ const components = {
   // 反馈组件
   VkMessageBox,
   VkTooltip,
+
+  // 布局组件
+  VkSpace,
 };
 
 /**

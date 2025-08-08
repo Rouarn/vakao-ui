@@ -58,6 +58,12 @@ Vakao UI 组件推荐使用直接的图标属性来设置图标，而不是通�
 - [Tag 标签](/components/tag) - 用于标记和分类的标签组件
 - [Image 图片](/components/image) - 图片容器，支持懒加载、预览、错误处理等功能
 
+### 布局组件
+
+布局组件用于页面和组件的布局排列。
+
+- [Space 间距](/components/space) - 设置组件之间的间距
+
 ### 导航组件
 
 _即将推出导航组件..._
@@ -67,6 +73,7 @@ _即将推出导航组件..._
 反馈组件用于向用户展示操作结果、系统状态或重要信息。
 
 - [MessageBox 消息弹框](/components/message-box) - 模拟系统消息提示框的模态对话框组件
+- [Tooltip 工具提示](/components/tooltip) - 常用于展示鼠标 hover 时的提示信息
 
 ## 组件命名约定
 

@@ -83,11 +83,13 @@ git checkout -b fix/your-fix-name
 #### 组件开发
 
 1. **组件命名**: 使用 PascalCase，以 `Vk` 前缀开头
+
    ```
    VkButton, VkInput, VkCard
    ```
 
 2. **文件结构**: 每个组件应包含以下文件
+
    ```
    VkButton/
    ├── index.ts          # 导出文件
@@ -99,15 +101,16 @@ git checkout -b fix/your-fix-name
 3. **组件属性**: 使用 TypeScript 定义清晰的 Props 接口
    ```typescript
    interface VkButtonProps {
-     type?: 'primary' | 'secondary' | 'danger'
-     size?: 'small' | 'medium' | 'large'
-     disabled?: boolean
+     type?: "primary" | "secondary" | "danger";
+     size?: "small" | "medium" | "large";
+     disabled?: boolean;
    }
    ```
 
 #### 样式开发
 
 1. **CSS 变量**: 使用项目定义的 CSS 变量
+
    ```scss
    .vk-button {
      background-color: var(--vk-color-primary);
@@ -117,6 +120,7 @@ git checkout -b fix/your-fix-name
    ```
 
 2. **响应式设计**: 使用断点变量
+
    ```scss
    @media (min-width: var(--vk-breakpoint-medium)) {
      .vk-button {
@@ -223,6 +227,7 @@ git commit -m "style: update color variables naming convention"
 ### 2. PR 标题格式
 
 使用与提交信息相同的格式：
+
 ```
 feat(button): add loading state support
 ```
@@ -231,6 +236,7 @@ feat(button): add loading state support
 
 ```markdown
 ## 📋 变更类型
+
 - [ ] 新功能
 - [ ] Bug 修复
 - [ ] 文档更新
@@ -241,15 +247,19 @@ feat(button): add loading state support
 - [ ] 其他
 
 ## 📝 变更描述
+
 简要描述此次变更的内容和原因。
 
 ## 🔗 相关 Issue
+
 关闭 #issue_number
 
 ## 📸 截图（如适用）
+
 如果是 UI 相关的变更，请提供截图。
 
 ## ✅ 检查清单
+
 - [ ] 代码已通过 lint 检查
 - [ ] 代码已通过类型检查
 - [ ] 相关测试已通过

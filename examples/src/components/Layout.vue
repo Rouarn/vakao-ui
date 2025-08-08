@@ -36,6 +36,11 @@
           </div>
 
           <div class="nav-group">
+            <h3 class="nav-title">布局组件</h3>
+            <router-link to="/space" class="nav-item">Space 间距</router-link>
+          </div>
+
+          <div class="nav-group">
             <h3 class="nav-title">反馈组件</h3>
             <router-link to="/message-box" class="nav-item">MessageBox 消息弹框</router-link>
             <router-link to="/tooltip" class="nav-item">Tooltip 文字提示</router-link>
@@ -54,7 +59,7 @@
 // 布局组件，提供统一的页面结构和导航
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .layout {
   min-height: 100vh;
   background: #f5f7fa;
@@ -94,6 +99,7 @@
   max-width: 1200px;
   margin: 0 auto;
   min-height: calc(100vh - 120px);
+  position: relative;
 }
 
 .layout-sidebar {
@@ -105,6 +111,9 @@
   height: fit-content;
   position: sticky;
   top: 20px;
+  max-height: calc(100vh - 50px);
+  overflow-y: auto;
+  z-index: 100;
 }
 
 .nav-menu {
@@ -113,6 +122,10 @@
 
 .nav-group {
   margin-bottom: 24px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 }
 
 .nav-title {
@@ -152,7 +165,7 @@
   flex: 1;
   padding: 20px;
   background: white;
-  margin: 20px 20px 20px 0;
+  margin: 20px 20px 20px 10px;
   border-radius: 8px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
 }

@@ -54,7 +54,7 @@
 <script lang="ts">
 import { defineComponent, ref, computed, onMounted, onUnmounted } from "vue";
 import { messageBoxProps, messageBoxEmits } from "./types";
-import type { ComponentType } from "../../../types";
+import type { ComponentType } from "@/types";
 import VkButton from "../../VkButton";
 import VkIcon from "../../VkIcon";
 import VkInput from "../../VkInput";

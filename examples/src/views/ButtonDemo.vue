@@ -52,12 +52,12 @@
       <h2>圆形按钮</h2>
       <p>使用 <code>circle</code> 属性创建圆形按钮。</p>
       <div class="demo-block">
-        <VkButton circle icon="search"></VkButton>
-        <VkButton type="primary" circle icon="edit"></VkButton>
-        <VkButton type="success" circle icon="check"></VkButton>
-        <VkButton type="info" circle icon="message"></VkButton>
-        <VkButton type="warning" circle icon="star"></VkButton>
-        <VkButton type="danger" circle icon="delete"></VkButton>
+        <VkButton circle icon="material-symbols:search"></VkButton>
+        <VkButton type="primary" circle icon="material-symbols:edit"></VkButton>
+        <VkButton type="success" circle icon="material-symbols:check"></VkButton>
+        <VkButton type="info" circle icon="material-symbols:message"></VkButton>
+        <VkButton type="warning" circle icon="material-symbols:star"></VkButton>
+        <VkButton type="danger" circle icon="material-symbols:delete"></VkButton>
       </div>
     </div>
 
@@ -121,17 +121,17 @@
       <h2>图标按钮</h2>
       <p>使用 <code>icon</code> 属性为按钮添加图标。</p>
       <div class="demo-block">
-        <VkButton icon="edit"></VkButton>
-        <VkButton type="primary" icon="share"></VkButton>
-        <VkButton type="success" icon="delete"></VkButton>
-        <VkButton type="info" icon="search">搜索</VkButton>
-        <VkButton type="warning" icon="upload">上传</VkButton>
-        <VkButton type="danger" icon="download">下载</VkButton>
+        <VkButton icon="material-symbols:edit"></VkButton>
+        <VkButton type="primary" icon="material-symbols:share"></VkButton>
+        <VkButton type="success" icon="material-symbols:delete"></VkButton>
+        <VkButton type="info" icon="material-symbols:search">搜索</VkButton>
+        <VkButton type="warning" icon="material-symbols:upload">上传</VkButton>
+        <VkButton type="danger" icon="material-symbols:download">下载</VkButton>
       </div>
       <div class="demo-block">
-        <VkButton icon="edit" icon-position="right">编辑</VkButton>
-        <VkButton type="primary" icon="share" icon-position="right">分享</VkButton>
-        <VkButton type="success" icon="check" icon-position="right">确认</VkButton>
+        <VkButton icon="material-symbols:edit" icon-position="right">编辑</VkButton>
+        <VkButton type="primary" icon="material-symbols:share" icon-position="right">分享</VkButton>
+        <VkButton type="success" icon="material-symbols:check" icon-position="right">确认</VkButton>
       </div>
     </div>
 
@@ -161,7 +161,7 @@
         <VkButton :loading="loading1" @click="handleLoading1">点击加载</VkButton>
         <VkButton type="primary" :loading="loading2" @click="handleLoading2">提交数据</VkButton>
         <VkButton type="success" loading>加载中</VkButton>
-        <VkButton type="warning" loading icon="upload">上传中</VkButton>
+        <VkButton type="warning" loading icon="material-symbols:upload">上传中</VkButton>
       </div>
     </div>
 
@@ -175,9 +175,9 @@
           <VkButton type="primary">下一页</VkButton>
         </VkButtonGroup>
         <VkButtonGroup>
-          <VkButton type="primary" icon="edit"></VkButton>
-          <VkButton type="primary" icon="share"></VkButton>
-          <VkButton type="primary" icon="delete"></VkButton>
+          <VkButton type="primary" icon="material-symbols:edit"></VkButton>
+          <VkButton type="primary" icon="material-symbols:share"></VkButton>
+          <VkButton type="primary" icon="material-symbols:delete"></VkButton>
         </VkButtonGroup>
       </div>
     </div>

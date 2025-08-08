@@ -90,10 +90,10 @@
           <VkButton>消息中心</VkButton>
         </VkBadge>
         <VkBadge is-dot>
-          <Icon icon="material-symbols:notifications" size="24" />
+          <VkIcon icon="material-symbols:notifications" size="24" />
         </VkBadge>
         <VkBadge is-dot>
-          <Icon icon="material-symbols:message" size="24" />
+          <VkIcon icon="material-symbols:message" size="24" />
         </VkBadge>
       </div>
       <div class="demo-code">
@@ -164,7 +164,7 @@
         <VkBadge :is-dot="showDot">
           <VkButton @click="toggleDot">切换红点</VkButton>
         </VkBadge>
-        <VkButton @click="resetAll" type="danger">重置所有</VkButton>
+        <VkButton type="danger" @click="resetAll">重置所有</VkButton>
       </div>
       <div class="demo-code">
         <pre><code>&lt;VkBadge :value="dynamicValue"&gt;
@@ -184,23 +184,23 @@
         <div class="demo-block navigation-demo">
           <div class="nav-item">
             <VkBadge :value="unreadMessages" :max="99">
-              <Icon icon="material-symbols:message" size="20" />
+              <VkIcon icon="material-symbols:message" size="20" />
               <span>消息</span>
             </VkBadge>
           </div>
           <div class="nav-item">
             <VkBadge :value="notifications" :max="9">
-              <Icon icon="material-symbols:notifications" size="20" />
+              <VkIcon icon="material-symbols:notifications" size="20" />
               <span>通知</span>
             </VkBadge>
           </div>
           <div class="nav-item">
-            <VkBadge is-dot v-if="hasUpdate">
-              <Icon icon="material-symbols:settings" size="20" />
+            <VkBadge v-if="hasUpdate" is-dot>
+              <VkIcon icon="material-symbols:settings" size="20" />
               <span>设置</span>
             </VkBadge>
             <div v-else class="nav-content">
-              <Icon icon="material-symbols:settings" size="20" />
+              <VkIcon icon="material-symbols:settings" size="20" />
               <span>设置</span>
             </div>
           </div>
@@ -213,12 +213,12 @@
         <div class="demo-block cart-demo">
           <VkBadge :value="cartItems" :max="99">
             <VkButton type="primary">
-              <Icon icon="material-symbols:shopping-cart" />
+              <VkIcon icon="material-symbols:shopping-cart" />
               购物车
             </VkButton>
           </VkBadge>
-          <VkButton @click="addToCart" style="margin-left: 10px">添加商品</VkButton>
-          <VkButton @click="clearCart" type="danger" style="margin-left: 10px">清空购物车</VkButton>
+          <VkButton style="margin-left: 10px" @click="addToCart">添加商品</VkButton>
+          <VkButton type="danger" style="margin-left: 10px" @click="clearCart">清空购物车</VkButton>
         </div>
       </div>
 
