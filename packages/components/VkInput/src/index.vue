@@ -14,24 +14,48 @@
 
     <!-- 输入框容器 -->
     <div :class="ns.element('wrapper')">
-      <input
-        ref="inputRef"
-        v-bind="filteredAttrs"
-        :class="inputClass"
-        :type="showPasswordVisible ? 'text' : type"
-        :value="currentValue"
-        :placeholder="placeholder"
-        :disabled="disabled"
-        :readonly="readonly"
-        :maxlength="maxlength"
-        :autofocus="autofocus"
-        @input="handleInput"
-        @change="handleChange"
-        @focus="handleFocus"
-        @blur="handleBlur"
-        @keydown.enter="handleEnter"
-      />
+      <template v-if="type === 'textarea'">
+        <textarea
+          ref="inputRef"
+          v-bind="filteredAttrs"
+          :class="inputClass"
+          :value="currentValue"
+          :placeholder="placeholder"
+          :disabled="disabled"
+          :readonly="readonly"
+          :maxlength="maxlength"
+          :autofocus="autofocus"
+          :rows="rows"
+          @input="handleInput"
+          @change="handleChange"
+          @focus="handleFocus"
+          @blur="handleBlur"
+          @keydown.enter="handleEnter"
+        />
+      </template>
+      <template v-else>
+        <input
+          ref="inputRef"
+          v-bind="filteredAttrs"
+          :class="inputClass"
+          :type="showPasswordVisible ? 'text' : type"
+          :value="currentValue"
+          :placeholder="placeholder"
+          :disabled="disabled"
+          :readonly="readonly"
+          :maxlength="maxlength"
+          :autofocus="autofocus"
+          @input="handleInput"
+          @change="handleChange"
+          @focus="handleFocus"
+          @blur="handleBlur"
+          @keydown.enter="handleEnter"
+        />
+      </template>
     </div>
+
+    <!-- 字数统计 -->
+    <span v-if="showWordLimit && maxlength" :class="ns.element('word-limit')"> {{ currentValue?.length || 0 }}/{{ maxlength }} </span>
 
     <!-- 后缀插槽 -->
     <div v-if="showSuffix" :class="ns.element('suffix')">
@@ -59,7 +83,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed, nextTick } from "vue";
+import { defineComponent, ref, computed, nextTick, onMounted } from "vue";
 import type { StyleValue } from "vue";
 import { inputProps, inputEmits } from "./types";
 import { useNamespace, isUrl, useStandardControlled } from "@vakao-ui/utils";
@@ -145,6 +169,35 @@ export default defineComponent({
       return props.clearable && !props.disabled && !props.readonly && !!currentValue.value;
     });
 
+    // 自适应高度处理
+    const adjustTextareaHeight = (element: HTMLTextAreaElement) => {
+      if (!props.autosize) return;
+
+      element.style.height = "auto";
+      const minRows = typeof props.autosize === "object" ? props.autosize.minRows : undefined;
+      const maxRows = typeof props.autosize === "object" ? props.autosize.maxRows : undefined;
+
+      let height = element.scrollHeight;
+      const lineHeight = parseInt(getComputedStyle(element).lineHeight) || 20;
+
+      if (minRows !== undefined) {
+        height = Math.max(height, minRows * lineHeight);
+      }
+
+      if (maxRows !== undefined) {
+        height = Math.min(height, maxRows * lineHeight);
+      }
+
+      element.style.height = `${height}px`;
+    };
+
+    // 初始自适应高度调整
+    onMounted(() => {
+      if (props.type === "textarea" && props.autosize && inputRef.value) {
+        adjustTextareaHeight(inputRef.value as unknown as HTMLTextAreaElement);
+      }
+    });
+
     // 事件处理
     const handleInput = (event: Event) => {
       const target = event.target as HTMLInputElement;
@@ -152,6 +205,10 @@ export default defineComponent({
 
       updateValue(value);
       emit("input", value);
+
+      if (props.type === "textarea" && props.autosize) {
+        adjustTextareaHeight(target as unknown as HTMLTextAreaElement);
+      }
     };
 
     const handleChange = (event: Event) => {

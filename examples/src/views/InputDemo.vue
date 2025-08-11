@@ -112,7 +112,7 @@
       <div class="demo-block">
         <VkSpace vertical>
           <VkInput v-model="textareaValue1" type="textarea" placeholder="请输入内容" />
-          <VkInput v-model="textareaValue2" type="textarea" placeholder="请输入内容" :rows="4" resize="none" />
+          <VkInput v-model="textareaValue2" type="textarea" placeholder="请输入内容" :rows="4" />
           <div class="demo-value">文本域内容：{{ textareaValue1 }}</div>
         </VkSpace>
       </div>
@@ -125,6 +125,7 @@
       <div class="demo-block">
         <VkInput v-model="autosizeValue1" type="textarea" placeholder="自适应高度" autosize />
         <VkInput v-model="autosizeValue2" type="textarea" placeholder="限制最小和最大行数" :autosize="{ minRows: 2, maxRows: 6 }" />
+        <VkInput v-model="autosizeValue3" type="textarea" placeholder="带长度限制的自适应" :maxlength="200" show-word-limit autosize />
       </div>
     </div>
 
@@ -133,7 +134,7 @@
       <h2>输入长度限制</h2>
       <p>使用 <code>maxlength</code> 和 <code>show-word-limit</code> 属性来限制输入长度并显示字数统计。</p>
       <div class="demo-block">
-        <VkInput v-model="limitValue1" placeholder="请输入内容" :maxlength="20" show-word-limit />
+        <VkInput v-model="limitValue1" placeholder="请输入内容" :maxlength="20" :show-word-limit="true" />
         <VkInput v-model="limitValue2" type="textarea" placeholder="请输入内容" :maxlength="100" show-word-limit :rows="3" />
       </div>
     </div>
@@ -224,6 +225,7 @@ const textareaValue1 = ref("");
 const textareaValue2 = ref("固定行数的文本域");
 const autosizeValue1 = ref("");
 const autosizeValue2 = ref("");
+const autosizeValue3 = ref("");
 const limitValue1 = ref("");
 const limitValue2 = ref("");
 const eventValue = ref("");
@@ -372,6 +374,7 @@ const submitForm = () => {
 }
 
 .demo-block {
+  width: 100%;
   padding: 24px;
   background: #fafbfc;
   border: 1px solid #ebeef5;

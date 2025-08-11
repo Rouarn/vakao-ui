@@ -3,6 +3,15 @@
   "version": "0.0.0",
   "description": "Vakao UI 包管理配置",
   "private": true,
+  "main": "./index.ts",
+  "types": "./types/index.ts",
+  "exports": {
+    ".": {
+      "types": "./types/index.ts",
+      "import": "./index.ts"
+    },
+    "./style.scss": "./styles/index.scss"
+  },
   "scripts": {
     "build": "vite build",
     "build:types": "vue-tsc --declaration --emitDeclarationOnly",
