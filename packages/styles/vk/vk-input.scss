@@ -130,6 +130,17 @@
     }
   }
 
+  &--size-tiny {
+    font-size: var(--vk-font-size-extra-small);
+    line-height: var(--vk-line-height-tight);
+    min-height: var(--vk-size-extra-extra-small);
+    border-radius: var(--vk-border-radius-small);
+
+    .vk-input__inner {
+      padding: var(--vk-spacing-0) var(--vk-spacing-1);
+    }
+  }
+
   // 前缀和后缀
   &__prefix,
   &__suffix {
