@@ -416,15 +416,29 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue";
 
+// 类型定义
+interface User {
+  id: number;
+  name: string;
+  email: string;
+  status: "active" | "inactive";
+}
+
+interface FormData {
+  username: string;
+  password: string;
+  email: string;
+}
+
 // 基础数据
-const tooltipDisabled = ref(false);
-const manualVisible = ref(false);
+const tooltipDisabled = ref<boolean>(false);
+const manualVisible = ref<boolean>(false);
 
 // 表格数据
-const users = ref([
+const users = ref<User[]>([
   {
     id: 1,
     name: "张三",
@@ -446,72 +460,72 @@ const users = ref([
 ]);
 
 // 表单数据
-const formData = ref({
+const formData = ref<FormData>({
   username: "",
   password: "",
   email: "",
 });
 
 // 工具栏状态
-const canUndo = ref(true);
-const canRedo = ref(false);
+const canUndo = ref<boolean>(true);
+const canRedo = ref<boolean>(false);
 
 // 事件日志
-const eventLogs = ref([]);
+const eventLogs = ref<string[]>([]);
 
 // 表格操作方法
-const editUser = (user) => {
+const editUser = (user: User): void => {
   addLog(`编辑用户: ${user.name}`);
 };
 
-const deleteUser = (user) => {
+const deleteUser = (user: User): void => {
   addLog(`删除用户: ${user.name}`);
 };
 
-const toggleUserStatus = (user) => {
+const toggleUserStatus = (user: User): void => {
   user.status = user.status === "active" ? "inactive" : "active";
   addLog(`${user.status === "active" ? "启用" : "禁用"}用户: ${user.name}`);
 };
 
 // 工具栏方法
-const createDocument = () => {
+const createDocument = (): void => {
   addLog("创建新文档");
 };
 
-const saveDocument = () => {
+const saveDocument = (): void => {
   addLog("保存文档");
 };
 
-const printDocument = () => {
+const printDocument = (): void => {
   addLog("打印文档");
 };
 
-const undoAction = () => {
+const undoAction = (): void => {
   addLog("撤销操作");
   canUndo.value = false;
   canRedo.value = true;
 };
 
-const redoAction = () => {
+const redoAction = (): void => {
   addLog("重做操作");
   canUndo.value = true;
   canRedo.value = false;
 };
 
-const toggleFullscreen = () => {
+const toggleFullscreen = (): void => {
   addLog("切换全屏模式");
 };
 
 // 事件处理方法
-const handleTooltipShow = () => {
+const handleTooltipShow = (): void => {
   addLog("Tooltip 显示");
 };
 
-const handleTooltipHide = () => {
+const handleTooltipHide = (): void => {
   addLog("Tooltip 隐藏");
 };
 
-const addLog = (message) => {
+const addLog = (message: string): void => {
   const timestamp = new Date().toLocaleTimeString();
   eventLogs.value.unshift(`[${timestamp}] ${message}`);
   if (eventLogs.value.length > 10) {

@@ -39,7 +39,7 @@
   closable
   @close="handleClose(tag)"
 &gt;
-  {{ tag }}
+{{ $attrs.tag }}
 &lt;/VkTag&gt;</code></pre>
       </div>
     </section>
@@ -70,7 +70,7 @@
   closable
   @close="handleClose(tag)"
 &gt;
-  {{ tag }}
+  {{ $attrs.tag }}
 &lt;/VkTag&gt;
 &lt;VkInput
   v-if="inputVisible"
@@ -368,18 +368,54 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, computed, nextTick } from "vue";
 
+// 类型定义
+interface CheckableTag {
+  name: string;
+  type: "primary" | "success" | "info" | "warning" | "danger";
+  checked: boolean;
+}
+
+interface ProductTag {
+  name: string;
+  type: "primary" | "success" | "info" | "warning" | "danger";
+  effect: "dark" | "light" | "plain";
+}
+
+interface Product {
+  id: number;
+  name: string;
+  price: number;
+  tags: ProductTag[];
+}
+
+interface StatusItem {
+  id: number;
+  name: string;
+  status: {
+    text: string;
+    type: "primary" | "success" | "info" | "warning" | "danger";
+    effect: "dark" | "light" | "plain";
+  };
+}
+
+interface EventTag {
+  name: string;
+  type: "primary" | "success" | "info" | "warning" | "danger";
+  checked: boolean;
+}
+
 // 基础数据
-const dynamicTags = ref(["标签一", "标签二", "标签三"]);
-const editableTags = ref(["标签一", "标签二", "标签三"]);
-const inputVisible = ref(false);
-const inputValue = ref("");
-const saveTagInput = ref(null);
+const dynamicTags = ref<string[]>(["标签一", "标签二", "标签三"]);
+const editableTags = ref<string[]>(["标签一", "标签二", "标签三"]);
+const inputVisible = ref<boolean>(false);
+const inputValue = ref<string>("");
+const saveTagInput = ref<any>(null);
 
 // 可选择标签
-const checkableTags = ref([
+const checkableTags = ref<CheckableTag[]>([
   { name: "Vue.js", type: "primary", checked: false },
   { name: "React", type: "success", checked: true },
   { name: "Angular", type: "info", checked: false },
@@ -388,17 +424,17 @@ const checkableTags = ref([
 ]);
 
 // 文章标签
-const techTags = ref(["Vue.js", "JavaScript", "TypeScript"]);
-const categoryTags = ref(["前端开发", "技术分享"]);
-const techInputVisible = ref(false);
-const techInputValue = ref("");
-const categoryInputVisible = ref(false);
-const categoryInputValue = ref("");
-const techInput = ref(null);
-const categoryInput = ref(null);
+const techTags = ref<string[]>(["Vue.js", "JavaScript", "TypeScript"]);
+const categoryTags = ref<string[]>(["前端开发", "技术分享"]);
+const techInputVisible = ref<boolean>(false);
+const techInputValue = ref<string>("");
+const categoryInputVisible = ref<boolean>(false);
+const categoryInputValue = ref<string>("");
+const techInput = ref<any>(null);
+const categoryInput = ref<any>(null);
 
 // 商品数据
-const products = ref([
+const products = ref<Product[]>([
   {
     id: 1,
     name: "iPhone 14 Pro",
@@ -431,7 +467,7 @@ const products = ref([
 ]);
 
 // 状态数据
-const statusItems = ref([
+const statusItems = ref<StatusItem[]>([
   {
     id: 1,
     name: "订单 #001",
@@ -455,20 +491,20 @@ const statusItems = ref([
 ]);
 
 // 筛选数据
-const skills = ref(["Vue.js", "React", "Angular", "Node.js", "Python", "Java"]);
-const experiences = ref(["1-3年", "3-5年", "5-10年", "10年以上"]);
-const selectedSkills = ref(["Vue.js", "React"]);
-const selectedExperiences = ref(["3-5年"]);
+const skills = ref<string[]>(["Vue.js", "React", "Angular", "Node.js", "Python", "Java"]);
+const experiences = ref<string[]>(["1-3年", "3-5年", "5-10年", "10年以上"]);
+const selectedSkills = ref<string[]>(["Vue.js", "React"]);
+const selectedExperiences = ref<string[]>(["3-5年"]);
 
 // 事件标签
-const eventTags = ref([
+const eventTags = ref<EventTag[]>([
   { name: "标签1", type: "primary", checked: false },
   { name: "标签2", type: "success", checked: true },
   { name: "标签3", type: "warning", checked: false },
 ]);
 
 // 事件日志
-const eventLogs = ref([]);
+const eventLogs = ref<string[]>([]);
 
 // 计算属性
 const selectedTags = computed(() => {
@@ -476,22 +512,22 @@ const selectedTags = computed(() => {
 });
 
 // 基础方法
-const handleClose = (tag) => {
+const handleClose = (tag: string): void => {
   dynamicTags.value.splice(dynamicTags.value.indexOf(tag), 1);
 };
 
-const handleEditableClose = (tag) => {
+const handleEditableClose = (tag: string): void => {
   editableTags.value.splice(editableTags.value.indexOf(tag), 1);
 };
 
-const showInput = () => {
+const showInput = (): void => {
   inputVisible.value = true;
   nextTick(() => {
     saveTagInput.value.$refs.input.focus();
   });
 };
 
-const handleInputConfirm = () => {
+const handleInputConfirm = (): void => {
   const value = inputValue.value;
   if (value && !editableTags.value.includes(value)) {
     editableTags.value.push(value);
@@ -500,34 +536,34 @@ const handleInputConfirm = () => {
   inputValue.value = "";
 };
 
-const handleTagCheck = (tag) => {
+const handleTagCheck = (tag: CheckableTag): void => {
   tag.checked = !tag.checked;
 };
 
 // 文章标签方法
-const removeTechTag = (tag) => {
+const removeTechTag = (tag: string): void => {
   techTags.value.splice(techTags.value.indexOf(tag), 1);
 };
 
-const removeCategoryTag = (tag) => {
+const removeCategoryTag = (tag: string): void => {
   categoryTags.value.splice(categoryTags.value.indexOf(tag), 1);
 };
 
-const showTechInput = () => {
+const showTechInput = (): void => {
   techInputVisible.value = true;
   nextTick(() => {
     techInput.value.$refs.input.focus();
   });
 };
 
-const showCategoryInput = () => {
+const showCategoryInput = (): void => {
   categoryInputVisible.value = true;
   nextTick(() => {
     categoryInput.value.$refs.input.focus();
   });
 };
 
-const addTechTag = () => {
+const addTechTag = (): void => {
   const value = techInputValue.value;
   if (value && !techTags.value.includes(value)) {
     techTags.value.push(value);
@@ -536,7 +572,7 @@ const addTechTag = () => {
   techInputValue.value = "";
 };
 
-const addCategoryTag = () => {
+const addCategoryTag = (): void => {
   const value = categoryInputValue.value;
   if (value && !categoryTags.value.includes(value)) {
     categoryTags.value.push(value);
@@ -546,7 +582,7 @@ const addCategoryTag = () => {
 };
 
 // 筛选方法
-const toggleSkill = (skill) => {
+const toggleSkill = (skill: string): void => {
   const index = selectedSkills.value.indexOf(skill);
   if (index > -1) {
     selectedSkills.value.splice(index, 1);
@@ -555,7 +591,7 @@ const toggleSkill = (skill) => {
   }
 };
 
-const toggleExperience = (exp) => {
+const toggleExperience = (exp: string): void => {
   const index = selectedExperiences.value.indexOf(exp);
   if (index > -1) {
     selectedExperiences.value.splice(index, 1);
@@ -564,14 +600,14 @@ const toggleExperience = (exp) => {
   }
 };
 
-const clearFilters = () => {
+const clearFilters = (): void => {
   selectedSkills.value = [];
   selectedExperiences.value = [];
   addLog("筛选条件已清空");
 };
 
 // 事件处理方法
-const handleEventClose = (tag) => {
+const handleEventClose = (tag: EventTag): void => {
   const index = eventTags.value.findIndex((t) => t.name === tag.name);
   if (index > -1) {
     eventTags.value.splice(index, 1);
@@ -579,16 +615,16 @@ const handleEventClose = (tag) => {
   }
 };
 
-const handleEventChange = (tag) => {
+const handleEventChange = (tag: EventTag): void => {
   tag.checked = !tag.checked;
   addLog(`标签 "${tag.name}" 选择状态变为: ${tag.checked ? "选中" : "未选中"}`);
 };
 
-const handleEventClick = (tag) => {
+const handleEventClick = (tag: EventTag): void => {
   addLog(`标签 "${tag.name}" 被点击`);
 };
 
-const addLog = (message) => {
+const addLog = (message: string): void => {
   const timestamp = new Date().toLocaleTimeString();
   eventLogs.value.unshift(`[${timestamp}] ${message}`);
   if (eventLogs.value.length > 10) {
