@@ -33,7 +33,7 @@
     border-radius: inherit;
     box-sizing: border-box;
 
-    input {
+    input, textarea {
       width: 100%;
       border: none;
       outline: none;
@@ -42,10 +42,16 @@
       font-size: inherit;
       line-height: inherit;
       padding: var(--vk-spacing-2) var(--vk-spacing-3);
+      resize: vertical;
+      min-height: var(--vk-size-large);
 
       &::placeholder {
         color: var(--vk-text-color-placeholder);
       }
+    }
+    
+    textarea {
+      min-height: calc(var(--vk-size-large) * 2);
     }
   }
 
@@ -127,6 +133,17 @@
 
     .vk-input__inner {
       padding: var(--vk-spacing-3) var(--vk-spacing-4);
+    }
+  }
+
+  &--size-tiny {
+    font-size: var(--vk-font-size-extra-small);
+    line-height: var(--vk-line-height-tight);
+    min-height: var(--vk-size-extra-extra-small);
+    border-radius: var(--vk-border-radius-small);
+
+    .vk-input__inner {
+      padding: var(--vk-spacing-0) var(--vk-spacing-1);
     }
   }
 
@@ -213,6 +230,18 @@
 
     &:hover {
       color: var(--vk-text-color-primary);
+    }
+  }
+
+  // 字数统计
+  &__word-limit {
+    font-size: var(--vk-font-size-extra-small);
+    color: var(--vk-text-color-secondary);
+    margin-left: var(--vk-spacing-2);
+    white-space: nowrap;
+
+    &.is-exceed {
+      color: var(--vk-color-danger);
     }
   }
 }

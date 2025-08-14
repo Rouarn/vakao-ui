@@ -29,6 +29,7 @@
     "build:utils": "pnpm -C packages/utils build",
     "build:hooks": "pnpm -C packages/hooks build",
     "build:docs": "pnpm -C docs build",
+    "build:examples": "pnpm -C examples build",
     "build:deps": "pnpm -C packages/utils build && pnpm -C packages/hooks build",
     "generate:colors": "tsx ./packages/utils/modules/generate-color.ts",
     "deploy:docs": "node ./scripts/publish.js --deploy-only --deploy-strategy docs",

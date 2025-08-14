@@ -365,28 +365,59 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, computed, watch } from "vue";
 
+// 类型定义
+interface Option {
+  value: string;
+  label: string;
+  disabled?: boolean;
+  desc?: string;
+}
+
+interface GroupOption {
+  label: string;
+  options: Option[];
+}
+
+interface City {
+  value: string;
+  label: string;
+  country: string;
+}
+
+interface FormData {
+  country: string;
+  city: string;
+  hobbies: string[];
+}
+
+interface FilterData {
+  category: string;
+  brand: string;
+  priceRange: string;
+}
+
 // 基础数据
-const basicValue = ref("");
-const disabledValue = ref("");
-const disabledSelectValue = ref("");
-const clearableValue = ref("");
-const multipleValue = ref([]);
-const customValue = ref("");
-const groupValue = ref("");
-const searchValue = ref("");
-const remoteValue = ref("");
-const createValue = ref([]);
-const sizeValue1 = ref("");
-const sizeValue2 = ref("");
-const sizeValue3 = ref("");
-const sizeValue4 = ref("");
-const eventValue = ref([]);
+const basicValue = ref<string>("");
+const disabledValue = ref<string>("");
+const disabledSelectValue = ref<string>("");
+const clearableValue = ref<string>("");
+const multipleValue = ref<string[]>([]);
+const customValue = ref<string>("");
+const groupValue = ref<string>("");
+const searchValue = ref<string>("");
+const remoteValue = ref<string>("");
+const createValue = ref<string[]>([]);
+const sizeValue1 = ref<string>("");
+const sizeValue2 = ref<string>("");
+const sizeValue3 = ref<string>("");
+const sizeValue4 = ref<string>("");
+const eventValue = ref<string[]>([]);
 
 // 选项数据
-const options = ref([
+const options = ref<Option[]>([
   { value: "option1", label: "黄金糕" },
   { value: "option2", label: "双皮奶" },
   { value: "option3", label: "蚵仔煎" },
@@ -394,7 +425,7 @@ const options = ref([
   { value: "option5", label: "北京烤鸭" },
 ]);
 
-const disabledOptions = ref([
+const disabledOptions = ref<Option[]>([
   { value: "option1", label: "黄金糕" },
   { value: "option2", label: "双皮奶", disabled: true },
   { value: "option3", label: "蚵仔煎" },
@@ -402,7 +433,7 @@ const disabledOptions = ref([
   { value: "option5", label: "北京烤鸭" },
 ]);
 
-const cities = ref([
+const cities = ref<Option[]>([
   { value: "beijing", label: "北京", desc: "首都" },
   { value: "shanghai", label: "上海", desc: "魔都" },
   { value: "nanjing", label: "南京", desc: "六朝古都" },
@@ -411,7 +442,7 @@ const cities = ref([
   { value: "guangzhou", label: "广州", desc: "花城" },
 ]);
 
-const groupOptions = ref([
+const groupOptions = ref<GroupOption[]>([
   {
     label: "热门城市",
     options: [
@@ -430,7 +461,7 @@ const groupOptions = ref([
   },
 ]);
 
-const searchOptions = ref([
+const searchOptions = ref<Option[]>([
   { value: "vue", label: "Vue.js" },
   { value: "react", label: "React" },
   { value: "angular", label: "Angular" },
@@ -441,7 +472,7 @@ const searchOptions = ref([
   { value: "lodash", label: "Lodash" },
 ]);
 
-const createOptions = ref([
+const createOptions = ref<Option[]>([
   { value: "javascript", label: "JavaScript" },
   { value: "typescript", label: "TypeScript" },
   { value: "vue", label: "Vue.js" },
@@ -449,9 +480,9 @@ const createOptions = ref([
 ]);
 
 // 远程搜索相关
-const loading = ref(false);
-const remoteOptions = ref([]);
-const allRemoteOptions = [
+const loading = ref<boolean>(false);
+const remoteOptions = ref<Option[]>([]);
+const allRemoteOptions: Option[] = [
   { value: "alabama", label: "Alabama" },
   { value: "alaska", label: "Alaska" },
   { value: "arizona", label: "Arizona" },
@@ -465,20 +496,20 @@ const allRemoteOptions = [
 ];
 
 // 表单数据
-const formData = ref({
+const formData = ref<FormData>({
   country: "",
   city: "",
   hobbies: [],
 });
 
-const countries = ref([
+const countries = ref<Option[]>([
   { value: "china", label: "中国" },
   { value: "usa", label: "美国" },
   { value: "japan", label: "日本" },
   { value: "korea", label: "韩国" },
 ]);
 
-const allCities = ref([
+const allCities = ref<City[]>([
   { value: "beijing", label: "北京", country: "china" },
   { value: "shanghai", label: "上海", country: "china" },
   { value: "guangzhou", label: "广州", country: "china" },
@@ -490,7 +521,7 @@ const allCities = ref([
   { value: "busan", label: "釜山", country: "korea" },
 ]);
 
-const hobbies = ref([
+const hobbies = ref<Option[]>([
   { value: "reading", label: "阅读" },
   { value: "music", label: "音乐" },
   { value: "sports", label: "运动" },
@@ -500,27 +531,27 @@ const hobbies = ref([
 ]);
 
 // 筛选数据
-const filterData = ref({
+const filterData = ref<FilterData>({
   category: "",
   brand: "",
   priceRange: "",
 });
 
-const categories = ref([
+const categories = ref<Option[]>([
   { value: "electronics", label: "电子产品" },
   { value: "clothing", label: "服装" },
   { value: "books", label: "图书" },
   { value: "home", label: "家居" },
 ]);
 
-const brands = ref([
+const brands = ref<Option[]>([
   { value: "apple", label: "苹果" },
   { value: "samsung", label: "三星" },
   { value: "huawei", label: "华为" },
   { value: "xiaomi", label: "小米" },
 ]);
 
-const priceRanges = ref([
+const priceRanges = ref<Option[]>([
   { value: "0-100", label: "0-100元" },
   { value: "100-500", label: "100-500元" },
   { value: "500-1000", label: "500-1000元" },
@@ -528,7 +559,7 @@ const priceRanges = ref([
 ]);
 
 // 事件日志
-const eventLogs = ref([]);
+const eventLogs = ref<string[]>([]);
 
 // 计算属性
 const filteredCities = computed(() => {
@@ -545,7 +576,7 @@ watch(
 );
 
 // 远程搜索方法
-const remoteMethod = (query) => {
+const remoteMethod = (query: string): void => {
   if (query !== "") {
     loading.value = true;
     setTimeout(() => {
@@ -560,7 +591,7 @@ const remoteMethod = (query) => {
 };
 
 // 筛选相关方法
-const resetFilters = () => {
+const resetFilters = (): void => {
   filterData.value = {
     category: "",
     brand: "",
@@ -569,47 +600,47 @@ const resetFilters = () => {
   addLog("筛选条件已重置");
 };
 
-const getCategoryLabel = (value) => {
+const getCategoryLabel = (value: string): string => {
   const category = categories.value.find((item) => item.value === value);
   return category ? category.label : value;
 };
 
-const getBrandLabel = (value) => {
+const getBrandLabel = (value: string): string => {
   const brand = brands.value.find((item) => item.value === value);
   return brand ? brand.label : value;
 };
 
-const getPriceRangeLabel = (value) => {
+const getPriceRangeLabel = (value: string): string => {
   const range = priceRanges.value.find((item) => item.value === value);
   return range ? range.label : value;
 };
 
 // 事件处理方法
-const handleChange = (value) => {
+const handleChange = (value: any): void => {
   addLog(`选择改变: ${JSON.stringify(value)}`);
 };
 
-const handleVisibleChange = (visible) => {
+const handleVisibleChange = (visible: boolean): void => {
   addLog(`下拉框${visible ? "展开" : "收起"}`);
 };
 
-const handleRemoveTag = (value) => {
+const handleRemoveTag = (value: string): void => {
   addLog(`移除标签: ${value}`);
 };
 
-const handleClear = () => {
+const handleClear = (): void => {
   addLog("清空选择");
 };
 
-const handleBlur = () => {
+const handleBlur = (): void => {
   addLog("失去焦点");
 };
 
-const handleFocus = () => {
+const handleFocus = (): void => {
   addLog("获得焦点");
 };
 
-const addLog = (message) => {
+const addLog = (message: string): void => {
   const timestamp = new Date().toLocaleTimeString();
   eventLogs.value.unshift(`[${timestamp}] ${message}`);
   if (eventLogs.value.length > 10) {

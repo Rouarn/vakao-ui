@@ -120,7 +120,11 @@
                   <div class="setting-desc">{{ setting.description }}</div>
                 </div>
               </div>
-              <VkSwitch v-model="settings[setting.key]" :active-color="setting.color" @change="handleSettingChange(setting.key, $event)" />
+              <VkSwitch
+                v-model="settings[setting.key as keyof typeof settings]"
+                :active-color="setting.color"
+                @change="handleSettingChange(setting.key, $event)"
+              />
             </div>
           </div>
 
@@ -344,7 +348,7 @@ const privacySettings = [
   },
 ];
 
-const settings = reactive({
+const settings = reactive<Record<string, boolean>>({
   emailNotification: true,
   smsNotification: false,
   pushNotification: true,
@@ -393,13 +397,13 @@ const features = [
   },
 ];
 
-const featureStates = reactive({
+const featureStates = reactive<Record<string, boolean>>({
   darkMode: false,
   experimentalFeatures: false,
   premiumFeatures: false,
 });
 
-const featureOptions = reactive({
+const featureOptions = reactive<Record<string, boolean>>({
   autoDarkMode: false,
   darkModeSchedule: false,
   betaUI: false,

@@ -269,37 +269,37 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue";
 
 // 动态数据
-const dynamicValue = ref(1);
-const messageCount = ref(5);
-const showDot = ref(true);
-const unreadMessages = ref(12);
-const notifications = ref(3);
-const hasUpdate = ref(true);
-const cartItems = ref(2);
-const clickCount = ref(0);
-const eventLogs = ref([]);
+const dynamicValue = ref<number>(1);
+const messageCount = ref<number>(5);
+const showDot = ref<boolean>(true);
+const unreadMessages = ref<number>(12);
+const notifications = ref<number>(3);
+const hasUpdate = ref<boolean>(true);
+const cartItems = ref<number>(2);
+const clickCount = ref<number>(0);
+const eventLogs = ref<string[]>([]);
 
 // 方法
-const increaseDynamic = () => {
+const increaseDynamic = (): void => {
   dynamicValue.value++;
   addLog(`动态值增加到: ${dynamicValue.value}`);
 };
 
-const addMessage = () => {
+const addMessage = (): void => {
   messageCount.value++;
   addLog(`消息数量增加到: ${messageCount.value}`);
 };
 
-const toggleDot = () => {
+const toggleDot = (): void => {
   showDot.value = !showDot.value;
   addLog(`红点状态切换为: ${showDot.value ? "显示" : "隐藏"}`);
 };
 
-const resetAll = () => {
+const resetAll = (): void => {
   dynamicValue.value = 1;
   messageCount.value = 5;
   showDot.value = true;
@@ -307,22 +307,22 @@ const resetAll = () => {
   addLog("所有数据已重置");
 };
 
-const addToCart = () => {
+const addToCart = (): void => {
   cartItems.value++;
   addLog(`购物车商品数量: ${cartItems.value}`);
 };
 
-const clearCart = () => {
+const clearCart = (): void => {
   cartItems.value = 0;
   addLog("购物车已清空");
 };
 
-const handleBadgeClick = () => {
+const handleBadgeClick = (): void => {
   clickCount.value++;
   addLog(`徽章被点击，点击次数: ${clickCount.value}`);
 };
 
-const addLog = (message) => {
+const addLog = (message: string): void => {
   const timestamp = new Date().toLocaleTimeString();
   eventLogs.value.unshift(`[${timestamp}] ${message}`);
   if (eventLogs.value.length > 10) {

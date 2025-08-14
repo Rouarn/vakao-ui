@@ -2,7 +2,7 @@ import type { PropType, CSSProperties } from "vue";
 import type { ExtractPublicPropTypes, ComponentSize } from "@/types";
 
 // 输入框类型
-export type InputType = "text" | "password" | "email" | "number" | "tel" | "url";
+export type InputType = "text" | "password" | "email" | "number" | "tel" | "url" | "textarea";
 
 // 输入框尺寸
 export type InputSize = ComponentSize;
@@ -44,6 +44,16 @@ export const inputProps = {
     type: [Number, String] as PropType<number | string>,
     default: undefined,
   },
+  /** 文本域行数 */
+  rows: {
+    type: Number,
+    default: 2,
+  },
+  /** 文本域是否自适应高度 */
+  autosize: {
+    type: [Boolean, Object] as PropType<boolean | { minRows?: number; maxRows?: number }>,
+    default: false,
+  },
   /** 是否显示清除按钮 */
   clearable: {
     type: Boolean,
@@ -51,6 +61,11 @@ export const inputProps = {
   },
   /** 是否显示密码切换按钮 */
   showPassword: {
+    type: Boolean,
+    default: false,
+  },
+  /** 是否显示字数统计 */
+  showWordLimit: {
     type: Boolean,
     default: false,
   },

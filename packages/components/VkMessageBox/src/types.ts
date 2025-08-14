@@ -11,7 +11,7 @@ export type MessageBoxAction = "confirm" | "cancel" | "close";
 export const messageBoxProps = {
   /** 消息内容 */
   message: {
-    type: String,
+    type: [String, Object] as PropType<string | any>,
     required: true,
   },
   /** 标题 */
@@ -107,6 +107,11 @@ export const messageBoxProps = {
     type: Function as PropType<(_action: MessageBoxAction, _instance: MessageBoxInstance) => void>,
     default: undefined,
   },
+  /** 关闭前的回调，返回 false 或 Promise.reject 时阻止关闭 */
+  beforeClose: {
+    type: Function as PropType<(_action: MessageBoxAction, _instance: MessageBoxInstance, _done?: () => void) => boolean | Promise<boolean> | void>,
+    default: undefined,
+  },
 } as const;
 
 // MessageBox 属性类型
@@ -115,8 +120,9 @@ export type MessageBoxProps = ExtractPublicPropTypes<typeof messageBoxProps>;
 // MessageBox 选项
 export interface MessageBoxOptions {
   title?: string;
-  message?: string;
+  message?: string | any;
   type?: MessageBoxType;
+  iconClass?: string;
   confirmText?: string;
   cancelText?: string;
   showConfirmButton?: boolean;
@@ -132,6 +138,7 @@ export interface MessageBoxOptions {
   inputPattern?: RegExp;
   inputValidator?: (_value: string) => boolean | string;
   inputErrorMessage?: string;
+  beforeClose?: (_action: MessageBoxAction, _instance: MessageBoxInstance, _done?: () => void) => boolean | Promise<boolean> | void;
 }
 
 // MessageBox 实例
@@ -139,6 +146,9 @@ export interface MessageBoxInstance {
   visible: boolean;
   value?: string;
   close: () => void;
+  confirmButtonLoading?: boolean;
+  confirmText?: string;
+  cancelText?: string;
 }
 
 // MessageBox 结果

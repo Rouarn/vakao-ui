@@ -348,17 +348,31 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue";
 
+// 类型定义
+interface Product {
+  id: number;
+  name: string;
+  price: number;
+  image: string;
+}
+
+interface User {
+  id: number;
+  name: string;
+  avatar: string;
+}
+
 // 图片数据
-const imageUrl = ref("https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg");
-const slowImageUrl = ref("https://picsum.photos/400/300?random=1");
-const avatarUrl = ref("https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png");
-const eventImageUrl = ref("https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg");
+const imageUrl = ref<string>("https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg");
+const slowImageUrl = ref<string>("https://picsum.photos/400/300?random=1");
+const avatarUrl = ref<string>("https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png");
+const eventImageUrl = ref<string>("https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg");
 
 // 懒加载图片列表
-const lazyImages = ref([
+const lazyImages = ref<string[]>([
   "https://picsum.photos/400/300?random=1",
   "https://picsum.photos/400/300?random=2",
   "https://picsum.photos/400/300?random=3",
@@ -368,14 +382,14 @@ const lazyImages = ref([
 ]);
 
 // 预览图片列表
-const previewImages = ref([
+const previewImages = ref<string[]>([
   "https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg",
   "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
   "https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png",
 ]);
 
 // 商品数据
-const products = ref([
+const products = ref<Product[]>([
   {
     id: 1,
     name: "时尚T恤",
@@ -403,7 +417,7 @@ const products = ref([
 ]);
 
 // 用户数据
-const users = ref([
+const users = ref<User[]>([
   {
     id: 1,
     name: "张三",
@@ -427,7 +441,7 @@ const users = ref([
 ]);
 
 // 画廊图片
-const galleryImages = ref([
+const galleryImages = ref<string[]>([
   "https://picsum.photos/300/200?random=20",
   "https://picsum.photos/300/200?random=21",
   "https://picsum.photos/300/200?random=22",
@@ -440,37 +454,37 @@ const galleryImages = ref([
 ]);
 
 // 事件日志
-const eventLogs = ref([]);
+const eventLogs = ref<string[]>([]);
 
 // 事件处理方法
-const handleLoad = () => {
+const handleLoad = (): void => {
   addLog("图片加载成功");
 };
 
-const handleError = () => {
+const handleError = (): void => {
   addLog("图片加载失败");
 };
 
-const handleClick = () => {
+const handleClick = (): void => {
   addLog("图片被点击");
 };
 
-const refreshImage = () => {
+const refreshImage = (): void => {
   eventImageUrl.value = `https://picsum.photos/400/300?random=${Date.now()}`;
   addLog("刷新图片");
 };
 
-const loadErrorImage = () => {
+const loadErrorImage = (): void => {
   eventImageUrl.value = "https://invalid-image-url.jpg";
   addLog("尝试加载错误图片");
 };
 
-const clearLogs = () => {
+const clearLogs = (): void => {
   eventLogs.value = [];
   addLog("日志已清空");
 };
 
-const addLog = (message) => {
+const addLog = (message: string): void => {
   const timestamp = new Date().toLocaleTimeString();
   eventLogs.value.unshift(`[${timestamp}] ${message}`);
   if (eventLogs.value.length > 10) {
