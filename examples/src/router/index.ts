@@ -1,10 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Layout from "../components/Layout.vue";
 import Home from "../views/Home.vue";
-import ButtonDemo from "../views/ButtonDemo.vue";
-import InputDemo from "../views/InputDemo.vue";
-import CardDemo from "../views/CardDemo.vue";
-import AvatarDemo from "../views/AvatarDemo.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -21,24 +17,23 @@ const router = createRouter({
         {
           path: "/button",
           name: "Button",
-          component: ButtonDemo,
+          component: () => import("../views/ButtonDemo.vue"),
         },
         {
           path: "/input",
           name: "Input",
-          component: InputDemo,
+          component: () => import("../views/InputDemo.vue"),
         },
         {
           path: "/card",
           name: "Card",
-          component: CardDemo,
+          component: () => import("../views/CardDemo.vue"),
         },
         {
           path: "/avatar",
           name: "Avatar",
-          component: AvatarDemo,
+          component: () => import("../views/AvatarDemo.vue"),
         },
-        // 其他组件路由将在后续添加
         {
           path: "/icon",
           name: "Icon",
