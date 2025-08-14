@@ -149,6 +149,8 @@ export interface MessageBoxInstance {
   confirmButtonLoading?: boolean;
   confirmText?: string;
   cancelText?: string;
+  inputValue?: string;
+  inputErrorMessage?: string;
 }
 
 // MessageBox 结果

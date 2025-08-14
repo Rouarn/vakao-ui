@@ -290,6 +290,18 @@ const getMessageBoxInstance = () => {
     set cancelText(value: string) {
       dynamicCancelText.value = value;
     },
+    get inputValue() {
+      return inputValue.value;
+    },
+    set inputValue(value: string) {
+      inputValue.value = value;
+    },
+    get inputErrorMessage() {
+      return inputErrorMessage.value;
+    },
+    set inputErrorMessage(value: string) {
+      inputErrorMessage.value = value;
+    },
   };
 };
 
