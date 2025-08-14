@@ -57,7 +57,8 @@ export * from "./VkDivider";
 export * from "./VkTag";
 export * from "./VkSpace";
 
-/** 反馈组件 */
+/** 反馈相关组件 */
+export * from "./VkMessage";
 export * from "./VkMessageBox";
 export * from "./VkTooltip";
 
@@ -78,6 +79,7 @@ import { VkBadge } from "./VkBadge";
 import { VkCard } from "./VkCard";
 import { VkDivider } from "./VkDivider";
 import { VkTag } from "./VkTag";
+import { VkMessage } from "./VkMessage";
 import { VkMessageBox } from "./VkMessageBox";
 import { VkSelect, VkOption, VkOptionGroup } from "./VkSelect";
 import { VkTooltip } from "./VkTooltip";
@@ -118,6 +120,7 @@ const components = {
   VkTag,
 
   // 反馈组件
+  VkMessage,
   VkMessageBox,
   VkTooltip,
 

@@ -78,6 +78,11 @@ const router = createRouter({
           component: () => import("../views/TagDemo.vue"),
         },
         {
+          path: "/message",
+          name: "Message",
+          component: () => import("../views/MessageDemo.vue"),
+        },
+        {
           path: "/message-box",
           name: "MessageBox",
           component: () => import("../views/MessageBoxDemo.vue"),

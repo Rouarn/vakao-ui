@@ -42,6 +42,7 @@
 
           <div class="nav-group">
             <h3 class="nav-title">反馈组件</h3>
+            <router-link to="/message" class="nav-item">Message 消息</router-link>
             <router-link to="/message-box" class="nav-item">MessageBox 消息弹框</router-link>
             <router-link to="/tooltip" class="nav-item">Tooltip 文字提示</router-link>
           </div>

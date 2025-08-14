@@ -1,0 +1,310 @@
+/**
+ * VkMessage 消息组件样式
+ *
+ * 提供完整的消息组件样式，包括基础样式、类型变体、位置变体、动画效果等。
+ * 支持多种类型（default、primary、success、warning、danger、info）、
+ * 多种位置（top、top-left、top-right）、以及完整的进入和离开动画。
+ */
+
+// VkMessage 组件样式
+.vk-message {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  border-radius: var(--vk-border-radius-base);
+  border: 1px solid transparent;
+  background-color: var(--vk-fill-color-blank);
+  box-shadow: var(--vk-box-shadow-light);
+  font-size: var(--vk-font-size-base);
+  line-height: 1.4;
+  min-width: 300px;
+  max-width: 500px;
+  word-wrap: break-word;
+  word-break: break-all;
+  transition: all 0.3s ease-in-out;
+  box-sizing: border-box;
+  pointer-events: auto;
+  user-select: none;
+
+  // 消息图标
+  &__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 8px;
+    flex-shrink: 0;
+  }
+
+  // 消息内容
+  &__content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    color: var(--vk-text-color-primary);
+    line-height: 1.4;
+  }
+
+  // 关闭按钮
+  &__close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 12px;
+    cursor: pointer;
+    border-radius: var(--vk-border-radius-circle);
+    padding: 2px;
+    transition: all 0.2s ease-in-out;
+    opacity: 0.7;
+    flex-shrink: 0;
+
+    &:hover {
+      opacity: 1;
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  // 类型变体
+  &--default {
+    background-color: var(--vk-fill-color-blank);
+    border-color: var(--vk-border-color-light);
+    color: var(--vk-text-color-primary);
+
+    .vk-message__icon {
+      color: var(--vk-text-color-regular);
+    }
+  }
+
+  &--primary {
+    background-color: var(--vk-color-primary-light-9);
+    border-color: var(--vk-color-primary-light-7);
+    color: var(--vk-color-primary);
+
+    .vk-message__icon {
+      color: var(--vk-color-primary);
+    }
+
+    .vk-message__close:hover {
+      background-color: var(--vk-color-primary-light-8);
+    }
+  }
+
+  &--success {
+    background-color: var(--vk-color-success-light-9);
+    border-color: var(--vk-color-success-light-7);
+    color: var(--vk-color-success);
+
+    .vk-message__icon {
+      color: var(--vk-color-success);
+    }
+
+    .vk-message__close:hover {
+      background-color: var(--vk-color-success-light-8);
+    }
+  }
+
+  &--warning {
+    background-color: var(--vk-color-warning-light-9);
+    border-color: var(--vk-color-warning-light-7);
+    color: var(--vk-color-warning);
+
+    .vk-message__icon {
+      color: var(--vk-color-warning);
+    }
+
+    .vk-message__close:hover {
+      background-color: var(--vk-color-warning-light-8);
+    }
+  }
+
+  &--danger {
+    background-color: var(--vk-color-danger-light-9);
+    border-color: var(--vk-color-danger-light-7);
+    color: var(--vk-color-danger);
+
+    .vk-message__icon {
+      color: var(--vk-color-danger);
+    }
+
+    .vk-message__close:hover {
+      background-color: var(--vk-color-danger-light-8);
+    }
+  }
+
+  &--info {
+    background-color: var(--vk-color-info-light-9);
+    border-color: var(--vk-color-info-light-7);
+    color: var(--vk-color-info);
+
+    .vk-message__icon {
+      color: var(--vk-color-info);
+    }
+
+    .vk-message__close:hover {
+      background-color: var(--vk-color-info-light-8);
+    }
+  }
+
+  // 位置变体
+  &--top {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  &--top-left {
+    left: 20px;
+  }
+
+  &--top-right {
+    right: 20px;
+  }
+}
+
+// 消息动画
+.vk-message-enter-active {
+  transition: all 0.3s ease-out;
+}
+
+.vk-message-leave-active {
+  transition: all 0.3s ease-in;
+}
+
+.vk-message-enter-from {
+  opacity: 0;
+  transform: translateY(-100%) translateX(-50%);
+}
+
+.vk-message-enter-to {
+  opacity: 1;
+  transform: translateY(0) translateX(-50%);
+}
+
+.vk-message-leave-from {
+  opacity: 1;
+  transform: translateY(0) translateX(-50%);
+}
+
+.vk-message-leave-to {
+  opacity: 0;
+  transform: translateY(-100%) translateX(-50%);
+}
+
+// 左侧位置的动画
+.vk-message--top-left {
+  &.vk-message-enter-from {
+    transform: translateY(-100%);
+  }
+
+  &.vk-message-enter-to {
+    transform: translateY(0);
+  }
+
+  &.vk-message-leave-from {
+    transform: translateY(0);
+  }
+
+  &.vk-message-leave-to {
+    transform: translateY(-100%);
+  }
+}
+
+// 右侧位置的动画
+.vk-message--top-right {
+  &.vk-message-enter-from {
+    transform: translateY(-100%);
+  }
+
+  &.vk-message-enter-to {
+    transform: translateY(0);
+  }
+
+  &.vk-message-leave-from {
+    transform: translateY(0);
+  }
+
+  &.vk-message-leave-to {
+    transform: translateY(-100%);
+  }
+}
+
+// 响应式设计
+@media (max-width: 768px) {
+  .vk-message {
+    min-width: 280px;
+    max-width: calc(100vw - 40px);
+    margin: 0 20px;
+
+    &--top {
+      left: 20px;
+      right: 20px;
+      transform: none;
+    }
+
+    &--top-left {
+      left: 20px;
+    }
+
+    &--top-right {
+      right: 20px;
+    }
+  }
+
+  // 移动端动画调整
+  .vk-message--top {
+    &.vk-message-enter-from {
+      transform: translateY(-100%);
+    }
+
+    &.vk-message-enter-to {
+      transform: translateY(0);
+    }
+
+    &.vk-message-leave-from {
+      transform: translateY(0);
+    }
+
+    &.vk-message-leave-to {
+      transform: translateY(-100%);
+    }
+  }
+}
+
+// 高对比度模式支持
+@media (prefers-contrast: high) {
+  .vk-message {
+    border-width: 2px;
+    
+    &--primary {
+      border-color: var(--vk-color-primary);
+    }
+
+    &--success {
+      border-color: var(--vk-color-success);
+    }
+
+    &--warning {
+      border-color: var(--vk-color-warning);
+    }
+
+    &--danger {
+      border-color: var(--vk-color-danger);
+    }
+
+    &--info {
+      border-color: var(--vk-color-info);
+    }
+  }
+}
+
+// 减少动画模式支持
+@media (prefers-reduced-motion: reduce) {
+  .vk-message-enter-active,
+  .vk-message-leave-active {
+    transition: opacity 0.2s ease;
+  }
+
+  .vk-message-enter-from,
+  .vk-message-leave-to {
+    transform: none;
+  }
+}

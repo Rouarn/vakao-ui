@@ -72,6 +72,7 @@ _即将推出导航组件..._
 
 反馈组件用于向用户展示操作结果、系统状态或重要信息。
 
+- [Message 消息](/components/message) - 从页面顶部滑入的全局提示消息组件
 - [MessageBox 消息弹框](/components/message-box) - 模拟系统消息提示框的模态对话框组件
 - [Tooltip 工具提示](/components/tooltip) - 常用于展示鼠标 hover 时的提示信息
 
