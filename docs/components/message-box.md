@@ -425,7 +425,7 @@ const showAlert = () => {
 | 参数               | 说明                                                                                               | 类型            | 可选值                           | 默认值 |
 | ------------------ | -------------------------------------------------------------------------------------------------- | --------------- | -------------------------------- | ------ |
 | title              | MessageBox 标题                                                                                    | string          | —                                | 提示   |
-| message            | MessageBox 消息正文内容                                                                            | string          | —                                | —      |
+| message            | MessageBox 消息正文内容，支持字符串或 VNode                                                        | string / VNode  | —                                | —      |
 | type               | 消息类型，用于显示图标                                                                             | string          | success / info / warning / error | info   |
 | customClass        | MessageBox 的自定义类名                                                                            | string          | —                                | —      |
 | customStyle        | MessageBox 的自定义样式                                                                            | string / object | —                                | —      |
@@ -625,6 +625,66 @@ VkMessageBox.confirm("确认提交吗？", "提交确认", {
 });
 ```
 
+## HTML 内容渲染
+
+如果需要在消息内容中使用 HTML，需要使用 VNode 而不是 HTML 字符串：
+
+```javascript
+import { h } from 'vue'
+import { VkMessageBox } from 'vakao-ui'
+
+// ❌ 错误：HTML 字符串不会被解析
+VkMessageBox.alert('<strong>警告：</strong>此操作不可逆！', '提示')
+
+// ✅ 正确：使用 VNode
+VkMessageBox.alert(
+  h('div', [
+    h('strong', { style: { color: 'red' } }, '警告：'),
+    '此操作不可逆！'
+  ]),
+  '提示'
+)
+
+// ✅ 或者使用 JSX（需要配置 JSX 支持）
+VkMessageBox.alert(
+  <div>
+    <strong style={{ color: 'red' }}>警告：</strong>
+    此操作不可逆！
+  </div>,
+  '提示'
+)
+```
+
+### 复杂 HTML 内容示例
+
+```javascript
+import { h } from 'vue'
+
+// 创建包含多种元素的复杂内容
+const complexMessage = h('div', {
+  style: { lineHeight: '1.6' }
+}, [
+  h('p', { style: { margin: '0 0 10px 0' } }, [
+    h('strong', { style: { color: '#e74c3c' } }, '重要提醒：'),
+    '以下操作将会：'
+  ]),
+  h('ul', { style: { margin: '10px 0', paddingLeft: '20px' } }, [
+    h('li', '删除所有相关数据'),
+    h('li', '清空缓存信息'),
+    h('li', '重置用户配置')
+  ]),
+  h('p', { style: { margin: '10px 0 0 0', fontSize: '12px', color: '#666' } }, 
+    '此操作不可撤销，请谨慎操作！'
+  )
+])
+
+VkMessageBox.confirm(complexMessage, '确认删除', {
+  type: 'warning',
+  confirmText: '确认删除',
+  cancelText: '取消'
+})
+```
+
 ## 注意事项
 
 1. **Promise vs 回调**: 可以选择使用 Promise 模式或回调模式，两者可以同时使用
@@ -632,3 +692,4 @@ VkMessageBox.confirm("确认提交吗？", "提交确认", {
 3. **输入验证**: 使用 `inputValidator` 进行输入验证，返回字符串表示错误信息
 4. **样式定制**: 通过 `customClass` 和 `customStyle` 进行样式定制
 5. **关闭控制**: 使用 `beforeClose` 可以阻止弹框关闭，适用于异步操作场景
+6. **HTML 渲染**: 不支持 HTML 字符串解析，需要使用 VNode 来实现富文本内容

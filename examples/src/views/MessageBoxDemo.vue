@@ -668,7 +668,15 @@ const sensitiveOperation = (): void => {
     confirmText: "继续",
     cancelText: "取消",
     type: "warning",
-    message: "<strong>警告：</strong>此操作可能影响系统安全，请谨慎操作！",
+    message: h(
+      "div",
+      {
+        style: {
+          color: "red",
+        },
+      },
+      [h("strong", {}, "警告："), "此操作可能影响系统安全，请谨慎操作！"],
+    ),
   })
     .then(() => {
       addLog("执行敏感操作");
