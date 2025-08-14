@@ -14,7 +14,7 @@
         <pre><code>import { VkMessageBox } from '@vakao-ui/components'
 
 VkMessageBox.alert('这是一段内容', '标题名称', {
-  confirmButtonText: '确定',
+  confirmText: '确定',
   callback: action => {
     this.$message({
       type: 'info',
@@ -34,8 +34,8 @@ VkMessageBox.alert('这是一段内容', '标题名称', {
       </div>
       <div class="demo-code">
         <pre><code>VkMessageBox.confirm('此操作将永久删除该文件, 是否继续?', '提示', {
-  confirmButtonText: '确定',
-  cancelButtonText: '取消',
+  confirmText: '确定',
+  cancelText: '取消',
   type: 'warning'
 }).then(() => {
   this.$message({
@@ -60,8 +60,8 @@ VkMessageBox.alert('这是一段内容', '标题名称', {
       </div>
       <div class="demo-code">
         <pre><code>VkMessageBox.prompt('请输入邮箱', '提示', {
-  confirmButtonText: '确定',
-  cancelButtonText: '取消',
+  confirmText: '确定',
+  cancelText: '取消',
   inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+(\w{2,})/,
   inputErrorMessage: '邮箱格式不正确'
 }).then(({ value }) => {
@@ -95,12 +95,12 @@ VkMessageBox.alert('这是一段内容', '标题名称', {
     h('i', { style: 'color: teal' }, 'VNode')
   ]),
   showCancelButton: true,
-  confirmButtonText: '确定',
-  cancelButtonText: '取消',
+  confirmText: '确定',
+  cancelText: '取消',
   beforeClose: (action, instance, done) => {
     if (action === 'confirm') {
       instance.confirmButtonLoading = true
-      instance.confirmButtonText = '执行中...'
+      instance.confirmText = '执行中...'
       setTimeout(() => {
         done()
         setTimeout(() => {
@@ -252,19 +252,33 @@ VkMessageBox.alert('这是一条错误消息', '错误', {
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, computed, h } from "vue";
-import { VkMessageBox } from "@vakao-ui/components";
+import { VkMessageBox } from "vakao-ui";
+
+// 类型定义
+interface FormData {
+  username: string;
+  email: string;
+  remark: string;
+}
+
+interface ListItem {
+  id: number;
+  name: string;
+  status: "active" | "inactive";
+  selected: boolean;
+}
 
 // 表单数据
-const formData = ref({
+const formData = ref<FormData>({
   username: "",
   email: "",
   remark: "",
 });
 
 // 列表数据
-const items = ref([
+const items = ref<ListItem[]>([
   { id: 1, name: "项目 A", status: "active", selected: false },
   { id: 2, name: "项目 B", status: "inactive", selected: false },
   { id: 3, name: "项目 C", status: "active", selected: false },
@@ -273,7 +287,7 @@ const items = ref([
 ]);
 
 // 事件日志
-const eventLogs = ref([]);
+const eventLogs = ref<string[]>([]);
 
 // 计算属性
 const selectedCount = computed(() => {
@@ -281,19 +295,22 @@ const selectedCount = computed(() => {
 });
 
 // 基础 MessageBox 方法
-const showAlert = () => {
+const showAlert = (): void => {
   VkMessageBox.alert("这是一段内容", "标题名称", {
-    confirmButtonText: "确定",
-    callback: (action) => {
-      addLog(`Alert 对话框操作: ${action}`);
-    },
-  });
+    confirmText: "确定",
+  })
+    .then(() => {
+      addLog("Alert 对话框确认");
+    })
+    .catch(() => {
+      addLog("Alert 对话框取消");
+    });
 };
 
-const showConfirm = () => {
+const showConfirm = (): void => {
   VkMessageBox.confirm("此操作将永久删除该文件, 是否继续?", "提示", {
-    confirmButtonText: "确定",
-    cancelButtonText: "取消",
+    confirmText: "确定",
+    cancelText: "取消",
     type: "warning",
   })
     .then(() => {
@@ -304,10 +321,10 @@ const showConfirm = () => {
     });
 };
 
-const showPrompt = () => {
+const showPrompt = (): void => {
   VkMessageBox.prompt("请输入邮箱", "提示", {
-    confirmButtonText: "确定",
-    cancelButtonText: "取消",
+    confirmText: "确定",
+    cancelText: "取消",
     inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+([a-zA-Z]{2,})/,
     inputErrorMessage: "邮箱格式不正确",
   })
@@ -320,35 +337,35 @@ const showPrompt = () => {
 };
 
 // 自定义 MessageBox
-const showCustom = () => {
+const showCustom = (): void => {
   VkMessageBox({
     title: "自定义消息",
     message: "这是一个自定义样式的消息框",
-    iconClass: "vk-icon-warning",
     customClass: "custom-message-box",
     showCancelButton: true,
-    confirmButtonText: "确定",
-    cancelButtonText: "取消",
-    beforeClose: (action, instance, done) => {
+    confirmText: "确定",
+    cancelText: "取消",
+    beforeClose: (action: string, instance: any, done?: () => void) => {
       if (action === "confirm") {
         instance.confirmButtonLoading = true;
-        instance.confirmButtonText = "处理中...";
+        instance.confirmText = "处理中...";
         setTimeout(() => {
-          done();
+          done?.();
           addLog("自定义对话框确认");
           setTimeout(() => {
             instance.confirmButtonLoading = false;
+            instance.confirmText = "完成";
           }, 300);
         }, 2000);
       } else {
-        done();
+        done?.();
         addLog("自定义对话框取消");
       }
     },
   });
 };
 
-const showHTML = () => {
+const showHTML = (): void => {
   VkMessageBox({
     title: "HTML 内容",
     message: h("div", null, [
@@ -358,8 +375,8 @@ const showHTML = () => {
       h("em", { style: "color: #67c23a" }, "HTML 元素"),
     ]),
     showCancelButton: true,
-    confirmButtonText: "确定",
-    cancelButtonText: "取消",
+    confirmText: "确定",
+    cancelText: "取消",
   })
     .then(() => {
       addLog("HTML 内容对话框确认");
@@ -369,50 +386,52 @@ const showHTML = () => {
     });
 };
 
-const showCenter = () => {
+const showCenter = (): void => {
   VkMessageBox.alert("居中显示的消息内容", "居中布局", {
-    confirmButtonText: "确定",
-    center: true,
-    callback: () => {
-      addLog("居中对话框操作");
-    },
+    confirmText: "确定",
+  }).then(() => {
+    addLog("居中对话框操作");
   });
 };
 
 // 不同类型的 MessageBox
-const showSuccess = () => {
+const showSuccess = (): void => {
   VkMessageBox.alert("操作成功!", "成功", {
     type: "success",
-    callback: () => addLog("成功消息确认"),
+  }).then(() => {
+    addLog("成功消息确认");
   });
 };
 
-const showInfo = () => {
+const showInfo = (): void => {
   VkMessageBox.alert("这是一条消息提示", "消息", {
     type: "info",
-    callback: () => addLog("信息消息确认"),
+  }).then(() => {
+    addLog("居中对话框操作");
   });
 };
 
-const showWarning = () => {
+const showWarning = (): void => {
   VkMessageBox.alert("这是一条警告消息", "警告", {
     type: "warning",
-    callback: () => addLog("警告消息确认"),
+  }).then(() => {
+    addLog("警告消息确认");
   });
 };
 
-const showError = () => {
+const showError = (): void => {
   VkMessageBox.alert("这是一条错误消息", "错误", {
     type: "error",
-    callback: () => addLog("错误消息确认"),
+  }).then(() => {
+    addLog("错误消息确认");
   });
 };
 
 // 数据操作方法
-const editData = () => {
+const editData = (): void => {
   VkMessageBox.prompt("请输入新的数据值", "编辑数据", {
-    confirmButtonText: "保存",
-    cancelButtonText: "取消",
+    confirmText: "保存",
+    cancelText: "取消",
     inputValue: "原始数据",
   })
     .then(({ value }) => {
@@ -423,10 +442,10 @@ const editData = () => {
     });
 };
 
-const deleteData = () => {
+const deleteData = (): void => {
   VkMessageBox.confirm("确定要删除这条数据吗？此操作不可恢复。", "删除确认", {
-    confirmButtonText: "删除",
-    cancelButtonText: "取消",
+    confirmText: "删除",
+    cancelText: "取消",
     type: "warning",
   })
     .then(() => {
@@ -437,10 +456,10 @@ const deleteData = () => {
     });
 };
 
-const resetData = () => {
+const resetData = (): void => {
   VkMessageBox.confirm("重置数据将清空所有自定义设置，是否继续？", "重置确认", {
-    confirmButtonText: "重置",
-    cancelButtonText: "取消",
+    confirmText: "重置",
+    cancelText: "取消",
     type: "warning",
   })
     .then(() => {
@@ -451,10 +470,10 @@ const resetData = () => {
     });
 };
 
-const backupConfig = () => {
+const backupConfig = (): void => {
   VkMessageBox.confirm("是否创建当前配置的备份？", "备份确认", {
-    confirmButtonText: "备份",
-    cancelButtonText: "取消",
+    confirmText: "备份",
+    cancelText: "取消",
     type: "info",
   })
     .then(() => {
@@ -465,10 +484,10 @@ const backupConfig = () => {
     });
 };
 
-const restoreConfig = () => {
+const restoreConfig = (): void => {
   VkMessageBox.confirm("恢复配置将覆盖当前设置，是否继续？", "恢复确认", {
-    confirmButtonText: "恢复",
-    cancelButtonText: "取消",
+    confirmText: "恢复",
+    cancelText: "取消",
     type: "warning",
   })
     .then(() => {
@@ -479,10 +498,10 @@ const restoreConfig = () => {
     });
 };
 
-const clearConfig = () => {
+const clearConfig = (): void => {
   VkMessageBox.confirm("清空配置将删除所有设置，此操作不可恢复！", "危险操作", {
-    confirmButtonText: "确认清空",
-    cancelButtonText: "取消",
+    confirmText: "确认清空",
+    cancelText: "取消",
     type: "error",
   })
     .then(() => {
@@ -494,7 +513,7 @@ const clearConfig = () => {
 };
 
 // 表单操作方法
-const submitForm = () => {
+const submitForm = (): void => {
   if (!formData.value.username || !formData.value.email) {
     VkMessageBox.alert("请填写完整的用户信息", "提示", {
       type: "warning",
@@ -503,8 +522,8 @@ const submitForm = () => {
   }
 
   VkMessageBox.confirm("确认提交表单数据？", "提交确认", {
-    confirmButtonText: "提交",
-    cancelButtonText: "取消",
+    confirmText: "提交",
+    cancelText: "取消",
     type: "info",
   })
     .then(() => {
@@ -517,10 +536,10 @@ const submitForm = () => {
     });
 };
 
-const draftForm = () => {
+const draftForm = (): void => {
   VkMessageBox.confirm("保存当前表单为草稿？", "保存草稿", {
-    confirmButtonText: "保存",
-    cancelButtonText: "取消",
+    confirmText: "保存",
+    cancelText: "取消",
     type: "info",
   })
     .then(() => {
@@ -531,10 +550,10 @@ const draftForm = () => {
     });
 };
 
-const clearForm = () => {
+const clearForm = (): void => {
   VkMessageBox.confirm("确定要清空表单内容吗？", "清空确认", {
-    confirmButtonText: "清空",
-    cancelButtonText: "取消",
+    confirmText: "清空",
+    cancelText: "取消",
     type: "warning",
   })
     .then(() => {
@@ -547,25 +566,25 @@ const clearForm = () => {
 };
 
 // 批量操作方法
-const selectAll = () => {
+const selectAll = (): void => {
   items.value.forEach((item) => {
     item.selected = true;
   });
   addLog("已全选所有项目");
 };
 
-const selectNone = () => {
+const selectNone = (): void => {
   items.value.forEach((item) => {
     item.selected = false;
   });
   addLog("已取消全选");
 };
 
-const batchActivate = () => {
+const batchActivate = (): void => {
   const count = selectedCount.value;
   VkMessageBox.confirm(`确定要激活选中的 ${count} 个项目吗？`, "批量激活", {
-    confirmButtonText: "激活",
-    cancelButtonText: "取消",
+    confirmText: "激活",
+    cancelText: "取消",
     type: "success",
   })
     .then(() => {
@@ -582,11 +601,11 @@ const batchActivate = () => {
     });
 };
 
-const batchDeactivate = () => {
+const batchDeactivate = (): void => {
   const count = selectedCount.value;
   VkMessageBox.confirm(`确定要停用选中的 ${count} 个项目吗？`, "批量停用", {
-    confirmButtonText: "停用",
-    cancelButtonText: "取消",
+    confirmText: "停用",
+    cancelText: "取消",
     type: "warning",
   })
     .then(() => {
@@ -603,11 +622,11 @@ const batchDeactivate = () => {
     });
 };
 
-const batchDelete = () => {
+const batchDelete = (): void => {
   const count = selectedCount.value;
   VkMessageBox.confirm(`确定要删除选中的 ${count} 个项目吗？此操作不可恢复！`, "批量删除", {
-    confirmButtonText: "删除",
-    cancelButtonText: "取消",
+    confirmText: "删除",
+    cancelText: "取消",
     type: "error",
   })
     .then(() => {
@@ -620,11 +639,10 @@ const batchDelete = () => {
 };
 
 // 权限验证方法
-const adminOperation = () => {
+const adminOperation = (): void => {
   VkMessageBox.prompt("请输入管理员密码", "权限验证", {
-    confirmButtonText: "验证",
-    cancelButtonText: "取消",
-    inputType: "password",
+    confirmText: "验证",
+    cancelText: "取消",
     inputPlaceholder: "请输入密码",
   })
     .then(({ value }) => {
@@ -645,12 +663,11 @@ const adminOperation = () => {
     });
 };
 
-const sensitiveOperation = () => {
+const sensitiveOperation = (): void => {
   VkMessageBox.confirm("此操作涉及敏感数据，确定要继续吗？", "敏感操作警告", {
-    confirmButtonText: "继续",
-    cancelButtonText: "取消",
+    confirmText: "继续",
+    cancelText: "取消",
     type: "warning",
-    dangerouslyUseHTMLString: true,
     message: "<strong>警告：</strong>此操作可能影响系统安全，请谨慎操作！",
   })
     .then(() => {
@@ -661,11 +678,10 @@ const sensitiveOperation = () => {
     });
 };
 
-const changePassword = () => {
+const changePassword = (): void => {
   VkMessageBox.prompt("请输入新密码", "修改密码", {
-    confirmButtonText: "修改",
-    cancelButtonText: "取消",
-    inputType: "password",
+    confirmText: "修改",
+    cancelText: "取消",
     inputPlaceholder: "请输入新密码",
     inputPattern: /^.{6,}$/,
     inputErrorMessage: "密码长度至少6位",
@@ -681,15 +697,15 @@ const changePassword = () => {
     });
 };
 
-const exportData = () => {
+const exportData = (): void => {
   VkMessageBox.confirm("导出数据可能需要一些时间，是否继续？", "导出确认", {
-    confirmButtonText: "导出",
-    cancelButtonText: "取消",
+    confirmText: "导出",
+    cancelText: "取消",
     type: "info",
   })
     .then(() => {
       // 模拟导出过程
-      const msgBox = VkMessageBox({
+      VkMessageBox({
         title: "导出进度",
         message: "正在导出数据，请稍候...",
         showCancelButton: false,
@@ -699,7 +715,7 @@ const exportData = () => {
       });
 
       setTimeout(() => {
-        msgBox.close();
+        VkMessageBox.close();
         VkMessageBox.alert("数据导出完成", "导出成功", {
           type: "success",
         });
@@ -712,7 +728,7 @@ const exportData = () => {
 };
 
 // 工具方法
-const addLog = (message) => {
+const addLog = (message: string): void => {
   const timestamp = new Date().toLocaleTimeString();
   eventLogs.value.unshift(`[${timestamp}] ${message}`);
   if (eventLogs.value.length > 15) {

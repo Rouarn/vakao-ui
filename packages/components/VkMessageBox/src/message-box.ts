@@ -66,10 +66,23 @@ function createMessageBox(options: MessageBoxOptions): Promise<MessageBoxResult>
 }
 
 // MessageBox 主对象
-export const VkMessageBox = {
-  /**
-   * 显示确认对话框
-   */
+interface VkMessageBoxType {
+  (options: MessageBoxOptions): Promise<MessageBoxResult>;
+  confirm(message: string, title?: string | MessageBoxOptions, options?: MessageBoxOptions): Promise<MessageBoxResult>;
+  alert(message: string, title?: string | MessageBoxOptions, options?: MessageBoxOptions): Promise<MessageBoxResult>;
+  prompt(message: string, title?: string | MessageBoxOptions, options?: MessageBoxOptions): Promise<MessageBoxResult>;
+  close(): void;
+}
+
+export const VkMessageBox: VkMessageBoxType = Object.assign(
+  // 直接调用函数
+  function(options: MessageBoxOptions): Promise<MessageBoxResult> {
+    return createMessageBox(options);
+  },
+  {
+    /**
+     * 显示确认对话框
+     */
   confirm(message: string, title?: string | MessageBoxOptions, options?: MessageBoxOptions): Promise<MessageBoxResult> {
     let mergedOptions: MessageBoxOptions;
 
@@ -159,6 +172,7 @@ export const VkMessageBox = {
       currentContainer = null;
     }
   },
-};
+  }
+);
 
 export default VkMessageBox;

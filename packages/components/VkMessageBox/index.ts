@@ -11,10 +11,10 @@ VkMessageBoxComponentWithInstall.confirm = MessageBoxService.confirm;
 VkMessageBoxComponentWithInstall.prompt = MessageBoxService.prompt;
 VkMessageBoxComponentWithInstall.close = MessageBoxService.close;
 
+// 导出组件（用于模板使用和插件安装）
+export { VkMessageBoxComponentWithInstall as VkMessageBox };
 // 导出服务（用于函数式调用）
-export { MessageBoxService as VkMessageBox };
-// 导出组件（用于模板使用）
-export { VkMessageBoxComponentWithInstall as VkMessageBoxComponent };
+export { MessageBoxService as VkMessageBoxService };
 export default VkMessageBoxComponentWithInstall;
 
 // 导出类型
