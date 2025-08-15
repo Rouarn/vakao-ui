@@ -274,6 +274,93 @@ const handleClose = () => {
   </template>
 </Demo>
 
+## 消息堆叠
+
+同一位置的多个消息会自动堆叠显示，最新的消息在上方。
+
+<Demo>
+  <vk-button @click="showStackedMessages">显示堆叠消息</vk-button>
+  <vk-button @click="showDifferentPositions">不同位置消息</vk-button>
+  
+  <template #code>
+
+```vue
+<template>
+  <vk-button @click="showStackedMessages">显示堆叠消息</vk-button>
+  <vk-button @click="showDifferentPositions">不同位置消息</vk-button>
+</template>
+
+<script setup>
+import { VkMessage } from "vakao-ui";
+
+const showStackedMessages = () => {
+  VkMessage.success("第一条消息");
+  setTimeout(() => VkMessage.warning("第二条消息"), 500);
+  setTimeout(() => VkMessage.info("第三条消息"), 1000);
+};
+
+const showDifferentPositions = () => {
+  VkMessage({ message: "顶部居中", position: "top" });
+  VkMessage({ message: "左上角", position: "top-left" });
+  VkMessage({ message: "右上角", position: "top-right" });
+};
+</script>
+```
+
+  </template>
+</Demo>
+
+## 最大消息数量配置
+
+可以配置同时显示的最大消息数量，超出时会自动关闭最旧的消息。
+
+<Demo>
+  <vk-button @click="setMaxCount3">设置最大3条</vk-button>
+  <vk-button @click="setMaxCount5">设置最大5条</vk-button>
+  <vk-button @click="showManyMessages">显示多条消息</vk-button>
+  <vk-button @click="getCurrentMaxCount">获取当前最大数量</vk-button>
+  
+  <template #code>
+
+```vue
+<template>
+  <vk-button @click="setMaxCount3">设置最大3条</vk-button>
+  <vk-button @click="setMaxCount5">设置最大5条</vk-button>
+  <vk-button @click="showManyMessages">显示多条消息</vk-button>
+  <vk-button @click="getCurrentMaxCount">获取当前最大数量</vk-button>
+</template>
+
+<script setup>
+import { VkMessage } from "vakao-ui";
+
+const setMaxCount3 = () => {
+  VkMessage.setMaxCount(3);
+  VkMessage.success("已设置最大消息数量为3条");
+};
+
+const setMaxCount5 = () => {
+  VkMessage.setMaxCount(5);
+  VkMessage.success("已设置最大消息数量为5条");
+};
+
+const showManyMessages = () => {
+  for (let i = 1; i <= 8; i++) {
+    setTimeout(() => {
+      VkMessage.info(`第${i}条消息`);
+    }, i * 200);
+  }
+};
+
+const getCurrentMaxCount = () => {
+  const maxCount = VkMessage.getMaxCount();
+  VkMessage.info(`当前最大消息数量：${maxCount}`);
+};
+</script>
+```
+
+  </template>
+</Demo>
+
 ## 全局方法
 
 Message 提供了一些全局方法来管理消息。
@@ -282,6 +369,7 @@ Message 提供了一些全局方法来管理消息。
   <vk-button @click="showMultipleMessages">显示多条消息</vk-button>
   <vk-button @click="closeAllMessages">关闭所有消息</vk-button>
   <vk-button @click="getMessageCount">获取消息数量</vk-button>
+  <vk-button @click="getPositionCount">获取顶部消息数量</vk-button>
   
   <template #code>
 
@@ -290,15 +378,16 @@ Message 提供了一些全局方法来管理消息。
   <vk-button @click="showMultipleMessages">显示多条消息</vk-button>
   <vk-button @click="closeAllMessages">关闭所有消息</vk-button>
   <vk-button @click="getMessageCount">获取消息数量</vk-button>
+  <vk-button @click="getPositionCount">获取顶部消息数量</vk-button>
 </template>
 
 <script setup>
 import { VkMessage } from "vakao-ui";
 
 const showMultipleMessages = () => {
-  VkMessage.success("第一条消息");
-  VkMessage.warning("第二条消息");
-  VkMessage.info("第三条消息");
+  VkMessage.success("消息1");
+  VkMessage.warning("消息2");
+  VkMessage.danger("消息3");
 };
 
 const closeAllMessages = () => {
@@ -307,7 +396,12 @@ const closeAllMessages = () => {
 
 const getMessageCount = () => {
   const count = VkMessage.getCount();
-  VkMessage.info(`当前有 $&#123;count&#125; 条活跃消息`);
+  VkMessage.info(`当前消息数量：${count}`);
+};
+
+const getPositionCount = () => {
+  const count = VkMessage.getCountByPosition("top");
+  VkMessage.info(`顶部消息数量：${count}`);
 };
 </script>
 ```
@@ -357,6 +451,11 @@ const getMessageCount = () => {
 | VkMessage.getInstance     | 获取指定消息实例 | `(id: string)`                                     | `MessageInstance &vert; undefined` |
 | VkMessage.getAllInstances | 获取所有消息实例 | —                                                  | `MessageInstance[]`                |
 | VkMessage.getCount        | 获取消息数量     | —                                                  | `number`                           |
+| VkMessage.getCountByPosition | 获取指定位置的消息数量 | `(position: string)`                               | `number`                           |
+| VkMessage.setMaxCount     | 设置最大消息数量 | `(count: number)`                                  | —                                  |
+| VkMessage.getMaxCount     | 获取最大消息数量 | —                                                  | `number`                           |
+| VkMessage.setMessageGap   | 设置消息间距     | `(gap: number)`                                    | —                                  |
+| VkMessage.getMessageGap   | 获取消息间距     | —                                                  | `number`                           |
 
 ### MessageInstance
 
@@ -467,6 +566,43 @@ const handleClose = () => {
   showMessageComponent.value = false;
 };
 
+// 消息堆叠
+const showStackedMessages = () => {
+  VkMessage.success("第一条消息");
+  setTimeout(() => VkMessage.warning("第二条消息"), 500);
+  setTimeout(() => VkMessage.info("第三条消息"), 1000);
+};
+
+const showDifferentPositions = () => {
+  VkMessage({ message: "顶部居中", position: "top" });
+  VkMessage({ message: "左上角", position: "top-left" });
+  VkMessage({ message: "右上角", position: "top-right" });
+};
+
+// 最大消息数量配置
+const setMaxCount3 = () => {
+  VkMessage.setMaxCount(3);
+  VkMessage.success("已设置最大消息数量为3条");
+};
+
+const setMaxCount5 = () => {
+  VkMessage.setMaxCount(5);
+  VkMessage.success("已设置最大消息数量为5条");
+};
+
+const showManyMessages = () => {
+  for (let i = 1; i <= 8; i++) {
+    setTimeout(() => {
+      VkMessage.info(`第${i}条消息`);
+    }, i * 200);
+  }
+};
+
+const getCurrentMaxCount = () => {
+  const maxCount = VkMessage.getMaxCount();
+  VkMessage.info(`当前最大消息数量：${maxCount}`);
+};
+
 // 多条消息和管理
 const showMultipleMessages = () => {
   VkMessage.success('第一条消息');
@@ -480,6 +616,11 @@ const closeAllMessages = () => {
 
 const getMessageCount = () => {
   const count = VkMessage.getCount();
-  VkMessage.info(`当前有 $&#123;count&#125; 条活跃消息`);
+  VkMessage.info(`当前有 ${count} 条活跃消息`);
+};
+
+const getPositionCount = () => {
+  const count = VkMessage.getCountByPosition("top");
+  VkMessage.info(`顶部消息数量：${count}`);
 };
 </script>

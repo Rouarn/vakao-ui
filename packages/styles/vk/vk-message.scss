@@ -11,29 +11,34 @@
   position: fixed;
   display: flex;
   align-items: center;
-  padding: 12px 16px;
-  border-radius: var(--vk-border-radius-base);
-  border: 1px solid transparent;
-  background-color: var(--vk-fill-color-blank);
-  box-shadow: var(--vk-box-shadow-light);
+  padding: 16px 20px;
+  border-radius: 12px;
+  border: none;
+  background-color: var(--vk-bg-color);
+  box-shadow: var(--vk-box-shadow-large);
   font-size: var(--vk-font-size-base);
-  line-height: 1.4;
-  min-width: 300px;
-  max-width: 500px;
+  line-height: 1.5;
+  min-width: 320px;
+  max-width: 520px;
   word-wrap: break-word;
-  word-break: break-all;
-  transition: all 0.3s ease-in-out;
+  word-break: break-word;
+  transition: all var(--vk-transition-duration) var(--vk-transition-function-ease-in-out-bezier);
   box-sizing: border-box;
   pointer-events: auto;
   user-select: none;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 
   // 消息图标
   &__icon {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    margin-right: 8px;
+    margin-right: 12px;
     flex-shrink: 0;
+    font-size: 16px;
+    width: 20px;
+    height: 20px;
   }
 
   // 消息内容
@@ -42,7 +47,8 @@
     display: flex;
     align-items: center;
     color: var(--vk-text-color-primary);
-    line-height: 1.4;
+    line-height: 1.5;
+    font-weight: 400;
   }
 
   // 关闭按钮
@@ -50,25 +56,33 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    margin-left: 12px;
+    margin-left: 16px;
     cursor: pointer;
-    border-radius: var(--vk-border-radius-circle);
-    padding: 2px;
-    transition: all 0.2s ease-in-out;
-    opacity: 0.7;
+    border-radius: 50%;
+    padding: 4px;
+    transition: all var(--vk-transition-duration-fast) var(--vk-transition-function-ease-in-out-bezier);
+    opacity: 0.6;
     flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    font-size: 14px;
 
     &:hover {
       opacity: 1;
-      background-color: rgba(0, 0, 0, 0.1);
+      background-color: var(--vk-bg-color-overlay);
+      transform: scale(1.1);
+    }
+
+    &:active {
+      transform: scale(0.95);
     }
   }
 
   // 类型变体
   &--default {
-    background-color: var(--vk-fill-color-blank);
-    border-color: var(--vk-border-color-light);
+    background-color: var(--vk-bg-color);
     color: var(--vk-text-color-primary);
+    border-left: 4px solid var(--vk-border-color-light);
 
     .vk-message__icon {
       color: var(--vk-text-color-regular);
@@ -76,154 +90,172 @@
   }
 
   &--primary {
-    background-color: var(--vk-color-primary-light-9);
-    border-color: var(--vk-color-primary-light-7);
+    background-color: var(--vk-color-primary-light-1);
     color: var(--vk-color-primary);
+    border-left: 4px solid var(--vk-color-primary);
 
     .vk-message__icon {
       color: var(--vk-color-primary);
     }
 
     .vk-message__close:hover {
-      background-color: var(--vk-color-primary-light-8);
+      background-color: var(--vk-color-primary-light-2);
     }
   }
 
   &--success {
-    background-color: var(--vk-color-success-light-9);
-    border-color: var(--vk-color-success-light-7);
+    background-color: var(--vk-color-success-light-1);
     color: var(--vk-color-success);
+    border-left: 4px solid var(--vk-color-success);
 
     .vk-message__icon {
       color: var(--vk-color-success);
     }
 
     .vk-message__close:hover {
-      background-color: var(--vk-color-success-light-8);
+      background-color: var(--vk-color-success-light-2);
     }
   }
 
   &--warning {
-    background-color: var(--vk-color-warning-light-9);
-    border-color: var(--vk-color-warning-light-7);
+    background-color: var(--vk-color-warning-light-1);
     color: var(--vk-color-warning);
+    border-left: 4px solid var(--vk-color-warning);
 
     .vk-message__icon {
       color: var(--vk-color-warning);
     }
 
     .vk-message__close:hover {
-      background-color: var(--vk-color-warning-light-8);
+      background-color: var(--vk-color-warning-light-2);
     }
   }
 
   &--danger {
-    background-color: var(--vk-color-danger-light-9);
-    border-color: var(--vk-color-danger-light-7);
+    background-color: var(--vk-color-danger-light-1);
     color: var(--vk-color-danger);
+    border-left: 4px solid var(--vk-color-danger);
 
     .vk-message__icon {
       color: var(--vk-color-danger);
     }
 
     .vk-message__close:hover {
-      background-color: var(--vk-color-danger-light-8);
+      background-color: var(--vk-color-danger-light-2);
     }
   }
 
   &--info {
-    background-color: var(--vk-color-info-light-9);
-    border-color: var(--vk-color-info-light-7);
+    background-color: var(--vk-color-info-light-1);
     color: var(--vk-color-info);
+    border-left: 4px solid var(--vk-color-info);
 
     .vk-message__icon {
       color: var(--vk-color-info);
     }
 
     .vk-message__close:hover {
-      background-color: var(--vk-color-info-light-8);
+      background-color: var(--vk-color-info-light-2);
     }
   }
 
   // 位置变体
   &--top {
+    top: 20px;
     left: 50%;
     transform: translateX(-50%);
   }
 
   &--top-left {
+    top: 20px;
     left: 20px;
   }
 
   &--top-right {
+    top: 20px;
     right: 20px;
   }
 }
 
 // 消息动画
 .vk-message-enter-active {
-  transition: all 0.3s ease-out;
+  transition: all var(--vk-transition-duration-slow) var(--vk-transition-function-fast-bezier);
 }
 
 .vk-message-leave-active {
-  transition: all 0.3s ease-in;
+  transition: all var(--vk-transition-duration) var(--vk-transition-function-ease-in-bezier);
 }
 
 .vk-message-enter-from {
   opacity: 0;
-  transform: translateY(-100%) translateX(-50%);
 }
 
 .vk-message-enter-to {
   opacity: 1;
-  transform: translateY(0) translateX(-50%);
 }
 
 .vk-message-leave-from {
   opacity: 1;
-  transform: translateY(0) translateX(-50%);
 }
 
 .vk-message-leave-to {
   opacity: 0;
-  transform: translateY(-100%) translateX(-50%);
+}
+
+// 顶部居中位置的动画
+.vk-message--top {
+  &.vk-message-enter-from {
+    transform: translateY(-50px) translateX(-50%) scale(0.9);
+  }
+
+  &.vk-message-enter-to {
+    transform: translateY(0) translateX(-50%) scale(1);
+  }
+
+  &.vk-message-leave-from {
+    transform: translateY(0) translateX(-50%) scale(1);
+  }
+
+  &.vk-message-leave-to {
+    transform: translateY(-30px) translateX(-50%) scale(0.95);
+  }
 }
 
 // 左侧位置的动画
 .vk-message--top-left {
   &.vk-message-enter-from {
-    transform: translateY(-100%);
+    transform: translateY(-50px) translateX(-30px) scale(0.9);
   }
 
   &.vk-message-enter-to {
-    transform: translateY(0);
+    transform: translateY(0) translateX(0) scale(1);
   }
 
   &.vk-message-leave-from {
-    transform: translateY(0);
+    transform: translateY(0) translateX(0) scale(1);
   }
 
   &.vk-message-leave-to {
-    transform: translateY(-100%);
+    transform: translateY(-30px) translateX(-20px) scale(0.95);
   }
 }
 
 // 右侧位置的动画
 .vk-message--top-right {
   &.vk-message-enter-from {
-    transform: translateY(-100%);
+    transform: translateY(-50px) translateX(30px) scale(0.9);
   }
 
   &.vk-message-enter-to {
-    transform: translateY(0);
+    transform: translateY(0) translateX(0) scale(1);
   }
 
   &.vk-message-leave-from {
-    transform: translateY(0);
+    transform: translateY(0) translateX(0) scale(1);
   }
 
   &.vk-message-leave-to {
-    transform: translateY(-100%);
+    transform: translateY(-30px) translateX(20px) scale(0.95);
   }
 }
 
@@ -231,40 +263,42 @@
 @media (max-width: 768px) {
   .vk-message {
     min-width: 280px;
-    max-width: calc(100vw - 40px);
-    margin: 0 20px;
+    max-width: calc(100vw - 32px);
+    margin: 0 16px;
+    padding: 14px 16px;
+    border-radius: 10px;
 
     &--top {
-      left: 20px;
-      right: 20px;
+      left: 16px;
+      right: 16px;
       transform: none;
     }
 
     &--top-left {
-      left: 20px;
+      left: 16px;
     }
 
     &--top-right {
-      right: 20px;
+      right: 16px;
     }
   }
 
   // 移动端动画调整
   .vk-message--top {
     &.vk-message-enter-from {
-      transform: translateY(-100%);
+      transform: translateY(-40px) scale(0.9);
     }
 
     &.vk-message-enter-to {
-      transform: translateY(0);
+      transform: translateY(0) scale(1);
     }
 
     &.vk-message-leave-from {
-      transform: translateY(0);
+      transform: translateY(0) scale(1);
     }
 
     &.vk-message-leave-to {
-      transform: translateY(-100%);
+      transform: translateY(-25px) scale(0.95);
     }
   }
 }
@@ -272,39 +306,65 @@
 // 高对比度模式支持
 @media (prefers-contrast: high) {
   .vk-message {
-    border-width: 2px;
+    border-left-width: 6px;
+    box-shadow: var(--vk-box-shadow-medium);
     
+    &--default {
+      border-left-color: var(--vk-border-color-darker);
+    }
+
     &--primary {
-      border-color: var(--vk-color-primary);
+      border-left-color: var(--vk-color-primary);
+      background-color: var(--vk-color-primary-light-2);
     }
 
     &--success {
-      border-color: var(--vk-color-success);
+      border-left-color: var(--vk-color-success);
+      background-color: var(--vk-color-success-light-2);
     }
 
     &--warning {
-      border-color: var(--vk-color-warning);
+      border-left-color: var(--vk-color-warning);
+      background-color: var(--vk-color-warning-light-2);
     }
 
     &--danger {
-      border-color: var(--vk-color-danger);
+      border-left-color: var(--vk-color-danger);
+      background-color: var(--vk-color-danger-light-2);
     }
 
     &--info {
-      border-color: var(--vk-color-info);
+      border-left-color: var(--vk-color-info);
+      background-color: var(--vk-color-info-light-2);
     }
   }
 }
 
 // 减少动画模式支持
 @media (prefers-reduced-motion: reduce) {
+  .vk-message {
+    transition: opacity var(--vk-transition-duration-fast) ease;
+  }
+
   .vk-message-enter-active,
   .vk-message-leave-active {
-    transition: opacity 0.2s ease;
+    transition: opacity var(--vk-transition-duration-fast) ease;
   }
 
   .vk-message-enter-from,
   .vk-message-leave-to {
     transform: none;
+  }
+
+  .vk-message__close {
+    transition: opacity var(--vk-transition-duration-fast) ease;
+
+    &:hover {
+      transform: none;
+    }
+
+    &:active {
+      transform: none;
+    }
   }
 }

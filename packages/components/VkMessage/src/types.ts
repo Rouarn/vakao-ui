@@ -254,6 +254,20 @@ export interface MessageInstance {
    * 消息的唯一标识符，用于区分不同的消息实例。
    */
   id: string;
+
+  /**
+   * 消息位置
+   *
+   * 消息显示的位置，用于堆叠管理。
+   */
+  position?: MessagePosition;
+
+  /**
+   * Vue组件实例
+   *
+   * 用于访问和控制消息组件。
+   */
+  vm?: MessageComponentInstance;
 }
 
 /**

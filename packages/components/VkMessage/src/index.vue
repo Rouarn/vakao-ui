@@ -7,7 +7,7 @@
       @before-leave="onBeforeLeave"
       @after-leave="onAfterLeave"
     >
-      <div v-show="visible" :id="messageId" :class="mergedClass" :style="mergedStyle" role="alert" aria-live="assertive">
+      <div v-show="visible" :id="messageId" :class="mergedClass" :style="mergedStyle" role="alert" aria-live="assertive" v-bind="attrs">
         <!-- 消息图标 -->
         <span v-if="showIcon" :class="ns.element('icon')">
           <component :is="currentIcon" v-if="typeof currentIcon === 'object'" />
@@ -136,6 +136,7 @@ const currentIcon = computed(() => {
     info: "mdi:information",
     default: "mdi:information",
     primary: "mdi:information",
+    plain: "mdi:information",
   };
 
   return iconMap[props.type] || iconMap.info;
@@ -159,25 +160,15 @@ const mergedClass = computed(() => {
 /**
  * 合并的样式
  *
- * 组合位置样式、层级样式和自定义样式。
+ * 组合层级样式和自定义样式，位置样式由message.ts的堆叠逻辑控制。
  */
 const mergedStyle = computed(() => {
   const styles: CSSProperties = {
     zIndex: props.zIndex,
   };
 
-  // 设置位置偏移
-  if (props.position === "top") {
-    styles.top = `${props.offset}px`;
-    styles.left = "50%";
-    styles.transform = "translateX(-50%)";
-  } else if (props.position === "top-left") {
-    styles.top = `${props.offset}px`;
-    styles.left = `${props.offset}px`;
-  } else if (props.position === "top-right") {
-    styles.top = `${props.offset}px`;
-    styles.right = `${props.offset}px`;
-  }
+  // 不在这里设置位置样式，让message.ts的updatePositionOffsets方法来控制位置
+  // 这样可以避免样式冲突，确保消息堆叠功能正常工作
 
   // 合并自定义样式
   if (props.customStyle) {
