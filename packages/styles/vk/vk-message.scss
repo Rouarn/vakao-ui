@@ -11,7 +11,7 @@
   position: fixed;
   display: flex;
   align-items: center;
-  padding: 16px 20px;
+  padding: 14px 18px;
   border-radius: 12px;
   border: none;
   background-color: var(--vk-bg-color);
@@ -22,7 +22,7 @@
   max-width: 520px;
   word-wrap: break-word;
   word-break: break-word;
-  transition: all var(--vk-transition-duration) var(--vk-transition-function-ease-in-out-bezier);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), top 0.3s cubic-bezier(0.22, 1, 0.36, 1);
   box-sizing: border-box;
   pointer-events: auto;
   user-select: none;
@@ -160,19 +160,17 @@
   }
 
   // 位置变体
+  // 注意：top值由JavaScript动态控制，这里只设置水平位置
   &--top {
-    top: 20px;
     left: 50%;
     transform: translateX(-50%);
   }
 
   &--top-left {
-    top: 20px;
     left: 20px;
   }
 
   &--top-right {
-    top: 20px;
     right: 20px;
   }
 }
@@ -205,57 +203,77 @@
 // 顶部居中位置的动画
 .vk-message--top {
   &.vk-message-enter-from {
-    transform: translateY(-50px) translateX(-50%) scale(0.9);
+    transform: translateX(-50%) scale(0.9);
+    margin-top: -50px;
   }
 
   &.vk-message-enter-to {
-    transform: translateY(0) translateX(-50%) scale(1);
+    transform: translateX(-50%) scale(1);
+    margin-top: 0;
   }
 
   &.vk-message-leave-from {
-    transform: translateY(0) translateX(-50%) scale(1);
+    transform: translateX(-50%) scale(1);
+    margin-top: 0;
   }
 
   &.vk-message-leave-to {
-    transform: translateY(-30px) translateX(-50%) scale(0.95);
+    transform: translateX(-50%) scale(0.95);
+    margin-top: -30px;
   }
 }
 
 // 左侧位置的动画
 .vk-message--top-left {
   &.vk-message-enter-from {
-    transform: translateY(-50px) translateX(-30px) scale(0.9);
+    transform: scale(0.9);
+    margin-top: -50px;
+    margin-left: -30px;
   }
 
   &.vk-message-enter-to {
-    transform: translateY(0) translateX(0) scale(1);
+    transform: scale(1);
+    margin-top: 0;
+    margin-left: 0;
   }
 
   &.vk-message-leave-from {
-    transform: translateY(0) translateX(0) scale(1);
+    transform: scale(1);
+    margin-top: 0;
+    margin-left: 0;
   }
 
   &.vk-message-leave-to {
-    transform: translateY(-30px) translateX(-20px) scale(0.95);
+    transform: scale(0.95);
+    margin-top: -30px;
+    margin-left: -20px;
   }
 }
 
 // 右侧位置的动画
 .vk-message--top-right {
   &.vk-message-enter-from {
-    transform: translateY(-50px) translateX(30px) scale(0.9);
+    transform: scale(0.9);
+    margin-top: -50px;
+    margin-right: -30px;
   }
 
   &.vk-message-enter-to {
-    transform: translateY(0) translateX(0) scale(1);
+    transform: scale(1);
+    margin-top: 0;
+    margin-right: 0;
   }
 
   &.vk-message-leave-from {
-    transform: translateY(0) translateX(0) scale(1);
+    transform: scale(1);
+    margin-top: 0;
+    margin-right: 0;
   }
 
   &.vk-message-leave-to {
-    transform: translateY(-30px) translateX(20px) scale(0.95);
+    transform: scale(0.95);
+    margin-top: -30px;
+    margin-right: -20px;
   }
 }
 

@@ -7,7 +7,7 @@
       @before-leave="onBeforeLeave"
       @after-leave="onAfterLeave"
     >
-      <div v-show="visible" :id="messageId" :class="mergedClass" :style="mergedStyle" role="alert" aria-live="assertive" v-bind="attrs">
+      <div v-show="visible" :id="messageId" :class="mergedClass" :style="mergedStyle" role="alert" aria-live="assertive">
         <!-- 消息图标 -->
         <span v-if="showIcon" :class="ns.element('icon')">
           <component :is="currentIcon" v-if="typeof currentIcon === 'object'" />
@@ -75,7 +75,7 @@
 // ==================== 模块导入 ====================
 
 /** Vue 3 核心 API */
-import { computed, ref, onMounted, onUnmounted, useAttrs, nextTick } from "vue";
+import { computed, ref, onMounted, onUnmounted, nextTick } from "vue";
 import type { CSSProperties } from "vue";
 /** 组件属性和事件定义 */
 import { messageProps, messageEmits } from "./types";
@@ -89,7 +89,7 @@ import VkIcon from "../../VkIcon";
 /** 组件选项配置 */
 defineOptions({
   name: "VkMessage",
-  inheritAttrs: false,
+  inheritAttrs: true,
 });
 
 /** 组件属性定义 */
@@ -97,9 +97,6 @@ const props = defineProps(messageProps);
 
 /** 组件事件定义 */
 const emit = defineEmits(messageEmits);
-
-/** 组件属性 */
-const attrs = useAttrs();
 
 // ==================== 响应式数据 ====================
 
@@ -114,6 +111,9 @@ const messageId = ref(`vk-message-${Date.now()}-${Math.random().toString(36).sub
 
 /** 自动关闭定时器 */
 let timer: NodeJS.Timeout | null = null;
+
+/** 响应式的offset值，用于消息堆叠定位 */
+const currentOffset = ref(props.offset);
 
 // ==================== 计算属性 ====================
 
@@ -160,15 +160,24 @@ const mergedClass = computed(() => {
 /**
  * 合并的样式
  *
- * 组合层级样式和自定义样式，位置样式由message.ts的堆叠逻辑控制。
+ * 组合层级样式和自定义样式，设置初始位置，然后由message.ts的堆叠逻辑控制最终位置。
  */
 const mergedStyle = computed(() => {
   const styles: CSSProperties = {
     zIndex: props.zIndex,
+    // 使用响应式的offset值，确保消息堆叠时能正确更新位置
+    top: `${currentOffset.value}px`,
   };
 
-  // 不在这里设置位置样式，让message.ts的updatePositionOffsets方法来控制位置
-  // 这样可以避免样式冲突，确保消息堆叠功能正常工作
+  // 设置水平位置样式，垂直位置由message.ts的updatePositionOffsets方法控制
+  if (props.position === "top") {
+    styles.left = "50%";
+    styles.transform = "translateX(-50%)";
+  } else if (props.position === "top-left") {
+    styles.left = "20px";
+  } else if (props.position === "top-right") {
+    styles.right = "20px";
+  }
 
   // 合并自定义样式
   if (props.customStyle) {
@@ -309,5 +318,6 @@ defineExpose({
   close,
   visible,
   messageId,
+  currentOffset, // 暴露响应式的offset值，用于消息堆叠定位
 });
 </script>

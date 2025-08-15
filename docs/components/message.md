@@ -229,51 +229,6 @@ const showNoIconMessage = () => {
   </template>
 </Demo>
 
-## 组件方式使用
-
-除了函数式调用，也可以直接在模板中使用组件。
-
-<Demo>
-  <div>
-    <vk-message
-      v-if="showMessageComponent"
-      type="success"
-      message="这是组件方式的消息"
-      :closable="true"
-      @close="handleClose"
-    />
-    <vk-button @click="toggleMessage">切换消息显示</vk-button>
-  </div>
-  
-  <template #code>
-
-```vue
-<template>
-  <div>
-    <vk-message v-if="showMessageComponent" type="success" message="这是组件方式的消息" :closable="true" @close="handleClose" />
-    <vk-button @click="toggleMessage">切换消息显示</vk-button>
-  </div>
-</template>
-
-<script setup>
-import { ref } from "vue";
-import { VkMessage, VkButton } from "vakao-ui";
-
-const showMessageComponent = ref(false);
-
-const toggleMessage = () => {
-  showMessageComponent.value = !showMessageComponent.value;
-};
-
-const handleClose = () => {
-  showMessageComponent.value = false;
-};
-</script>
-```
-
-  </template>
-</Demo>
-
 ## 消息堆叠
 
 同一位置的多个消息会自动堆叠显示，最新的消息在上方。
@@ -553,17 +508,6 @@ const showNoIconMessage = () => {
     message: '无图标消息',
     showIcon: false
   });
-};
-
-// 组件方式使用
-const showMessageComponent = ref(false);
-
-const toggleMessage = () => {
-  showMessageComponent.value = !showMessageComponent.value;
-};
-
-const handleClose = () => {
-  showMessageComponent.value = false;
 };
 
 // 消息堆叠

@@ -29,7 +29,7 @@ class MessageManager {
   private maxCount = 3;
 
   /** 消息间距配置 */
-  private messageGap = 16;
+  private messageGap = 12;
 
   /**
    * 创建消息实例
@@ -46,10 +46,9 @@ class MessageManager {
     // 生成唯一 ID
     const id = `vk-message-${Date.now()}-${++this.counter}`;
 
-    // 消息选项，不设置offset让updatePositionOffsets方法来控制位置
+    // 消息选项，保持原始offset值，稍后通过updatePositionOffsets方法来控制堆叠位置
     const finalOptions = {
       ...options,
-      offset: 0, // 设置为0，让堆叠逻辑来控制位置
     };
 
     // 创建容器元素
@@ -106,41 +105,32 @@ class MessageManager {
 
   /**
    * 更新位置分组中所有消息的偏移量
+   * 实现垂直堆叠效果，新消息在最上面
    *
    * @param position - 消息位置
    */
   private updatePositionOffsets(position: string) {
     const positionInstances = this.instancesByPosition.get(position) || [];
-    const messageHeight = 60 + this.messageGap;
 
     positionInstances.forEach((instance, index) => {
-      // 通过DOM直接更新消息位置
-      const container = document.getElementById(instance.id);
-      if (container) {
-        // 找到容器内的.vk-message元素
-        const messageElement = container.querySelector(".vk-message") as HTMLElement;
-        if (messageElement) {
-          const baseOffset = 20; // 基础偏移量
-          const stackOffset = index * messageHeight;
+      // 基础配置
+      const baseOffset = 20; // 基础偏移量（距顶部或边缘）
+      const messageHeight = 50; // 每个消息的基本高度
+      const messageGap = this.messageGap; // 消息之间的间距，使用类属性值
 
-          // 根据位置类型设置不同的样式
-          if (position === "top") {
-            messageElement.style.top = `${baseOffset + stackOffset}px`;
-            // 保持水平居中
-            messageElement.style.left = "50%";
-            messageElement.style.transform = "translateX(-50%)";
-            messageElement.style.right = "";
-          } else if (position === "top-left") {
-            messageElement.style.top = `${baseOffset + stackOffset}px`;
-            messageElement.style.left = `${baseOffset}px`;
-            messageElement.style.transform = "";
-            messageElement.style.right = "";
-          } else if (position === "top-right") {
-            messageElement.style.top = `${baseOffset + stackOffset}px`;
-            messageElement.style.right = `${baseOffset}px`;
-            messageElement.style.left = "";
-            messageElement.style.transform = "";
-          }
+      // 计算垂直位置：新消息在顶部，后续消息向下堆叠
+      // index=0的消息在顶部，index=1的消息在下方，以此类推
+      const topPosition = baseOffset + index * (messageHeight + messageGap);
+
+      // 通过Vue组件暴露的响应式currentOffset更新位置
+      if (instance.vm && (instance.vm as any).currentOffset) {
+        // 检查currentOffset是否是ref对象
+        if (typeof (instance.vm as any).currentOffset === "object" && "value" in (instance.vm as any).currentOffset) {
+          // 更新响应式的offset值，触发组件重新渲染
+          (instance.vm as any).currentOffset.value = topPosition;
+        } else {
+          // 如果不是ref对象，直接赋值
+          (instance.vm as any).currentOffset = topPosition;
         }
       }
     });
