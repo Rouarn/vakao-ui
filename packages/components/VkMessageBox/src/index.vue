@@ -17,7 +17,7 @@
           <!-- 内容 -->
           <div :class="ns.element('content')">
             <div :class="ns.element('message')">
-              <component v-if="isVNode(message)" :is="message" />
+              <component :is="message" v-if="isVNode(message)" />
               <span v-else>{{ message }}</span>
             </div>
             <!-- 输入框 (用于 prompt 类型) -->
@@ -60,7 +60,8 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted, isVNode } from "vue";
-import { messageBoxProps, messageBoxEmits, MessageBoxType } from "./types";
+import type { MessageBoxType } from "./types";
+import { messageBoxProps, messageBoxEmits } from "./types";
 import type { ComponentType } from "@/types";
 import VkButton from "../../VkButton";
 import VkIcon from "../../VkIcon";

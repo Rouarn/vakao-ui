@@ -392,25 +392,25 @@ const getPositionCount = () => {
 
 ### Methods
 
-| 方法名                    | 说明             | 参数                                               | 返回值                             |
-| ------------------------- | ---------------- | -------------------------------------------------- | ---------------------------------- |
-| VkMessage                 | 显示消息         | `(message: string)` 或 `(options: MessageOptions)` | `MessageInstance`                  |
-| VkMessage.success         | 显示成功消息     | `(message: string)` 或 `(options: MessageOptions)` | `MessageInstance`                  |
-| VkMessage.warning         | 显示警告消息     | `(message: string)` 或 `(options: MessageOptions)` | `MessageInstance`                  |
-| VkMessage.info            | 显示信息消息     | `(message: string)` 或 `(options: MessageOptions)` | `MessageInstance`                  |
-| VkMessage.error           | 显示错误消息     | `(message: string)` 或 `(options: MessageOptions)` | `MessageInstance`                  |
-| VkMessage.danger          | 显示危险消息     | `(message: string)` 或 `(options: MessageOptions)` | `MessageInstance`                  |
-| VkMessage.primary         | 显示主要消息     | `(message: string)` 或 `(options: MessageOptions)` | `MessageInstance`                  |
-| VkMessage.close           | 关闭指定消息     | `(id: string)`                                     | —                                  |
-| VkMessage.closeAll        | 关闭所有消息     | —                                                  | —                                  |
-| VkMessage.getInstance     | 获取指定消息实例 | `(id: string)`                                     | `MessageInstance &vert; undefined` |
-| VkMessage.getAllInstances | 获取所有消息实例 | —                                                  | `MessageInstance[]`                |
-| VkMessage.getCount        | 获取消息数量     | —                                                  | `number`                           |
+| 方法名                       | 说明                   | 参数                                               | 返回值                             |
+| ---------------------------- | ---------------------- | -------------------------------------------------- | ---------------------------------- |
+| VkMessage                    | 显示消息               | `(message: string)` 或 `(options: MessageOptions)` | `MessageInstance`                  |
+| VkMessage.success            | 显示成功消息           | `(message: string)` 或 `(options: MessageOptions)` | `MessageInstance`                  |
+| VkMessage.warning            | 显示警告消息           | `(message: string)` 或 `(options: MessageOptions)` | `MessageInstance`                  |
+| VkMessage.info               | 显示信息消息           | `(message: string)` 或 `(options: MessageOptions)` | `MessageInstance`                  |
+| VkMessage.error              | 显示错误消息           | `(message: string)` 或 `(options: MessageOptions)` | `MessageInstance`                  |
+| VkMessage.danger             | 显示危险消息           | `(message: string)` 或 `(options: MessageOptions)` | `MessageInstance`                  |
+| VkMessage.primary            | 显示主要消息           | `(message: string)` 或 `(options: MessageOptions)` | `MessageInstance`                  |
+| VkMessage.close              | 关闭指定消息           | `(id: string)`                                     | —                                  |
+| VkMessage.closeAll           | 关闭所有消息           | —                                                  | —                                  |
+| VkMessage.getInstance        | 获取指定消息实例       | `(id: string)`                                     | `MessageInstance &vert; undefined` |
+| VkMessage.getAllInstances    | 获取所有消息实例       | —                                                  | `MessageInstance[]`                |
+| VkMessage.getCount           | 获取消息数量           | —                                                  | `number`                           |
 | VkMessage.getCountByPosition | 获取指定位置的消息数量 | `(position: string)`                               | `number`                           |
-| VkMessage.setMaxCount     | 设置最大消息数量 | `(count: number)`                                  | —                                  |
-| VkMessage.getMaxCount     | 获取最大消息数量 | —                                                  | `number`                           |
-| VkMessage.setMessageGap   | 设置消息间距     | `(gap: number)`                                    | —                                  |
-| VkMessage.getMessageGap   | 获取消息间距     | —                                                  | `number`                           |
+| VkMessage.setMaxCount        | 设置最大消息数量       | `(count: number)`                                  | —                                  |
+| VkMessage.getMaxCount        | 获取最大消息数量       | —                                                  | `number`                           |
+| VkMessage.setMessageGap      | 设置消息间距           | `(gap: number)`                                    | —                                  |
+| VkMessage.getMessageGap      | 获取消息间距           | —                                                  | `number`                           |
 
 ### MessageInstance
 

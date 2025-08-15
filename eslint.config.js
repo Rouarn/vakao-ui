@@ -45,6 +45,8 @@ export default [
       ".eslintcache",
 
       // VitePress 相关
+      "docs/.vitepress/cache/**/*",
+      "docs/.vitepress/dist/**/*",
       ".vitepress/cache/**/*",
       ".vitepress/dist/**/*",
 

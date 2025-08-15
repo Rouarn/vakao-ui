@@ -65,7 +65,7 @@
       <h2>批量操作</h2>
       <div class="demo-buttons">
         <VkButton @click="showMultipleMessages">显示多条消息</VkButton>
-        <VkButton @click="closeAllMessages" type="danger">关闭所有消息</VkButton>
+        <VkButton type="danger" @click="closeAllMessages">关闭所有消息</VkButton>
         <VkButton @click="getMessageCount">获取消息数量</VkButton>
       </div>
     </section>

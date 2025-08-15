@@ -57,11 +57,11 @@
           ref="saveTagInput"
           v-model="inputValue"
           size="small"
+          style="width: 90px; margin-left: 10px"
           @keyup.enter="handleInputConfirm"
           @blur="handleInputConfirm"
-          style="width: 90px; margin-left: 10px"
         />
-        <VkButton v-else size="small" @click="showInput" style="margin-left: 10px"> + New Tag </VkButton>
+        <VkButton v-else size="small" style="margin-left: 10px" @click="showInput"> + New Tag </VkButton>
       </div>
       <div class="demo-code">
         <pre><code>&lt;VkTag
@@ -219,11 +219,11 @@
                 ref="techInput"
                 v-model="techInputValue"
                 size="small"
+                style="width: 90px; margin-left: 10px"
                 @keyup.enter="addTechTag"
                 @blur="addTechTag"
-                style="width: 90px; margin-left: 10px"
               />
-              <VkButton v-else size="small" @click="showTechInput" style="margin-left: 10px"> + 添加技术标签 </VkButton>
+              <VkButton v-else size="small" style="margin-left: 10px" @click="showTechInput"> + 添加技术标签 </VkButton>
             </div>
             <div class="tag-category">
               <h4>分类标签</h4>
@@ -235,11 +235,11 @@
                 ref="categoryInput"
                 v-model="categoryInputValue"
                 size="small"
+                style="width: 90px; margin-left: 10px"
                 @keyup.enter="addCategoryTag"
                 @blur="addCategoryTag"
-                style="width: 90px; margin-left: 10px"
               />
-              <VkButton v-else size="small" @click="showCategoryInput" style="margin-left: 10px"> + 添加分类标签 </VkButton>
+              <VkButton v-else size="small" style="margin-left: 10px" @click="showCategoryInput"> + 添加分类标签 </VkButton>
             </div>
           </div>
         </div>
@@ -328,7 +328,7 @@
                   经验：{{ exp }}
                 </VkTag>
               </div>
-              <VkButton @click="clearFilters" size="small" type="danger" style="margin-top: 10px"> 清空筛选 </VkButton>
+              <VkButton size="small" type="danger" style="margin-top: 10px" @click="clearFilters"> 清空筛选 </VkButton>
             </div>
           </div>
         </div>
@@ -528,7 +528,7 @@ const showInput = (): void => {
 };
 
 const handleInputConfirm = (): void => {
-  const value = inputValue.value;
+  const {value} = inputValue;
   if (value && !editableTags.value.includes(value)) {
     editableTags.value.push(value);
   }
@@ -564,7 +564,7 @@ const showCategoryInput = (): void => {
 };
 
 const addTechTag = (): void => {
-  const value = techInputValue.value;
+  const {value} = techInputValue;
   if (value && !techTags.value.includes(value)) {
     techTags.value.push(value);
   }
@@ -573,7 +573,7 @@ const addTechTag = (): void => {
 };
 
 const addCategoryTag = (): void => {
-  const value = categoryInputValue.value;
+  const {value} = categoryInputValue;
   if (value && !categoryTags.value.includes(value)) {
     categoryTags.value.push(value);
   }

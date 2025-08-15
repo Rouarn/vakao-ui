@@ -116,7 +116,7 @@ class MessageManager {
       // 基础配置
       const baseOffset = 20; // 基础偏移量（距顶部或边缘）
       const messageHeight = 50; // 每个消息的基本高度
-      const messageGap = this.messageGap; // 消息之间的间距，使用类属性值
+      const {messageGap} = this; // 消息之间的间距，使用类属性值
 
       // 计算垂直位置：新消息在顶部，后续消息向下堆叠
       // index=0的消息在顶部，index=1的消息在下方，以此类推
