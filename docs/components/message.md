@@ -17,10 +17,10 @@
 </template>
 
 <script setup>
-import { Message } from '@vakao-ui/components';
+import { VkMessage } from "vakao-ui";
 
 const showMessage = () => {
-  Message('这是一条消息');
+  VkMessage("这是一条消息");
 };
 </script>
 ```
@@ -49,22 +49,22 @@ const showMessage = () => {
 </template>
 
 <script setup>
-import { Message } from '@vakao-ui/components';
+import { VkMessage } from "vakao-ui";
 
 const showSuccess = () => {
-  Message.success('操作成功！');
+  VkMessage.success("操作成功！");
 };
 
 const showWarning = () => {
-  Message.warning('请注意检查输入内容');
+  VkMessage.warning("请注意检查输入内容");
 };
 
 const showError = () => {
-  Message.error('操作失败，请重试');
+  VkMessage.error("操作失败，请重试");
 };
 
 const showInfo = () => {
-  Message.info('这是一条信息提示');
+  VkMessage.info("这是一条信息提示");
 };
 </script>
 ```
@@ -87,14 +87,14 @@ const showInfo = () => {
 </template>
 
 <script setup>
-import { Message } from '@vakao-ui/components';
+import { VkMessage } from "vakao-ui";
 
 const showClosableMessage = () => {
-  Message({
-    message: '这是一条可关闭的消息',
-    type: 'success',
+  VkMessage({
+    message: "这是一条可关闭的消息",
+    type: "success",
     closable: true,
-    duration: 0 // 设置为 0 表示不自动关闭
+    duration: 0, // 设置为 0 表示不自动关闭
   });
 };
 </script>
@@ -120,21 +120,21 @@ const showClosableMessage = () => {
 </template>
 
 <script setup>
-import { Message } from '@vakao-ui/components';
+import { VkMessage } from "vakao-ui";
 
 const showLongMessage = () => {
-  Message({
-    message: '这条消息会显示 10 秒',
-    type: 'info',
-    duration: 10000
+  VkMessage({
+    message: "这条消息会显示 10 秒",
+    type: "info",
+    duration: 10000,
   });
 };
 
 const showShortMessage = () => {
-  Message({
-    message: '这条消息会显示 1 秒',
-    type: 'warning',
-    duration: 1000
+  VkMessage({
+    message: "这条消息会显示 1 秒",
+    type: "warning",
+    duration: 1000,
   });
 };
 </script>
@@ -156,32 +156,32 @@ const showShortMessage = () => {
 
 ```vue
 <template>
-  <vk-button @click="showTopMessage">顶部居中</vk-button>
-  <vk-button @click="showTopLeftMessage">左上角</vk-button>
-  <vk-button @click="showTopRightMessage">右上角</vk-button>
+  <vk-button @click="showTopMessage">顶部显示</vk-button>
+  <vk-button @click="showTopLeftMessage">左上角显示</vk-button>
+  <vk-button @click="showTopRightMessage">右上角显示</vk-button>
 </template>
 
 <script setup>
-import { Message } from '@vakao-ui/components';
+import { VkMessage } from "vakao-ui";
 
 const showTopMessage = () => {
-  Message({
-    message: '顶部居中显示',
-    position: 'top'
+  VkMessage({
+    message: "顶部居中显示",
+    position: "top",
   });
 };
 
 const showTopLeftMessage = () => {
-  Message({
-    message: '左上角显示',
-    position: 'top-left'
+  VkMessage({
+    message: "左上角显示",
+    position: "top-left",
   });
 };
 
 const showTopRightMessage = () => {
-  Message({
-    message: '右上角显示',
-    position: 'top-right'
+  VkMessage({
+    message: "右上角显示",
+    position: "top-right",
   });
 };
 </script>
@@ -207,20 +207,20 @@ const showTopRightMessage = () => {
 </template>
 
 <script setup>
-import { Message } from '@vakao-ui/components';
+import { VkMessage } from "vakao-ui";
 
 const showCustomIconMessage = () => {
-  Message({
-    message: '自定义图标消息',
-    icon: 'mdi:heart',
-    type: 'primary'
+  VkMessage({
+    message: "自定义图标消息",
+    icon: "mdi:heart",
+    type: "primary",
   });
 };
 
 const showNoIconMessage = () => {
-  Message({
-    message: '无图标消息',
-    showIcon: false
+  VkMessage({
+    message: "无图标消息",
+    showIcon: false,
   });
 };
 </script>
@@ -250,20 +250,14 @@ const showNoIconMessage = () => {
 ```vue
 <template>
   <div>
-    <vk-message
-      v-if="showMessageComponent"
-      type="success"
-      message="这是组件方式的消息"
-      :closable="true"
-      @close="handleClose"
-    />
+    <vk-message v-if="showMessageComponent" type="success" message="这是组件方式的消息" :closable="true" @close="handleClose" />
     <vk-button @click="toggleMessage">切换消息显示</vk-button>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { VkMessage, VkButton } from '@vakao-ui/components';
+import { ref } from "vue";
+import { VkMessage, VkButton } from "vakao-ui";
 
 const showMessageComponent = ref(false);
 
@@ -299,21 +293,21 @@ Message 提供了一些全局方法来管理消息。
 </template>
 
 <script setup>
-import { Message } from '@vakao-ui/components';
+import { VkMessage } from "vakao-ui";
 
 const showMultipleMessages = () => {
-  Message.success('第一条消息');
-  Message.warning('第二条消息');
-  Message.info('第三条消息');
+  VkMessage.success("第一条消息");
+  VkMessage.warning("第二条消息");
+  VkMessage.info("第三条消息");
 };
 
 const closeAllMessages = () => {
-  Message.closeAll();
+  VkMessage.closeAll();
 };
 
 const getMessageCount = () => {
-  const count = Message.getCount();
-  Message.info(`当前有 ${count} 条活跃消息`);
+  const count = VkMessage.getCount();
+  VkMessage.info(`当前有 $&#123;count&#125; 条活跃消息`);
 };
 </script>
 ```
@@ -325,48 +319,167 @@ const getMessageCount = () => {
 
 ### Props
 
-| 名称 | 类型 | 默认值 | 说明 |
-| --- | --- | --- | --- |
-| type | `'default' \| 'primary' \| 'success' \| 'warning' \| 'danger' \| 'info'` | `'info'` | 消息类型 |
-| message | `string` | — | 消息内容 |
-| duration | `number` | `3000` | 显示时长，单位毫秒。设为 0 则不会自动关闭 |
-| closable | `boolean` | `true` | 是否可关闭 |
-| showIcon | `boolean` | `true` | 是否显示图标 |
-| icon | `string \| VNode` | — | 自定义图标 |
-| position | `'top' \| 'top-left' \| 'top-right'` | `'top'` | 消息位置 |
-| offset | `number` | `20` | 距离顶部的偏移量 |
-| dangerouslyUseHTMLString | `boolean` | `false` | 是否将 message 属性作为 HTML 片段处理 |
-| customClass | `string` | — | 自定义类名 |
-| customStyle | `string \| object` | — | 自定义样式 |
-| zIndex | `number` | `2000` | 层级 |
+| 名称                     | 类型                                                                                         | 默认值   | 说明                                      |
+| ------------------------ | -------------------------------------------------------------------------------------------- | -------- | ----------------------------------------- |
+| type                     | `'default' &vert; 'primary' &vert; 'success' &vert; 'warning' &vert; 'danger' &vert; 'info'` | `'info'` | 消息类型                                  |
+| message                  | `string`                                                                                     | —        | 消息内容                                  |
+| duration                 | `number`                                                                                     | `3000`   | 显示时长，单位毫秒。设为 0 则不会自动关闭 |
+| closable                 | `boolean`                                                                                    | `true`   | 是否可关闭                                |
+| showIcon                 | `boolean`                                                                                    | `true`   | 是否显示图标                              |
+| icon                     | `string &vert; VNode`                                                                        | —        | 自定义图标                                |
+| position                 | `'top' &vert; 'top-left' &vert; 'top-right'`                                                 | `'top'`  | 消息位置                                  |
+| offset                   | `number`                                                                                     | `20`     | 距离顶部的偏移量                          |
+| dangerouslyUseHTMLString | `boolean`                                                                                    | `false`  | 是否将 message 属性作为 HTML 片段处理     |
+| customClass              | `string`                                                                                     | —        | 自定义类名                                |
+| customStyle              | `string &vert; object`                                                                       | —        | 自定义样式                                |
+| zIndex                   | `number`                                                                                     | `2000`   | 层级                                      |
 
 ### Events
 
-| 名称 | 参数 | 说明 |
-| --- | --- | --- |
-| close | — | 关闭时触发 |
-| destroy | — | 销毁时触发 |
+| 名称    | 参数 | 说明       |
+| ------- | ---- | ---------- |
+| close   | —    | 关闭时触发 |
+| destroy | —    | 销毁时触发 |
 
 ### Methods
 
-| 方法名 | 说明 | 参数 | 返回值 |
-| --- | --- | --- | --- |
-| Message | 显示消息 | `(message: string)` 或 `(options: MessageOptions)` | `MessageInstance` |
-| Message.success | 显示成功消息 | `(message: string)` 或 `(options: MessageOptions)` | `MessageInstance` |
-| Message.warning | 显示警告消息 | `(message: string)` 或 `(options: MessageOptions)` | `MessageInstance` |
-| Message.info | 显示信息消息 | `(message: string)` 或 `(options: MessageOptions)` | `MessageInstance` |
-| Message.error | 显示错误消息 | `(message: string)` 或 `(options: MessageOptions)` | `MessageInstance` |
-| Message.danger | 显示危险消息 | `(message: string)` 或 `(options: MessageOptions)` | `MessageInstance` |
-| Message.primary | 显示主要消息 | `(message: string)` 或 `(options: MessageOptions)` | `MessageInstance` |
-| Message.close | 关闭指定消息 | `(id: string)` | — |
-| Message.closeAll | 关闭所有消息 | — | — |
-| Message.getInstance | 获取指定消息实例 | `(id: string)` | `MessageInstance \| undefined` |
-| Message.getAllInstances | 获取所有消息实例 | — | `MessageInstance[]` |
-| Message.getCount | 获取消息数量 | — | `number` |
+| 方法名                    | 说明             | 参数                                               | 返回值                             |
+| ------------------------- | ---------------- | -------------------------------------------------- | ---------------------------------- |
+| VkMessage                 | 显示消息         | `(message: string)` 或 `(options: MessageOptions)` | `MessageInstance`                  |
+| VkMessage.success         | 显示成功消息     | `(message: string)` 或 `(options: MessageOptions)` | `MessageInstance`                  |
+| VkMessage.warning         | 显示警告消息     | `(message: string)` 或 `(options: MessageOptions)` | `MessageInstance`                  |
+| VkMessage.info            | 显示信息消息     | `(message: string)` 或 `(options: MessageOptions)` | `MessageInstance`                  |
+| VkMessage.error           | 显示错误消息     | `(message: string)` 或 `(options: MessageOptions)` | `MessageInstance`                  |
+| VkMessage.danger          | 显示危险消息     | `(message: string)` 或 `(options: MessageOptions)` | `MessageInstance`                  |
+| VkMessage.primary         | 显示主要消息     | `(message: string)` 或 `(options: MessageOptions)` | `MessageInstance`                  |
+| VkMessage.close           | 关闭指定消息     | `(id: string)`                                     | —                                  |
+| VkMessage.closeAll        | 关闭所有消息     | —                                                  | —                                  |
+| VkMessage.getInstance     | 获取指定消息实例 | `(id: string)`                                     | `MessageInstance &vert; undefined` |
+| VkMessage.getAllInstances | 获取所有消息实例 | —                                                  | `MessageInstance[]`                |
+| VkMessage.getCount        | 获取消息数量     | —                                                  | `number`                           |
 
 ### MessageInstance
 
-| 属性/方法 | 说明 | 类型 |
-| --- | --- | --- |
-| id | 消息唯一标识 | `string` |
-| close | 关闭消息 | `() => void` |
+| 属性/方法 | 说明         | 类型         |
+| --------- | ------------ | ------------ |
+| id        | 消息唯一标识 | `string`     |
+| close     | 关闭消息     | `() => void` |
+
+<script setup>
+import { VkMessage, VkButton } from '@vakao-ui/components';
+import { ref } from 'vue';
+
+// 基础用法
+const showMessage = () => {
+  VkMessage('这是一条消息');
+};
+
+// 不同类型
+const showSuccess = () => {
+  VkMessage.success('操作成功！');
+};
+
+const showWarning = () => {
+  VkMessage.warning('请注意检查输入内容');
+};
+
+const showError = () => {
+  VkMessage.error('操作失败，请重试');
+};
+
+const showInfo = () => {
+  VkMessage.info('这是一条信息提示');
+};
+
+// 可关闭消息
+const showClosableMessage = () => {
+  VkMessage({
+    message: '这是一条可关闭的消息',
+    type: 'success',
+    closable: true,
+    duration: 0 // 设置为 0 表示不自动关闭
+  });
+};
+
+// 自定义持续时间
+const showLongMessage = () => {
+  VkMessage({
+    message: '这条消息会显示 10 秒',
+    type: 'info',
+    duration: 10000
+  });
+};
+
+const showShortMessage = () => {
+  VkMessage({
+    message: '这条消息会显示 1 秒',
+    type: 'warning',
+    duration: 1000
+  });
+};
+
+// 不同位置
+const showTopMessage = () => {
+  VkMessage({
+    message: '顶部居中显示',
+    position: 'top'
+  });
+};
+
+const showTopLeftMessage = () => {
+  VkMessage({
+    message: '左上角显示',
+    position: 'top-left'
+  });
+};
+
+const showTopRightMessage = () => {
+  VkMessage({
+    message: '右上角显示',
+    position: 'top-right'
+  });
+};
+
+// 自定义图标
+const showCustomIconMessage = () => {
+  VkMessage({
+    message: '自定义图标消息',
+    icon: 'mdi:heart',
+    type: 'primary'
+  });
+};
+
+const showNoIconMessage = () => {
+  VkMessage({
+    message: '无图标消息',
+    showIcon: false
+  });
+};
+
+// 组件方式使用
+const showMessageComponent = ref(false);
+
+const toggleMessage = () => {
+  showMessageComponent.value = !showMessageComponent.value;
+};
+
+const handleClose = () => {
+  showMessageComponent.value = false;
+};
+
+// 多条消息和管理
+const showMultipleMessages = () => {
+  VkMessage.success('第一条消息');
+  VkMessage.warning('第二条消息');
+  VkMessage.info('第三条消息');
+};
+
+const closeAllMessages = () => {
+  VkMessage.closeAll();
+};
+
+const getMessageCount = () => {
+  const count = VkMessage.getCount();
+  VkMessage.info(`当前有 $&#123;count&#125; 条活跃消息`);
+};
+</script>
