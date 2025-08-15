@@ -53,6 +53,14 @@
     "publish:sync": "node ./scripts/publish.js --sync-version",
     "publish:sync:dry-run": "node ./scripts/publish.js --sync-version --dry-run",
     "test:notification": "node -e \"const notifier = require('node-notifier'); notifier.notify({title: '测试通知', message: '桌面通知功能正常', sound: true});\"",
+    "commit": "git add . && git commit",
+    "commit:feat": "git add . && git commit -m \"feat: 新增功能\"",
+    "commit:fix": "git add . && git commit -m \"fix: 修复问题\"",
+    "commit:docs": "git add . && git commit -m \"docs: 更新文档\"",
+    "commit:style": "git add . && git commit -m \"style: 代码格式调整\"",
+    "commit:refactor": "git add . && git commit -m \"refactor: 代码重构\"",
+    "commit:test": "git add . && git commit -m \"test: 添加测试\"",
+    "commit:chore": "git add . && git commit -m \"chore: 构建或辅助工具的变动\"",
     "prepare": "husky"
   },
   "keywords": [
