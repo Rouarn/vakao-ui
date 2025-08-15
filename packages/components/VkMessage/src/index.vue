@@ -7,40 +7,22 @@
       @before-leave="onBeforeLeave"
       @after-leave="onAfterLeave"
     >
-      <div
-        v-show="visible"
-        :id="messageId"
-        :class="mergedClass"
-        :style="mergedStyle"
-        role="alert"
-        aria-live="assertive"
-      >
+      <div v-show="visible" :id="messageId" :class="mergedClass" :style="mergedStyle" role="alert" aria-live="assertive">
         <!-- 消息图标 -->
         <span v-if="showIcon" :class="ns.element('icon')">
           <component :is="currentIcon" v-if="typeof currentIcon === 'object'" />
-          <VkIcon
-            v-else-if="typeof currentIcon === 'string'"
-            :icon="currentIcon"
-            :size="16"
-          />
+          <VkIcon v-else-if="typeof currentIcon === 'string'" :icon="currentIcon" :size="16" />
         </span>
 
         <!-- 消息内容 -->
         <div :class="ns.element('content')">
-          <div
-            v-if="dangerouslyUseHTMLString"
-            v-html="message"
-          />
+          <div v-if="dangerouslyUseHTMLString" v-html="message" />
           <span v-else>{{ message }}</span>
           <slot />
         </div>
 
         <!-- 关闭按钮 -->
-        <span
-          v-if="closable"
-          :class="ns.element('close')"
-          @click="handleClose"
-        >
+        <span v-if="closable" :class="ns.element('close')" @click="handleClose">
           <VkIcon icon="mdi:close" :size="14" />
         </span>
       </div>
@@ -165,11 +147,7 @@ const currentIcon = computed(() => {
  * 组合基础类名、类型类名、位置类名和自定义类名。
  */
 const mergedClass = computed(() => {
-  const classes = [
-    ns.block(),
-    ns.modifier(props.type),
-    ns.modifier(props.position),
-  ];
+  const classes = [ns.block(), ns.modifier(props.type), ns.modifier(props.position)];
 
   if (props.customClass) {
     classes.push(props.customClass);

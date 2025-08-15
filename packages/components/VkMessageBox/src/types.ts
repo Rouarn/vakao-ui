@@ -109,7 +109,9 @@ export const messageBoxProps = {
   },
   /** 关闭前的回调，返回 false 或 Promise.reject 时阻止关闭 */
   beforeClose: {
-    type: Function as PropType<(_action: MessageBoxAction, _instance: MessageBoxInstance, _done?: () => void) => boolean | Promise<boolean> | void>,
+    type: Function as PropType<
+      (_action: MessageBoxAction, _instance: MessageBoxInstance, _done?: () => void) => boolean | Promise<boolean> | void
+    >,
     default: undefined,
   },
 } as const;

@@ -76,7 +76,7 @@
       <div class="demo-buttons">
         <VkButton @click="toggleComponentMessage">切换组件消息</VkButton>
       </div>
-      
+
       <!-- 使用组件方式 -->
       <VkMessage
         v-if="showComponentMessage"
@@ -95,138 +95,136 @@
       <div class="demo-buttons">
         <VkButton @click="showHTMLMessage">显示 HTML 消息</VkButton>
       </div>
-      <p class="demo-warning">
-        <strong>警告：</strong>启用 HTML 内容时请确保内容安全，避免 XSS 攻击。
-      </p>
+      <p class="demo-warning"><strong>警告：</strong>启用 HTML 内容时请确保内容安全，避免 XSS 攻击。</p>
     </section>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import { VkButton, VkMessage, Message } from '@vakao-ui/components';
+import { ref } from "vue";
+import { VkButton, VkMessage, Message } from "@vakao-ui/components";
 
 // 组件消息的显示状态
 const showComponentMessage = ref(false);
 
 // 基础消息
 const showBasicMessage = () => {
-  Message('这是一条基础消息');
+  Message("这是一条基础消息");
 };
 
 // 不同类型的消息
 const showPrimaryMessage = () => {
-  Message.primary('这是一条主要消息');
+  Message.primary("这是一条主要消息");
 };
 
 const showSuccessMessage = () => {
-  Message.success('操作成功！');
+  Message.success("操作成功！");
 };
 
 const showWarningMessage = () => {
-  Message.warning('请注意检查输入内容');
+  Message.warning("请注意检查输入内容");
 };
 
 const showErrorMessage = () => {
-  Message.error('操作失败，请重试');
+  Message.error("操作失败，请重试");
 };
 
 const showInfoMessage = () => {
-  Message.info('这是一条信息提示');
+  Message.info("这是一条信息提示");
 };
 
 // 可关闭消息
 const showClosableMessage = () => {
   Message({
-    message: '这是一条可关闭的消息',
-    type: 'success',
+    message: "这是一条可关闭的消息",
+    type: "success",
     closable: true,
-    duration: 5000
+    duration: 5000,
   });
 };
 
 const showPersistentMessage = () => {
   Message({
-    message: '这条消息不会自动关闭，请手动关闭',
-    type: 'warning',
+    message: "这条消息不会自动关闭，请手动关闭",
+    type: "warning",
     closable: true,
-    duration: 0 // 设置为 0 表示不自动关闭
+    duration: 0, // 设置为 0 表示不自动关闭
   });
 };
 
 // 自定义持续时间
 const showShortMessage = () => {
   Message({
-    message: '这条消息会显示 1 秒',
-    type: 'info',
-    duration: 1000
+    message: "这条消息会显示 1 秒",
+    type: "info",
+    duration: 1000,
   });
 };
 
 const showLongMessage = () => {
   Message({
-    message: '这条消息会显示 10 秒',
-    type: 'primary',
-    duration: 10000
+    message: "这条消息会显示 10 秒",
+    type: "primary",
+    duration: 10000,
   });
 };
 
 // 不同位置
 const showTopMessage = () => {
   Message({
-    message: '顶部居中显示',
-    type: 'success',
-    position: 'top'
+    message: "顶部居中显示",
+    type: "success",
+    position: "top",
   });
 };
 
 const showTopLeftMessage = () => {
   Message({
-    message: '左上角显示',
-    type: 'warning',
-    position: 'top-left'
+    message: "左上角显示",
+    type: "warning",
+    position: "top-left",
   });
 };
 
 const showTopRightMessage = () => {
   Message({
-    message: '右上角显示',
-    type: 'danger',
-    position: 'top-right'
+    message: "右上角显示",
+    type: "danger",
+    position: "top-right",
   });
 };
 
 // 自定义图标
 const showCustomIconMessage = () => {
   Message({
-    message: '自定义图标消息',
-    type: 'primary',
-    icon: 'mdi:heart'
+    message: "自定义图标消息",
+    type: "primary",
+    icon: "mdi:heart",
   });
 };
 
 const showNoIconMessage = () => {
   Message({
-    message: '无图标消息',
-    type: 'info',
-    showIcon: false
+    message: "无图标消息",
+    type: "info",
+    showIcon: false,
   });
 };
 
 // 批量操作
 const showMultipleMessages = () => {
-  Message.success('第一条消息');
+  Message.success("第一条消息");
   setTimeout(() => {
-    Message.warning('第二条消息');
+    Message.warning("第二条消息");
   }, 500);
   setTimeout(() => {
-    Message.info('第三条消息');
+    Message.info("第三条消息");
   }, 1000);
 };
 
 const closeAllMessages = () => {
   Message.closeAll();
-  Message.success('已关闭所有消息');
+  Message.success("已关闭所有消息");
 };
 
 const getMessageCount = () => {
@@ -246,10 +244,10 @@ const handleComponentMessageClose = () => {
 // HTML 内容
 const showHTMLMessage = () => {
   Message({
-    message: '<strong>这是粗体文本</strong> 和 <em>斜体文本</em>',
-    type: 'info',
+    message: "<strong>这是粗体文本</strong> 和 <em>斜体文本</em>",
+    type: "info",
     dangerouslyUseHTMLString: true,
-    duration: 5000
+    duration: 5000,
   });
 };
 </script>
@@ -314,11 +312,11 @@ p {
   .message-demo {
     padding: 16px;
   }
-  
+
   .demo-section {
     padding: 16px;
   }
-  
+
   .demo-buttons {
     flex-direction: column;
   }
