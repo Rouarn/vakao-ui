@@ -17,7 +17,7 @@
           <!-- 内容 -->
           <div :class="ns.element('content')">
             <div :class="ns.element('message')">
-              <component v-if="isVNode(message)" :is="message" />
+              <component :is="message" v-if="isVNode(message)" />
               <span v-else>{{ message }}</span>
             </div>
             <!-- 输入框 (用于 prompt 类型) -->
@@ -60,7 +60,8 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted, isVNode } from "vue";
-import { messageBoxProps, messageBoxEmits, MessageBoxType } from "./types";
+import type { MessageBoxAction, MessageBoxInstance, MessageBoxType } from "./types";
+import { messageBoxProps, messageBoxEmits } from "./types";
 import type { ComponentType } from "@/types";
 import VkButton from "../../VkButton";
 import VkIcon from "../../VkIcon";
@@ -160,7 +161,7 @@ const validateInput = (showError = true) => {
 };
 
 // 执行关闭前回调
-const executeBeforeClose = async (action: string, instance: any): Promise<boolean> => {
+const executeBeforeClose = async (action: MessageBoxAction, instance: MessageBoxInstance): Promise<boolean> => {
   if (props.beforeClose) {
     try {
       // 检查 beforeClose 函数的参数个数，判断是否使用 done 回调模式
@@ -168,7 +169,7 @@ const executeBeforeClose = async (action: string, instance: any): Promise<boolea
         // done 回调模式
         return new Promise<boolean>((resolve) => {
           const done = () => resolve(true);
-          const result = props.beforeClose!(action as any, instance, done);
+          const result = props.beforeClose!(action, instance, done);
 
           // 如果返回了 Promise，等待它完成
           if (result instanceof Promise) {
@@ -190,7 +191,7 @@ const executeBeforeClose = async (action: string, instance: any): Promise<boolea
         });
       } else {
         // 传统的返回值模式
-        const result = await props.beforeClose(action as any, instance);
+        const result = await props.beforeClose(action, instance);
         return result !== false;
       }
     } catch {
@@ -289,6 +290,18 @@ const getMessageBoxInstance = () => {
     },
     set cancelText(value: string) {
       dynamicCancelText.value = value;
+    },
+    get inputValue() {
+      return inputValue.value;
+    },
+    set inputValue(value: string) {
+      inputValue.value = value;
+    },
+    get inputErrorMessage() {
+      return inputErrorMessage.value;
+    },
+    set inputErrorMessage(value: string) {
+      inputErrorMessage.value = value;
     },
   };
 };

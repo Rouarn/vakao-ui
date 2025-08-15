@@ -331,8 +331,8 @@
           </VkImage>
           <div class="event-controls">
             <VkButton @click="refreshImage">刷新图片</VkButton>
-            <VkButton @click="loadErrorImage" type="warning">加载错误图片</VkButton>
-            <VkButton @click="clearLogs" type="danger">清空日志</VkButton>
+            <VkButton type="warning" @click="loadErrorImage">加载错误图片</VkButton>
+            <VkButton type="danger" @click="clearLogs">清空日志</VkButton>
           </div>
         </div>
         <div class="event-log">

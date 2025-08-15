@@ -142,7 +142,7 @@
         <h3>支付方式选择</h3>
         <div class="payment-demo">
           <VkRadioGroup v-model="paymentMethod">
-            <div class="payment-option" v-for="method in paymentMethods" :key="method.value">
+            <div v-for="method in paymentMethods" :key="method.value" class="payment-option">
               <VkRadio :label="method.value" border>
                 <div class="payment-content">
                   <VkIcon :icon="'material-symbols:' + method.icon" size="24" :color="method.color" />
@@ -163,7 +163,7 @@
         <h3>配送方式选择</h3>
         <div class="delivery-demo">
           <VkRadioGroup v-model="deliveryMethod">
-            <div class="delivery-option" v-for="method in deliveryMethods" :key="method.value">
+            <div v-for="method in deliveryMethods" :key="method.value" class="delivery-option">
               <VkRadio :label="method.value" border>
                 <div class="delivery-content">
                   <div class="delivery-header">
@@ -203,7 +203,7 @@
       <div class="demo-block">
         <h3>问卷调查</h3>
         <div class="survey-demo">
-          <div class="survey-question" v-for="(question, index) in surveyQuestions" :key="index">
+          <div v-for="(question, index) in surveyQuestions" :key="index" class="survey-question">
             <h4>{{ index + 1 }}. {{ question.title }}</h4>
             <VkRadioGroup v-model="surveyAnswers[index]">
               <VkRadio v-for="option in question.options" :key="option.value" :label="option.value" border>
@@ -217,7 +217,7 @@
               <span class="question-num">问题{{ index + 1 }}：</span>
               <span class="answer-text">{{ getAnswerText(index, answer) }}</span>
             </div>
-            <VkButton type="primary" :disabled="!isAllAnswered" @click="submitSurvey" style="margin-top: 16px"> 提交问卷 </VkButton>
+            <VkButton type="primary" :disabled="!isAllAnswered" style="margin-top: 16px" @click="submitSurvey"> 提交问卷 </VkButton>
           </div>
         </div>
       </div>
@@ -226,7 +226,7 @@
       <div class="demo-block">
         <h3>评分选择</h3>
         <div class="rating-demo">
-          <div class="rating-item" v-for="item in ratingItems" :key="item.key">
+          <div v-for="item in ratingItems" :key="item.key" class="rating-item">
             <h4>{{ item.title }}</h4>
             <VkRadioGroup v-model="ratings[item.key]">
               <VkRadioButton v-for="score in 5" :key="score" :label="score.toString()">

@@ -254,7 +254,7 @@ VkMessageBox.alert('这是一条错误消息', '错误', {
 
 <script setup lang="ts">
 import { ref, computed, h } from "vue";
-import { VkMessageBox } from "vakao-ui";
+import { VkMessageBox, type MessageBoxInstance } from "vakao-ui";
 
 // 类型定义
 interface FormData {
@@ -345,7 +345,7 @@ const showCustom = (): void => {
     showCancelButton: true,
     confirmText: "确定",
     cancelText: "取消",
-    beforeClose: (action: string, instance: any, done?: () => void) => {
+    beforeClose: (action: string, instance: MessageBoxInstance, done?: () => void) => {
       if (action === "confirm") {
         instance.confirmButtonLoading = true;
         instance.confirmText = "处理中...";
@@ -694,7 +694,7 @@ const changePassword = (): void => {
     inputPattern: /^.{6,}$/,
     inputErrorMessage: "密码长度至少6位",
   })
-    .then(({ value }) => {
+    .then(({ value: _ }) => {
       addLog("密码修改成功");
       VkMessageBox.alert("密码修改成功，请重新登录", "修改成功", {
         type: "success",

@@ -50,9 +50,21 @@ function getFullscreenElement(): Element | null {
   }
   return (
     document.fullscreenElement ||
-    (document as any).webkitFullscreenElement ||
-    (document as any).mozFullScreenElement ||
-    (document as any).msFullscreenElement ||
+    (document as Document & {
+      webkitFullscreenElement?: Element;
+      mozFullScreenElement?: Element;
+      msFullscreenElement?: Element;
+    }).webkitFullscreenElement ||
+    (document as Document & {
+      webkitFullscreenElement?: Element;
+      mozFullScreenElement?: Element;
+      msFullscreenElement?: Element;
+    }).mozFullScreenElement ||
+    (document as Document & {
+      webkitFullscreenElement?: Element;
+      mozFullScreenElement?: Element;
+      msFullscreenElement?: Element;
+    }).msFullscreenElement ||
     null
   );
 }
@@ -61,14 +73,20 @@ function getFullscreenElement(): Element | null {
  * 请求全屏
  */
 function requestFullscreen(element: HTMLElement): Promise<void> {
+  const extendedElement = element as HTMLElement & {
+    webkitRequestFullscreen?: () => Promise<void>;
+    mozRequestFullScreen?: () => Promise<void>;
+    msRequestFullscreen?: () => Promise<void>;
+  };
+  
   if (element.requestFullscreen) {
     return element.requestFullscreen();
-  } else if ((element as any).webkitRequestFullscreen) {
-    return (element as any).webkitRequestFullscreen();
-  } else if ((element as any).mozRequestFullScreen) {
-    return (element as any).mozRequestFullScreen();
-  } else if ((element as any).msRequestFullscreen) {
-    return (element as any).msRequestFullscreen();
+  } else if (extendedElement.webkitRequestFullscreen) {
+    return extendedElement.webkitRequestFullscreen();
+  } else if (extendedElement.mozRequestFullScreen) {
+    return extendedElement.mozRequestFullScreen();
+  } else if (extendedElement.msRequestFullscreen) {
+    return extendedElement.msRequestFullscreen();
   }
   return Promise.reject(new Error("全屏 API 不被支持"));
 }
@@ -80,14 +98,21 @@ function exitFullscreen(): Promise<void> {
   if (typeof document === "undefined") {
     return Promise.reject(new Error("document 对象不可用"));
   }
+  
+  const extendedDocument = document as Document & {
+    webkitExitFullscreen?: () => Promise<void>;
+    mozCancelFullScreen?: () => Promise<void>;
+    msExitFullscreen?: () => Promise<void>;
+  };
+  
   if (document.exitFullscreen) {
     return document.exitFullscreen();
-  } else if ((document as any).webkitExitFullscreen) {
-    return (document as any).webkitExitFullscreen();
-  } else if ((document as any).mozCancelFullScreen) {
-    return (document as any).mozCancelFullScreen();
-  } else if ((document as any).msExitFullscreen) {
-    return (document as any).msExitFullscreen();
+  } else if (extendedDocument.webkitExitFullscreen) {
+    return extendedDocument.webkitExitFullscreen();
+  } else if (extendedDocument.mozCancelFullScreen) {
+    return extendedDocument.mozCancelFullScreen();
+  } else if (extendedDocument.msExitFullscreen) {
+    return extendedDocument.msExitFullscreen();
   }
   return Promise.reject(new Error("退出全屏 API 不被支持"));
 }
@@ -99,11 +124,18 @@ function isFullscreenSupported(): boolean {
   if (typeof document === "undefined") {
     return false;
   }
+  
+  const extendedDocument = document as Document & {
+    webkitFullscreenEnabled?: boolean;
+    mozFullScreenEnabled?: boolean;
+    msFullscreenEnabled?: boolean;
+  };
+  
   return !!(
     document.fullscreenEnabled ||
-    (document as any).webkitFullscreenEnabled ||
-    (document as any).mozFullScreenEnabled ||
-    (document as any).msFullscreenEnabled
+    extendedDocument.webkitFullscreenEnabled ||
+    extendedDocument.mozFullScreenEnabled ||
+    extendedDocument.msFullscreenEnabled
   );
 }
 

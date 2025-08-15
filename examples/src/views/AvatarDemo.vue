@@ -181,6 +181,15 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
+// 类型定义
+interface User {
+  id: number;
+  name: string;
+  avatar: string;
+  role?: string;
+  status?: string;
+}
+
 // 用户数据
 const users = ref([
   { id: 1, name: "张三", avatar: "https://picsum.photos/100/100?random=1" },
@@ -222,11 +231,11 @@ const wallUsers = ref([
 const clickLogs = ref<string[]>([]);
 
 // 事件处理函数
-const handleAvatarClick = (user: any) => {
+const handleAvatarClick = (user: User) => {
   addClickLog(`点击了 ${user.name} 的头像`);
 };
 
-const handleWallAvatarClick = (user: any) => {
+const handleWallAvatarClick = (user: User) => {
   addClickLog(`查看 ${user.name}（${user.role}）的详细信息`);
 };
 

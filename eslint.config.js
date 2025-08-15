@@ -45,6 +45,8 @@ export default [
       ".eslintcache",
 
       // VitePress 相关
+      "docs/.vitepress/cache/**/*",
+      "docs/.vitepress/dist/**/*",
       ".vitepress/cache/**/*",
       ".vitepress/dist/**/*",
 
@@ -344,6 +346,14 @@ export default [
       "vue/require-default-prop": "off",
       "vue/multi-word-component-names": "off",
       "no-console": "off",
+    },
+  },
+
+  // 组件文件特殊规则
+  {
+    files: ["packages/components/**/*.vue"],
+    rules: {
+      "vue/no-v-html": "off", // 组件库中需要支持HTML字符串渲染
     },
   },
 ];

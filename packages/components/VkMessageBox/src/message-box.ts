@@ -76,103 +76,103 @@ interface VkMessageBoxType {
 
 export const VkMessageBox: VkMessageBoxType = Object.assign(
   // 直接调用函数
-  function(options: MessageBoxOptions): Promise<MessageBoxResult> {
+  function (options: MessageBoxOptions): Promise<MessageBoxResult> {
     return createMessageBox(options);
   },
   {
     /**
      * 显示确认对话框
      */
-  confirm(message: string, title?: string | MessageBoxOptions, options?: MessageBoxOptions): Promise<MessageBoxResult> {
-    let mergedOptions: MessageBoxOptions;
+    confirm(message: string, title?: string | MessageBoxOptions, options?: MessageBoxOptions): Promise<MessageBoxResult> {
+      let mergedOptions: MessageBoxOptions;
 
-    if (typeof title === "string") {
-      mergedOptions = {
-        message,
-        title,
-        showCancelButton: true,
-        ...options,
-      };
-    } else {
-      mergedOptions = {
-        message,
-        title: "确认",
-        showCancelButton: true,
-        ...title,
-      };
-    }
-
-    return createMessageBox(mergedOptions);
-  },
-
-  /**
-   * 显示警告对话框
-   */
-  alert(message: string, title?: string | MessageBoxOptions, options?: MessageBoxOptions): Promise<MessageBoxResult> {
-    let mergedOptions: MessageBoxOptions;
-
-    if (typeof title === "string") {
-      mergedOptions = {
-        message,
-        title,
-        showCancelButton: false,
-        ...options,
-      };
-    } else {
-      mergedOptions = {
-        message,
-        title: "提示",
-        showCancelButton: false,
-        ...title,
-      };
-    }
-
-    return createMessageBox(mergedOptions);
-  },
-
-  /**
-   * 显示提示对话框
-   */
-  prompt(message: string, title?: string | MessageBoxOptions, options?: MessageBoxOptions): Promise<MessageBoxResult> {
-    let mergedOptions: MessageBoxOptions;
-
-    if (typeof title === "string") {
-      mergedOptions = {
-        message,
-        title,
-        showCancelButton: true,
-        type: "info",
-        showInput: true,
-        ...options,
-      };
-    } else {
-      mergedOptions = {
-        message,
-        title: "输入",
-        showCancelButton: true,
-        type: "info",
-        showInput: true,
-        ...title,
-      };
-    }
-
-    return createMessageBox(mergedOptions);
-  },
-
-  /**
-   * 关闭当前 MessageBox
-   */
-  close() {
-    if (messageBoxInstance && currentContainer) {
-      messageBoxInstance.unmount();
-      if (currentContainer.parentNode) {
-        document.body.removeChild(currentContainer);
+      if (typeof title === "string") {
+        mergedOptions = {
+          message,
+          title,
+          showCancelButton: true,
+          ...options,
+        };
+      } else {
+        mergedOptions = {
+          message,
+          title: "确认",
+          showCancelButton: true,
+          ...title,
+        };
       }
-      messageBoxInstance = null;
-      currentContainer = null;
-    }
+
+      return createMessageBox(mergedOptions);
+    },
+
+    /**
+     * 显示警告对话框
+     */
+    alert(message: string, title?: string | MessageBoxOptions, options?: MessageBoxOptions): Promise<MessageBoxResult> {
+      let mergedOptions: MessageBoxOptions;
+
+      if (typeof title === "string") {
+        mergedOptions = {
+          message,
+          title,
+          showCancelButton: false,
+          ...options,
+        };
+      } else {
+        mergedOptions = {
+          message,
+          title: "提示",
+          showCancelButton: false,
+          ...title,
+        };
+      }
+
+      return createMessageBox(mergedOptions);
+    },
+
+    /**
+     * 显示提示对话框
+     */
+    prompt(message: string, title?: string | MessageBoxOptions, options?: MessageBoxOptions): Promise<MessageBoxResult> {
+      let mergedOptions: MessageBoxOptions;
+
+      if (typeof title === "string") {
+        mergedOptions = {
+          message,
+          title,
+          showCancelButton: true,
+          type: "info",
+          showInput: true,
+          ...options,
+        };
+      } else {
+        mergedOptions = {
+          message,
+          title: "输入",
+          showCancelButton: true,
+          type: "info",
+          showInput: true,
+          ...title,
+        };
+      }
+
+      return createMessageBox(mergedOptions);
+    },
+
+    /**
+     * 关闭当前 MessageBox
+     */
+    close() {
+      if (messageBoxInstance && currentContainer) {
+        messageBoxInstance.unmount();
+        if (currentContainer.parentNode) {
+          document.body.removeChild(currentContainer);
+        }
+        messageBoxInstance = null;
+        currentContainer = null;
+      }
+    },
   },
-  }
 );
 
 export default VkMessageBox;

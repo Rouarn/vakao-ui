@@ -171,6 +171,12 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
+// 类型定义
+interface ClickableIcon {
+  name: string;
+  action: string;
+}
+
 // 图标名称映射函数，将原来的图标名称映射到 Material Symbols 图标名称
 const iconNameToMaterialSymbols = (name: string) => {
   const iconMap: Record<string, string> = {
@@ -318,7 +324,7 @@ const copyIconName = (iconName: string) => {
   });
 };
 
-const handleIconClick = (icon: any) => {
+const handleIconClick = (icon: ClickableIcon) => {
   const timestamp = new Date().toLocaleTimeString();
   clickLogs.value.unshift(`[${timestamp}] ${icon.action} - ${icon.name}`);
   if (clickLogs.value.length > 6) {

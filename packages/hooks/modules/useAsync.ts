@@ -5,7 +5,7 @@ import type { ResetFunction } from "../types/shared";
 /**
  * 异步函数类型
  */
-export type AsyncFunction<T, P extends any[] = any[]> = (...args: P) => Promise<T>;
+export type AsyncFunction<T, P extends unknown[] = unknown[]> = (...args: P) => Promise<T>;
 
 /**
  * 异步操作状态枚举
@@ -36,7 +36,7 @@ export interface AsyncState<T> {
 /**
  * 执行异步操作的函数类型
  */
-export type AsyncExecuteFunction<P extends any[] = any[]> = (...args: P) => Promise<void>;
+export type AsyncExecuteFunction<P extends unknown[] = unknown[]> = (...args: P) => Promise<void>;
 
 /**
  * 成功回调函数类型
@@ -62,7 +62,7 @@ export interface UseAsyncOptions {
   /** 重置延迟时间（毫秒），用于防止状态闪烁 */
   resetDelay?: number;
   /** 成功回调 */
-  onSuccess?: (data: any) => void;
+  onSuccess?: <T>(data: T) => void;
   /** 错误回调 */
   onError?: (error: Error) => void;
   /** 完成回调（无论成功或失败） */
@@ -72,7 +72,7 @@ export interface UseAsyncOptions {
 /**
  * useAsync 返回值类型
  */
-export type UseAsyncReturn<T, P extends any[] = any[]> = [
+export type UseAsyncReturn<T, P extends unknown[] = unknown[]> = [
   ComputedRef<T | null>,
   ComputedRef<boolean>,
   ComputedRef<Error | null>,
@@ -123,7 +123,7 @@ export type UseAsyncReturn<T, P extends any[] = any[]> = [
  * @since 0.0.2
  * @author Vakao UI Team
  */
-export function useAsync<T, P extends any[] = any[]>(asyncFn: AsyncFunction<T, P>, options: UseAsyncOptions = {}): UseAsyncReturn<T, P> {
+export function useAsync<T, P extends unknown[] = unknown[]>(asyncFn: AsyncFunction<T, P>, options: UseAsyncOptions = {}): UseAsyncReturn<T, P> {
   const { immediate = false, resetDelay = 0, onSuccess, onError, onFinally } = options;
 
   // 状态管理

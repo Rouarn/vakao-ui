@@ -221,6 +221,27 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
+// 类型定义
+interface Product {
+  id: number;
+  name: string;
+  description: string;
+  price: number;
+  originalPrice: number | null;
+  discount: string | null;
+  rating: number;
+  image: string;
+}
+
+interface InteractiveItem {
+  id: number;
+  title: string;
+  description: string;
+  icon: string;
+  status: string;
+  statusText: string;
+}
+
 // 用户数据
 const users = ref([
   {
@@ -348,15 +369,15 @@ const interactiveItems = ref([
 ]);
 
 // 事件处理函数
-const addToCart = (product: any) => {
+const addToCart = (product: Product) => {
   alert(`已将 ${product.name} 加入购物车`);
 };
 
-const buyNow = (product: any) => {
+const buyNow = (product: Product) => {
   alert(`立即购买 ${product.name}`);
 };
 
-const handleCardClick = (item: any) => {
+const handleCardClick = (item: InteractiveItem) => {
   alert(`点击了 ${item.title}`);
 };
 </script>
