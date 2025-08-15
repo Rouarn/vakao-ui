@@ -52,7 +52,8 @@
     "publish:all:dry-run": "node ./scripts/publish.js --packages main,hooks,utils --dry-run",
     "publish:sync": "node ./scripts/publish.js --sync-version",
     "publish:sync:dry-run": "node ./scripts/publish.js --sync-version --dry-run",
-    "test:notification": "node -e \"const notifier = require('node-notifier'); notifier.notify({title: '测试通知', message: '桌面通知功能正常', sound: true});\""
+    "test:notification": "node -e \"const notifier = require('node-notifier'); notifier.notify({title: '测试通知', message: '桌面通知功能正常', sound: true});\"",
+    "prepare": "husky"
   },
   "keywords": [
     "vue3",
@@ -73,6 +74,8 @@
     "@iconify/vue": "^5.0.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "19.8.1",
+    "@commitlint/config-conventional": "19.8.1",
     "@typescript-eslint/eslint-plugin": "^8.39.0",
     "@typescript-eslint/parser": "^8.39.0",
     "@vakao-ui/components": "workspace:*",
@@ -83,7 +86,9 @@
     "eslint": "^9.32.0",
     "eslint-plugin-vue": "^9.33.0",
     "fs-extra": "^11.3.1",
+    "husky": "9.1.7",
     "inquirer": "^9.3.7",
+    "lint-staged": "16.1.5",
     "node-notifier": "^10.0.1",
     "prettier": "^3.6.2",
     "terser": "^5.43.1",
@@ -101,5 +106,14 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "lint-staged": {
+    "*.{vue,js,ts,jsx,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md}": [
+      "prettier --write"
+    ]
   }
 }
