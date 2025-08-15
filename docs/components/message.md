@@ -6,11 +6,14 @@
 
 最简单的用法，显示一条信息消息。
 
+<Demo>
+  <vk-button @click="showMessage">显示消息</vk-button>
+  
+  <template #code>
+
 ```vue
 <template>
-  <div>
-    <VkButton @click="showMessage">显示消息</VkButton>
-  </div>
+  <vk-button @click="showMessage">显示消息</vk-button>
 </template>
 
 <script setup>
@@ -22,18 +25,27 @@ const showMessage = () => {
 </script>
 ```
 
+  </template>
+</Demo>
+
 ## 不同类型
 
 消息支持多种类型，用于表示不同的语义。
 
+<Demo>
+  <vk-button @click="showSuccess" type="success">成功</vk-button>
+  <vk-button @click="showWarning" type="warning">警告</vk-button>
+  <vk-button @click="showError" type="danger">错误</vk-button>
+  <vk-button @click="showInfo" type="info">信息</vk-button>
+  
+  <template #code>
+
 ```vue
 <template>
-  <div>
-    <VkButton @click="showSuccess">成功</VkButton>
-    <VkButton @click="showWarning">警告</VkButton>
-    <VkButton @click="showError">错误</VkButton>
-    <VkButton @click="showInfo">信息</VkButton>
-  </div>
+  <vk-button @click="showSuccess" type="success">成功</vk-button>
+  <vk-button @click="showWarning" type="warning">警告</vk-button>
+  <vk-button @click="showError" type="danger">错误</vk-button>
+  <vk-button @click="showInfo" type="info">信息</vk-button>
 </template>
 
 <script setup>
@@ -57,15 +69,21 @@ const showInfo = () => {
 </script>
 ```
 
+  </template>
+</Demo>
+
 ## 可关闭
 
 可以添加关闭按钮，允许用户手动关闭消息。
 
+<Demo>
+  <vk-button @click="showClosableMessage">可关闭消息</vk-button>
+  
+  <template #code>
+
 ```vue
 <template>
-  <div>
-    <VkButton @click="showClosableMessage">可关闭消息</VkButton>
-  </div>
+  <vk-button @click="showClosableMessage">可关闭消息</vk-button>
 </template>
 
 <script setup>
@@ -82,16 +100,23 @@ const showClosableMessage = () => {
 </script>
 ```
 
+  </template>
+</Demo>
+
 ## 自定义持续时间
 
 可以自定义消息的显示时长。
 
+<Demo>
+  <vk-button @click="showLongMessage">长时间显示</vk-button>
+  <vk-button @click="showShortMessage">短时间显示</vk-button>
+  
+  <template #code>
+
 ```vue
 <template>
-  <div>
-    <VkButton @click="showLongMessage">长时间显示</VkButton>
-    <VkButton @click="showShortMessage">短时间显示</VkButton>
-  </div>
+  <vk-button @click="showLongMessage">长时间显示</vk-button>
+  <vk-button @click="showShortMessage">短时间显示</vk-button>
 </template>
 
 <script setup>
@@ -115,17 +140,25 @@ const showShortMessage = () => {
 </script>
 ```
 
+  </template>
+</Demo>
+
 ## 不同位置
 
 可以设置消息显示的位置。
 
+<Demo>
+  <vk-button @click="showTopMessage">顶部居中</vk-button>
+  <vk-button @click="showTopLeftMessage">左上角</vk-button>
+  <vk-button @click="showTopRightMessage">右上角</vk-button>
+  
+  <template #code>
+
 ```vue
 <template>
-  <div>
-    <VkButton @click="showTopMessage">顶部居中</VkButton>
-    <VkButton @click="showTopLeftMessage">左上角</VkButton>
-    <VkButton @click="showTopRightMessage">右上角</VkButton>
-  </div>
+  <vk-button @click="showTopMessage">顶部居中</vk-button>
+  <vk-button @click="showTopLeftMessage">左上角</vk-button>
+  <vk-button @click="showTopRightMessage">右上角</vk-button>
 </template>
 
 <script setup>
@@ -154,16 +187,23 @@ const showTopRightMessage = () => {
 </script>
 ```
 
+  </template>
+</Demo>
+
 ## 自定义图标
 
 可以自定义消息的图标。
 
+<Demo>
+  <vk-button @click="showCustomIconMessage">自定义图标</vk-button>
+  <vk-button @click="showNoIconMessage">无图标</vk-button>
+  
+  <template #code>
+
 ```vue
 <template>
-  <div>
-    <VkButton @click="showCustomIconMessage">自定义图标</VkButton>
-    <VkButton @click="showNoIconMessage">无图标</VkButton>
-  </div>
+  <vk-button @click="showCustomIconMessage">自定义图标</vk-button>
+  <vk-button @click="showNoIconMessage">无图标</vk-button>
 </template>
 
 <script setup>
@@ -186,21 +226,38 @@ const showNoIconMessage = () => {
 </script>
 ```
 
+  </template>
+</Demo>
+
 ## 组件方式使用
 
 除了函数式调用，也可以直接在模板中使用组件。
 
-```vue
-<template>
+<Demo>
   <div>
-    <VkMessage
+    <vk-message
       v-if="showMessageComponent"
       type="success"
       message="这是组件方式的消息"
       :closable="true"
       @close="handleClose"
     />
-    <VkButton @click="toggleMessage">切换消息显示</VkButton>
+    <vk-button @click="toggleMessage">切换消息显示</vk-button>
+  </div>
+  
+  <template #code>
+
+```vue
+<template>
+  <div>
+    <vk-message
+      v-if="showMessageComponent"
+      type="success"
+      message="这是组件方式的消息"
+      :closable="true"
+      @close="handleClose"
+    />
+    <vk-button @click="toggleMessage">切换消息显示</vk-button>
   </div>
 </template>
 
@@ -220,17 +277,25 @@ const handleClose = () => {
 </script>
 ```
 
+  </template>
+</Demo>
+
 ## 全局方法
 
 Message 提供了一些全局方法来管理消息。
 
+<Demo>
+  <vk-button @click="showMultipleMessages">显示多条消息</vk-button>
+  <vk-button @click="closeAllMessages">关闭所有消息</vk-button>
+  <vk-button @click="getMessageCount">获取消息数量</vk-button>
+  
+  <template #code>
+
 ```vue
 <template>
-  <div>
-    <VkButton @click="showMultipleMessages">显示多条消息</VkButton>
-    <VkButton @click="closeAllMessages">关闭所有消息</VkButton>
-    <VkButton @click="getMessageCount">获取消息数量</VkButton>
-  </div>
+  <vk-button @click="showMultipleMessages">显示多条消息</vk-button>
+  <vk-button @click="closeAllMessages">关闭所有消息</vk-button>
+  <vk-button @click="getMessageCount">获取消息数量</vk-button>
 </template>
 
 <script setup>
@@ -253,52 +318,55 @@ const getMessageCount = () => {
 </script>
 ```
 
+  </template>
+</Demo>
+
 ## API
 
-### Message Props
+### Props
 
-| 参数 | 说明 | 类型 | 可选值 | 默认值 |
-| --- | --- | --- | --- | --- |
-| type | 消息类型 | string | default / primary / success / warning / danger / info | info |
-| message | 消息内容 | string | — | — |
-| duration | 显示时长，单位毫秒。设为 0 则不会自动关闭 | number | — | 3000 |
-| closable | 是否可关闭 | boolean | — | true |
-| showIcon | 是否显示图标 | boolean | — | true |
-| icon | 自定义图标 | string / VNode | — | — |
-| position | 消息位置 | string | top / top-left / top-right | top |
-| offset | 距离顶部的偏移量 | number | — | 20 |
-| dangerouslyUseHTMLString | 是否将 message 属性作为 HTML 片段处理 | boolean | — | false |
-| customClass | 自定义类名 | string | — | — |
-| customStyle | 自定义样式 | string / object | — | — |
-| zIndex | 层级 | number | — | 2000 |
+| 名称 | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| type | `'default' \| 'primary' \| 'success' \| 'warning' \| 'danger' \| 'info'` | `'info'` | 消息类型 |
+| message | `string` | — | 消息内容 |
+| duration | `number` | `3000` | 显示时长，单位毫秒。设为 0 则不会自动关闭 |
+| closable | `boolean` | `true` | 是否可关闭 |
+| showIcon | `boolean` | `true` | 是否显示图标 |
+| icon | `string \| VNode` | — | 自定义图标 |
+| position | `'top' \| 'top-left' \| 'top-right'` | `'top'` | 消息位置 |
+| offset | `number` | `20` | 距离顶部的偏移量 |
+| dangerouslyUseHTMLString | `boolean` | `false` | 是否将 message 属性作为 HTML 片段处理 |
+| customClass | `string` | — | 自定义类名 |
+| customStyle | `string \| object` | — | 自定义样式 |
+| zIndex | `number` | `2000` | 层级 |
 
-### Message Events
+### Events
 
-| 事件名 | 说明 | 回调参数 |
+| 名称 | 参数 | 说明 |
 | --- | --- | --- |
-| close | 关闭时触发 | — |
-| destroy | 销毁时触发 | — |
+| close | — | 关闭时触发 |
+| destroy | — | 销毁时触发 |
 
-### Message Methods
+### Methods
 
 | 方法名 | 说明 | 参数 | 返回值 |
 | --- | --- | --- | --- |
-| Message | 显示消息 | (message: string) 或 (options: MessageOptions) | MessageInstance |
-| Message.success | 显示成功消息 | (message: string) 或 (options: MessageOptions) | MessageInstance |
-| Message.warning | 显示警告消息 | (message: string) 或 (options: MessageOptions) | MessageInstance |
-| Message.info | 显示信息消息 | (message: string) 或 (options: MessageOptions) | MessageInstance |
-| Message.error | 显示错误消息 | (message: string) 或 (options: MessageOptions) | MessageInstance |
-| Message.danger | 显示危险消息 | (message: string) 或 (options: MessageOptions) | MessageInstance |
-| Message.primary | 显示主要消息 | (message: string) 或 (options: MessageOptions) | MessageInstance |
-| Message.close | 关闭指定消息 | (id: string) | — |
+| Message | 显示消息 | `(message: string)` 或 `(options: MessageOptions)` | `MessageInstance` |
+| Message.success | 显示成功消息 | `(message: string)` 或 `(options: MessageOptions)` | `MessageInstance` |
+| Message.warning | 显示警告消息 | `(message: string)` 或 `(options: MessageOptions)` | `MessageInstance` |
+| Message.info | 显示信息消息 | `(message: string)` 或 `(options: MessageOptions)` | `MessageInstance` |
+| Message.error | 显示错误消息 | `(message: string)` 或 `(options: MessageOptions)` | `MessageInstance` |
+| Message.danger | 显示危险消息 | `(message: string)` 或 `(options: MessageOptions)` | `MessageInstance` |
+| Message.primary | 显示主要消息 | `(message: string)` 或 `(options: MessageOptions)` | `MessageInstance` |
+| Message.close | 关闭指定消息 | `(id: string)` | — |
 | Message.closeAll | 关闭所有消息 | — | — |
-| Message.getInstance | 获取指定消息实例 | (id: string) | MessageInstance \| undefined |
-| Message.getAllInstances | 获取所有消息实例 | — | MessageInstance[] |
-| Message.getCount | 获取消息数量 | — | number |
+| Message.getInstance | 获取指定消息实例 | `(id: string)` | `MessageInstance \| undefined` |
+| Message.getAllInstances | 获取所有消息实例 | — | `MessageInstance[]` |
+| Message.getCount | 获取消息数量 | — | `number` |
 
 ### MessageInstance
 
 | 属性/方法 | 说明 | 类型 |
 | --- | --- | --- |
-| id | 消息唯一标识 | string |
-| close | 关闭消息 | () => void |
+| id | 消息唯一标识 | `string` |
+| close | 关闭消息 | `() => void` |

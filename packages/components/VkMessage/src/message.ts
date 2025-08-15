@@ -6,7 +6,7 @@
  */
 
 import { createApp, type App } from "vue";
-import type { MessageOptions, MessageInstance, MessageType } from "./types";
+import type { MessageOptions, MessageInstance, MessageType, MessageComponentInstance } from "./types";
 import MessageComponent from "./index.vue";
 
 /**
@@ -45,7 +45,7 @@ class MessageManager {
     });
 
     // 挂载组件
-    const vm = app.mount(container);
+    const vm = app.mount(container) as unknown as MessageComponentInstance;
 
     // 创建消息实例对象
     const instance: MessageInstance = {

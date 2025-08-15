@@ -222,6 +222,20 @@ export const messageEmits = {
 export type MessageEmits = typeof messageEmits;
 
 /**
+ * 消息组件实例接口
+ *
+ * 定义了消息组件实例的结构，包含组件暴露的方法和属性。
+ */
+export interface MessageComponentInstance {
+  /** 关闭消息的方法 */
+  close: () => void;
+  /** 消息可见性 */
+  visible: boolean;
+  /** 消息唯一 ID */
+  messageId: string;
+}
+
+/**
  * 消息实例接口
  *
  * 定义了消息实例的方法，用于程序化控制消息的行为。
@@ -245,13 +259,71 @@ export interface MessageInstance {
 /**
  * 消息配置选项
  *
- * 用于创建消息时的配置选项，继承自 MessageProps。
+ * 用于创建消息时的配置选项，基于 MessageProps 但使用实际的值类型而不是 Vue prop 定义。
  */
-export interface MessageOptions extends Partial<MessageProps> {
+export interface MessageOptions {
+  /**
+   * 消息类型
+   */
+  type?: MessageType;
+
   /**
    * 消息内容
    *
    * 要显示的消息文本内容，这是必需的属性。
    */
   message: string;
+
+  /**
+   * 显示时长
+   *
+   * 消息自动关闭的时间，单位为毫秒。
+   * 设置为 0 时不会自动关闭。
+   */
+  duration?: number;
+
+  /**
+   * 是否可关闭
+   */
+  closable?: boolean;
+
+  /**
+   * 是否显示图标
+   */
+  showIcon?: boolean;
+
+  /**
+   * 自定义图标
+   */
+  icon?: string | VNode;
+
+  /**
+   * 消息位置
+   */
+  position?: MessagePosition;
+
+  /**
+   * 距离顶部的偏移量
+   */
+  offset?: number;
+
+  /**
+   * 是否使用 HTML
+   */
+  dangerouslyUseHTMLString?: boolean;
+
+  /**
+   * 自定义类名
+   */
+  customClass?: string;
+
+  /**
+   * 自定义样式
+   */
+  customStyle?: string | CSSProperties;
+
+  /**
+   * z-index 层级
+   */
+  zIndex?: number;
 }
