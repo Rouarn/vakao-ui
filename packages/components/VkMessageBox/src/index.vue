@@ -60,7 +60,7 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted, isVNode } from "vue";
-import type { MessageBoxType } from "./types";
+import type { MessageBoxAction, MessageBoxInstance, MessageBoxType } from "./types";
 import { messageBoxProps, messageBoxEmits } from "./types";
 import type { ComponentType } from "@/types";
 import VkButton from "../../VkButton";
@@ -161,7 +161,7 @@ const validateInput = (showError = true) => {
 };
 
 // 执行关闭前回调
-const executeBeforeClose = async (action: string, instance: any): Promise<boolean> => {
+const executeBeforeClose = async (action: MessageBoxAction, instance: MessageBoxInstance): Promise<boolean> => {
   if (props.beforeClose) {
     try {
       // 检查 beforeClose 函数的参数个数，判断是否使用 done 回调模式
@@ -169,7 +169,7 @@ const executeBeforeClose = async (action: string, instance: any): Promise<boolea
         // done 回调模式
         return new Promise<boolean>((resolve) => {
           const done = () => resolve(true);
-          const result = props.beforeClose!(action as any, instance, done);
+          const result = props.beforeClose!(action, instance, done);
 
           // 如果返回了 Promise，等待它完成
           if (result instanceof Promise) {
@@ -191,7 +191,7 @@ const executeBeforeClose = async (action: string, instance: any): Promise<boolea
         });
       } else {
         // 传统的返回值模式
-        const result = await props.beforeClose(action as any, instance);
+        const result = await props.beforeClose(action, instance);
         return result !== false;
       }
     } catch {

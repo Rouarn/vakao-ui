@@ -348,4 +348,12 @@ export default [
       "no-console": "off",
     },
   },
+
+  // 组件文件特殊规则
+  {
+    files: ["packages/components/**/*.vue"],
+    rules: {
+      "vue/no-v-html": "off", // 组件库中需要支持HTML字符串渲染
+    },
+  },
 ];

@@ -262,6 +262,39 @@
 <script setup lang="ts">
 import { ref, reactive } from "vue";
 
+// 类型定义
+interface Permission {
+  key: string;
+  name: string;
+  enabled: boolean;
+}
+
+interface User {
+  id: number;
+  name: string;
+  role: string;
+  avatar: string;
+  active: boolean;
+  permissions: Permission[];
+}
+
+interface ServiceStats {
+  cpu: number;
+  memory: number;
+  uptime: string;
+}
+
+interface Service {
+  id: number;
+  name: string;
+  description: string;
+  icon: string;
+  status: string;
+  enabled: boolean;
+  loading: boolean;
+  stats: ServiceStats;
+}
+
 // 基础用法
 const switch1 = ref(true);
 const switch2 = ref(false);
@@ -450,7 +483,7 @@ const users = reactive([
   },
 ]);
 
-const confirmPermissionChange = (user: any, permission: any) => {
+const confirmPermissionChange = (user: User, permission: Permission) => {
   return confirm(`确定要${permission.enabled ? "禁用" : "启用"}用户 ${user.name} 的${permission.name}吗？`);
 };
 
@@ -525,7 +558,7 @@ const getStatusText = (status: string) => {
   return statusMap[status as keyof typeof statusMap] || "未知";
 };
 
-const toggleService = (service: any) => {
+const toggleService = (service: Service) => {
   return new Promise((resolve) => {
     service.loading = true;
 

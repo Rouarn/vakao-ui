@@ -412,7 +412,7 @@ const dynamicTags = ref<string[]>(["标签一", "标签二", "标签三"]);
 const editableTags = ref<string[]>(["标签一", "标签二", "标签三"]);
 const inputVisible = ref<boolean>(false);
 const inputValue = ref<string>("");
-const saveTagInput = ref<any>(null);
+const saveTagInput = ref<HTMLInputElement | null>(null);
 
 // 可选择标签
 const checkableTags = ref<CheckableTag[]>([
@@ -430,8 +430,8 @@ const techInputVisible = ref<boolean>(false);
 const techInputValue = ref<string>("");
 const categoryInputVisible = ref<boolean>(false);
 const categoryInputValue = ref<string>("");
-const techInput = ref<any>(null);
-const categoryInput = ref<any>(null);
+const techInput = ref<HTMLInputElement | null>(null);
+const categoryInput = ref<HTMLInputElement | null>(null);
 
 // 商品数据
 const products = ref<Product[]>([
@@ -523,12 +523,12 @@ const handleEditableClose = (tag: string): void => {
 const showInput = (): void => {
   inputVisible.value = true;
   nextTick(() => {
-    saveTagInput.value.$refs.input.focus();
+    saveTagInput.value?.focus();
   });
 };
 
 const handleInputConfirm = (): void => {
-  const {value} = inputValue;
+  const { value } = inputValue;
   if (value && !editableTags.value.includes(value)) {
     editableTags.value.push(value);
   }
@@ -552,19 +552,19 @@ const removeCategoryTag = (tag: string): void => {
 const showTechInput = (): void => {
   techInputVisible.value = true;
   nextTick(() => {
-    techInput.value.$refs.input.focus();
+    techInput.value?.focus();
   });
 };
 
 const showCategoryInput = (): void => {
   categoryInputVisible.value = true;
   nextTick(() => {
-    categoryInput.value.$refs.input.focus();
+    categoryInput.value?.focus();
   });
 };
 
 const addTechTag = (): void => {
-  const {value} = techInputValue;
+  const { value } = techInputValue;
   if (value && !techTags.value.includes(value)) {
     techTags.value.push(value);
   }
@@ -573,7 +573,7 @@ const addTechTag = (): void => {
 };
 
 const addCategoryTag = (): void => {
-  const {value} = categoryInputValue;
+  const { value } = categoryInputValue;
   if (value && !categoryTags.value.includes(value)) {
     categoryTags.value.push(value);
   }

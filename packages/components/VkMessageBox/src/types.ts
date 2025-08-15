@@ -1,4 +1,4 @@
-import type { PropType, CSSProperties } from "vue";
+import type { PropType, CSSProperties, VNode } from "vue";
 import type { ExtractPublicPropTypes } from "@/types";
 
 // MessageBox 类型
@@ -11,7 +11,7 @@ export type MessageBoxAction = "confirm" | "cancel" | "close";
 export const messageBoxProps = {
   /** 消息内容 */
   message: {
-    type: [String, Object] as PropType<string | any>,
+    type: [String, Object] as PropType<string | VNode>,
     required: true,
   },
   /** 标题 */
@@ -122,7 +122,7 @@ export type MessageBoxProps = ExtractPublicPropTypes<typeof messageBoxProps>;
 // MessageBox 选项
 export interface MessageBoxOptions {
   title?: string;
-  message?: string | any;
+  message?: string | VNode;
   type?: MessageBoxType;
   iconClass?: string;
   confirmText?: string;

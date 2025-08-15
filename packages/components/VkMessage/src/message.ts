@@ -8,6 +8,7 @@
 import { createApp, nextTick, type App } from "vue";
 import type { MessageOptions, MessageInstance, MessageType, MessageComponentInstance } from "./types";
 import MessageComponent from "./index.vue";
+import type { Ref } from "vue";
 
 /**
  * 消息实例管理器
@@ -116,21 +117,25 @@ class MessageManager {
       // 基础配置
       const baseOffset = 20; // 基础偏移量（距顶部或边缘）
       const messageHeight = 50; // 每个消息的基本高度
-      const {messageGap} = this; // 消息之间的间距，使用类属性值
+      const { messageGap } = this; // 消息之间的间距，使用类属性值
 
       // 计算垂直位置：新消息在顶部，后续消息向下堆叠
       // index=0的消息在顶部，index=1的消息在下方，以此类推
       const topPosition = baseOffset + index * (messageHeight + messageGap);
 
       // 通过Vue组件暴露的响应式currentOffset更新位置
-      if (instance.vm && (instance.vm as any).currentOffset) {
+      const vmWithOffset = instance.vm as MessageComponentInstance & {
+        currentOffset?: Ref<number> | number;
+      };
+
+      if (instance.vm && vmWithOffset.currentOffset) {
         // 检查currentOffset是否是ref对象
-        if (typeof (instance.vm as any).currentOffset === "object" && "value" in (instance.vm as any).currentOffset) {
+        if (typeof vmWithOffset.currentOffset === "object" && "value" in vmWithOffset.currentOffset) {
           // 更新响应式的offset值，触发组件重新渲染
-          (instance.vm as any).currentOffset.value = topPosition;
+          vmWithOffset.currentOffset.value = topPosition;
         } else {
           // 如果不是ref对象，直接赋值
-          (instance.vm as any).currentOffset = topPosition;
+          vmWithOffset.currentOffset = topPosition;
         }
       }
     });

@@ -187,7 +187,7 @@ const mergedStyle = computed(() => {
       props.customStyle.split(";").forEach((rule) => {
         const [property, value] = rule.split(":").map((s) => s.trim());
         if (property && value) {
-          styleObj[property as keyof CSSProperties] = value as any;
+          (styleObj as Record<string, string>)[property] = value;
         }
       });
       Object.assign(styles, styleObj);

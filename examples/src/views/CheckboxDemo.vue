@@ -323,6 +323,20 @@
 <script setup lang="ts">
 import { ref, computed, reactive } from "vue";
 
+// 类型定义
+interface Permission {
+  label: string;
+  value: string;
+}
+
+interface PermissionGroup {
+  name: string;
+  permissions: Permission[];
+  checkedPermissions: string[];
+  checkAll: boolean;
+  isIndeterminate: boolean;
+}
+
 // 基础用法
 const checked1 = ref(true);
 const checked2 = ref(false);
@@ -394,12 +408,12 @@ const permissionGroups = reactive([
   },
 ]);
 
-const handlePermissionAllChange = (group: any) => {
-  group.checkedPermissions = group.checkAll ? group.permissions.map((p: any) => p.value) : [];
+const handlePermissionAllChange = (group: PermissionGroup) => {
+  group.checkedPermissions = group.checkAll ? group.permissions.map((p: Permission) => p.value) : [];
   group.isIndeterminate = false;
 };
 
-const handlePermissionChange = (group: any) => {
+const handlePermissionChange = (group: PermissionGroup) => {
   const checkedCount = group.checkedPermissions.length;
   group.checkAll = checkedCount === group.permissions.length;
   group.isIndeterminate = checkedCount > 0 && checkedCount < group.permissions.length;

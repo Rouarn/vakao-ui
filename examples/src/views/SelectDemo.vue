@@ -616,7 +616,7 @@ const getPriceRangeLabel = (value: string): string => {
 };
 
 // 事件处理方法
-const handleChange = (value: any): void => {
+const handleChange = (value: unknown): void => {
   addLog(`选择改变: ${JSON.stringify(value)}`);
 };
 
