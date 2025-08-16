@@ -13,7 +13,7 @@
     "./style.scss": "./styles/index.scss"
   },
   "scripts": {
-    "build": "vite build",
+    "build": "pnpm -C ../ build:deps && vite build",
     "build:types": "vue-tsc --declaration --emitDeclarationOnly",
     "build:full": "npm run build && npm run build:types"
   },
@@ -26,5 +26,8 @@
   },
   "peerDependencies": {
     "vue": "^3.3.0"
+  },
+  "dependencies": {
+    "@popperjs/core": "^2.11.8"
   }
 }

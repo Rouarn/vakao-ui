@@ -48,6 +48,7 @@
 
 <script setup lang="ts">
 import { ref, computed, watch, nextTick, onMounted, onUnmounted } from "vue";
+import type { CSSProperties } from "vue";
 import { createPopper } from "@popperjs/core";
 import type { Instance as PopperInstance, Placement } from "@popperjs/core";
 import { useClickOutside, useEventListener } from "@vakao-ui/hooks";
@@ -110,15 +111,15 @@ const popperStyles = computed(() => {
     if (isString(props.popperStyle)) {
       // 将字符串样式解析为对象
       const additionalStyles: Record<string, string> = {};
-      props.popperStyle.split(";").forEach((rule) => {
-        const [property, value] = rule.split(":").map((s) => s.trim());
+      (props.popperStyle as string).split(";").forEach((rule: string) => {
+        const [property, value] = rule.split(":").map((s: string) => s.trim());
         if (property && value) {
           additionalStyles[property] = value;
         }
       });
       return { ...styles, ...additionalStyles };
     }
-    return { ...styles, ...props.popperStyle };
+    return { ...styles, ...(props.popperStyle as CSSProperties) };
   }
 
   return styles;
