@@ -123,7 +123,10 @@ export type UseAsyncReturn<T, P extends unknown[] = unknown[]> = [
  * @since 0.0.2
  * @author Vakao UI Team
  */
-export function useAsync<T, P extends unknown[] = unknown[]>(asyncFn: AsyncFunction<T, P>, options: UseAsyncOptions = {}): UseAsyncReturn<T, P> {
+export function useAsync<T, P extends unknown[] = unknown[]>(
+  asyncFn: AsyncFunction<T, P>,
+  options: UseAsyncOptions = {},
+): UseAsyncReturn<T, P> {
   const { immediate = false, resetDelay = 0, onSuccess, onError, onFinally } = options;
 
   // 状态管理

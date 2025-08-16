@@ -70,25 +70,6 @@
       </div>
     </section>
 
-    <!-- 组件方式使用 -->
-    <section class="demo-section">
-      <h2>组件方式使用</h2>
-      <div class="demo-buttons">
-        <VkButton @click="toggleComponentMessage">切换组件消息</VkButton>
-      </div>
-
-      <!-- 使用组件方式 -->
-      <VkMessage
-        v-if="showComponentMessage"
-        type="success"
-        message="这是通过组件方式显示的消息"
-        :closable="true"
-        :duration="0"
-        position="top-right"
-        @close="handleComponentMessageClose"
-      />
-    </section>
-
     <!-- HTML 内容 -->
     <section class="demo-section">
       <h2>HTML 内容</h2>
@@ -101,11 +82,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-import { VkButton, VkMessage, Message } from "@vakao-ui/components";
-
-// 组件消息的显示状态
-const showComponentMessage = ref(false);
+import { VkButton, Message } from "vakao-ui";
 
 // 基础消息
 const showBasicMessage = () => {
@@ -230,15 +207,6 @@ const closeAllMessages = () => {
 const getMessageCount = () => {
   const count = Message.getCount();
   Message.info(`当前有 ${count} 条活跃消息`);
-};
-
-// 组件方式
-const toggleComponentMessage = () => {
-  showComponentMessage.value = !showComponentMessage.value;
-};
-
-const handleComponentMessageClose = () => {
-  showComponentMessage.value = false;
 };
 
 // HTML 内容

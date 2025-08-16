@@ -50,21 +50,27 @@ function getFullscreenElement(): Element | null {
   }
   return (
     document.fullscreenElement ||
-    (document as Document & {
-      webkitFullscreenElement?: Element;
-      mozFullScreenElement?: Element;
-      msFullscreenElement?: Element;
-    }).webkitFullscreenElement ||
-    (document as Document & {
-      webkitFullscreenElement?: Element;
-      mozFullScreenElement?: Element;
-      msFullscreenElement?: Element;
-    }).mozFullScreenElement ||
-    (document as Document & {
-      webkitFullscreenElement?: Element;
-      mozFullScreenElement?: Element;
-      msFullscreenElement?: Element;
-    }).msFullscreenElement ||
+    (
+      document as Document & {
+        webkitFullscreenElement?: Element;
+        mozFullScreenElement?: Element;
+        msFullscreenElement?: Element;
+      }
+    ).webkitFullscreenElement ||
+    (
+      document as Document & {
+        webkitFullscreenElement?: Element;
+        mozFullScreenElement?: Element;
+        msFullscreenElement?: Element;
+      }
+    ).mozFullScreenElement ||
+    (
+      document as Document & {
+        webkitFullscreenElement?: Element;
+        mozFullScreenElement?: Element;
+        msFullscreenElement?: Element;
+      }
+    ).msFullscreenElement ||
     null
   );
 }
@@ -78,7 +84,7 @@ function requestFullscreen(element: HTMLElement): Promise<void> {
     mozRequestFullScreen?: () => Promise<void>;
     msRequestFullscreen?: () => Promise<void>;
   };
-  
+
   if (element.requestFullscreen) {
     return element.requestFullscreen();
   } else if (extendedElement.webkitRequestFullscreen) {
@@ -98,13 +104,13 @@ function exitFullscreen(): Promise<void> {
   if (typeof document === "undefined") {
     return Promise.reject(new Error("document 对象不可用"));
   }
-  
+
   const extendedDocument = document as Document & {
     webkitExitFullscreen?: () => Promise<void>;
     mozCancelFullScreen?: () => Promise<void>;
     msExitFullscreen?: () => Promise<void>;
   };
-  
+
   if (document.exitFullscreen) {
     return document.exitFullscreen();
   } else if (extendedDocument.webkitExitFullscreen) {
@@ -124,13 +130,13 @@ function isFullscreenSupported(): boolean {
   if (typeof document === "undefined") {
     return false;
   }
-  
+
   const extendedDocument = document as Document & {
     webkitFullscreenEnabled?: boolean;
     mozFullScreenEnabled?: boolean;
     msFullscreenEnabled?: boolean;
   };
-  
+
   return !!(
     document.fullscreenEnabled ||
     extendedDocument.webkitFullscreenEnabled ||

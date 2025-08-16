@@ -302,9 +302,21 @@ export default [
 
   // 配置文件特殊规则
   {
-    files: ["**/*.config.js", "**/*.config.ts", "scripts/**/*.js"],
+    files: ["**/*.config.js", "**/*.config.ts", "**/*.config.cjs", "scripts/**/*.js"],
+    languageOptions: {
+      globals: {
+        __dirname: "readonly",
+        __filename: "readonly",
+        require: "readonly",
+        module: "readonly",
+        exports: "readonly",
+        console: "readonly",
+        process: "readonly",
+      },
+    },
     rules: {
       "no-console": "off",
+      "no-undef": "off",
       "@typescript-eslint/no-var-requires": "off",
       "comma-dangle": ["error", "always-multiline"],
     },
