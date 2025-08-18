@@ -188,7 +188,7 @@ const computedIconSize = computed(() => {
     small: 12,
   };
 
-  return sizeMap[props.size as "large" | "default" | "small"] || 16;
+  return sizeMap[props.size as "large" | "default" | "small"] || sizeMap.default;
 });
 
 /**
