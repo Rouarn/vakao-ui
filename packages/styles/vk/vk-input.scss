@@ -33,7 +33,8 @@
     border-radius: inherit;
     box-sizing: border-box;
 
-    input, textarea {
+    input,
+    textarea {
       width: 100%;
       border: none;
       outline: none;
@@ -49,7 +50,7 @@
         color: var(--vk-text-color-placeholder);
       }
     }
-    
+
     textarea {
       min-height: calc(var(--vk-size-large) * 2);
     }
@@ -157,6 +158,8 @@
     flex-shrink: 0;
     background-color: var(--vk-fill-color-lighter);
     border: 1px solid var(--vk-border-color-lighter);
+    border-top: 0;
+    border-bottom: 0;
     transition: all var(--vk-transition-duration-base) var(--vk-transition-timing-function);
     align-self: stretch;
     box-sizing: border-box;
