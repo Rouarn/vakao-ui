@@ -7,7 +7,16 @@
       @before-leave="onBeforeLeave"
       @after-leave="onAfterLeave"
     >
-      <div v-show="visible" :id="messageId" :class="mergedClass" :style="mergedStyle" role="alert" aria-live="assertive">
+      <div
+        v-show="visible"
+        :id="messageId"
+        :class="mergedClass"
+        :style="mergedStyle"
+        role="alert"
+        aria-live="assertive"
+        @mouseenter="handleMouseEnter"
+        @mouseleave="handleMouseLeave"
+      >
         <!-- 消息图标 -->
         <span v-if="showIcon" :class="ns.element('icon')">
           <component :is="currentIcon" v-if="typeof currentIcon === 'object'" />
@@ -22,7 +31,7 @@
         </div>
 
         <!-- 关闭按钮 -->
-        <span v-if="closable" :class="ns.element('close')" @click="handleClose">
+        <span v-if="closable" :class="[ns.element('close'), { [ns.element('close-visible')]: isHovered }]" @click="handleClose">
           <VkIcon icon="mdi:close" :size="14" />
         </span>
       </div>
@@ -114,6 +123,9 @@ let timer: NodeJS.Timeout | null = null;
 
 /** 响应式的offset值，用于消息堆叠定位 */
 const currentOffset = ref(props.offset);
+
+/** 鼠标悬浮状态 */
+const isHovered = ref(false);
 
 // ==================== 计算属性 ====================
 
@@ -245,6 +257,20 @@ const handleClose = () => {
   clearTimer();
   visible.value = false;
   emit("close");
+};
+
+/**
+ * 处理鼠标进入事件
+ */
+const handleMouseEnter = () => {
+  isHovered.value = true;
+};
+
+/**
+ * 处理鼠标离开事件
+ */
+const handleMouseLeave = () => {
+  isHovered.value = false;
 };
 
 /**
