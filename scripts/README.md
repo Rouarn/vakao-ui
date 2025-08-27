@@ -17,7 +17,6 @@ scripts/
 │   ├── github-integration.js     # GitHub 集成
 │   ├── legacy-deploy.js          # 传统部署扩展
 │   └── notification.js           # 通知扩展
-├── legacy/                       # 传统脚本（已废弃）
 ├── publish.js                    # 统一发布工具（主入口）
 ├── utils.js                      # 工具函数
 └── README.md                     # 本文档

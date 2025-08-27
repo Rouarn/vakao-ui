@@ -45,9 +45,15 @@ export const checkboxProps = {
     default: undefined,
   },
   /** 自定义类名 */
-  customClass: String,
+  customClass: {
+    type: String,
+    default: "",
+  },
   /** 自定义样式 */
-  customStyle: [String, Object] as PropType<string | CSSProperties>,
+  customStyle: {
+    type: [String, Object] as PropType<string | CSSProperties>,
+    default: {},
+  },
 } as const;
 
 // 复选框组属性定义
@@ -73,9 +79,15 @@ export const checkboxGroupProps = {
     default: Infinity,
   },
   /** 自定义类名 */
-  customClass: String,
+  customClass: {
+    type: String,
+    default: "",
+  },
   /** 自定义样式 */
-  customStyle: [String, Object] as PropType<string | CSSProperties>,
+  customStyle: {
+    type: [String, Object] as PropType<string | CSSProperties>,
+    default: {},
+  },
 } as const;
 
 // 导出属性类型

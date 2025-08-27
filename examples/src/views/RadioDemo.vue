@@ -10,8 +10,8 @@
       <h2>基础用法</h2>
       <p>由于选项默认可见，不宜过多，若选项过多，建议使用 Select 选择器。</p>
       <div class="demo-block">
-        <VkRadio v-model="radio1" label="1">备选项1</VkRadio>
-        <VkRadio v-model="radio1" label="2">备选项2</VkRadio>
+        <VkRadio v-model="radio1" value="1">备选项1</VkRadio>
+        <VkRadio v-model="radio1" value="2">备选项2</VkRadio>
         <p class="result">当前选中：{{ radio1 }}</p>
       </div>
     </div>
@@ -21,8 +21,8 @@
       <h2>禁用状态</h2>
       <p>单选框不可用的状态。</p>
       <div class="demo-block">
-        <VkRadio v-model="radio2" label="禁用" disabled>备选项1</VkRadio>
-        <VkRadio v-model="radio2" label="选中且禁用" disabled>备选项2</VkRadio>
+        <VkRadio v-model="radio2" value="禁用" disabled>备选项1</VkRadio>
+        <VkRadio v-model="radio2" value="选中且禁用" disabled>备选项2</VkRadio>
         <p class="result">当前选中：{{ radio2 }}</p>
       </div>
     </div>
@@ -33,9 +33,9 @@
       <p>适用于在多个互斥的选项中选择的场景。</p>
       <div class="demo-block">
         <VkRadioGroup v-model="radio3">
-          <VkRadio label="3">备选项1</VkRadio>
-          <VkRadio label="6">备选项2</VkRadio>
-          <VkRadio label="9">备选项3</VkRadio>
+          <VkRadio value="3">备选项1</VkRadio>
+          <VkRadio value="6">备选项2</VkRadio>
+          <VkRadio value="9">备选项3</VkRadio>
         </VkRadioGroup>
         <p class="result">当前选中：{{ radio3 }}</p>
       </div>
@@ -47,10 +47,10 @@
       <p>按钮样式的单选组合。</p>
       <div class="demo-block">
         <VkRadioGroup v-model="radio4">
-          <VkRadioButton label="上海">上海</VkRadioButton>
-          <VkRadioButton label="北京">北京</VkRadioButton>
-          <VkRadioButton label="广州">广州</VkRadioButton>
-          <VkRadioButton label="深圳">深圳</VkRadioButton>
+          <VkRadio value="上海">上海</VkRadio>
+          <VkRadio value="北京">北京</VkRadio>
+          <VkRadio value="广州">广州</VkRadio>
+          <VkRadio value="深圳">深圳</VkRadio>
         </VkRadioGroup>
         <p class="result">当前选中：{{ radio4 }}</p>
       </div>
@@ -62,9 +62,9 @@
       <p>设置 border 属性可以渲染为带有边框的单选框。</p>
       <div class="demo-block">
         <div class="border-group">
-          <VkRadio v-model="radio5" label="1" border>备选项1</VkRadio>
-          <VkRadio v-model="radio5" label="2" border>备选项2</VkRadio>
-          <VkRadio v-model="radio5" label="3" border disabled>备选项3（禁用）</VkRadio>
+          <VkRadio v-model="radio5" value="1" border>备选项1</VkRadio>
+          <VkRadio v-model="radio5" value="2" border>备选项2</VkRadio>
+          <VkRadio v-model="radio5" value="3" border disabled>备选项3（禁用）</VkRadio>
         </div>
         <p class="result">当前选中：{{ radio5 }}</p>
       </div>
@@ -78,33 +78,33 @@
         <div class="size-group">
           <h4>大尺寸</h4>
           <VkRadioGroup v-model="radio6" size="large">
-            <VkRadioButton label="选项1">选项1</VkRadioButton>
-            <VkRadioButton label="选项2">选项2</VkRadioButton>
-            <VkRadioButton label="选项3">选项3</VkRadioButton>
+            <VkRadio value="选项1">选项1</VkRadio>
+            <VkRadio value="选项2">选项2</VkRadio>
+            <VkRadio value="选项3">选项3</VkRadio>
           </VkRadioGroup>
         </div>
         <div class="size-group">
           <h4>默认尺寸</h4>
           <VkRadioGroup v-model="radio7">
-            <VkRadioButton label="选项1">选项1</VkRadioButton>
-            <VkRadioButton label="选项2">选项2</VkRadioButton>
-            <VkRadioButton label="选项3">选项3</VkRadioButton>
+            <VkRadio value="选项1">选项1</VkRadio>
+            <VkRadio value="选项2">选项2</VkRadio>
+            <VkRadio value="选项3">选项3</VkRadio>
           </VkRadioGroup>
         </div>
         <div class="size-group">
           <h4>小尺寸</h4>
           <VkRadioGroup v-model="radio8" size="small">
-            <VkRadioButton label="选项1">选项1</VkRadioButton>
-            <VkRadioButton label="选项2">选项2</VkRadioButton>
-            <VkRadioButton label="选项3">选项3</VkRadioButton>
+            <VkRadio value="选项1">选项1</VkRadio>
+            <VkRadio value="选项2">选项2</VkRadio>
+            <VkRadio value="选项3">选项3</VkRadio>
           </VkRadioGroup>
         </div>
         <div class="size-group">
           <h4>迷你尺寸</h4>
           <VkRadioGroup v-model="radio9" size="mini">
-            <VkRadioButton label="选项1">选项1</VkRadioButton>
-            <VkRadioButton label="选项2">选项2</VkRadioButton>
-            <VkRadioButton label="选项3">选项3</VkRadioButton>
+            <VkRadio value="选项1">选项1</VkRadio>
+            <VkRadio value="选项2">选项2</VkRadio>
+            <VkRadio value="选项3">选项3</VkRadio>
           </VkRadioGroup>
         </div>
       </div>
@@ -120,15 +120,15 @@
         <h3>性别选择</h3>
         <div class="gender-demo">
           <VkRadioGroup v-model="gender">
-            <VkRadio label="male" border>
+            <VkRadio value="male" border>
               <VkIcon icon="material-symbols:male" size="16" color="#409eff" />
               男
             </VkRadio>
-            <VkRadio label="female" border>
+            <VkRadio value="female" border>
               <VkIcon icon="material-symbols:female" size="16" color="#f56c6c" />
               女
             </VkRadio>
-            <VkRadio label="other" border>
+            <VkRadio value="other" border>
               <VkIcon icon="material-symbols:question-mark" size="16" color="#909399" />
               其他
             </VkRadio>
@@ -143,7 +143,7 @@
         <div class="payment-demo">
           <VkRadioGroup v-model="paymentMethod">
             <div v-for="method in paymentMethods" :key="method.value" class="payment-option">
-              <VkRadio :label="method.value" border>
+              <VkRadio :value="method.value" border>
                 <div class="payment-content">
                   <VkIcon :icon="'material-symbols:' + method.icon" size="24" :color="method.color" />
                   <div class="payment-info">
@@ -164,7 +164,7 @@
         <div class="delivery-demo">
           <VkRadioGroup v-model="deliveryMethod">
             <div v-for="method in deliveryMethods" :key="method.value" class="delivery-option">
-              <VkRadio :label="method.value" border>
+              <VkRadio :value="method.value" border>
                 <div class="delivery-content">
                   <div class="delivery-header">
                     <span class="delivery-name">{{ method.name }}</span>
@@ -185,10 +185,10 @@
         <h3>主题选择</h3>
         <div class="theme-demo">
           <VkRadioGroup v-model="theme">
-            <VkRadioButton v-for="themeOption in themes" :key="themeOption.value" :label="themeOption.value">
+            <VkRadio v-for="themeOption in themes" :key="themeOption.value" :value="themeOption.value">
               <VkIcon :icon="'material-symbols:' + themeOption.icon" size="16" />
               {{ themeOption.name }}
-            </VkRadioButton>
+            </VkRadio>
           </VkRadioGroup>
           <div class="theme-preview" :class="theme">
             <h4>主题预览</h4>
@@ -206,7 +206,7 @@
           <div v-for="(question, index) in surveyQuestions" :key="index" class="survey-question">
             <h4>{{ index + 1 }}. {{ question.title }}</h4>
             <VkRadioGroup v-model="surveyAnswers[index]">
-              <VkRadio v-for="option in question.options" :key="option.value" :label="option.value" border>
+              <VkRadio v-for="option in question.options" :key="option.value" :value="option.value" border>
                 {{ option.label }}
               </VkRadio>
             </VkRadioGroup>
@@ -229,10 +229,10 @@
           <div v-for="item in ratingItems" :key="item.key" class="rating-item">
             <h4>{{ item.title }}</h4>
             <VkRadioGroup v-model="ratings[item.key]">
-              <VkRadioButton v-for="score in 5" :key="score" :label="score.toString()">
+              <VkRadio v-for="score in 5" :key="score" :value="score.toString()">
                 <VkIcon icon="material-symbols:star" size="16" :color="score <= parseInt(ratings[item.key] || '0') ? '#e6a23c' : '#ddd'" />
                 {{ score }}
-              </VkRadioButton>
+              </VkRadio>
             </VkRadioGroup>
           </div>
           <div class="rating-summary">

@@ -20,8 +20,10 @@
       <h2>禁用状态</h2>
       <p>多选框不可用状态。</p>
       <div class="demo-block">
-        <VkCheckbox v-model="checked2" disabled>备选项1</VkCheckbox>
-        <VkCheckbox v-model="checked3" disabled>备选项2</VkCheckbox>
+        <VkSpace>
+          <VkCheckbox v-model="checked2" disabled>备选项1</VkCheckbox>
+          <VkCheckbox v-model="checked3" disabled>备选项2</VkCheckbox>
+        </VkSpace>
       </div>
     </div>
 
@@ -32,11 +34,11 @@
       <div class="demo-block">
         <VkCheckboxGroup v-model="checkList1">
           <VkSpace>
-            <VkCheckbox label="复选框 A">复选框 A</VkCheckbox>
-            <VkCheckbox label="复选框 B">复选框 B</VkCheckbox>
-            <VkCheckbox label="复选框 C">复选框 C</VkCheckbox>
-            <VkCheckbox label="禁用" disabled>禁用</VkCheckbox>
-            <VkCheckbox label="选中且禁用" disabled>选中且禁用</VkCheckbox>
+            <VkCheckbox value="复选框 A">复选框 A</VkCheckbox>
+            <VkCheckbox value="复选框 B">复选框 B</VkCheckbox>
+            <VkCheckbox value="复选框 C">复选框 C</VkCheckbox>
+            <VkCheckbox value="禁用" disabled>禁用</VkCheckbox>
+            <VkCheckbox value="选中且禁用" disabled>选中且禁用</VkCheckbox>
           </VkSpace>
         </VkCheckboxGroup>
         <p class="result">当前选中：{{ checkList1 }}</p>
@@ -51,8 +53,8 @@
         <VkSpace vertical>
           <VkCheckbox v-model="checkAll" :indeterminate="isIndeterminate" @change="handleCheckAllChange"> 全选 </VkCheckbox>
           <VkCheckboxGroup v-model="checkedCities" @change="handleCheckedCitiesChange">
-            <VkSpace>
-              <VkCheckbox v-for="city in cities" :key="city" :label="city">
+            <VkSpace :wrapItem="false">
+              <VkCheckbox v-for="city in cities" :key="city" :value="city">
                 {{ city }}
               </VkCheckbox>
             </VkSpace>
@@ -68,8 +70,8 @@
       <p>使用 min 和 max 属性能够限制可以被勾选的项目的数量。</p>
       <div class="demo-block">
         <VkCheckboxGroup v-model="checkedFruits" :min="1" :max="2">
-          <VkSpace>
-            <VkCheckbox v-for="fruit in fruits" :key="fruit" :label="fruit">
+          <VkSpace :wrapItem="false">
+            <VkCheckbox v-for="fruit in fruits" :key="fruit" :value="fruit">
               {{ fruit }}
             </VkCheckbox>
           </VkSpace>
@@ -84,10 +86,10 @@
       <p>按钮样式的多选组合。</p>
       <div class="demo-block">
         <VkCheckboxGroup v-model="checkedButtons1">
-          <VkSpace>
-            <VkCheckboxButton v-for="button in buttonOptions1" :key="button" :label="button">
+          <VkSpace :wrapItem="false">
+            <VkCheckbox v-for="button in buttonOptions1" :key="button" :value="button">
               {{ button }}
-            </VkCheckboxButton>
+            </VkCheckbox>
           </VkSpace>
         </VkCheckboxGroup>
         <p class="result">当前选中：{{ checkedButtons1 }}</p>
@@ -117,9 +119,9 @@
             <h4>大尺寸</h4>
             <VkCheckboxGroup v-model="checkedSizes1" size="large">
               <VkSpace>
-                <VkCheckboxButton label="选项1">选项1</VkCheckboxButton>
-                <VkCheckboxButton label="选项2">选项2</VkCheckboxButton>
-                <VkCheckboxButton label="选项3">选项3</VkCheckboxButton>
+                <VkCheckbox value="选项1">选项1</VkCheckbox>
+                <VkCheckbox value="选项2">选项2</VkCheckbox>
+                <VkCheckbox value="选项3">选项3</VkCheckbox>
               </VkSpace>
             </VkCheckboxGroup>
           </div>
@@ -127,9 +129,9 @@
             <h4>默认尺寸</h4>
             <VkCheckboxGroup v-model="checkedSizes2">
               <VkSpace>
-                <VkCheckboxButton label="选项1">选项1</VkCheckboxButton>
-                <VkCheckboxButton label="选项2">选项2</VkCheckboxButton>
-                <VkCheckboxButton label="选项3">选项3</VkCheckboxButton>
+                <VkCheckbox value="选项1">选项1</VkCheckbox>
+                <VkCheckbox value="选项2">选项2</VkCheckbox>
+                <VkCheckbox value="选项3">选项3</VkCheckbox>
               </VkSpace>
             </VkCheckboxGroup>
           </div>
@@ -137,9 +139,9 @@
             <h4>小尺寸</h4>
             <VkCheckboxGroup v-model="checkedSizes3" size="small">
               <VkSpace>
-                <VkCheckboxButton label="选项1">选项1</VkCheckboxButton>
-                <VkCheckboxButton label="选项2">选项2</VkCheckboxButton>
-                <VkCheckboxButton label="选项3">选项3</VkCheckboxButton>
+                <VkCheckbox value="选项1">选项1</VkCheckbox>
+                <VkCheckbox value="选项2">选项2</VkCheckbox>
+                <VkCheckbox value="选项3">选项3</VkCheckbox>
               </VkSpace>
             </VkCheckboxGroup>
           </div>
@@ -147,9 +149,9 @@
             <h4>迷你尺寸</h4>
             <VkCheckboxGroup v-model="checkedSizes4" size="mini">
               <VkSpace>
-                <VkCheckboxButton label="选项1">选项1</VkCheckboxButton>
-                <VkCheckboxButton label="选项2">选项2</VkCheckboxButton>
-                <VkCheckboxButton label="选项3">选项3</VkCheckboxButton>
+                <VkCheckbox value="选项1">选项1</VkCheckbox>
+                <VkCheckbox value="选项2">选项2</VkCheckbox>
+                <VkCheckbox value="选项3">选项3</VkCheckbox>
               </VkSpace>
             </VkCheckboxGroup>
           </div>
@@ -174,8 +176,8 @@
                   全选
                 </VkCheckbox>
                 <VkCheckboxGroup v-model="group.checkedPermissions" @change="handlePermissionChange(group)">
-                  <VkSpace wrap>
-                    <VkCheckbox v-for="permission in group.permissions" :key="permission.value" :label="permission.value" border>
+                  <VkSpace :wrapItem="false">
+                    <VkCheckbox v-for="permission in group.permissions" :key="permission.value" :value="permission.value" border>
                       {{ permission.label }}
                     </VkCheckbox>
                   </VkSpace>
@@ -196,8 +198,8 @@
                 <div v-for="category in hobbyCategories" :key="category.name">
                   <VkSpace vertical>
                     <h4>{{ category.name }}</h4>
-                    <VkSpace wrap>
-                      <VkCheckbox v-for="hobby in category.hobbies" :key="hobby" :label="hobby" border>
+                    <VkSpace :wrapItem="false">
+                      <VkCheckbox v-for="hobby in category.hobbies" :key="hobby" :value="hobby" border>
                         {{ hobby }}
                       </VkCheckbox>
                     </VkSpace>
@@ -219,10 +221,10 @@
               <VkSpace vertical>
                 <h4>品牌</h4>
                 <VkCheckboxGroup v-model="selectedBrands">
-                  <VkSpace wrap>
-                    <VkCheckboxButton v-for="brand in brands" :key="brand" :label="brand">
+                  <VkSpace :wrapItem="false">
+                    <VkCheckbox v-for="brand in brands" :key="brand" :value="brand">
                       {{ brand }}
-                    </VkCheckboxButton>
+                    </VkCheckbox>
                   </VkSpace>
                 </VkCheckboxGroup>
               </VkSpace>
@@ -232,8 +234,8 @@
               <VkSpace vertical>
                 <h4>价格区间</h4>
                 <VkCheckboxGroup v-model="selectedPriceRanges">
-                  <VkSpace vertical>
-                    <VkCheckbox v-for="range in priceRanges" :key="range" :label="range">
+                  <VkSpace :wrapItem="false">
+                    <VkCheckbox v-for="range in priceRanges" :key="range" :value="range">
                       {{ range }}
                     </VkCheckbox>
                   </VkSpace>
@@ -245,11 +247,11 @@
               <VkSpace vertical>
                 <h4>其他筛选</h4>
                 <VkCheckboxGroup v-model="selectedFilters">
-                  <VkSpace>
-                    <VkCheckbox label="free-shipping">包邮</VkCheckbox>
-                    <VkCheckbox label="on-sale">促销</VkCheckbox>
-                    <VkCheckbox label="new-arrival">新品</VkCheckbox>
-                    <VkCheckbox label="high-rating">高评分</VkCheckbox>
+                  <VkSpace :wrapItem="false">
+                    <VkCheckbox value="free-shipping">包邮</VkCheckbox>
+                    <VkCheckbox value="on-sale">促销</VkCheckbox>
+                    <VkCheckbox value="new-arrival">新品</VkCheckbox>
+                    <VkCheckbox value="high-rating">高评分</VkCheckbox>
                   </VkSpace>
                 </VkCheckboxGroup>
               </VkSpace>
@@ -267,53 +269,6 @@
               </VkSpace>
             </div>
           </VkSpace>
-        </div>
-      </div>
-
-      <!-- 表格行选择 -->
-      <div class="demo-block">
-        <h3>表格行选择</h3>
-        <div class="table-demo">
-          <table class="demo-table">
-            <thead>
-              <tr>
-                <th>
-                  <VkCheckbox v-model="tableCheckAll" :indeterminate="tableIsIndeterminate" @change="handleTableAllChange" />
-                </th>
-                <th>姓名</th>
-                <th>职位</th>
-                <th>部门</th>
-                <th>状态</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="user in tableUsers" :key="user.id">
-                <td>
-                  <VkCheckbox v-model="selectedTableUsers" :label="user.id" @change="handleTableRowChange" />
-                </td>
-                <td>{{ user.name }}</td>
-                <td>{{ user.position }}</td>
-                <td>{{ user.department }}</td>
-                <td>
-                  <span :class="['status', user.status]">
-                    {{ user.status === "active" ? "在职" : "离职" }}
-                  </span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <p class="result">已选择 {{ selectedTableUsers.length }} 个用户</p>
-          <div class="table-actions">
-            <VkButton :disabled="selectedTableUsers.length === 0" type="primary" size="small" @click="batchAction('activate')">
-              批量激活
-            </VkButton>
-            <VkButton :disabled="selectedTableUsers.length === 0" type="warning" size="small" @click="batchAction('deactivate')">
-              批量停用
-            </VkButton>
-            <VkButton :disabled="selectedTableUsers.length === 0" type="danger" size="small" @click="batchAction('delete')">
-              批量删除
-            </VkButton>
-          </div>
         </div>
       </div>
     </div>
@@ -450,40 +405,6 @@ const clearFilters = () => {
   selectedPriceRanges.value = [];
   selectedFilters.value = [];
 };
-
-// 表格行选择
-const tableUsers = [
-  { id: 1, name: "张三", position: "前端工程师", department: "技术部", status: "active" },
-  { id: 2, name: "李四", position: "后端工程师", department: "技术部", status: "active" },
-  { id: 3, name: "王五", position: "产品经理", department: "产品部", status: "inactive" },
-  { id: 4, name: "赵六", position: "设计师", department: "设计部", status: "active" },
-  { id: 5, name: "钱七", position: "测试工程师", department: "技术部", status: "active" },
-];
-
-const selectedTableUsers = ref([1, 3]);
-const tableCheckAll = ref(false);
-const tableIsIndeterminate = computed(() => {
-  const checkedCount = selectedTableUsers.value.length;
-  return checkedCount > 0 && checkedCount < tableUsers.length;
-});
-
-const handleTableAllChange = (val: boolean) => {
-  selectedTableUsers.value = val ? tableUsers.map((user) => user.id) : [];
-};
-
-const handleTableRowChange = () => {
-  const checkedCount = selectedTableUsers.value.length;
-  tableCheckAll.value = checkedCount === tableUsers.length;
-};
-
-const batchAction = (action: string) => {
-  const actionNames = {
-    activate: "激活",
-    deactivate: "停用",
-    delete: "删除",
-  };
-  alert(`执行${actionNames[action as keyof typeof actionNames]}操作，影响 ${selectedTableUsers.value.length} 个用户`);
-};
 </script>
 
 <style lang="scss" scoped>
@@ -614,64 +535,6 @@ const batchAction = (action: string) => {
   margin-bottom: 16px;
 }
 
-/* 表格样式 */
-.table-demo {
-  background: white;
-  padding: 24px;
-  border-radius: 8px;
-  border: 1px solid #e4e7ed;
-}
-
-.demo-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 16px;
-}
-
-.demo-table th,
-.demo-table td {
-  padding: 12px;
-  text-align: left;
-  border-bottom: 1px solid #ebeef5;
-}
-
-.demo-table th {
-  background: #f5f7fa;
-  font-weight: 600;
-  color: #2c3e50;
-}
-
-.demo-table td {
-  color: #606266;
-}
-
-.demo-table tr:hover {
-  background: #f5f7fa;
-}
-
-.status {
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: 12px;
-  font-weight: 500;
-}
-
-.status.active {
-  background: #f0f9ff;
-  color: #67c23a;
-}
-
-.status.inactive {
-  background: #fef0f0;
-  color: #f56c6c;
-}
-
-.table-actions {
-  display: flex;
-  gap: 12px;
-  margin-top: 16px;
-}
-
 @media (max-width: 768px) {
   .demo-block {
     padding: 16px;
@@ -688,19 +551,6 @@ const batchAction = (action: string) => {
 
   .hobby-list {
     grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-  }
-
-  .table-actions {
-    flex-direction: column;
-  }
-
-  .demo-table {
-    font-size: 14px;
-  }
-
-  .demo-table th,
-  .demo-table td {
-    padding: 8px;
   }
 
   .demo-header h1 {
