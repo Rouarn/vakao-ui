@@ -34,7 +34,7 @@
     "generate:colors": "tsx ./packages/utils/modules/generate-color.ts",
     "deploy:docs": "node ./scripts/publish.js --deploy-only --deploy-strategy docs",
     "deploy:github-pages": "node ./scripts/publish.js --deploy-only --deploy-strategy github-pages",
-    "deploy:preview": "pnpm run build:docs && pnpm -C docs serve",
+    "deploy:preview": "pnpm run build:docs && pnpm -C docs preview",
     "lint": "eslint . --ext .vue,.js,.ts,.jsx,.tsx --fix",
     "format": "prettier --write \"**/*.{vue,js,ts,json,md}\"",
     "publish": "node ./scripts/publish.js",
