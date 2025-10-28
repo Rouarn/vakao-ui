@@ -231,7 +231,7 @@ function useCounter(initialValue?: number, options?: UseCounterOptions): UseCoun
 - 游戏分数计算
 - 任何需要数值增减的场景
 
-<script setup>
+<script lang="ts" setup>
 import { useCounter } from '@vakao-ui/hooks';
 
 // 基本用法示例

@@ -42,6 +42,48 @@ export type UseCounterReturn = [
 ];
 
 /**
+ * 安全的数值转换函数
+ * @param value 要转换的值
+ * @param fallback 转换失败时的后备值
+ * @returns 安全的数值
+ */
+function toSafeNumber(value: any, fallback: number = 0): number {
+  if (typeof value === "number" && Number.isFinite(value)) {
+    return value;
+  }
+
+  if (typeof value === "string") {
+    const parsed = Number(value);
+    if (Number.isFinite(parsed)) {
+      return parsed;
+    }
+  }
+
+  return fallback;
+}
+
+/**
+ * 应用边界约束
+ * @param value 要约束的值
+ * @param min 最小值
+ * @param max 最大值
+ * @returns 约束后的值
+ */
+function applyConstraints(value: number, min?: number, max?: number): number {
+  let result = value;
+
+  if (typeof min === "number" && Number.isFinite(min)) {
+    result = Math.max(result, min);
+  }
+
+  if (typeof max === "number" && Number.isFinite(max)) {
+    result = Math.min(result, max);
+  }
+
+  return result;
+}
+
+/**
  * 计数器钩子函数
  * @param initialValue 初始计数值，默认为0
  * @param options 配置选项
@@ -67,35 +109,38 @@ export function useCounter(
     max?: number;
   } = {},
 ): UseCounterReturn {
-  const { min, max } = options;
-  const count = ref(initialValue);
+  // 安全地处理初始值
+  const safeInitialValue = toSafeNumber(initialValue, 0);
+  const safeMin = typeof options.min === "number" ? toSafeNumber(options.min) : undefined;
+  const safeMax = typeof options.max === "number" ? toSafeNumber(options.max) : undefined;
+
+  // 应用初始约束
+  const constrainedInitialValue = applyConstraints(safeInitialValue, safeMin, safeMax);
+
+  const count = ref(constrainedInitialValue);
 
   // 创建只读的计算属性
   const readonlyCount = computed(() => count.value);
 
   function increment(delta: number = 1) {
-    const newValue = count.value + delta;
-    count.value = max !== undefined ? Math.min(newValue, max) : newValue;
+    const safeDelta = toSafeNumber(delta, 1);
+    const newValue = count.value + safeDelta;
+    count.value = applyConstraints(newValue, safeMin, safeMax);
   }
 
   function decrement(delta: number = 1) {
-    const newValue = count.value - delta;
-    count.value = min !== undefined ? Math.max(newValue, min) : newValue;
+    const safeDelta = toSafeNumber(delta, 1);
+    const newValue = count.value - safeDelta;
+    count.value = applyConstraints(newValue, safeMin, safeMax);
   }
 
   function reset() {
-    count.value = initialValue;
+    count.value = constrainedInitialValue;
   }
 
   function setCount(value: number) {
-    let newValue = value;
-    if (min !== undefined) {
-      newValue = Math.max(newValue, min);
-    }
-    if (max !== undefined) {
-      newValue = Math.min(newValue, max);
-    }
-    count.value = newValue;
+    const safeValue = toSafeNumber(value, count.value);
+    count.value = applyConstraints(safeValue, safeMin, safeMax);
   }
 
   return [readonlyCount, increment, decrement, reset, setCount];
