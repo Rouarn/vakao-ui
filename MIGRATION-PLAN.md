@@ -38,7 +38,7 @@
 | 远端               | 地址                                                                   | 平台侧事实                                                                                          |
 | ------------------ | ---------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
 | `origin`（codeup） | `git@codeup.aliyun.com:676d377c721f4dc7be6ca65a/vakao-ui/vakao-ui.git` | repoId `5586374`，私有，创建 2025-08-14，最后活动 2026-11-01，当前账号 accessLevel=40（Maintainer） |
-| `github`           | `git@github.com:Rouarn/VakaoUI.git`                                    | **公开**仓库，默认分支 `main`，最后推送 2026-11-01T07:35:39Z，当前 token 权限 `admin=true`          |
+| `github`           | `git@github.com:Rouarn/vakao-ui.git`                                   | **公开**仓库，默认分支 `main`，最后推送 2026-11-01T07:35:39Z，当前 token 权限 `admin=true`          |
 
 > codeup 的 `vakao-ui` 是**组 / 命名空间**，下面还有 3 个仍在使用的仓库：
 > `vakao-axios`、`vakao-scripts-utils`、`vakao-socket-system`、`vakao-static-hub`、`vakao-rtc`。
@@ -179,11 +179,11 @@
 
 ### 1.7 可用凭据（只记录路径，不记录内容）
 
-| 用途                  | 文件                                                           | 核查结果                                                             |
-| --------------------- | -------------------------------------------------------------- | -------------------------------------------------------------------- |
-| 云效 OpenAPI / codeup | `/Users/woyuxiaji/Documents/GlobalConfig/yx.token`（`pt-...`） | 可读；`GET /oapi/v1/codeup/.../repositories` 返回 200                |
-| GitHub                | `/Users/woyuxiaji/Documents/GlobalConfig/gh.token`             | 可读；`GET /repos/Rouarn/VakaoUI` 返回 200，`permissions.admin=true` |
-| npm 发布              | `~/.npmrc` 中的 `_authToken`                                   | `npm ping` 正常（PONG）                                              |
+| 用途                  | 文件                                                           | 核查结果                                                              |
+| --------------------- | -------------------------------------------------------------- | --------------------------------------------------------------------- |
+| 云效 OpenAPI / codeup | `/Users/woyuxiaji/Documents/GlobalConfig/yx.token`（`pt-...`） | 可读；`GET /oapi/v1/codeup/.../repositories` 返回 200                 |
+| GitHub                | `/Users/woyuxiaji/Documents/GlobalConfig/gh.token`             | 可读；`GET /repos/Rouarn/vakao-ui` 返回 200，`permissions.admin=true` |
+| npm 发布              | `~/.npmrc` 中的 `_authToken`                                   | `npm ping` 正常（PONG）                                               |
 
 > 本机未安装 `gh` CLI，GitHub 删除走 REST API（`curl`）。
 > 云效制品仓库未提供本地 CLI，删除走 OpenAPI 或控制台。
@@ -451,7 +451,7 @@ curl -X DELETE -H "x-yunxiao-token: $YX" "$BASE/124748619/281093170?repoType=NPM
 TOK=$(cat /Users/woyuxiaji/Documents/GlobalConfig/gh.token)
 curl -X DELETE -H "Authorization: Bearer $TOK" \
      -H "Accept: application/vnd.github+json" \
-     https://api.github.com/repos/Rouarn/VakaoUI        # 期望 204
+     https://api.github.com/repos/Rouarn/vakao-ui        # 期望 204
 ```
 
 **codeup**
@@ -478,7 +478,7 @@ rm -rf /Users/woyuxiaji/Rouarn/AliyunCloud/vakao-ui
 - 建议：在 5.7 之前额外执行一次 `git clone --mirror` 留档
 
 ```bash
-git clone --mirror git@github.com:Rouarn/VakaoUI.git ~/Backups/VakaoUI.git
+git clone --mirror git@github.com:Rouarn/vakao-ui.git ~/Backups/VakaoUI.git
 ```
 
 ---
@@ -567,5 +567,5 @@ curl -s -H "x-yunxiao-token: $(cat /Users/woyuxiaji/Documents/GlobalConfig/yx.to
 
 # GitHub 仓库
 curl -s -H "Authorization: Bearer $(cat /Users/woyuxiaji/Documents/GlobalConfig/gh.token)" \
-  https://api.github.com/repos/Rouarn/VakaoUI
+  https://api.github.com/repos/Rouarn/vakao-ui
 ```
